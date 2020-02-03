@@ -11,7 +11,7 @@ function App() {
       </div>
       <header className="v-header container">
         <div className="fullscreen-video-wrap">
-          <video src="video.mp4" autoPlay loop muted />
+          <video src="video-header.mp4" autoPlay loop muted />
         </div>
 
         <div className="header-overlay" />
