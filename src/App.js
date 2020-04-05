@@ -1,18 +1,15 @@
 import React from 'react';
+import { usePrismicFetch } from './hooks';
+import renderPrismicSections from './containers/prismic';
 
 function App() {
+  const [page, loadingPageData] = usePrismicFetch('pages', 'home');
+
   return (
     <div className="App">
-      <header className="v-header container">
-        <div className="fullscreen-video-wrap">
-          <video src="video-header.mp4" autoPlay loop muted />
-        </div>
-
-        <div className="header-content">
-          <h1>Find your passion.</h1>
-          <input type="text" placeholder="Postcode" className="postcode" /> <button type="button">Find Quidditch</button>
-        </div>
-      </header>
+      {loadingPageData
+        ? <> Loading...</>
+        : <>{renderPrismicSections(page.data.body)}</>}
 
       <div className="section-one container">
         <h2>Latest News</h2>
