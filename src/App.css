@@ -157,6 +157,8 @@ button {
   display: flex;
   flex-direction: row;
   list-style-type: none;
+  margin: 0;
+  align-items: center;
 }
 
 .headroom .container li {

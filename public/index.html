@@ -41,6 +41,11 @@
     -->
 
     <!-- Prismic -->
-    <script async defer src=//static.cdn.prismic.io/prismic.js?repo=chaser&new=true></script>
+    <script>
+      window.prismic = {
+        endpoint: 'https://chaser.cdn.prismic.io/api/v2'
+      };
+    </script>
+    <script type="text/javascript" src="https://static.cdn.prismic.io/prismic.min.js?new=true"></script>
   </body>
 </html>
