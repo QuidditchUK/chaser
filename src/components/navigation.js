@@ -1,17 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import Headroom from 'react-headroom';
+import { RichText } from 'prismic-reactjs';
+import get from 'just-safe-get';
 import logo from '../images/logo.png';
+import { getTopNavigation } from '../modules/prismic';
 
-function Header() {
+function Navigation() {
+  const [navigation, setNavigation] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getTopNavigation();
+      setNavigation(data);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Headroom>
       <div className="headroom">
         <div className="container">
-          <img src={logo} alt="Quidditch UK" className="logo" />
+          <Link to="/"><img src={logo} alt="Quidditch UK" className="logo" /></Link>
+
+          <nav>
+            <ul>
+              {navigation.map((item) => (
+                <li key={item.uid}>
+                  <NavLink to={item.uid} activeClassName="selected">
+                    {RichText.asText(get(item, 'data.title'))}
+                  </NavLink>
+                </li>
+              ))}
+
+              <li><button type="button">Sign in</button></li>
+            </ul>
+          </nav>
         </div>
       </div>
     </Headroom>
   );
 }
 
-export default Header;
+export default Navigation;

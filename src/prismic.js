@@ -10,7 +10,7 @@ function Prismic() {
   return (
     <>
       {loadingPageData
-        ? <> Loading...</>
+        ? <>...</>
         : <>{renderPrismicSections(page.data.body)}</>}
     </>
   );

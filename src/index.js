@@ -19,7 +19,7 @@ const store = configureStore();
 
 render(
   <Provider store={store}>
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Shell>
         <Switch>
           <Route exact path="/">

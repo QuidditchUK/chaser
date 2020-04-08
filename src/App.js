@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       {loadingPageData
-        ? <> Loading...</>
+        ? <>...</>
         : <>{renderPrismicSections(page.data.body)}</>}
 
       <div className="section-one container">
