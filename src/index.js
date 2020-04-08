@@ -1,38 +1,36 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+
 import {
   Route,
   Switch,
+  BrowserRouter as Router,
 } from 'react-router-dom';
-import * as serviceWorker from './serviceWorker';
 
-import configureStore, { history } from './configureStore';
+import configureStore from './configureStore';
 
-import Shell from './containers/partials/shell';
+import Shell from './components/shell';
 import App from './app';
+import Prismic from './prismic';
 import './app.css';
 
 const store = configureStore();
 
 render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <>
+    <Router>
+      <Shell>
         <Switch>
           <Route exact path="/">
-            <Shell>
-              <App />
-            </Shell>
+            <App />
+          </Route>
+
+          <Route path="/:uid">
+            <Prismic />
           </Route>
         </Switch>
-      </>
-    </ConnectedRouter>
+      </Shell>
+    </Router>
   </Provider>, document.getElementById('root'),
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

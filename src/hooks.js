@@ -14,6 +14,7 @@ function usePrismicFetch(type, uid) {
 
     fetchUrl();
   }, [type, uid]);
+
   return [data, loading];
 }
 

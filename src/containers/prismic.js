@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HeroVideoWithCTA from '../components/prismic/HeroVideoWithCTA';
+import HeroVideoWithCTA from '../components/HeroVideoWithCTA';
 
 const types = {
   video_hero_with_cta: HeroVideoWithCTA,
@@ -11,15 +11,14 @@ export default function (sections) {
     const Component = types[section.slice_type];
 
     if (!Component) {
-      // For development purposes
       // eslint-disable-next-line no-console
-      console.warn('Missing Prismic component: ', section.slice_type);
+      console.warn('Missing Prismic Component ID: ', section.slice_type);
 
       return null;
     }
 
     return (
-      <Component key={`prismic-section-${i}`} {...section} />
+      <Component key={`prismic${i}`} {...section} />
     );
   });
 }

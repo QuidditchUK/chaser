@@ -1,3 +1,5 @@
+const mockFunc = () => console.log('Root Saga');
+
 export default function* rootSaga() {
-  console.log('Saga');
+  yield mockFunc;
 }
