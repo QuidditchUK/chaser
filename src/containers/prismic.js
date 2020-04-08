@@ -13,7 +13,6 @@ export default function (sections) {
     if (!Component) {
       // eslint-disable-next-line no-console
       console.warn('Missing Prismic Component ID: ', section.slice_type);
-
       return null;
     }
 

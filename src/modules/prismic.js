@@ -1,5 +1,6 @@
 import Prismic from 'prismic-javascript';
+import config from '../config';
 
-const apiEndpoint = 'https://chaser.cdn.prismic.io/api/v2'; // TODO: CONFIG + API KEY
+const { prismic } = config;
 
-export const Client = (req = null) => Prismic.client(apiEndpoint, { req });
+export const Client = (req = null) => Prismic.client(prismic.url, { req, accessToken: prismic.token });
