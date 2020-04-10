@@ -1,10 +1,10 @@
 import React, { Suspense, lazy } from 'react';
 import Skeleton from '../components/skeleton';
 
-const HeroVideo = lazy(() => import('../components/HeroVideo'));
+const HomeHero = lazy(() => import('../components/home-hero'));
 
 const types = {
-  video_hero_with_cta: HeroVideo,
+  video_hero_with_cta: HomeHero,
 };
 
 export default function (sections) {

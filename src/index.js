@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
 
 import {
   Route,
@@ -11,26 +12,37 @@ import {
 import configureStore from './configureStore';
 
 import Shell from './components/shell';
-import App from './app';
 import Prismic from './prismic';
+import GlobalStyle from './styles/reset';
+import theme from './styles/theme';
 import './app.css';
 
 const store = configureStore();
 
-render(
-  <Provider store={store}>
-    <Router basename={process.env.PUBLIC_URL}>
-      <Shell>
-        <Switch>
-          <Route exact path="/">
-            <App />
-          </Route>
 
-          <Route path="/:uid">
-            <Prismic />
-          </Route>
-        </Switch>
-      </Shell>
-    </Router>
-  </Provider>, document.getElementById('root'),
+const Root = () => (
+  <>
+    <GlobalStyle />
+
+    <Provider store={store}>
+      <Router basename={process.env.PUBLIC_URL}>
+
+        <ThemeProvider theme={theme}>
+          <Shell>
+            <Switch>
+              <Route exact path="/">
+                <Prismic />
+              </Route>
+
+              <Route path="/:uid">
+                <Prismic />
+              </Route>
+            </Switch>
+          </Shell>
+        </ThemeProvider>
+      </Router>
+    </Provider>
+  </>
 );
+
+render(<Root />, document.getElementById('root'));

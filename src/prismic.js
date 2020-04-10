@@ -5,7 +5,7 @@ import { usePrismicFetch } from './hooks';
 import renderPrismicSections from './containers/prismic';
 
 function Prismic() {
-  const { uid } = useParams();
+  const { uid = 'home' } = useParams();
   const [page, loadingPageData] = usePrismicFetch('pages', uid);
 
   return (
