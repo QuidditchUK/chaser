@@ -1,4 +1,5 @@
 import React from 'react';
+import Skeleton from './components/skeleton';
 import { usePrismicFetch } from './hooks';
 import renderPrismicSections from './containers/prismic';
 
@@ -8,7 +9,7 @@ function App() {
   return (
     <div className="App">
       {loadingPageData
-        ? <>...</>
+        ? <Skeleton />
         : <>{renderPrismicSections(page.data.body)}</>}
 
       <div className="section-one container">

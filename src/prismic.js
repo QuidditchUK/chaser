@@ -1,4 +1,5 @@
 import React from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { useParams } from 'react-router-dom';
 import { usePrismicFetch } from './hooks';
 import renderPrismicSections from './containers/prismic';
@@ -10,7 +11,7 @@ function Prismic() {
   return (
     <>
       {loadingPageData
-        ? <>...</>
+        ? <Skeleton count={5} />
         : <>{renderPrismicSections(page.data.body)}</>}
     </>
   );

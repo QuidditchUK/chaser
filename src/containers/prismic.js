@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
+import Skeleton from '../components/skeleton';
 
-import HeroVideoWithCTA from '../components/HeroVideoWithCTA';
+const HeroVideo = lazy(() => import('../components/HeroVideo'));
 
 const types = {
-  video_hero_with_cta: HeroVideoWithCTA,
+  video_hero_with_cta: HeroVideo,
 };
 
 export default function (sections) {
@@ -17,7 +18,9 @@ export default function (sections) {
     }
 
     return (
-      <Component key={`prismic${i}`} {...section} />
+      <Suspense fallback={<Skeleton />}>
+        <Component key={`prismic${i}`} {...section} />
+      </Suspense>
     );
   });
 }
