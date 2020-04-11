@@ -15,7 +15,6 @@ import Shell from './components/shell';
 import Prismic from './prismic';
 import GlobalStyle from './styles/reset';
 import theme from './styles/theme';
-import './app.css';
 
 const store = configureStore();
 
