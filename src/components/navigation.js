@@ -38,6 +38,10 @@ const Item = styled.li`
   ${space}
 `;
 
+const LogoLink = styled(Link)`
+  height: 45px;
+`;
+
 const Logo = styled.img`
   height: 45px;
 `;
@@ -57,7 +61,7 @@ function Navigation() {
   return (
     <Wrapper>
       <Header>
-        <Link to="/"><Logo src={logo} alt="Quidditch UK" /></Link>
+        <LogoLink to="/"><Logo src={logo} alt="Quidditch UK" /></LogoLink>
 
         <nav>
           <List>
