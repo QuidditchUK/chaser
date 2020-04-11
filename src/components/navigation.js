@@ -27,7 +27,7 @@ const Header = styled.header`
   padding: 0 ${({ theme }) => theme.space.gutter._};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 40px;
+    height: 50px;
   }
 `;
 
@@ -47,7 +47,7 @@ const LogoLink = styled(Link)`
 
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 30px;
+    height: 35px;
   }
 `;
 
@@ -56,7 +56,7 @@ const Logo = styled.img`
 
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 30px;
+    height: 35px;
   }
 `;
 
