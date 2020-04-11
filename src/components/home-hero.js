@@ -1,7 +1,7 @@
 import React from 'react';
 import get from 'just-safe-get';
 import styled from 'styled-components';
-import { space } from 'styled-system';
+import { space, color } from 'styled-system';
 
 import Input from './input';
 import Button from './button';
@@ -24,6 +24,7 @@ const Hero = styled.section`
   height: 70vh;
   justify-content: center;
   text-align: center;
+  ${color};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     height: 30vh;
@@ -35,7 +36,7 @@ const VideoWrapper = styled.div`
   width: 100%;
   height: 70vh;
   overflow: hidden;
-  z-index: -1;
+  z-index: 1;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     height: 30vh;
@@ -53,10 +54,12 @@ const TextWrapper = styled.div`
   flex-direction: column;
   align-content: center;
   justify-content: center;
+  z-index: 2;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     height: 30vh;
   }
+
 `;
 
 const CTA = styled.div`
@@ -73,7 +76,7 @@ const HomeHero = (rawData) => {
   };
 
   return (
-    <Hero>
+    <Hero bg="primary">
       <VideoWrapper>
         <Video src={data.video} autoPlay loop muted />
       </VideoWrapper>
