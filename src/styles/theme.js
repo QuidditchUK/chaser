@@ -4,23 +4,23 @@ const emBase = 16;
 
 const rem = (value) => `${value / emBase}rem`;
 
-const breakpoints = {
-  s: rem(576),
-  m: rem(768),
-  l: rem(992),
-  xl: rem(1200),
-};
+const breakpoints = [rem(576), rem(768), rem(992), rem(1200)];
+
+[breakpoints.s] = breakpoints;
+[, breakpoints.m] = breakpoints;
+[,, breakpoints.l] = breakpoints;
+[,,, breakpoints.xl] = breakpoints;
 
 const colors = {
   white: '#fff',
   black: '#000',
   royalBlue: '#003471',
-  red: '#9e1925',
+  monarchRed: '#9e1925',
   greyMedium: '#d6d7dc',
 };
 
 colors.primary = colors.royalBlue;
-colors.secondary = colors.greyMedium;
+colors.secondary = colors.monarchRed;
 
 const fonts = {
   body: 'pt-sans sans-serif',

@@ -1,17 +1,49 @@
 import styled from 'styled-components';
-import { hoverStates } from '../styles/styles';
+import { shade, tint } from 'polished';
+import { variant } from 'styled-system';
+
+const variants = (theme) => ({
+  primary: {
+    bg: theme.colors.primary,
+    border: `1px solid ${theme.colors.primary}`,
+    color: theme.colors.white,
+  },
+  secondary: {
+    bg: theme.colors.secondary,
+    border: `1px solid ${theme.colors.secondary}`,
+    color: theme.colors.white,
+  },
+  light: {
+    bg: theme.colors.white,
+    border: `1px solid ${theme.colors.royalBlue}`,
+    color: theme.colors.royalBlue,
+  },
+});
+
+const hoverStates = (theme) => ({
+  primary: {
+    bg: shade(0.3, theme.colors.primary),
+    border: `1px solid ${shade(0.2, theme.colors.primary)}`,
+  },
+  secondary: {
+    bg: shade(0.3, theme.colors.secondary),
+    border: `1px solid ${shade(0.3, theme.colors.secondary)}`,
+  },
+  light: {
+    bg: tint(0.9, theme.colors.royalBlue),
+  },
+});
+
 
 export default styled.button`
-  background: ${({ theme, color }) => theme.colors[color] || theme.colors.primary};
-  border: ${({ theme }) => theme.radius[0]} solid ${({ theme, color }) => theme.colors[color] || theme.colors.primary};
   border-radius: ${({ theme }) => theme.radius[0]};
-  color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   display: inline-block;
   font-size: ${({ theme }) => theme.fontSizes.body};
   padding: ${({ theme }) => theme.spaces[1]} ${({ theme }) => theme.spaces[3]};
+  ${({ theme }) => variant({ variants: variants(theme) })}
 
   &:hover {
-    ${({ theme, color }) => hoverStates(theme.colors[color] || theme.colors.primary).buttons};
+    ${({ theme }) => variant({ variants: hoverStates(theme) })}
   }
 `;

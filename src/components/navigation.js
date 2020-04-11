@@ -36,8 +36,8 @@ function Navigation() {
                 </li>
               ))}
 
-              <li><Button type="button">Find Quidditch</Button></li>
-              <li><Button type="button" color="red">Sign in</Button></li>
+              <li><Button type="button" variant="primary">Find Quidditch</Button></li>
+              <li><Button type="button" variant="light">Sign in</Button></li>
             </ul>
           </nav>
         </div>

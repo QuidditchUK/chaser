@@ -48,7 +48,7 @@ const Video = styled.video`
 
 const Input = styled.input`
   background: ${({ theme }) => theme.colors.white};
-  border: ${({ theme }) => theme.radius[0]} solid ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.white};
   border-radius: ${({ theme }) => theme.radius[0]};
   color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fontSizes.body};
@@ -71,7 +71,7 @@ const HomeHero = (rawData) => {
 
       <div>
         <Heading>{data.title}</Heading>
-        <Input type="text" placeholder="Postcode" /> <Button type="button">{data.cta_text}</Button>
+        <Input type="text" placeholder="Postcode" /> <Button type="button" variant="primary">{data.cta_text}</Button>
       </div>
     </Header>
   );
