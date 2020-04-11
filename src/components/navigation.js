@@ -25,6 +25,10 @@ const Header = styled.header`
   height: 60px;
   justify-content: space-between;
   padding: 0 ${({ theme }) => theme.space.gutter._};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
+    height: 40px;
+  }
 `;
 
 const List = styled.ul`
@@ -40,10 +44,20 @@ const Item = styled.li`
 
 const LogoLink = styled(Link)`
   height: 45px;
+
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
+    height: 30px;
+  }
 `;
 
 const Logo = styled.img`
   height: 45px;
+
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
+    height: 30px;
+  }
 `;
 
 function Navigation() {
