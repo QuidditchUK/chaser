@@ -25,8 +25,8 @@ const Hero = styled.section`
   justify-content: center;
   text-align: center;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 35vh;
+  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
+    height: 30vh;
   }
 `;
 
@@ -37,14 +37,13 @@ const VideoWrapper = styled.div`
   overflow: hidden;
   z-index: -1;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 35vh;
+  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
+    height: 30vh;
   }
 `;
 
 const Video = styled.video`
-  min-height: 100%;
-  min-width: 100%;
+  width: 100%;
 `;
 
 const TextWrapper = styled.div`
@@ -55,8 +54,8 @@ const TextWrapper = styled.div`
   align-content: center;
   justify-content: center;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 35vh;
+  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
+    height: 30vh;
   }
 `;
 
