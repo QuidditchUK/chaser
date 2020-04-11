@@ -2,6 +2,8 @@ import React from 'react';
 import get from 'just-safe-get';
 import styled from 'styled-components';
 import { space } from 'styled-system';
+
+import Input from './input';
 import Button from './button';
 
 const Heading = styled.h1`
@@ -16,7 +18,7 @@ const Heading = styled.h1`
   }
 `;
 
-const Header = styled.section`
+const Hero = styled.section`
   align-items: center;
   display: flex;
   height: 70vh;
@@ -43,15 +45,6 @@ const VideoWrapper = styled.div`
 const Video = styled.video`
   min-height: 100%;
   min-width: 100%;
-`;
-
-const Input = styled.input`
-  background: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.radius[0]};
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: ${({ theme }) => theme.fontSizes.body};
-  padding: ${({ theme }) => theme.space[2]};
 `;
 
 const TextWrapper = styled.div`
@@ -81,7 +74,7 @@ const HomeHero = (rawData) => {
   };
 
   return (
-    <Header>
+    <Hero>
       <VideoWrapper>
         <Video src={data.video} autoPlay loop muted />
       </VideoWrapper>
@@ -92,7 +85,7 @@ const HomeHero = (rawData) => {
           <Input type="text" placeholder="Postcode" /><Button type="button" variant="primary" ml={2}>{data.cta_text}</Button>
         </CTA>
       </TextWrapper>
-    </Header>
+    </Hero>
   );
 };
 

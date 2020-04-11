@@ -2,7 +2,7 @@ import { rgba } from 'polished';
 
 const emBase = 16;
 
-const rem = (value) => `${value / emBase}rem`;
+export const rem = (value) => `${value / emBase}rem`;
 
 const breakpoints = [rem(576), rem(768), rem(992), rem(1200)];
 
@@ -19,10 +19,14 @@ const colors = {
   greyMedium: '#d6d7dc',
   northernMagenta: '#90268c',
   southernBlue: '#84c7e6',
+  greyLight: '#e6ebef',
+  greyDark: '#787d80',
 };
 
 colors.primary = colors.royalBlue;
 colors.secondary = colors.monarchRed;
+
+const containerSize = rem(1280);
 
 const fonts = {
   body: 'pt-sans, sans-serif',
@@ -35,7 +39,7 @@ const fontSizes = {
   body: rem(16),
 };
 
-const radius = [rem(3)];
+const radius = [rem(3), rem(10)];
 
 const shadows = {
   box: `0 0 ${rem(10)} ${rgba(0, 0, 0, 0.3)}`,
@@ -68,6 +72,7 @@ space.gutter = {
 export default {
   breakpoints,
   colors,
+  containerSize,
   fonts,
   fontSizes,
   radius,

@@ -15,8 +15,8 @@ const variants = (theme) => ({
   },
   light: {
     bg: theme.colors.white,
-    border: `1px solid ${theme.colors.royalBlue}`,
-    color: theme.colors.royalBlue,
+    border: `1px solid ${theme.colors.primary}`,
+    color: theme.colors.primary,
   },
 });
 
@@ -30,7 +30,7 @@ const hoverStates = (theme) => ({
     border: `1px solid ${shade(0.3, theme.colors.secondary)}`,
   },
   light: {
-    bg: tint(0.9, theme.colors.royalBlue),
+    bg: tint(0.9, theme.colors.primary),
   },
 });
 
