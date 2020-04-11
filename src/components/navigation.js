@@ -3,15 +3,10 @@ import { Link, NavLink } from 'react-router-dom';
 import Headroom from 'react-headroom';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import styled from 'styled-components';
+
 import logo from '../images/logo.png';
 import { getTopNavigation } from '../modules/prismic';
 import Button from './button';
-
-const RedButton = styled(Button)`
-  background: ${({ theme }) => theme.colors.red};
-  border: ${({ theme }) => theme.radius[0]} solid ${({ theme }) => theme.colors.red}
-`;
 
 function Navigation() {
   const [navigation, setNavigation] = useState([]);
@@ -41,7 +36,8 @@ function Navigation() {
                 </li>
               ))}
 
-              <li><RedButton type="button">Sign in</RedButton></li>
+              <li><Button type="button">Find Quidditch</Button></li>
+              <li><Button type="button" color="red">Sign in</Button></li>
             </ul>
           </nav>
         </div>
