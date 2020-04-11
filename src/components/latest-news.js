@@ -5,8 +5,12 @@ import Image from './image';
 import Container from './container';
 
 const LatestNews = () => (
-  <Box bg="greyLight">
-    <Container pt={10} pb={10}>
+  <Box
+    bg="greyLight"
+    py={{ _: 4, l: 10 }}
+    px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+  >
+    <Container>
       <Grid
         gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
         gridGap={{ _: 'gutter._', m: 'gutter.m' }}
