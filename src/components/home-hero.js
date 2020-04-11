@@ -19,24 +19,24 @@ const Heading = styled.h1`
 const Header = styled.section`
   align-items: center;
   display: flex;
-  height: 80vh;
+  height: 70vh;
   justify-content: center;
   text-align: center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 40vh;
+    height: 35vh;
   }
 `;
 
 const VideoWrapper = styled.div`
   position: absolute;
   width: 100%;
-  height: 80vh;
+  height: 70vh;
   overflow: hidden;
   z-index: -1;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 40vh;
+    height: 35vh;
   }
 `;
 
@@ -56,14 +56,14 @@ const Input = styled.input`
 
 const TextWrapper = styled.div`
   align-items: center;
-  height: 80vh;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   align-content: center;
   justify-content: center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 40vh;
+    height: 35vh;
   }
 `;
 
