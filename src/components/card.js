@@ -50,10 +50,12 @@ const Content = styled.div`
 
 const Name = styled.h2`
   font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes.headingCard};
 `;
 
 const Description = styled.p`
-  color: ${({ theme }) => theme.colors.greyDark};
+  color: ${({ theme }) => theme.colors.greyMedium};
+  font-size: ${({ theme }) => theme.fontSizes.bodyCard};
   line-height: ${rem(18)};
   max-height: ${rem(36)};
   overflow: hidden;

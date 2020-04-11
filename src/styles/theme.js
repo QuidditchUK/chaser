@@ -36,7 +36,9 @@ const fonts = {
 const fontSizes = {
   heading: rem(80),
   headingMobile: rem(32),
+  headingCard: rem(20),
   body: rem(16),
+  bodyCard: rem(14),
 };
 
 const radius = [rem(3), rem(10)];
