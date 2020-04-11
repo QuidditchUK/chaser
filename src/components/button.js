@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { shade, tint } from 'polished';
-import { variant } from 'styled-system';
+import { variant, space } from 'styled-system';
 
 const variants = (theme) => ({
   primary: {
@@ -39,9 +39,11 @@ export default styled.button`
   border-radius: ${({ theme }) => theme.radius[0]};
   cursor: pointer;
   display: inline-block;
+  font-family: ${({ theme }) => theme.fonts.body};
   font-size: ${({ theme }) => theme.fontSizes.body};
-  padding: ${({ theme }) => theme.spaces[1]} ${({ theme }) => theme.spaces[3]};
+  padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
   ${({ theme }) => variant({ variants: variants(theme) })}
+  ${space}
 
   &:hover {
     ${({ theme }) => variant({ variants: hoverStates(theme) })}

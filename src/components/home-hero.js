@@ -1,21 +1,22 @@
 import React from 'react';
 import get from 'just-safe-get';
 import styled from 'styled-components';
+import { space } from 'styled-system';
 import Button from './button';
 
 const Heading = styled.h1`
   color: ${({ theme }) => theme.colors.white};
   font-family: ${({ theme }) => theme.fonts.heading};
   font-size: ${({ theme }) => theme.fontSizes.heading};
-  margin-top: 0;
   text-shadow: ${({ theme }) => theme.shadows.heading};
+  ${space}
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
     font-size: ${({ theme }) => theme.fontSizes.headingMobile}
   }
 `;
 
-const Header = styled.header`
+const Header = styled.section`
   align-items: center;
   display: flex;
   height: 80vh;
@@ -29,8 +30,6 @@ const Header = styled.header`
 
 const VideoWrapper = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 80vh;
   overflow: hidden;
@@ -52,7 +51,25 @@ const Input = styled.input`
   border-radius: ${({ theme }) => theme.radius[0]};
   color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fontSizes.body};
-  padding: ${({ theme }) => theme.spaces[1]};
+  padding: ${({ theme }) => theme.space[2]};
+`;
+
+const TextWrapper = styled.div`
+  align-items: center;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
+    height: 40vh;
+  }
+`;
+
+const CTA = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 const HomeHero = (rawData) => {
@@ -69,10 +86,12 @@ const HomeHero = (rawData) => {
         <Video src={data.video} autoPlay loop muted />
       </VideoWrapper>
 
-      <div>
-        <Heading>{data.title}</Heading>
-        <Input type="text" placeholder="Postcode" /> <Button type="button" variant="primary">{data.cta_text}</Button>
-      </div>
+      <TextWrapper>
+        <Heading mt={0} mb={8}>{data.title}</Heading>
+        <CTA>
+          <Input type="text" placeholder="Postcode" /><Button type="button" variant="primary" ml={2}>{data.cta_text}</Button>
+        </CTA>
+      </TextWrapper>
     </Header>
   );
 };
