@@ -71,7 +71,7 @@ const HomeHero = (rawData) => {
       </VideoWrapper>
 
       <TextWrapper>
-        <Heading fontSize={{ _: 2, m: 5 }} mt={0} mb={8} color="white">{data.title}</Heading>
+        <Heading fontSize={[4, 4, 5]} mt={0} mb={8} color="white">{data.title}</Heading>
         <CTA>
           <Input type="text" placeholder="Postcode" /><Button type="button" variant="primary" ml={2}>{data.cta_text}</Button>
         </CTA>

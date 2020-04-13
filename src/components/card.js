@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { space, variant } from 'styled-system';
+import Heading from './heading';
 import { rem } from '../styles/theme';
 
 const variants = (theme) => ({
@@ -22,7 +24,7 @@ const variants = (theme) => ({
   },
 });
 
-const Card = styled.article`
+const StyledCard = styled.article`
   cursor: pointer;
   border-radius: ${({ theme }) => theme.radius[1]};
   display: flex;
@@ -48,11 +50,6 @@ const Content = styled.div`
   padding: 0 ${({ theme }) => theme.space[4]};
 `;
 
-const Name = styled.h2`
-  font-family: ${({ theme }) => theme.fonts.heading};
-  font-size: ${({ theme }) => theme.fontSizes.headingCard};
-`;
-
 const Description = styled.p`
   color: ${({ theme }) => theme.colors.greyMedium};
   font-size: ${({ theme }) => theme.fontSizes.bodyCard};
@@ -63,17 +60,25 @@ const Description = styled.p`
   white-space: nowrap;
 `;
 
-export default ({
+export const Card = ({
   image,
   name,
   description,
   ...cardProps
 }) => (
-  <Card {...cardProps}>
+  <StyledCard {...cardProps}>
     <Image>{image}</Image>
     <Content>
-      <Name>{name}</Name>
+      <Heading as="h2" fontSize={3}>{name}</Heading>
       <Description>{description}</Description>
     </Content>
-  </Card>
+  </StyledCard>
 );
+
+Card.propTypes = {
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  image: PropTypes.shape({}).isRequired,
+};
+
+export default Card;
