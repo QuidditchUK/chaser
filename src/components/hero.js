@@ -14,6 +14,7 @@ const Hero = (rawData) => {
       as="section"
       position="relative"
       backgroundImage={`url(${data.image})`}
+      backgroundColor="primary"
       backgroundSize="cover"
       backgroundPosition="center"
       px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
