@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { space } from 'styled-system';
 
 import logo from '../images/logo.png';
+import { ReactComponent as HamburgerIcon } from '../images/hamburger.svg';
 import { getTopNavigation } from '../modules/prismic';
 import Button from './button';
 
@@ -36,6 +37,16 @@ const List = styled.ul`
   display: flex;
   flex-direction: row;
   list-style-type: none;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
+    display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: hidden;
+    max-height: 0;
+    width: 100%;
+  }
 `;
 
 const Item = styled.li`
@@ -57,6 +68,15 @@ const Logo = styled.img`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
     height: 35px;
+  }
+`;
+
+const Hamburger = styled(HamburgerIcon)`
+  display: none;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
+    display: block;
+    cursor: pointer;
   }
 `;
 
@@ -90,6 +110,7 @@ function Navigation() {
             <Item pl={4}><Button type="button" variant="primary">Find Quidditch</Button></Item>
             <Item pl={4}><Button type="button" variant="light">Sign in</Button></Item>
           </List>
+          <Hamburger aria-hidden="true" />
         </nav>
       </Header>
     </Wrapper>

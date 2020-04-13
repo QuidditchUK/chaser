@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    {
+      "inlineStyles": {
+        "onlyMatchedOnce": false
+      }
+    },
+    {
+      "removeViewBox": false
+    }
+  ]
+}
