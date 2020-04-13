@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Headroom from 'react-headroom';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import styled from 'styled-components';
 import { space } from 'styled-system';
+import { transparentize, tint } from 'polished';
 
 import logo from '../images/logo.png';
 import { ReactComponent as HamburgerIcon } from '../images/hamburger.svg';
 import { getTopNavigation } from '../modules/prismic';
+
+import { Logo, LogoLink } from './logo';
 import Button from './button';
 
 const Wrapper = styled(Headroom)`
@@ -32,6 +35,12 @@ const Header = styled.header`
   }
 `;
 
+const Nav = styled.nav`
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+`;
+
 const List = styled.ul`
   align-items: center;
   display: flex;
@@ -39,49 +48,53 @@ const List = styled.ul`
   list-style-type: none;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    display: none;
+    background: ${({ open, theme }) => (open ? transparentize(0.1, theme.colors.primary) : 'none')};
+    display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    justify-content: space-between;
-    overflow: hidden;
-    max-height: 0;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
+    transition: transform 0.3s;
     width: 100%;
   }
 `;
 
 const Item = styled.li`
   ${space}
-`;
 
-const LogoLink = styled(Link)`
-  height: 45px;
+    @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
+      padding-bottom: ${({ theme }) => theme.space[4]};
 
+      button {
+        background: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.primary};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 35px;
-  }
-`;
-
-const Logo = styled.img`
-  height: 45px;
-
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 35px;
-  }
+        &:hover {
+          background: ${({ theme }) => tint(0.9, theme.colors.primary)};
+        }
+      }
+    }
 `;
 
 const Hamburger = styled(HamburgerIcon)`
   display: none;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    display: block;
+    color: ${({ open, theme }) => (open ? theme.colors.white : theme.colors.primary)};
     cursor: pointer;
+    display: block;
+    z-index: 5;
   }
 `;
 
 function Navigation() {
   const [navigation, setNavigation] = useState([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,11 +110,11 @@ function Navigation() {
       <Header>
         <LogoLink to="/"><Logo src={logo} alt="Quidditch UK" /></LogoLink>
 
-        <nav>
-          <List>
+        <Nav>
+          <List open={open}>
             {navigation.map((item) => (
               <Item key={item.uid} pl={4}>
-                <NavLink to={item.uid} activeClassName="selected">
+                <NavLink to={item.uid} activeClassName="selected" onClick={() => setOpen(false)}>
                   {RichText.asText(get(item, 'data.title'))}
                 </NavLink>
               </Item>
@@ -110,8 +123,12 @@ function Navigation() {
             <Item pl={4}><Button type="button" variant="primary">Find Quidditch</Button></Item>
             <Item pl={4}><Button type="button" variant="light">Sign in</Button></Item>
           </List>
-          <Hamburger aria-hidden="true" />
-        </nav>
+          <Hamburger
+            open={open}
+            aria-hidden="true"
+            onClick={() => setOpen(!open)}
+          />
+        </Nav>
       </Header>
     </Wrapper>
   );
