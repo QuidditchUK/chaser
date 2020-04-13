@@ -13,6 +13,8 @@ import configureStore from './configureStore';
 
 import Shell from './components/shell';
 import Prismic from './prismic';
+import Search from './search';
+import News from './news';
 import GlobalStyle from './styles/reset';
 import theme from './styles/theme';
 
@@ -33,6 +35,13 @@ const Root = () => (
                 <Prismic />
               </Route>
 
+              <Route exact path="/clubs">
+                <Search />
+              </Route>
+
+              <Route exact path="/news">
+                <News />
+              </Route>
               <Route path="/:uid">
                 <Prismic />
               </Route>

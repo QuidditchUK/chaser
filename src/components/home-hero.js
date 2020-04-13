@@ -6,7 +6,7 @@ import { space, color } from 'styled-system';
 import Input from './input';
 import Button from './button';
 
-const Heading = styled.h1`
+export const Heading = styled.h1`
   color: ${({ theme }) => theme.colors.white};
   font-family: ${({ theme }) => theme.fonts.heading};
   font-size: ${({ theme }) => theme.fontSizes.heading};

@@ -1,12 +1,15 @@
+/* eslint-disable react/no-array-index-key */
 import React, { Suspense, lazy } from 'react';
 import Skeleton from '../components/skeleton';
 
 const HomeHero = lazy(() => import('../components/home-hero'));
+const Hero = lazy(() => import('../components/hero'));
 const LatestNews = lazy(() => import('../components/latest-news'));
 
 const types = {
   video_hero_with_cta: HomeHero,
   latest_news: LatestNews,
+  hero: Hero,
 };
 
 export default function (sections) {
