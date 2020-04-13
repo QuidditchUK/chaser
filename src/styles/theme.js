@@ -33,13 +33,13 @@ const fonts = {
   heading: 'century-gothic, sans-serif',
 };
 
-const fontSizes = {
-  heading: rem(80),
-  headingMobile: rem(32),
-  headingCard: rem(20),
-  body: rem(16),
-  bodyCard: rem(14),
-};
+const fontSizes = [rem(0), rem(14), rem(16), rem(20), rem(32), rem(80)];
+
+[, fontSizes.bodyCard] = fontSizes;
+[,, fontSizes.body] = fontSizes;
+[,,, fontSizes.headingCard] = fontSizes;
+[,,,, fontSizes.headingMobile] = fontSizes;
+[,,,,, fontSizes.heading] = fontSizes;
 
 const radius = [rem(3), rem(10)];
 

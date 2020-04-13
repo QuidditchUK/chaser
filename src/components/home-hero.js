@@ -1,22 +1,11 @@
 import React from 'react';
 import get from 'just-safe-get';
 import styled from 'styled-components';
-import { space, color } from 'styled-system';
+import { color } from 'styled-system';
 
 import Input from './input';
 import Button from './button';
-
-export const Heading = styled.h1`
-  color: ${({ theme }) => theme.colors.white};
-  font-family: ${({ theme }) => theme.fonts.heading};
-  font-size: ${({ theme }) => theme.fontSizes.heading};
-  text-shadow: ${({ theme }) => theme.shadows.heading};
-  ${space}
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    font-size: ${({ theme }) => theme.fontSizes.headingMobile}
-  }
-`;
+import Heading from './heading';
 
 const Hero = styled.section`
   align-items: center;
@@ -82,7 +71,7 @@ const HomeHero = (rawData) => {
       </VideoWrapper>
 
       <TextWrapper>
-        <Heading mt={0} mb={8}>{data.title}</Heading>
+        <Heading fontSize={{ _: 2, m: 5 }} mt={0} mb={8} color="white">{data.title}</Heading>
         <CTA>
           <Input type="text" placeholder="Postcode" /><Button type="button" variant="primary" ml={2}>{data.cta_text}</Button>
         </CTA>

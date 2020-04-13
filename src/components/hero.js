@@ -1,7 +1,7 @@
 import React from 'react';
 import get from 'just-safe-get';
 import { Box, Flex } from './layout';
-import { Heading } from './home-hero';
+import Heading from './heading';
 
 const Hero = (rawData) => {
   const data = {
@@ -27,7 +27,7 @@ const Hero = (rawData) => {
         justifyContent="center"
         py={{ _: 9, m: 13 }}
       >
-        <Heading>{data.title}</Heading>
+        <Heading fontSize={[4, 4, 5]} color="white">{data.title}</Heading>
       </Flex>
     </Box>
   );

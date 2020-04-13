@@ -2,7 +2,7 @@ import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useParams } from 'react-router-dom';
 import { usePrismicFetch } from './hooks';
-import renderPrismicSections from './containers/prismic';
+import renderPrismicSections from './constants/prismic';
 
 function Prismic() {
   const { uid = 'home' } = useParams();

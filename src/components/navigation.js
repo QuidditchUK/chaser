@@ -81,6 +81,10 @@ const Item = styled.li`
         }
       }
     }
+
+  .selected {
+    font-weight: bold;
+  }
 `;
 
 const NavStyledLink = styled(NavLink)`
