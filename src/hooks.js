@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Client } from './modules/prismic';
 
-function usePrismicFetch(type, uid) {
+export function usePrismicFetch(type, uid) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,5 +17,3 @@ function usePrismicFetch(type, uid) {
 
   return [data, loading];
 }
-
-export { usePrismicFetch };

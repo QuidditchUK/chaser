@@ -4,6 +4,7 @@ import Headroom from 'react-headroom';
 import styled from 'styled-components';
 import { space } from 'styled-system';
 import { transparentize, tint } from 'polished';
+import ScrollLock from 'react-scrolllock';
 
 import logo from '../images/logo.png';
 import { ReactComponent as HamburgerIcon } from '../images/hamburger.svg';
@@ -142,6 +143,7 @@ function Navigation() {
 
             <Item pl={4}><Button type="button" variant="primary">Find Quidditch</Button></Item>
             <Item pl={4}><Button type="button" variant="light">Sign in</Button></Item>
+            <ScrollLock isActive={open} />
           </List>
           <Hamburger
             open={open}

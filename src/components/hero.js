@@ -1,7 +1,12 @@
 import React from 'react';
 import get from 'just-safe-get';
+import styled from 'styled-components';
 import { Box, Flex } from './layout';
 import Heading from './heading';
+
+export const HeadingHero = styled(Heading)`
+  text-shadow: ${({ theme }) => theme.shadows.heading};
+`;
 
 const Hero = (rawData) => {
   const data = {
@@ -27,7 +32,7 @@ const Hero = (rawData) => {
         justifyContent="center"
         py={{ _: 9, m: 13 }}
       >
-        <Heading fontSize={[4, 4, 5]} color="white">{data.title}</Heading>
+        <HeadingHero fontSize={[4, 4, 5]} color="white">{data.title}</HeadingHero>
       </Flex>
     </Box>
   );
