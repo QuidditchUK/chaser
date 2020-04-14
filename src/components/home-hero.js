@@ -29,7 +29,7 @@ const HomeHero = (rawData) => {
         position="absolute"
         zIndex={1}
       >
-        <video src={data.video} poster={data.poster} preload="metadata" autoPlay loop muted />
+        <video src={data.video} poster={data.poster} preload="metadata" width="100%" autoPlay loop muted />
       </Box>
 
       <Flex
