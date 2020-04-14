@@ -6,12 +6,14 @@ const HomeHero = lazy(() => import('../components/home-hero'));
 const Hero = lazy(() => import('../components/hero'));
 const LatestNews = lazy(() => import('../components/latest-news'));
 const HeaderAndParagraph = lazy(() => import('../components/header-and-paragraph'));
+const ImageSlice = lazy(() => import('../components/image-slice'));
 
 const types = {
   video_hero_with_cta: HomeHero,
   latest_news: LatestNews,
   hero: Hero,
   header_and_paragraph: HeaderAndParagraph,
+  image: ImageSlice,
 };
 
 export default function (sections) {

@@ -5,6 +5,8 @@ import Button from './button';
 import { HeadingHero } from './hero';
 import { Flex, Box } from './layout';
 
+const heightBreakpoints = { _: '30vh', l: '70vh' };
+
 const HomeHero = (rawData) => {
   const data = {
     title: get(rawData, 'primary.slug'),
@@ -18,21 +20,21 @@ const HomeHero = (rawData) => {
     <Box
       as="section"
       backgroundColor="primary"
-      minHeight={{ _: '30vh', l: '70vh' }}
+      minHeight={heightBreakpoints}
       overflow="hidden"
       position="relative"
     >
       <Box
-        minHeight={{ _: '30vh', l: '70vh' }}
+        minHeight={heightBreakpoints}
         position="absolute"
         zIndex={1}
       >
-        <video src={data.video} poster={data.poster} preload="metadata" width="100%" autoPlay loop muted />
+        <video src={data.video} poster={data.poster} preload="metadata" autoPlay loop muted />
       </Box>
 
       <Flex
         position="relative"
-        minHeight={{ _: '30vh', l: '70vh' }}
+        minHeight={heightBreakpoints}
         alignItems="center"
         justifyContent="center"
         flexDirection="column"

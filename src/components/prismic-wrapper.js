@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { variant as styledVariant } from 'styled-system';
 import { Box } from './layout';
 import Container from './container';
+import { rem } from '../styles/theme';
 
 const variants = {
   light: {
@@ -34,12 +35,12 @@ const Wrapper = styled(Box)(
 
 export const PrismicWrapper = ({ children, variant }) => (
   <Wrapper
-    py={{ _: 2, l: 4 }}
+    py={{ _: 4, l: 10 }}
     px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
     as="section"
     variant={variant}
   >
-    <Container>
+    <Container maxWidth={rem(960)}>
       {children}
     </Container>
   </Wrapper>
