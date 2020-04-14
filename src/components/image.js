@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -37,6 +38,7 @@ const ResponsiveImage = ({
   const imageProps = {
     src, alt, width, height,
   };
+
   return (
     <Container aspectRatio={calcAspectRatio(height, width)}>
       <Image>
