@@ -35,7 +35,7 @@ const Wrapper = styled(Box)(
 
 export const PrismicWrapper = ({ children, variant }) => (
   <Wrapper
-    py={{ _: 4, l: 10 }}
+    py={{ _: 4, l: 5 }}
     px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
     as="section"
     variant={variant}

@@ -1,11 +1,17 @@
 import React from 'react';
 import get from 'just-safe-get';
+import styled from 'styled-components';
 import Input from './input';
 import Button from './button';
 import { HeadingHero } from './hero';
 import { Flex, Box } from './layout';
 
 const heightBreakpoints = { _: '30vh', l: '70vh' };
+
+const Video = styled.video`
+  width: 121%;
+  min-height: 100%;
+`;
 
 const HomeHero = (rawData) => {
   const data = {
@@ -29,7 +35,7 @@ const HomeHero = (rawData) => {
         position="absolute"
         zIndex={1}
       >
-        <video src={data.video} poster={data.poster} preload="metadata" width="100%" autoPlay loop muted />
+        <Video src={data.video} poster={data.poster} preload="metadata" autoPlay loop muted />
       </Box>
 
       <Flex

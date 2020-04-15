@@ -8,6 +8,8 @@ export const HeadingHero = styled(Heading)`
   text-shadow: ${({ theme }) => theme.shadows.heading};
 `;
 
+const minHeight = { _: '30vh', m: '70vh' };
+
 const Hero = (rawData) => {
   const data = {
     title: get(rawData, 'primary.slug'),
@@ -23,11 +25,11 @@ const Hero = (rawData) => {
       backgroundSize="cover"
       backgroundPosition="center"
       px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-      minHeight={{ _: '30vh', m: '70vh' }}
+      minHeight={minHeight}
     >
       <Flex
         position="relative"
-        minHeight={{ _: '30vh', m: '70vh' }}
+        minHeight={minHeight}
         alignItems="center"
         justifyContent="center"
         py={{ _: 9, m: 13 }}
