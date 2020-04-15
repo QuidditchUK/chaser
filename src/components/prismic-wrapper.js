@@ -25,7 +25,7 @@ const variants = {
   },
   dark: {
     color: 'white',
-    bg: 'black',
+    bg: 'darkBlue',
   },
 };
 

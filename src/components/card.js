@@ -19,7 +19,7 @@ const variants = (theme) => ({
     color: theme.colors.white,
   },
   dark: {
-    bg: theme.colors.black,
+    bg: theme.colors.darkBlue,
     color: theme.colors.white,
   },
 });

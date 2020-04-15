@@ -21,6 +21,8 @@ const colors = {
   southernBlue: '#84c7e6',
   greyLight: '#e6ebef',
   greyDark: '#787d80',
+  darkBlue: '#070d1f',
+  darkRed: '#1f0707',
 };
 
 colors.primary = colors.royalBlue;
