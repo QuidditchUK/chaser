@@ -8,7 +8,7 @@ import { rem } from '../styles/theme';
 
 const variants = {
   light: {
-    color: 'primary',
+    color: 'darkBlue',
     bg: 'greyLight',
   },
   primary: {

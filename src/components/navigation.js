@@ -7,6 +7,7 @@ import { transparentize, tint } from 'polished';
 import ScrollLock from 'react-scrolllock';
 
 import logo from '../images/logo.png';
+import logoText from '../images/logo-text.png';
 import { ReactComponent as HamburgerIcon } from '../images/hamburger.svg';
 import { TOP_NAVIGATION } from '../constants/navigation';
 
@@ -74,7 +75,7 @@ const Item = styled.li`
       button {
         background: ${({ theme }) => theme.colors.white};
         border: 1px solid ${({ theme }) => theme.colors.white};
-        color: ${({ theme }) => theme.colors.primary};
+        color: ${({ theme }) => theme.colors.darkBlue};
         width: 100%;
 
         &:hover {
@@ -96,6 +97,7 @@ const NavItem = styled.span`
   color: ${({ theme }) => theme.colors.primary};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
+    color: ${({ theme }) => theme.colors.darkBlue};
     background: ${({ theme }) => theme.colors.white};
     border: 1px solid ${({ theme }) => theme.colors.white};
     border-radius: ${({ theme }) => theme.radius[0]};
@@ -129,6 +131,7 @@ function Navigation() {
       <Header>
         <LogoLink to="/" onClick={() => setOpen(false)}>
           <Logo src={logo} alt="Quidditch UK" white={open} />
+          <Logo src={logoText} alt="Quidditch UK" white={open} />
         </LogoLink>
 
         <Nav>
