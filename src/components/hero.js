@@ -8,7 +8,7 @@ export const HeadingHero = styled(Heading)`
   text-shadow: ${({ theme }) => theme.shadows.heading};
 `;
 
-const minHeight = { _: '30vh', m: '70vh' };
+const minHeight = { _: '30vh', m: '40vh' };
 
 const Hero = (rawData) => {
   const data = {

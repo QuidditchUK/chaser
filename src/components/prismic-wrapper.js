@@ -20,7 +20,7 @@ const variants = {
     bg: 'secondary',
   },
   white: {
-    color: 'black',
+    color: 'darkBlue',
     bg: 'white',
   },
   dark: {
@@ -33,14 +33,14 @@ const Wrapper = styled(Box)(
   styledVariant({ variants }),
 );
 
-export const PrismicWrapper = ({ children, variant }) => (
+export const PrismicWrapper = ({ children, variant, small }) => (
   <Wrapper
     py={{ _: 4, l: 5 }}
     px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
     as="section"
     variant={variant}
   >
-    <Container maxWidth={rem(960)}>
+    <Container maxWidth={small ? rem(960) : ''}>
       {children}
     </Container>
   </Wrapper>
@@ -48,11 +48,13 @@ export const PrismicWrapper = ({ children, variant }) => (
 
 PrismicWrapper.defaultProps = {
   variant: 'light',
+  small: false,
 };
 
 PrismicWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   variant: PropTypes.string,
+  small: PropTypes.bool,
 };
 
 export default PrismicWrapper;

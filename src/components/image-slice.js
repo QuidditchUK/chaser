@@ -18,7 +18,7 @@ const ImageSlice = (rawData) => {
   };
 
   return (
-    <PrismicWrapper variant={data.variant}>
+    <PrismicWrapper variant={data.variant} small>
       <Image alt={data.image.alt} src={data.image.url} height={data.image.dimensions.height} width={data.image.dimensions.width} />
       {data.support && (<Support textAlign="center" pt={2} fontStyle="italic">{data.support}</Support>)}
     </PrismicWrapper>

@@ -12,7 +12,7 @@ const HeaderAndParagraph = (rawData) => {
   };
 
   return (
-    <PrismicWrapper variant={data.variant}>
+    <PrismicWrapper variant={data.variant} small>
       {RichText.asText(data.title) && (
         <Heading as="h2" fontSize={[3, 3, 4]} mt={2}>
           {RichText.asText(data.title)}

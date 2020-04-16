@@ -11,8 +11,4 @@ export const TOP_NAVIGATION = [
     label: 'Team UK',
     link: '/team-uk',
   },
-  {
-    label: 'Clubs',
-    link: '/clubs',
-  },
 ];
