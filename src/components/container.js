@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {
-  space, layout, position, color, typography,
+  space, layout, position, color, typography, border,
 } from 'styled-system';
 
 export default styled.div`
@@ -12,4 +12,5 @@ export default styled.div`
   ${position}
   ${color}
   ${typography}
+  ${border}
 `;
