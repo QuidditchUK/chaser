@@ -45,6 +45,7 @@ const List = styled.ul`
   display: flex;
   flex-direction: row;
   list-style-type: none;
+  padding-left: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
     background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
