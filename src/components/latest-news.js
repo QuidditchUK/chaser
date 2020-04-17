@@ -1,70 +1,75 @@
-import React from 'react';
-import { Grid, GridItem, Box } from './layout';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { getBlogPosts } from '../modules/prismic';
+import { Grid, Flex, Box } from './layout';
 import Card from './card';
 import Image from './image';
 import Container from './container';
 
-const LatestNews = () => (
-  <Box
-    bg="greyLight"
-    py={{ _: 4, l: 10 }}
-    px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-  >
-    <Container>
-      <Grid
-        gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
-        gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-      >
-        <GridItem>
-          <Card
-            variant="light"
-            name="Development Cup review: OUQC take gold"
-            description="The Radcliffe Chimeras, London Unbreakables and Bangor Broken Broomsticks secured berths at the British Quidditch Cup after medalling at Development Cup, held at Salford Sports Village on 7/8 March."
-            image={(
-              <Image
-                src="1.jpg"
-                alt="Test"
-                width={1600}
-                height={900}
-              />
-        )}
-          />
-        </GridItem>
+const StyledLink = styled(Link)`
+  text-decoration:none;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`;
 
-        <GridItem>
-          <Card
-            variant="light"
-            name="QuidditchUK 19/20 Season & COVID-19 Updates"
-            description="A word from the QUK Leadership Team"
-            image={(
-              <Image
-                src="2.jpg"
-                alt="Test"
-                width={1600}
-                height={900}
-              />
-        )}
-          />
-        </GridItem>
+const News = ({ count }) => {
+  const [news, setNews] = useState([]);
 
-        <GridItem>
-          <Card
-            variant="light"
-            name="Molly Maurice-Smith Looks For Successor In Human Resources"
-            description="Molly Maurice-Smith, one of the longest running members of QuidditchUK’s current Executive Management Team has stepped down."
-            image={(
-              <Image
-                src="3.jpg"
-                alt="Test"
-                width={1600}
-                height={900}
-              />
-        )}
-          />
-        </GridItem>
-      </Grid>
-    </Container>
-  </Box>
-);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getBlogPosts(count);
+      setNews(data);
+    };
 
-export default LatestNews;
+    fetchData();
+  }, [count]);
+
+  return (
+    <Box
+      bg="greyLight"
+      py={{ _: 4, l: 10 }}
+      px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+    >
+      <Container>
+        <Grid
+          gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
+          gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+        >
+
+          {news.map(({ uid, data }) => (
+            <Flex flexDirection="column" key={uid}>
+              <StyledLink to={`/news/${uid}`}>
+                <Card
+                  variant="light"
+                  name={data.title}
+                  category={data.category}
+                  image={(
+                    <Image
+                      src={data.image.url}
+                      alt={data.image.alt}
+                      width={1600}
+                      height={900}
+                    />
+                  )}
+                />
+              </StyledLink>
+            </Flex>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
+  );
+};
+
+News.defaultProps = {
+  count: null,
+};
+
+News.propTypes = {
+  count: PropTypes.number,
+};
+
+export default News;

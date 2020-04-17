@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { space, variant } from 'styled-system';
+import { space, variant, typography } from 'styled-system';
 import Heading from './heading';
-import { rem } from '../styles/theme';
 
 const variants = (theme) => ({
   light: {
@@ -29,6 +28,7 @@ const StyledCard = styled.article`
   border-radius: ${({ theme }) => theme.radius[1]};
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   overflow: hidden;
   position: relative;
   transition: box-shadow 0.125s;
@@ -47,37 +47,38 @@ const Image = styled.div`
 `;
 
 const Content = styled.div`
-  padding: 0 ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[5]} ${({ theme }) => theme.space[4]};
 `;
 
-const Description = styled.p`
-  color: ${({ theme }) => theme.colors.greyMedium};
-  font-size: ${({ theme }) => theme.fontSizes.bodyCard};
-  line-height: ${rem(18)};
-  max-height: ${rem(36)};
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+const Category = styled.span`
+  ${typography};
+  color: ${({ theme }) => theme.colors.white};
+  text-transform: uppercase;
+  border: 3px solid ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.primary};
+  border-radius: ${({ theme }) => theme.radius[1]};
+  padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
 `;
 
 export const Card = ({
   image,
   name,
-  description,
+  category,
   ...cardProps
 }) => (
   <StyledCard {...cardProps}>
     <Image>{image}</Image>
     <Content>
+      <Category fontWeight="bold" fontSize={1}>{category}</Category>
       <Heading as="h2" fontSize={3}>{name}</Heading>
-      <Description>{description}</Description>
+
     </Content>
   </StyledCard>
 );
 
 Card.propTypes = {
   name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
   image: PropTypes.shape({}).isRequired,
 };
 
