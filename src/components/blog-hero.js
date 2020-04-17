@@ -57,7 +57,7 @@ const BlogHero = (rawData) => {
           justifyContent="center"
           zIndex={2}
         >
-          <Container maxWidth={rem(960)} textAlign="center">
+          <Container maxWidth={rem(960)} textAlign="center" px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
             <HeadingHero fontSize={[3, 3, 4]} color="white" textAlign="center" pb={2}>{data.title}</HeadingHero>
             <Tag fontWeight="bold" fontSize={[1, 1, 2]}>{data.category}</Tag>
           </Container>

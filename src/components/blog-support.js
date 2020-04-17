@@ -26,14 +26,14 @@ const Author = styled.img`
 
 const Icon = styled.a`
   svg {
-      color: ${({ theme }) => theme.colors.darkBlue};
+      color: ${({ theme }) => theme.colors.greyDark};
       height: 30px;
       width: 30px;
     }
 
     &:hover {
       svg {
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.primary};
       }
     }
 `;
@@ -78,7 +78,7 @@ const BlogSupport = (rawData) => {
             </Icon>
             <Icon
               aria-label="Share this article on Whatsapp"
-              href={`https://web.whatsapp.com/send?text=${encodeURIComponent(
+              href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
                 `QuidditchUK: ${data.title} ${window.location.href}`,
               )}`}
               target="_blank"
