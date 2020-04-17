@@ -6,6 +6,7 @@ import Heading from './heading';
 import PrismicWrapper from './prismic-wrapper';
 import { Box, Grid } from './layout';
 import Image from './image';
+import Content from './content';
 
 const Item = ({ item, isImageLeft }) => (
   <Grid
@@ -19,7 +20,7 @@ const Item = ({ item, isImageLeft }) => (
         </Heading>
       )}
 
-      {item.content && <>{RichText.render(item.content)}</>}
+      {item.content && <Content>{RichText.render(item.content)}</Content>}
     </Box>
 
     <Box order={(isImageLeft ? 1 : 2)}>

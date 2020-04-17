@@ -43,11 +43,18 @@ const fontSizes = [rem(0), rem(14), rem(16), rem(20), rem(32), rem(80)];
 [,,,, fontSizes.headingMobile] = fontSizes;
 [,,,,, fontSizes.heading] = fontSizes;
 
+const lineHeights = [rem(0), rem(16), rem(20), rem(24), rem(28)];
+
+[, lineHeights.body] = lineHeights;
+[,, lineHeights.display] = lineHeights;
+[,,, lineHeights.displayMobile] = lineHeights;
+
 const radius = [rem(3), rem(10)];
 
 const shadows = {
   box: `0 0 ${rem(10)} ${rgba(0, 0, 0, 0.3)}`,
   heading: `0 0 ${rem(50)} ${rgba(0, 0, 0, 0.3)}`,
+  body: `0 0 ${rem(6.5)} ${rgba(0, 0, 0, 0.5)}`,
 };
 
 const space = [
@@ -79,6 +86,7 @@ export default {
   containerSize,
   fonts,
   fontSizes,
+  lineHeights,
   radius,
   shadows,
   space,

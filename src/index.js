@@ -15,6 +15,7 @@ import Shell from './components/shell';
 import Prismic from './prismic';
 import Search from './search';
 import News from './news';
+import Post from './post';
 import GlobalStyle from './styles/reset';
 import theme from './styles/theme';
 
@@ -41,6 +42,10 @@ const Root = () => (
 
               <Route exact path="/news">
                 <News />
+              </Route>
+
+              <Route path="/news/:uid">
+                <Post />
               </Route>
               <Route path="/:uid">
                 <Prismic />

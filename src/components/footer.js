@@ -26,7 +26,7 @@ const Support = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.bodyCard};
 `;
 export const Footer = () => (
-  <>
+  <footer>
     <Box
       bg="primary"
       color="white"
@@ -84,7 +84,7 @@ export const Footer = () => (
             </Heading>
 
             <Support>
-              QuidditchUK and its activities are not licensed by, sponsored by or associated with Warner Bros., J.K. Rowling or their affiliates.  ‘Quidditch,’ ‘Harry Potter’ and all related names, characters and indicia are trademarks of and © Warner Bros. – Harry Potter publishing rights © J.K. Rowling.
+              QuidditchUK and its activities are not licensed by, sponsored by or associated with Warner Bros., J.K. Rowling or their affiliates.  ‘Quidditch,’ ‘Harry Potter’ and all related names, characters and indicia are trademarks of and &copy; Warner Bros. – Harry Potter publishing rights &copy; J.K. Rowling.
             </Support>
 
             <Support>
@@ -101,12 +101,12 @@ export const Footer = () => (
             <Logo src={logoText} alt="Quidditch UK" white />
           </LogoLink>
 
-          <Support>All Rights Reserved © {year} QuidditchUK</Support>
+          <Support>All Rights Reserved &copy; {year} QuidditchUK</Support>
         </>
 
       </Container>
     </Box>
-  </>
+  </footer>
 );
 
 export default Footer;

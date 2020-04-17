@@ -2,6 +2,7 @@ import React from 'react';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import Heading from './heading';
+import Content from './content';
 import PrismicWrapper from './prismic-wrapper';
 
 const HeaderAndParagraph = (rawData) => {
@@ -19,7 +20,7 @@ const HeaderAndParagraph = (rawData) => {
         </Heading>
       )}
 
-      {data.content && <>{RichText.render(data.content)}</>}
+      {data.content && <Content>{RichText.render(data.content)}</Content>}
     </PrismicWrapper>
   );
 };
