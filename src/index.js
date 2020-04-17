@@ -27,7 +27,7 @@ const Root = () => (
     <GlobalStyle />
 
     <Provider store={store}>
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router basename={`${process.env.PUBLIC_URL}/`}>
 
         <ThemeProvider theme={theme}>
           <Shell>
