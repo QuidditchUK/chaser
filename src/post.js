@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { usePrismicFetch } from './hooks';
 import renderPrismicSections from './constants/prismic';
 import BlogHero from './components/blog-hero';
+import BlogSupport from './components/blog-support';
 
 function Prismic() {
   const { uid = 'home' } = useParams();
@@ -17,6 +18,7 @@ function Prismic() {
           <article>
             <BlogHero {...page.data} />
             {renderPrismicSections(page.data.body)}
+            <BlogSupport {...page.data} />
           </article>
         )}
     </>
