@@ -2,7 +2,7 @@
   "name": "chaser",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://quk-tech.github.io/chaser",
+  "homepage": "http://testing.quidditchuk.org.s3-website.eu-west-2.amazonaws.com",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -32,9 +32,9 @@
   },
   "scripts": {
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "aws s3 sync build/ s3://testing.quidditchuk.org",
     "start": "react-scripts start",
-    "build": "react-scripts build && cp build/index.html build/404.html",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "svg:format": "find src/images -name '*.svg' -type f -exec svgo --config svgo.json '{}' \\;"
