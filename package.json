@@ -28,8 +28,6 @@
     "webpack": "4.42.1"
   },
   "scripts": {
-    "predeploy": "yarn run build",
-    "deploy": "aws s3 sync build/ s3://testing.quidditchuk.org",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
