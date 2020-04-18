@@ -21,7 +21,6 @@ import theme from './styles/theme';
 
 const store = configureStore();
 
-
 const Root = () => (
   <>
     <GlobalStyle />

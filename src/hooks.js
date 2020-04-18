@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import get from 'just-safe-get';
 import { Client } from './modules/prismic';
 
 export function usePrismicFetch(type, uid) {
@@ -16,4 +18,26 @@ export function usePrismicFetch(type, uid) {
   }, [type, uid]);
 
   return [data, loading];
+}
+
+export function usePageView(setMetadata) {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setMetadata({ url: `${window.location.origin}${pathname}` });
+  }, [pathname, setMetadata]);
+}
+
+export function usePrismicMeta(setMetadata, rawData) {
+  const data = {
+    subTitle: get(rawData, 'meta_title'),
+    description: get(rawData, 'meta_description'),
+    image: get(rawData, 'meta_image.url'),
+  };
+
+  useEffect(() => {
+    if (rawData) {
+      setMetadata(data);
+    }
+  }, [data, rawData, setMetadata]);
 }
