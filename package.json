@@ -5,6 +5,7 @@
   "homepage": "http://testing.quidditchuk.org.s3-website.eu-west-2.amazonaws.com",
   "dependencies": {
     "@babel/core": "7.9.0",
+    "@svgr/webpack": "5.3.1",
     "babel-eslint": "10.1.0",
     "babel-plugin-macros": "2.8.0",
     "date-fns": "2.12.0",
