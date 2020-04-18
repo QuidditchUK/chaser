@@ -40,7 +40,7 @@ const Icon = styled.a`
 `;
 
 const BlogSupport = (rawData) => {
-  const SITE_URL = 'https://quidditchuk.org';
+  const SITE_URL = 'https://chaser.quk-tech.now.sh';
 
   const router = useRouter();
   const url = `${SITE_URL}${router.asPath}`;

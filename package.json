@@ -2,7 +2,6 @@
   "name": "chaser",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://testing.quidditchuk.org.s3-website.eu-west-2.amazonaws.com",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@svgr/webpack": "5.3.1",
@@ -46,10 +45,14 @@
       "last 1 safari version"
     ]
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "devDependencies": {
     "@ava/babel": "0.7.0",
     "ava": "2.4.0",
     "babel-plugin-styled-components": "1.10.7",
+    "eslint": "6.8.0",
     "eslint-config-airbnb": "18.0.1",
     "eslint-plugin-import": "2.20.0",
     "eslint-plugin-jest": "23.6.0",

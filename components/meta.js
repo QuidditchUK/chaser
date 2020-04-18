@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 
-const SITE_URL = 'https://quidditchuk.org';
+const SITE_URL = 'https://chaser.quk-tech.now.sh';
 
 const Meta = ({ 
   subTitle, 
@@ -14,7 +14,7 @@ const Meta = ({
 }) => {
 
   const router = useRouter();
-  const url = `${SITE_URL}${router.asPath}`;
+  const url = `${router.asPath}`;
   const formattedTitle = subTitle ? `${subTitle} | ${title}` : title;
 
   return (
