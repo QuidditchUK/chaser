@@ -13,7 +13,7 @@ const Item = ({ item, isImageLeft }) => (
     gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
     gridGap={{ _: 'gutter._', m: 'gutter.m' }}
   >
-    <Box order={(isImageLeft ? 2 : 1)}>
+    <Box order={{ _: 2, m: `${(isImageLeft ? 2 : 1)}`}}>
       {RichText.asText(item.title) && (
         <Heading as="h2" fontSize={[3, 3, 4]} mt={2}>
           {RichText.asText(item.title)}
@@ -23,7 +23,7 @@ const Item = ({ item, isImageLeft }) => (
       {item.content && <Content>{RichText.render(item.content)}</Content>}
     </Box>
 
-    <Box order={(isImageLeft ? 1 : 2)}>
+    <Box order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}>
       <Image alt={item.image.alt} src={item.image.url} height={item.image.dimensions.height} width={item.image.dimensions.width} />
     </Box>
   </Grid>
@@ -64,9 +64,8 @@ const ImageAndContent = (rawData) => {
         const isImageLeft = item.layout === 'image-left';
 
         return (
-          <PrismicWrapper variant={item.variant}>
+          <PrismicWrapper variant={item.variant} key={`image-and-content-${i}`}>
             <Item
-              key={`image-and-content-${i}`}
               item={item}
               isImageLeft={isImageLeft}
             />
