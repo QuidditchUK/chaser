@@ -56,7 +56,7 @@ const List = styled.ul`
     height: 100vh;
     margin: 0;
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
     transition: transform 0.3s;
@@ -105,7 +105,6 @@ const NavItem = styled.span`
     display: block;
     padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
     text-align: center;
-    width: 100%;
 
     &:hover {
       background: ${({ theme }) => tint(0.9, theme.colors.primary)};
