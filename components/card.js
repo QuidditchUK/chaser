@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { space, variant, typography } from 'styled-system';
 import Heading from './heading';
+import { rem } from '../styles/theme';
 
 const variants = (theme) => ({
   light: {
@@ -57,7 +58,7 @@ const Category = styled.span`
   border: 3px solid ${({ theme }) => theme.colors.primary};
   background: ${({ theme }) => theme.colors.primary};
   border-radius: ${({ theme }) => theme.radius[1]};
-  padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[1]} ${({ theme }) => theme.space[2]};
 `;
 
 export const Card = ({
@@ -69,7 +70,7 @@ export const Card = ({
   <StyledCard {...cardProps}>
     <Image>{image}</Image>
     <Content>
-      <Category fontWeight="bold" fontSize={1}>{category}</Category>
+      <Category fontWeight="bold" fontSize={(rem(10))}>{category}</Category>
       <Heading as="h2" fontSize={3}>{name}</Heading>
 
     </Content>
