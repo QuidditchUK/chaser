@@ -31,7 +31,7 @@ colors.secondary = colors.monarchRed;
 const containerSize = rem(1280);
 
 const fonts = {
-  body: 'pt-sans, sans-serif',
+  body: 'adelle-sans, sans-serif',
   heading: 'century-gothic, sans-serif',
 };
 

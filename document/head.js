@@ -20,27 +20,7 @@ const DocumentHead = () => (
     <link rel="preconnect" href="//images.prismic.io" />
 
     {/* Fonts */}
-    <link
-      rel="preload"
-      href="%PUBLIC_URL%/fonts/PTSans-Regular.ttf"
-      as="font"
-      type="font/ttf"
-    />
-
-    <link
-      rel="preload"
-      href="%PUBLIC_URL%/fonts/Roboto-Regular.ttf"
-      as="font"
-      type="font/ttf"
-    />
-
-    <link
-      rel="preload"
-      href="%PUBLIC_URL%/fonts/Roboto-Bold.ttf"
-      as="font"
-      type="font/ttf"
-    />
-
+    <link rel="preload" href="https://use.typekit.net/rub1byg.css" as="style" />
     <link rel="stylesheet" href="https://use.typekit.net/rub1byg.css" />
 
     {/* Static CSS */}

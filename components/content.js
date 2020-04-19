@@ -5,5 +5,5 @@ export default styled('div')`
   ${space}
   ${color}
   ${typography}
-  line-height: ${({ theme }) => theme.lineHeights.displayMobile}
+  line-height: ${({ theme }) => theme.lineHeights.displayMobile};
 `;

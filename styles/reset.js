@@ -21,7 +21,7 @@ html {
 
 body {
   margin: 0;
-  font-family: pt-sans, sans-serif;
+  font-family: adelle-sans, sans-serif;
 }
 
 /**

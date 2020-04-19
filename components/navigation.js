@@ -30,7 +30,7 @@ const Header = styled.header`
   justify-content: space-between;
   padding: 0 ${({ theme }) => theme.space.gutter._};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     height: 50px;
   }
 `;
@@ -47,7 +47,7 @@ const List = styled.ul`
   list-style-type: none;
   padding-left: 0;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
     display: flex;
     flex-direction: column;
@@ -68,25 +68,14 @@ const List = styled.ul`
 const Item = styled.li`
   ${space}
 
-    @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-      padding-left: 0;
+  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
+    padding-left: 0;
+    width: 100%;
+    margin-bottom: ${({ theme }) => theme.space[4]};
+
+    button {
       width: 100%;
-      margin-bottom: ${({ theme }) => theme.space[4]};
-
-      button {
-        background: ${({ theme }) => theme.colors.white};
-        border: 1px solid ${({ theme }) => theme.colors.white};
-        color: ${({ theme }) => theme.colors.darkBlue};
-        width: 100%;
-
-        &:hover {
-          background: ${({ theme }) => tint(0.9, theme.colors.primary)};
-        }
-      }
     }
-
-  .selected {
-    font-weight: bold;
   }
 `;
 
@@ -95,14 +84,20 @@ const NavStyledLink = styled.a`
 `;
 
 const NavItem = styled.span`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.greyDark};
+  font-weight: bold;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
-    color: ${({ theme }) => theme.colors.darkBlue};
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     background: ${({ theme }) => theme.colors.white};
     border: 1px solid ${({ theme }) => theme.colors.white};
     border-radius: ${({ theme }) => theme.radius[0]};
+    color: ${({ theme }) => theme.colors.darkBlue};
     display: block;
+    font-weight: normal;
     padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
     text-align: center;
 
@@ -115,7 +110,7 @@ const NavItem = styled.span`
 const Hamburger = styled(HamburgerIcon)`
   display: none;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.m}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     color: ${({ open, theme }) => (open ? theme.colors.white : theme.colors.primary)};
     cursor: pointer;
     display: block;
@@ -141,7 +136,7 @@ function Navigation() {
         <Nav>
           <List open={open}>
             {TOP_NAVIGATION.map((item) => (
-              <Item key={item.link} pl={4}>
+              <Item key={item.link} pl={8}>
                 <Link href={item.link} passHref>
                   <NavStyledLink activeClassName="selected" onClick={() => setOpen(false)}>
                     <NavItem>{item.label}</NavItem>
@@ -150,7 +145,7 @@ function Navigation() {
               </Item>
             ))}
 
-            <Item pl={4}><Button type="button" variant="primary">Find Quidditch</Button></Item>
+            <Item pl={8}><Button type="button" variant={{ _: "secondary", l: "primary"}}>Find Quidditch</Button></Item>
             <Item pl={4}><Button type="button" variant="light">Sign in</Button></Item>
             <ScrollLock isActive={open} />
           </List>
