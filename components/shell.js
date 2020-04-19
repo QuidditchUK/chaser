@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import dynamic from 'next/dynamic';
 
 import DocumentHead from '../document/head';
-import Scripts from '../document/scripts';
+const Scripts = dynamic(() => import('../document/Scripts'), { ssr: false });
 
 export default (Page) => class Template extends Component {
   static async getInitialProps(context) {

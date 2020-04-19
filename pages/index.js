@@ -32,7 +32,7 @@ Home.getInitialProps = async ({ res, req }) => {
 Home.propTypes = {
   page: PropTypes.shape({
     data: PropTypes.shape({
-      body: PropTypes.shape({}),
+      body: PropTypes.array,
     }),
   }).isRequired,
 };
