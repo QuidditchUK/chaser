@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import dynamic from 'next/dynamic';
 
 import DocumentHead from '../document/head';
-const Scripts = dynamic(() => import('../document/Scripts'), { ssr: false });
+const Scripts = dynamic(() => import('../document/scripts'), { ssr: false });
 
 export default (Page) => class Template extends Component {
   static async getInitialProps(context) {
