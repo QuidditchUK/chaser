@@ -2,13 +2,13 @@ import React from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 
 import withShell from '../../components/shell';
-import { getDocs, getPrismicDocByUid } from '../../modules/prismic';
+import { getDocs, getPrismicDocByUid, formatMetadata } from '../../modules/prismic';
 import renderPrismicSections from '../../constants/prismic';
 import Layout from '../../containers/layout';
 import Meta from '../../components/meta';
 import BlogHero from '../../components/blog-hero';
 import BlogSupport from '../../components/blog-support';
-import { formatMetadata } from '../../modules/prismic';
+
 
 const Post = ({ page: { data } }) => (
   <Layout>
@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   const page = await getPrismicDocByUid('post', uid);
 
   return {
-    props: { page }
+    props: { page },
   };
 };
 
@@ -37,6 +37,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: allPages?.map(({ uid }) => `/news/${uid}`),
     fallback: true,
   };
-}
+};
 
 export default withShell(Post);

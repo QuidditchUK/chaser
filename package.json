@@ -42,9 +42,6 @@
       "last 1 safari version"
     ]
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "devDependencies": {
     "@ava/babel": "0.7.0",
     "@types/react": "16.9.34",
