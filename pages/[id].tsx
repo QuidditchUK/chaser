@@ -1,18 +1,32 @@
 import React from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
+import PropTypes from 'prop-types';
 
-import withShell from '../components/shell';
 import { getPrismicDocByUid, getDocs, formatMetadata } from '../modules/prismic';
 import renderPrismicSections from '../constants/prismic';
 import Layout from '../containers/layout';
 import Meta from '../components/meta';
 
-const Page = ({ page: { data } }) => (
-  <Layout>
-    <Meta {...formatMetadata(data)} />
-    <>{renderPrismicSections(data.body)}</>
-  </Layout>
+const Page = ({ page }) => (
+  <>
+    {page
+      ? (
+        <Layout>
+          <Meta {...formatMetadata(page.data)} />
+          <>{renderPrismicSections(page.data.body)}</>
+        </Layout>
+      )
+      : (<></>)}
+  </>
 );
+
+Page.propTypes = {
+  page: PropTypes.shape({
+    data: PropTypes.shape({
+      body: PropTypes.array,
+    }),
+  }).isRequired,
+};
 
 export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   const uid = id.toString();
@@ -32,4 +46,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export default withShell(Page);
+export default Page;

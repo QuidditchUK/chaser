@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { GetStaticProps, GetStaticPaths } from 'next';
 
-import withShell from '../../components/shell';
 import { getDocs, getPrismicDocByUid, formatMetadata } from '../../modules/prismic';
 import renderPrismicSections from '../../constants/prismic';
 import Layout from '../../containers/layout';
@@ -10,16 +10,31 @@ import BlogHero from '../../components/blog-hero';
 import BlogSupport from '../../components/blog-support';
 
 
-const Post = ({ page: { data } }) => (
-  <Layout>
-    <Meta {...formatMetadata(data)} />
-    <article>
-      <BlogHero {...data} />
-      {renderPrismicSections(data.body)}
-      <BlogSupport {...data} />
-    </article>
-  </Layout>
+const Post = ({ page }) => (
+  <>
+    {page
+      ? (
+        <Layout>
+          <Meta {...formatMetadata(page.data)} />
+
+          <article>
+            <BlogHero {...page.data} />
+            {renderPrismicSections(page.data.body)}
+            <BlogSupport {...page.data} />
+          </article>
+        </Layout>
+      )
+      : (<></>)}
+  </>
 );
+
+Post.propTypes = {
+  page: PropTypes.shape({
+    data: PropTypes.shape({
+      body: PropTypes.array,
+    }),
+  }).isRequired,
+};
 
 export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   const uid = id.toString();
@@ -39,4 +54,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export default withShell(Post);
+export default Post;
