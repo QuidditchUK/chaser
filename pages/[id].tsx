@@ -5,9 +5,9 @@ import { getPrismicDocByUid, getDocs, formatMetadata } from '../modules/prismic'
 import renderPrismicSections from '../constants/prismic';
 import Layout from '../containers/layout';
 import Meta from '../components/meta';
-import { PageProps } from '../types';
+import { Page } from '../types';
 
-const Page = ({ page }: PageProps) => (
+const Page = ({ page }: Page) => (
   <>
     {page
       ? (

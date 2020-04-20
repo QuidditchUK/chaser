@@ -7,9 +7,9 @@ import Layout from '../../containers/layout';
 import Meta from '../../components/meta';
 import BlogHero from '../../components/blog-hero';
 import BlogSupport from '../../components/blog-support';
-import { PageProps } from '../../types';
+import { Page } from '../../types';
 
-const Post = ({ page }: PageProps) => (
+const Post = ({ page }: Page) => (
   <>
     {page
       ? (
