@@ -3,7 +3,6 @@ module.exports = {
     "import",
     "react",
     "jsx-a11y",
-    "jest",
     "react-hooks",
     "@typescript-eslint"
   ],
@@ -34,7 +33,7 @@ module.exports = {
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".jsx"]
+        "extensions": [".js", ".jsx", ".tsx"]
       }
     ],
     "react/destructuring-assignment": 0,
@@ -44,21 +43,6 @@ module.exports = {
     "import/no-named-as-default-member": 0,
     "import/prefer-default-export": 0,
     "import/no-cycle": "warn",
-    "jest/no-disabled-tests": "warn",
-    "jest/no-focused-tests": "error",
-    "jest/no-identical-title": "error",
-    "jest/prefer-to-have-length": "warn",
-    "jest/valid-expect": "error",
-    "jsx-a11y/anchor-is-valid": [
-      "error",
-      {
-        "components": ["Link"],
-        "specialLink": ["hrefLeft", "hrefRight"],
-        "aspects": ["invalidHref", "preferButton"]
-      }
-    ],
-    "jsx-a11y/label-has-for": 0,
-    "jsx-a11y/label-has-associated-control": 0,
     "no-console": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn"

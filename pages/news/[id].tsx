@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { GetStaticProps, GetStaticPaths } from 'next';
 
 import { getDocs, getPrismicDocByUid, formatMetadata } from '../../modules/prismic';
@@ -8,9 +7,9 @@ import Layout from '../../containers/layout';
 import Meta from '../../components/meta';
 import BlogHero from '../../components/blog-hero';
 import BlogSupport from '../../components/blog-support';
+import { PageProps } from '../../types';
 
-
-const Post = ({ page }) => (
+const Post = ({ page }: PageProps) => (
   <>
     {page
       ? (
@@ -27,14 +26,6 @@ const Post = ({ page }) => (
       : (<></>)}
   </>
 );
-
-Post.propTypes = {
-  page: PropTypes.shape({
-    data: PropTypes.shape({
-      body: PropTypes.array,
-    }),
-  }).isRequired,
-};
 
 export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   const uid = id.toString();

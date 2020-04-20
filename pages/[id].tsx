@@ -1,13 +1,13 @@
 import React from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import PropTypes from 'prop-types';
 
 import { getPrismicDocByUid, getDocs, formatMetadata } from '../modules/prismic';
 import renderPrismicSections from '../constants/prismic';
 import Layout from '../containers/layout';
 import Meta from '../components/meta';
+import { PageProps } from '../types';
 
-const Page = ({ page }) => (
+const Page = ({ page }: PageProps) => (
   <>
     {page
       ? (
@@ -19,14 +19,6 @@ const Page = ({ page }) => (
       : (<></>)}
   </>
 );
-
-Page.propTypes = {
-  page: PropTypes.shape({
-    data: PropTypes.shape({
-      body: PropTypes.array,
-    }),
-  }).isRequired,
-};
 
 export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   const uid = id.toString();
