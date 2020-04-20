@@ -1,13 +1,15 @@
-{
+module.exports = {
   "plugins": [
     "import",
     "react",
     "jsx-a11y",
     "jest",
-    "react-hooks"
+    "react-hooks",
+    "@typescript-eslint"
   ],
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "project": "./tsconfig.json",
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
@@ -21,8 +23,9 @@
     "mocha": true
   },
   "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
   ],
   "rules": {
     "max-len": 0,

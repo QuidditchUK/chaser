@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { GetStaticProps, GetStaticPaths } from 'next';
 
 import withShell from '../../components/shell';
-import { Client as PrismicClient } from '../../modules/prismic';
+import { getDocs, getPrismicDocByUid } from '../../modules/prismic';
 import renderPrismicSections from '../../constants/prismic';
 import Layout from '../../containers/layout';
 import Meta from '../../components/meta';
@@ -21,25 +21,22 @@ const Post = ({ page: { data } }) => (
   </Layout>
 );
 
-Post.getInitialProps = async ({ res, req, query: { id } }) => {
-  const page = await PrismicClient(req).getByUID('post', id);
+export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
+  const uid = id.toString();
+  const page = await getPrismicDocByUid('post', uid);
 
-
-  if (res && !page) {
-    res.writeHead(404);
-    res.end();
-    return;
-  }
-
-  return { page };
+  return {
+    props: { page }
+  };
 };
 
-Post.propTypes = {
-  page: PropTypes.shape({
-    data: PropTypes.shape({
-      body: PropTypes.array,
-    }),
-  }).isRequired,
-};
+export const getStaticPaths: GetStaticPaths = async () => {
+  const allPages = await getDocs('post');
+
+  return {
+    paths: allPages?.map(({ uid }) => `/news/${uid}`),
+    fallback: true,
+  };
+}
 
 export default withShell(Post);

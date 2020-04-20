@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { getBlogPosts } from '../modules/prismic';
+import { getDocs } from '../modules/prismic';
 import { Grid, Flex, Box } from './layout';
 import Card from './card';
 import Image from './image';
@@ -20,7 +20,7 @@ const News = ({ count }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getBlogPosts(count);
+      const data = await getDocs('post', { orderings: '[my.post.date desc]', pageSize: 18 });
       setNews(data);
     };
 

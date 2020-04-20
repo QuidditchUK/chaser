@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { GetStaticProps } from 'next';
 
 import withShell from '../components/shell';
-import { Client as PrismicClient } from '../modules/prismic';
+import { getPrismicDocByUid } from '../modules/prismic';
 import renderPrismicSections from '../constants/prismic';
 import Layout from '../containers/layout';
 import Meta from '../components/meta';
@@ -16,25 +16,11 @@ const Home = ({ page: { data } }) => (
   </Layout>
 );
 
-Home.getInitialProps = async ({ res, req }) => {
-  const page = await PrismicClient(req).getByUID('pages', 'home');
-
-
-  if (res && !page) {
-    res.writeHead(404);
-    res.end();
-    return;
-  }
-
-  return { page };
-};
-
-Home.propTypes = {
-  page: PropTypes.shape({
-    data: PropTypes.shape({
-      body: PropTypes.array,
-    }),
-  }).isRequired,
+export const getStaticProps: GetStaticProps = async () => {
+  const page = await getPrismicDocByUid('pages', 'home');
+  return {
+    props: { page }
+  };
 };
 
 export default withShell(Home);
