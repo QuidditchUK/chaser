@@ -69,13 +69,7 @@
     }
   },
   "lint-staged": {
-    "*.js": [
-      "eslint",
-      "git add"
-    ],
-    "*.svg": [
-      "svgo --config svgo.json",
-      "git add"
-    ]
+    "*.{js,ts,tsx}": "eslint",
+    "*.svg": "svgo --config svgo.json"
   }
 }
