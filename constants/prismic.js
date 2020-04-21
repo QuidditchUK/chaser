@@ -22,7 +22,6 @@ export default function (sections) {
     const Component = types[section.slice_type];
 
     if (!Component) {
-      // eslint-disable-next-line no-console
       console.warn('Missing Prismic Component ID: ', section.slice_type);
       return null;
     }

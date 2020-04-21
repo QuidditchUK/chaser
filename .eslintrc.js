@@ -28,7 +28,6 @@ module.exports = {
   ],
   "rules": {
     "max-len": 0,
-    "camelcase": 0,
     "no-restricted-globals": 0,
     "react/jsx-filename-extension": [
       1,
@@ -39,11 +38,10 @@ module.exports = {
     "react/destructuring-assignment": 0,
     "react/jsx-props-no-spreading": 0,
     "react/jsx-one-expression-per-line": 0,
+    "react/no-array-index-key": 0,
     "import/no-named-as-default": 0,
     "import/no-named-as-default-member": 0,
     "import/prefer-default-export": 0,
-    "import/no-cycle": "warn",
-    "no-console": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn"
   }
