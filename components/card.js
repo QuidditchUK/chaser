@@ -61,7 +61,7 @@ const Category = styled.span`
   padding: ${({ theme }) => theme.space[1]} ${({ theme }) => theme.space[2]};
 `;
 
-export const Card = ({
+const Card = ({
   image,
   name,
   category,

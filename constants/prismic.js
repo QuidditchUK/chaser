@@ -13,7 +13,7 @@ const types = {
   latest_news: LatestNews,
   hero: Hero,
   header_and_paragraph: HeaderAndParagraph,
-  image: ImageSlice,
+  images: ImageSlice,
   image_and_content: ImageAndContent,
 };
 

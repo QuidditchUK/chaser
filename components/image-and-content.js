@@ -13,7 +13,7 @@ const Item = ({ item, isImageLeft }) => (
     gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
     gridGap={{ _: 'gutter._', m: 'gutter.m' }}
   >
-    <Box order={{ _: 2, m: `${(isImageLeft ? 2 : 1)}`}}>
+    <Box order={{ _: 2, m: `${(isImageLeft ? 2 : 1)}` }}>
       {RichText.asText(item.title) && (
         <Heading as="h2" fontSize={[3, 3, 4]} mt={2}>
           {RichText.asText(item.title)}

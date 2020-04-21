@@ -14,7 +14,7 @@ export const Container = styled.div`
   padding-bottom: ${({ aspectRatio }) => aspectRatio}%;
 `;
 
-export const Image = styled.div`
+const Image = styled.div`
   width: 100%;
 
   img {

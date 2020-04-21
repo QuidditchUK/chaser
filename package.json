@@ -24,7 +24,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "svg:format": "find src/images -name '*.svg' -type f -exec svgo --config svgo.json '{}' \\;"
+    "svg:format": "find public/images -name '*.svg' -type f -exec svgo --config svgo.json '{}' \\;"
   },
   "browserslist": {
     "production": [
