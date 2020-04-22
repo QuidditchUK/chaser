@@ -51,10 +51,10 @@ export default styled.button`
   font-family: ${({ theme }) => theme.fonts.body};
   font-size: ${({ theme }) => theme.fontSizes.body};
   padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
-  ${({ theme }) => variant({ variants: variants(theme) })}
-  ${space}
+  ${({ theme }) => variant({ variants: variants(theme) })};
+  ${space};
 
   &:hover {
-    ${({ theme }) => variant({ variants: hoverStates(theme) })}
+    ${({ theme }) => variant({ variants: hoverStates(theme) })};
   }
 `;

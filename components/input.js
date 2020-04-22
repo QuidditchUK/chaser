@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { layout } from 'styled-system';
 
 const Input = styled.input`
   background: ${({ theme }) => theme.colors.white};
@@ -7,6 +8,7 @@ const Input = styled.input`
   color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fontSizes.body};
   padding: ${({ theme }) => theme.space[2]};
+  ${layout};
 `;
 
 export default Input;

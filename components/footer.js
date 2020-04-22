@@ -1,16 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
+import ActiveLink from './active-link';
 import {
-  Box, Grid, GridItem,
+  Box, Grid, GridItem, Flex,
 } from './layout';
 import { Logo, LogoLink } from './logo';
 import Container from './container';
 import Heading from './heading';
+import Input from './input';
+import Button from './button';
 import { rem } from '../styles/theme';
+import FacebookIcon from '../public/images/facebook.svg';
+import TwitterIcon from '../public/images/twitter.svg';
+import InstagramIcon from '../public/images/instagram.svg';
 
 const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';
+
 
 const year = new Date().getFullYear();
 
@@ -21,10 +28,41 @@ const List = styled.ul`
 
 const Item = styled.li`
   line-height: ${rem(28)};
+
+  a { 
+    text-decoration: none;
+  }
+
+  span {
+    color: ${({ theme }) => theme.colors.white};
+
+    &:hover {
+      border-bottom: 2px solid ${({ theme }) => theme.colors.white};
+    }
+
+    &.active {
+      font-weight: 700;
+    }
+  }
 `;
 
 const Support = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.bodyCard};
+`;
+
+const Icon = styled.a`
+  padding-left: ${({ theme }) => theme.space[2]};
+  svg {
+      color: ${({ theme }) => theme.colors.greyLight};
+      height: 30px;
+      width: 30px;
+    }
+
+    &:hover {
+      svg {
+        color: ${({ theme }) => theme.colors.white};
+      }
+    }
 `;
 export const Footer = () => (
   <footer>
@@ -45,10 +83,10 @@ export const Footer = () => (
             </Heading>
 
             <List>
-              <Item>What is Quidditch</Item>
-              <Item>History</Item>
-              <Item>Team UK</Item>
-              <Item>Executive</Item>
+              <Item><ActiveLink href="/about/what-is-quidditch"><span>What is Quidditch</span></ActiveLink></Item>
+              <Item><ActiveLink href="/about/history"><span>History</span></ActiveLink></Item>
+              <Item><ActiveLink href="/team-uk"><span>Team UK</span></ActiveLink></Item>
+              <Item><ActiveLink href="/about/meet-the-executive"><span>Executive</span></ActiveLink></Item>
             </List>
           </GridItem>
 
@@ -59,10 +97,10 @@ export const Footer = () => (
 
             <List>
               <Item>Find Quidditch</Item>
-              <Item>Refereeing</Item>
-              <Item>Coaching</Item>
-              <Item>Volunteering</Item>
-              <Item>News</Item>
+              <Item><ActiveLink href="/get-involved/refereeing"><span>Refereeing</span></ActiveLink></Item>
+              <Item><ActiveLink href="/get-involved/coaching"><span>Coaching</span></ActiveLink></Item>
+              <Item><ActiveLink href="/get-involved/volunteering"><span>Volunteering</span></ActiveLink></Item>
+              <Item><ActiveLink href="/news"><span>News</span></ActiveLink></Item>
             </List>
           </GridItem>
 
@@ -72,10 +110,11 @@ export const Footer = () => (
             </Heading>
 
             <List>
-              <Item>Contact Us</Item>
-              <Item>FAQ</Item>
-              <Item>Rule Book</Item>
-              <Item>Policies</Item>
+              <Item><ActiveLink href="/info/contact-us"><span>Contact Us</span></ActiveLink></Item>
+              <Item><ActiveLink href="/info/faqs"><span>FAQs</span></ActiveLink></Item>
+              <Item><ActiveLink href="/info/rule-book"><span>Rule Book</span></ActiveLink></Item>
+              <Item><ActiveLink href="/info/key-documents"><span>Key Documents</span></ActiveLink></Item>
+              <Item><ActiveLink href="/info/policies"><span>Policies</span></ActiveLink></Item>
             </List>
           </GridItem>
 
@@ -96,19 +135,59 @@ export const Footer = () => (
       </Container>
 
       <Container borderTop="3px solid white" py={5} textAlign={{ _: 'center', m: 'left' }}>
-        <>
-          <Link href="/" passHref>
-            <LogoLink>
-              <>
-                <Logo src={logo} alt="Quidditch UK" white />
-                <Logo src={logoText} alt="Quidditch UK" white />
-              </>
-            </LogoLink>
-          </Link>
+        <Grid
+          gridTemplateColumns={{ _: '1fr', m: '4fr 2fr' }}
+          gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+        >
+          <Flex flexDirection="column" order={{ _: 2, m: 1 }}>
+            <Link href="/" passHref>
+              <LogoLink>
+                <>
+                  <Logo src={logo} alt="Quidditch UK" white />
+                  <Logo src={logoText} alt="Quidditch UK" white />
+                </>
+              </LogoLink>
+            </Link>
 
-          <Support>All Rights Reserved &copy; {year} QuidditchUK</Support>
-        </>
+            <Support>All Rights Reserved &copy; {year} QuidditchUK</Support>
+          </Flex>
 
+          <Flex flexDirection="column" order={{ _: 1, m: 2 }}>
+            <Flex>
+              <Input type="text" placeholder="Enter email to join our newsletter" width={1} /><Button variant="secondary" ml={2}>Submit</Button>
+            </Flex>
+
+            <Flex justifyContent={{ _: 'center', m: 'flex-end' }} mt={3}>
+              <Icon
+                aria-label="Like us on Facebook"
+                href="https://www.facebook.com/QuidditchUK"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FacebookIcon />
+              </Icon>
+
+              <Icon
+                aria-label="Follow us on Twitter"
+                href="https://twitter.com/QuidditchUK"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TwitterIcon />
+              </Icon>
+
+              <Icon
+                aria-label="Follow us on Instagram"
+                href="https://instagram.com/ukquidditch"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <InstagramIcon />
+              </Icon>
+            </Flex>
+          </Flex>
+
+        </Grid>
       </Container>
     </Box>
   </footer>

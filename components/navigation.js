@@ -8,6 +8,7 @@ import ScrollLock from 'react-scrolllock';
 import HamburgerIcon from '../public/images/hamburger.svg';
 import { TOP_NAVIGATION } from '../constants/navigation';
 
+import ActiveLink from './active-link';
 import { Logo, LogoLink } from './logo';
 import Button from './button';
 
@@ -47,6 +48,20 @@ const List = styled.ul`
   list-style-type: none;
   padding-left: 0;
 
+  a {
+    text-decoration: none;
+  }
+
+  span {
+    &.active {
+      color: ${({ theme }) => theme.colors.primary};
+
+      @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
+        font-weight: 700;
+      }
+    }
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
     display: flex;
@@ -77,10 +92,6 @@ const Item = styled.li`
       width: 100%;
     }
   }
-`;
-
-const NavStyledLink = styled.a`
-  text-decoration: none;
 `;
 
 const NavItem = styled.span`
@@ -137,15 +148,13 @@ function Navigation() {
           <List open={open}>
             {TOP_NAVIGATION.map((item) => (
               <Item key={item.link} pl={8}>
-                <Link href={item.link} passHref>
-                  <NavStyledLink activeClassName="selected" onClick={() => setOpen(false)}>
-                    <NavItem>{item.label}</NavItem>
-                  </NavStyledLink>
-                </Link>
+                <ActiveLink href={item.link}>
+                  <NavItem onClick={() => setOpen(false)}>{item.label}</NavItem>
+                </ActiveLink>
               </Item>
             ))}
 
-            <Item pl={8}><Button type="button" variant={{ _: "secondary", l: "primary"}}>Find Quidditch</Button></Item>
+            <Item pl={8}><Button type="button" variant={{ _: 'secondary', l: 'primary' }}>Find Quidditch</Button></Item>
             <Item pl={4}><Button type="button" variant="light">Sign in</Button></Item>
             <ScrollLock isActive={open} />
           </List>
