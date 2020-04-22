@@ -146,19 +146,14 @@ const List = styled.ul`
       height: 0;
       transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
       background: unset;
-      /* transition: height 0.3s; */
-      display: block;
+      /* display: none; */
       overflow: hidden;
-
-      &.show {
-        height: 100%;
-      }
+      border-top: 0;
 
       li {
         display: flex;
         margin: ${({ theme }) => theme.space[3]} auto;
         width: 100%;
-
 
         a {
           width: 100%;
@@ -173,10 +168,25 @@ const List = styled.ul`
           padding: ${({ theme }) => theme.space[2]} 0;
           background: ${({ theme }) => tint(0.7, theme.colors.primary)};
 
+          &.active {
+             background: ${({ theme }) => theme.colors.primary};
+             color: ${({ theme }) => theme.colors.white};
+
+             &:hover {
+               color: ${({ theme }) => theme.colors.white};
+             }
+          }
+
+
           &:hover {
             color: ${({ theme }) => theme.colors.primary};
           }
         }
+      }
+
+      &.dropdown, .dropdown:hover {
+        display: block;
+        height: initial;
       }
     }
   }
@@ -235,12 +245,6 @@ function Navigation() {
   const [open, setOpen] = useState(false);
   const [navigationToggle, setNavigationToggle] = useState(10);
 
-  // function updateNavigationToggle(index) {
-  //   const current = navigationToggle;
-  //   current[index] = !current[index];
-  //   setNavigationToggle(navigationToggle);
-  // }
-
   return (
     <Wrapper>
       <Header>
@@ -260,7 +264,7 @@ function Navigation() {
                 {item.list
                   ? (
                     <>
-                      <NavItem onClick={() => setNavigationToggle(i)}>{item.label}</NavItem>
+                      <NavItem onClick={() => setNavigationToggle(navigationToggle === i ? 10 : i)}>{item.label}</NavItem>
                     </>
                   )
                   : (
@@ -271,7 +275,7 @@ function Navigation() {
 
 
                 {item.list && (
-                  <List className={`${(navigationToggle === i) ? 'show' : ''}`}>
+                  <List className={`${navigationToggle === i ? 'dropdown' : ''}`}>
                     {item.list.map((subItem) => (
                       <Item key={subItem.link}>
                         <ActiveLink href={subItem.link}>
