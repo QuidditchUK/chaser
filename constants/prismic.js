@@ -17,7 +17,7 @@ const types = {
   image_and_content: ImageAndContent,
 };
 
-export default function (sections) {
+export default function (sections, posts) {
   return sections.map((section, i) => {
     const Component = types[section.slice_type];
 
@@ -27,7 +27,7 @@ export default function (sections) {
     }
 
     return (
-      <Component key={`prismic${i}`} {...section} />
+      <Component key={`prismic${i}`} {...section} posts={posts} />
     );
   });
 }

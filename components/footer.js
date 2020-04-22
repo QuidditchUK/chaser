@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { space } from 'styled-system';
 import Link from 'next/link';
 import ActiveLink from './active-link';
 import {
@@ -51,7 +52,8 @@ const Support = styled.p`
 `;
 
 const Icon = styled.a`
-  padding-left: ${({ theme }) => theme.space[2]};
+  ${space};
+
   svg {
       color: ${({ theme }) => theme.colors.greyLight};
       height: 30px;
@@ -157,7 +159,7 @@ export const Footer = () => (
               <Input type="text" placeholder="Enter email to join our newsletter" width={1} /><Button variant="secondary" ml={2}>Submit</Button>
             </Flex>
 
-            <Flex justifyContent={{ _: 'center', m: 'flex-end' }} mt={3}>
+            <Flex justifyContent={{ _: 'center', m: 'flex-end' }} mt={5}>
               <Icon
                 aria-label="Like us on Facebook"
                 href="https://www.facebook.com/QuidditchUK"
@@ -172,6 +174,7 @@ export const Footer = () => (
                 href="https://twitter.com/QuidditchUK"
                 target="_blank"
                 rel="noopener noreferrer"
+                pl={{ _: 5, m: 3 }}
               >
                 <TwitterIcon />
               </Icon>
@@ -181,6 +184,7 @@ export const Footer = () => (
                 href="https://instagram.com/ukquidditch"
                 target="_blank"
                 rel="noopener noreferrer"
+                pl={{ _: 5, m: 3 }}
               >
                 <InstagramIcon />
               </Icon>

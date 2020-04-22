@@ -5,8 +5,11 @@ interface Data {
   meta_image: any;
 }
 
+export type Posts = Record<string, any>[];
+
 export interface Page {
   page: {
     [key: string]: Data;
   };
+  posts: Posts;
 }
