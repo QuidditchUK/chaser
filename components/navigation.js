@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Headroom from 'react-headroom';
 import styled from 'styled-components';
@@ -121,7 +121,7 @@ const List = styled.ul`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
-    display: flex;
+    display: ${({ testingtest }) => (testingtest ? 'flex' : 'flex')};
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
@@ -134,35 +134,44 @@ const List = styled.ul`
     transition: transform 0.3s;
     width: 100%;
     padding: 0 ${({ theme }) => theme.space[4]};
-
-    /* WIP - Navigation with dropdowns */
+    
     li > ul,
     ul,
     li:hover > ul, 
     li:focus > ul,
     li ul:focus {
-      display: inline;
-      position: relative;
-      padding: 1rem 0rem;
-      margin-top: 1rem;
-      border-top: 0;
-      top: 0;
+      margin: initial;
+      padding: initial;
+      position: initial;
+      height: 0;
+      transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
+      background: unset;
+      /* transition: height 0.3s; */
+      display: block;
+      overflow: hidden;
+
+      &.show {
+        height: 100%;
+      }
 
       li {
         display: flex;
+        margin: ${({ theme }) => theme.space[3]} auto;
         width: 100%;
-        padding: 0;
+
 
         a {
           width: 100%;
-          
+
           &:hover {
             color: ${({ theme }) => theme.colors.primary};
           }
         }
 
         span {
-          padding: 0;
+          display: block;
+          padding: ${({ theme }) => theme.space[2]} 0;
+          background: ${({ theme }) => tint(0.7, theme.colors.primary)};
 
           &:hover {
             color: ${({ theme }) => theme.colors.primary};
@@ -224,6 +233,13 @@ const Hamburger = styled(HamburgerIcon)`
 
 function Navigation() {
   const [open, setOpen] = useState(false);
+  const [navigationToggle, setNavigationToggle] = useState(10);
+
+  // function updateNavigationToggle(index) {
+  //   const current = navigationToggle;
+  //   current[index] = !current[index];
+  //   setNavigationToggle(navigationToggle);
+  // }
 
   return (
     <Wrapper>
@@ -239,22 +255,31 @@ function Navigation() {
 
         <Nav>
           <List open={open}>
-            {TOP_NAVIGATION.map((item) => (
+            {TOP_NAVIGATION.map((item, i) => (
               <Item key={item.label} pl={8}>
-                <ActiveLink href={item.link}>
-                  <NavItem onClick={() => setOpen(false)}>{item.label}</NavItem>
-                </ActiveLink>
+                {item.list
+                  ? (
+                    <>
+                      <NavItem onClick={() => setNavigationToggle(i)}>{item.label}</NavItem>
+                    </>
+                  )
+                  : (
+                    <ActiveLink href={item.link}>
+                      <NavItem onClick={() => setOpen(false)}>{item.label}</NavItem>
+                    </ActiveLink>
+                  )}
+
 
                 {item.list && (
-                <List>
-                  {item.list.map((subItem) => (
-                    <Item key={subItem.link}>
-                      <ActiveLink href={subItem.link}>
-                        <NavItem onClick={() => setOpen(false)}>{subItem.label}</NavItem>
-                      </ActiveLink>
-                    </Item>
-                  ))}
-                </List>
+                  <List className={`${(navigationToggle === i) ? 'show' : ''}`}>
+                    {item.list.map((subItem) => (
+                      <Item key={subItem.link}>
+                        <ActiveLink href={subItem.link}>
+                          <NavItem onClick={() => setOpen(false)}>{subItem.label}</NavItem>
+                        </ActiveLink>
+                      </Item>
+                    ))}
+                  </List>
                 )}
               </Item>
             ))}
