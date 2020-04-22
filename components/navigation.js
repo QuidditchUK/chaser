@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Headroom from 'react-headroom';
 import styled from 'styled-components';
 import { space } from 'styled-system';
-import { transparentize, tint } from 'polished';
+import { transparentize, tint, rgba } from 'polished';
 import ScrollLock from 'react-scrolllock';
 import HamburgerIcon from '../public/images/hamburger.svg';
 import { TOP_NAVIGATION } from '../constants/navigation';
@@ -62,6 +62,63 @@ const List = styled.ul`
     }
   }
 
+  li {
+    cursor: pointer;
+  }
+
+  ul {
+    display: none;
+  }
+
+  li:hover > ul, 
+  li:focus > ul,
+  li ul:focus {
+    display: flex;
+    position: absolute;
+    top: 35px;
+    border-top: 25px solid ${rgba(0, 0, 0, 0)};
+    flex-direction: column;
+    justify-content: flex-start;
+
+    li {
+      background: ${({ theme }) => theme.colors.white};
+      box-shadow: 0 10px 0.625rem rgba(0,0,0,0.3);
+      width: 100%;
+
+      a {         
+        color: ${({ theme }) => theme.colors.greyDark};
+        display: block;
+
+        width: 100%;
+
+        &:hover {
+          color: ${({ theme }) => theme.colors.white};
+        }
+      }
+
+      span {
+        color: inherit;
+        display: block;
+        padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[6]};
+        width: 100%;
+
+        &:hover {
+          color: ${({ theme }) => theme.colors.white};
+        }
+
+        &.active {
+          color: ${({ theme }) => theme.colors.white};
+          background: ${({ theme }) => theme.colors.primary};
+        }
+      }
+
+      &:hover {
+        background: ${({ theme }) => theme.colors.primary};
+        color: ${({ theme }) => theme.colors.white};
+      }
+    }
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
     display: flex;
@@ -77,6 +134,42 @@ const List = styled.ul`
     transition: transform 0.3s;
     width: 100%;
     padding: 0 ${({ theme }) => theme.space[4]};
+
+    /* WIP - Navigation with dropdowns */
+    li > ul,
+    ul,
+    li:hover > ul, 
+    li:focus > ul,
+    li ul:focus {
+      display: inline;
+      position: relative;
+      padding: 1rem 0rem;
+      margin-top: 1rem;
+      border-top: 0;
+      top: 0;
+
+      li {
+        display: flex;
+        width: 100%;
+        padding: 0;
+
+        a {
+          width: 100%;
+          
+          &:hover {
+            color: ${({ theme }) => theme.colors.primary};
+          }
+        }
+
+        span {
+          padding: 0;
+
+          &:hover {
+            color: ${({ theme }) => theme.colors.primary};
+          }
+        }
+      }
+    }
   }
 `;
 
@@ -147,10 +240,22 @@ function Navigation() {
         <Nav>
           <List open={open}>
             {TOP_NAVIGATION.map((item) => (
-              <Item key={item.link} pl={8}>
+              <Item key={item.label} pl={8}>
                 <ActiveLink href={item.link}>
                   <NavItem onClick={() => setOpen(false)}>{item.label}</NavItem>
                 </ActiveLink>
+
+                {item.list && (
+                <List>
+                  {item.list.map((subItem) => (
+                    <Item key={subItem.link}>
+                      <ActiveLink href={subItem.link}>
+                        <NavItem onClick={() => setOpen(false)}>{subItem.label}</NavItem>
+                      </ActiveLink>
+                    </Item>
+                  ))}
+                </List>
+                )}
               </Item>
             ))}
 

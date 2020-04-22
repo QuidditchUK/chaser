@@ -4,10 +4,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 const ActiveLink = ({ href, children }) => {
-  const router = useRouter();
+  const { asPath } = useRouter();
 
   let className = children.props.className || '';
-  if (router.asPath === href) {
+  const regexHref = RegExp(href.replace(/\//g, '\\/'), 'g');
+  // console.log(`/${regexHref}/g`);
+
+  if (regexHref.test(asPath)) {
     className = `${className} active`;
   }
 
