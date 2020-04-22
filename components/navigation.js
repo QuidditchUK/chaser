@@ -146,7 +146,6 @@ const List = styled.ul`
       height: 0;
       transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
       background: unset;
-      /* display: none; */
       overflow: hidden;
       border-top: 0;
 
@@ -154,6 +153,7 @@ const List = styled.ul`
         display: flex;
         margin: ${({ theme }) => theme.space[3]} auto;
         width: 100%;
+        box-shadow: none;
 
         a {
           width: 100%;
@@ -169,12 +169,12 @@ const List = styled.ul`
           background: ${({ theme }) => tint(0.7, theme.colors.primary)};
 
           &.active {
-             background: ${({ theme }) => theme.colors.primary};
-             color: ${({ theme }) => theme.colors.white};
+            background: ${({ theme }) => theme.colors.primary};
+            color: ${({ theme }) => theme.colors.white};
 
-             &:hover {
-               color: ${({ theme }) => theme.colors.white};
-             }
+            &:hover {
+              color: ${({ theme }) => theme.colors.white};
+            }
           }
 
 
