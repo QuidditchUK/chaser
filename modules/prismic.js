@@ -14,6 +14,6 @@ export const formatMetadata = ({ meta_description, meta_title, meta_image }) => 
 export const getDocs = async (type, options = {}) => {
   const { results } = await Client().query(Prismic.Predicates.at('document.type', type), options);
   return results;
-}
+};
 
-export const getPrismicDocByUid = (type: string, uid: string) => Client().getByUID(type, uid, {});
+export const getPrismicDocByUid = (type, uid) => Client().getByUID(type, uid, {});

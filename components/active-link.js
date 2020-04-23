@@ -8,7 +8,6 @@ const ActiveLink = ({ href, children }) => {
 
   let className = children.props.className || '';
   const regexHref = RegExp(href.replace(/\//g, '\\/'), 'g');
-  // console.log(`/${regexHref}/g`);
 
   if (regexHref.test(asPath)) {
     className = `${className} active`;

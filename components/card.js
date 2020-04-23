@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { space, variant, typography } from 'styled-system';
+import { RichText } from 'prismic-reactjs';
 import Heading from './heading';
 import { rem } from '../styles/theme';
 
@@ -65,22 +66,30 @@ const Card = ({
   image,
   name,
   category,
+  content,
   ...cardProps
 }) => (
   <StyledCard {...cardProps}>
     <Image>{image}</Image>
-    <Content>
-      <Category fontWeight="bold" fontSize={(rem(10))}>{category}</Category>
-      <Heading as="h2" fontSize={3}>{name}</Heading>
 
+    <Content>
+      {category && <Category fontWeight="bold" fontSize={(rem(10))}>{category}</Category>}
+      <Heading as="h2" fontSize={3}>{name}</Heading>
+      {content && <Content>{RichText.render(content)}</Content>}
     </Content>
   </StyledCard>
 );
 
+Card.defaultProps = {
+  category: null,
+  content: null,
+};
+
 Card.propTypes = {
   name: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
+  category: PropTypes.string,
   image: PropTypes.shape({}).isRequired,
+  content: PropTypes.string,
 };
 
 export default Card;

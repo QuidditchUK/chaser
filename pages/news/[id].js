@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetStaticProps, GetStaticPaths } from 'next';
+import PropTypes from 'prop-types';
 
 import { getDocs, getPrismicDocByUid, formatMetadata } from '../../modules/prismic';
 import renderPrismicSections from '../../constants/prismic';
@@ -7,9 +7,8 @@ import Layout from '../../containers/layout';
 import Meta from '../../components/meta';
 import BlogHero from '../../components/blog-hero';
 import BlogSupport from '../../components/blog-support';
-import { Page } from '../../types';
 
-const Post = ({ page }: Page) => (
+const Post = ({ page }) => (
   <>
     {page
       ? (
@@ -27,7 +26,7 @@ const Post = ({ page }: Page) => (
   </>
 );
 
-export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
+export const getStaticProps = async ({ params: { id } }) => {
   const uid = id.toString();
   const page = await getPrismicDocByUid('post', uid);
 
@@ -36,13 +35,21 @@ export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths = async () => {
   const allPages = await getDocs('post');
 
   return {
     paths: allPages?.map(({ uid }) => `/news/${uid}`),
     fallback: true,
   };
+};
+
+Post.propTypes = {
+  page: PropTypes.shape({
+    data: PropTypes.shape({
+      body: PropTypes.arrayOf(PropTypes.shape({})),
+    }),
+  }).isRequired,
 };
 
 export default Post;

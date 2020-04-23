@@ -62,7 +62,7 @@ const Icon = styled.a`
 
     &:hover {
       svg {
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.secondary};
       }
     }
 `;

@@ -4,11 +4,9 @@ module.exports = {
     "react",
     "jsx-a11y",
     "react-hooks",
-    "@typescript-eslint"
   ],
-  "parser": "@typescript-eslint/parser",
+  "parser": "babel-eslint",
   "parserOptions": {
-    "project": "./tsconfig.json",
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
@@ -22,17 +20,18 @@ module.exports = {
     "mocha": true
   },
   "extends": [
-    "airbnb-typescript",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
+    "airbnb",
+    "eslint:recommended",
+    "plugin:react/recommended",
   ],
   "rules": {
     "max-len": 0,
     "no-restricted-globals": 0,
+    "camelcase": 0,
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".jsx", ".tsx"]
+        "extensions": [".js", ".jsx"]
       }
     ],
     "react/destructuring-assignment": 0,
