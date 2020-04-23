@@ -17,25 +17,41 @@ const StyledLink = styled.a`
 `;
 
 const HorizontalScrollWrapper = styled.div`
-  /* white-space: nowrap; */
   overflow-x: scroll;
   overflow-y: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
+    overflow-x: initial;
+    overflow-y: initial;
+  }
+`;
+
+const HorizontalSpacer = styled.div`
+  display: block;
+
+   @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
+    display: none;
+  }
 `;
 
 const News = ({ posts }) => (
   <Box
     bg="greyLight"
     py={{ _: 6, l: 10 }}
-    paddingLeft={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-    paddingRight={{ _: 0, m: 'gutter.m' }}
+    px={{ _: 0, m: 'gutter.m' }}
   >
     <Container>
-      <Heading as="h2" fontSize={[3, 3, 4]} mt={0}>Latest News</Heading>
+      <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>Latest News</Heading>
       <HorizontalScrollWrapper>
         <Grid
-          gridTemplateColumns={{ _: 'repeat(6, calc(75% - 40px))', m: 'repeat(auto-fit, minmax(300px, 1fr))' }}
+          gridTemplateColumns={{ _: '1rem repeat(6, calc(75% - 40px)) 2.5rem', m: 'repeat(auto-fit, minmax(300px, 1fr))' }}
           gridGap={{ _: 'gutter._', m: 'gutter.m' }}
         >
+          <HorizontalSpacer />
 
           {posts.map(({ uid, data }) => (
             <Flex flexDirection="column" key={uid}>
@@ -58,6 +74,8 @@ const News = ({ posts }) => (
               </Link>
             </Flex>
           ))}
+
+          <HorizontalSpacer />
         </Grid>
       </HorizontalScrollWrapper>
     </Container>
