@@ -6,7 +6,7 @@ import Button from './button';
 import { HeadingHero } from './hero';
 import { Flex, Box } from './layout';
 
-const heightBreakpoints = { _: '30vh', l: '70vh' };
+const heightBreakpoints = { _: '250px', m: '540px' };
 
 const Video = styled.video`
   width: 121%;
