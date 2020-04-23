@@ -26,7 +26,6 @@ const variants = (theme) => ({
 });
 
 const StyledCard = styled.article`
-  /* cursor: pointer; */
   border-radius: ${({ theme }) => theme.radius[1]};
   display: flex;
   flex-direction: column;
