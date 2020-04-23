@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Headroom from 'react-headroom';
 import styled from 'styled-components';
@@ -73,12 +73,12 @@ const List = styled.ul`
   li:hover > ul, 
   li:focus > ul,
   li ul:focus {
-    display: flex;
-    position: absolute;
-    top: 35px;
     border-top: 25px solid ${rgba(0, 0, 0, 0)};
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    position: absolute;
+    top: 35px;
 
     li {
       background: ${({ theme }) => theme.colors.white};
@@ -88,7 +88,6 @@ const List = styled.ul`
       a {         
         color: ${({ theme }) => theme.colors.greyDark};
         display: block;
-
         width: 100%;
 
         &:hover {
@@ -107,8 +106,8 @@ const List = styled.ul`
         }
 
         &.active {
-          color: ${({ theme }) => theme.colors.white};
           background: ${({ theme }) => theme.colors.primary};
+          color: ${({ theme }) => theme.colors.white};
         }
       }
 
@@ -120,46 +119,42 @@ const List = styled.ul`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    li:has(ul) {
-      margin-bottom: 0;
-    }
-
     background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
     display: ${({ testingtest }) => (testingtest ? 'flex' : 'flex')};
     flex-direction: column;
     flex-wrap: wrap;
+    left: 0;
     justify-content: center;
     height: 100vh;
     margin: 0;
+    padding: 0 ${({ theme }) => theme.space[4]};
     position: absolute;
-    left: 0;
     top: 0;
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
     transition: transform 0.3s;
     width: 100%;
-    padding: 0 ${({ theme }) => theme.space[4]};
     
     li > ul,
     ul,
     li:hover > ul, 
     li:focus > ul,
     li ul:focus {
+      background: unset;
+      border-top: 0;
+      display: block;
       margin: initial;
+      max-height: 0;
+      overflow: hidden;
       padding: initial;
       position: initial;
-      max-height: 0;
       transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-      background: unset;
-      overflow: hidden;
-      border-top: 0;
       transition: max-height 0.5s;
-      display: block;
 
       li {
+        box-shadow: none;
         display: flex;
         margin: ${({ theme }) => theme.space[3]} auto;
         width: 100%;
-        box-shadow: none;
 
         a {
           width: 100%;
@@ -170,9 +165,9 @@ const List = styled.ul`
         }
 
         span {
+          background: ${({ theme }) => tint(0.7, theme.colors.primary)};
           display: block;
           padding: ${({ theme }) => theme.space[2]} 0;
-          background: ${({ theme }) => tint(0.7, theme.colors.primary)};
 
           &.active {
             background: ${({ theme }) => theme.colors.primary};
@@ -183,7 +178,6 @@ const List = styled.ul`
             }
           }
 
-
           &:hover {
             color: ${({ theme }) => theme.colors.primary};
           }
@@ -191,8 +185,8 @@ const List = styled.ul`
       }
 
       &.dropdown, .dropdown:hover {
-        max-height: 200px;
         height: auto;
+        max-height: 200px;
       }
     }
   }

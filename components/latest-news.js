@@ -9,7 +9,7 @@ import Image from './image';
 import Container from './container';
 
 const StyledLink = styled.a`
-  text-decoration:none;
+  text-decoration: none;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
