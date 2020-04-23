@@ -120,6 +120,10 @@ const List = styled.ul`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
+    li:has(ul) {
+      margin-bottom: 0;
+    }
+
     background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
     display: ${({ testingtest }) => (testingtest ? 'flex' : 'flex')};
     flex-direction: column;
@@ -143,11 +147,13 @@ const List = styled.ul`
       margin: initial;
       padding: initial;
       position: initial;
-      height: 0;
+      max-height: 0;
       transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
       background: unset;
       overflow: hidden;
       border-top: 0;
+      transition: max-height 0.5s;
+      display: block;
 
       li {
         display: flex;
@@ -185,8 +191,8 @@ const List = styled.ul`
       }
 
       &.dropdown, .dropdown:hover {
-        display: block;
-        height: initial;
+        max-height: 200px;
+        height: auto;
       }
     }
   }
