@@ -8,6 +8,7 @@ const HeaderAndParagraph = dynamic(() => import('../components/header-and-paragr
 const ImageSlice = dynamic(() => import('../components/image-slice'));
 const ImageAndContent = dynamic(() => import('../components/image-and-content'));
 const Cards = dynamic(() => import('../components/cards'));
+const FindQuidditch = dynamic(() => import('../components/find-quidditch'));
 
 const types = {
   video_hero_with_cta: HomeHero,
@@ -17,6 +18,7 @@ const types = {
   images: ImageSlice,
   image_and_content: ImageAndContent,
   cards: Cards,
+  find_quidditch: FindQuidditch,
 };
 
 export default function (sections, posts) {
