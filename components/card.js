@@ -55,8 +55,7 @@ const Category = styled.span`
   ${typography};
   color: ${({ theme }) => theme.colors.white};
   text-transform: uppercase;
-  border: 3px solid ${({ theme }) => theme.colors.primary};
-  background: ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.categoryColors[Math.floor((Math.random() * theme.categoryColors.length))]};
   border-radius: ${({ theme }) => theme.radius[1]};
   padding: ${({ theme }) => theme.space[1]} ${({ theme }) => theme.space[2]};
 `;
@@ -73,7 +72,7 @@ const Card = ({
 
     <Content>
       {category && <Category fontWeight="bold" fontSize={(rem(10))}>{category}</Category>}
-      {name && <Heading as="h2" fontSize={3}>{name}</Heading>}
+      {name && <Heading as="h2" fontSize={3} isBody>{name}</Heading>}
       {content && <Content>{RichText.render(content)}</Content>}
     </Content>
   </StyledCard>

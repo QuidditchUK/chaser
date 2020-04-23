@@ -25,6 +25,8 @@ const colors = {
   darkRed: '#1f0707',
 };
 
+const categoryColors = [colors.northernMagenta, colors.southernBlue, colors.royalBlue, colors.monarchRed];
+
 colors.primary = colors.royalBlue;
 colors.secondary = colors.monarchRed;
 
@@ -90,4 +92,5 @@ export default {
   radius,
   shadows,
   space,
+  categoryColors,
 };

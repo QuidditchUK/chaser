@@ -47,7 +47,7 @@ const News = ({ posts }) => (
     px={{ _: 0, m: 'gutter.m' }}
   >
     <Container>
-      <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }}>Latest News</Heading>
+      <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }} isBody color="primary">Latest News</Heading>
       <HorizontalScrollWrapper>
         <Grid
           gridTemplateColumns={{ _: '1rem repeat(6, calc(75% - 40px)) 2.5rem', m: 'repeat(auto-fit, minmax(300px, 1fr))' }}
