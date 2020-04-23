@@ -17,7 +17,7 @@ export const TOP_NAVIGATION = [
       },
       {
         label: 'Executive',
-        link: '/meet-the-executive',
+        link: '/about/meet-the-executive',
       },
     ],
   },

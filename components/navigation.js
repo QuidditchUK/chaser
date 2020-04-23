@@ -148,7 +148,7 @@ const List = styled.ul`
       padding: initial;
       position: initial;
       transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-      transition: max-height 0.5s;
+      transition: max-height 0.3s;
 
       li {
         box-shadow: none;
