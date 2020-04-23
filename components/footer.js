@@ -15,6 +15,7 @@ import { rem } from '../styles/theme';
 import FacebookIcon from '../public/images/facebook.svg';
 import TwitterIcon from '../public/images/twitter.svg';
 import InstagramIcon from '../public/images/instagram.svg';
+import YoutubeIcon from '../public/images/youtube.svg';
 
 const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';
@@ -187,6 +188,16 @@ export const Footer = () => (
                 pl={{ _: 5, m: 3 }}
               >
                 <InstagramIcon />
+              </Icon>
+
+              <Icon
+                aria-label="Subscribe to our Youtube Channel"
+                href="https://www.youtube.com/channel/UCef5ZmqGJvff6RIqA0KS0wQ"
+                target="_blank"
+                rel="noopener noreferrer"
+                pl={{ _: 5, m: 3 }}
+              >
+                <YoutubeIcon />
               </Icon>
             </Flex>
           </Flex>
