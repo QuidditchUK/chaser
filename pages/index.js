@@ -14,7 +14,7 @@ const Home = ({ page, posts }) => (
 
 export const getStaticProps = async () => {
   const page = await getPrismicDocByUid('pages', 'home');
-  const posts = await getDocs('post', { orderings: '[my.post.date desc]', pageSize: 18 });
+  const posts = await getDocs('post', { orderings: '[my.post.date desc]', pageSize: 6 });
 
   return {
     props: { page, posts },
