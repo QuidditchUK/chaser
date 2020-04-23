@@ -7,6 +7,7 @@ const LatestNews = dynamic(() => import('../components/latest-news'));
 const HeaderAndParagraph = dynamic(() => import('../components/header-and-paragraph'));
 const ImageSlice = dynamic(() => import('../components/image-slice'));
 const ImageAndContent = dynamic(() => import('../components/image-and-content'));
+const Cards = dynamic(() => import('../components/cards'));
 
 const types = {
   video_hero_with_cta: HomeHero,
@@ -15,6 +16,7 @@ const types = {
   header_and_paragraph: HeaderAndParagraph,
   images: ImageSlice,
   image_and_content: ImageAndContent,
+  cards: Cards,
 };
 
 export default function (sections, posts) {

@@ -7,6 +7,7 @@ import { Grid, Flex, Box } from './layout';
 import Card from './card';
 import Image from './image';
 import Container from './container';
+import Heading from './heading';
 
 const StyledLink = styled.a`
   text-decoration: none;
@@ -22,6 +23,8 @@ const News = ({ posts }) => (
     px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
   >
     <Container>
+      <Heading as="h2" fontSize={[3, 3, 4]} mt={0}>Latest News</Heading>
+
       <Grid
         gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
         gridGap={{ _: 'gutter._', m: 'gutter.m' }}

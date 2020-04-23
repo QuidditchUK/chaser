@@ -26,7 +26,7 @@ const variants = (theme) => ({
 });
 
 const StyledCard = styled.article`
-  cursor: pointer;
+  /* cursor: pointer; */
   border-radius: ${({ theme }) => theme.radius[1]};
   display: flex;
   flex-direction: column;
@@ -74,7 +74,7 @@ const Card = ({
 
     <Content>
       {category && <Category fontWeight="bold" fontSize={(rem(10))}>{category}</Category>}
-      <Heading as="h2" fontSize={3}>{name}</Heading>
+      {name && <Heading as="h2" fontSize={3}>{name}</Heading>}
       {content && <Content>{RichText.render(content)}</Content>}
     </Content>
   </StyledCard>
@@ -83,10 +83,11 @@ const Card = ({
 Card.defaultProps = {
   category: null,
   content: null,
+  name: null,
 };
 
 Card.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   category: PropTypes.string,
   image: PropTypes.shape({}).isRequired,
   content: PropTypes.string,
