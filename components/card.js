@@ -90,7 +90,7 @@ Card.propTypes = {
   name: PropTypes.string,
   category: PropTypes.string,
   image: PropTypes.shape({}).isRequired,
-  content: PropTypes.string,
+  content: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default Card;
