@@ -10,7 +10,7 @@ import Container from './container';
 
 import { rem } from '../styles/theme';
 
-const minHeight = { _: '30vh', m: '50vh' };
+const minHeight = { _: '250px', m: '400px' };
 
 const Tag = styled.span`
   ${typography};
