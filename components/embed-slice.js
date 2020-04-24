@@ -1,0 +1,106 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { RichText } from 'prismic-reactjs';
+import get from 'just-safe-get';
+import styled from 'styled-components';
+import { typography, space } from 'styled-system';
+import PrismicWrapper from './prismic-wrapper';
+import { Box, Grid } from './layout';
+import Heading from './heading';
+import Content from './content';
+
+const Support = styled.div`
+${typography};
+${space};
+`;
+
+const VideoContainer = styled(Box)`
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+`;
+
+const Video = styled.iframe`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+`;
+
+
+const Item = ({ item }) => {
+  let url = null;
+
+  // Oh, you better believe that is a-hackin'
+  if (item.embed.provider_name === 'YouTube') {
+    [url] = item
+      .embed.html
+      .split('src="')[1]
+      .split('"');
+  }
+
+  return (
+    <Box>
+      {url
+        ? (
+          <VideoContainer>
+            <Video src={url} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          </VideoContainer>
+        )
+        : (<div dangerouslySetInnerHTML={{ __html: item.embed.html }} />)}
+
+      {item.support && (<Support textAlign="center" pt={2} fontStyle="italic">{item.support}</Support>)}
+    </Box>
+  );
+};
+
+Item.propTypes = {
+  item: PropTypes.shape({
+    embed: PropTypes.shape({
+      html: PropTypes.string.isRequired,
+      provider_name: PropTypes.string,
+    }),
+    support: PropTypes.string,
+  }).isRequired,
+};
+
+const Embed = (rawData) => {
+  const data = {
+    title: get(rawData, 'primary.title'),
+    content: get(rawData, 'primary.content'),
+    items: get(rawData, 'items'),
+    variant: get(rawData, 'primary.variant'),
+  };
+
+  const multipleEmbeds = data.items.length > 1;
+
+  return (
+    <PrismicWrapper variant={data.variant} small={!multipleEmbeds}>
+      {RichText.asText(data.title) && (
+        <Heading as="h2" fontSize={[3, 3, 4]} mt={2} textAlign="center">
+          {RichText.asText(data.title)}
+        </Heading>
+      )}
+
+      {data.content && <Content textAlign="center" pb={3}>{RichText.render(data.content)}</Content>}
+
+      <Grid
+        gridTemplateColumns={{ _: '1fr', m: `${(multipleEmbeds ? '1fr 1fr' : '1fr')}` }}
+        gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+      >
+        {data.items.map((itemData, i) => {
+          const item = {
+            embed: get(itemData, 'embed'),
+            support: get(itemData, 'support'),
+          };
+
+          return (<Item key={`embed-slice-${i}`} item={item} />);
+        })}
+      </Grid>
+    </PrismicWrapper>
+  );
+};
+
+export default Embed;
