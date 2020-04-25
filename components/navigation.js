@@ -17,7 +17,7 @@ const logoText = '/images/logo-text.png';
 
 const Wrapper = styled(Headroom)`
   position: relative;
-  z-index: 5;
+  z-index: ${({ open }) => (open ? 7 : 5)};
 `;
 
 const Header = styled.header`
@@ -79,6 +79,7 @@ const List = styled.ul`
     justify-content: flex-start;
     position: absolute;
     top: 35px;
+    z-index: 15;
 
     li {
       background: ${({ theme }) => theme.colors.white};
@@ -246,7 +247,7 @@ function Navigation() {
   const [navigationToggle, setNavigationToggle] = useState(10);
 
   return (
-    <Wrapper>
+    <Wrapper open={open}>
       <Header>
         <Link href="/" passHref>
           <LogoLink onClick={() => setOpen(false)}>
@@ -268,7 +269,7 @@ function Navigation() {
                     </>
                   )
                   : (
-                    <ActiveLink href={item.link}>
+                    <ActiveLink href={item.href} as={item.as} passHref>
                       <NavItem onClick={() => setOpen(false)}>{item.label}</NavItem>
                     </ActiveLink>
                   )}
@@ -277,8 +278,8 @@ function Navigation() {
                 {item.list && (
                   <List className={`${navigationToggle === i ? 'dropdown' : ''}`}>
                     {item.list.map((subItem) => (
-                      <Item key={subItem.link}>
-                        <ActiveLink href={subItem.link}>
+                      <Item key={subItem.href}>
+                        <ActiveLink href={subItem.href} as={item.as} passHref>
                           <NavItem onClick={() => setOpen(false)}>{subItem.label}</NavItem>
                         </ActiveLink>
                       </Item>

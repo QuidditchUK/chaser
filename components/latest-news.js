@@ -40,14 +40,14 @@ const HorizontalSpacer = styled.div`
   }
 `;
 
-const News = ({ posts }) => (
+const News = ({ posts, category }) => (
   <Box
     bg="greyLight"
     py={{ _: 6, l: 10 }}
     px={{ _: 0, m: 'gutter.m' }}
   >
     <Container>
-      <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }} isBody color="primary">Latest News</Heading>
+      <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }} isBody color="primary">{category || 'Latest'} News</Heading>
       <HorizontalScrollWrapper>
         <Grid
           gridTemplateColumns={{ _: '1rem repeat(6, calc(75% - 40px)) 2.5rem', m: 'repeat(auto-fit, minmax(300px, 1fr))' }}
@@ -57,7 +57,7 @@ const News = ({ posts }) => (
 
           {posts.map(({ uid, data }) => (
             <Flex flexDirection="column" key={uid}>
-              <Link href={`/news/${uid}`} passHref>
+              <Link href="/news/[id]" as={`/news/${uid}`} passHref>
                 <StyledLink>
                   <Card
                     variant="light"
@@ -85,10 +85,12 @@ const News = ({ posts }) => (
 );
 
 News.defaultProps = {
+  category: null,
   posts: [],
 };
 
 News.propTypes = {
+  category: PropTypes.string,
   posts: PropTypes.arrayOf(PropTypes.shape({})),
 };
 

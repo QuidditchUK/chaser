@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { typography } from 'styled-system';
+import Link from 'next/link';
 
 import get from 'just-safe-get';
 
@@ -16,10 +17,15 @@ const Tag = styled.span`
   ${typography};
   color: ${({ theme }) => theme.colors.primary};
   text-transform: uppercase;
+  text-decoration: none;
   border: 3px solid ${({ theme }) => theme.colors.white};
   background: ${({ theme }) => theme.colors.white};
   border-radius: ${({ theme }) => theme.radius[1]};
   padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
+`;
+
+const StyledLink = styled.a`
+  text-decoration: none;
 `;
 
 const BlogHero = (rawData) => {
@@ -59,7 +65,7 @@ const BlogHero = (rawData) => {
         >
           <Container maxWidth={rem(960)} textAlign="center" px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
             <HeadingHero fontSize={[3, 3, 4]} color="white" textAlign="center" pb={2}>{data.title}</HeadingHero>
-            <Tag fontWeight="bold" fontSize={[1, 1, 2]}>{data.category}</Tag>
+            <Link href={`/news/${data.category.toLowerCase()}`} passHref><StyledLink href={`/news/${data.category.toLowerCase()}`}><Tag fontWeight="bold" fontSize={[1, 1, 2]}>{data.category}</Tag></StyledLink></Link>
           </Container>
         </Flex>
       </Box>

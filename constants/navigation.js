@@ -1,46 +1,56 @@
 export const TOP_NAVIGATION = [
   {
     label: 'About',
-    link: '/about',
+    href: '/about',
+    as: '/[id]',
     list: [
       {
         label: 'What is Quidditch',
-        link: '/about/what-is-quidditch',
+        href: '/about/what-is-quidditch',
+        as: '/about/[id]',
       },
       {
         label: 'History',
-        link: '/about/history',
+        href: '/about/history',
+        as: '/about/[id]',
       },
       {
         label: 'Team UK',
-        link: '/team-uk',
+        href: '/team-uk',
+        as: '/[id]',
       },
       {
         label: 'Executive',
-        link: '/about/meet-the-executive',
+        href: '/about/meet-the-executive',
+        as: '/about/[id]',
       },
     ],
   },
   {
     label: 'Get Involved',
-    link: '/get-involved',
+    href: '/get-involved',
+    as: '/[id]',
     list: [
       {
         label: 'Refereeing',
-        link: '/get-involved/refereeing',
+        href: '/get-involved/refereeing',
+        as: '/get-involved/[id]',
       },
       {
         label: 'Coaching',
-        link: '/get-involved/coaching',
+        href: '/get-involved/coaching',
+        as: '/get-involved/[id]',
       },
       {
         label: 'Volunteering',
-        link: '/get-involved/volunteering',
+        href: '/get-involved/volunteering',
+        as: '/get-involved/[id]',
       },
     ],
   },
   {
     label: 'News',
-    link: '/news',
+    href: '/news',
+    as: '/news',
   },
 ];

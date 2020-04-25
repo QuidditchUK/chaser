@@ -86,10 +86,10 @@ export const Footer = () => (
             </Heading>
 
             <List>
-              <Item><ActiveLink href="/about/what-is-quidditch"><span>What is Quidditch</span></ActiveLink></Item>
-              <Item><ActiveLink href="/about/history"><span>History</span></ActiveLink></Item>
-              <Item><ActiveLink href="/team-uk"><span>Team UK</span></ActiveLink></Item>
-              <Item><ActiveLink href="/about/meet-the-executive"><span>Executive</span></ActiveLink></Item>
+              <Item><ActiveLink href="/about/what-is-quidditch" as="/about/[id]"><span>What is Quidditch</span></ActiveLink></Item>
+              <Item><ActiveLink href="/about/history" as="/about/[id]"><span>History</span></ActiveLink></Item>
+              <Item><ActiveLink href="/team-uk" as="/[id]"><span>Team UK</span></ActiveLink></Item>
+              <Item><ActiveLink href="/about/meet-the-executive" as="/about/[id]"><span>Executive</span></ActiveLink></Item>
             </List>
           </GridItem>
 
@@ -100,10 +100,10 @@ export const Footer = () => (
 
             <List>
               <Item>Find Quidditch</Item>
-              <Item><ActiveLink href="/get-involved/refereeing"><span>Refereeing</span></ActiveLink></Item>
-              <Item><ActiveLink href="/get-involved/coaching"><span>Coaching</span></ActiveLink></Item>
-              <Item><ActiveLink href="/get-involved/volunteering"><span>Volunteering</span></ActiveLink></Item>
-              <Item><ActiveLink href="/news"><span>News</span></ActiveLink></Item>
+              <Item><ActiveLink href="/get-involved/refereeing" as="/get-involved/[id]"><span>Refereeing</span></ActiveLink></Item>
+              <Item><ActiveLink href="/get-involved/coaching" as="/get-involved/[id]"><span>Coaching</span></ActiveLink></Item>
+              <Item><ActiveLink href="/get-involved/volunteering" as="/get-involved/[id]"><span>Volunteering</span></ActiveLink></Item>
+              <Item><ActiveLink href="/news" as="news"><span>News</span></ActiveLink></Item>
             </List>
           </GridItem>
 
@@ -113,11 +113,11 @@ export const Footer = () => (
             </Heading>
 
             <List>
-              <Item><ActiveLink href="/info/contact-us"><span>Contact Us</span></ActiveLink></Item>
-              <Item><ActiveLink href="/info/faqs"><span>FAQs</span></ActiveLink></Item>
-              <Item><ActiveLink href="/info/rule-book"><span>Rule Book</span></ActiveLink></Item>
-              <Item><ActiveLink href="/info/key-documents"><span>Key Documents</span></ActiveLink></Item>
-              <Item><ActiveLink href="/info/policies"><span>Policies</span></ActiveLink></Item>
+              <Item><ActiveLink href="/info/contact-us" as="/info/[id]"><span>Contact Us</span></ActiveLink></Item>
+              <Item><ActiveLink href="/info/faqs" as="/info/[id]"><span>FAQs</span></ActiveLink></Item>
+              <Item><ActiveLink href="/info/rule-book" as="/info/[id]"><span>Rule Book</span></ActiveLink></Item>
+              <Item><ActiveLink href="/info/key-documents" as="/info/[id]"><span>Key Documents</span></ActiveLink></Item>
+              <Item><ActiveLink href="/info/policies" as="/info/[id]"><span>Policies</span></ActiveLink></Item>
             </List>
           </GridItem>
 

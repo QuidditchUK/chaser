@@ -44,7 +44,7 @@ export const Embed = ({ embed }) => {
       {url
         ? (
           <VideoContainer>
-            <Video src={url} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+            <Video src={url} frameborder="0" allowfullscreen />
           </VideoContainer>
         )
         : (<div dangerouslySetInnerHTML={{ __html: embed.html }} />)}
