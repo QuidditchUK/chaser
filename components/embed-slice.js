@@ -29,32 +29,44 @@ const Video = styled.iframe`
   border: 0;
 `;
 
-
-const Item = ({ item }) => {
+export const Embed = ({ embed }) => {
   let url = null;
 
   // Oh, you better believe that is a-hackin'
-  if (item.embed.provider_name === 'YouTube') {
-    [url] = item
-      .embed.html
+  if (embed.provider_name === 'YouTube') {
+    [url] = embed.html
       .split('src="')[1]
       .split('"');
   }
 
   return (
-    <Box>
+    <>
       {url
         ? (
           <VideoContainer>
             <Video src={url} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
           </VideoContainer>
         )
-        : (<div dangerouslySetInnerHTML={{ __html: item.embed.html }} />)}
-
-      {item.support && (<Support textAlign="center" pt={2} fontStyle="italic">{item.support}</Support>)}
-    </Box>
+        : (<div dangerouslySetInnerHTML={{ __html: embed.html }} />)}
+    </>
   );
 };
+
+Embed.propTypes = {
+  embed: PropTypes.shape({
+    html: PropTypes.string.isRequired,
+    provider_name: PropTypes.string,
+  }).isRequired,
+};
+
+
+export const Item = ({ item }) => (
+  <Box>
+    <Embed embed={item.embed} />
+
+    {item.support && (<Support textAlign="center" pt={2} fontStyle="italic">{item.support}</Support>)}
+  </Box>
+);
 
 Item.propTypes = {
   item: PropTypes.shape({
@@ -66,7 +78,7 @@ Item.propTypes = {
   }).isRequired,
 };
 
-const Embed = (rawData) => {
+const EmbedSlice = (rawData) => {
   const data = {
     title: get(rawData, 'primary.title'),
     content: get(rawData, 'primary.content'),
@@ -103,4 +115,4 @@ const Embed = (rawData) => {
   );
 };
 
-export default Embed;
+export default EmbedSlice;
