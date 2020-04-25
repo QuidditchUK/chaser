@@ -120,7 +120,7 @@ const News = ({
           )
           : (
             <Grid
-              gridTemplateColumns={{ _: '1fr', m: 'repeat(auto-fit, minmax(300px, 1fr))' }}
+              gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
               gridGap={{ _: 'gutter._', m: 'gutter.m' }}
               px={{ _: 'gutter._', s: 'gutter.s', m: 0 }}
             >
