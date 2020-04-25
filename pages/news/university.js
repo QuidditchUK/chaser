@@ -11,7 +11,7 @@ const News = ({ posts }) => (
   <Layout>
     <Meta />
     <NewsHeader />
-    <LatestNews posts={posts} category="University" allowPagination={false} />
+    <LatestNews posts={posts} category="University" allowPagination horizontalScroll={false} />
   </Layout>
 );
 
