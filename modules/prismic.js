@@ -22,3 +22,5 @@ export const getBlogCategory = async (category, options = {}) => {
 };
 
 export const getPrismicDocByUid = (type, uid) => Client().getByUID(type, uid, {});
+
+export const PAGE_SIZE = 6;

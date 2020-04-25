@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getBlogCategory } from '../../modules/prismic';
+import { getBlogCategory, PAGE_SIZE } from '../../modules/prismic';
 
 import LatestNews from '../../components/latest-news';
 import NewsHeader from '../../components/news-header';
@@ -11,12 +11,12 @@ const News = ({ posts }) => (
   <Layout>
     <Meta />
     <NewsHeader />
-    <LatestNews posts={posts} category="Community" />
+    <LatestNews posts={posts} category="Community" allowPagination horizontalScroll={false} />
   </Layout>
 );
 
 export const getStaticProps = async () => {
-  const posts = await getBlogCategory('Community', { orderings: '[my.post.date desc]', pageSize: 18 });
+  const posts = await getBlogCategory('Community', { orderings: '[my.post.date desc]', pageSize: PAGE_SIZE });
 
   return {
     props: { posts },
