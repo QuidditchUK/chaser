@@ -7,6 +7,8 @@ import theme from '../styles/theme';
 
 const Scripts = dynamic(() => import('../document/scripts'), { ssr: false });
 
+require('intersection-observer');
+
 function App({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>

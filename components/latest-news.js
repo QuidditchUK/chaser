@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { useInView } from 'react-intersection-observer';
 
 import { Grid, Flex, Box } from './layout';
 import Card from './card';
@@ -42,8 +43,30 @@ const HorizontalSpacer = styled.div`
   }
 `;
 
+const LoadMore = ({ setPage }) => {
+  const [ref, inView] = useInView({ threshold: 0 });
+
+  useEffect(() => {
+    if (inView) {
+      setPage((currentPage) => currentPage + 1);
+    }
+  }, [inView, setPage]);
+
+
+  return (
+    <Flex alignItems="center" justifyContent="center" py={5} ref={ref}><Button variant="light">Load More</Button></Flex>
+  );
+};
+
+LoadMore.propTypes = {
+  setPage: PropTypes.func.isRequired,
+};
+
 const News = ({
-  posts: initialPosts, category, allowPagination, horizontalScroll,
+  posts: initialPosts,
+  category,
+  allowPagination,
+  horizontalScroll,
 }) => {
   const [loading, setLoading] = useState(false);
   const [showLoadMore, setShowLoadMore] = useState(allowPagination);
@@ -150,9 +173,7 @@ const News = ({
 
         {loading && <Flex alignItems="center" justifyContent="center" py={5}>Loading...</Flex>}
         {showLoadMore && !loading && (
-          <Flex alignItems="center" justifyContent="center" py={5}>
-            <Button variant="light" onClick={() => setPage((currentPage) => currentPage + 1)}>Load More</Button>
-          </Flex>
+          <LoadMore setPage={setPage} />
         )}
       </Container>
     </Box>

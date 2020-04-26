@@ -5,6 +5,7 @@
   "dependencies": {
     "@svgr/webpack": "5.3.1",
     "date-fns": "2.12.0",
+    "intersection-observer": "^0.10.0",
     "just-safe-get": "2.0.0",
     "next": "9.3.5",
     "polished": "3.5.1",
@@ -14,6 +15,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-headroom": "3.0.0",
+    "react-intersection-observer": "^8.26.2",
     "react-loading-skeleton": "2.0.1",
     "react-scrolllock": "5.0.1",
     "styled-components": "5.1.0",
