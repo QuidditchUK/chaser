@@ -1,56 +1,52 @@
 export const TOP_NAVIGATION = [
   {
     label: 'About',
-    href: '/about',
-    as: '/[id]',
     list: [
       {
         label: 'What is Quidditch',
-        href: '/about/what-is-quidditch',
-        as: '/about/[id]',
+        as: '/about/what-is-quidditch',
+        href: '/about/[id]',
       },
       {
         label: 'History',
-        href: '/about/history',
-        as: '/about/[id]',
+        as: '/about/history',
+        href: '/about/[id]',
       },
       {
         label: 'Team UK',
-        href: '/team-uk',
-        as: '/[id]',
+        as: '/team-uk',
+        href: '/[id]',
       },
       {
         label: 'Executive',
-        href: '/about/meet-the-executive',
-        as: '/about/[id]',
+        as: '/about/meet-the-executive',
+        href: '/about/[id]',
       },
     ],
   },
   {
     label: 'Get Involved',
-    href: '/get-involved',
-    as: '/[id]',
     list: [
       {
         label: 'Refereeing',
-        href: '/get-involved/refereeing',
-        as: '/get-involved/[id]',
+        as: '/get-involved/refereeing',
+        href: '/get-involved/[id]',
       },
       {
         label: 'Coaching',
-        href: '/get-involved/coaching',
-        as: '/get-involved/[id]',
+        as: '/get-involved/coaching',
+        href: '/get-involved/[id]',
       },
       {
         label: 'Volunteering',
-        href: '/get-involved/volunteering',
-        as: '/get-involved/[id]',
+        as: '/get-involved/volunteering',
+        href: '/get-involved/[id]',
       },
     ],
   },
   {
     label: 'News',
-    href: '/news',
     as: '/news',
+    href: '/news',
   },
 ];

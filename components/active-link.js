@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
@@ -13,7 +14,7 @@ const ActiveLink = ({ href, children, as }) => {
     className = `${className} active`;
   }
 
-  return (<Link href={href} as={as}><a href={href}>{React.cloneElement(children, { className })}</a></Link>);
+  return (<Link href={href} as={as} passHref><a>{React.cloneElement(children, { className })}</a></Link>);
 };
 
 ActiveLink.propTypes = {
@@ -30,7 +31,7 @@ export const ExactActiveLink = ({ href, children, as }) => {
     className = `${className} active`;
   }
 
-  return (<Link href={href} as={as}><a href={href}>{React.cloneElement(children, { className })}</a></Link>);
+  return (<Link href={href} as={as} passHref><a>{React.cloneElement(children, { className })}</a></Link>);
 };
 
 ExactActiveLink.propTypes = {

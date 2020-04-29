@@ -269,7 +269,7 @@ function Navigation() {
                     </>
                   )
                   : (
-                    <ActiveLink href={item.href} as={item.as} passHref>
+                    <ActiveLink href={item.href} as={item.as}>
                       <NavItem onClick={() => setOpen(false)}>{item.label}</NavItem>
                     </ActiveLink>
                   )}
@@ -278,8 +278,8 @@ function Navigation() {
                 {item.list && (
                   <List className={`${navigationToggle === i ? 'dropdown' : ''}`}>
                     {item.list.map((subItem) => (
-                      <Item key={subItem.href}>
-                        <ActiveLink href={subItem.href} as={item.as} passHref>
+                      <Item key={subItem.as}>
+                        <ActiveLink href={subItem.href} as={subItem.as}>
                           <NavItem onClick={() => setOpen(false)}>{subItem.label}</NavItem>
                         </ActiveLink>
                       </Item>
