@@ -8,9 +8,9 @@ const ActiveLink = ({ href, children, as }) => {
   const { asPath } = useRouter();
 
   let className = children.props.className || '';
-  const regexHref = RegExp(href.replace(/\//g, '\\/'), 'g');
+  const regexAs = RegExp(as.replace(/\//g, '\\/'), 'g');
 
-  if (regexHref.test(asPath)) {
+  if (regexAs.test(asPath)) {
     className = `${className} active`;
   }
 
@@ -27,7 +27,7 @@ export const ExactActiveLink = ({ href, children, as }) => {
   const { asPath } = useRouter();
   let className = children.props.className || '';
 
-  if (href === asPath) {
+  if (as === asPath) {
     className = `${className} active`;
   }
 
