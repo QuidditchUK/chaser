@@ -33,7 +33,7 @@ const Hero = (rawData) => {
         alignItems="center"
         justifyContent="center"
       >
-        <HeadingHero fontSize={[4, 4, 5]} color="white">{data.title}</HeadingHero>
+        <HeadingHero fontSize={[4, 4, 7]} color="white">{data.title}</HeadingHero>
       </Flex>
     </Box>
   );

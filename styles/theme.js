@@ -8,8 +8,8 @@ const breakpoints = [rem(576), rem(768), rem(992), rem(1200)];
 
 [breakpoints.s] = breakpoints;
 [, breakpoints.m] = breakpoints;
-[,, breakpoints.l] = breakpoints;
-[,,, breakpoints.xl] = breakpoints;
+[, , breakpoints.l] = breakpoints;
+[, , , breakpoints.xl] = breakpoints;
 
 const colors = {
   white: '#fff',
@@ -37,19 +37,19 @@ const fonts = {
   heading: 'century-gothic, sans-serif',
 };
 
-const fontSizes = [rem(0), rem(14), rem(16), rem(20), rem(32), rem(80)];
+const fontSizes = [rem(0), rem(14), rem(16), rem(20), rem(32), rem(40), rem(48), rem(80)];
 
 [, fontSizes.bodyCard] = fontSizes;
-[,, fontSizes.body] = fontSizes;
-[,,, fontSizes.headingCard] = fontSizes;
-[,,,, fontSizes.headingMobile] = fontSizes;
-[,,,,, fontSizes.heading] = fontSizes;
+[, , fontSizes.body] = fontSizes;
+[, , , fontSizes.headingCard] = fontSizes;
+[, , , , fontSizes.headingMobile] = fontSizes;
+[, , , , , , , fontSizes.heading] = fontSizes;
 
 const lineHeights = [rem(0), rem(16), rem(20), rem(24), rem(28)];
 
 [, lineHeights.body] = lineHeights;
-[,, lineHeights.display] = lineHeights;
-[,,, lineHeights.displayMobile] = lineHeights;
+[, , lineHeights.display] = lineHeights;
+[, , , lineHeights.displayMobile] = lineHeights;
 
 const radius = [rem(3), rem(10)];
 

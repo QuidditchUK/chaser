@@ -50,7 +50,7 @@ const HomeHero = (rawData) => {
         flexDirection="column"
         zIndex={2}
       >
-        <HeadingHero fontSize={[4, 4, 5]} mt={0} mb={8} color="white">{data.title}</HeadingHero>
+        <HeadingHero fontSize={[4, 4, 7]} mt={0} mb={8} color="white">{data.title}</HeadingHero>
 
         <Formik
           initialValues={{ postcode: '' }}
