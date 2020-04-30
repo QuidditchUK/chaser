@@ -1,5 +1,7 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import get from 'just-safe-get';
+import { Formik, Form, Field } from 'formik';
 import styled from 'styled-components';
 import Input from './input';
 import Button from './button';
@@ -14,6 +16,8 @@ const Video = styled.video`
 `;
 
 const HomeHero = (rawData) => {
+  const router = useRouter();
+
   const data = {
     title: get(rawData, 'primary.slug'),
     cta_text: get(rawData, 'primary.cta_text'),
@@ -48,9 +52,17 @@ const HomeHero = (rawData) => {
       >
         <HeadingHero fontSize={[4, 4, 5]} mt={0} mb={8} color="white">{data.title}</HeadingHero>
 
-        <Flex flexDirection="row">
-          <Input type="text" placeholder="Postcode" /><Button type="button" variant="primary" ml={2}>{data.cta_text}</Button>
-        </Flex>
+        <Formik
+          initialValues={{ postcode: '' }}
+          onSubmit={({ postcode }) => router.push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`)}
+        >
+          <Form>
+            <Flex flexDirection="row">
+              <Field name="postcode" placeholder="Postcode" as={Input} />
+              <Button type="submit" variant="primary" ml={2}>{data.cta_text}</Button>
+            </Flex>
+          </Form>
+        </Formik>
       </Flex>
     </Box>
   );

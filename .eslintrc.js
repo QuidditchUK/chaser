@@ -24,6 +24,9 @@ module.exports = {
     "eslint:recommended",
     "plugin:react/recommended",
   ],
+  "settings": {
+    "import/resolver": "babel-plugin-root-import"
+  },
   "rules": {
     "max-len": 0,
     "no-restricted-globals": 0,

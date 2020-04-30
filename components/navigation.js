@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Headroom from 'react-headroom';
@@ -5,8 +6,8 @@ import styled from 'styled-components';
 import { space } from 'styled-system';
 import { transparentize, tint, rgba } from 'polished';
 import ScrollLock from 'react-scrolllock';
-import HamburgerIcon from '../public/images/hamburger.svg';
-import { TOP_NAVIGATION } from '../constants/navigation';
+import HamburgerIcon from '~/public/images/hamburger.svg';
+import { TOP_NAVIGATION } from '~/constants/navigation';
 
 import ActiveLink from './active-link';
 import { Logo, LogoLink } from './logo';
@@ -289,7 +290,7 @@ function Navigation() {
               </Item>
             ))}
 
-            <Item pl={8}><Button type="button" variant={{ _: 'secondary', l: 'primary' }}>Find Quidditch</Button></Item>
+            <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={{ _: 'secondary', l: 'primary' }}>Find Quidditch</Button></a></Link></Item>
             <Item pl={4}><Button type="button" variant="light">Sign in</Button></Item>
             <ScrollLock isActive={open} />
           </List>
