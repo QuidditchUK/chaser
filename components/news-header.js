@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { flexbox } from 'styled-system';
 import { Box } from './layout';
 import Container from './container';
 import ActiveLink, { ExactActiveLink } from './active-link';
@@ -15,13 +16,15 @@ const List = styled.ul`
   align-items: center;
   display: flex;
   list-style-type: none;
-  justify-content: center;
+  padding-left: 0;
+  justify-content: space-between;
+  ${flexbox};
 `;
 
 const ListItem = styled.li`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.greyDark};
-  padding: 0 ${({ theme }) => theme.space[4]};
+  padding: 0;
 
   a {
     text-decoration: none;
@@ -38,8 +41,12 @@ const ListItem = styled.li`
 `;
 
 const NewsHeader = () => (
-  <NewsHeaderWrapper bg="white" width="100%" height="60px">
-    <Container>
+  <NewsHeaderWrapper
+    bg="white"
+    width="100%"
+    height="60px"
+  >
+    <Container px={{ _: 6 }} maxWidth={{ _: '100%', m: '500px' }}>
       <List>
         <ListItem>
           <ExactActiveLink href="/news" as="/news"><span>All</span></ExactActiveLink>
