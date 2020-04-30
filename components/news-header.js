@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { flexbox } from 'styled-system';
 import { Box } from './layout';
 import Container from './container';
 import ActiveLink, { ExactActiveLink } from './active-link';
@@ -18,7 +17,6 @@ const List = styled.ul`
   list-style-type: none;
   padding-left: 0;
   justify-content: space-between;
-  ${flexbox};
 `;
 
 const ListItem = styled.li`
