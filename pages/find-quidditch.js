@@ -27,6 +27,11 @@ const Input = styled.input`
   color: ${({ theme }) => theme.colors.white};
   outline: 0;
   ${space};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.white};
+    opacity: 0.8;
+  }
 `;
 
 const fetchResults = (postcode) => console.log(postcode);
