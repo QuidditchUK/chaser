@@ -28,11 +28,9 @@ const colors = {
 };
 
 colors.primary = colors.royalBlue;
-// colors.primary = colors.seekerYellow;
 colors.secondary = colors.monarchRed;
 
 const categoryColors = [colors.northernMagenta, colors.southernBlue, colors.royalBlue, colors.monarchRed];
-
 
 const containerSize = rem(1280);
 
