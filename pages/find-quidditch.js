@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
+import {
+  Formik,
+  Form,
+  Field,
+  useFormikContext,
+} from 'formik';
+import styled from 'styled-components';
+import { space } from 'styled-system';
+import debounce from 'just-debounce';
 import Layout from '~/containers/layout';
 import { Box, Flex } from '~/components/layout';
 import { HeadingHero } from '~/components/hero';
@@ -10,6 +19,40 @@ import Heading from '~/components/heading';
 // import Meta from '../components/meta';
 
 const minHeight = { _: '250px', m: '400px' };
+
+const Input = styled.input`
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.white};
+  outline: 0;
+  ${space};
+`;
+
+const fetchResults = (postcode) => console.log(postcode);
+const fetchDebouncedResults = debounce(fetchResults, 1000);
+
+const updatePostcode = (postcode) => {
+  Router.push({
+    pathname: Router.pathname,
+    query: { postcode },
+  }, {
+    pathname: Router.pathname,
+    query: { postcode },
+  }, { shallow: true });
+
+  fetchDebouncedResults(postcode);
+};
+
+const AutoValidatePostcode = () => {
+  const { values } = useFormikContext();
+
+  useEffect(() => {
+    updatePostcode(values.postcode);
+  }, [values.postcode]);
+
+  return null;
+};
 
 const FindQuidditch = ({ clubs, events }) => {
   const { query: { postcode = '' } } = useRouter();
@@ -38,22 +81,37 @@ const FindQuidditch = ({ clubs, events }) => {
           position="relative"
           minHeight={minHeight}
           alignItems="center"
-          justifyContent="center"
           zIndex={2}
         >
-          <HeadingHero fontSize={[4, 5, 6]} color="white">Quidditch near {postcode}</HeadingHero>
+          <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+            <Formik
+              initialValues={{ postcode }}
+            >
+              <Form>
+                <HeadingHero fontSize={[4, 4, 6]} color="white" isBody>
+                  Quidditch near
+                  <Field
+                    name="postcode"
+                    placeholder="Postcode"
+                    as={Input}
+                    size="8"
+                    marginLeft={[2, 4]}
+                  />
+                  <AutoValidatePostcode />
+                </HeadingHero>
+              </Form>
+            </Formik>
+          </Container>
         </Flex>
       </Box>
 
       <Box
         bg="greyLight"
         py={{ _: 6, l: 10 }}
-        px={{ _: 0, m: 'gutter.m' }}
       >
-        <Container>
-          <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }} isBody color="primary">Clubs</Heading>
-
-          <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }} isBody color="primary">Events</Heading>
+        <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+          <Heading as="h2" fontSize={[3, 3, 4]} mt={0} isBody color="primary">Clubs</Heading>
+          <Heading as="h2" fontSize={[3, 3, 4]} mt={0} isBody color="primary">Events</Heading>
         </Container>
         {clubs}
         {events}

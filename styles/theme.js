@@ -23,12 +23,16 @@ const colors = {
   greyDark: '#787d80',
   darkBlue: '#070d1f',
   darkRed: '#1f0707',
+  keeperGreen: '#34a31d',
+  seekerYellow: '#f7ea34',
 };
+
+colors.primary = colors.royalBlue;
+// colors.primary = colors.seekerYellow;
+colors.secondary = colors.monarchRed;
 
 const categoryColors = [colors.northernMagenta, colors.southernBlue, colors.royalBlue, colors.monarchRed];
 
-colors.primary = colors.royalBlue;
-colors.secondary = colors.monarchRed;
 
 const containerSize = rem(1280);
 
