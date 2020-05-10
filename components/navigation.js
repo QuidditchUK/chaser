@@ -72,7 +72,20 @@ const List = styled.ul`
   }
 
   ul {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    justify-content: flex-start;
+    transition: max-height 0.3s;
+    width: 0;
+    justify-content: flex-start;
+    position: absolute;
+    top: 35px;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
+      width: auto;
+    }
   }
 
   li:hover > ul, 
@@ -80,11 +93,14 @@ const List = styled.ul`
   li ul:focus {
     border-top: 25px solid ${rgba(0, 0, 0, 0)};
     display: flex;
+    overflow: hidden;
     flex-direction: column;
     justify-content: flex-start;
     position: absolute;
+    width: auto;
     top: 35px;
     z-index: 15;
+    max-height: 400px;
 
     li {
       background: ${({ theme }) => theme.colors.white};
@@ -236,7 +252,6 @@ const NavItem = styled.span`
 
     &:hover {
       background: ${({ theme }) => tint(0.9, theme.colors.primary)};
-      /* color: ${({ theme }) => theme.colors.secondary}; */
     }
   }
 `;
