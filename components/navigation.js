@@ -147,9 +147,9 @@ const List = styled.ul`
     flex-wrap: wrap;
     left: 0;
     justify-content: center;
-    min-height: 100%;
+    height: 100vh;
     margin: 0;
-    padding: 60px ${({ theme }) => theme.space[4]};
+    padding: 0 ${({ theme }) => theme.space[4]};
     position: absolute;
     top: 0;
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
