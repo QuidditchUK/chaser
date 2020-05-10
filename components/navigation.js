@@ -7,7 +7,7 @@ import { space } from 'styled-system';
 import { transparentize, tint, rgba } from 'polished';
 import ScrollLock from 'react-scrolllock';
 import HamburgerIcon from '~/public/images/hamburger.svg';
-import { TOP_NAVIGATION } from '~/constants/navigation';
+import { MAIN_NAVIGATION } from '~/constants/navigation';
 
 import ActiveLink from './active-link';
 import { Logo, LogoLink } from './logo';
@@ -261,7 +261,7 @@ function Navigation() {
 
         <Nav>
           <List open={open}>
-            {TOP_NAVIGATION.map((item, i) => (
+            {MAIN_NAVIGATION.map((item, i) => (
               <Item key={item.label} pl={8}>
                 {item.list
                   ? (

@@ -29,7 +29,7 @@ const Page = ({ page }) => {
 };
 
 export const getStaticProps = async ({ params: { id } }) => {
-  const page = await getPrismicDocByUid('about', id) || null;
+  const page = await getPrismicDocByUid('volunteer', id) || null;
 
   return {
     props: { page },
@@ -37,10 +37,10 @@ export const getStaticProps = async ({ params: { id } }) => {
 };
 
 export const getStaticPaths = async () => {
-  const allPages = await getDocs('about');
+  const allPages = await getDocs('volunteer');
 
   return {
-    paths: allPages?.map(({ uid }) => `/about/${uid}`),
+    paths: allPages?.map(({ uid }) => `/volunteer/${uid}`),
     fallback: true,
   };
 };

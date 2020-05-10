@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import Page404 from '~/pages/404';
-
 import { getPrismicDocByUid, getDocs, formatMetadata } from '~/modules/prismic';
 import renderPrismicSections from '~/constants/prismic';
 import Layout from '~/containers/layout';
@@ -29,7 +28,7 @@ const Page = ({ page }) => {
 };
 
 export const getStaticProps = async ({ params: { id } }) => {
-  const page = await getPrismicDocByUid('about', id) || null;
+  const page = await getPrismicDocByUid('programmes', id) || null;
 
   return {
     props: { page },
@@ -37,10 +36,10 @@ export const getStaticProps = async ({ params: { id } }) => {
 };
 
 export const getStaticPaths = async () => {
-  const allPages = await getDocs('about');
+  const allPages = await getDocs('programmes');
 
   return {
-    paths: allPages?.map(({ uid }) => `/about/${uid}`),
+    paths: allPages?.map(({ uid }) => `/programmes/${uid}`),
     fallback: true,
   };
 };

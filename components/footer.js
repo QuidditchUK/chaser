@@ -20,7 +20,6 @@ import YoutubeIcon from '../public/images/youtube.svg';
 const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';
 
-
 const year = new Date().getFullYear();
 
 const List = styled.ul`
@@ -82,42 +81,44 @@ export const Footer = () => (
         >
           <GridItem>
             <Heading as="h3" color="white">
-            About
+            Information
             </Heading>
 
             <List>
-              <Item><ActiveLink as="/about/what-is-quidditch" href="/about/[id]"><span>What is Quidditch</span></ActiveLink></Item>
-              <Item><ActiveLink as="/about/history" href="/about/[id]"><span>History</span></ActiveLink></Item>
-              <Item><ActiveLink as="/team-uk" href="/[id]"><span>Team UK</span></ActiveLink></Item>
-              <Item><ActiveLink as="/about/meet-the-executive" href="/about/[id]"><span>Executive</span></ActiveLink></Item>
+              <Item><ActiveLink as="/about/contact-us" href="/about/[id]"><span>Contact Us</span></ActiveLink></Item>
+              <Item><ActiveLink as="/about/staff" href="/about/[id]"><span>Staff</span></ActiveLink></Item>
+              <Item><ActiveLink as="/find-quidditch" href="/find-quidditch"><span>All Clubs</span></ActiveLink></Item>
+              <Item><ActiveLink as="/about/results" href="/about/[id]"><span>Results</span></ActiveLink></Item>
+              <Item><ActiveLink as="/about/fees" href="/about/[id]"><span>Season Fees</span></ActiveLink></Item>
             </List>
           </GridItem>
 
           <GridItem>
             <Heading as="h3" color="white">
-            Get Involved
+            Partners
             </Heading>
 
             <List>
-              <Item>Find Quidditch</Item>
-              <Item><ActiveLink as="/get-involved/refereeing" href="/get-involved/[id]"><span>Refereeing</span></ActiveLink></Item>
-              <Item><ActiveLink as="/get-involved/coaching" href="/get-involved/[id]"><span>Coaching</span></ActiveLink></Item>
-              <Item><ActiveLink as="/get-involved/volunteering" href="/get-involved/[id]"><span>Volunteering</span></ActiveLink></Item>
-              <Item><ActiveLink as="/news" href="news"><span>News</span></ActiveLink></Item>
+              <Item><a href="http://www.enricheducationuk.com/quidditch/" target="_blank" rel="noopener noreferrer"><span>Enrich Education</span></a></Item>
+              <Item><a href="https://www.epionemedical.com/" target="_blank" rel="noopener noreferrer"><span>Epione Medical</span></a></Item>
+              <Item><a href="https://www.utilityapparel.com/" target="_blank" rel="noopener noreferrer"><span>Utility Apparel</span></a></Item>
+              <Item><a href="https://quidditcheurope.wixsite.com/" target="_blank" rel="noopener noreferrer"><span>Quidditch Europe</span></a></Item>
+              <Item><a href="https://iqasport.com" target="_blank" rel="noopener noreferrer"><span>International Quidditch Association</span></a></Item>
+              <Item><a href="https://quidditchpremierleague.com" target="_blank" rel="noopener noreferrer"><span>Quidditch Premier League</span></a></Item>
             </List>
           </GridItem>
 
           <GridItem>
             <Heading as="h3" color="white">
-            Info
+            Programmes
             </Heading>
 
             <List>
-              <Item><ActiveLink as="/info/contact-us" href="/info/[id]"><span>Contact Us</span></ActiveLink></Item>
-              <Item><ActiveLink as="/info/faqs" href="/info/[id]"><span>FAQs</span></ActiveLink></Item>
-              <Item><ActiveLink as="/info/rule-book" href="/info/[id]"><span>Rule Book</span></ActiveLink></Item>
-              <Item><ActiveLink as="/info/key-documents" href="/info/[id]"><span>Key Documents</span></ActiveLink></Item>
-              <Item><ActiveLink as="/info/policies" href="/info/[id]"><span>Policies</span></ActiveLink></Item>
+              <Item><ActiveLink as="/programmes/national-teams" href="/programmes/[id]"><span>National Teams</span></ActiveLink></Item>
+              <Item><ActiveLink as="/programmes/grants" href="/programmes/[id]"><span>Grants</span></ActiveLink></Item>
+              <Item><ActiveLink as="/programmes/all-in-coaching" href="/programmes/[id]"><span>All In Coaching</span></ActiveLink></Item>
+              <Item><ActiveLink as="/programmes/level-up" href="/programmes/[id]"><span>Level Up</span></ActiveLink></Item>
+              <Item><ActiveLink as="/programmes/queens-cup" href="/programmes/[id]"><span>Queens Cup</span></ActiveLink></Item>
             </List>
           </GridItem>
 

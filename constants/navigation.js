@@ -1,4 +1,4 @@
-export const TOP_NAVIGATION = [
+export const MAIN_NAVIGATION = [
   {
     label: 'About',
     list: [
@@ -13,36 +13,154 @@ export const TOP_NAVIGATION = [
         href: '/about/[id]',
       },
       {
-        label: 'Team UK',
-        as: '/team-uk',
-        href: '/[id]',
+        label: 'Leadership',
+        as: '/about/leadership',
+        href: '/about/[id]',
       },
       {
-        label: 'Executive',
-        as: '/about/meet-the-executive',
+        label: 'Documents & Policies',
+        as: '/about/documents-and-policies',
+        href: '/about/[id]',
+      },
+      {
+        label: 'Minutes',
+        as: '/about/minutes',
         href: '/about/[id]',
       },
     ],
   },
   {
-    label: 'Get Involved',
+    label: 'Play',
     list: [
       {
-        label: 'Refereeing',
-        as: '/get-involved/refereeing',
-        href: '/get-involved/[id]',
+        label: 'Find Quidditch',
+        as: '/find-quidditch',
+        href: '/find-quidditch',
       },
       {
-        label: 'Coaching',
-        as: '/get-involved/coaching',
-        href: '/get-involved/[id]',
+        label: 'Getting Started',
+        as: '/play/getting-started',
+        href: '/play/[id]',
       },
       {
-        label: 'Volunteering',
-        as: '/get-involved/volunteering',
-        href: '/get-involved/[id]',
+        label: 'Rulebook',
+        as: '/play/rulebook',
+        href: '/play/[id]',
+      },
+      {
+        label: 'Official Events',
+        as: '/play/official-events',
+        href: '/play/[id]',
       },
     ],
+  },
+  {
+    label: 'Volunteer',
+    list: [
+      {
+        label: 'Staff',
+        as: '/volunteer/staff',
+        href: '/volunteer/[id]',
+      },
+      {
+        label: 'Coaches',
+        as: '/volunteer/coaches',
+        href: '/volunteer/[id]',
+      },
+      {
+        label: 'Referees',
+        as: '/volunteer/referees',
+        href: '/volunteer/[id]',
+      },
+      {
+        label: 'Snitches',
+        as: '/volunteer/snitches',
+        href: '/volunteer/[id]',
+      },
+      {
+        label: 'Tournaments',
+        as: '/volunteer/tournaments',
+        href: '/volunteer/[id]',
+      },
+    ],
+  },
+  {
+    label: 'Youth',
+    as: '/youth',
+    href: '/[id]',
+  },
+  {
+    label: 'Merch',
+    as: '/merch',
+    href: '/[id]',
+  },
+  {
+    label: 'News',
+    as: '/news',
+    href: '/news',
+  },
+];
+
+export const DASHBOARD_NAVIGATION = [
+  {
+    label: 'Events',
+    list: [
+      {
+        label: 'Register',
+        as: '/events/register',
+        href: '/events/register',
+      },
+    ],
+  },
+  {
+    label: 'My Membership',
+    list: [
+      {
+        label: 'Manage QUK Membership',
+        as: '/membership/manage',
+        href: '/membership/[id]',
+      },
+      {
+        label: 'Club',
+        as: '/membership/club',
+        href: '/membership/[id]',
+      },
+      {
+        label: 'Transfer',
+        as: '/membership/transfer',
+        href: '/membership/[id]',
+      },
+    ],
+  },
+  {
+    label: 'Tournament Volunteer',
+    list: [
+      {
+        label: 'Staff',
+        as: '/tournaments/volunteer/staff',
+        href: '/tournaments/volunteer/[id]',
+      },
+      {
+        label: 'Referees',
+        as: '/tournaments/volunteer/referees',
+        href: '/tournaments/volunteer/[id]',
+      },
+      {
+        label: 'Snitches',
+        as: '/tournaments/volunteer/snitches',
+        href: '/tournaments/volunteer/[id]',
+      },
+      {
+        label: 'Claim Expenses',
+        as: '/tournaments/volunteer/claim-expenses',
+        href: '/tournaments/volunteer/[id]',
+      },
+    ],
+  },
+  {
+    label: 'Merch',
+    as: '/merch',
+    href: '/merch',
   },
   {
     label: 'News',
