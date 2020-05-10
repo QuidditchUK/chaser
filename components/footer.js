@@ -102,7 +102,7 @@ export const Footer = () => (
               <Item><a href="http://www.enricheducationuk.com/quidditch/" target="_blank" rel="noopener noreferrer"><span>Enrich Education</span></a></Item>
               <Item><a href="https://www.epionemedical.com/" target="_blank" rel="noopener noreferrer"><span>Epione Medical</span></a></Item>
               <Item><a href="https://www.utilityapparel.com/" target="_blank" rel="noopener noreferrer"><span>Utility Apparel</span></a></Item>
-              <Item><a href="https://quidditcheurope.wixsite.com/" target="_blank" rel="noopener noreferrer"><span>Quidditch Europe</span></a></Item>
+              <Item><a href="https://quidditcheurope.wixsite.com/quidditcheurope" target="_blank" rel="noopener noreferrer"><span>Quidditch Europe</span></a></Item>
               <Item><a href="https://iqasport.com" target="_blank" rel="noopener noreferrer"><span>International Quidditch Association</span></a></Item>
               <Item><a href="https://quidditchpremierleague.com" target="_blank" rel="noopener noreferrer"><span>Quidditch Premier League</span></a></Item>
             </List>
