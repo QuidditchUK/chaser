@@ -149,6 +149,7 @@ const List = styled.ul`
     justify-content: center;
     height: 100vh;
     margin: 0;
+    overflow: hidden;
     padding: 0 ${({ theme }) => theme.space[4]};
     position: absolute;
     top: 0;
@@ -298,7 +299,6 @@ function Navigation() {
                       <NavItem onClick={() => setOpen(false)}>{item.label}</NavItem>
                     </ActiveLink>
                   )}
-
 
                 {item.list && (
                   <List className={`${navigationToggle === i ? 'dropdown' : ''}`}>
