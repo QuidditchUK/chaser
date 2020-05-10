@@ -3,16 +3,15 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 
-const SITE_URL = 'https://chaser.quk-tech.now.sh';
+const SITE_URL = 'https://chaser.quidditchuk.now.sh';
 
-const Meta = ({ 
-  subTitle, 
+const Meta = ({
+  subTitle,
   description,
   image,
   title,
   type,
 }) => {
-
   const router = useRouter();
   const url = `${router.asPath}`;
   const formattedTitle = subTitle ? `${subTitle} | ${title}` : title;
@@ -37,14 +36,14 @@ Meta.defaultProps = {
   subTitle: 'Find Your Passion',
   title: 'QuidditchUK',
   type: 'website',
-}
+};
 
 Meta.propTypes = {
-    title: PropTypes.string,
-    subTitle: PropTypes.string,
-    description: PropTypes.string,
-    image: PropTypes.string,
-    type: PropTypes.string,
+  title: PropTypes.string,
+  subTitle: PropTypes.string,
+  description: PropTypes.string,
+  image: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default Meta;

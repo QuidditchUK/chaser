@@ -7,11 +7,13 @@ import { Flex } from '~/components/layout';
 import Heading from '~/components/heading';
 import Content from '~/components/content';
 import Image from '~/components/image';
+import Meta from '../components/meta';
 
 export default function Custom404() {
   return (
     <Layout>
       <Container>
+        <Meta subTitle="Page Not Found" />
         <Flex alignItems="center" justifyContent="center" flexDirection="column" py={10} px={5}>
           <Heading as="h1" textAlign="center" marginTop={0}>Page Not Found</Heading>
           <Image src="/images/404.gif" alt="404" height={208} width={500} />
