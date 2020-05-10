@@ -142,14 +142,14 @@ const List = styled.ul`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
-    display: ${({ testingtest }) => (testingtest ? 'flex' : 'flex')};
+    display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     left: 0;
     justify-content: center;
-    height: 100vh;
+    min-height: 100%;
     margin: 0;
-    padding: 0 ${({ theme }) => theme.space[4]};
+    padding: 60px ${({ theme }) => theme.space[4]};
     position: absolute;
     top: 0;
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
