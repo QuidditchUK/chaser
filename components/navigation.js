@@ -25,7 +25,7 @@ const Header = styled.header`
   align-items: center;
   background: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadows.box};
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secondary};
   display: flex;
   flex-direction: row;
   height: 60px;
@@ -55,11 +55,15 @@ const List = styled.ul`
 
   span {
     &.active {
-      color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.secondary};
 
       @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
         font-weight: 700;
       }
+    }
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.secondary};
     }
   }
 
@@ -108,13 +112,13 @@ const List = styled.ul`
         }
 
         &.active {
-          background: ${({ theme }) => theme.colors.primary};
+          background: ${({ theme }) => theme.colors.secondary};
           color: ${({ theme }) => theme.colors.white};
         }
       }
 
       &:hover {
-        background: ${({ theme }) => theme.colors.primary};
+        background: ${({ theme }) => theme.colors.secondary};
         color: ${({ theme }) => theme.colors.white};
       }
     }
@@ -135,6 +139,10 @@ const List = styled.ul`
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
     transition: transform 0.3s;
     width: 100%;
+
+    span:hover {
+      color: ${({ theme }) => theme.colors.primary};
+    }
     
     li > ul,
     ul,
@@ -162,7 +170,7 @@ const List = styled.ul`
           width: 100%;
 
           &:hover {
-            color: ${({ theme }) => theme.colors.primary};
+            color: ${({ theme }) => theme.colors.secondary};
           }
         }
 
@@ -176,7 +184,7 @@ const List = styled.ul`
             color: ${({ theme }) => theme.colors.white};
 
             &:hover {
-              color: ${({ theme }) => theme.colors.white};
+              color: ${({ theme }) => theme.colors.primary};
             }
           }
 
@@ -228,6 +236,7 @@ const NavItem = styled.span`
 
     &:hover {
       background: ${({ theme }) => tint(0.9, theme.colors.primary)};
+      /* color: ${({ theme }) => theme.colors.secondary}; */
     }
   }
 `;
