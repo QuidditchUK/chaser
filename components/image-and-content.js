@@ -2,18 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
+import styled from 'styled-components';
 import Heading from './heading';
 import PrismicWrapper from './prismic-wrapper';
 import { Box, Grid } from './layout';
 import Image from './image';
 import Content from './content';
 
+const CenterJustify = styled(Box)`
+  display: flex;  
+  flex-direction: column;
+  justify-content: center;
+`;
+
 const Item = ({ item, isImageLeft }) => (
   <Grid
     gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
     gridGap={{ _: 'gutter._', m: 'gutter.m' }}
   >
-    <Box order={{ _: 2, m: `${(isImageLeft ? 2 : 1)}` }}>
+    <CenterJustify order={{ _: 2, m: `${(isImageLeft ? 2 : 1)}` }}>
       {RichText.asText(item.title) && (
         <Heading as="h2" fontSize={[3, 3, 4]} mt={2}>
           {RichText.asText(item.title)}
@@ -21,11 +28,11 @@ const Item = ({ item, isImageLeft }) => (
       )}
 
       {item.content && <Content>{RichText.render(item.content)}</Content>}
-    </Box>
+    </CenterJustify>
 
-    <Box order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}>
+    <CenterJustify order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}>
       <Image alt={item.image.alt} src={item.image.url} height={item.image.dimensions.height} width={item.image.dimensions.width} />
-    </Box>
+    </CenterJustify>
   </Grid>
 );
 
