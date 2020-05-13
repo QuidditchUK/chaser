@@ -22,7 +22,7 @@
     "react-scrolllock": "5.0.1",
     "styled-components": "5.1.0",
     "styled-system": "5.1.5",
-    "webpack": "4.42.1"
+    "webpack": "4.43.0"
   },
   "scripts": {
     "dev": "next dev",
