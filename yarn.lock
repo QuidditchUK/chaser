@@ -6852,7 +6852,7 @@ pretty-ms@^5.0.0:
   dependencies:
     parse-ms "^2.1.0"
 
-prismic-helpers@^1.0.0:
+prismic-helpers@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/prismic-helpers/-/prismic-helpers-1.0.3.tgz#cc1aa184f8791ed6b0a1775a9eb68a74a83f741e"
   integrity sha512-eGCSflFwsWeXe7BdqWWGjjoaq1SPr61Y55xIUkgYumKFmfJsK9TVcSkRp0rdwW0hGnnDSRvjJwIo2kkDwG7KxA==
@@ -6865,12 +6865,12 @@ prismic-javascript@2.7.0:
     cross-fetch "^2.2.3"
     promise-polyfill "8.0.0"
 
-prismic-reactjs@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/prismic-reactjs/-/prismic-reactjs-1.3.0.tgz#dc7a21712cd2015d73bde3fa0937eef99f4e444a"
-  integrity sha512-7x69AnBI/ySiaGTzFZ+zHlzKli9LOTBEFOSJmnGR4Y5aBU3AVu0E728LhAUY1Wt2f3O2Kf6WS5nonMeGYsg2PQ==
+prismic-reactjs@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/prismic-reactjs/-/prismic-reactjs-1.3.1.tgz#42f629a42ee940702708fcc66bb95c1958246934"
+  integrity sha512-FequnXrYVAHO7xtx6UALqcIwqm6BFvogbcEbF9IN5yQ0a8rxPVxGrKIfDbvrivfUlUoG0Qqy7qlwPxTVqTsr0w==
   dependencies:
-    prismic-helpers "^1.0.0"
+    prismic-helpers "^1.0.3"
     prismic-richtext "^1.0.3"
     prop-types "^15.7.2"
 
