@@ -9,7 +9,7 @@ import { Box, Grid } from './layout';
 import Image from './image';
 import Content from './content';
 
-const CenterJustify = styled(Box)`
+export const CenterJustify = styled(Box)`
   display: flex;  
   flex-direction: column;
   justify-content: center;

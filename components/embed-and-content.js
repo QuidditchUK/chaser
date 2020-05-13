@@ -4,16 +4,17 @@ import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import Heading from './heading';
 import PrismicWrapper from './prismic-wrapper';
-import { Box, Grid } from './layout';
+import { Grid } from './layout';
 import Content from './content';
 import { Embed } from './embed-slice';
+import { CenterJustify } from './image-and-content';
 
 const Item = ({ item, isEmbedLeft }) => (
   <Grid
     gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
     gridGap={{ _: 'gutter._', m: 'gutter.m' }}
   >
-    <Box order={{ _: 2, m: `${(isEmbedLeft ? 2 : 1)}` }}>
+    <CenterJustify order={{ _: 2, m: `${(isEmbedLeft ? 2 : 1)}` }}>
       {RichText.asText(item.title) && (
         <Heading as="h2" fontSize={[3, 3, 4]} mt={2}>
           {RichText.asText(item.title)}
@@ -21,11 +22,11 @@ const Item = ({ item, isEmbedLeft }) => (
       )}
 
       {item.content && <Content>{RichText.render(item.content)}</Content>}
-    </Box>
+    </CenterJustify>
 
-    <Box order={{ _: 1, m: `${(isEmbedLeft ? 1 : 2)}` }}>
+    <CenterJustify order={{ _: 1, m: `${(isEmbedLeft ? 1 : 2)}` }}>
       <Embed embed={item.embed} />
-    </Box>
+    </CenterJustify>
   </Grid>
 );
 
