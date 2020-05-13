@@ -32,6 +32,7 @@ export const getStaticProps = async ({ params: { id } }) => {
 
   return {
     props: { page },
+    unstable_revalidate: 1,
   };
 };
 
