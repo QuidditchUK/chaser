@@ -10,11 +10,11 @@ import {
 import styled from 'styled-components';
 import { space } from 'styled-system';
 import debounce from 'just-debounce';
-import Layout from '~/containers/layout';
-import { Box, Flex } from '~/components/layout';
-import { HeadingHero } from '~/components/hero';
-import Container from '~/components/container';
-import Heading from '~/components/heading';
+import Layout from 'containers/layout';
+import { Box, Flex } from 'components/layout';
+import { HeadingHero } from 'components/hero';
+import Container from 'components/container';
+import Heading from 'components/heading';
 // import { formatMetadata } from '../modules/prismic';
 // import Meta from '../components/meta';
 

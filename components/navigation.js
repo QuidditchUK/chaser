@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { space } from 'styled-system';
 import { transparentize, tint, rgba } from 'polished';
 import ScrollLock from 'react-scrolllock';
-import HamburgerIcon from '~/public/images/hamburger.svg';
-import { MAIN_NAVIGATION } from '~/constants/navigation';
+import HamburgerIcon from 'public/images/hamburger.svg';
+import { MAIN_NAVIGATION } from 'constants/navigation';
 
 import ActiveLink from './active-link';
 import { Logo, LogoLink } from './logo';

@@ -25,7 +25,11 @@ module.exports = {
     "plugin:react/recommended",
   ],
   "settings": {
-    "import/resolver": "babel-plugin-root-import"
+    "import/resolver": {
+      "node": {
+        "paths": ["."],
+      }
+    },
   },
   "rules": {
     "max-len": 0,

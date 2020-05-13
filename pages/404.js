@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Link from 'next/link';
-import Layout from '~/containers/layout';
-import Container from '~/components/container';
-import { Flex, Box } from '~/components/layout';
-import Heading from '~/components/heading';
-import Content from '~/components/content';
-import Image from '~/components/image';
+import Layout from 'containers/layout';
+import Container from 'components/container';
+import { Flex, Box } from 'components/layout';
+import Heading from 'components/heading';
+import Content from 'components/content';
+import Image from 'components/image';
 import Meta from '../components/meta';
 
 export default function Custom404() {

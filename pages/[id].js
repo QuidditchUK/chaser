@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import Page404 from './404';
-import { getPrismicDocByUid, getDocs, formatMetadata } from '~/modules/prismic';
-import renderPrismicSections from '~/constants/prismic';
-import Layout from '~/containers/layout';
-import Meta from '~/components/meta';
-import PageLoading from '~/components/page-loading';
+import { getPrismicDocByUid, getDocs, formatMetadata } from 'modules/prismic';
+import Layout from 'containers/layout';
+import Meta from 'components/meta';
+import PageLoading from 'components/page-loading';
+import Page404 from 'pages/404';
+import renderPrismicSections from 'constants/prismic';
 
 const Page = ({ page }) => {
   const router = useRouter();

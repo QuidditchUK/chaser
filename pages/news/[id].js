@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import Page404 from '~/pages/404';
+import Page404 from 'pages/404';
 
-import { getDocs, getPrismicDocByUid, formatMetadata } from '~/modules/prismic';
-import renderPrismicSections from '~/constants/prismic';
-import Layout from '~/containers/layout';
-import Meta from '~/components/meta';
-import BlogHero from '~/components/blog-hero';
-import BlogSupport from '~/components/blog-support';
-import PageLoading from '~/components/page-loading';
+import { getDocs, getPrismicDocByUid, formatMetadata } from 'modules/prismic';
+import renderPrismicSections from 'constants/prismic';
+import Layout from 'containers/layout';
+import Meta from 'components/meta';
+import BlogHero from 'components/blog-hero';
+import BlogSupport from 'components/blog-support';
+import PageLoading from 'components/page-loading';
 
 const Post = ({ page }) => {
   const router = useRouter();

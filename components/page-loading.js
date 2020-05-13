@@ -1,8 +1,8 @@
 import React from 'react';
-import Layout from '~/containers/layout';
-import Container from '~/components/container';
-import { Flex } from '~/components/layout';
-import Heading from '~/components/heading';
+import Layout from 'containers/layout';
+import Container from 'components/container';
+import { Flex } from 'components/layout';
+import Heading from 'components/heading';
 
 export default function PageLoading() {
   return (
