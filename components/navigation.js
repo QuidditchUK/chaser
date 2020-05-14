@@ -9,7 +9,7 @@ import ScrollLock from 'react-scrolllock';
 import HamburgerIcon from 'public/images/hamburger.svg';
 import { MAIN_NAVIGATION } from 'constants/navigation';
 
-import ActiveLink from './active-link';
+import ActiveLink, { ParentWrapper } from './active-link';
 import { Logo, LogoLink } from './logo';
 import Button from './button';
 
@@ -290,9 +290,9 @@ function Navigation() {
               <Item key={item.label} pl={8}>
                 {item.list
                   ? (
-                    <>
+                    <ParentWrapper path={item.path}>
                       <NavItem onClick={() => setNavigationToggle(navigationToggle === i ? 10 : i)}>{item.label}</NavItem>
-                    </>
+                    </ParentWrapper>
                   )
                   : (
                     <ActiveLink href={item.href} as={item.as}>

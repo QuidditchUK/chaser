@@ -1,6 +1,7 @@
 export const MAIN_NAVIGATION = [
   {
     label: 'About',
+    path: '/about',
     list: [
       {
         label: 'What is Quidditch',
@@ -31,6 +32,7 @@ export const MAIN_NAVIGATION = [
   },
   {
     label: 'Play',
+    path: '/play',
     list: [
       {
         label: 'Find Quidditch',
@@ -56,6 +58,7 @@ export const MAIN_NAVIGATION = [
   },
   {
     label: 'Volunteer',
+    path: '/volunteer',
     list: [
       {
         label: 'Staff',

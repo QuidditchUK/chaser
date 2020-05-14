@@ -23,6 +23,25 @@ ActiveLink.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
+export const ParentWrapper = ({ path, children }) => {
+  const { asPath } = useRouter();
+
+  let className = children.props.className || '';
+  const regexAs = RegExp(path.replace(/\//g, '\\/'), 'g');
+
+  if (regexAs.test(asPath)) {
+    className = `${className} active`;
+  }
+
+  return (React.cloneElement(children, { className }));
+};
+
+ParentWrapper.propTypes = {
+  path: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+};
+
+
 export const ExactActiveLink = ({ href, children, as }) => {
   const { asPath } = useRouter();
   let className = children.props.className || '';

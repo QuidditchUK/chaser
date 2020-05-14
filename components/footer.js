@@ -86,7 +86,7 @@ export const Footer = () => (
 
             <List>
               <Item><ActiveLink as="/about/contact-us" href="/about/[id]"><span>Contact Us</span></ActiveLink></Item>
-              <Item><ActiveLink as="/about/staff" href="/about/[id]"><span>Staff</span></ActiveLink></Item>
+              <Item><ActiveLink as="/about/leadership" href="/about/[id]"><span>Leadership</span></ActiveLink></Item>
               <Item><ActiveLink as="/find-quidditch" href="/find-quidditch"><span>All Clubs</span></ActiveLink></Item>
               <Item><ActiveLink as="/about/results" href="/about/[id]"><span>Results</span></ActiveLink></Item>
               <Item><ActiveLink as="/about/fees" href="/about/[id]"><span>Season Fees</span></ActiveLink></Item>
