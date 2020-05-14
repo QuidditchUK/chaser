@@ -10,22 +10,37 @@ const variants = {
   light: {
     color: 'darkBlue',
     bg: 'greyLight',
+    a: {
+      color: 'secondary',
+    },
   },
   primary: {
     color: 'white',
     bg: 'primary',
+    a: {
+      color: 'secondary',
+    },
   },
   secondary: {
     color: 'white',
     bg: 'secondary',
+    a: {
+      color: 'darkBlue',
+    },
   },
   white: {
     color: 'darkBlue',
     bg: 'white',
+    a: {
+      color: 'secondary',
+    },
   },
   dark: {
     color: 'white',
     bg: 'darkBlue',
+    a: {
+      color: 'secondary',
+    },
   },
 };
 

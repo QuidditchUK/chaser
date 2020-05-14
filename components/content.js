@@ -8,7 +8,6 @@ export default styled('div')`
   line-height: ${({ theme }) => theme.lineHeights.displayMobile};
 
   a {
-    color: ${({ theme }) => theme.colors.secondary};
     text-decoration: none;
 
     &:hover {
