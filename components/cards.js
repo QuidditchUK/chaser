@@ -43,14 +43,14 @@ const CardsSlice = (rawData) => {
                 variant="light"
                 name={item.title}
                 content={item.content}
-                image={(
+                image={item.image.url ? (
                   <Image
                     src={item.image.url}
                     alt={item.image.alt}
                     width={1600}
                     height={900}
                   />
-              )}
+                ) : null}
               />
             </Flex>
           );

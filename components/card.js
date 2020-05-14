@@ -49,6 +49,14 @@ const Image = styled.div`
 
 const Content = styled.div`
   padding: ${({ theme }) => theme.space[5]} ${({ theme }) => theme.space[4]};
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 const Category = styled.span`
@@ -68,12 +76,12 @@ const Card = ({
   ...cardProps
 }) => (
   <StyledCard {...cardProps}>
-    <Image>{image}</Image>
+    {image ? (<Image>{image}</Image>) : null}
 
     <Content>
       {category && <Category fontWeight="bold" fontSize={(rem(10))}>{category}</Category>}
       {name && <Heading as="h2" fontSize={3} isBody>{name}</Heading>}
-      {content && <Content>{RichText.render(content)}</Content>}
+      {content && <>{RichText.render(content)}</>}
     </Content>
   </StyledCard>
 );
@@ -82,12 +90,13 @@ Card.defaultProps = {
   category: null,
   content: null,
   name: null,
+  image: null,
 };
 
 Card.propTypes = {
   name: PropTypes.string,
   category: PropTypes.string,
-  image: PropTypes.shape({}).isRequired,
+  image: PropTypes.shape({}),
   content: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
