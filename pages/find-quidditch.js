@@ -11,12 +11,51 @@ import styled from 'styled-components';
 import { space } from 'styled-system';
 import debounce from 'just-debounce';
 import Layout from 'containers/layout';
-import { Box, Flex } from 'components/layout';
+import { Box, Flex, Grid } from 'components/layout';
 import { HeadingHero } from 'components/hero';
 import Container from 'components/container';
 import Heading from 'components/heading';
+import ClubCard from 'components/club-card';
+import Image from 'components/image';
 // import { formatMetadata } from '../modules/prismic';
 // import Meta from '../components/meta';
+
+const MOCK_CLUBS = [{
+  uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+  name: 'London Quidditch Club',
+  slug: 'london-quidditch-club',
+  type: 'Community',
+  location: { type: 'POINT', coordinates: ['-0.150805', '51.460149'] },
+  images: ['https://images.prismic.io/chaser/40bfbdca-e2e0-4273-85fd-3aaca8dfb09c_57246916_1980968082025155_3749381092197531648_o.jpg?auto=compress,format'],
+  venue: 'Clapham Common, London',
+},
+{
+  uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+  name: 'London Unspeakables Quidditch',
+  slug: 'london-unspeakables-quidditch',
+  type: 'Community',
+  location: { type: 'POINT', coordinates: ['-0.148176', '51.453825'] },
+  images: ['https://images.prismic.io/chaser/475578b7-a77c-4abc-90f2-de1547bbacf2_72886220_1438371239645635_5936997713475272704_o.jpg?auto=compress,format'],
+  venue: 'Clapham Common, London',
+},
+{
+  uuid: '2d31f5d3-c265-4e5a-a973-5b77ab3218df',
+  name: 'Werewolves of London Quidditch Club',
+  slug: 'werewolves-of-london',
+  type: 'Community',
+  location: { type: 'POINT', coordinates: ['-0.157671', '51.558175'] },
+  images: ['https://images.prismic.io/chaser/71dc92d4-5687-4814-933a-9fb1b92093dc_60423142_2303196516632278_4906127668908392448_n.jpg?auto=compress,format'],
+  venue: 'Hampstead Heath, London',
+},
+{
+  uuid: '36f03565-f622-43e6-90c5-fae022c5444c',
+  name: 'St Andrews Snidgets Quidditch Club',
+  slug: 'st-andrews-snidgets',
+  type: 'University',
+  location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
+  images: ['https://images.prismic.io/chaser/879d8b2b-428d-4130-acba-509bc327e8f1_31265313_2077158405647076_3498501473933721600_o.jpg?auto=compress,format'],
+  venue: 'North Haugh, St Andrews',
+}];
 
 const minHeight = { _: '250px', m: '400px' };
 
@@ -115,10 +154,35 @@ const FindQuidditch = ({ clubs, events }) => {
         py={{ _: 6, l: 10 }}
       >
         <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
-          <Heading as="h2" fontSize={[3, 3, 4]} mt={0} isBody color="primary">Clubs</Heading>
-          <Heading as="h2" fontSize={[3, 3, 4]} mt={0} isBody color="primary">Events</Heading>
+          <Heading as="h2" fontSize={4} mt={0} isBody color="primary">Clubs</Heading>
+
+          <Grid
+            gridTemplateColumns="repeat(auto-fit, minmax(400px, 1fr))"
+            gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+            pb={3}
+          >
+            {clubs.map((club) => (
+              <Flex flexDirection="column" key={club.uuid}>
+                <ClubCard
+                  variant="light"
+                  name={club.name}
+                  type={club.type}
+                  venue={club.venue}
+                  image={club.images ? (
+                    <Image
+                      src={club.images[0]}
+                      alt={club.name}
+                      width={1600}
+                      height={900}
+                    />
+                  ) : null}
+                />
+              </Flex>
+            ))}
+          </Grid>
+
+          <Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>
         </Container>
-        {clubs}
         {events}
       </Box>
     </Layout>
@@ -126,7 +190,7 @@ const FindQuidditch = ({ clubs, events }) => {
 };
 
 FindQuidditch.defaultProps = {
-  clubs: [],
+  clubs: MOCK_CLUBS,
   events: [],
 };
 
@@ -141,12 +205,12 @@ export const getServerSideProps = async ({ query }) => {
 
   if (!postcode) {
     return {
-      props: { clubs: [], events: [] },
+      props: { clubs: MOCK_CLUBS, events: [] },
     };
   }
 
   return {
-    props: { clubs: [], events: [] },
+    props: { clubs: MOCK_CLUBS, events: [] },
   };
 };
 
