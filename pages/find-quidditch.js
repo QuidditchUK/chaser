@@ -21,7 +21,7 @@ import Image from 'components/image';
 // import Meta from '../components/meta';
 
 const MOCK_CLUBS = [{
-  uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+  uuid: '789e0d73-af14-4a35-a37f-8c854728dsd9b9',
   name: 'London Quidditch Club',
   slug: 'london-quidditch-club',
   type: 'Community',
