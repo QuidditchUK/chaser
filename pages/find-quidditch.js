@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Router, { useRouter } from 'next/router';
 import {
@@ -28,6 +28,8 @@ const MOCK_CLUBS = [{
   location: { type: 'POINT', coordinates: ['-0.150805', '51.460149'] },
   images: ['https://images.prismic.io/chaser/40bfbdca-e2e0-4273-85fd-3aaca8dfb09c_57246916_1980968082025155_3749381092197531648_o.jpg?auto=compress,format'],
   venue: 'Clapham Common, London',
+  featuredColor: '#0e375f',
+  textColor: '#ffffff',
 },
 {
   uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
@@ -37,6 +39,8 @@ const MOCK_CLUBS = [{
   location: { type: 'POINT', coordinates: ['-0.148176', '51.453825'] },
   images: ['https://images.prismic.io/chaser/475578b7-a77c-4abc-90f2-de1547bbacf2_72886220_1438371239645635_5936997713475272704_o.jpg?auto=compress,format'],
   venue: 'Clapham Common, London',
+  featuredColor: '#381e51',
+  textColor: '#ffffff',
 },
 {
   uuid: '2d31f5d3-c265-4e5a-a973-5b77ab3218df',
@@ -46,6 +50,8 @@ const MOCK_CLUBS = [{
   location: { type: 'POINT', coordinates: ['-0.157671', '51.558175'] },
   images: ['https://images.prismic.io/chaser/71dc92d4-5687-4814-933a-9fb1b92093dc_60423142_2303196516632278_4906127668908392448_n.jpg?auto=compress,format'],
   venue: 'Hampstead Heath, London',
+  featuredColor: '#6a1713',
+  textColor: '#ffffff',
 },
 {
   uuid: '36f03565-f622-43e6-90c5-fae022c5444c',
@@ -55,6 +61,8 @@ const MOCK_CLUBS = [{
   location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
   images: ['https://images.prismic.io/chaser/879d8b2b-428d-4130-acba-509bc327e8f1_31265313_2077158405647076_3498501473933721600_o.jpg?auto=compress,format'],
   venue: 'North Haugh, St Andrews',
+  featuredColor: '#0e375f',
+  textColor: '#ffffff',
 }];
 
 const minHeight = { _: '250px', m: '400px' };
@@ -100,6 +108,10 @@ const AutoValidatePostcode = () => {
 
 const FindQuidditch = ({ clubs, events }) => {
   const { query: { postcode = '' } } = useRouter();
+  const [showClubs, setShowClubs] = useState(true);
+  const [showEvents, setShowEvents] = useState(true);
+
+  console.log(events);
 
   return (
     <Layout>
@@ -148,42 +160,53 @@ const FindQuidditch = ({ clubs, events }) => {
           </Container>
         </Flex>
       </Box>
+      <Box bg="white" py={5}>
+        <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+          <input type="checkbox" checked={showClubs} onChange={() => setShowClubs(!showClubs)} /> Clubs
+          <input type="checkbox" checked={showEvents} onChange={() => setShowEvents(!showEvents)} /> Events
+        </Container>
+      </Box>
 
       <Box
         bg="greyLight"
         py={{ _: 6, l: 10 }}
       >
         <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
-          <Heading as="h2" fontSize={4} mt={0} isBody color="primary">Clubs</Heading>
+          {showClubs
+          && (
+          <>
+            <Heading as="h2" fontSize={4} mt={0} isBody color="primary">Clubs</Heading>
 
-          <Grid
-            gridTemplateColumns="repeat(auto-fit, minmax(400px, 1fr))"
-            gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-            pb={3}
-          >
-            {clubs.map((club) => (
-              <Flex flexDirection="column" key={club.uuid}>
-                <ClubCard
-                  variant="light"
-                  name={club.name}
-                  type={club.type}
-                  venue={club.venue}
-                  image={club.images ? (
-                    <Image
-                      src={club.images[0]}
-                      alt={club.name}
-                      width={1600}
-                      height={900}
-                    />
-                  ) : null}
-                />
-              </Flex>
-            ))}
-          </Grid>
+            <Grid
+              gridTemplateColumns="repeat(auto-fit, minmax(400px, 1fr))"
+              gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+              pb={3}
+            >
+              {clubs.map((club) => (
+                <Flex flexDirection="column" key={club.uuid}>
+                  <ClubCard
+                    backgroundColor={club.featuredColor}
+                    color={club.textColor}
+                    name={club.name}
+                    type={club.type}
+                    venue={club.venue}
+                    image={club.images ? (
+                      <Image
+                        src={club.images[0]}
+                        alt={club.name}
+                        width={1600}
+                        height={900}
+                      />
+                    ) : null}
+                  />
+                </Flex>
+              ))}
+            </Grid>
+          </>
+          )}
 
-          <Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>
+          {showEvents && <Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>}
         </Container>
-        {events}
       </Box>
     </Layout>
   );

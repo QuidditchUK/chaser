@@ -18,9 +18,8 @@ const StyledCard = styled.article`
   overflow: hidden;
   position: relative;
   transition: box-shadow 0.125s;
-  background: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.primary};
   
+  ${color};
   ${space};
 
   &:hover {
