@@ -178,7 +178,7 @@ const FindQuidditch = ({ clubs, events }) => {
             <Heading as="h2" fontSize={4} mt={0} isBody color="primary">Clubs</Heading>
 
             <Grid
-              gridTemplateColumns="repeat(auto-fit, minmax(400px, 1fr))"
+              gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
               gridGap={{ _: 'gutter._', m: 'gutter.m' }}
               pb={3}
             >
