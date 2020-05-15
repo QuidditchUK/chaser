@@ -11,12 +11,12 @@ const News = ({ posts }) => (
   <Layout>
     <Meta />
     <NewsHeader />
-    <LatestNews posts={posts} category="University" allowPagination horizontalScroll={false} />
+    <LatestNews posts={posts} category="Leagues" allowPagination horizontalScroll={false} />
   </Layout>
 );
 
 export const getStaticProps = async () => {
-  const posts = await getBlogCategory('University', { orderings: '[my.post.date desc]', pageSize: PAGE_SIZE });
+  const posts = await getBlogCategory('Leagues', { orderings: '[my.post.date desc]', pageSize: PAGE_SIZE });
 
   return {
     props: { posts },

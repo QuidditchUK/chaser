@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { space, variant, typography } from 'styled-system';
+import {
+  space, variant, typography, color,
+} from 'styled-system';
 import { RichText } from 'prismic-reactjs';
+import CATEGORIES from 'constants/categories';
 import Heading from './heading';
 import { rem } from '../styles/theme';
 
@@ -61,9 +64,9 @@ const Content = styled.div`
 
 const Category = styled.span`
   ${typography};
+  ${color};
   color: ${({ theme }) => theme.colors.white};
   text-transform: uppercase;
-  background: ${({ theme }) => theme.categoryColors[Math.floor((Math.random() * theme.categoryColors.length))]};
   border-radius: ${({ theme }) => theme.radius[1]};
   padding: ${({ theme }) => theme.space[1]} ${({ theme }) => theme.space[2]};
 `;
@@ -79,7 +82,7 @@ const Card = ({
     {image ? (<Image>{image}</Image>) : null}
 
     <Content>
-      {category && <Category fontWeight="bold" fontSize={(rem(10))}>{category}</Category>}
+      {category && <Category fontWeight="bold" fontSize={(rem(10))} bg={CATEGORIES[category]}>{category}</Category>}
       {name && <Heading as="h2" fontSize={3} isBody>{name}</Heading>}
       {content && <>{RichText.render(content)}</>}
     </Content>

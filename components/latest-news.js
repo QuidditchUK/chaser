@@ -83,6 +83,9 @@ const News = ({
           : getDocs('post', { orderings: '[my.post.date desc]', pageSize: PAGE_SIZE, page });
 
         const newPages = await getPages;
+        if (newPages.length === 0) {
+          setShowLoadMore(false);
+        }
 
         setPosts((oldPages) => [...oldPages, ...newPages]);
         setLoading(false);

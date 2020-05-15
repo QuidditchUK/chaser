@@ -53,7 +53,7 @@ const NewsHeader = () => (
           <ActiveLink href="/news/community" as="/news/community"><span>Community</span></ActiveLink>
         </ListItem>
         <ListItem>
-          <ActiveLink href="/news/university" as="/news/university"><span>University</span></ActiveLink>
+          <ActiveLink href="/news/university" as="/news/leagues"><span>Leagues</span></ActiveLink>
         </ListItem>
         <ListItem>
           <ActiveLink href="/news/executive" as="/news/executive"><span>Executive</span></ActiveLink>
