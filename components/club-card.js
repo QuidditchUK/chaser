@@ -43,11 +43,6 @@ const Icon = styled.img`
   border-radius: 50%;
   height: 75px;
   width: 75px;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.l}) {
-    height: 100px;
-    width: 100px;
-  }
 `;
 
 const Content = styled.div`
