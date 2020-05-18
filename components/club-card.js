@@ -32,6 +32,24 @@ const Image = styled.div`
   z-index: 2;
 `;
 
+const IconContainer = styled.div`
+  padding: ${({ theme }) => theme.space[4]};
+  position: absolute;
+  right: 0;
+  z-index: 3;
+`;
+
+const Icon = styled.img`
+  border-radius: 50%;
+  height: 75px;
+  width: 75px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.l}) {
+    height: 100px;
+    width: 100px;
+  }
+`;
+
 const Content = styled.div`
   padding: ${({ theme }) => theme.space[5]} ${({ theme }) => theme.space[4]};
 
@@ -57,11 +75,13 @@ const ClubCard = ({
   image,
   name,
   type,
+  icon,
   venue,
   ...cardProps
 }) => (
   <StyledCard {...cardProps}>
     {image ? (<Image>{image}</Image>) : null}
+    <IconContainer><Icon src={icon} alt={`${name} logo`} /></IconContainer>
 
     <Content>
       <Type fontWeight="bold" fontSize={(rem(10))} bg={TYPES[type]}>{type}</Type>
@@ -76,12 +96,14 @@ ClubCard.defaultProps = {
   type: null,
   image: null,
   venue: null,
+  icon: null,
 };
 
 ClubCard.propTypes = {
   name: PropTypes.string,
   type: PropTypes.string,
   venue: PropTypes.string,
+  icon: PropTypes.string,
   image: PropTypes.shape({}),
 };
 

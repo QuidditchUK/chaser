@@ -28,8 +28,9 @@ const MOCK_CLUBS = [{
   location: { type: 'POINT', coordinates: ['-0.150805', '51.460149'] },
   images: ['https://images.prismic.io/chaser/40bfbdca-e2e0-4273-85fd-3aaca8dfb09c_57246916_1980968082025155_3749381092197531648_o.jpg?auto=compress,format'],
   venue: 'Clapham Common, London',
-  featuredColor: '#0e375f',
+  featuredColor: '#062461',
   textColor: '#ffffff',
+  icon: 'https://images.prismic.io/chaser/568da066-5b90-4ca8-ac8f-8dcbfc3fd610_lqc.png?auto=compress,format',
 },
 {
   uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
@@ -41,6 +42,7 @@ const MOCK_CLUBS = [{
   venue: 'Clapham Common, London',
   featuredColor: '#381e51',
   textColor: '#ffffff',
+  icon: 'https://images.prismic.io/chaser/98cc10fb-4840-40ac-a973-1bc54e7d86c5_unspeakables.png?auto=compress,format',
 },
 {
   uuid: '2d31f5d3-c265-4e5a-a973-5b77ab3218df',
@@ -52,6 +54,7 @@ const MOCK_CLUBS = [{
   venue: 'Hampstead Heath, London',
   featuredColor: '#6a1713',
   textColor: '#ffffff',
+  icon: 'https://images.prismic.io/chaser/38824ffa-4c30-4a01-960a-42a236bee0cc_werewolves.jpg?auto=compress,format',
 },
 {
   uuid: '36f03565-f622-43e6-90c5-fae022c5444c',
@@ -61,8 +64,9 @@ const MOCK_CLUBS = [{
   location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
   images: ['https://images.prismic.io/chaser/879d8b2b-428d-4130-acba-509bc327e8f1_31265313_2077158405647076_3498501473933721600_o.jpg?auto=compress,format'],
   venue: 'North Haugh, St Andrews',
-  featuredColor: '#0e375f',
+  featuredColor: '#1f4183',
   textColor: '#ffffff',
+  icon: 'https://images.prismic.io/chaser/86004abc-75c2-4990-b519-8ea86a0e951b_snidgets.png?auto=compress,format',
 }];
 
 const minHeight = { _: '250px', m: '400px' };
@@ -190,6 +194,7 @@ const FindQuidditch = ({ clubs, events }) => {
                     name={club.name}
                     type={club.type}
                     venue={club.venue}
+                    icon={club.icon}
                     image={club.images ? (
                       <Image
                         src={club.images[0]}
