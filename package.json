@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@svgr/webpack": "5.4.0",
-    "date-fns": "2.13.0",
+    "date-fns": "2.14.0",
     "formik": "^2.1.4",
     "intersection-observer": "^0.10.0",
     "just-debounce": "^1.0.0",
