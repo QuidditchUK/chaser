@@ -19,7 +19,7 @@ import Heading from 'components/heading';
 import ClubCard from 'components/club-card';
 import Image from 'components/image';
 // import { formatMetadata } from '../modules/prismic';
-// import Meta from '../components/meta';
+import Meta from '../components/meta';
 
 const MOCK_CLUBS = [{
   uuid: '789e0d73-af14-4a35-a37f-8c854728dsd9b9',
@@ -127,6 +127,7 @@ const FindQuidditch = ({ clubs, events }) => {
 
   return (
     <Layout>
+      <Meta subTitle="Find Quidditch near you" description="Find your nearest club and upcoming Quidditch events in the UK" image="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959" />
       <Box
         as="section"
         position="relative"
