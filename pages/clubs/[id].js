@@ -9,9 +9,12 @@ import Heading from 'components/heading';
 
 import Layout from 'containers/layout';
 import Meta from 'components/meta';
-import { Box, Flex } from 'components/layout';
+import { Box, Flex, Grid } from 'components/layout';
 import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
+import Container from 'components/container';
+import { getBlogTags } from 'modules/prismic';
+import { HorizontalNews } from 'components/latest-news';
 
 const minHeight = { _: '250px', m: '400px' };
 
@@ -24,8 +27,9 @@ const Icon = styled.img`
   border-radius: 50%;
   height: 100px;
   width: 100px;
-
   background: ${({ theme }) => theme.colors.white};
+  box-shadow: ${({ theme }) => theme.shadows.box};
+
   @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
     height: 200px;
     width: 200px;
@@ -43,9 +47,10 @@ const UNSPEAKABLES = {
   featuredColor: '#381e51',
   textColor: '#ffffff',
   icon: 'https://images.prismic.io/chaser/98cc10fb-4840-40ac-a973-1bc54e7d86c5_unspeakables.png?auto=compress,format',
+  tags: ['London Unspeakables Quidditch', 'Unspeakables', 'Unbreakables'],
 };
 
-const ClubPage = ({ club }) => {
+const ClubPage = ({ club, posts }) => {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -99,6 +104,32 @@ const ClubPage = ({ club }) => {
         </Flex>
       </Box>
 
+      <Box
+        bg="greyLight"
+        py={{ _: 6, l: 10 }}
+        px={{ _: 0, m: 'gutter.m' }}
+      >
+        <Container>
+          <Box>
+            <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }} isBody color={club.featuredColor}>Latest News</Heading>
+            <HorizontalNews horizontalScroll posts={posts} />
+          </Box>
+
+          <Grid
+            gridTemplateColumns={{ _: '1fr', m: '1fr 3fr' }}
+            gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+            mt={5}
+          >
+            <Box bg="white">
+              <Heading as="h3" fontSize={[2, 2, 3]} px={{ _: 'gutter.s', m: '0' }} isBody color={club.featuredColor} textAlign="center">Club Details</Heading>
+            </Box>
+
+            <Box bg="white">
+              <Heading as="h3" fontSize={[2, 2, 3]} px={{ _: 'gutter.s', m: '0' }} isBody color={club.featuredColor} textAlign="center">Second Area</Heading>
+            </Box>
+          </Grid>
+        </Container>
+      </Box>
     </Layout>
   );
 };
@@ -106,9 +137,10 @@ const ClubPage = ({ club }) => {
 // eslint-disable-next-line no-unused-vars
 export const getServerSideProps = async ({ params: { id } }) => {
   const club = UNSPEAKABLES;
+  const posts = await getBlogTags(club.tags, { orderings: '[my.post.date desc]', pageSize: 3 });
 
   return {
-    props: { club },
+    props: { club, posts },
   };
 };
 
@@ -123,6 +155,7 @@ ClubPage.propTypes = {
     textColor: PropTypes.string,
     type: PropTypes.string,
   }).isRequired,
+  posts: PropTypes.arrayOf(PropTypes.shape).isRequired,
 };
 
 export default ClubPage;

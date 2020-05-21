@@ -23,4 +23,9 @@ export const getBlogCategory = async (category, options = {}) => {
 
 export const getPrismicDocByUid = (type, uid) => Client().getByUID(type, uid, {});
 
+export const getBlogTags = async (tags, options = {}) => {
+  const { results } = await Client().query(Prismic.Predicates.any('document.tags', tags), options);
+  return results;
+};
+
 export const PAGE_SIZE = 6;
