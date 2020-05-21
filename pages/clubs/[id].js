@@ -91,7 +91,7 @@ const ClubPage = ({ club }) => {
         height="130px"
       >
         <Flex justifyContent="flex-start" alignItems="center" top={{ _: 0, m: '-50px' }} position="relative">
-          <IconContainer><Icon src={club.icon} alt={`${name} logo`} /></IconContainer>
+          <IconContainer><Icon src={club.icon} alt={`${club.name} logo`} /></IconContainer>
           <Flex flexDirection="column">
             <Heading as="h2" fontSize={[3, 4, 5]} py="0" my="0">{club.name}</Heading>
             <p>{club.venue}</p>
