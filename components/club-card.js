@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { space, typography, color } from 'styled-system';
-import Heading from './heading';
+import { space, color } from 'styled-system';
+import Heading from 'components/heading';
+import Type, { TYPES } from 'components/club-type';
 import { rem } from '../styles/theme';
-
-const TYPES = {
-  University: 'keeperGreen',
-  Community: 'northernMagenta',
-};
 
 const StyledCard = styled.article`
   border-radius: ${({ theme }) => theme.radius[1]};
@@ -55,15 +51,6 @@ const Content = styled.div`
       text-decoration: underline;
     }
   }
-`;
-
-const Type = styled.span`
-  ${typography};
-  ${color};
-  color: ${({ theme }) => theme.colors.white};
-  text-transform: uppercase;
-  border-radius: ${({ theme }) => theme.radius[1]};
-  padding: ${({ theme }) => theme.space[1]} ${({ theme }) => theme.space[2]};
 `;
 
 const ClubCard = ({

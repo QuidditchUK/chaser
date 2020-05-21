@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Router, { useRouter } from 'next/router';
+import Link from 'next/link';
 import {
   Formik,
   Form,
@@ -83,6 +84,13 @@ const Input = styled.input`
     color: ${({ theme }) => theme.colors.white};
     opacity: 0.8;
   }
+`;
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 `;
 
 const fetchResults = (postcode) => console.log(postcode);
@@ -188,22 +196,26 @@ const FindQuidditch = ({ clubs, events }) => {
             >
               {clubs.map((club) => (
                 <Flex flexDirection="column" key={club.uuid}>
-                  <ClubCard
-                    backgroundColor={club.featuredColor}
-                    color={club.textColor}
-                    name={club.name}
-                    type={club.type}
-                    venue={club.venue}
-                    icon={club.icon}
-                    image={club.images ? (
-                      <Image
-                        src={club.images[0]}
-                        alt={club.name}
-                        width={1600}
-                        height={900}
+                  <Link href="/clubs/[id]" as={`/clubs/${club.slug}`} passHref>
+                    <StyledLink>
+                      <ClubCard
+                        backgroundColor={club.featuredColor}
+                        color={club.textColor}
+                        name={club.name}
+                        type={club.type}
+                        venue={club.venue}
+                        icon={club.icon}
+                        image={club.images ? (
+                          <Image
+                            src={club.images[0]}
+                            alt={club.name}
+                            width={1600}
+                            height={900}
+                          />
+                        ) : null}
                       />
-                    ) : null}
-                  />
+                    </StyledLink>
+                  </Link>
                 </Flex>
               ))}
             </Grid>
