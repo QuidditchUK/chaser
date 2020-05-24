@@ -34,7 +34,7 @@ const Item = ({ item, isImageLeft }) => (
 
     <CenterJustify order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}>
       <Image alt={item.image.alt} src={item.image.url} height={item.image.dimensions.height} width={item.image.dimensions.width} />
-      {item.support && (<Support textAlign="center" pt={2} fontStyle="italic">{RichText.render(item.support)}</Support>)}
+      {RichText.asText(item.support) && (<Support textAlign="center" pt={2} fontStyle="italic">{RichText.render(item.support)}</Support>)}
     </CenterJustify>
   </Grid>
 );
