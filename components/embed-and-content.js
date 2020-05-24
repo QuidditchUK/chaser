@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import Heading from './heading';
-import PrismicWrapper from './prismic-wrapper';
-import { Grid } from './layout';
-import Content from './content';
-import { Embed } from './embed-slice';
-import { CenterJustify } from './image-and-content';
+
+import Heading from 'components/heading';
+import PrismicWrapper from 'components/prismic-wrapper';
+import { Grid } from 'components/layout';
+import Content from 'components/content';
+import { Embed } from 'components/embed-slice';
+import { CenterJustify } from 'components/image-and-content';
+import { Support } from 'components/image-slice';
 
 const Item = ({ item, isEmbedLeft }) => (
   <Grid
@@ -26,6 +28,7 @@ const Item = ({ item, isEmbedLeft }) => (
 
     <CenterJustify order={{ _: 1, m: `${(isEmbedLeft ? 1 : 2)}` }}>
       <Embed embed={item.embed} />
+      {item.support && (<Support textAlign="center" pt={2} fontStyle="italic">{item.support}</Support>)}
     </CenterJustify>
   </Grid>
 );
@@ -35,6 +38,7 @@ Item.propTypes = {
     title: PropTypes.array,
     content: PropTypes.array,
     embed: PropTypes.shape({}),
+    support: PropTypes.array,
   }).isRequired,
   isEmbedLeft: PropTypes.bool.isRequired,
 };
@@ -53,6 +57,7 @@ const EmbedAndContent = (rawData) => {
           embed: get(itemData, 'embed'),
           variant: get(itemData, 'variant'),
           layout: get(itemData, 'layout_content'),
+          support: get(itemData, 'support'),
         };
 
         const isEmbedLeft = item.layout === 'embed-left';

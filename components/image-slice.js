@@ -7,7 +7,7 @@ import PrismicWrapper from './prismic-wrapper';
 import { Box, Grid } from './layout';
 import Image from './image';
 
-const Support = styled.div`
+export const Support = styled.div`
 ${typography};
 ${space};
 `;

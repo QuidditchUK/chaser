@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import styled from 'styled-components';
-import Heading from './heading';
-import PrismicWrapper from './prismic-wrapper';
-import { Box, Grid } from './layout';
-import Image from './image';
-import Content from './content';
+
+import Heading from 'components/heading';
+import PrismicWrapper from 'components/prismic-wrapper';
+import { Box, Grid } from 'components/layout';
+import Image from 'components/image';
+import { Support } from 'components/image-slice';
+import Content from 'components/content';
 
 export const CenterJustify = styled(Box)`
   display: flex;  
@@ -32,6 +34,7 @@ const Item = ({ item, isImageLeft }) => (
 
     <CenterJustify order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}>
       <Image alt={item.image.alt} src={item.image.url} height={item.image.dimensions.height} width={item.image.dimensions.width} />
+      {item.support && (<Support textAlign="center" pt={2} fontStyle="italic">{item.support}</Support>)}
     </CenterJustify>
   </Grid>
 );
@@ -48,6 +51,7 @@ Item.propTypes = {
         width: PropTypes.number,
       }),
     }),
+    support: PropTypes.array,
   }).isRequired,
   isImageLeft: PropTypes.bool.isRequired,
 };
@@ -66,6 +70,7 @@ const ImageAndContent = (rawData) => {
           image: get(itemData, 'image'),
           variant: get(itemData, 'variant'),
           layout: get(itemData, 'layout_content'),
+          support: get(itemData, 'support'),
         };
 
         const isImageLeft = item.layout === 'image-left';
