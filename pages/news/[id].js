@@ -35,11 +35,12 @@ const Post = ({ page }) => {
   );
 };
 
-export const getStaticProps = async ({ params: { id } }) => {
-  const page = await getPrismicDocByUid('post', id) || null;
+export const getStaticProps = async ({ params: { id }, preview = null, previewData = {} }) => {
+  const { ref } = previewData;
+  const page = await getPrismicDocByUid('post', id, ref ? { ref } : null) || null;
 
   return {
-    props: { page },
+    props: { page, preview },
     unstable_revalidate: 1,
   };
 };

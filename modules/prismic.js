@@ -21,7 +21,7 @@ export const getBlogCategory = async (category, options = {}) => {
   return results;
 };
 
-export const getPrismicDocByUid = (type, uid) => Client().getByUID(type, uid, {});
+export const getPrismicDocByUid = (type, uid, options = {}) => Client().getByUID(type, uid, options);
 
 export const getBlogTags = async (tags, options = {}) => {
   const { results } = await Client().query(Prismic.Predicates.any('document.tags', tags), options);
