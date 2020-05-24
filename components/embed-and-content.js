@@ -28,7 +28,7 @@ const Item = ({ item, isEmbedLeft }) => (
 
     <CenterJustify order={{ _: 1, m: `${(isEmbedLeft ? 1 : 2)}` }}>
       <Embed embed={item.embed} />
-      {item.support && (<Support textAlign="center" pt={2} fontStyle="italic">{item.support}</Support>)}
+      {item.support && (<Support textAlign="center" pt={2} fontStyle="italic">{RichText.render(item.support)}</Support>)}
     </CenterJustify>
   </Grid>
 );
