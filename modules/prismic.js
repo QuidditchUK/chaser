@@ -29,3 +29,20 @@ export const getBlogTags = async (tags, options = {}) => {
 };
 
 export const PAGE_SIZE = 6;
+
+export const linkResolver = ({ type, uid }) => {
+  switch (type) {
+    case 'volunteer':
+      return `/volunteer/${uid}`;
+    case 'play':
+      return `/play/${uid}`;
+    case 'about':
+      return `/about/${uid}`;
+    case 'post':
+      return `/news/${uid}`;
+    case 'programmes':
+      return `/programmes/${uid}`;
+    default:
+      return `/${uid}`;
+  }
+};
