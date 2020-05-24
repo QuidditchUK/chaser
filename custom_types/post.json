@@ -1,0 +1,393 @@
+{
+  "Main": {
+    "title": {
+      "type": "Text",
+      "config": {
+        "label": "Title"
+      }
+    },
+    "date": {
+      "type": "Date",
+      "config": {
+        "label": "date"
+      }
+    },
+    "uid": {
+      "type": "UID",
+      "config": {
+        "label": "UID"
+      }
+    },
+    "author": {
+      "type": "Select",
+      "config": {
+        "options": [
+          "Sam Instone",
+          "Abby Whiteley",
+          "Jasmine Lowen",
+          "Matt Bateman"
+        ],
+        "label": "author"
+      }
+    },
+    "category": {
+      "type": "Select",
+      "config": {
+        "options": [
+          "Community",
+          "Executive",
+          "Leagues"
+        ],
+        "label": "category"
+      }
+    },
+    "image": {
+      "type": "Image",
+      "config": {
+        "constraint": {},
+        "thumbnails": [],
+        "label": "image"
+      }
+    },
+    "body": {
+      "type": "Slices",
+      "fieldset": "Slice zone",
+      "config": {
+        "labels": {
+          "image": []
+        },
+        "choices": {
+          "header_and_paragraph": {
+            "type": "Slice",
+            "fieldset": "Header and Paragraph",
+            "description": "Header and Paragraph",
+            "icon": "line_weight",
+            "display": "list",
+            "non-repeat": {
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2",
+                  "label": "Title"
+                }
+              },
+              "content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "Content"
+                }
+              },
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "primary",
+                    "secondary",
+                    "white",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "Variant"
+                }
+              }
+            },
+            "repeat": {}
+          },
+          "images": {
+            "type": "Slice",
+            "fieldset": "Images",
+            "description": "Images",
+            "icon": "face",
+            "display": "grid",
+            "non-repeat": {
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "primary",
+                    "secondary",
+                    "white",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "Variant"
+                }
+              }
+            },
+            "repeat": {
+              "image": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "image"
+                }
+              },
+              "support": {
+                "type": "Text",
+                "config": {
+                  "label": "support"
+                }
+              }
+            }
+          },
+          "image_and_content": {
+            "type": "Slice",
+            "fieldset": "Image and Content",
+            "description": "Displays image and some copy",
+            "icon": "art_track",
+            "display": "list",
+            "non-repeat": {},
+            "repeat": {
+              "image": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "image"
+                }
+              },
+              "layout_content": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "image-left",
+                    "image-right"
+                  ],
+                  "default_value": "image-left",
+                  "label": "Layout content"
+                }
+              },
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "primary",
+                    "secondary",
+                    "white",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "Variant"
+                }
+              },
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2",
+                  "label": "title"
+                }
+              },
+              "content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, strong, em, hyperlink, list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "content"
+                }
+              }
+            }
+          },
+          "cards": {
+            "type": "Slice",
+            "fieldset": "Cards",
+            "description": "Displays a grid of cards",
+            "icon": "apps",
+            "display": "grid",
+            "non-repeat": {
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2",
+                  "label": "title"
+                }
+              },
+              "content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "content"
+                }
+              },
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "primary",
+                    "secondary",
+                    "dark",
+                    "white"
+                  ],
+                  "default_value": "light",
+                  "label": "Variant"
+                }
+              }
+            },
+            "repeat": {
+              "image": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "image"
+                }
+              },
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2",
+                  "label": "title"
+                }
+              },
+              "content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "Content"
+                }
+              }
+            }
+          },
+          "embed_and_content": {
+            "type": "Slice",
+            "fieldset": "Embed and Content",
+            "description": "Displays embeded video and some copy",
+            "icon": "art_track",
+            "display": "list",
+            "non-repeat": {},
+            "repeat": {
+              "embed": {
+                "type": "Embed",
+                "config": {
+                  "label": "embed"
+                }
+              },
+              "layout_content": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "embed-left",
+                    "embed-right"
+                  ],
+                  "default_value": "embed-left",
+                  "label": "Layout content"
+                }
+              },
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "primary",
+                    "secondary",
+                    "white",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "Variant"
+                }
+              },
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2",
+                  "label": "title"
+                }
+              },
+              "content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, strong, em, hyperlink, list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "content"
+                }
+              }
+            }
+          },
+          "embed": {
+            "type": "Slice",
+            "fieldset": "Embed",
+            "description": "Embed videos from Youtube or Facebook",
+            "icon": "burst_mode",
+            "display": "list",
+            "non-repeat": {
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2",
+                  "label": "Title"
+                }
+              },
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "primary",
+                    "secondary",
+                    "white",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "variant"
+                }
+              },
+              "content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, strong, em, hyperlink, list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "Content"
+                }
+              }
+            },
+            "repeat": {
+              "embed": {
+                "type": "Embed",
+                "config": {
+                  "label": "embed"
+                }
+              },
+              "support": {
+                "type": "Text",
+                "config": {
+                  "label": "Support Text"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "Metadata": {
+    "meta_title": {
+      "type": "Text",
+      "config": {
+        "label": "Meta Title"
+      }
+    },
+    "meta_description": {
+      "type": "Text",
+      "config": {
+        "label": "Meta Description"
+      }
+    },
+    "meta_image": {
+      "type": "Image",
+      "config": {
+        "constraint": {},
+        "thumbnails": [],
+        "label": "Meta Image"
+      }
+    }
+  }
+}

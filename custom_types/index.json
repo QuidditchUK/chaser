@@ -1,0 +1,38 @@
+[
+  {
+    "id": "pages",
+    "name": "Pages",
+    "repeatable": true,
+    "value": "pages.json"
+  },
+  {
+    "id": "about",
+    "name": "About",
+    "repeatable": true,
+    "value": "about.json"
+  },
+  {
+    "id": "play",
+    "name": "Play",
+    "repeatable": true,
+    "value": "play.json"
+  },
+  {
+    "id": "post",
+    "name": "Post",
+    "repeatable": true,
+    "value": "post.json"
+  },
+  {
+    "id": "programmes",
+    "name": "Programmes",
+    "repeatable": true,
+    "value": "programmes.json"
+  },
+  {
+    "id": "volunteer",
+    "name": "Volunteer",
+    "repeatable": true,
+    "value": "volunteer.json"
+  }
+]
