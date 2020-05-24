@@ -6,13 +6,11 @@ import Link from 'next/link';
 import get from 'just-safe-get';
 
 import CATEGORIES from 'constants/categories';
-import { HeadingHero } from './hero';
-import { Box, Flex } from './layout';
-import Container from './container';
-
-import { rem } from '../styles/theme';
-
-const minHeight = { _: '250px', m: '400px' };
+import { HeadingHero } from 'components/hero';
+import { Box, Flex } from 'components/layout';
+import Container from 'components/container';
+import { rem } from 'styles/theme';
+import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 
 const Tag = styled.span`
   ${typography};
@@ -47,12 +45,12 @@ const BlogHero = (rawData) => {
         backgroundColor="primary"
         backgroundSize="cover"
         backgroundPosition="center"
-        minHeight={minHeight}
+        minHeight={BLOG_MIN_HEIGHTS}
       >
 
         <Flex
           position="absolute"
-          minHeight={minHeight}
+          minHeight={BLOG_MIN_HEIGHTS}
           zIndex={1}
           bg="primary"
           opacity={0.2}
@@ -61,7 +59,7 @@ const BlogHero = (rawData) => {
 
         <Flex
           position="relative"
-          minHeight={minHeight}
+          minHeight={BLOG_MIN_HEIGHTS}
           alignItems="center"
           justifyContent="center"
           zIndex={2}

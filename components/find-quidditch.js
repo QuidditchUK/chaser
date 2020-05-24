@@ -3,12 +3,11 @@ import get from 'just-safe-get';
 import { Formik, Form, Field } from 'formik';
 import { useRouter } from 'next/router';
 
-import { Box, Flex } from './layout';
-import Heading from './heading';
-import Button from './button';
-import Input from './input';
-
-const minHeight = { _: '300px', m: '400px' };
+import { Box, Flex } from 'components/layout';
+import Heading from 'components/heading';
+import Button from 'components/button';
+import Input from 'components/input';
+import { SLICE_MIN_HEIGHTS } from 'styles/hero-heights';
 
 const FindQuidditch = (rawData) => {
   const router = useRouter();
@@ -26,12 +25,12 @@ const FindQuidditch = (rawData) => {
       backgroundColor="primary"
       backgroundSize="cover"
       backgroundPosition="center"
-      minHeight={minHeight}
+      minHeight={SLICE_MIN_HEIGHTS}
       px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
     >
       <Flex
         position="relative"
-        minHeight={minHeight}
+        minHeight={SLICE_MIN_HEIGHTS}
         alignItems="center"
         justifyContent="center"
         flexDirection="column"

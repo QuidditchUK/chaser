@@ -18,8 +18,8 @@ import Container from 'components/container';
 import Heading from 'components/heading';
 import ClubCard from 'components/club-card';
 import Image from 'components/image';
-// import { formatMetadata } from '../modules/prismic';
-import Meta from '../components/meta';
+import Meta from 'components/meta';
+import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 
 const MOCK_CLUBS = [{
   uuid: '789e0d73-af14-4a35-a37f-8c854728dsd9b9',
@@ -69,8 +69,6 @@ const MOCK_CLUBS = [{
   textColor: '#ffffff',
   icon: 'https://images.prismic.io/chaser/86004abc-75c2-4990-b519-8ea86a0e951b_snidgets.png?auto=compress,format',
 }];
-
-const minHeight = { _: '250px', m: '400px' };
 
 const Input = styled.input`
   background: transparent;
@@ -135,11 +133,11 @@ const FindQuidditch = ({ clubs, events }) => {
         backgroundColor="primary"
         backgroundSize="cover"
         backgroundPosition="center"
-        minHeight={minHeight}
+        minHeight={BLOG_MIN_HEIGHTS}
       >
         <Flex
           position="absolute"
-          minHeight={minHeight}
+          minHeight={BLOG_MIN_HEIGHTS}
           zIndex={1}
           bg="primary"
           opacity={0.2}
@@ -148,7 +146,7 @@ const FindQuidditch = ({ clubs, events }) => {
 
         <Flex
           position="relative"
-          minHeight={minHeight}
+          minHeight={BLOG_MIN_HEIGHTS}
           alignItems="center"
           zIndex={2}
         >

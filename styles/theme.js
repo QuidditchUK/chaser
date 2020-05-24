@@ -53,6 +53,13 @@ const lineHeights = [rem(0), rem(16), rem(20), rem(24), rem(28)];
 [, , lineHeights.display] = lineHeights;
 [, , , lineHeights.displayMobile] = lineHeights;
 
+const sizes = [rem(250), rem(300), rem(400), rem(540)];
+
+[sizes.min] = sizes;
+[, sizes.sliceMin] = sizes;
+[, , sizes.clubsMax] = sizes;
+[, , , sizes.max] = sizes;
+
 const radius = [rem(3), rem(10)];
 
 const shadows = {
@@ -95,4 +102,5 @@ export default {
   shadows,
   space,
   categoryColors,
+  sizes,
 };

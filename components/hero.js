@@ -1,14 +1,13 @@
 import React from 'react';
 import get from 'just-safe-get';
 import styled from 'styled-components';
-import { Box, Flex } from './layout';
-import Heading from './heading';
+import { Box, Flex } from 'components/layout';
+import Heading from 'components/heading';
+import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 
 export const HeadingHero = styled(Heading)`
   text-shadow: ${({ theme }) => theme.shadows.heading};
 `;
-
-const minHeight = { _: '250px', m: '540px' };
 
 const Hero = (rawData) => {
   const data = {
@@ -25,11 +24,11 @@ const Hero = (rawData) => {
       backgroundSize="cover"
       backgroundPosition="center"
       px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-      minHeight={minHeight}
+      minHeight={HERO_MIN_HEIGHTS}
     >
       <Flex
         position="relative"
-        minHeight={minHeight}
+        minHeight={HERO_MIN_HEIGHTS}
         alignItems="center"
         justifyContent="center"
       >

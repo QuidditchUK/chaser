@@ -15,8 +15,7 @@ import { rem } from 'styles/theme';
 import Container from 'components/container';
 import { getBlogTags } from 'modules/prismic';
 import { HorizontalNews } from 'components/latest-news';
-
-const minHeight = { _: '250px', m: '400px' };
+import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 
 const IconContainer = styled.div`
   padding: ${({ theme }) => theme.space[4]};
@@ -76,7 +75,7 @@ const ClubPage = ({ club, posts }) => {
         backgroundSize="cover"
         backgroundPosition="center"
         px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-        minHeight={minHeight}
+        minHeight={BLOG_MIN_HEIGHTS}
       >
         <Box
           position="absolute"

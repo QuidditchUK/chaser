@@ -3,12 +3,11 @@ import { useRouter } from 'next/router';
 import get from 'just-safe-get';
 import { Formik, Form, Field } from 'formik';
 import styled from 'styled-components';
-import Input from './input';
-import Button from './button';
-import { HeadingHero } from './hero';
-import { Flex, Box } from './layout';
-
-const heightBreakpoints = { _: '250px', m: '540px' };
+import Input from 'components/input';
+import Button from 'components/button';
+import { HeadingHero } from 'components/hero';
+import { Flex, Box } from 'components/layout';
+import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 
 const Video = styled.video`
   width: 121%;
@@ -30,12 +29,12 @@ const HomeHero = (rawData) => {
     <Box
       as="section"
       backgroundColor="primary"
-      minHeight={heightBreakpoints}
+      minHeight={HERO_MIN_HEIGHTS}
       overflow="hidden"
       position="relative"
     >
       <Box
-        minHeight={heightBreakpoints}
+        minHeight={HERO_MIN_HEIGHTS}
         position="absolute"
         zIndex={1}
       >
@@ -44,7 +43,7 @@ const HomeHero = (rawData) => {
 
       <Flex
         position="relative"
-        minHeight={heightBreakpoints}
+        minHeight={HERO_MIN_HEIGHTS}
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
