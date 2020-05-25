@@ -106,6 +106,7 @@ const Tab = styled.li`
 
 const TableHead = styled.th`
   text-align: left;
+  padding: ${({ theme }) => theme.space[1]};
   border-bottom-style: solid;
   border-bottom-width: 3px;
 `;
@@ -261,12 +262,12 @@ const ClubPage = ({ club, posts, results }) => {
         </Flex>
       </Box>
 
+
       <Box
         bg="greyLight"
         py={0}
         px={0}
       >
-
         <Grid
           gridTemplateColumns={{ _: '1fr', m: '1fr 3fr' }}
           gridGap={{ _: 'gutter._', m: 'gutter.m' }}
@@ -274,6 +275,7 @@ const ClubPage = ({ club, posts, results }) => {
         >
           <Box bg="white" py={{ _: 6, m: 10 }} color={club.featuredColor} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
             <Heading as="h3" fontSize={[2, 2, 3]} isBody>Club Details</Heading>
+
             <Table>
               <tbody>
                 <TableRow>
