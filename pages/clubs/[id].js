@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+import { space, color, border } from 'styled-system';
 import { useRouter } from 'next/router';
 import Page404 from 'pages/404';
 import PageLoading from 'components/page-loading';
@@ -12,10 +12,13 @@ import Meta from 'components/meta';
 import { Box, Flex, Grid } from 'components/layout';
 import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
-import Container from 'components/container';
 import { getBlogTags } from 'modules/prismic';
-import { HorizontalNews } from 'components/latest-news';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
+
+import FacebookIcon from 'public/images/facebook.svg';
+import TwitterIcon from 'public/images/twitter.svg';
+import InstagramIcon from 'public/images/instagram.svg';
+import YoutubeIcon from 'public/images/youtube.svg';
 
 const IconContainer = styled.div`
   padding: ${({ theme }) => theme.space[4]};
@@ -35,6 +38,61 @@ const Icon = styled.img`
   }
 `;
 
+const SocialIcon = styled.a`
+  ${space};
+
+  svg {
+      color: ${({ theme }) => theme.colors.greyDark};
+      height: 30px;
+      width: 30px;
+    }
+
+    &:hover {
+      svg {
+        color: ${({ featuredColor }) => featuredColor};
+      }
+    }
+`;
+
+const Table = styled.table`
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+`;
+
+const TableData = styled.td`
+  padding: ${({ theme }) => theme.space[1]};
+`;
+
+const TableRow = styled.tr`
+  border-collapse: separate;
+  border-spacing: 0;
+`;
+
+const Support = styled.p`
+  color: ${({ theme }) => theme.colors.greyDark};
+  font-size: ${({ theme }) => theme.fontSizes.bodyCard};
+`;
+
+const Tabs = styled.ul`
+  display: flex;
+  justify-content: flex-start;
+  list-style-type: none;
+  margin: 0;
+  width: 100%;
+`;
+
+const Tab = styled.li`
+  ${color};
+  ${border};
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-radius: ${({ theme }) => theme.radius[0]};
+  display: block;
+  margin-right: ${({ theme }) => theme.space[2]};
+  padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[5]};
+`;
+
 const UNSPEAKABLES = {
   uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
   name: 'London Unspeakables Quidditch',
@@ -47,9 +105,33 @@ const UNSPEAKABLES = {
   textColor: '#ffffff',
   icon: 'https://images.prismic.io/chaser/98cc10fb-4840-40ac-a973-1bc54e7d86c5_unspeakables.png?auto=compress,format',
   tags: ['London Unspeakables Quidditch', 'Unspeakables', 'Unbreakables'],
+  trainings: 'Saturdays 12-4PM',
+  leaderPosition: 'President',
+  leader: 'John Morris',
+  officialWebsite: 'https://www.facebook.com/UnspeakablesLDN/',
+  status: 'active',
+  social_facebook: 'https://www.facebook.com/UnspeakablesLDN/',
+  social_twitter: 'https://twitter.com/UnspeakablesLDN',
+  social_youtube: 'https://www.youtube.com/user/UnspeakablesLDN',
+  social_instagram: 'https://www.instagram.com/londonunspeakables',
+  teams: [{
+    uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
+    name: 'Unspeakables',
+  },
+  {
+    uuid: '789e0d73-af14-4a35-a37f-8c854728c9b2',
+    name: 'Unstoppables',
+  },
+  {
+    uuid: '789e0d73-af14-4a35-a37f-8c854728c9b3',
+    name: 'Unbreakables',
+  }],
 };
 
+const ACTIVE_STATUS = 'active';
+
 const ClubPage = ({ club, posts }) => {
+  console.log(posts);
   const router = useRouter();
 
   if (router.isFallback) {
@@ -105,29 +187,112 @@ const ClubPage = ({ club, posts }) => {
 
       <Box
         bg="greyLight"
-        py={{ _: 6, l: 10 }}
-        px={{ _: 0, m: 'gutter.m' }}
+        py={0}
+        px={0}
       >
-        <Container>
-          <Box>
-            <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }} isBody color={club.featuredColor}>Latest News</Heading>
-            <HorizontalNews horizontalScroll posts={posts} />
+
+        <Grid
+          gridTemplateColumns={{ _: '1fr', m: '1fr 3fr' }}
+          gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+          mt={0}
+        >
+          <Box bg="white" py={{ _: 6, m: 10 }} color={club.featuredColor} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+            <Heading as="h3" fontSize={[2, 2, 3]} isBody>Club Details</Heading>
+            <Table>
+              <tbody>
+                <TableRow>
+                  <TableData><strong>Trainings</strong></TableData>
+                  <TableData>{club.trainings}</TableData>
+                </TableRow>
+
+                <TableRow>
+                  <TableData><strong>League</strong></TableData>
+                  <TableData>{club.type}</TableData>
+                </TableRow>
+
+                <TableRow>
+                  <TableData><strong>{club.leaderPosition}</strong></TableData>
+                  <TableData>{club.leader}</TableData>
+                </TableRow>
+
+                <TableRow>
+                  <TableData><strong>Official Website</strong></TableData>
+                  <TableData><a href={club.officialWebsite} rel="noopener noreferrer" target="_blank">{club.officialWebsite}</a></TableData>
+                </TableRow>
+              </tbody>
+            </Table>
+
+            <Flex justifyContent={{ _: 'center', m: 'flex-start' }} mt={5}>
+              {club.social_facebook && (
+                <SocialIcon
+                  aria-label={`Like ${club.name} on Facebook`}
+                  href={club.social_facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  featuredColor={club.featuredColor}
+                >
+                  <FacebookIcon />
+                </SocialIcon>
+              )}
+
+              {club.social_twitter && (
+                <SocialIcon
+                  aria-label={`Follow ${club.name} on Twitter`}
+                  href={club.social_twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  pl={{ _: 5, m: 3 }}
+                  featuredColor={club.featuredColor}
+                >
+                  <TwitterIcon />
+                </SocialIcon>
+              )}
+
+              {club.social_instagram && (
+                <SocialIcon
+                  aria-label={`Follow ${club.name} on Instagram`}
+                  href={club.social_instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  pl={{ _: 5, m: 3 }}
+                  featuredColor={club.featuredColor}
+                >
+                  <InstagramIcon />
+                </SocialIcon>
+              )}
+
+              {club.social_youtube && (
+                <SocialIcon
+                  aria-label={`Subscribe to ${club.name} Youtube Channel`}
+                  href={club.social_youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  pl={{ _: 5, m: 3 }}
+                  featuredColor={club.featuredColor}
+                >
+                  <YoutubeIcon />
+                </SocialIcon>
+              )}
+            </Flex>
+
+            {club.status !== ACTIVE_STATUS && <Support>This club is currently inactive, if you are interested in restarting it contact our <a href={`mailto:teams@quidditchuk.org?subject=${club.name}`}>Teams Director</a></Support>}
           </Box>
 
-          <Grid
-            gridTemplateColumns={{ _: '1fr', m: '1fr 3fr' }}
-            gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-            mt={5}
-          >
-            <Box bg="white">
-              <Heading as="h3" fontSize={[2, 2, 3]} px={{ _: 'gutter.s', m: '0' }} isBody color={club.featuredColor} textAlign="center">Club Details</Heading>
+          <Box py={{ _: 6, m: 10 }}>
+            <Box>
+              <nav>
+                <Tabs>
+                  <Tab bg="white" borderColor="white">Overview</Tab>
+                  {club.teams.map((team) => (
+                    <Tab key={team.uuid} bg="greyDark" color="white">{team.name}</Tab>
+                  ))}
+                </Tabs>
+              </nav>
             </Box>
 
-            <Box bg="white">
-              <Heading as="h3" fontSize={[2, 2, 3]} px={{ _: 'gutter.s', m: '0' }} isBody color={club.featuredColor} textAlign="center">Second Area</Heading>
-            </Box>
-          </Grid>
-        </Container>
+            <Box bg="white" py={6} />
+          </Box>
+        </Grid>
       </Box>
     </Layout>
   );
@@ -153,6 +318,16 @@ ClubPage.propTypes = {
     featuredColor: PropTypes.string,
     textColor: PropTypes.string,
     type: PropTypes.string,
+    leader: PropTypes.string,
+    leaderPosition: PropTypes.string,
+    officialWebsite: PropTypes.string,
+    trainings: PropTypes.string,
+    status: PropTypes.string,
+    social_facebook: PropTypes.string,
+    social_twitter: PropTypes.string,
+    social_youtube: PropTypes.string,
+    social_instagram: PropTypes.string,
+    teams: PropTypes.array,
   }).isRequired,
   posts: PropTypes.arrayOf(PropTypes.shape).isRequired,
 };

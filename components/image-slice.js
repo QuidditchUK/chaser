@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import get from 'just-safe-get';
 import styled from 'styled-components';
 import { typography, space } from 'styled-system';
-import PrismicWrapper from './prismic-wrapper';
-import { Box, Grid } from './layout';
-import Image from './image';
+import PrismicWrapper from 'components/prismic-wrapper';
+import { Box, Grid } from 'components/layout';
+import Image from 'components/image';
 
 export const Support = styled.div`
-${typography};
-${space};
+  ${typography};
+  ${space};
 `;
 
 const Item = ({ item, forceAspectRatio }) => {
