@@ -96,7 +96,7 @@ const Tabs = styled.ul`
 const Tab = styled.li`
   ${color};
   margin-right: ${({ theme }) => theme.space[2]};
-  line-height: 1.35;
+  line-height: 1.4;
   
   a {
     display: block;
