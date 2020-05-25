@@ -196,6 +196,15 @@
                   "allowTargetBlank": true,
                   "label": "content"
                 }
+              },
+              "support": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, strong, em, hyperlink",
+                  "allowTargetBlank": true,
+                  "label": "Image support",
+                  "placeholder": "Support Text that will appear under the image"
+                }
               }
             }
           },

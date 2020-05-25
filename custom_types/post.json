@@ -190,6 +190,15 @@
                   "allowTargetBlank": true,
                   "label": "content"
                 }
+              },
+              "support": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, strong, em, hyperlink",
+                  "allowTargetBlank": true,
+                  "label": "Image support",
+                  "placeholder": "Support Text that will appear under the image"
+                }
               }
             }
           },
@@ -308,6 +317,15 @@
                   "multi": "paragraph, preformatted, strong, em, hyperlink, list-item, o-list-item",
                   "allowTargetBlank": true,
                   "label": "content"
+                }
+              },
+              "support": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, strong, em, hyperlink",
+                  "allowTargetBlank": true,
+                  "label": "Embed support",
+                  "placeholder": "Support Text that will appear under the embedded video"
                 }
               }
             }
