@@ -23,6 +23,7 @@ import FacebookIcon from 'public/images/facebook.svg';
 import TwitterIcon from 'public/images/twitter.svg';
 import InstagramIcon from 'public/images/instagram.svg';
 import YoutubeIcon from 'public/images/youtube.svg';
+import PinIcon from 'public/images/location-pin.svg';
 
 const IconContainer = styled.div`
   padding: ${({ theme }) => theme.space[4]};
@@ -96,9 +97,9 @@ const Tabs = styled.ul`
 const Tab = styled.li`
   ${color};
   ${border};
+  border-radius: ${({ theme }) => theme.radius[0]};
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  border-radius: ${({ theme }) => theme.radius[0]};
   display: block;
   margin-right: ${({ theme }) => theme.space[2]};
   padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[5]};
@@ -111,6 +112,17 @@ const TableHead = styled.th`
   border-bottom-width: 3px;
 `;
 
+const LocationIcon = styled(PinIcon)`
+  height: 15px;
+  width: 15px;
+`;
+
+const LocationLink = styled.a`
+  padding: ${({ theme }) => theme.space[1]};
+  text-decoration: none;
+  color: ${({ linkColor }) => linkColor};
+  border-bottom: 2px dotted ${({ linkColor }) => linkColor};
+`;
 const UNSPEAKABLES = {
   uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
   name: 'London Unspeakables Quidditch',
@@ -118,7 +130,7 @@ const UNSPEAKABLES = {
   type: 'Community',
   location: { type: 'POINT', coordinates: ['-0.148176', '51.453825'] },
   images: ['https://images.prismic.io/chaser/475578b7-a77c-4abc-90f2-de1547bbacf2_72886220_1438371239645635_5936997713475272704_o.jpg?auto=compress,format'],
-  venue: 'Clapham Common, London',
+  venue: 'Clapham South, London',
   featuredColor: '#381e51',
   textColor: '#ffffff',
   icon: 'https://images.prismic.io/chaser/98cc10fb-4840-40ac-a973-1bc54e7d86c5_unspeakables.png?auto=compress,format',
@@ -134,15 +146,18 @@ const UNSPEAKABLES = {
   social_instagram: 'https://www.instagram.com/londonunspeakables',
   teams: [{
     uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
-    name: 'Unspeakables',
+    name: 'London Unspeakables',
+    short_name: 'Unspeakables',
   },
   {
     uuid: '789e0d73-af14-4a35-a37f-8c854728c9b2',
-    name: 'Unstoppables',
+    name: 'London Unstoppables',
+    short_name: 'Unstoppables',
   },
   {
     uuid: '789e0d73-af14-4a35-a37f-8c854728c9b3',
     name: 'Unbreakables',
+    short_name: 'Unbreakables',
   }],
 };
 
@@ -257,7 +272,7 @@ const ClubPage = ({ club, posts, results }) => {
           <IconContainer><Icon src={club.icon} alt={`${club.name} logo`} /></IconContainer>
           <Flex flexDirection="column">
             <Heading as="h2" fontSize={[3, 4, 5]} py="0" my="0">{club.name}</Heading>
-            <p>{club.venue}</p>
+            <Flex alignItems="center"><LocationIcon />{' '}<LocationLink href={`https://www.google.com/maps/search/?api=1&query=${club.location.coordinates[1]},${club.location.coordinates[0]}`} rel="noopener noreferrer" target="_blank" linkColor={club.textColor}>{club.venue}</LocationLink></Flex>
           </Flex>
         </Flex>
       </Box>
@@ -386,7 +401,7 @@ const ClubPage = ({ club, posts, results }) => {
                 <Tabs>
                   <Tab bg="white" borderColor="white">Overview</Tab>
                   {club.teams.map((team) => (
-                    <Tab key={team.uuid} bg="greyDark" color="white">{team.name}</Tab>
+                    <Tab key={team.uuid} bg="greyDark" color="white">{team.short_name || team.name}</Tab>
                   ))}
                 </Tabs>
               </nav>
@@ -435,6 +450,7 @@ ClubPage.propTypes = {
     social_youtube: PropTypes.string,
     social_instagram: PropTypes.string,
     teams: PropTypes.array,
+    location: PropTypes.shape,
   }).isRequired,
   posts: PropTypes.arrayOf(PropTypes.shape).isRequired,
   results: PropTypes.arrayOf(PropTypes.shape).isRequired,
