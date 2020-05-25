@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { space, color, border } from 'styled-system';
+import {
+  space, color, border, typography,
+} from 'styled-system';
 import { useRouter } from 'next/router';
 import Page404 from 'pages/404';
 import PageLoading from 'components/page-loading';
@@ -14,6 +16,8 @@ import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 import { getBlogTags } from 'modules/prismic';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
+
+import { formatOrdinals } from 'modules/numbers';
 
 import FacebookIcon from 'public/images/facebook.svg';
 import TwitterIcon from 'public/images/twitter.svg';
@@ -55,6 +59,7 @@ const SocialIcon = styled.a`
 `;
 
 const Table = styled.table`
+  ${typography};
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
@@ -64,9 +69,15 @@ const TableData = styled.td`
   padding: ${({ theme }) => theme.space[1]};
 `;
 
+const TableDataBorder = styled(TableData)`
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+`;
+
 const TableRow = styled.tr`
   border-collapse: separate;
   border-spacing: 0;
+  vertical-align: top;
 `;
 
 const Support = styled.p`
@@ -91,6 +102,12 @@ const Tab = styled.li`
   display: block;
   margin-right: ${({ theme }) => theme.space[2]};
   padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[5]};
+`;
+
+const TableHead = styled.th`
+  text-align: left;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
 `;
 
 const UNSPEAKABLES = {
@@ -128,9 +145,68 @@ const UNSPEAKABLES = {
   }],
 };
 
+const RESULTS = [
+  {
+    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
+    position: 2,
+    tournament_name: 'European Qualifier Tournament',
+    tournament_date: '2020-01-30',
+    season: '19/20',
+  },
+  {
+    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b3',
+    position: 2,
+    tournament_name: 'Development Cup',
+    tournament_date: '2020-03-07',
+    season: '19/20',
+  },
+  {
+    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
+    position: 2,
+    tournament_name: 'Southern Cup',
+    tournament_date: '2019-11-12',
+    season: '19/20',
+  },
+  {
+    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
+    position: 5,
+    tournament_name: 'British Quidditch Cup',
+    tournament_date: '2019-04-15',
+    season: '18/19',
+  },
+  {
+    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b2',
+    position: 2,
+    tournament_name: 'Development Cup',
+    tournament_date: '2020-03-04',
+    season: '18/19',
+  },
+  {
+    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
+    position: 3,
+    tournament_name: 'Southern Cup',
+    tournament_date: '2018-11-12',
+    season: '18/19',
+  },
+  {
+    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
+    position: 5,
+    tournament_name: 'British Quidditch Cup',
+    tournament_date: '2018-04-03',
+    season: '17/18',
+  },
+];
+
 const ACTIVE_STATUS = 'active';
 
-const ClubPage = ({ club, posts }) => {
+const ClubPage = ({ club, posts, results }) => {
   console.log(posts);
   const router = useRouter();
 
@@ -201,7 +277,7 @@ const ClubPage = ({ club, posts }) => {
             <Table>
               <tbody>
                 <TableRow>
-                  <TableData><strong>Trainings</strong></TableData>
+                  <TableData borderBottomWidth="0"><strong>Trainings</strong></TableData>
                   <TableData>{club.trainings}</TableData>
                 </TableRow>
 
@@ -276,6 +352,30 @@ const ClubPage = ({ club, posts }) => {
             </Flex>
 
             {club.status !== ACTIVE_STATUS && <Support>This club is currently inactive, if you are interested in restarting it contact our <a href={`mailto:teams@quidditchuk.org?subject=${club.name}`}>Teams Director</a></Support>}
+
+            <Heading as="h3" fontSize={[2, 2, 3]} isBody>Club Achievements</Heading>
+
+            <Table fontSize="1">
+              <thead>
+                <TableRow>
+                  <TableHead>Position</TableHead>
+                  <TableHead>Season</TableHead>
+                  <TableHead>Tournament</TableHead>
+                  <TableHead>Team</TableHead>
+                </TableRow>
+              </thead>
+
+              <tbody>
+                {results.map((result) => (
+                  <TableRow key={`${result.club_uuid}_${result.team_uuid}_${result.tournament_name}_${result.tournament_date}`}>
+                    <TableDataBorder>{result.position}{formatOrdinals(result.position)}</TableDataBorder>
+                    <TableDataBorder>{result.season}</TableDataBorder>
+                    <TableDataBorder>{result.tournament_name}</TableDataBorder>
+                    <TableDataBorder>{club.teams.find(({ uuid }) => uuid === result.team_uuid)?.name}</TableDataBorder>
+                  </TableRow>
+                ))}
+              </tbody>
+            </Table>
           </Box>
 
           <Box py={{ _: 6, m: 10 }}>
@@ -299,12 +399,17 @@ const ClubPage = ({ club, posts }) => {
 };
 
 // eslint-disable-next-line no-unused-vars
-export const getServerSideProps = async ({ params: { id } }) => {
-  const club = UNSPEAKABLES;
-  const posts = await getBlogTags(club.tags, { orderings: '[my.post.date desc]', pageSize: 3 });
+export const getServerSideProps = async ({ params: { club } }) => {
+  const data = UNSPEAKABLES;
+  const results = RESULTS.sort((a, b) => new Date(b.tournament_date) - new Date(a.tournament_date));
+  const posts = await getBlogTags(data.tags, { orderings: '[my.post.date desc]', pageSize: 3 });
 
   return {
-    props: { club, posts },
+    props: {
+      club: data,
+      posts,
+      results,
+    },
   };
 };
 
@@ -330,6 +435,7 @@ ClubPage.propTypes = {
     teams: PropTypes.array,
   }).isRequired,
   posts: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  results: PropTypes.arrayOf(PropTypes.shape).isRequired,
 };
 
 export default ClubPage;

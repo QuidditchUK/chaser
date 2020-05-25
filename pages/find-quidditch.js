@@ -195,7 +195,7 @@ const FindQuidditch = ({ clubs, events }) => {
             >
               {clubs.map((club) => (
                 <Flex flexDirection="column" key={club.uuid}>
-                  <Link href="/clubs/[id]" as={`/clubs/${club.slug}`} passHref>
+                  <Link href="/clubs/[club]" as={`/clubs/${club.slug}`} passHref>
                     <StyledLink>
                       <ClubCard
                         backgroundColor={club.featuredColor}
