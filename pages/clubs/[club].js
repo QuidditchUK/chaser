@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  space, color, border, typography,
-} from 'styled-system';
+import { space, color, typography } from 'styled-system';
 import { useRouter } from 'next/router';
 import Page404 from 'pages/404';
 import PageLoading from 'components/page-loading';
@@ -16,6 +14,7 @@ import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 import { getBlogTags } from 'modules/prismic';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
+import ActiveLink, { ExactActiveLink } from 'components/active-link';
 
 import { formatOrdinals } from 'modules/numbers';
 
@@ -90,19 +89,41 @@ const Tabs = styled.ul`
   display: flex;
   justify-content: flex-start;
   list-style-type: none;
-  margin: 0;
+  /* margin: 0; */
   width: 100%;
 `;
 
 const Tab = styled.li`
   ${color};
-  ${border};
-  border-radius: ${({ theme }) => theme.radius[0]};
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  display: block;
   margin-right: ${({ theme }) => theme.space[2]};
-  padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[5]};
+  line-height: 1.35;
+  
+  a {
+    display: block;
+    text-decoration: none;
+  }
+
+  span {
+    color: ${({ theme }) => theme.colors.white};
+    padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[5]};
+    background: ${({ theme }) => theme.colors.greyDark};
+    border-radius: ${({ theme }) => theme.radius[0]};
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    &:hover {
+      background: ${({ featuredColor }) => featuredColor};
+      color: ${({ textColor }) => textColor};
+      border-radius: ${({ theme }) => theme.radius[0]};
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  .active {
+    background: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.greyDark};
+  }
 `;
 
 const TableHead = styled.th`
@@ -148,16 +169,19 @@ const UNSPEAKABLES = {
     uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
     name: 'London Unspeakables',
     short_name: 'Unspeakables',
+    slug: 'unspeakables',
   },
   {
     uuid: '789e0d73-af14-4a35-a37f-8c854728c9b2',
     name: 'London Unstoppables',
     short_name: 'Unstoppables',
+    slug: 'unstoppables',
   },
   {
     uuid: '789e0d73-af14-4a35-a37f-8c854728c9b3',
     name: 'Unbreakables',
     short_name: 'Unbreakables',
+    slug: 'unbreakables',
   }],
 };
 
@@ -188,14 +212,6 @@ const RESULTS = [
   },
   {
     club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
-    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
-    position: 5,
-    tournament_name: 'British Quidditch Cup',
-    tournament_date: '2019-04-15',
-    season: '18/19',
-  },
-  {
-    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
     team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b2',
     position: 2,
     tournament_name: 'Development Cup',
@@ -209,14 +225,6 @@ const RESULTS = [
     tournament_name: 'Southern Cup',
     tournament_date: '2018-11-12',
     season: '18/19',
-  },
-  {
-    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
-    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
-    position: 5,
-    tournament_name: 'British Quidditch Cup',
-    tournament_date: '2018-04-03',
-    season: '17/18',
   },
 ];
 
@@ -388,7 +396,7 @@ const ClubPage = ({ club, posts, results }) => {
                     <TableDataBorder>{result.position}{formatOrdinals(result.position)}</TableDataBorder>
                     <TableDataBorder>{result.season}</TableDataBorder>
                     <TableDataBorder>{result.tournament_name}</TableDataBorder>
-                    <TableDataBorder>{club.teams.find(({ uuid }) => uuid === result.team_uuid)?.name}</TableDataBorder>
+                    <TableDataBorder>{club.teams.find(({ uuid }) => uuid === result.team_uuid)?.short_name}</TableDataBorder>
                   </TableRow>
                 ))}
               </tbody>
@@ -399,9 +407,18 @@ const ClubPage = ({ club, posts, results }) => {
             <Box>
               <nav>
                 <Tabs>
-                  <Tab bg="white" borderColor="white">Overview</Tab>
+                  <Tab>
+                    <ExactActiveLink as={`/clubs/${club.slug}`} href="/clubs/[club]">
+                      <span>Overview</span>
+                    </ExactActiveLink>
+                  </Tab>
+
                   {club.teams.map((team) => (
-                    <Tab key={team.uuid} bg="greyDark" color="white">{team.short_name || team.name}</Tab>
+                    <Tab key={team.uuid} featuredColor={club.featuredColor} textColor={club.textColor}>
+                      <ActiveLink as={`/clubs/${club.slug}/teams/${team.slug}`} href="/clubs/[club]/teams/[team]">
+                        <span>{team.short_name || team.name}</span>
+                      </ActiveLink>
+                    </Tab>
                   ))}
                 </Tabs>
               </nav>
