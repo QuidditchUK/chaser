@@ -215,7 +215,7 @@ const RESULTS = [
     team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b2',
     position: 2,
     tournament_name: 'Development Cup',
-    tournament_date: '2020-03-04',
+    tournament_date: '2019-03-04',
     season: '18/19',
   },
   {
@@ -435,7 +435,7 @@ const ClubPage = ({ club, posts, results }) => {
 // eslint-disable-next-line no-unused-vars
 export const getServerSideProps = async ({ params: { club } }) => {
   const data = UNSPEAKABLES;
-  const results = RESULTS.sort((a, b) => new Date(b.tournament_date) - new Date(a.tournament_date));
+  const results = RESULTS.sort((a, b) => new Date(b.tournament_date).getTime() - new Date(a.tournament_date).getTime());
   const posts = await getBlogTags(data.tags, { orderings: '[my.post.date desc]', pageSize: 3 });
 
   return {
