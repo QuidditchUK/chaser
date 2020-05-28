@@ -141,21 +141,19 @@ const List = styled.ul`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     left: 0;
     justify-content: center;
-    height: 100vh;
     margin: 0;
-    overflow: hidden;
-    padding: 0 ${({ theme }) => theme.space[4]};
+    padding: 60px ${({ theme }) => theme.space[4]} 120px;
     position: absolute;
     top: 0;
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
     transition: transform 0.3s;
     width: 100%;
+    z-index: 4;
 
     span:hover {
       color: ${({ theme }) => theme.colors.primary};
@@ -268,12 +266,25 @@ const Hamburger = styled(HamburgerIcon)`
   }
 `;
 
+const Overlay = styled.div`
+  width: 100%;
+  height: 100vh;
+  background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
+  transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
+  transition: transform 0.3s;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
 function Navigation() {
   const [open, setOpen] = useState(false);
   const [navigationToggle, setNavigationToggle] = useState(10);
 
   return (
     <Wrapper open={open}>
+      <Overlay open={open} />
       <Header>
         <Link href="/" passHref>
           <LogoLink onClick={() => setOpen(false)}>
