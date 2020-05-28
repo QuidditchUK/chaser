@@ -218,7 +218,11 @@ const List = styled.ul`
 `;
 
 const Item = styled.li`
-  ${space}
+  ${space};
+
+ &:first-of-type {
+   padding-left: 0;
+ }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     padding-left: 0;
@@ -298,7 +302,7 @@ function Navigation() {
         <Nav>
           <List open={open}>
             {MAIN_NAVIGATION.map((item, i) => (
-              <Item key={item.label} pl={8}>
+              <Item key={item.label} pl={6}>
                 {item.list
                   ? (
                     <ParentWrapper path={item.path}>
