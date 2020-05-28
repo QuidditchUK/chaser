@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { space, typography } from 'styled-system';
+import { space, typography, border } from 'styled-system';
 import { useRouter } from 'next/router';
 import Page404 from 'pages/404';
 import PageLoading from 'components/page-loading';
@@ -15,7 +15,9 @@ import { rem } from 'styles/theme';
 import { getBlogTags } from 'modules/prismic';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import Content from 'components/content';
+import Image from 'components/image';
 import ClubNews from 'components/club-news';
+import { CenterJustify } from 'components/image-and-content';
 
 import { formatOrdinals } from 'modules/numbers';
 
@@ -73,6 +75,7 @@ const TableData = styled.td`
 const TableDataBorder = styled(TableData)`
   border-bottom-width: 1px;
   border-bottom-style: solid;
+  ${border};
 `;
 
 const TableRow = styled.tr`
@@ -131,18 +134,27 @@ const UNSPEAKABLES = {
     name: 'London Unspeakables',
     short_name: 'Unspeakables',
     slug: 'unspeakables',
+    current_division: 1,
+    current_position: 4,
+    image: 'https://images.prismic.io/chaser/79143992-e8a4-4f90-a39a-830664d1f342_83868043_799470787197707_7665980757470347264_o.jpg?auto=compress,format',
   },
   {
     uuid: '789e0d73-af14-4a35-a37f-8c854728c9b2',
     name: 'London Unstoppables',
     short_name: 'Unstoppables',
     slug: 'unstoppables',
+    current_division: 2,
+    current_position: 3,
+    image: 'https://images.prismic.io/chaser/7c170182-bd18-4787-a4e7-2f9df1607a88_Unbreakables-1024x683.jpg?auto=compress,format',
   },
   {
     uuid: '789e0d73-af14-4a35-a37f-8c854728c9b3',
     name: 'Unbreakables',
     short_name: 'Unbreakables',
     slug: 'unbreakables',
+    current_division: 3,
+    current_position: 1,
+    image: 'https://images.prismic.io/chaser/7c170182-bd18-4787-a4e7-2f9df1607a88_Unbreakables-1024x683.jpg?auto=compress,format',
   }],
 };
 
@@ -256,13 +268,13 @@ const ClubPage = ({ club, posts, results }) => {
           gridGap={{ _: 'gutter._', m: 'gutter.m' }}
           mt={0}
         >
-          <Box bg="white" py={{ _: 6, m: 10 }} color={club.featuredColor} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
-            <Heading as="h3" fontSize={[2, 2, 3]} isBody>Club Details</Heading>
+          <Box bg="white" py={{ _: 6, m: 10 }} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+            <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>Club Details</Heading>
 
             <Table>
               <tbody>
                 <TableRow>
-                  <TableData borderBottomWidth="0"><strong>Trainings</strong></TableData>
+                  <TableData><strong>Trainings</strong></TableData>
                   <TableData>{club.trainings}</TableData>
                 </TableRow>
 
@@ -338,7 +350,7 @@ const ClubPage = ({ club, posts, results }) => {
 
             {club.status !== ACTIVE_STATUS && <Support>This club is currently inactive, if you are interested in restarting it contact our <a href={`mailto:teams@quidditchuk.org?subject=${club.name}`}>Teams Director</a></Support>}
 
-            <Heading as="h3" fontSize={[2, 2, 3]} isBody>Club Achievements</Heading>
+            <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>Club Achievements</Heading>
 
             <Table fontSize="1">
               <thead>
@@ -364,14 +376,44 @@ const ClubPage = ({ club, posts, results }) => {
           </Box>
 
           <Box py={{ _: 3, m: 9 }} paddingRight={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }} paddingLeft={{ _: 'gutter._', s: 'gutter.s', m: 0 }}>
-            <Box bg="white" py={3} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }} color={club.featuredColor}>
-              <Heading as="h3" fontSize={[2, 2, 3]} isBody>Latest News</Heading>
+            <Box bg="white" py={3} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>Latest News</Heading>
               <ClubNews posts={posts} bgColor={club.featuredColor} color={club.textColor} />
 
-              <Heading as="h3" fontSize={[2, 2, 3]} isBody>About {club.name}</Heading>
+              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>About {club.name}</Heading>
               <Content paddingBottom={3}>{club.description}</Content>
 
+              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>Teams</Heading>
 
+              {club.teams.map((team) => (
+                <Grid
+                  gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
+                  gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+                  key={team.uuid}
+                  paddingBottom="6"
+                >
+                  <CenterJustify>
+                    <Image alt={team.name} src={team.image} height={9} width={16} />
+                  </CenterJustify>
+
+                  <CenterJustify>
+                    <Heading as="h3" isBody mt={0}>{team.short_name || team.name}</Heading>
+                    <Table>
+                      <tbody>
+                        <TableRow>
+                          <TableDataBorder borderTopWidth="3px" borderTopStyle="solid"><strong>Current Division</strong></TableDataBorder>
+                          <TableDataBorder borderTopWidth="3px" borderTopStyle="solid">{team.current_division}</TableDataBorder>
+                        </TableRow>
+
+                        <TableRow>
+                          <TableDataBorder><strong>Current Position</strong></TableDataBorder>
+                          <TableDataBorder>{team.current_position}{formatOrdinals(team.current_position)}</TableDataBorder>
+                        </TableRow>
+                      </tbody>
+                    </Table>
+                  </CenterJustify>
+                </Grid>
+              ))}
             </Box>
           </Box>
         </Grid>
