@@ -12,14 +12,14 @@ import Container from './container';
 import Heading from './heading';
 import { getDocs, getBlogCategory, PAGE_SIZE } from '../modules/prismic';
 
-const StyledLink = styled.a`
+export const StyledLink = styled.a`
   text-decoration: none;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 `;
 
-const HorizontalScrollWrapper = styled.div`
+export const HorizontalScrollWrapper = styled.div`
   overflow-x: scroll;
   overflow-y: hidden;
 
@@ -35,7 +35,7 @@ const HorizontalScrollWrapper = styled.div`
   }
 `;
 
-const HorizontalSpacer = styled.div`
+export const HorizontalSpacer = styled.div`
   display: block;
 
    @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
@@ -88,7 +88,7 @@ export const HorizontalNews = ({ horizontalScroll, posts }) => (
                           width={1600}
                           height={900}
                         />
-                          )}
+                      )}
                     />
                   </StyledLink>
                 </Link>

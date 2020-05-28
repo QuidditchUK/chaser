@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { space, color, typography } from 'styled-system';
+import { space, typography } from 'styled-system';
 import { useRouter } from 'next/router';
 import Page404 from 'pages/404';
 import PageLoading from 'components/page-loading';
@@ -14,7 +14,8 @@ import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 import { getBlogTags } from 'modules/prismic';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
-import ActiveLink, { ExactActiveLink } from 'components/active-link';
+import Content from 'components/content';
+import ClubNews from 'components/club-news';
 
 import { formatOrdinals } from 'modules/numbers';
 
@@ -85,47 +86,6 @@ const Support = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.bodyCard};
 `;
 
-const Tabs = styled.ul`
-  display: flex;
-  justify-content: flex-start;
-  list-style-type: none;
-  /* margin: 0; */
-  width: 100%;
-`;
-
-const Tab = styled.li`
-  ${color};
-  margin-right: ${({ theme }) => theme.space[2]};
-  line-height: 1.4;
-  
-  a {
-    display: block;
-    text-decoration: none;
-  }
-
-  span {
-    color: ${({ theme }) => theme.colors.white};
-    padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[5]};
-    background: ${({ theme }) => theme.colors.greyDark};
-    border-radius: ${({ theme }) => theme.radius[0]};
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-
-    &:hover {
-      background: ${({ featuredColor }) => featuredColor};
-      color: ${({ textColor }) => textColor};
-      border-radius: ${({ theme }) => theme.radius[0]};
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-  }
-
-  .active {
-    background: ${({ theme }) => theme.colors.white};
-    color: ${({ theme }) => theme.colors.greyDark};
-  }
-`;
-
 const TableHead = styled.th`
   text-align: left;
   padding: ${({ theme }) => theme.space[1]};
@@ -165,6 +125,7 @@ const UNSPEAKABLES = {
   social_twitter: 'https://twitter.com/UnspeakablesLDN',
   social_youtube: 'https://www.youtube.com/user/UnspeakablesLDN',
   social_instagram: 'https://www.instagram.com/londonunspeakables',
+  description: 'The Unspeakables are London’s first quidditch team. Through our regular open sessions, we have introduced many new players to the sport who missed out on the more well-trodden university route; this makes us a true community team. We pride ourselves both on our diversity- we are diverse in every way possible- and our spirit of competitiveness while never losing our sense of humour. Our core of passionate, friendly and dedicated regular members, supplemented by talented players from far and wide, has allowed us to consistently improve over the past two years and we were thrilled to finish fifth at the most recent British Quidditch Cup. The Unbreakables, our second team, were formed in 2017. A bigger club enables us to continue our traditions of developing brand new people and helping players transition from other sports.',
   teams: [{
     uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
     name: 'London Unspeakables',
@@ -231,7 +192,6 @@ const RESULTS = [
 const ACTIVE_STATUS = 'active';
 
 const ClubPage = ({ club, posts, results }) => {
-  console.log(posts);
   const router = useRouter();
 
   if (router.isFallback) {
@@ -403,28 +363,16 @@ const ClubPage = ({ club, posts, results }) => {
             </Table>
           </Box>
 
-          <Box py={{ _: 6, m: 10 }}>
-            <Box>
-              <nav>
-                <Tabs>
-                  <Tab>
-                    <ExactActiveLink as={`/clubs/${club.slug}`} href="/clubs/[club]">
-                      <span>Overview</span>
-                    </ExactActiveLink>
-                  </Tab>
+          <Box py={{ _: 3, m: 9 }} paddingRight={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }} paddingLeft={{ _: 'gutter._', s: 'gutter.s', m: 0 }}>
+            <Box bg="white" py={3} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }} color={club.featuredColor}>
+              <Heading as="h3" fontSize={[2, 2, 3]} isBody>Latest News</Heading>
+              <ClubNews posts={posts} bgColor={club.featuredColor} color={club.textColor} />
 
-                  {club.teams.map((team) => (
-                    <Tab key={team.uuid} featuredColor={club.featuredColor} textColor={club.textColor}>
-                      <ActiveLink as={`/clubs/${club.slug}/teams/${team.slug}`} href="/clubs/[club]/teams/[team]">
-                        <span>{team.short_name || team.name}</span>
-                      </ActiveLink>
-                    </Tab>
-                  ))}
-                </Tabs>
-              </nav>
+              <Heading as="h3" fontSize={[2, 2, 3]} isBody>About {club.name}</Heading>
+              <Content paddingBottom={3}>{club.description}</Content>
+
+
             </Box>
-
-            <Box bg="white" py={6} />
           </Box>
         </Grid>
       </Box>
@@ -468,6 +416,7 @@ ClubPage.propTypes = {
     social_instagram: PropTypes.string,
     teams: PropTypes.array,
     location: PropTypes.shape,
+    description: PropTypes.string,
   }).isRequired,
   posts: PropTypes.arrayOf(PropTypes.shape).isRequired,
   results: PropTypes.arrayOf(PropTypes.shape).isRequired,

@@ -39,6 +39,7 @@ const StyledCard = styled.article`
 
   ${({ theme }) => variant({ variants: variants(theme) })};
   ${space};
+  ${color};
 
   &:hover {
     box-shadow: ${({ theme }) => theme.shadows.box};
