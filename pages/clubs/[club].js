@@ -380,7 +380,7 @@ const ClubPage = ({ club, posts, results }) => {
               <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>Latest News</Heading>
               <ClubNews posts={posts} bgColor={club.featuredColor} color={club.textColor} />
 
-              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>About {club.name}</Heading>
+              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor} paddingTop="2">About {club.name}</Heading>
               <Content paddingBottom={3}>{club.description}</Content>
 
               <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>Teams</Heading>
