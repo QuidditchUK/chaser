@@ -4,13 +4,18 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 
-import { Grid, Flex, Box } from './layout';
-import Card from './card';
-import Image from './image';
-import Button from './button';
-import Container from './container';
-import Heading from './heading';
-import { getDocs, getBlogCategory, PAGE_SIZE } from '../modules/prismic';
+import { Grid, Flex, Box } from 'components/layout';
+import Card from 'components/card';
+import Image from 'components/image';
+import Button from 'components/button';
+import Container from 'components/container';
+import Heading from 'components/heading';
+import {
+  getDocs,
+  getBlogCategory,
+  getBlogTags,
+  PAGE_SIZE,
+} from 'modules/prismic';
 
 export const StyledLink = styled.a`
   text-decoration: none;
@@ -145,6 +150,7 @@ const News = ({
   category,
   allowPagination,
   horizontalScroll,
+  tag,
 }) => {
   const [loading, setLoading] = useState(false);
   const [showLoadMore, setShowLoadMore] = useState(allowPagination);
@@ -156,9 +162,15 @@ const News = ({
       setLoading(true);
 
       const fetchData = async () => {
-        const getPages = category
-          ? getBlogCategory(category, { orderings: '[my.post.date desc]', pageSize: PAGE_SIZE, page })
-          : getDocs('post', { orderings: '[my.post.date desc]', pageSize: PAGE_SIZE, page });
+        let getPages;
+
+        if (category) {
+          getPages = getBlogCategory(category, { orderings: '[my.post.date desc]', pageSize: PAGE_SIZE, page });
+        } else if (tag) {
+          getPages = getBlogTags([tag], { orderings: '[my.post.date desc]', pageSize: PAGE_SIZE, page });
+        } else {
+          getPages = getDocs('post', { orderings: '[my.post.date desc]', pageSize: PAGE_SIZE, page });
+        }
 
         const newPages = await getPages;
         if (newPages.length === 0) {
@@ -171,7 +183,7 @@ const News = ({
 
       fetchData();
     }
-  }, [category, page]);
+  }, [category, page, tag]);
 
   useEffect(() => {
     if (posts.length % PAGE_SIZE !== 0) {
@@ -186,7 +198,7 @@ const News = ({
       px={{ _: 0, m: 'gutter.m' }}
     >
       <Container>
-        <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }} isBody color="primary">{category || 'Latest'} News</Heading>
+        <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }} isBody color="primary">{category || tag || 'Latest'} News</Heading>
         <HorizontalNews horizontalScroll={horizontalScroll} posts={posts} />
 
         {loading && <Flex alignItems="center" justifyContent="center" py={5}>Loading...</Flex>}
@@ -201,6 +213,7 @@ News.defaultProps = {
   horizontalScroll: true,
   allowPagination: false,
   category: null,
+  tag: null,
   posts: [],
 };
 
@@ -208,6 +221,7 @@ News.propTypes = {
   horizontalScroll: PropTypes.bool,
   allowPagination: PropTypes.bool,
   category: PropTypes.string,
+  tag: PropTypes.string,
   posts: PropTypes.arrayOf(PropTypes.shape({})),
 };
 

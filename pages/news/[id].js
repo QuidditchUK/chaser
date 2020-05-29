@@ -29,7 +29,7 @@ const Post = ({ page }) => {
       <article>
         <BlogHero {...page.data} />
         {renderPrismicSections(page.data.body)}
-        <BlogSupport {...page.data} />
+        <BlogSupport {...page.data} tags={page.tags} />
       </article>
     </Layout>
   );
@@ -59,6 +59,7 @@ Post.propTypes = {
     data: PropTypes.shape({
       body: PropTypes.arrayOf(PropTypes.shape({})),
     }),
+    tags: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
 };
 
