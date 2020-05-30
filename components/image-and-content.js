@@ -86,6 +86,8 @@ const ImageAndContent = (rawData) => {
           variant: get(itemData, 'variant'),
           layout: get(itemData, 'layout_content'),
           support: get(itemData, 'support'),
+          cta_text: get(itemData, 'cta_text'),
+          cta_url: get(itemData, 'cta_url'),
         };
 
         const isImageLeft = item.layout === 'image-left';

@@ -23,6 +23,11 @@ const variants = (theme) => ({
     border: `1px solid ${theme.colors.darkBlue}`,
     color: theme.colors.white,
   },
+  white: {
+    bg: theme.colors.white,
+    border: `1px solid ${theme.colors.white}`,
+    color: theme.colors.primary,
+  },
 });
 
 const hoverStates = (theme) => ({
@@ -40,6 +45,9 @@ const hoverStates = (theme) => ({
   dark: {
     bg: tint(0.9, theme.colors.darkBlue),
     border: `1px solid ${tint(0.9, theme.colors.darkBlue)}`,
+  },
+  white: {
+    bg: tint(0.9, theme.colors.primary),
   },
 });
 

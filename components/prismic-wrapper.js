@@ -49,7 +49,7 @@ export const buttonVariants = {
   primary: 'white',
   secondary: 'white',
   white: 'primary',
-  dark: 'secondary,',
+  dark: 'secondary',
 };
 
 const Wrapper = styled(Box)(
