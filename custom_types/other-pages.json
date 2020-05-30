@@ -23,7 +23,9 @@
           "hero": [],
           "header_and_paragraph": [],
           "image": [],
-          "image_and_content": []
+          "image_and_content": [],
+          "embed": [],
+          "embed_and_content": []
         },
         "choices": {
           "video_hero_with_cta": {
@@ -137,6 +139,20 @@
                   "default_value": "light",
                   "label": "Variant"
                 }
+              },
+              "cta_text": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA Text",
+                  "placeholder": "CTA Button"
+                }
+              },
+              "cta_url": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA URL",
+                  "placeholder": "If linking out of QUK, include the https://"
+                }
               }
             },
             "repeat": {}
@@ -204,6 +220,20 @@
                   "allowTargetBlank": true,
                   "label": "Image support",
                   "placeholder": "Support Text that will appear under the image"
+                }
+              },
+              "cta_text": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA Text",
+                  "placeholder": "CTA Button"
+                }
+              },
+              "cta_url": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA URL",
+                  "placeholder": "If linking out of QUK, include the https://"
                 }
               }
             }
@@ -305,6 +335,137 @@
                   "multi": "paragraph, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
                   "allowTargetBlank": true,
                   "label": "Content"
+                }
+              }
+            }
+          },
+          "embed": {
+            "type": "Slice",
+            "fieldset": "Embed",
+            "description": "Embed videos from Youtube or Facebook",
+            "icon": "burst_mode",
+            "display": "list",
+            "non-repeat": {
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2",
+                  "label": "Title"
+                }
+              },
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "primary",
+                    "secondary",
+                    "white",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "variant"
+                }
+              },
+              "content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, strong, em, hyperlink, list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "Content"
+                }
+              }
+            },
+            "repeat": {
+              "embed": {
+                "type": "Embed",
+                "config": {
+                  "label": "embed"
+                }
+              },
+              "support": {
+                "type": "Text",
+                "config": {
+                  "label": "Support Text"
+                }
+              }
+            }
+          },
+          "embed_and_content": {
+            "type": "Slice",
+            "fieldset": "Embed and Content",
+            "description": "Displays embeded video and some copy",
+            "icon": "art_track",
+            "display": "list",
+            "non-repeat": {},
+            "repeat": {
+              "embed": {
+                "type": "Embed",
+                "config": {
+                  "label": "embed"
+                }
+              },
+              "layout_content": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "embed-left",
+                    "embed-right"
+                  ],
+                  "default_value": "embed-left",
+                  "label": "Layout content"
+                }
+              },
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "primary",
+                    "secondary",
+                    "white",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "Variant"
+                }
+              },
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2",
+                  "label": "title"
+                }
+              },
+              "content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, strong, em, hyperlink, list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "content"
+                }
+              },
+              "support": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, strong, em, hyperlink",
+                  "allowTargetBlank": true,
+                  "label": "Embed Support text",
+                  "placeholder": "Text that will appear under the embedded video"
+                }
+              },
+              "cta_text": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA Text",
+                  "placeholder": "CTA Button"
+                }
+              },
+              "cta_url": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA URL",
+                  "placeholder": "If linking out of QUK, include the https://"
                 }
               }
             }

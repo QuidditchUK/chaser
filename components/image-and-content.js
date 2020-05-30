@@ -5,11 +5,13 @@ import get from 'just-safe-get';
 import styled from 'styled-components';
 
 import Heading from 'components/heading';
-import PrismicWrapper from 'components/prismic-wrapper';
-import { Box, Grid } from 'components/layout';
+import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
+import { Box, Grid, Flex } from 'components/layout';
 import Image from 'components/image';
 import { Support } from 'components/image-slice';
 import Content from 'components/content';
+import ExternalLink from 'components/external-link';
+import Button from 'components/button';
 
 export const CenterJustify = styled(Box)`
   display: flex;  
@@ -30,6 +32,16 @@ const Item = ({ item, isImageLeft }) => (
       )}
 
       {item.content && <Content>{RichText.render(item.content)}</Content>}
+
+      {item.cta_text && (
+        <Flex justifyContent="center">
+          <ExternalLink href={item.cta_url}>
+            <Button type="button" variant={buttonVariants[item.variant]} ml={2}>
+              {item.cta_text}
+            </Button>
+          </ExternalLink>
+        </Flex>
+      )}
     </CenterJustify>
 
     <CenterJustify order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}>
@@ -52,6 +64,9 @@ Item.propTypes = {
       }),
     }),
     support: PropTypes.array,
+    variant: PropTypes.string,
+    cta_text: PropTypes.string,
+    cta_url: PropTypes.string,
   }).isRequired,
   isImageLeft: PropTypes.bool.isRequired,
 };

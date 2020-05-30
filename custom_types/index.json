@@ -9,13 +9,13 @@
     "id": "about",
     "name": "About",
     "repeatable": true,
-    "value": "about.json"
+    "value": "other-pages.json"
   },
   {
     "id": "play",
     "name": "Play",
     "repeatable": true,
-    "value": "play.json"
+    "value": "other-pages.json"
   },
   {
     "id": "post",
@@ -27,12 +27,12 @@
     "id": "programmes",
     "name": "Programmes",
     "repeatable": true,
-    "value": "programmes.json"
+    "value": "other-pages.json"
   },
   {
     "id": "volunteer",
     "name": "Volunteer",
     "repeatable": true,
-    "value": "volunteer.json"
+    "value": "other-pages.json"
   }
 ]

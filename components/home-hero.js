@@ -20,7 +20,6 @@ const HomeHero = (rawData) => {
   const data = {
     title: get(rawData, 'primary.slug'),
     cta_text: get(rawData, 'primary.cta_text'),
-    cta_url: get(rawData, 'primary.cta_url'),
     video: get(rawData, 'primary.video_url.url'),
     poster: get(rawData, 'primary.poster.url'),
   };

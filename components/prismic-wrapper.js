@@ -44,6 +44,14 @@ const variants = {
   },
 };
 
+export const buttonVariants = {
+  light: 'primary',
+  primary: 'white',
+  secondary: 'white',
+  white: 'primary',
+  dark: 'secondary,',
+};
+
 const Wrapper = styled(Box)(
   styledVariant({ variants }),
 );

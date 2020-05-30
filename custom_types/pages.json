@@ -27,7 +27,7 @@
           "cards": [],
           "find_quidditch": [],
           "embed": [],
-          "image_and_content1": []
+          "embed_and_content": []
         },
         "choices": {
           "video_hero_with_cta": {
@@ -141,6 +141,20 @@
                   "default_value": "light",
                   "label": "Variant"
                 }
+              },
+              "cta_text": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA Text",
+                  "placeholder": "CTA Button"
+                }
+              },
+              "cta_url": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA URL",
+                  "placeholder": "If linking out of QUK, include the https://"
+                }
               }
             },
             "repeat": {}
@@ -208,6 +222,20 @@
                   "allowTargetBlank": true,
                   "label": "Image support",
                   "placeholder": "Support Text that will appear under the image"
+                }
+              },
+              "cta_text": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA Text",
+                  "placeholder": "CTA Button"
+                }
+              },
+              "cta_url": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA URL",
+                  "placeholder": "If linking out of QUK, include the https://"
                 }
               }
             }
@@ -463,6 +491,20 @@
                   "allowTargetBlank": true,
                   "label": "Embed Support text",
                   "placeholder": "Text that will appear under the embedded video"
+                }
+              },
+              "cta_text": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA Text",
+                  "placeholder": "CTA Button"
+                }
+              },
+              "cta_url": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA URL",
+                  "placeholder": "If linking out of QUK, include the https://"
                 }
               }
             }

@@ -4,12 +4,14 @@ import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 
 import Heading from 'components/heading';
-import PrismicWrapper from 'components/prismic-wrapper';
-import { Grid } from 'components/layout';
+import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
+import { Grid, Flex } from 'components/layout';
 import Content from 'components/content';
 import { Embed } from 'components/embed-slice';
 import { CenterJustify } from 'components/image-and-content';
 import { Support } from 'components/image-slice';
+import ExternalLink from 'components/external-link';
+import Button from 'components/button';
 
 const Item = ({ item, isEmbedLeft }) => (
   <Grid
@@ -24,6 +26,16 @@ const Item = ({ item, isEmbedLeft }) => (
       )}
 
       {item.content && <Content>{RichText.render(item.content)}</Content>}
+
+      {item.cta_text && (
+        <Flex justifyContent="center">
+          <ExternalLink href={item.cta_url}>
+            <Button type="button" variant={buttonVariants[item.variant]} ml={2}>
+              {item.cta_text}
+            </Button>
+          </ExternalLink>
+        </Flex>
+      )}
     </CenterJustify>
 
     <CenterJustify order={{ _: 1, m: `${(isEmbedLeft ? 1 : 2)}` }}>
@@ -39,6 +51,9 @@ Item.propTypes = {
     content: PropTypes.array,
     embed: PropTypes.shape({}),
     support: PropTypes.array,
+    variant: PropTypes.string,
+    cta_text: PropTypes.string,
+    cta_url: PropTypes.string,
   }).isRequired,
   isEmbedLeft: PropTypes.bool.isRequired,
 };
