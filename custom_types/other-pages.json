@@ -25,7 +25,8 @@
           "image": [],
           "image_and_content": [],
           "embed": [],
-          "embed_and_content": []
+          "embed_and_content": [],
+          "contact_form": []
         },
         "choices": {
           "video_hero_with_cta": {
@@ -469,6 +470,27 @@
                 }
               }
             }
+          },
+          "contact_form": {
+            "type": "Slice",
+            "fieldset": "Contact Us Form",
+            "description": "Contact Us Form",
+            "icon": "assignment",
+            "display": "list",
+            "non-repeat": {
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "variant"
+                }
+              }
+            },
+            "repeat": {}
           }
         }
       }

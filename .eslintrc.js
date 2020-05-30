@@ -49,6 +49,12 @@ module.exports = {
     "import/no-named-as-default-member": 0,
     "import/prefer-default-export": 0,
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "jsx-a11y/label-has-associated-control": [2, {
+      "labelComponents": ["Label"],
+      "labelAttributes": ["label"],
+      "controlComponents": ["Input", "Textarea"],
+      "depth": 3,
+    }],
   }
 }

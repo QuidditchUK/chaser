@@ -423,6 +423,27 @@
                 }
               }
             }
+          },
+          "contact_form": {
+            "type": "Slice",
+            "fieldset": "Contact Us Form",
+            "description": "Contact Us Form",
+            "icon": "assignment",
+            "display": "list",
+            "non-repeat": {
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "variant"
+                }
+              }
+            },
+            "repeat": {}
           }
         }
       }
