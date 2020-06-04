@@ -56,7 +56,11 @@ const EventCard = ({
   startTime,
   ...cardProps
 }) => (
-  <StyledCard {...cardProps} gridTemplateColumns="3fr 6fr 3fr">
+  <StyledCard
+    {...cardProps}
+    gridTemplateColumns={{ _: '1fr', m: '3fr 6fr 3fr' }}
+    gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+  >
     <Box
       as="section"
       position="relative"
@@ -94,7 +98,7 @@ const EventCard = ({
       </p>
     </Content>
 
-    <Flex flexDirection="column" justifyContent="center" padding="7">
+    <Flex flexDirection="column" justifyContent="center" padding="3">
       <Button type="button" variant="primary" mb="3">First CTA</Button>
       <Button type="button" variant="light">Second CTA</Button>
     </Flex>
