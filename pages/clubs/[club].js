@@ -264,8 +264,8 @@ const ClubPage = ({ club, posts, results }) => {
         px={0}
       >
         <Grid
-          gridTemplateColumns={{ _: '1fr', m: '1fr 3fr' }}
-          gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+          gridTemplateColumns={{ _: '1fr', l: '1fr 3fr' }}
+          gridGap={{ _: 'gutter._', l: 'gutter.m' }}
           mt={0}
         >
           <Box bg="white" py={{ _: 6, m: 10 }} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
