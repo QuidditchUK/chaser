@@ -122,6 +122,7 @@ const List = styled.ul`
         display: block;
         padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[6]};
         width: 100%;
+        font-weight: normal;
 
         &:hover {
           color: ${({ theme }) => theme.colors.white};
