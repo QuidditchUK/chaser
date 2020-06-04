@@ -111,7 +111,7 @@ const UNSPEAKABLES = {
   uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
   name: 'London Unspeakables Quidditch',
   slug: 'london-unspeakables-quidditch',
-  type: 'Community',
+  league: 'Community',
   location: { type: 'POINT', coordinates: ['-0.148176', '51.453825'] },
   images: ['https://images.prismic.io/chaser/475578b7-a77c-4abc-90f2-de1547bbacf2_72886220_1438371239645635_5936997713475272704_o.jpg?auto=compress,format'],
   venue: 'Clapham South, London',
@@ -236,7 +236,7 @@ const ClubPage = ({ club, posts, results }) => {
           right="0"
           padding={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
         >
-          <Type fontWeight="bold" fontSize={[rem(10), rem(16)]} bg={TYPES[club.type]}>{club.type}</Type>
+          <Type fontWeight="bold" fontSize={[rem(10), rem(16)]} bg={TYPES[club.league]}>{club.league}</Type>
         </Box>
       </Box>
       <Box
@@ -280,7 +280,7 @@ const ClubPage = ({ club, posts, results }) => {
 
                 <TableRow>
                   <TableData><strong>League</strong></TableData>
-                  <TableData>{club.type}</TableData>
+                  <TableData>{club.league}</TableData>
                 </TableRow>
 
                 <TableRow>
@@ -446,7 +446,7 @@ ClubPage.propTypes = {
     icon: PropTypes.string,
     featuredColor: PropTypes.string,
     textColor: PropTypes.string,
-    type: PropTypes.string,
+    league: PropTypes.string,
     leader: PropTypes.string,
     leaderPosition: PropTypes.string,
     officialWebsite: PropTypes.string,

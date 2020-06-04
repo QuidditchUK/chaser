@@ -56,7 +56,7 @@ const Content = styled.div`
 const ClubCard = ({
   image,
   name,
-  type,
+  league,
   icon,
   venue,
   ...cardProps
@@ -66,7 +66,7 @@ const ClubCard = ({
     <IconContainer><Icon src={icon} alt={`${name} logo`} /></IconContainer>
 
     <Content>
-      <Type fontWeight="bold" fontSize={(rem(10))} bg={TYPES[type]}>{type}</Type>
+      <Type fontWeight="bold" fontSize={(rem(10))} bg={TYPES[league]}>{league}</Type>
       <Heading as="h2" fontSize={3} isBody>{name}</Heading>
       <p>{venue}</p>
     </Content>
@@ -75,7 +75,7 @@ const ClubCard = ({
 
 ClubCard.defaultProps = {
   name: null,
-  type: null,
+  league: null,
   image: null,
   venue: null,
   icon: null,
@@ -83,7 +83,7 @@ ClubCard.defaultProps = {
 
 ClubCard.propTypes = {
   name: PropTypes.string,
-  type: PropTypes.string,
+  league: PropTypes.string,
   venue: PropTypes.string,
   icon: PropTypes.string,
   image: PropTypes.shape({}),
