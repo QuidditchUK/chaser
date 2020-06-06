@@ -107,7 +107,7 @@ const List = styled.ul`
       box-shadow: 0 10px 0.625rem rgba(0,0,0,0.3);
       width: 100%;
 
-      a {         
+      a {
         color: ${({ theme }) => theme.colors.greyDark};
         display: block;
         width: 100%;
