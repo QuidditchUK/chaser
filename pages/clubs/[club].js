@@ -10,10 +10,9 @@ import Heading from 'components/heading';
 import Layout from 'containers/layout';
 import Meta from 'components/meta';
 import { Box, Flex, Grid } from 'components/layout';
-import Type, { TYPES } from 'components/club-type';
-import { rem } from 'styles/theme';
+import HeroWithLocation from 'components/hero-with-location';
+
 import { getBlogTags } from 'modules/prismic';
-import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import Content from 'components/content';
 import Image from 'components/image';
 import ClubNews from 'components/club-news';
@@ -25,25 +24,6 @@ import FacebookIcon from 'public/images/facebook.svg';
 import TwitterIcon from 'public/images/twitter.svg';
 import InstagramIcon from 'public/images/instagram.svg';
 import YoutubeIcon from 'public/images/youtube.svg';
-import PinIcon from 'public/images/location-pin.svg';
-
-const IconContainer = styled.div`
-  padding: ${({ theme }) => theme.space[4]};
-  z-index: 3;
-`;
-
-const Icon = styled.img`
-  border-radius: 50%;
-  height: 100px;
-  width: 100px;
-  background: ${({ theme }) => theme.colors.white};
-  box-shadow: ${({ theme }) => theme.shadows.box};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 200px;
-    width: 200px;
-  }
-`;
 
 const SocialIcon = styled.a`
   ${space};
@@ -96,17 +76,6 @@ const TableHead = styled.th`
   border-bottom-width: 3px;
 `;
 
-const LocationIcon = styled(PinIcon)`
-  height: 15px;
-  width: 15px;
-`;
-
-const LocationLink = styled.a`
-  padding: ${({ theme }) => theme.space[1]};
-  text-decoration: none;
-  color: ${({ linkColor }) => linkColor};
-  border-bottom: 2px dotted ${({ linkColor }) => linkColor};
-`;
 const UNSPEAKABLES = {
   uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
   name: 'London Unspeakables Quidditch',
@@ -221,41 +190,17 @@ const ClubPage = ({ club, posts, results }) => {
         subTitle={club.name}
         image={club.images[0]}
       />
-      <Box
-        as="section"
-        position="relative"
-        backgroundImage={`url(${club.images[0]})`}
-        backgroundColor="primary"
-        backgroundSize="cover"
-        backgroundPosition="center"
-        px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-        minHeight={BLOG_MIN_HEIGHTS}
-      >
-        <Box
-          position="absolute"
-          right="0"
-          padding={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-        >
-          <Type fontWeight="bold" fontSize={[rem(10), rem(16)]} bg={TYPES[club.league]}>{club.league}</Type>
-        </Box>
-      </Box>
-      <Box
-        as="section"
-        position="relative"
-        backgroundColor={club.featuredColor}
-        color={club.textColor}
-        px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-        py="0"
-        height="130px"
-      >
-        <Flex justifyContent="flex-start" alignItems="center" top={{ _: 0, m: '-60px' }} position="relative">
-          <IconContainer><Icon src={club.icon} alt={`${club.name} logo`} /></IconContainer>
-          <Flex flexDirection="column">
-            <Heading as="h2" fontSize={[3, 4, 5]} py="0" my="0">{club.name}</Heading>
-            <Flex alignItems="center"><LocationIcon />{' '}<LocationLink href={`https://www.google.com/maps/search/?api=1&query=${club.location.coordinates[1]},${club.location.coordinates[0]}`} rel="noopener noreferrer" target="_blank" linkColor={club.textColor}>{club.venue}</LocationLink></Flex>
-          </Flex>
-        </Flex>
-      </Box>
+
+      <HeroWithLocation
+        image={club.images[0]}
+        name={club.name}
+        venue={club.venue}
+        featuredColor={club.featuredColor}
+        textColor={club.textColor}
+        icon={club.icon}
+        league={club.league}
+        location={club.location}
+      />
 
 
       <Box
