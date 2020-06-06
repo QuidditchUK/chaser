@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Flex } from 'components/layout';
 import styled from 'styled-components';
+import { format } from 'date-fns';
+import { parseTimestamptz } from 'modules/dates';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
@@ -47,6 +49,7 @@ const HeroWithLocation = ({
   name,
   location,
   venue,
+  startTime,
 }) => (
   <>
     <Box
@@ -81,10 +84,11 @@ const HeroWithLocation = ({
         <Flex flexDirection="column">
           <Heading as="h2" fontSize={[3, 4, 5]} py="0" my="0">{name}</Heading>
 
+          {startTime && (<Box>{' '}<strong>{format(parseTimestamptz(startTime), 'EEE, d LLL H:mm a')}</strong></Box>)}
           <Flex alignItems="center">
             <LocationIcon />{' '}
             <LocationLink
-              href={`https://www.google.com/maps/search/?api=1&query=${location.coordinates[1]},${location.coordinates[0]}`}
+              href={`https://www.google.com/maps/search/?api=1&query=${location?.coordinates[1]},${location?.coordinates[0]}`}
               rel="noopener noreferrer"
               target="_blank"
               linkColor={textColor}
@@ -106,7 +110,8 @@ HeroWithLocation.defaultProps = {
   textColor: null,
   league: null,
   name: null,
-  location: {},
+  location: null,
+  startTime: null,
 };
 
 HeroWithLocation.propTypes = {
@@ -118,6 +123,7 @@ HeroWithLocation.propTypes = {
   league: PropTypes.string,
   name: PropTypes.string,
   location: PropTypes.shape,
+  startTime: PropTypes.string,
 };
 
 export default HeroWithLocation;

@@ -202,7 +202,6 @@ const ClubPage = ({ club, posts, results }) => {
         location={club.location}
       />
 
-
       <Box
         bg="greyLight"
         py={0}

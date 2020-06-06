@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
-// import { Box, Flex } from 'components/layout';
+import { Box } from 'components/layout';
 import Page404 from 'pages/404';
 import Layout from 'containers/layout';
 import Meta from 'components/meta';
@@ -51,8 +51,14 @@ const EventPage = ({ event }) => {
         icon={event.icon}
         league={event.league}
         location={event.location}
+        startTime={event.start_time}
       />
 
+      <Box
+        bg="greyLight"
+        px={10}
+        py={20}
+      />
     </Layout>
   );
 };
