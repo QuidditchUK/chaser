@@ -6,6 +6,7 @@
     "@svgr/webpack": "5.4.0",
     "date-fns": "2.14.0",
     "formik": "^2.1.4",
+    "html-react-parser": "^0.13.0",
     "intersection-observer": "^0.10.0",
     "just-debounce": "^1.0.0",
     "just-safe-get": "2.0.0",
