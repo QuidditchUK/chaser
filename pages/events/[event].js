@@ -148,6 +148,8 @@ const EventPage = ({ event }) => {
       >
         <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
           <Content>{parse(event.description)}</Content>
+
+
         </Container>
       </Box>
 

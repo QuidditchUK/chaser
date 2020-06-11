@@ -82,6 +82,8 @@ const MOCK_EVENTS = [{
   start_time: '2020-11-13 07:00:00Z',
   images: ['https://images.prismic.io/chaser/239db290-616f-4839-8d5f-3fa0ea83ab4d_DSC04508-2000x1200.jpg?auto=compress,format'],
   icon: 'https://images.prismic.io/chaser/65d65868-3e13-4024-871a-6f23d1467042_Northern-Cup-2019-Logo.png?auto=compress,format',
+  registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdqKtdD2MoUfobYHtlzIbItUeOsgjJgWmylPnnP4vrkOCgpUg/viewform',
+  registerTime: '2020-05-13 07:00:00Z',
 },
 {
   uuid: '36f03565-f622-43e6-90c5-fae022c5444y',
@@ -94,6 +96,8 @@ const MOCK_EVENTS = [{
   start_time: '2020-11-29 07:00:00Z',
   images: ['https://images.prismic.io/chaser/ed7c8345-27c6-4517-8a60-954d641ad8b1_QD_FN-128+copy.jpg?auto=compress,format'],
   icon: 'https://images.prismic.io/chaser/1a2c9d38-6c51-44af-8cd3-57a24b04d452_Southern-Cup-6-Tournament-Logo.png?auto=compress,format',
+  registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdqKtdD2MoUfobYHtlzIbItUeOsgjJgWmylPnnP4vrkOCgpUg/viewform',
+  registerTime: '2020-09-13 07:00:00Z',
 },
 {
   uuid: '36f03565-f622-43e6-90c5-fae022c5444x',
@@ -106,6 +110,8 @@ const MOCK_EVENTS = [{
   start_time: '2020-12-25 07:00:00Z',
   images: ['https://images.prismic.io/chaser/d03c57e4-c3f3-4033-b08f-d0331d860ec4_57114819_3035649453142627_7886437477404114944_o.jpg?auto=compress,format'],
   icon: 'https://images.prismic.io/chaser/1a2c9d38-6c51-44af-8cd3-57a24b04d452_Southern-Cup-6-Tournament-Logo.png?auto=compress,format',
+  registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdqKtdD2MoUfobYHtlzIbItUeOsgjJgWmylPnnP4vrkOCgpUg/viewform',
+  registerTime: '2020-09-13 07:00:00Z',
 },
 ];
 
@@ -269,19 +275,18 @@ const FindQuidditch = ({ clubs, events }) => {
               >
                 {events.map((event) => (
                   <Flex flexDirection="column" key={event.uuid}>
-                    <Link href="/events/[event]" as={`/events/${event.slug}`} passHref>
-                      <StyledLink>
-                        <EventCard
-                          name={event.name}
-                          type={event.type}
-                          icon={event.icon}
-                          league={event.league}
-                          venue={event.venue}
-                          startTime={event.start_time}
-                          image={event.images[0]}
-                        />
-                      </StyledLink>
-                    </Link>
+                    <EventCard
+                      name={event.name}
+                      type={event.type}
+                      icon={event.icon}
+                      league={event.league}
+                      venue={event.venue}
+                      startTime={event.start_time}
+                      image={event.images[0]}
+                      slug={event.slug}
+                      registerLink={event.registerLink}
+                      registerTime={event.registerTime}
+                    />
                   </Flex>
                 ))}
               </Grid>

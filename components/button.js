@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { shade, tint } from 'polished';
-import { variant, space } from 'styled-system';
+import { variant, space, layout } from 'styled-system';
 
 const variants = (theme) => ({
   primary: {
@@ -61,6 +61,7 @@ export default styled.button`
   padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
   ${({ theme }) => variant({ variants: variants(theme) })};
   ${space};
+  ${layout};
 
   &:hover {
     ${({ theme }) => variant({ variants: hoverStates(theme) })};
