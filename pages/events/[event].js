@@ -14,6 +14,8 @@ import PageLoading from 'components/page-loading';
 import Heading from 'components/heading';
 import Content from 'components/content';
 import { parseTimestamptz } from 'modules/dates';
+import Button from 'components/button';
+import ExternalLink from 'components/external-link';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { rem } from 'styles/theme';
 import PinIcon from 'public/images/location-pin.svg';
@@ -31,6 +33,8 @@ const EVENT = {
   images: ['https://images.prismic.io/chaser/239db290-616f-4839-8d5f-3fa0ea83ab4d_DSC04508-2000x1200.jpg?auto=compress,format'],
   icon: 'https://images.prismic.io/chaser/65d65868-3e13-4024-871a-6f23d1467042_Northern-Cup-2019-Logo.png?auto=compress,format',
   description: '<p>Welcome to Northern Cup 2019! The UK’s Northern teams will be competing for the title of Northern Cup Champions, as well as fighting to earn their place at the inaugural European Qualifying Tournament and the British Quidditch Cup 2019.</p><p> Welcome to Northern Cup 2019! The UK’s Northern teams will be competing for the title of Northern Cup Champions, as well as fighting to earn their place at the inaugural European Qualifying Tournament and the British Quidditch Cup 2019.</p>',
+  registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdqKtdD2MoUfobYHtlzIbItUeOsgjJgWmylPnnP4vrkOCgpUg/viewform',
+  registerTime: '2020-09-13 07:00:00Z',
 };
 
 const Icon = styled.img`
@@ -149,7 +153,10 @@ const EventPage = ({ event }) => {
         <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
           <Content>{parse(event.description)}</Content>
 
-
+          <Flex flexDirection={{ _: 'column', m: 'row' }} justifyContent="center" alignItems="center" padding="3">
+            {event.registerLink && new Date() < parseTimestamptz(event.registerTime) && (<ExternalLink href={event.registerLink}><Button type="button" variant="primary" width="1" marginRight={{ _: 0, m: '3' }} marginBottom={{ _: '3', m: 0 }}>Register</Button></ExternalLink>)}
+            <Button type="button" variant="light" width="1">Read More</Button>
+          </Flex>
         </Container>
       </Box>
 
@@ -179,6 +186,8 @@ EventPage.propTypes = {
     league: PropTypes.string,
     images: PropTypes.arrayOf(PropTypes.string),
     location: PropTypes.shape,
+    registerLink: PropTypes.string,
+    registerTime: PropTypes.string,
   }).isRequired,
 };
 
