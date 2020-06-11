@@ -104,7 +104,7 @@ const EventCard = ({
       </p>
     </Content>
 
-    <Flex flexDirection="column" justifyContent="center" padding="3">
+    <Flex flexDirection="column" justifyContent="center" alignItems="center" padding="3">
       {registerLink && new Date() < parseTimestamptz(registerTime) && (<ExternalLink href={registerLink}><Button type="button" variant="primary" mb="3" width="1">Register</Button></ExternalLink>)}
       <Link href="/events/[event]" as={`/events/${slug}`}><a><Button type="button" variant="light" width="1">Read More</Button></a></Link>
     </Flex>
