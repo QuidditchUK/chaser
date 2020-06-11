@@ -153,9 +153,8 @@ const EventPage = ({ event }) => {
         <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
           <Content>{parse(event.description)}</Content>
 
-          <Flex flexDirection={{ _: 'column', m: 'row' }} justifyContent="center" alignItems="center" padding="3">
-            {event.registerLink && new Date() < parseTimestamptz(event.registerTime) && (<ExternalLink href={event.registerLink}><Button type="button" variant="primary" width="1" marginRight={{ _: 0, m: '3' }} marginBottom={{ _: '3', m: 0 }}>Register</Button></ExternalLink>)}
-            <Button type="button" variant="light" width="1">Read More</Button>
+          <Flex flexDirection="column" justifyContent="center" alignItems="center" padding="3">
+            {event.registerLink && new Date() < parseTimestamptz(event.registerTime) && (<ExternalLink href={event.registerLink}><Button type="button" variant="primary" width="1">Register</Button></ExternalLink>)}
           </Flex>
         </Container>
       </Box>
