@@ -310,12 +310,12 @@ FindQuidditch.propTypes = {
 };
 
 export const getServerSideProps = async ({ query }) => {
-  // get events and clubs
   const { postcode } = query;
 
   if (!postcode) {
+    const { data: clubs } = await api.get('/clubs/search');
     return {
-      props: { clubs: MOCK_CLUBS, events: MOCK_EVENTS },
+      props: { clubs, events: MOCK_EVENTS },
     };
   }
 
