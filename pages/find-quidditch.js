@@ -8,6 +8,7 @@ import {
   Field,
   useFormikContext,
 } from 'formik';
+import { api } from 'modules/api';
 import styled from 'styled-components';
 import { space } from 'styled-system';
 import debounce from 'just-debounce';
@@ -30,8 +31,8 @@ const MOCK_CLUBS = [{
   location: { type: 'POINT', coordinates: ['-0.150805', '51.460149'] },
   images: ['https://images.prismic.io/chaser/40bfbdca-e2e0-4273-85fd-3aaca8dfb09c_57246916_1980968082025155_3749381092197531648_o.jpg?auto=compress,format'],
   venue: 'Clapham Common, London',
-  featuredColor: '#062461',
-  textColor: '#ffffff',
+  featured_color: '#062461',
+  text_color: '#ffffff',
   icon: 'https://images.prismic.io/chaser/568da066-5b90-4ca8-ac8f-8dcbfc3fd610_lqc.png?auto=compress,format',
 },
 {
@@ -42,8 +43,8 @@ const MOCK_CLUBS = [{
   location: { type: 'POINT', coordinates: ['-0.148176', '51.453825'] },
   images: ['https://images.prismic.io/chaser/475578b7-a77c-4abc-90f2-de1547bbacf2_72886220_1438371239645635_5936997713475272704_o.jpg?auto=compress,format'],
   venue: 'Clapham Common, London',
-  featuredColor: '#381e51',
-  textColor: '#ffffff',
+  featured_color: '#381e51',
+  text_color: '#ffffff',
   icon: 'https://images.prismic.io/chaser/98cc10fb-4840-40ac-a973-1bc54e7d86c5_unspeakables.png?auto=compress,format',
 },
 {
@@ -54,8 +55,8 @@ const MOCK_CLUBS = [{
   location: { type: 'POINT', coordinates: ['-0.157671', '51.558175'] },
   images: ['https://images.prismic.io/chaser/71dc92d4-5687-4814-933a-9fb1b92093dc_60423142_2303196516632278_4906127668908392448_n.jpg?auto=compress,format'],
   venue: 'Hampstead Heath, London',
-  featuredColor: '#6a1713',
-  textColor: '#ffffff',
+  featured_color: '#6a1713',
+  text_color: '#ffffff',
   icon: 'https://images.prismic.io/chaser/38824ffa-4c30-4a01-960a-42a236bee0cc_werewolves.jpg?auto=compress,format',
 },
 {
@@ -66,8 +67,8 @@ const MOCK_CLUBS = [{
   location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
   images: ['https://images.prismic.io/chaser/879d8b2b-428d-4130-acba-509bc327e8f1_31265313_2077158405647076_3498501473933721600_o.jpg?auto=compress,format'],
   venue: 'North Haugh, St Andrews',
-  featuredColor: '#1f4183',
-  textColor: '#ffffff',
+  featured_color: '#1f4183',
+  text_color: '#ffffff',
   icon: 'https://images.prismic.io/chaser/86004abc-75c2-4990-b519-8ea86a0e951b_snidgets.png?auto=compress,format',
 }];
 
@@ -241,8 +242,8 @@ const FindQuidditch = ({ clubs, events }) => {
                   <Link href="/clubs/[club]" as={`/clubs/${club.slug}`} passHref>
                     <StyledLink>
                       <ClubCard
-                        backgroundColor={club.featuredColor}
-                        color={club.textColor}
+                        backgroundColor={club.featured_color}
+                        color={club.text_color}
                         name={club.name}
                         league={club.league}
                         venue={club.venue}
@@ -318,8 +319,10 @@ export const getServerSideProps = async ({ query }) => {
     };
   }
 
+  const { data: clubs } = await api.get(`/clubs/search?postcode=${postcode}`);
+
   return {
-    props: { clubs: MOCK_CLUBS, events: MOCK_EVENTS },
+    props: { clubs, events: MOCK_EVENTS },
   };
 };
 
