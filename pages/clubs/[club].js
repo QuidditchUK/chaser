@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Page404 from 'pages/404';
 import PageLoading from 'components/page-loading';
 import Heading from 'components/heading';
+import { api } from 'modules/api';
 
 import Layout from 'containers/layout';
 import Meta from 'components/meta';
@@ -76,57 +77,6 @@ const TableHead = styled.th`
   border-bottom-width: 3px;
 `;
 
-const UNSPEAKABLES = {
-  uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
-  name: 'London Unspeakables Quidditch',
-  slug: 'london-unspeakables-quidditch',
-  league: 'Community',
-  location: { type: 'POINT', coordinates: ['-0.148176', '51.453825'] },
-  images: ['https://images.prismic.io/chaser/475578b7-a77c-4abc-90f2-de1547bbacf2_72886220_1438371239645635_5936997713475272704_o.jpg?auto=compress,format'],
-  venue: 'Clapham South, London',
-  featuredColor: '#381e51',
-  textColor: '#ffffff',
-  icon: 'https://images.prismic.io/chaser/98cc10fb-4840-40ac-a973-1bc54e7d86c5_unspeakables.png?auto=compress,format',
-  tags: ['London Unspeakables Quidditch', 'Unspeakables', 'Unbreakables'],
-  trainings: 'Saturdays 12-4PM',
-  leaderPosition: 'President',
-  leader: 'John Morris',
-  officialWebsite: 'https://www.facebook.com/UnspeakablesLDN/',
-  status: 'active',
-  social_facebook: 'https://www.facebook.com/UnspeakablesLDN/',
-  social_twitter: 'https://twitter.com/UnspeakablesLDN',
-  social_youtube: 'https://www.youtube.com/user/UnspeakablesLDN',
-  social_instagram: 'https://www.instagram.com/londonunspeakables',
-  description: 'The Unspeakables are London’s first quidditch team. Through our regular open sessions, we have introduced many new players to the sport who missed out on the more well-trodden university route; this makes us a true community team. We pride ourselves both on our diversity- we are diverse in every way possible- and our spirit of competitiveness while never losing our sense of humour. Our core of passionate, friendly and dedicated regular members, supplemented by talented players from far and wide, has allowed us to consistently improve over the past two years and we were thrilled to finish fifth at the most recent British Quidditch Cup. The Unbreakables, our second team, were formed in 2017. A bigger club enables us to continue our traditions of developing brand new people and helping players transition from other sports.',
-  teams: [{
-    uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
-    name: 'London Unspeakables',
-    short_name: 'Unspeakables',
-    slug: 'unspeakables',
-    current_division: 1,
-    current_position: 4,
-    image: 'https://images.prismic.io/chaser/79143992-e8a4-4f90-a39a-830664d1f342_83868043_799470787197707_7665980757470347264_o.jpg?auto=compress,format',
-  },
-  {
-    uuid: '789e0d73-af14-4a35-a37f-8c854728c9b2',
-    name: 'London Unstoppables',
-    short_name: 'Unstoppables',
-    slug: 'unstoppables',
-    current_division: 2,
-    current_position: 3,
-    image: 'https://images.prismic.io/chaser/7c170182-bd18-4787-a4e7-2f9df1607a88_Unbreakables-1024x683.jpg?auto=compress,format',
-  },
-  {
-    uuid: '789e0d73-af14-4a35-a37f-8c854728c9b3',
-    name: 'Unbreakables',
-    short_name: 'Unbreakables',
-    slug: 'unbreakables',
-    current_division: 3,
-    current_position: 1,
-    image: 'https://images.prismic.io/chaser/7c170182-bd18-4787-a4e7-2f9df1607a88_Unbreakables-1024x683.jpg?auto=compress,format',
-  }],
-};
-
 const RESULTS = [
   {
     club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
@@ -195,11 +145,11 @@ const ClubPage = ({ club, posts, results }) => {
         image={club.images[0]}
         name={club.name}
         venue={club.venue}
-        featuredColor={club.featuredColor}
-        textColor={club.textColor}
+        featuredColor={club.featured_color}
+        textColor={club.text_color}
         icon={club.icon}
         league={club.league}
-        location={club.location}
+        location={JSON.parse(club.coordinates)}
       />
 
       <Box
@@ -213,7 +163,7 @@ const ClubPage = ({ club, posts, results }) => {
           mt={0}
         >
           <Box bg="white" py={{ _: 6, m: 10 }} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
-            <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>Club Details</Heading>
+            <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Club Details</Heading>
 
             <Table>
               <tbody>
@@ -228,13 +178,13 @@ const ClubPage = ({ club, posts, results }) => {
                 </TableRow>
 
                 <TableRow>
-                  <TableData><strong>{club.leaderPosition}</strong></TableData>
+                  <TableData><strong>{club.leader_position}</strong></TableData>
                   <TableData>{club.leader}</TableData>
                 </TableRow>
 
                 <TableRow>
                   <TableData><strong>Official Website</strong></TableData>
-                  <TableData><a href={club.officialWebsite} rel="noopener noreferrer" target="_blank">{club.officialWebsite}</a></TableData>
+                  <TableData><a href={club.official_website} rel="noopener noreferrer" target="_blank">{club.official_website}</a></TableData>
                 </TableRow>
               </tbody>
             </Table>
@@ -246,7 +196,7 @@ const ClubPage = ({ club, posts, results }) => {
                   href={club.social_facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  featuredColor={club.featuredColor}
+                  featuredColor={club.featured_color}
                 >
                   <FacebookIcon />
                 </SocialIcon>
@@ -259,7 +209,7 @@ const ClubPage = ({ club, posts, results }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   pl={{ _: 5, m: 3 }}
-                  featuredColor={club.featuredColor}
+                  featuredColor={club.featured_color}
                 >
                   <TwitterIcon />
                 </SocialIcon>
@@ -272,7 +222,7 @@ const ClubPage = ({ club, posts, results }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   pl={{ _: 5, m: 3 }}
-                  featuredColor={club.featuredColor}
+                  featuredColor={club.featured_color}
                 >
                   <InstagramIcon />
                 </SocialIcon>
@@ -285,7 +235,7 @@ const ClubPage = ({ club, posts, results }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   pl={{ _: 5, m: 3 }}
-                  featuredColor={club.featuredColor}
+                  featuredColor={club.featured_color}
                 >
                   <YoutubeIcon />
                 </SocialIcon>
@@ -294,7 +244,7 @@ const ClubPage = ({ club, posts, results }) => {
 
             {club.status !== ACTIVE_STATUS && <Support>This club is currently inactive, if you are interested in restarting it contact our <a href={`mailto:teams@quidditchuk.org?subject=${club.name}`}>Teams Director</a></Support>}
 
-            <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>Club Achievements</Heading>
+            <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Club Achievements</Heading>
 
             <Table fontSize="1">
               <thead>
@@ -321,13 +271,13 @@ const ClubPage = ({ club, posts, results }) => {
 
           <Box py={{ _: 3, m: 9 }} paddingRight={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }} paddingLeft={{ _: 'gutter._', s: 'gutter.s', m: 0 }}>
             <Box bg="white" py={3} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
-              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>Latest News</Heading>
-              <ClubNews posts={posts} bgColor={club.featuredColor} color={club.textColor} />
+              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Latest News</Heading>
+              <ClubNews posts={posts} bgColor={club.featured_color} color={club.text_color} />
 
-              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor} paddingTop="2">About {club.name}</Heading>
+              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color} paddingTop="2">About {club.name}</Heading>
               <Content paddingBottom={3}>{club.description}</Content>
 
-              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featuredColor}>Teams</Heading>
+              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Teams</Heading>
 
               {club.teams.map((team) => (
                 <Grid
@@ -368,7 +318,8 @@ const ClubPage = ({ club, posts, results }) => {
 
 // eslint-disable-next-line no-unused-vars
 export const getServerSideProps = async ({ params: { club } }) => {
-  const data = UNSPEAKABLES;
+  const { data } = await api.get(`/clubs/${club}`);
+
   const results = RESULTS.sort((a, b) => new Date(b.tournament_date).getTime() - new Date(a.tournament_date).getTime());
   const posts = await getBlogTags(data.tags, { orderings: '[my.post.date desc]', pageSize: 3 });
 
@@ -388,12 +339,12 @@ ClubPage.propTypes = {
     images: PropTypes.arrayOf(PropTypes.string),
     venue: PropTypes.string,
     icon: PropTypes.string,
-    featuredColor: PropTypes.string,
-    textColor: PropTypes.string,
+    featured_color: PropTypes.string,
+    text_color: PropTypes.string,
     league: PropTypes.string,
     leader: PropTypes.string,
-    leaderPosition: PropTypes.string,
-    officialWebsite: PropTypes.string,
+    leader_position: PropTypes.string,
+    official_website: PropTypes.string,
     trainings: PropTypes.string,
     status: PropTypes.string,
     social_facebook: PropTypes.string,
@@ -403,6 +354,7 @@ ClubPage.propTypes = {
     teams: PropTypes.array,
     location: PropTypes.shape,
     description: PropTypes.string,
+    coordinates: PropTypes.shape,
   }).isRequired,
   posts: PropTypes.arrayOf(PropTypes.shape).isRequired,
   results: PropTypes.arrayOf(PropTypes.shape).isRequired,
