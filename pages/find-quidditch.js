@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Router, { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -11,7 +11,7 @@ import {
 import { api } from 'modules/api';
 import styled from 'styled-components';
 import { space } from 'styled-system';
-import debounce from 'just-debounce';
+import { debounce } from 'throttle-debounce';
 import Layout from 'containers/layout';
 import { Box, Flex, Grid } from 'components/layout';
 import { HeadingHero } from 'components/hero';
@@ -22,7 +22,7 @@ import EventCard from 'components/event-card';
 import Image from 'components/image';
 import Meta from 'components/meta';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
-
+import { postcodeRegex } from 'modules/validations';
 
 const MOCK_EVENTS = [{
   uuid: '36f03565-f622-43e6-90c5-fae022c5444z',
@@ -89,10 +89,20 @@ const StyledLink = styled.a`
   flex-grow: 1;
 `;
 
-const fetchResults = (postcode) => console.log(postcode);
-const fetchDebouncedResults = debounce(fetchResults, 1000);
+const handleChangePostcode = debounce(1000, async (postcode, setClubs) => {
+  const validPostcode = !postcode || !!postcode.match(postcodeRegex);
+  if (!validPostcode) {
+    return;
+  }
 
-const updatePostcode = (postcode) => {
+  // TODO: IF YOU DON'T SET THE FULL URL AXIOS IGNORES THE EXTERNAL BASEURL
+  // AND SEARCHES THE CLIENT URL INSTEAD, DESPITE BEING THE EXACT SAME REQUEST AS IN THE SERVER SIDE PROPS.
+  // FIGURE OUT WHY AND FIX
+
+  const results = await api.get(`http://beater-env-1.eba-dyp9hrrm.eu-west-2.elasticbeanstalk.com/clubs/search?postcode=${postcode}`);
+
+  setClubs(results.data);
+
   Router.push({
     pathname: Router.pathname,
     query: { postcode },
@@ -100,24 +110,28 @@ const updatePostcode = (postcode) => {
     pathname: Router.pathname,
     query: { postcode },
   }, { shallow: true });
+});
 
-  fetchDebouncedResults(postcode);
-};
-
-const AutoValidatePostcode = () => {
+const AutoValidatePostcode = ({ setClubs }) => {
   const { values } = useFormikContext();
 
   useEffect(() => {
-    updatePostcode(values.postcode);
-  }, [values.postcode]);
+    handleChangePostcode(values.postcode, setClubs);
+  }, [values.postcode, setClubs]);
 
   return null;
 };
 
-const FindQuidditch = ({ clubs, events }) => {
-  const { query: { postcode = '' } } = useRouter();
+const FindQuidditch = ({ clubs: initialClubs, events }) => {
+  const { query } = useRouter();
+
   const [showClubs, setShowClubs] = useState(true);
   const [showEvents, setShowEvents] = useState(true);
+  const [clubs, setClubs] = useState(initialClubs);
+
+  const initialValues = {
+    postcode: query.postcode || '',
+  };
 
   return (
     <Layout>
@@ -148,7 +162,9 @@ const FindQuidditch = ({ clubs, events }) => {
         >
           <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
             <Formik
-              initialValues={{ postcode }}
+              initialValues={initialValues}
+              onSubmit={() => { }}
+              enableReinitialize
             >
               <Form>
                 <HeadingHero fontSize={[4, 4, 6]} color="white" isBody>
@@ -160,7 +176,7 @@ const FindQuidditch = ({ clubs, events }) => {
                     size="8"
                     marginLeft={[2, 4]}
                   />
-                  <AutoValidatePostcode />
+                  <AutoValidatePostcode setClubs={setClubs} />
                 </HeadingHero>
               </Form>
             </Formik>

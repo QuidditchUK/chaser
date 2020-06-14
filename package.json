@@ -24,6 +24,7 @@
     "react-scrolllock": "5.0.1",
     "styled-components": "5.1.1",
     "styled-system": "5.1.5",
+    "throttle-debounce": "^2.2.1",
     "webpack": "4.43.0",
     "yup": "^0.29.1"
   },
