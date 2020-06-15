@@ -52,7 +52,7 @@ const HomeHero = (rawData) => {
 
         <Formik
           initialValues={{ postcode: '' }}
-          onSubmit={({ postcode }) => router.push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`)}
+          onSubmit={({ postcode }) => router.push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`).then(() => window.scrollTo(0, 0))}
         >
           <Form>
             <Flex flexDirection="row">

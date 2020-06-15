@@ -164,7 +164,7 @@ export const Footer = () => {
               <Flex>
                 <Formik
                   initialValues={{ postcode: '' }}
-                  onSubmit={({ postcode }) => router.push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`)}
+                  onSubmit={({ postcode }) => router.push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`).then(() => window.scrollTo(0, 0))}
                 >
                   <Form>
                     <Field as={Input} placeholder="Enter your postcode" name="postcode" /><Button type="submit" variant="secondary" ml={2}>Find</Button>
