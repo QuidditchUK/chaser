@@ -99,7 +99,7 @@ const handleChangePostcode = debounce(1000, async (postcode, setClubs) => {
   // AND SEARCHES THE CLIENT URL INSTEAD, DESPITE BEING THE EXACT SAME REQUEST AS IN THE SERVER SIDE PROPS.
   // FIGURE OUT WHY AND FIX
 
-  const results = await api.get(`http://beater-env-1.eba-dyp9hrrm.eu-west-2.elasticbeanstalk.com/clubs/search?postcode=${postcode}`);
+  const results = await api.get(`https://api.quidditchuk.org/clubs/search?postcode=${postcode}`);
 
   setClubs(results.data);
 
@@ -196,71 +196,71 @@ const FindQuidditch = ({ clubs: initialClubs, events }) => {
       >
         <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
           {showClubs
-          && (
-          <>
-            <Heading as="h2" fontSize={4} mt={0} isBody color="primary">Clubs</Heading>
+            && (
+              <>
+                <Heading as="h2" fontSize={4} mt={0} isBody color="primary">Clubs</Heading>
 
-            <Grid
-              gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
-              gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-              pb={3}
-            >
-              {clubs.map((club) => (
-                <Flex flexDirection="column" key={club.uuid}>
-                  <Link href="/clubs/[club]" as={`/clubs/${club.slug}`} passHref>
-                    <StyledLink>
-                      <ClubCard
-                        backgroundColor={club.featured_color}
-                        color={club.text_color}
-                        name={club.name}
-                        league={club.league}
-                        venue={club.venue}
-                        icon={club.icon}
-                        image={club.images ? (
-                          <Image
-                            src={club.images[0]}
-                            alt={club.name}
-                            width={1600}
-                            height={900}
+                <Grid
+                  gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
+                  gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+                  pb={3}
+                >
+                  {clubs.map((club) => (
+                    <Flex flexDirection="column" key={club.uuid}>
+                      <Link href="/clubs/[club]" as={`/clubs/${club.slug}`} passHref>
+                        <StyledLink>
+                          <ClubCard
+                            backgroundColor={club.featured_color}
+                            color={club.text_color}
+                            name={club.name}
+                            league={club.league}
+                            venue={club.venue}
+                            icon={club.icon}
+                            image={club.images ? (
+                              <Image
+                                src={club.images[0]}
+                                alt={club.name}
+                                width={1600}
+                                height={900}
+                              />
+                            ) : null}
                           />
-                        ) : null}
-                      />
-                    </StyledLink>
-                  </Link>
-                </Flex>
-              ))}
-            </Grid>
-          </>
-          )}
+                        </StyledLink>
+                      </Link>
+                    </Flex>
+                  ))}
+                </Grid>
+              </>
+            )}
 
           {showEvents
-          && (
-            <>
-              <Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>
+            && (
+              <>
+                <Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>
 
-              <Grid
-                gridTemplateColumns="1fr"
-                gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-              >
-                {events.map((event) => (
-                  <Flex flexDirection="column" key={event.uuid}>
-                    <EventCard
-                      name={event.name}
-                      type={event.type}
-                      icon={event.icon}
-                      league={event.league}
-                      venue={event.venue}
-                      startTime={event.start_time}
-                      image={event.images[0]}
-                      slug={event.slug}
-                      registerLink={event.registerLink}
-                      registerTime={event.registerTime}
-                    />
-                  </Flex>
-                ))}
-              </Grid>
-            </>
-          )}
+                <Grid
+                  gridTemplateColumns="1fr"
+                  gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+                >
+                  {events.map((event) => (
+                    <Flex flexDirection="column" key={event.uuid}>
+                      <EventCard
+                        name={event.name}
+                        type={event.type}
+                        icon={event.icon}
+                        league={event.league}
+                        venue={event.venue}
+                        startTime={event.start_time}
+                        image={event.images[0]}
+                        slug={event.slug}
+                        registerLink={event.registerLink}
+                        registerTime={event.registerTime}
+                      />
+                    </Flex>
+                  ))}
+                </Grid>
+              </>
+            )}
         </Container>
       </Box>
     </Layout>
