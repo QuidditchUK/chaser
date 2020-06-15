@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@sentry/browser": "^5.17.0",
+    "@sentry/node": "^5.17.0",
+    "@sentry/webpack-plugin": "^1.11.1",
     "@svgr/webpack": "5.4.0",
+    "@zeit/next-source-maps": "^0.0.3",
     "axios": "^0.19.2",
     "date-fns": "2.14.0",
     "formik": "^2.1.4",
