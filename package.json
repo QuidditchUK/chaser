@@ -62,7 +62,7 @@
     "eslint-plugin-react": "7.20.0",
     "eslint-plugin-react-hooks": "4.0.4",
     "husky": "4.2.5",
-    "lint-staged": "10.2.10"
+    "lint-staged": "10.2.11"
   },
   "ava": {
     "babel": true
