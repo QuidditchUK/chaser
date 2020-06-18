@@ -56,7 +56,7 @@
     "babel-eslint": "10.1.0",
     "babel-plugin-styled-components": "^1.10.7",
     "eslint": "7.2.0",
-    "eslint-config-airbnb": "18.1.0",
+    "eslint-config-airbnb": "18.2.0",
     "eslint-plugin-import": "2.21.2",
     "eslint-plugin-jsx-a11y": "6.3.0",
     "eslint-plugin-react": "7.20.0",
