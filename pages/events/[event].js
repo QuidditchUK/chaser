@@ -27,7 +27,6 @@ const EVENT = {
   slug: 'northern-cup-2020',
   location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
   venue: 'Sheffield Hallam University Sports Park',
-  postcode: 'S9 1UA',
   start_time: '2020-11-14 07:00:00Z',
   end_time: '2020-11-15 17:00:00Z',
   images: ['https://images.prismic.io/chaser/239db290-616f-4839-8d5f-3fa0ea83ab4d_DSC04508-2000x1200.jpg?auto=compress,format'],

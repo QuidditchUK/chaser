@@ -78,22 +78,25 @@ const BlogSupport = (rawData) => {
 
   return (
     <>
-      <Box paddingBottom={10} bg="white" px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
-        <Container maxWidth={rem(960)}>
-          <Tags>
-            # {tags.map((tag) => (
-              <>
-                <Link as={`/news/tagged/${dasherizeTag(tag)}`} href="/news/tagged/[tag]" passHref>
-                  <a>
-                    <span>{tag}</span>
-                  </a>
-                </Link>
-                {' '}
-              </>
-          ))}
-          </Tags>
-        </Container>
-      </Box>
+      {tags?.length > 0 && (
+        <Box paddingBottom={10} bg="white" px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+          <Container maxWidth={rem(960)}>
+            <Tags>
+              # {tags.map((tag) => (
+                <>
+                  <Link as={`/news/tagged/${dasherizeTag(tag)}`} href="/news/tagged/[tag]" passHref>
+                    <a>
+                      <span>{tag}</span>
+                    </a>
+                  </Link>
+                  {' '}
+                </>
+            ))}
+            </Tags>
+          </Container>
+        </Box>
+      )}
+
 
       <PrismicWrapper small>
         <Flex alignItems="center" justifyContent="space-between">
