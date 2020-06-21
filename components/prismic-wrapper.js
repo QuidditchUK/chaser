@@ -56,10 +56,10 @@ const Wrapper = styled(Box)(
   styledVariant({ variants }),
 );
 
-export const PrismicWrapper = ({ children, variant, small }) => (
+export const PrismicWrapper = ({ children, variant, small, px }) => (
   <Wrapper
     py={{ _: 4, l: 5 }}
-    px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+    px={ px || { _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
     as="section"
     variant={variant}
   >
@@ -72,12 +72,14 @@ export const PrismicWrapper = ({ children, variant, small }) => (
 PrismicWrapper.defaultProps = {
   variant: 'light',
   small: false,
+  px: null,
 };
 
 PrismicWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   variant: PropTypes.string,
   small: PropTypes.bool,
+  px: PropTypes.shape,
 };
 
 export default PrismicWrapper;

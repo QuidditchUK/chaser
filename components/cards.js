@@ -7,6 +7,7 @@ import Card from './card';
 import Image from './image';
 import Heading from './heading';
 import Content from './content';
+import HorizontalScrollWrapper from 'components/horizontal-scroll-wrapper';
 
 const CardsSlice = (rawData) => {
   const data = {
@@ -14,10 +15,14 @@ const CardsSlice = (rawData) => {
     content: get(rawData, 'primary.content'),
     variant: get(rawData, 'primary.variant'),
     items: get(rawData, 'items'),
+    horizontalScroll: get(rawData, 'primary.horizontalScroll'),
   };
 
   return (
-    <PrismicWrapper variant={data.variant}>
+    <PrismicWrapper
+      variant={data.variant}
+      px={{ _: data.horizontalScroll ? 0 : 'gutter._', s: 'gutter.s', m: 'gutter.m'}}
+      >
       {RichText.asText(data.title) && (
         <Heading as="h2" fontSize={[3, 3, 4]} mt={2} textAlign="center">
           {RichText.asText(data.title)}
@@ -26,10 +31,7 @@ const CardsSlice = (rawData) => {
 
       {data.content && <Content textAlign="center" pb={3}>{RichText.render(data.content)}</Content>}
 
-      <Grid
-        gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
-        gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-      >
+      <HorizontalScrollWrapper horizontalScroll={data.horizontalScroll} itemsCount={data.items?.length}>
         {data.items.map((itemData, i) => {
           const item = {
             title: get(itemData, 'title'),
@@ -55,7 +57,7 @@ const CardsSlice = (rawData) => {
             </Flex>
           );
         })}
-      </Grid>
+      </HorizontalScrollWrapper>
     </PrismicWrapper>
   );
 };

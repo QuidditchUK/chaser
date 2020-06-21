@@ -10,6 +10,7 @@ import Image from 'components/image';
 import Button from 'components/button';
 import Container from 'components/container';
 import Heading from 'components/heading';
+import HorizontalScrollWrapper from 'components/horizontal-scroll-wrapper';
 import {
   getDocs,
   getBlogCategory,
@@ -22,30 +23,6 @@ export const StyledLink = styled.a`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-`;
-
-export const HorizontalScrollWrapper = styled.div`
-  overflow-x: scroll;
-  overflow-y: hidden;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  scrollbar-width: none;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
-    overflow-x: initial;
-    overflow-y: initial;
-  }
-`;
-
-export const HorizontalSpacer = styled.div`
-  display: block;
-
-   @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
-    display: none;
-  }
 `;
 
 const LoadMore = ({ setPage }) => {
@@ -65,84 +42,6 @@ const LoadMore = ({ setPage }) => {
 
 LoadMore.propTypes = {
   setPage: PropTypes.func.isRequired,
-};
-
-export const HorizontalNews = ({ horizontalScroll, posts }) => (
-  <>
-    {horizontalScroll
-      ? (
-        <HorizontalScrollWrapper>
-          <Grid
-            gridTemplateColumns={{ _: `1rem repeat(${posts.length}, calc(75% - 40px)) 2.5rem`, m: 'repeat(auto-fit, minmax(300px, 1fr))' }}
-            gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-          >
-            <HorizontalSpacer />
-
-            {posts.map(({ uid, data }) => (
-              <Flex flexDirection="column" key={uid}>
-                <Link href="/news/[id]" as={`/news/${uid}`} passHref>
-                  <StyledLink>
-                    <Card
-                      variant="light"
-                      name={data.title}
-                      category={data.category}
-                      image={(
-                        <Image
-                          src={data.image.url}
-                          alt={data.image.alt}
-                          width={1600}
-                          height={900}
-                        />
-                      )}
-                    />
-                  </StyledLink>
-                </Link>
-              </Flex>
-            ))}
-
-            <HorizontalSpacer />
-          </Grid>
-        </HorizontalScrollWrapper>
-      )
-      : (
-        <Grid
-          gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
-          gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-          px={{ _: 'gutter._', s: 'gutter.s', m: 0 }}
-        >
-          {posts.map(({ uid, data }) => (
-            <Flex flexDirection="column" key={uid}>
-              <Link href="/news/[id]" as={`/news/${uid}`} passHref>
-                <StyledLink>
-                  <Card
-                    variant="light"
-                    name={data.title}
-                    category={data.category}
-                    image={(
-                      <Image
-                        src={data.image.url}
-                        alt={data.image.alt}
-                        width={1600}
-                        height={900}
-                      />
-                        )}
-                  />
-                </StyledLink>
-              </Link>
-            </Flex>
-          ))}
-        </Grid>
-      )}
-  </>
-);
-
-HorizontalNews.defaultProps = {
-  horizontalScroll: false,
-};
-
-HorizontalNews.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  horizontalScroll: PropTypes.bool,
 };
 
 const News = ({
@@ -199,7 +98,30 @@ const News = ({
     >
       <Container>
         <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }} isBody color="primary">{category || tag || 'Latest'} News</Heading>
-        <HorizontalNews horizontalScroll={horizontalScroll} posts={posts} />
+        
+        <HorizontalScrollWrapper itemsCount={posts.length} horizontalScroll={horizontalScroll}>
+          {posts.map(({ uid, data }) => (
+            <Flex flexDirection="column" key={uid}>
+              <Link href="/news/[id]" as={`/news/${uid}`} passHref>
+                <StyledLink>
+                  <Card
+                    variant="light"
+                    name={data.title}
+                    category={data.category}
+                    image={(
+                      <Image
+                        src={data.image.url}
+                        alt={data.image.alt}
+                        width={1600}
+                        height={900}
+                      />
+                    )}
+                  />
+                </StyledLink>
+              </Link>
+            </Flex>
+          ))}
+        </HorizontalScrollWrapper>
 
         {loading && <Flex alignItems="center" justifyContent="center" py={5}>Loading...</Flex>}
         {showLoadMore && !loading && (
