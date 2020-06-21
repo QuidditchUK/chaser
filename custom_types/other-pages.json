@@ -313,6 +313,15 @@
                   "default_value": "light",
                   "label": "Variant"
                 }
+              },
+              "horizontalScroll": {
+                "type": "Boolean",
+                "config": {
+                  "placeholder_false": "False",
+                  "placeholder_true": "True",
+                  "default_value": false,
+                  "label": "Horizontal Scroll on Mobile"
+                }
               }
             },
             "repeat": {
