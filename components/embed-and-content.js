@@ -12,6 +12,7 @@ import { CenterJustify } from 'components/image-and-content';
 import { Support } from 'components/image-slice';
 import ExternalLink from 'components/external-link';
 import Button from 'components/button';
+import { linkResolver } from 'modules/prismic';
 
 const Item = ({ item, isEmbedLeft }) => (
   <Grid
@@ -25,7 +26,7 @@ const Item = ({ item, isEmbedLeft }) => (
         </Heading>
       )}
 
-      {item.content && <Content>{RichText.render(item.content)}</Content>}
+      {item.content && <Content>{RichText.render(item.content, linkResolver)}</Content>}
 
       {item.cta_text && (
         <Flex justifyContent="center">

@@ -6,8 +6,9 @@ import {
 } from 'styled-system';
 import { RichText } from 'prismic-reactjs';
 import CATEGORIES from 'constants/categories';
-import Heading from './heading';
-import { rem } from '../styles/theme';
+import Heading from 'components/heading';
+import { rem } from 'styles/theme';
+import { linkResolver } from 'modules/prismic';
 
 const variants = (theme) => ({
   light: {
@@ -85,7 +86,7 @@ const Card = ({
     <Content>
       {category && <Category fontWeight="bold" fontSize={(rem(10))} bg={CATEGORIES[category]}>{category}</Category>}
       {name && <Heading as="h2" fontSize={3} isBody>{name}</Heading>}
-      {content && <>{RichText.render(content)}</>}
+      {content && <>{RichText.render(content, linkResolver)}</>}
     </Content>
   </StyledCard>
 );

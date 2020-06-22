@@ -12,6 +12,7 @@ import { Support } from 'components/image-slice';
 import Content from 'components/content';
 import ExternalLink from 'components/external-link';
 import Button from 'components/button';
+import { linkResolver } from 'modules/prismic';
 
 export const CenterJustify = styled(Box)`
   display: flex;  
@@ -31,7 +32,7 @@ const Item = ({ item, isImageLeft }) => (
         </Heading>
       )}
 
-      {item.content && <Content>{RichText.render(item.content)}</Content>}
+      {item.content && <Content>{RichText.render(item.content, linkResolver)}</Content>}
 
       {item.cta_text && (
         <Flex justifyContent="center">
@@ -46,7 +47,7 @@ const Item = ({ item, isImageLeft }) => (
 
     <CenterJustify order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}>
       <Image alt={item.image.alt} src={item.image.url} height={item.image.dimensions.height} width={item.image.dimensions.width} />
-      {RichText.asText(item.support) && (<Support textAlign="center" pt={2} fontStyle="italic">{RichText.render(item.support)}</Support>)}
+      {RichText.asText(item.support) && (<Support textAlign="center" pt={2} fontStyle="italic">{RichText.render(item.support, linkResolver)}</Support>)}
     </CenterJustify>
   </Grid>
 );

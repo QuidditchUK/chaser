@@ -4,10 +4,11 @@ import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import styled from 'styled-components';
 import { typography, space } from 'styled-system';
-import PrismicWrapper from './prismic-wrapper';
-import { Box, Grid } from './layout';
-import Heading from './heading';
-import Content from './content';
+import PrismicWrapper from 'components/prismic-wrapper';
+import { Box, Grid } from 'components/layout';
+import Heading from 'components/heading';
+import Content from 'components/content';
+import { linkResolver } from 'modules/prismic';
 
 const Support = styled.div`
 ${typography};
@@ -96,7 +97,7 @@ const EmbedSlice = (rawData) => {
         </Heading>
       )}
 
-      {data.content && <Content textAlign="center" pb={3}>{RichText.render(data.content)}</Content>}
+      {data.content && <Content textAlign="center" pb={3}>{RichText.render(data.content, linkResolver)}</Content>}
 
       <Grid
         gridTemplateColumns={{ _: '1fr', m: `${(multipleEmbeds ? '1fr 1fr' : '1fr')}` }}
