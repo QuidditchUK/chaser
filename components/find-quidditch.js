@@ -7,7 +7,7 @@ import { Box, Flex } from 'components/layout';
 import Heading from 'components/heading';
 import Button from 'components/button';
 import Input from 'components/input';
-import { SLICE_MIN_HEIGHTS } from 'styles/hero-heights';
+import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 
 const FindQuidditch = (rawData) => {
   const router = useRouter();
@@ -25,12 +25,12 @@ const FindQuidditch = (rawData) => {
       backgroundColor="primary"
       backgroundSize="cover"
       backgroundPosition="center"
-      minHeight={SLICE_MIN_HEIGHTS}
+      minHeight={HERO_MIN_HEIGHTS}
       px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
     >
       <Flex
         position="relative"
-        minHeight={SLICE_MIN_HEIGHTS}
+        minHeight={HERO_MIN_HEIGHTS}
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
