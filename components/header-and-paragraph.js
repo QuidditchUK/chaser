@@ -7,6 +7,7 @@ import Content from 'components/content';
 import Button from 'components/button';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
 import ExternalLink from 'components/external-link';
+import { linkResolver } from 'modules/prismic';
 
 const HeaderAndParagraph = (rawData) => {
   const data = {
@@ -25,7 +26,7 @@ const HeaderAndParagraph = (rawData) => {
         </Heading>
       )}
 
-      {data.content && <Content>{RichText.render(data.content)}</Content>}
+      {data.content && <Content>{RichText.render(data.content, linkResolver)}</Content>}
 
       {data.cta_text && (
         <Flex justifyContent="center">
