@@ -319,8 +319,8 @@
               "horizontalScroll": {
                 "type": "Boolean",
                 "config": {
-                  "placeholder_false": "False",
-                  "placeholder_true": "True",
+                  "placeholder_false": "Off",
+                  "placeholder_true": "On",
                   "default_value": false,
                   "label": "Horizontal Scroll on Mobile"
                 }
