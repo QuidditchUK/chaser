@@ -91,7 +91,7 @@ const StyledLink = styled.a`
   flex-grow: 1;
 `;
 
-const handleChangePostcode = debounce(1000, async (postcode, setClubs) => {
+const handleChangePostcode = debounce(1000, async (postcode, setClubs, setEvents, showClubs, showEvents) => {
   const validPostcode = !postcode || !!postcode.match(postcodeRegex);
   if (!validPostcode) {
     return;
@@ -100,10 +100,15 @@ const handleChangePostcode = debounce(1000, async (postcode, setClubs) => {
   // TODO: IF YOU DON'T SET THE FULL URL AXIOS IGNORES THE EXTERNAL BASEURL
   // AND SEARCHES THE CLIENT URL INSTEAD, DESPITE BEING THE EXACT SAME REQUEST AS IN THE SERVER SIDE PROPS.
   // FIGURE OUT WHY AND FIX
+  if (showClubs) {
+    const { data: clubs } = await api.get(`https://api.quidditchuk.org/clubs/search?postcode=${postcode}`);
+    setClubs(clubs);
+  }
 
-  const results = await api.get(`https://api.quidditchuk.org/clubs/search?postcode=${postcode}`);
-
-  setClubs(results.data);
+  if (showEvents) {
+    const { data: events } = await api.get(`https://api.quidditchuk.org/events/search?postcode=${postcode}`);
+    setEvents(events);
+  }
 
   Router.push({
     pathname: Router.pathname,
@@ -114,26 +119,33 @@ const handleChangePostcode = debounce(1000, async (postcode, setClubs) => {
   }, { shallow: true });
 });
 
-const AutoValidatePostcode = ({ setClubs }) => {
+const AutoValidatePostcode = ({
+  setClubs, setEvents, showClubs, showEvents,
+}) => {
   const { values } = useFormikContext();
 
   useEffect(() => {
-    handleChangePostcode(values.postcode, setClubs);
-  }, [values.postcode, setClubs]);
+    handleChangePostcode(values.postcode, setClubs, setEvents, showClubs, showEvents);
+  }, [values.postcode, setClubs, setEvents, showClubs, showEvents]);
 
   return null;
 };
 
-const FindQuidditch = ({ clubs: initialClubs, events }) => {
+const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
   const { query } = useRouter();
 
   const [showClubs, setShowClubs] = useState(true);
   const [showEvents, setShowEvents] = useState(true);
   const [clubs, setClubs] = useState(initialClubs);
+  const [events, setEvents] = useState(initialEvents);
 
   const initialValues = {
     postcode: query.postcode || '',
   };
+
+  const showNoClubsOrEvents = showClubs && showEvents && !clubs.length && !events.length;
+  const showNoClubs = showClubs && !clubs.length && !showNoClubsOrEvents;
+  const showNoEvents = showEvents && !events.length && !showNoClubsOrEvents;
 
   return (
     <Layout>
@@ -178,7 +190,7 @@ const FindQuidditch = ({ clubs: initialClubs, events }) => {
                     size="8"
                     marginLeft={[2, 4]}
                   />
-                  <AutoValidatePostcode setClubs={setClubs} />
+                  <AutoValidatePostcode setClubs={setClubs} setEvents={setEvents} showClubs={showClubs} showEvents={showEvents} />
                 </HeadingHero>
               </Form>
             </Formik>
@@ -235,12 +247,15 @@ const FindQuidditch = ({ clubs: initialClubs, events }) => {
               </>
             )}
 
-          {showClubs && !clubs.length && !!events.length && (
-            <Flex alignItems="center" justifyContent="center" flexDirection="column">
-              <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No clubs matched your search</Heading>
-              <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
-              <Link href="/about/contact-us" passHref><a><Button variant="primary" type="button">Contact us</Button></a></Link>
-            </Flex>
+          {showNoClubs && (
+            <>
+              {showEvents && !events.length && (<Heading as="h2" fontSize={4} isBody color="primary">Clubs</Heading>)}
+              <Flex alignItems="center" justifyContent="center" flexDirection="column">
+                <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No clubs matched your search</Heading>
+                <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
+                <Link href="/about/contact-us" passHref><a><Button variant="primary" type="button">Contact us</Button></a></Link>
+              </Flex>
+            </>
           )}
 
           {showEvents && !!events.length
@@ -272,15 +287,18 @@ const FindQuidditch = ({ clubs: initialClubs, events }) => {
               </>
             )}
 
-          {showEvents && !events.length && !!clubs.length && (
-            <Flex alignItems="center" justifyContent="center" flexDirection="column">
-              <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No events matched your search</Heading>
-              <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
-              <Link href="/about/contact-us" passHref><a><Button variant="primary" type="button">Contact us</Button></a></Link>
-            </Flex>
+          {showNoEvents && (
+            <>
+              {showClubs && !clubs.length && (<Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>)}
+              <Flex alignItems="center" justifyContent="center" flexDirection="column">
+                <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No events matched your search</Heading>
+                <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
+                <Link href="/about/contact-us" passHref><a><Button variant="primary" type="button">Contact us</Button></a></Link>
+              </Flex>
+            </>
           )}
 
-          {(showEvents && showClubs) && !events.length && !clubs.length
+          {showNoClubsOrEvents
             && (
               <Flex alignItems="center" justifyContent="center" flexDirection="column">
                 <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No clubs or events matched your search</Heading>
