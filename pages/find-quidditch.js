@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Router, { useRouter } from 'next/router';
@@ -21,52 +22,53 @@ import ClubCard from 'components/club-card';
 import EventCard from 'components/event-card';
 import Image from 'components/image';
 import Meta from 'components/meta';
+import Button from 'components/button';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';
 
-const MOCK_EVENTS = [{
-  uuid: '36f03565-f622-43e6-90c5-fae022c5444z',
-  name: 'Northern Cup 2020',
-  league: 'University',
-  slug: 'northern-cup-2020',
-  location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
-  venue: 'Sheffield Hallam University Sports Park',
-  postcode: 'S9 1UA',
-  start_time: '2020-11-13 07:00:00Z',
-  images: ['https://images.prismic.io/chaser/239db290-616f-4839-8d5f-3fa0ea83ab4d_DSC04508-2000x1200.jpg?auto=compress,format'],
-  icon: 'https://images.prismic.io/chaser/65d65868-3e13-4024-871a-6f23d1467042_Northern-Cup-2019-Logo.png?auto=compress,format',
-  registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdqKtdD2MoUfobYHtlzIbItUeOsgjJgWmylPnnP4vrkOCgpUg/viewform',
-  registerTime: '2020-05-13 07:00:00Z',
-},
-{
-  uuid: '36f03565-f622-43e6-90c5-fae022c5444y',
-  name: 'Southern Cup 2020',
-  league: 'University',
-  slug: 'southern-cup-2020',
-  location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
-  venue: 'Oxford Brookes Sports Park',
-  postcode: 'S9 1UA',
-  start_time: '2020-11-29 07:00:00Z',
-  images: ['https://images.prismic.io/chaser/ed7c8345-27c6-4517-8a60-954d641ad8b1_QD_FN-128+copy.jpg?auto=compress,format'],
-  icon: 'https://images.prismic.io/chaser/1a2c9d38-6c51-44af-8cd3-57a24b04d452_Southern-Cup-6-Tournament-Logo.png?auto=compress,format',
-  registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdqKtdD2MoUfobYHtlzIbItUeOsgjJgWmylPnnP4vrkOCgpUg/viewform',
-  registerTime: '2020-09-13 07:00:00Z',
-},
-{
-  uuid: '36f03565-f622-43e6-90c5-fae022c5444x',
-  name: 'Community Fixture #1',
-  league: 'Community',
-  slug: 'community-fixture-1-2020',
-  location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
-  venue: 'Clapham Common',
-  postcode: 'SW4 0NH',
-  start_time: '2020-12-25 07:00:00Z',
-  images: ['https://images.prismic.io/chaser/d03c57e4-c3f3-4033-b08f-d0331d860ec4_57114819_3035649453142627_7886437477404114944_o.jpg?auto=compress,format'],
-  icon: 'https://images.prismic.io/chaser/1a2c9d38-6c51-44af-8cd3-57a24b04d452_Southern-Cup-6-Tournament-Logo.png?auto=compress,format',
-  registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdqKtdD2MoUfobYHtlzIbItUeOsgjJgWmylPnnP4vrkOCgpUg/viewform',
-  registerTime: '2020-09-13 07:00:00Z',
-},
-];
+// const MOCK_EVENTS = [{
+//   uuid: '36f03565-f622-43e6-90c5-fae022c5444z',
+//   name: 'Northern Cup 2020',
+//   league: 'University',
+//   slug: 'northern-cup-2020',
+//   location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
+//   venue: 'Sheffield Hallam University Sports Park',
+//   postcode: 'S9 1UA',
+//   start_time: '2020-11-13 07:00:00Z',
+//   images: ['https://images.prismic.io/chaser/239db290-616f-4839-8d5f-3fa0ea83ab4d_DSC04508-2000x1200.jpg?auto=compress,format'],
+//   icon: 'https://images.prismic.io/chaser/65d65868-3e13-4024-871a-6f23d1467042_Northern-Cup-2019-Logo.png?auto=compress,format',
+//   registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdqKtdD2MoUfobYHtlzIbItUeOsgjJgWmylPnnP4vrkOCgpUg/viewform',
+//   registerTime: '2020-05-13 07:00:00Z',
+// },
+// {
+//   uuid: '36f03565-f622-43e6-90c5-fae022c5444y',
+//   name: 'Southern Cup 2020',
+//   league: 'University',
+//   slug: 'southern-cup-2020',
+//   location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
+//   venue: 'Oxford Brookes Sports Park',
+//   postcode: 'S9 1UA',
+//   start_time: '2020-11-29 07:00:00Z',
+//   images: ['https://images.prismic.io/chaser/ed7c8345-27c6-4517-8a60-954d641ad8b1_QD_FN-128+copy.jpg?auto=compress,format'],
+//   icon: 'https://images.prismic.io/chaser/1a2c9d38-6c51-44af-8cd3-57a24b04d452_Southern-Cup-6-Tournament-Logo.png?auto=compress,format',
+//   registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdqKtdD2MoUfobYHtlzIbItUeOsgjJgWmylPnnP4vrkOCgpUg/viewform',
+//   registerTime: '2020-09-13 07:00:00Z',
+// },
+// {
+//   uuid: '36f03565-f622-43e6-90c5-fae022c5444x',
+//   name: 'Community Fixture #1',
+//   league: 'Community',
+//   slug: 'community-fixture-1-2020',
+//   location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
+//   venue: 'Clapham Common',
+//   postcode: 'SW4 0NH',
+//   start_time: '2020-12-25 07:00:00Z',
+//   images: ['https://images.prismic.io/chaser/d03c57e4-c3f3-4033-b08f-d0331d860ec4_57114819_3035649453142627_7886437477404114944_o.jpg?auto=compress,format'],
+//   icon: 'https://images.prismic.io/chaser/1a2c9d38-6c51-44af-8cd3-57a24b04d452_Southern-Cup-6-Tournament-Logo.png?auto=compress,format',
+//   registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdqKtdD2MoUfobYHtlzIbItUeOsgjJgWmylPnnP4vrkOCgpUg/viewform',
+//   registerTime: '2020-09-13 07:00:00Z',
+// },
+// ];
 
 const Input = styled.input`
   background: transparent;
@@ -195,7 +197,7 @@ const FindQuidditch = ({ clubs: initialClubs, events }) => {
         py={{ _: 6, l: 10 }}
       >
         <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
-          {showClubs
+          {showClubs && !!clubs.length
             && (
               <>
                 <Heading as="h2" fontSize={4} mt={0} isBody color="primary">Clubs</Heading>
@@ -233,7 +235,15 @@ const FindQuidditch = ({ clubs: initialClubs, events }) => {
               </>
             )}
 
-          {showEvents
+          {showClubs && !clubs.length && !!events.length && (
+            <Flex alignItems="center" justifyContent="center" flexDirection="column">
+              <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No clubs matched your search</Heading>
+              <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
+              <Link href="/about/contact-us" passHref><a><Button variant="primary" type="button">Contact us</Button></a></Link>
+            </Flex>
+          )}
+
+          {showEvents && !!events.length
             && (
               <>
                 <Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>
@@ -261,6 +271,23 @@ const FindQuidditch = ({ clubs: initialClubs, events }) => {
                 </Grid>
               </>
             )}
+
+          {showEvents && !events.length && !!clubs.length && (
+            <Flex alignItems="center" justifyContent="center" flexDirection="column">
+              <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No events matched your search</Heading>
+              <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
+              <Link href="/about/contact-us" passHref><a><Button variant="primary" type="button">Contact us</Button></a></Link>
+            </Flex>
+          )}
+
+          {(showEvents && showClubs) && !events.length && !clubs.length
+            && (
+              <Flex alignItems="center" justifyContent="center" flexDirection="column">
+                <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No clubs or events matched your search</Heading>
+                <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
+                <Link href="/about/contact-us" passHref><a><Button variant="primary" type="button">Contact us</Button></a></Link>
+              </Flex>
+            )}
         </Container>
       </Box>
     </Layout>
@@ -282,15 +309,17 @@ export const getServerSideProps = async ({ query }) => {
 
   if (!postcode) {
     const { data: clubs } = await api.get('/clubs/search');
+    const { data: events } = await api.get('/events/search');
     return {
-      props: { clubs, events: MOCK_EVENTS },
+      props: { clubs, events },
     };
   }
 
   const { data: clubs } = await api.get(`/clubs/search?postcode=${postcode}`);
+  const { data: events } = await api.get(`/events/search?postcode=${postcode}`);
 
   return {
-    props: { clubs, events: MOCK_EVENTS },
+    props: { clubs, events },
   };
 };
 
