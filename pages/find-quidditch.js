@@ -185,7 +185,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
           minHeight={BLOG_MIN_HEIGHTS}
           zIndex={1}
           bg="primary"
-          opacity={0.2}
+          opacity={0.8}
           width="100%"
         />
 
