@@ -25,6 +25,19 @@ import Meta from 'components/meta';
 import Button from 'components/button';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';
+import CloseIcon from 'public/images/close.svg';
+
+const Icon = styled.div`
+  ${space};
+  display: inline-block;
+  width: 30px;
+
+  svg {
+    height: 30px;
+    width: 30px;
+    filter: drop-shadow(0 0 .2rem rgb(0, 0, 0));
+  }
+`;
 
 // const MOCK_EVENTS = [{
 //   uuid: '36f03565-f622-43e6-90c5-fae022c5444z',
@@ -131,6 +144,14 @@ const AutoValidatePostcode = ({
   return null;
 };
 
+const validatePostcode = (value) => {
+  let error;
+  if (value && !value.match(postcodeRegex)) {
+    error = true;
+  }
+  return error;
+};
+
 const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
   const { query } = useRouter();
 
@@ -180,19 +201,25 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
               onSubmit={() => { }}
               enableReinitialize
             >
-              <Form>
-                <HeadingHero fontSize={[4, 4, 6]} color="white" isBody>
-                  Quidditch near
-                  <Field
-                    name="postcode"
-                    placeholder="Postcode"
-                    as={Input}
-                    size="8"
-                    marginLeft={[2, 4]}
-                  />
-                  <AutoValidatePostcode setClubs={setClubs} setEvents={setEvents} showClubs={showClubs} showEvents={showEvents} />
-                </HeadingHero>
-              </Form>
+              {({ errors, touched }) => (
+                <Form>
+                  <HeadingHero fontSize={[4, 4, 6]} color="white" isBody>
+                    Quidditch near
+                    <Box display="inline-block">
+                      <Field
+                        name="postcode"
+                        placeholder="Postcode"
+                        as={Input}
+                        size="8"
+                        marginLeft={[2, 4]}
+                        validate={validatePostcode}
+                      />
+                      {errors.postcode && touched.postcode && <Icon><CloseIcon /></Icon>}
+                    </Box>
+                    <AutoValidatePostcode setClubs={setClubs} setEvents={setEvents} showClubs={showClubs} showEvents={showEvents} />
+                  </HeadingHero>
+                </Form>
+              )}
             </Formik>
           </Container>
         </Flex>
