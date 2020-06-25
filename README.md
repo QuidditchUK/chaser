@@ -1,4 +1,4 @@
-# Chaser
+# 🤾‍♀️🏐 Chaser
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md) 
 
@@ -25,10 +25,6 @@ You will need a `.env.local` file to set environment variables - use `.env.examp
 - [Styled System](https://styled-system.com/api)
 - [Polished](https://polished.js.org/docs/)
 - [Prismic (CMS)](https://prismic.io/docs/reactjs/getting-started/getting-started-from-scratch)
-
-## Committing
-
-Chaser uses ESLint and Husky to enforce this linting style.
 
 ## Deployment
 
