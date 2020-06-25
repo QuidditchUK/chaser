@@ -249,7 +249,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
 
           {showNoClubs && (
             <>
-              {showEvents && !events.length && (<Heading as="h2" fontSize={4} isBody color="primary">Clubs</Heading>)}
+              {showEvents && !!events.length && (<Heading as="h2" fontSize={4} isBody color="primary">Clubs</Heading>)}
               <Flex alignItems="center" justifyContent="center" flexDirection="column">
                 <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No clubs matched your search</Heading>
                 <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
@@ -289,7 +289,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
 
           {showNoEvents && (
             <>
-              {showClubs && !clubs.length && (<Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>)}
+              {showClubs && !!clubs.length && (<Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>)}
               <Flex alignItems="center" justifyContent="center" flexDirection="column">
                 <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No events matched your search</Heading>
                 <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
