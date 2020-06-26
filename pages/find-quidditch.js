@@ -110,16 +110,13 @@ const handleChangePostcode = debounce(1000, async (postcode, setClubs, setEvents
     return;
   }
 
-  // TODO: IF YOU DON'T SET THE FULL URL AXIOS IGNORES THE EXTERNAL BASEURL
-  // AND SEARCHES THE CLIENT URL INSTEAD, DESPITE BEING THE EXACT SAME REQUEST AS IN THE SERVER SIDE PROPS.
-  // FIGURE OUT WHY AND FIX
   if (showClubs) {
-    const { data: clubs } = await api.get(`https://api.quidditchuk.org/clubs/search?postcode=${postcode}`);
+    const { data: clubs } = await api.get(`/clubs/search?postcode=${postcode}`);
     setClubs(clubs);
   }
 
   if (showEvents) {
-    const { data: events } = await api.get(`https://api.quidditchuk.org/events/search?postcode=${postcode}`);
+    const { data: events } = await api(`/events/search?postcode=${postcode}`);
     setEvents(events);
   }
 

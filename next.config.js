@@ -8,6 +8,7 @@ const {
   SENTRY_PROJECT,
   SENTRY_AUTH_TOKEN,
   NODE_ENV,
+  API_URL,
 } = process.env
 
 module.exports = {
@@ -62,5 +63,8 @@ module.exports = {
     config.resolve.modules.push(path.resolve('./'))
 
     return config;
+  },
+  publicRuntimeConfig: {
+    apiUrl: API_URL,
   },
 };
