@@ -22,7 +22,8 @@ const CardsSlice = (rawData) => {
   return (
     <PrismicWrapper
       variant={data.variant}
-      px={{ _: data.horizontalScroll ? 0 : 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+      // px={{ _: data.horizontalScroll ? 0 : 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+      px={data.horizontalScroll ? { _: 0, m: 'gutter.m' } : { _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
     >
       {RichText.asText(data.title) && (
         <Heading as="h2" fontSize={[3, 3, 4]} mt={2} textAlign="center">

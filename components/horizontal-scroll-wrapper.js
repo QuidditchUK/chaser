@@ -56,13 +56,13 @@ const HorizontalScrollWrapper = ({ horizontalScroll, itemsCount, children }) => 
 
 HorizontalScrollWrapper.defaultProps = {
   horizontalScroll: false,
-  itemCount: 0,
+  itemsCount: 0,
 };
 
 HorizontalScrollWrapper.propTypes = {
   horizontalScroll: PropTypes.bool,
   itemsCount: PropTypes.number,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default HorizontalScrollWrapper;
