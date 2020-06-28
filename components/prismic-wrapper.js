@@ -84,7 +84,7 @@ PrismicWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   variant: PropTypes.string,
   small: PropTypes.bool,
-  px: PropTypes.shape,
+  px: PropTypes.shape({}),
 };
 
 export default PrismicWrapper;
