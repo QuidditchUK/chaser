@@ -60,7 +60,6 @@ Embed.propTypes = {
   }).isRequired,
 };
 
-
 export const Item = ({ item }) => (
   <Box>
     <Embed embed={item.embed} />

@@ -500,6 +500,70 @@
               }
             },
             "repeat": {}
+          },
+          "two_column_table": {
+            "type": "Slice",
+            "fieldset": "Two Column Table",
+            "description": "Two Column Table",
+            "icon": "border_all",
+            "display": "list",
+            "non-repeat": {
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2",
+                  "label": "Title"
+                }
+              },
+              "column_one_title": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, heading3, heading4, heading5, heading6, strong, em, hyperlink, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "Column One Title"
+                }
+              },
+              "column_two_title": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, heading3, heading4, heading5, heading6, strong, em, hyperlink, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "Column Two Title"
+                }
+              },
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "primary",
+                    "secondary",
+                    "white",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "variant"
+                }
+              }
+            },
+            "repeat": {
+              "column_one": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, strong, em, hyperlink, image, list-item, o-list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "Column One"
+                }
+              },
+              "column_two": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, strong, em, hyperlink, list-item, o-list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "Column Two"
+                }
+              }
+            }
           }
         }
       }

@@ -61,7 +61,6 @@ const Tags = styled.div`
   }
 `;
 
-
 const BlogSupport = (rawData) => {
   const SITE_URL = 'https://chaser.quk-tech.now.sh';
 
@@ -79,7 +78,7 @@ const BlogSupport = (rawData) => {
   return (
     <>
       {tags?.length > 0 && (
-        <Box paddingBottom={10} bg="white" px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+        <Box py={2} bg="white" px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
           <Container maxWidth={rem(960)}>
             <Tags>
               # {tags.map((tag) => (
@@ -96,7 +95,6 @@ const BlogSupport = (rawData) => {
           </Container>
         </Box>
       )}
-
 
       <PrismicWrapper small>
         <Flex alignItems="center" justifyContent="space-between">
