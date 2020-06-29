@@ -120,9 +120,7 @@ export const Footer = () => {
               <List>
                 <Item><ActiveLink as="/programmes/national-teams" href="/programmes/[id]"><span>National Teams</span></ActiveLink></Item>
                 <Item><ActiveLink as="/programmes/grants" href="/programmes/[id]"><span>Grants</span></ActiveLink></Item>
-                <Item><ActiveLink as="/programmes/all-in-coaching" href="/programmes/[id]"><span>All In Coaching</span></ActiveLink></Item>
                 <Item><ActiveLink as="/programmes/level-up" href="/programmes/[id]"><span>Level Up</span></ActiveLink></Item>
-                <Item><ActiveLink as="/programmes/queens-cup" href="/programmes/[id]"><span>Queens Cup</span></ActiveLink></Item>
               </List>
             </GridItem>
 
