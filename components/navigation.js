@@ -212,7 +212,7 @@ const List = styled.ul`
 
       &.dropdown, .dropdown:hover {
         height: auto;
-        max-height: 200px;
+        max-height: 250px;
       }
     }
   }
