@@ -8,6 +8,7 @@ import {
   Form,
   Field,
   useFormikContext,
+  FieldArray,
 } from 'formik';
 import { api } from 'modules/api';
 import styled from 'styled-components';
@@ -26,6 +27,8 @@ import Button from 'components/button';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';
 import CloseIcon from 'public/images/close.svg';
+import Type, { TYPES } from 'components/club-type';
+import { rem } from '../styles/theme';
 
 const Icon = styled.div`
   ${space};
@@ -39,6 +42,69 @@ const Icon = styled.div`
   }
 `;
 
+const SHOW_TYPES = [
+  { value: 'clubs', name: 'Clubs' },
+  { value: 'events', name: 'Events' },
+];
+
+const LEAGUES = [
+  { value: 'community', name: 'Community' },
+  { value: 'university', name: 'University' },
+];
+
+const Label = styled.label`
+  padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  border-radius: ${({ theme }) => theme.radius[1]};
+  margin-bottom: ${({ theme }) => theme.space[2]};
+  border: 1px solid;
+  border-color: transparent;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.greyLight}; 
+    border-color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+const Checkbox = styled.input`
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+`;
+
+const Checkmark = styled.span`
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+
+  &:after {
+    content: "";
+    display: none;
+    position: relative;
+    left: 10px;
+    top: 7px;
+    width: 5px;
+    height: 10px;
+    border: solid ${({ theme }) => theme.colors.white};
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+
+  input:checked ~ & {
+    background-color: ${({ theme }) => theme.colors.primary};
+  }
+
+  input:checked ~ &:after {
+    display: block;
+  }
+`;
 // const MOCK_EVENTS = [{
 //   uuid: '36f03565-f622-43e6-90c5-fae022c5444z',
 //   name: 'Northern Cup 2020',
@@ -159,6 +225,9 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
 
   const initialValues = {
     postcode: query.postcode || '',
+    showTypes: ['clubs', 'events'],
+    leagues: ['community', 'university'],
+    distance: 10000,
   };
 
   const showNoClubsOrEvents = showClubs && showEvents && !clubs.length && !events.length;
@@ -168,38 +237,38 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
   return (
     <Layout>
       <Meta subTitle="Find Quidditch near you" description="Find your nearest clubs and upcoming Quidditch events in the UK" image="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959" />
-      <Box
-        as="section"
-        position="relative"
-        backgroundImage="url(https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959)"
-        backgroundColor="primary"
-        backgroundSize="cover"
-        backgroundPosition="center"
-        minHeight={BLOG_MIN_HEIGHTS}
+      <Formik
+        initialValues={initialValues}
+        onSubmit={() => { }}
+        enableReinitialize
       >
-        <Flex
-          position="absolute"
-          minHeight={BLOG_MIN_HEIGHTS}
-          zIndex={1}
-          bg="primary"
-          opacity={0.8}
-          width="100%"
-        />
-
-        <Flex
-          position="relative"
-          minHeight={BLOG_MIN_HEIGHTS}
-          alignItems="center"
-          zIndex={2}
-        >
-          <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
-            <Formik
-              initialValues={initialValues}
-              onSubmit={() => { }}
-              enableReinitialize
+        {({ errors, touched, values }) => (
+          <Form>
+            <Box
+              as="section"
+              position="relative"
+              backgroundImage="url(https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959)"
+              backgroundColor="primary"
+              backgroundSize="cover"
+              backgroundPosition="center"
+              minHeight={BLOG_MIN_HEIGHTS}
             >
-              {({ errors, touched }) => (
-                <Form>
+              <Flex
+                position="absolute"
+                minHeight={BLOG_MIN_HEIGHTS}
+                zIndex={1}
+                bg="primary"
+                opacity={0.8}
+                width="100%"
+              />
+
+              <Flex
+                position="relative"
+                minHeight={BLOG_MIN_HEIGHTS}
+                alignItems="center"
+                zIndex={2}
+              >
+                <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
                   <HeadingHero fontSize={[4, 4, 6]} color="white" isBody>
                     Quidditch near
                     <Box display="inline-block">
@@ -215,18 +284,86 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
                     </Box>
                     <AutoValidatePostcode setClubs={setClubs} setEvents={setEvents} showClubs={showClubs} showEvents={showEvents} />
                   </HeadingHero>
-                </Form>
-              )}
-            </Formik>
-          </Container>
-        </Flex>
-      </Box>
-      <Box bg="white" py={5}>
-        <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
-          <input type="checkbox" checked={showClubs} onChange={() => setShowClubs(!showClubs)} /> Clubs
-          <input type="checkbox" checked={showEvents} onChange={() => setShowEvents(!showEvents)} /> Events
-        </Container>
-      </Box>
+                </Container>
+              </Flex>
+            </Box>
+
+            <Box bg="white" py={5}>
+              <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+                <Grid
+                  gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+                  gridTemplateColumns={{ _: '1fr', m: '1fr 1fr 1fr' }}
+                >
+                  <Box borderRight="1px solid" borderColor="lightGrey" px="5">
+                    <Heading as="h3" fontSize="3" isBody mt="0" px="4">Types {values.showTypes.length > 0 && `(${values.showTypes.length})`}</Heading>
+                    <FieldArray
+                      name="showTypes"
+                      render={(arrayHelpers) => (
+                        <Flex flexDirection="column" width="1/2">
+                          {SHOW_TYPES.map((type) => (
+                            <Label key={type.value}>
+                              <Checkbox
+                                name="showTypes"
+                                type="checkbox"
+                                value={type.value}
+                                checked={values.showTypes.includes(type.value)}
+                                onChange={(e) => {
+                                  if (e.target.checked) {
+                                    arrayHelpers.push(type.value);
+                                  } else {
+                                    arrayHelpers.remove(values.showTypes.indexOf(type.value));
+                                  }
+                                  const method = type.value === 'clubs' ? setShowClubs : setShowEvents;
+                                  method(!values.showTypes.includes(type.value));
+                                }}
+                              />{' '}
+                              {type.name}
+                              <Checkmark />
+                            </Label>
+                          ))}
+                        </Flex>
+                      )}
+                    />
+                  </Box>
+
+                  <Box borderRight="1px solid" borderColor="lightGrey" px="5">
+                    <Heading as="h3" fontSize="3" isBody mt="0" px="4">Leagues {values.leagues.length > 0 && `(${values.leagues.length})`}</Heading>
+                    <FieldArray
+                      name="leagues"
+                      render={(arrayHelpers) => (
+                        <Flex flexDirection="column" width="1/2">
+                          {LEAGUES.map((league) => (
+                            <Label key={league.value}>
+                              <Checkbox
+                                name="leagues"
+                                type="checkbox"
+                                value={league.value}
+                                checked={values.leagues.includes(league.value)}
+                                onChange={(e) => {
+                                  if (e.target.checked) {
+                                    arrayHelpers.push(league.value);
+                                  } else {
+                                    arrayHelpers.remove(values.leagues.indexOf(league.value));
+                                  }
+                                }}
+                              />{' '}
+                              <Type fontWeight="bold" fontSize={(rem(10))} bg={TYPES[league.name]}>{league.name}</Type><Checkmark />
+                            </Label>
+                          ))}
+                        </Flex>
+                      )}
+                    />
+                  </Box>
+
+                  <Box borderRight="1px solid" borderColor="lightGrey" px="5">
+                    <Heading as="h3" fontSize="3" isBody mt="0" px="4">Distance</Heading>
+                  </Box>
+                </Grid>
+              </Container>
+            </Box>
+          </Form>
+        )}
+      </Formik>
 
       <Box
         bg="greyLight"

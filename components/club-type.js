@@ -4,6 +4,7 @@ import { typography, color } from 'styled-system';
 export const TYPES = {
   University: 'keeperGreen',
   Community: 'northernMagenta',
+  Youth: 'southernBlue',
 };
 
 const Type = styled.span`
