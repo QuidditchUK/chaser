@@ -62,7 +62,7 @@ const Tags = styled.div`
 `;
 
 const BlogSupport = (rawData) => {
-  const SITE_URL = 'https://chaser.quk-tech.now.sh';
+  const SITE_URL = 'https://chaser.quidditchuk.org';
 
   const router = useRouter();
   const url = `${SITE_URL}${router.asPath}`;
