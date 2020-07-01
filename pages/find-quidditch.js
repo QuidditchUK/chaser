@@ -10,7 +10,7 @@ import {
   useFormikContext,
   FieldArray,
 } from 'formik';
-import { api } from 'modules/api';
+import { api, createQueryString } from 'modules/api';
 import styled from 'styled-components';
 import { space } from 'styled-system';
 import { debounce } from 'throttle-debounce';
@@ -48,20 +48,21 @@ const SHOW_TYPES = [
 ];
 
 const LEAGUES = [
-  { value: 'community', name: 'Community' },
-  { value: 'university', name: 'University' },
+  { value: 'Community', name: 'Community' },
+  { value: 'University', name: 'University' },
 ];
 
 const Label = styled.label`
-  padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[1]} ${({ theme }) => theme.space[2]};
   cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  font-size: ${({ theme }) => theme.fontSizes[1]};
 
   border-radius: ${({ theme }) => theme.radius[1]};
-  margin-bottom: ${({ theme }) => theme.space[2]};
+  margin-bottom: ${({ theme }) => theme.space[1]};
   border: 1px solid;
   border-color: transparent;
 
@@ -170,39 +171,36 @@ const StyledLink = styled.a`
   flex-grow: 1;
 `;
 
-const handleChangePostcode = debounce(1000, async (postcode, setClubs, setEvents, showClubs, showEvents) => {
+const handleChange = debounce(1000, async (values, setClubs, setEvents) => {
+  const { postcode, showTypes, leagues } = values;
   const validPostcode = !postcode || !!postcode.match(postcodeRegex);
   if (!validPostcode) {
     return;
   }
 
-  if (showClubs) {
-    const { data: clubs } = await api.get(`/clubs/search?postcode=${postcode}`);
-    setClubs(clubs);
-  }
+  const searchLeagues = leagues.length > 0 ? leagues : ['Community', 'University'];
+  const searchQuery = { ...values, leagues: searchLeagues };
+  const queryString = createQueryString(searchQuery);
+  const { data } = await api.get(`/search?${queryString}`);
 
-  if (showEvents) {
-    const { data: events } = await api(`/events/search?postcode=${postcode}`);
-    setEvents(events);
-  }
+  setClubs(data.clubs);
+  setEvents(data.events);
 
   Router.push({
     pathname: Router.pathname,
-    query: { postcode },
+    query: { postcode, showTypes, leagues },
   }, {
     pathname: Router.pathname,
-    query: { postcode },
+    query: { postcode, showTypes, leagues },
   }, { shallow: true });
 });
 
-const AutoValidatePostcode = ({
-  setClubs, setEvents, showClubs, showEvents,
-}) => {
+const AutoValidateForm = ({ setClubs, setEvents }) => {
   const { values } = useFormikContext();
 
   useEffect(() => {
-    handleChangePostcode(values.postcode, setClubs, setEvents, showClubs, showEvents);
-  }, [values.postcode, setClubs, setEvents, showClubs, showEvents]);
+    handleChange(values, setClubs, setEvents);
+  }, [values, setClubs, setEvents]);
 
   return null;
 };
@@ -217,17 +215,39 @@ const validatePostcode = (value) => {
 
 const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
   const { query } = useRouter();
+  const { postcode, showTypes, leagues } = query;
 
-  const [showClubs, setShowClubs] = useState(true);
-  const [showEvents, setShowEvents] = useState(true);
+  const showClubs = showTypes?.includes('clubs');
+  const showEvents = showTypes?.includes('events');
+
   const [clubs, setClubs] = useState(initialClubs);
   const [events, setEvents] = useState(initialEvents);
 
+  let showTypesInitial;
+
+  if (!showTypes) {
+    showTypesInitial = null;
+  } else if (Array.isArray(showTypes)) {
+    showTypesInitial = showTypes;
+  } else {
+    showTypesInitial = [showTypes];
+  }
+
+  let leaguesInitial;
+
+  if (!leagues) {
+    leaguesInitial = null;
+  } else if (Array.isArray(leagues)) {
+    leaguesInitial = leagues;
+  } else {
+    leaguesInitial = [leagues];
+  }
+
   const initialValues = {
-    postcode: query.postcode || '',
-    showTypes: ['clubs', 'events'],
-    leagues: ['community', 'university'],
-    distance: 10000,
+    postcode: postcode || '',
+    showTypes: showTypesInitial || ['clubs', 'events'],
+    leagues: leaguesInitial || ['Community', 'University'],
+    distance: 100000,
   };
 
   const showNoClubsOrEvents = showClubs && showEvents && !clubs.length && !events.length;
@@ -282,7 +302,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
                       />
                       {errors.postcode && touched.postcode && <Icon><CloseIcon /></Icon>}
                     </Box>
-                    <AutoValidatePostcode setClubs={setClubs} setEvents={setEvents} showClubs={showClubs} showEvents={showEvents} />
+                    <AutoValidateForm setClubs={setClubs} setEvents={setEvents} />
                   </HeadingHero>
                 </Container>
               </Flex>
@@ -291,11 +311,11 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
             <Box bg="white" py={5}>
               <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
                 <Grid
-                  gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+                  gridGap={0}
                   gridTemplateColumns={{ _: '1fr', m: '1fr 1fr 1fr' }}
                 >
-                  <Box borderRight="1px solid" borderColor="lightGrey" px="5">
-                    <Heading as="h3" fontSize="3" isBody mt="0" px="4">Types {values.showTypes.length > 0 && `(${values.showTypes.length})`}</Heading>
+                  <Box borderRight="1px solid" borderColor="lightGrey" px="4">
+                    <Heading as="h3" fontSize="2" isBody mt="0" px="2">Types {values.showTypes.length > 0 && `(${values.showTypes.length})`}</Heading>
                     <FieldArray
                       name="showTypes"
                       render={(arrayHelpers) => (
@@ -313,8 +333,6 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
                                   } else {
                                     arrayHelpers.remove(values.showTypes.indexOf(type.value));
                                   }
-                                  const method = type.value === 'clubs' ? setShowClubs : setShowEvents;
-                                  method(!values.showTypes.includes(type.value));
                                 }}
                               />{' '}
                               {type.name}
@@ -326,8 +344,8 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
                     />
                   </Box>
 
-                  <Box borderRight="1px solid" borderColor="lightGrey" px="5">
-                    <Heading as="h3" fontSize="3" isBody mt="0" px="4">Leagues {values.leagues.length > 0 && `(${values.leagues.length})`}</Heading>
+                  <Box borderRight="1px solid" borderColor="lightGrey" px="4">
+                    <Heading as="h3" fontSize="2" isBody mt="0" px="2">Leagues {values.leagues.length > 0 && `(${values.leagues.length})`}</Heading>
                     <FieldArray
                       name="leagues"
                       render={(arrayHelpers) => (
@@ -355,8 +373,8 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
                     />
                   </Box>
 
-                  <Box borderRight="1px solid" borderColor="lightGrey" px="5">
-                    <Heading as="h3" fontSize="3" isBody mt="0" px="4">Distance</Heading>
+                  <Box borderRight="1px solid" borderColor="lightGrey" px="4">
+                    <Heading as="h3" fontSize="2" isBody mt="0" px="4">Distance</Heading>
                   </Box>
                 </Grid>
               </Container>
@@ -484,21 +502,17 @@ FindQuidditch.propTypes = {
 };
 
 export const getServerSideProps = async ({ query }) => {
-  const { postcode } = query;
+  const leagues = query.leagues || ['Community', 'University'];
+  const searchQuery = { ...query, leagues };
+  const queryString = createQueryString(searchQuery);
 
-  if (!postcode) {
-    const { data: clubs } = await api.get('/clubs/search');
-    const { data: events } = await api.get('/events/search');
-    return {
-      props: { clubs, events },
-    };
-  }
-
-  const { data: clubs } = await api.get(`/clubs/search?postcode=${postcode}`);
-  const { data: events } = await api.get(`/events/search?postcode=${postcode}`);
+  const { data } = await api.get(`/search?${queryString}`);
 
   return {
-    props: { clubs, events },
+    props: {
+      clubs: data.clubs,
+      events: data.events,
+    },
   };
 };
 

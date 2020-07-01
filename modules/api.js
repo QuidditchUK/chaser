@@ -12,4 +12,4 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// export const api = (url, ...params) => fetch(`${publicRuntimeConfig.apiUrl}${url}`, ...params).then((response) => response.json());
+export const createQueryString = (query) => Object.keys(query).map((key) => (Array.isArray(query[key]) ? query[key].map((value) => `${key}=${value}`).join('&') : `${key}=${query[key]}`)).join('&');
