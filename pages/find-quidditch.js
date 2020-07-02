@@ -3,12 +3,15 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Router, { useRouter } from 'next/router';
 import Link from 'next/link';
+import Slider from '@material-ui/core/Slider';
+
 import {
   Formik,
   Form,
   Field,
   useFormikContext,
   FieldArray,
+  useField,
 } from 'formik';
 import { api, createQueryString } from 'modules/api';
 import styled from 'styled-components';
@@ -171,15 +174,45 @@ const StyledLink = styled.a`
   flex-grow: 1;
 `;
 
+const DistanceSlider = ({
+  min,
+  max,
+  defaultValue,
+  ...props
+}) => {
+  const [field, , helpers] = useField(props);
+
+  return (
+    <Slider
+      {...field}
+      {...props}
+      onBlur={(e) => helpers.setTouched(e)}
+      onChange={(e, v) => helpers.setValue(v)}
+      defaultValue={defaultValue}
+      valueLabelDisplay="auto"
+      min={min}
+      max={max}
+    />
+  );
+};
+
+DistanceSlider.propTypes = {
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+};
+
 const handleChange = debounce(1000, async (values, setClubs, setEvents) => {
-  const { postcode, showTypes, leagues } = values;
+  const {
+    postcode, showTypes, leagues, distance,
+  } = values;
   const validPostcode = !postcode || !!postcode.match(postcodeRegex);
   if (!validPostcode) {
     return;
   }
 
   const searchLeagues = leagues.length > 0 ? leagues : ['Community', 'University'];
-  const searchQuery = { ...values, leagues: searchLeagues };
+  const searchQuery = { ...values, leagues: searchLeagues, distance: (distance * 1000) };
   const queryString = createQueryString(searchQuery);
   const { data } = await api.get(`/search?${queryString}`);
 
@@ -188,10 +221,14 @@ const handleChange = debounce(1000, async (values, setClubs, setEvents) => {
 
   Router.push({
     pathname: Router.pathname,
-    query: { postcode, showTypes, leagues },
+    query: {
+      postcode, showTypes, leagues, distance,
+    },
   }, {
     pathname: Router.pathname,
-    query: { postcode, showTypes, leagues },
+    query: {
+      postcode, showTypes, leagues, distance,
+    },
   }, { shallow: true });
 });
 
@@ -215,7 +252,9 @@ const validatePostcode = (value) => {
 
 const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
   const { query } = useRouter();
-  const { postcode, showTypes, leagues } = query;
+  const {
+    postcode, showTypes, leagues, distance,
+  } = query;
 
   const showClubs = showTypes?.includes('clubs');
   const showEvents = showTypes?.includes('events');
@@ -247,7 +286,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
     postcode: postcode || '',
     showTypes: showTypesInitial || ['clubs', 'events'],
     leagues: leaguesInitial || ['Community', 'University'],
-    distance: 100000,
+    distance: distance || 100,
   };
 
   const showNoClubsOrEvents = showClubs && showEvents && !clubs.length && !events.length;
@@ -374,7 +413,17 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
                   </Box>
 
                   <Box borderRight="1px solid" borderColor="lightGrey" px="4">
-                    <Heading as="h3" fontSize="2" isBody mt="0" px="4">Distance</Heading>
+                    <Heading as="h3" fontSize="2" isBody mt="0" px="0" paddingBottom={2}>Distance ({values.distance}km)</Heading>
+                    <Box px="5">
+                      <DistanceSlider
+                        id="distanceSlider"
+                        name="distance"
+                        min={1}
+                        max={500}
+                        defaultValue={values.distance}
+                        marks={[{ value: 1, label: '1km' }, { value: 100, label: '100km' }, { value: 500, label: '500km' }]}
+                      />
+                    </Box>
                   </Box>
                 </Grid>
               </Container>
@@ -503,7 +552,7 @@ FindQuidditch.propTypes = {
 
 export const getServerSideProps = async ({ query }) => {
   const leagues = query.leagues || ['Community', 'University'];
-  const searchQuery = { ...query, leagues };
+  const searchQuery = { ...query, leagues, distance: (query.distance * 1000) };
   const queryString = createQueryString(searchQuery);
 
   const { data } = await api.get(`/search?${queryString}`);
