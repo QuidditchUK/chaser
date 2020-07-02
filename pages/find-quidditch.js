@@ -509,7 +509,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
               <Flex alignItems="center" justifyContent="center" flexDirection="column">
                 <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No clubs matched your search</Heading>
                 <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
-                <Link href="/about/contact-us" passHref><a><Button variant="primary" type="button">Contact us</Button></a></Link>
+                <Link href="/about/contact-us" passHref><a><Button variant="secondary" type="button">Contact us</Button></a></Link>
               </Flex>
             </>
           )}
@@ -549,7 +549,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
               <Flex alignItems="center" justifyContent="center" flexDirection="column">
                 <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No events matched your search</Heading>
                 <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
-                <Link href="/about/contact-us" passHref><a><Button variant="primary" type="button">Contact us</Button></a></Link>
+                <Link href="/about/contact-us" passHref><a><Button variant="secondary" type="button">Contact us</Button></a></Link>
               </Flex>
             </>
           )}
@@ -559,7 +559,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
               <Flex alignItems="center" justifyContent="center" flexDirection="column">
                 <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No clubs or events matched your search</Heading>
                 <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
-                <Link href="/about/contact-us" passHref><a><Button variant="primary" type="button">Contact us</Button></a></Link>
+                <Link href="/about/contact-us" passHref><a><Button variant="secondary" type="button">Contact us</Button></a></Link>
               </Flex>
             )}
         </Container>
