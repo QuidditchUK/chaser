@@ -21,7 +21,7 @@ const Tag = styled.span`
   text-decoration: none;
   border-width: 3px;
   border-style: solid;
-  border-radius: ${({ theme }) => theme.radius[1]};
+  border-radius: ${({ theme }) => theme.radii[1]};
   padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
 `;
 

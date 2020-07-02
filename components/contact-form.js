@@ -69,7 +69,7 @@ const ContactForm = (rawData) => {
 
                 <ErrorMessage name="name" component={InlineError} marginBottom={3} />
 
-                <Label htmlFor="name">
+                <Label htmlFor="email">
                   Your email (required)
                 </Label>
 
@@ -83,7 +83,7 @@ const ContactForm = (rawData) => {
 
                 <ErrorMessage name="email" component={InlineError} marginBottom={3} />
 
-                <Label htmlFor="name">
+                <Label htmlFor="subject">
                   Subject
                 </Label>
 
@@ -94,7 +94,7 @@ const ContactForm = (rawData) => {
                   my={3}
                 />
 
-                <Label htmlFor="name">
+                <Label htmlFor="message">
                   Your message (required)
                 </Label>
 

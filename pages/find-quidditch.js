@@ -64,7 +64,7 @@ const Label = styled.label`
   align-items: center;
   font-size: ${({ theme }) => theme.fontSizes[1]};
 
-  border-radius: ${({ theme }) => theme.radius[1]};
+  border-radius: ${({ theme }) => theme.radii[1]};
   margin-bottom: ${({ theme }) => theme.space[1]};
   border: 1px solid;
   border-color: transparent;

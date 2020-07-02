@@ -247,7 +247,7 @@ const NavItem = styled.span`
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     background: ${({ theme }) => theme.colors.white};
     border: 1px solid ${({ theme }) => theme.colors.white};
-    border-radius: ${({ theme }) => theme.radius[0]};
+    border-radius: ${({ theme }) => theme.radii[0]};
     color: ${({ theme }) => theme.colors.darkBlue};
     display: block;
     font-weight: normal;
@@ -331,7 +331,7 @@ function Navigation() {
             ))}
 
             <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={{ _: 'secondary', l: 'primary' }}>Find Quidditch</Button></a></Link></Item>
-            <Item pl={4}><Button type="button" variant="light">Sign in</Button></Item>
+            <Item pl={4}><Link href="/login" passHref><a><Button type="button" variant="light">Sign in</Button></a></Link></Item>
             <ScrollLock isActive={open} />
           </List>
           <Hamburger

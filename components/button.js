@@ -28,6 +28,11 @@ const variants = (theme) => ({
     border: `1px solid ${theme.colors.white}`,
     color: theme.colors.primary,
   },
+  green: {
+    bg: theme.colors.keeperGreen,
+    border: `1px solid ${theme.colors.keeperGreen}`,
+    color: theme.colors.white,
+  },
 });
 
 const hoverStates = (theme) => ({
@@ -49,11 +54,14 @@ const hoverStates = (theme) => ({
   white: {
     bg: tint(0.9, theme.colors.primary),
   },
+  green: {
+    bg: shade(0.3, theme.colors.keeperGreen),
+    border: `1px solid ${tint(0.9, theme.colors.keeperGreen)}`,
+  },
 });
 
-
 export default styled.button`
-  border-radius: ${({ theme }) => theme.radius[0]};
+  border-radius: ${({ theme }) => theme.radii[0]};
   cursor: pointer;
   display: inline-block;
   font-family: ${({ theme }) => theme.fonts.body};

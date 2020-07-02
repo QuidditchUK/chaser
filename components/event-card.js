@@ -14,7 +14,7 @@ import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 
 const StyledCard = styled(Grid)`
-  border-radius: ${({ theme }) => theme.radius[1]};
+  border-radius: ${({ theme }) => theme.radii[1]};
   overflow: hidden;
   transition: box-shadow 0.125s;
   background: ${({ theme }) => theme.colors.white};

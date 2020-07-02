@@ -60,7 +60,7 @@ const sizes = [rem(250), rem(300), rem(400), rem(540)];
 [, , sizes.clubsMax] = sizes;
 [, , , sizes.max] = sizes;
 
-const radius = [rem(3), rem(10)];
+const radii = [rem(3), rem(10)];
 
 const shadows = {
   box: `0 0 ${rem(10)} ${rgba(0, 0, 0, 0.3)}`,
@@ -98,7 +98,7 @@ export default {
   fonts,
   fontSizes,
   lineHeights,
-  radius,
+  radii,
   shadows,
   space,
   categoryColors,

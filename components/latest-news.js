@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 
-import { Grid, Flex, Box } from 'components/layout';
+import { Flex, Box } from 'components/layout';
 import Card from 'components/card';
 import Image from 'components/image';
 import Button from 'components/button';
@@ -33,7 +33,6 @@ const LoadMore = ({ setPage }) => {
       setPage((currentPage) => currentPage + 1);
     }
   }, [inView, setPage]);
-
 
   return (
     <Flex alignItems="center" justifyContent="center" py={5} ref={ref}><Button variant="light">Load More</Button></Flex>
@@ -98,7 +97,7 @@ const News = ({
     >
       <Container>
         <Heading as="h2" fontSize={[3, 3, 4]} mt={0} px={{ _: 'gutter.s', m: '0' }} isBody color="primary">{category || tag || 'Latest'} News</Heading>
-        
+
         <HorizontalScrollWrapper itemsCount={posts.length} horizontalScroll={horizontalScroll}>
           {posts.map(({ uid, data }) => (
             <Flex flexDirection="column" key={uid}>

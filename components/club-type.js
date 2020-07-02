@@ -12,7 +12,7 @@ const Type = styled.span`
   ${color};
   color: ${({ theme }) => theme.colors.white};
   text-transform: uppercase;
-  border-radius: ${({ theme }) => theme.radius[1]};
+  border-radius: ${({ theme }) => theme.radii[1]};
   padding: ${({ theme }) => theme.space[1]} ${({ theme }) => theme.space[2]};
 `;
 

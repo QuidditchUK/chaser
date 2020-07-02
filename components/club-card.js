@@ -7,7 +7,7 @@ import Type, { TYPES } from 'components/club-type';
 import { rem } from '../styles/theme';
 
 const StyledCard = styled.article`
-  border-radius: ${({ theme }) => theme.radius[1]};
+  border-radius: ${({ theme }) => theme.radii[1]};
   display: flex;
   flex-direction: column;
   flex-grow: 1;
