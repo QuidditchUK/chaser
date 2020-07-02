@@ -580,7 +580,7 @@ FindQuidditch.propTypes = {
 
 export const getServerSideProps = async ({ query }) => {
   const leagues = query.leagues || ['Community', 'University'];
-  const searchQuery = { ...query, leagues, distance: (query.distance * 1000) };
+  const searchQuery = { ...query, leagues, distance: ((query.distance || 100) * 1000) };
   const queryString = createQueryString(searchQuery);
 
   const { data } = await api.get(`/search?${queryString}`);
