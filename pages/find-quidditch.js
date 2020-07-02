@@ -256,6 +256,8 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
     postcode, showTypes, leagues, distance,
   } = query;
 
+  const [showFilters, setShowFilters] = useState(false);
+
   const showClubs = showTypes?.includes('clubs');
   const showEvents = showTypes?.includes('events');
 
@@ -347,6 +349,13 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
               </Flex>
             </Box>
 
+            <Box bg="white" py={5}>
+              <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+                <Button variant="light" type="button" onClick={() => setShowFilters(!showFilters)}>{showFilters ? 'Hide' : 'Show'} filters</Button>
+              </Container>
+            </Box>
+            {showFilters
+            && (
             <Box bg="white" py={5}>
               <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
                 <Grid
@@ -446,6 +455,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
                 </Grid>
               </Container>
             </Box>
+            )}
           </Form>
         )}
       </Formik>
