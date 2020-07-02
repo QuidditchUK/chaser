@@ -350,15 +350,24 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
             <Box bg="white" py={5}>
               <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
                 <Grid
-                  gridGap={0}
-                  gridTemplateColumns={{ _: '1fr', m: '1fr 1fr 1fr' }}
+                  gridGap={{ _: 4, m: 0 }}
+                  gridTemplateColumns={{ _: '1fr 1fr', m: '1fr 1fr 1fr' }}
+                  gridTemplateAreas={{ _: '"types leagues" "distance distance"', m: '"types leagues distance"' }}
                 >
-                  <Box borderRight="1px solid" borderColor="lightGrey" px="4">
+                  <Box
+                    borderLeftStyle="solid"
+                    borderLeftWidth={{ _: '0', m: '1px' }}
+                    borderRightStyle="solid"
+                    borderRightWidth="1px"
+                    borderColor="lightGrey"
+                    px="4"
+                    gridArea="types"
+                  >
                     <Heading as="h3" fontSize="2" isBody mt="0" px="2">Types {values.showTypes.length > 0 && `(${values.showTypes.length})`}</Heading>
                     <FieldArray
                       name="showTypes"
                       render={(arrayHelpers) => (
-                        <Flex flexDirection="column" width="1/2">
+                        <Flex flexDirection="column">
                           {SHOW_TYPES.map((type) => (
                             <Label key={type.value}>
                               <Checkbox
@@ -383,12 +392,12 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
                     />
                   </Box>
 
-                  <Box borderRight="1px solid" borderColor="lightGrey" px="4">
+                  <Box borderRightStyle="solid" borderRightWidth={{ _: '0', m: '1px' }} borderColor="lightGrey" px="4" gridArea="leagues">
                     <Heading as="h3" fontSize="2" isBody mt="0" px="2">Leagues {values.leagues.length > 0 && `(${values.leagues.length})`}</Heading>
                     <FieldArray
                       name="leagues"
                       render={(arrayHelpers) => (
-                        <Flex flexDirection="column" width="1/2">
+                        <Flex flexDirection="column">
                           {LEAGUES.map((league) => (
                             <Label key={league.value}>
                               <Checkbox
@@ -412,7 +421,16 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
                     />
                   </Box>
 
-                  <Box borderRight="1px solid" borderColor="lightGrey" px="4">
+                  <Box
+                    borderTopStyle="solid"
+                    borderRightStyle="solid"
+                    borderTopWidth={{ _: '1px', m: '0px' }}
+                    borderRightWidth={{ _: '0px', m: '1px' }}
+                    borderColor="lightGrey"
+                    px="4"
+                    py={{ _: 4, m: 0 }}
+                    gridArea="distance"
+                  >
                     <Heading as="h3" fontSize="2" isBody mt="0" px="0" paddingBottom={2}>Distance ({values.distance}km)</Heading>
                     <Box px="5">
                       <DistanceSlider

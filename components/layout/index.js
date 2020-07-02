@@ -19,6 +19,7 @@ export const Box = styled.div`
   ${flexbox}
   ${position}
   ${border}
+  ${grid}
 `;
 
 export const Grid = styled.div`
