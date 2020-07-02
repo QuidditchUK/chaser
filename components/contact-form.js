@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import {
   Formik,
   Form,
@@ -18,9 +19,14 @@ import Heading from 'components/heading';
 import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
 
+const Required = styled.span`
+font-weight: bold;
+color: ${({ theme }) => theme.colors.secondary};
+`;
+
 const ContactFormSchema = Yup.object().shape({
   name: Yup.string().required('Please enter your name'),
-  email: Yup.string().email('Invalid email address').required('Please enter an email address'),
+  email: Yup.string().email('Invalid email address').required('Please enter a valid email address'),
   message: Yup.string().required('Required'),
 });
 
@@ -55,7 +61,7 @@ const ContactForm = (rawData) => {
                 gridTemplateColumns="1fr"
               >
                 <Label htmlFor="name">
-                  Your name (required)
+                  Your name <Required>*</Required>
                 </Label>
 
                 <Field
@@ -70,7 +76,7 @@ const ContactForm = (rawData) => {
                 <ErrorMessage name="name" component={InlineError} marginBottom={3} />
 
                 <Label htmlFor="email">
-                  Your email (required)
+                  Your email <Required>*</Required>
                 </Label>
 
                 <Field
@@ -95,7 +101,7 @@ const ContactForm = (rawData) => {
                 />
 
                 <Label htmlFor="message">
-                  Your message (required)
+                  Your message <Required>*</Required>
                 </Label>
 
                 <Field
