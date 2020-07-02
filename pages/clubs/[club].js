@@ -70,59 +70,59 @@ const Support = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.bodyCard};
 `;
 
-const TableHead = styled.th`
-  text-align: left;
-  padding: ${({ theme }) => theme.space[1]};
-  border-bottom-style: solid;
-  border-bottom-width: 3px;
-`;
+// const TableHead = styled.th`
+//   text-align: left;
+//   padding: ${({ theme }) => theme.space[1]};
+//   border-bottom-style: solid;
+//   border-bottom-width: 3px;
+// `;
 
-const RESULTS = [
-  {
-    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
-    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
-    position: 2,
-    tournament_name: 'European Qualifier Tournament',
-    tournament_date: '2020-01-30',
-    season: '19/20',
-  },
-  {
-    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
-    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b3',
-    position: 2,
-    tournament_name: 'Development Cup',
-    tournament_date: '2020-03-07',
-    season: '19/20',
-  },
-  {
-    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
-    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
-    position: 2,
-    tournament_name: 'Southern Cup',
-    tournament_date: '2019-11-12',
-    season: '19/20',
-  },
-  {
-    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
-    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b2',
-    position: 2,
-    tournament_name: 'Development Cup',
-    tournament_date: '2019-03-04',
-    season: '18/19',
-  },
-  {
-    club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
-    team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
-    position: 3,
-    tournament_name: 'Southern Cup',
-    tournament_date: '2018-11-12',
-    season: '18/19',
-  },
-];
+// const RESULTS = [
+//   {
+//     club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+//     team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
+//     position: 2,
+//     tournament_name: 'European Qualifier Tournament',
+//     tournament_date: '2020-01-30',
+//     season: '19/20',
+//   },
+//   {
+//     club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+//     team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b3',
+//     position: 2,
+//     tournament_name: 'Development Cup',
+//     tournament_date: '2020-03-07',
+//     season: '19/20',
+//   },
+//   {
+//     club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+//     team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
+//     position: 2,
+//     tournament_name: 'Southern Cup',
+//     tournament_date: '2019-11-12',
+//     season: '19/20',
+//   },
+//   {
+//     club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+//     team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b2',
+//     position: 2,
+//     tournament_name: 'Development Cup',
+//     tournament_date: '2019-03-04',
+//     season: '18/19',
+//   },
+//   {
+//     club_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b9',
+//     team_uuid: '789e0d73-af14-4a35-a37f-8c854728c9b1',
+//     position: 3,
+//     tournament_name: 'Southern Cup',
+//     tournament_date: '2018-11-12',
+//     season: '18/19',
+//   },
+// ];
 
 const ACTIVE_STATUS = 'active';
 
-const ClubPage = ({ club, posts, results }) => {
+const ClubPage = ({ club, posts }) => {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -244,7 +244,7 @@ const ClubPage = ({ club, posts, results }) => {
 
             {club.status !== ACTIVE_STATUS && <Support>This club is currently inactive, if you are interested in restarting it contact our <a href={`mailto:teams@quidditchuk.org?subject=${club.name}`}>Teams Director</a></Support>}
 
-            <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Club Achievements</Heading>
+            {/* <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Club Achievements</Heading>
 
             <Table fontSize="1">
               <thead>
@@ -266,7 +266,7 @@ const ClubPage = ({ club, posts, results }) => {
                   </TableRow>
                 ))}
               </tbody>
-            </Table>
+            </Table> */}
           </Box>
 
           <Box py={{ _: 3, m: 9 }} paddingRight={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }} paddingLeft={{ _: 'gutter._', s: 'gutter.s', m: 0 }}>
@@ -320,14 +320,14 @@ const ClubPage = ({ club, posts, results }) => {
 export const getServerSideProps = async ({ params: { club } }) => {
   const { data } = await api.get(`/clubs/${club}`);
 
-  const results = RESULTS.sort((a, b) => new Date(b.tournament_date).getTime() - new Date(a.tournament_date).getTime());
+  // const results = RESULTS.sort((a, b) => new Date(b.tournament_date).getTime() - new Date(a.tournament_date).getTime());
   const posts = await getBlogTags(data.tags, { orderings: '[my.post.date desc]', pageSize: 3 });
 
   return {
     props: {
       club: data,
       posts,
-      results,
+      // results,
     },
   };
 };
@@ -351,13 +351,12 @@ ClubPage.propTypes = {
     social_twitter: PropTypes.string,
     social_youtube: PropTypes.string,
     social_instagram: PropTypes.string,
-    teams: PropTypes.array,
+    teams: PropTypes.arrayOf(PropTypes.shape({})),
     location: PropTypes.shape,
     description: PropTypes.string,
     coordinates: PropTypes.shape,
   }).isRequired,
   posts: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  results: PropTypes.arrayOf(PropTypes.shape).isRequired,
 };
 
 export default ClubPage;
