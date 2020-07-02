@@ -22,16 +22,15 @@ const CardsSlice = (rawData) => {
   return (
     <PrismicWrapper
       variant={data.variant}
-      // px={{ _: data.horizontalScroll ? 0 : 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
       px={data.horizontalScroll ? { _: 0, m: 'gutter.m' } : { _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
     >
       {RichText.asText(data.title) && (
-        <Heading as="h2" fontSize={[3, 3, 4]} mt={2} textAlign="center">
+        <Heading as="h2" fontSize={[3, 3, 4]} mt={2} textAlign="center" px={data.horizontalScroll ? { _: 'gutter._', s: 'gutter.s', m: 'gutter.m' } : { _: 0, m: 'gutter.m' }}>
           {RichText.asText(data.title)}
         </Heading>
       )}
 
-      {data.content && <Content textAlign="center" pb={3}>{RichText.render(data.content, linkResolver)}</Content>}
+      {data.content && <Content textAlign="center" pb={3} px={data.horizontalScroll ? { _: 'gutter._', s: 'gutter.s', m: 'gutter.m' } : { _: 0, m: 'gutter.m' }}>{RichText.render(data.content, linkResolver)}</Content>}
 
       <HorizontalScrollWrapper horizontalScroll={data.horizontalScroll} itemsCount={data.items?.length}>
         {data.items.map((itemData, i) => {
