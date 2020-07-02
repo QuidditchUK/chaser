@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Layout from 'containers/layout';
 import Meta from 'components/meta';
 import Container from 'components/container';
-import { Box, Grid } from 'components/layout';
+import { Box, Grid, Flex } from 'components/layout';
 import { Logo } from 'components/logo';
 import Heading from 'components/heading';
 import {
@@ -37,8 +37,8 @@ const Page = () => (
       px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
     >
       <Container maxWidth={rem(500)}>
-        <Logo src={logo} alt="Quidditch UK" />
-        <Heading as="h2" isBody>Sign in to QuidditchUK</Heading>
+        <Flex justifyContent="center" alignItems="center"><Logo src={logo} alt="Quidditch UK" /></Flex>
+        <Heading as="h1" isBody textAlign="center">Sign in to QuidditchUK</Heading>
 
         <Formik
           initialValues={{
