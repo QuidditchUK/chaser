@@ -215,9 +215,6 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
 
   const [showFilters, setShowFilters] = useState(false);
 
-  const showClubs = showTypes?.includes('clubs');
-  const showEvents = showTypes?.includes('events');
-
   const [clubs, setClubs] = useState(initialClubs);
   const [events, setEvents] = useState(initialEvents);
 
@@ -247,6 +244,9 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
     leagues: leaguesInitial || ['Community', 'University'],
     distance: distance || 100,
   };
+
+  const showClubs = initialValues.showTypes?.includes('clubs');
+  const showEvents = initialValues.showTypes?.includes('events');
 
   const showNoClubsOrEvents = showClubs && showEvents && !clubs.length && !events.length;
   const showNoClubs = showClubs && !clubs.length && !showNoClubsOrEvents;
