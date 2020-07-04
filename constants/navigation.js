@@ -106,17 +106,6 @@ export const MAIN_NAVIGATION = [
 
 export const DASHBOARD_NAVIGATION = [
   {
-    label: 'Events',
-    path: '/dashboard/events',
-    list: [
-      {
-        label: 'Register',
-        as: '/dashboard/events/register',
-        href: '/dashboard/events/register',
-      },
-    ],
-  },
-  {
     label: 'My Membership',
     path: '/dashboard/membership',
     list: [
