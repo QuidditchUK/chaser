@@ -5,7 +5,6 @@ import Page404 from 'pages/404';
 
 import { getPrismicDocByUid, getDocs, formatMetadata } from 'modules/prismic';
 import renderPrismicSections from 'constants/prismic';
-import Layout from 'containers/layout';
 import Meta from 'components/meta';
 import PageLoading from 'components/page-loading';
 
@@ -21,10 +20,10 @@ const Page = ({ page }) => {
   }
 
   return (
-    <Layout>
+    <>
       <Meta {...formatMetadata(page.data)} />
       <>{renderPrismicSections(page.data.body)}</>
-    </Layout>
+    </>
   );
 };
 

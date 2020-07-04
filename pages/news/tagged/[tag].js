@@ -4,17 +4,16 @@ import { getBlogTags, PAGE_SIZE } from 'modules/prismic';
 
 import LatestNews from 'components/latest-news';
 import NewsHeader from 'components/news-header';
-import Layout from 'containers/layout';
 import Meta from 'components/meta';
 
 const unDasherizeTag = (tag) => tag.replace(/--/g, ' ').replace(/__/g, '/');
 
 const News = ({ posts, tag }) => (
-  <Layout>
+  <>
     <Meta />
     <NewsHeader />
     <LatestNews posts={posts} tag={unDasherizeTag(tag)} allowPagination horizontalScroll={false} />
-  </Layout>
+  </>
 );
 
 export const getServerSideProps = async ({ params: { tag } }) => {

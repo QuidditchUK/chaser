@@ -296,7 +296,7 @@ const Overlay = styled.div`
   left: 0;
 `;
 
-function Navigation({ dashboard }) {
+function Navigation({ dashboard, loggedIn }) {
   const [open, setOpen] = useState(false);
   const [navigationToggle, setNavigationToggle] = useState(10);
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
@@ -344,11 +344,12 @@ function Navigation({ dashboard }) {
               </Item>
             ))}
 
-            {dashboard
-              ? (<Item pl={8}><Link href="/dashboard" passHref><a><Button type="button" variant="secondary">Dashboard</Button></a></Link></Item>)
-              : (<Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={{ _: 'secondary', l: 'primary' }}>Find Quidditch</Button></a></Link></Item>)}
+            <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={dashboard ? 'secondary' : { _: 'secondary', l: 'primary' }}>Find Quidditch</Button></a></Link></Item>
 
-            <Item pl={4}><Link href="/login" passHref><a><Button type="button" variant="light">Sign in</Button></a></Link></Item>
+            {loggedIn
+              ? (<Item pl={4}><Link href="/dashboard" passHref><a><Button type="button" variant="light">Dashboard</Button></a></Link></Item>)
+              : (<Item pl={4}><Link href="/login" passHref><a><Button type="button" variant="light">Sign in</Button></a></Link></Item>)}
+
             <ScrollLock isActive={open} />
           </List>
           <Hamburger
@@ -364,10 +365,12 @@ function Navigation({ dashboard }) {
 
 Navigation.defaultProps = {
   dashboard: false,
+  loggedIn: false,
 };
 
 Navigation.propTypes = {
   dashboard: PropTypes.bool,
+  loggedIn: PropTypes.bool,
 };
 
 export default Navigation;

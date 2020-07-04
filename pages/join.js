@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 import Router from 'next/router';
 import Link from 'next/link';
-import Layout from 'containers/layout';
 import Meta from 'components/meta';
 import Container from 'components/container';
 import { Box, Grid, Flex } from 'components/layout';
@@ -63,7 +62,7 @@ const logo = '/images/logo.png';
 const Page = () => {
   const [serverError, setServerError] = useState(null);
   return (
-    <Layout>
+    <>
       <Meta description="Join QuidditchUK to manage your QuidditchUK Membership, Account details and more" subTitle="Join QuidditchUK" />
       <Box
         bg="greyLight"
@@ -143,7 +142,7 @@ const Page = () => {
           </Box>
         </Container>
       </Box>
-    </Layout>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import dynamic from 'next/dynamic';
 import DocumentHead from 'document/head';
 import theme from 'styles/theme';
+import Layout from 'containers/layout';
 
 Sentry.init({
   enabled: process.env.NODE_ENV === 'production',
@@ -20,8 +21,9 @@ function App({ Component, pageProps, err }) {
     <ThemeProvider theme={theme}>
       <DocumentHead />
       <Scripts />
-
-      <Component {...pageProps} err={err} />
+      <Layout>
+        <Component {...pageProps} err={err} />
+      </Layout>
     </ThemeProvider>
   );
 }

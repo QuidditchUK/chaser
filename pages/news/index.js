@@ -4,15 +4,14 @@ import { getDocs, PAGE_SIZE } from '../../modules/prismic';
 
 import LatestNews from '../../components/latest-news';
 import NewsHeader from '../../components/news-header';
-import Layout from '../../containers/layout';
 import Meta from '../../components/meta';
 
 const News = ({ posts }) => (
-  <Layout>
+  <>
     <Meta />
     <NewsHeader />
     <LatestNews posts={posts} allowPagination horizontalScroll={false} />
-  </Layout>
+  </>
 );
 
 export const getStaticProps = async () => {

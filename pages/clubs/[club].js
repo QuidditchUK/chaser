@@ -8,7 +8,6 @@ import PageLoading from 'components/page-loading';
 import Heading from 'components/heading';
 import { api } from 'modules/api';
 
-import Layout from 'containers/layout';
 import Meta from 'components/meta';
 import { Box, Flex, Grid } from 'components/layout';
 import HeroWithLocation from 'components/hero-with-location';
@@ -134,7 +133,7 @@ const ClubPage = ({ club, posts }) => {
   }
 
   return (
-    <Layout>
+    <>
       <Meta
         description={`Club page of ${club.name} with all their latest news, results and details`}
         subTitle={club.name}
@@ -312,7 +311,7 @@ const ClubPage = ({ club, posts }) => {
           </Box>
         </Grid>
       </Box>
-    </Layout>
+    </>
   );
 };
 

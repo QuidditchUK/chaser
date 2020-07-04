@@ -16,7 +16,6 @@ import { api, createQueryString } from 'modules/api';
 import styled from 'styled-components';
 import { space } from 'styled-system';
 import { debounce } from 'throttle-debounce';
-import Layout from 'containers/layout';
 import { Box, Flex, Grid } from 'components/layout';
 import { HeadingHero } from 'components/hero';
 import Container from 'components/container';
@@ -252,7 +251,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
   const showNoEvents = showEvents && !events.length && !showNoClubsOrEvents;
 
   return (
-    <Layout>
+    <>
       <Meta subTitle="Find Quidditch near you" description="Find your nearest clubs and upcoming Quidditch events in the UK" image="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959" />
       <Formik
         initialValues={initialValues}
@@ -520,7 +519,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
             )}
         </Container>
       </Box>
-    </Layout>
+    </>
   );
 };
 

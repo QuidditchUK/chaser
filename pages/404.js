@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Layout from 'containers/layout';
 import Container from 'components/container';
 import { Flex, Box } from 'components/layout';
 import Heading from 'components/heading';
@@ -10,7 +9,7 @@ import Meta from '../components/meta';
 
 export default function Custom404() {
   return (
-    <Layout>
+    <>
       <Box bg="greyLight">
         <Container>
           <Meta subTitle="Page Not Found" />
@@ -23,6 +22,6 @@ export default function Custom404() {
           </Flex>
         </Container>
       </Box>
-    </Layout>
+    </>
   );
 }

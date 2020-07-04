@@ -6,7 +6,6 @@ import parse from 'html-react-parser';
 import styled from 'styled-components';
 import { Box, Flex } from 'components/layout';
 import Page404 from 'pages/404';
-import Layout from 'containers/layout';
 import Meta from 'components/meta';
 import Container from 'components/container';
 import { TYPES } from 'components/club-type';
@@ -78,7 +77,7 @@ const EventPage = ({ event }) => {
   }
 
   return (
-    <Layout>
+    <>
       <Meta
         description={`${event.name} on ${format(parseTimestamptz(event.start_time), 'EEE, d LLL')}`}
         subTitle={event.name}
@@ -158,7 +157,7 @@ const EventPage = ({ event }) => {
         </Container>
       </Box>
 
-    </Layout>
+    </>
   );
 };
 

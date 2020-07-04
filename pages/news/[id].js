@@ -5,7 +5,6 @@ import Page404 from 'pages/404';
 
 import { getDocs, getPrismicDocByUid, formatMetadata } from 'modules/prismic';
 import renderPrismicSections from 'constants/prismic';
-import Layout from 'containers/layout';
 import Meta from 'components/meta';
 import BlogHero from 'components/blog-hero';
 import BlogSupport from 'components/blog-support';
@@ -23,7 +22,7 @@ const Post = ({ page }) => {
   }
 
   return (
-    <Layout>
+    <>
       <Meta {...formatMetadata(page.data)} />
 
       <article>
@@ -31,7 +30,7 @@ const Post = ({ page }) => {
         {renderPrismicSections(page.data.body)}
         <BlogSupport {...page.data} tags={page.tags} />
       </article>
-    </Layout>
+    </>
   );
 };
 
