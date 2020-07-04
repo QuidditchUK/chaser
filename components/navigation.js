@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import Headroom from 'react-headroom';
 import styled from 'styled-components';
-import { space } from 'styled-system';
+import { space, variant } from 'styled-system';
 import { transparentize, tint, rgba } from 'polished';
 import ScrollLock from 'react-scrolllock';
 import HamburgerIcon from 'public/images/hamburger.svg';
-import { MAIN_NAVIGATION } from 'constants/navigation';
+import { MAIN_NAVIGATION, DASHBOARD_NAVIGATION } from 'constants/navigation';
 
 import ActiveLink, { ParentWrapper } from './active-link';
 import { Logo, LogoLink } from './logo';
@@ -19,6 +20,17 @@ const Wrapper = styled(Headroom)`
   position: relative;
   z-index: ${({ open }) => (open ? 7 : 5)};
 `;
+
+const variants = (theme) => ({
+  primary: {
+    bg: theme.colors.primary,
+    color: theme.colors.white,
+  },
+  white: {
+    bg: theme.colors.white,
+    color: theme.colors.secondary,
+  },
+});
 
 const Header = styled.header`
   align-items: center;
@@ -34,6 +46,8 @@ const Header = styled.header`
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     height: 50px;
   }
+
+  ${({ theme }) => variant({ variants: variants(theme) })};
 `;
 
 const Nav = styled.nav`
@@ -263,7 +277,7 @@ const Hamburger = styled(HamburgerIcon)`
   display: none;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    color: ${({ open, theme }) => (open ? theme.colors.white : theme.colors.primary)};
+    color: ${({ white, theme }) => (white ? theme.colors.white : theme.colors.primary)};
     cursor: pointer;
     display: block;
     z-index: 5;
@@ -282,26 +296,27 @@ const Overlay = styled.div`
   left: 0;
 `;
 
-function Navigation() {
+function Navigation({ dashboard }) {
   const [open, setOpen] = useState(false);
   const [navigationToggle, setNavigationToggle] = useState(10);
+  const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
 
   return (
     <Wrapper open={open}>
       <Overlay open={open} />
-      <Header>
+      <Header variant={dashboard ? 'primary' : 'white'}>
         <Link href="/" passHref>
           <LogoLink onClick={() => setOpen(false)}>
             <>
-              <Logo src={logo} alt="Quidditch UK" white={open} />
-              <Logo src={logoText} alt="Quidditch UK" white={open} />
+              <Logo src={logo} alt="Quidditch UK" white={open || dashboard} />
+              <Logo src={logoText} alt="Quidditch UK" white={open || dashboard} />
             </>
           </LogoLink>
         </Link>
 
         <Nav>
           <List open={open}>
-            {MAIN_NAVIGATION.map((item, i) => (
+            {navigation.map((item, i) => (
               <Item key={item.label} pl={6}>
                 {item.list
                   ? (
@@ -329,12 +344,15 @@ function Navigation() {
               </Item>
             ))}
 
-            <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={{ _: 'secondary', l: 'primary' }}>Find Quidditch</Button></a></Link></Item>
+            {dashboard
+              ? (<Item pl={8}><Link href="/dashboard" passHref><a><Button type="button" variant="secondary">Dashboard</Button></a></Link></Item>)
+              : (<Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={{ _: 'secondary', l: 'primary' }}>Find Quidditch</Button></a></Link></Item>)}
+
             <Item pl={4}><Link href="/login" passHref><a><Button type="button" variant="light">Sign in</Button></a></Link></Item>
             <ScrollLock isActive={open} />
           </List>
           <Hamburger
-            open={open}
+            white={open || dashboard}
             aria-hidden="true"
             onClick={() => setOpen(!open)}
           />
@@ -343,5 +361,13 @@ function Navigation() {
     </Wrapper>
   );
 }
+
+Navigation.defaultProps = {
+  dashboard: false,
+};
+
+Navigation.propTypes = {
+  dashboard: PropTypes.bool,
+};
 
 export default Navigation;

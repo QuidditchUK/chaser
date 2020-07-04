@@ -107,56 +107,59 @@ export const MAIN_NAVIGATION = [
 export const DASHBOARD_NAVIGATION = [
   {
     label: 'Events',
+    path: '/dashboard/events',
     list: [
       {
         label: 'Register',
-        as: '/events/register',
-        href: '/events/register',
+        as: '/dashboard/events/register',
+        href: '/dashboard/events/register',
       },
     ],
   },
   {
     label: 'My Membership',
+    path: '/dashboard/membership',
     list: [
       {
         label: 'Manage QUK Membership',
-        as: '/membership/manage',
-        href: '/membership/[id]',
+        as: '/dashboard/membership/manage',
+        href: '/dashboard/membership/[id]',
       },
       {
         label: 'Club',
-        as: '/membership/club',
-        href: '/membership/[id]',
+        as: '/dashboard/membership/club',
+        href: '/dashboard/membership/[id]',
       },
       {
         label: 'Transfer',
-        as: '/membership/transfer',
-        href: '/membership/[id]',
+        as: '/dashboard/membership/transfer',
+        href: '/dashboard/membership/[id]',
       },
     ],
   },
   {
     label: 'Tournament Volunteer',
+    path: '/dashboard/tournaments',
     list: [
       {
         label: 'Staff',
-        as: '/tournaments/volunteer/staff',
-        href: '/tournaments/volunteer/[id]',
+        as: '/dashboard/tournaments/volunteer/staff',
+        href: '/dashboard/tournaments/volunteer/[id]',
       },
       {
         label: 'Referees',
-        as: '/tournaments/volunteer/referees',
-        href: '/tournaments/volunteer/[id]',
+        as: '/dashboard/tournaments/volunteer/referees',
+        href: '/dashboard/tournaments/volunteer/[id]',
       },
       {
         label: 'Snitches',
-        as: '/tournaments/volunteer/snitches',
-        href: '/tournaments/volunteer/[id]',
+        as: '/dashboard/tournaments/volunteer/snitches',
+        href: '/dashboard/tournaments/volunteer/[id]',
       },
       {
         label: 'Claim Expenses',
-        as: '/tournaments/volunteer/claim-expenses',
-        href: '/tournaments/volunteer/[id]',
+        as: '/dashboard/tournaments/volunteer/claim-expenses',
+        href: '/dashboard/tournaments/volunteer/[id]',
       },
     ],
   },

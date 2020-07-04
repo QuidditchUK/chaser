@@ -1,4 +1,6 @@
+/* eslint-disable no-param-reassign */
 import getConfig from 'next/config';
+import cookie from 'js-cookie';
 import axios from 'axios';
 
 const { publicRuntimeConfig } = getConfig();
@@ -6,8 +8,12 @@ const { publicRuntimeConfig } = getConfig();
 export const api = axios.create();
 
 api.interceptors.request.use((config) => {
-  // eslint-disable-next-line no-param-reassign
+  const token = cookie.get('AUTHENTICATION_TOKEN');
   config.baseURL = publicRuntimeConfig.apiUrl;
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
 
   return config;
 });
