@@ -346,11 +346,11 @@ function Navigation({ dashboard }) {
               </Item>
             ))}
 
-            <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={dashboard ? 'secondary' : { _: 'secondary', l: 'primary' }}>Find Quidditch</Button></a></Link></Item>
+            <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={dashboard ? 'secondary' : { _: 'secondary', l: 'primary' }} onClick={() => setOpen(false)}>Find Quidditch</Button></a></Link></Item>
 
             {loggedIn
-              ? (<Item pl={4}><Link href="/dashboard" passHref><a><Button type="button" variant="light">Dashboard</Button></a></Link></Item>)
-              : (<Item pl={4}><Link href="/login" passHref><a><Button type="button" variant="light">Sign in</Button></a></Link></Item>)}
+              ? (<Item pl={4}><Link href="/dashboard" passHref><a><Button type="button" variant="light" onClick={() => setOpen(false)}>Dashboard</Button></a></Link></Item>)
+              : (<Item pl={4}><Link href="/login" passHref><a><Button type="button" variant="light" onClick={() => setOpen(false)}>Sign in</Button></a></Link></Item>)}
 
             <ScrollLock isActive={open} />
           </List>
