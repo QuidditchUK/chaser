@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { space, variant } from 'styled-system';
 import { transparentize, tint, rgba } from 'polished';
 import ScrollLock from 'react-scrolllock';
+import cookies from 'js-cookie';
 import HamburgerIcon from 'public/images/hamburger.svg';
 import { MAIN_NAVIGATION, DASHBOARD_NAVIGATION } from 'constants/navigation';
 
@@ -296,7 +297,8 @@ const Overlay = styled.div`
   left: 0;
 `;
 
-function Navigation({ dashboard, loggedIn }) {
+function Navigation({ dashboard }) {
+  const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
   const [open, setOpen] = useState(false);
   const [navigationToggle, setNavigationToggle] = useState(10);
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
@@ -365,12 +367,10 @@ function Navigation({ dashboard, loggedIn }) {
 
 Navigation.defaultProps = {
   dashboard: false,
-  loggedIn: false,
 };
 
 Navigation.propTypes = {
   dashboard: PropTypes.bool,
-  loggedIn: PropTypes.bool,
 };
 
 export default Navigation;

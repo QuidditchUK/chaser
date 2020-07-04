@@ -4,26 +4,21 @@ import { useRouter } from 'next/router';
 import Navigation from 'components/navigation';
 import Footer from 'components/footer';
 
-const Layout = ({ loggedIn, children }) => {
+const Layout = ({ children }) => {
   const { asPath } = useRouter();
   const dashboard = RegExp(/\/dashboard/, 'g').test(asPath);
 
   return (
     <>
-      <Navigation dashboard={dashboard} loggedIn={loggedIn} />
+      <Navigation dashboard={dashboard} />
       {children}
       <Footer />
     </>
   );
 };
 
-Layout.defaultProps = {
-  loggedIn: false,
-};
-
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  loggedIn: PropTypes.bool,
 };
 
 export default Layout;
