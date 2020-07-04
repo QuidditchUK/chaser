@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
@@ -40,7 +39,6 @@ ParentWrapper.propTypes = {
   path: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
-
 
 export const ExactActiveLink = ({ href, children, as }) => {
   const { asPath } = useRouter();

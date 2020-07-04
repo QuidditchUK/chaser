@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import {
   Formik,
   Form,
@@ -16,13 +15,9 @@ import Button from 'components/button';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
 import Container from 'components/container';
 import Heading from 'components/heading';
+import Required from 'components/required';
 import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
-
-const Required = styled.span`
-font-weight: bold;
-color: ${({ theme }) => theme.colors.secondary};
-`;
 
 const ContactFormSchema = Yup.object().shape({
   name: Yup.string().required('Please enter your name'),
@@ -61,7 +56,7 @@ const ContactForm = (rawData) => {
                 gridTemplateColumns="1fr"
               >
                 <Label htmlFor="name">
-                  Your name <Required>*</Required>
+                  Your name <Required />
                 </Label>
 
                 <Field
@@ -76,7 +71,7 @@ const ContactForm = (rawData) => {
                 <ErrorMessage name="name" component={InlineError} marginBottom={3} />
 
                 <Label htmlFor="email">
-                  Your email <Required>*</Required>
+                  Your email <Required />
                 </Label>
 
                 <Field
@@ -101,7 +96,7 @@ const ContactForm = (rawData) => {
                 />
 
                 <Label htmlFor="message">
-                  Your message <Required>*</Required>
+                  Your message <Required />
                 </Label>
 
                 <Field

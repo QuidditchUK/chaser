@@ -20,6 +20,7 @@ import Button from 'components/button';
 import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
 import Content from 'components/content';
+import Required from 'components/required';
 
 const Text = styled(Content)`
   a {
@@ -28,9 +29,15 @@ const Text = styled(Content)`
 `;
 
 const JoinFormSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email address').required('Please enter a valid email address'),
-  password: Yup.string().required('Required'),
-  confirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Required'),
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Please enter a valid email address'),
+  password: Yup.string()
+    .min(8, 'Must be at least 8 characters long')
+    .required('Required'),
+  confirm: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required('Required'),
 });
 
 const logo = '/images/logo.png';
@@ -51,6 +58,7 @@ const Page = () => (
           initialValues={{
             email: '',
             password: '',
+            confirm: '',
           }}
           onSubmit={(values, { setSubmitting }) => {
             alert(JSON.stringify(values, null, 2));
@@ -67,7 +75,7 @@ const Page = () => (
                 gridTemplateColumns="1fr"
               >
                 <Label htmlFor="name">
-                  Email Address
+                  Email Address <Required />
                 </Label>
 
                 <Field
@@ -81,7 +89,7 @@ const Page = () => (
                 <ErrorMessage name="email" component={InlineError} marginBottom={3} />
 
                 <Label htmlFor="password">
-                  Password
+                  Password <Required />
                 </Label>
 
                 <Field
@@ -92,9 +100,10 @@ const Page = () => (
                   type="password"
                   error={errors.password && touched.password}
                 />
+                <ErrorMessage name="password" component={InlineError} marginBottom={3} />
 
                 <Label htmlFor="confirm">
-                  Confirm Password
+                  Confirm Password <Required />
                 </Label>
 
                 <Field
@@ -106,7 +115,7 @@ const Page = () => (
                   error={errors.confirm && touched.confirm}
                 />
 
-                <ErrorMessage name="cofirm" component={InlineError} marginBottom={3} />
+                <ErrorMessage name="confirm" component={InlineError} marginBottom={3} />
               </Grid>
               <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Join'}</Button>
             </Form>
@@ -114,7 +123,7 @@ const Page = () => (
         </Formik>
 
         <Box bg="white" px="4" py="2" mt="6" borderColor="primary" borderWidth="1px" borderStyle="solid" color="primary" borderRadius={0}>
-          <Text>Already have an account? <Link href="/login" as="/login">Sign in.</Link></Text>
+          <Text>Already have an account? <Link href="/login" as="/login" passHref><a>Sign in.</a></Link></Text>
         </Box>
       </Container>
     </Box>

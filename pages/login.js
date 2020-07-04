@@ -90,7 +90,7 @@ const Page = () => (
         </Formik>
 
         <Box bg="white" px="4" py="2" mt="6" borderColor="primary" borderWidth="1px" borderStyle="solid" color="primary" borderRadius={0}>
-          <Text>New to QuidditchUK? <Link href="/join" as="/join">Create an account.</Link></Text>
+          <Text>New to QuidditchUK? <Link href="/join" as="/join"><a>Create an account.</a></Link></Text>
         </Box>
       </Container>
     </Box>
