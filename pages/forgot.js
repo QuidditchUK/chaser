@@ -72,12 +72,8 @@ const Page = () => {
               >
                 {({ errors, touched, isSubmitting }) => (
                   <Form>
-                    <Grid
-                      gridTemplateColumns="1fr"
-                    >
-                      <Label htmlFor="name">
-                        Email Address
-                      </Label>
+                    <Grid gridTemplateColumns="1fr">
+                      <Label htmlFor="name">Email Address</Label>
 
                       <Field
                         name="email"

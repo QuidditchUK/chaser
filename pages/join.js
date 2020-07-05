@@ -121,7 +121,7 @@ const Page = () => {
 
                   <Field
                     name="confirm"
-                    placeholder="Confirm your Password"
+                    placeholder="Confirm your password"
                     as={Input}
                     my={3}
                     type="password"
