@@ -127,32 +127,6 @@ export const DASHBOARD_NAVIGATION = [
     ],
   },
   {
-    label: 'Tournament Volunteer',
-    path: '/dashboard/tournaments',
-    list: [
-      {
-        label: 'Staff',
-        as: '/dashboard/tournaments/volunteer/staff',
-        href: '/dashboard/tournaments/volunteer/[id]',
-      },
-      {
-        label: 'Referees',
-        as: '/dashboard/tournaments/volunteer/referees',
-        href: '/dashboard/tournaments/volunteer/[id]',
-      },
-      {
-        label: 'Snitches',
-        as: '/dashboard/tournaments/volunteer/snitches',
-        href: '/dashboard/tournaments/volunteer/[id]',
-      },
-      {
-        label: 'Claim Expenses',
-        as: '/dashboard/tournaments/volunteer/claim-expenses',
-        href: '/dashboard/tournaments/volunteer/[id]',
-      },
-    ],
-  },
-  {
     label: 'Merch',
     as: '/merch',
     href: '/merch',

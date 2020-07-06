@@ -10,6 +10,7 @@ import cookies from 'js-cookie';
 import HamburgerIcon from 'public/images/hamburger.svg';
 import { MAIN_NAVIGATION, DASHBOARD_NAVIGATION } from 'constants/navigation';
 
+import { removeCookie } from 'modules/cookies';
 import ActiveLink, { ParentWrapper } from './active-link';
 import { Logo, LogoLink } from './logo';
 import Button from './button';
@@ -25,11 +26,9 @@ const Wrapper = styled(Headroom)`
 const variants = (theme) => ({
   primary: {
     bg: theme.colors.primary,
-    color: theme.colors.white,
   },
   white: {
     bg: theme.colors.white,
-    color: theme.colors.secondary,
   },
 });
 
@@ -298,10 +297,15 @@ const Overlay = styled.div`
 `;
 
 function Navigation({ dashboard }) {
-  const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
+  const [loggedIn, setLoggedIn] = useState(cookies.get('AUTHENTICATION_TOKEN'));
   const [open, setOpen] = useState(false);
-  const [navigationToggle, setNavigationToggle] = useState(10);
+  const [navigationToggle, setNavigationToggle] = useState(1000);
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
+
+  const signOut = () => {
+    removeCookie('AUTHENTICATION_TOKEN');
+    setLoggedIn(false);
+  };
 
   return (
     <Wrapper open={open}>
@@ -323,7 +327,7 @@ function Navigation({ dashboard }) {
                 {item.list
                   ? (
                     <ParentWrapper path={item.path}>
-                      <NavItem onClick={() => setNavigationToggle(navigationToggle === i ? 10 : i)}>{item.label}</NavItem>
+                      <NavItem onClick={() => setNavigationToggle(navigationToggle === i ? 1000 : i)}>{item.label}</NavItem>
                     </ParentWrapper>
                   )
                   : (
@@ -348,9 +352,45 @@ function Navigation({ dashboard }) {
 
             <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={dashboard ? 'secondary' : { _: 'secondary', l: 'primary' }} onClick={() => setOpen(false)}>Find Quidditch</Button></a></Link></Item>
 
-            {loggedIn
-              ? (<Item pl={4}><Link href="/dashboard" passHref><a><Button type="button" variant="light" onClick={() => setOpen(false)}>Dashboard</Button></a></Link></Item>)
-              : (<Item pl={4}><Link href="/login" passHref><a><Button type="button" variant="light" onClick={() => setOpen(false)}>Sign in</Button></a></Link></Item>)}
+            {!loggedIn && <Item pl={4}><Link href="/login" passHref><a><Button type="button" variant="light" onClick={() => setOpen(false)}>Sign in</Button></a></Link></Item>}
+
+            {loggedIn && (
+            <Item pl={4}>
+              <ParentWrapper path="/dashboard">
+                <NavItem onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)}><Button type="button" variant="light">My Account</Button></NavItem>
+              </ParentWrapper>
+
+              <List className={`${navigationToggle === 20 ? 'dropdown' : ''}`}>
+                <Item>
+                  <ActiveLink href="/dashboard" as="/dashboard">
+                    <NavItem onClick={() => setOpen(false)}>Dashboard</NavItem>
+                  </ActiveLink>
+                </Item>
+                <Item>
+                  <ActiveLink href="/dashboard/account/settings" as="/dashboard/account/settings">
+                    <NavItem onClick={() => setOpen(false)}>Settings</NavItem>
+                  </ActiveLink>
+                </Item>
+                <Item>
+                  <ActiveLink href="/dashboard/account/profile" as="/dashboard/account/profile">
+                    <NavItem onClick={() => setOpen(false)}>My profile</NavItem>
+                  </ActiveLink>
+                </Item>
+                <Item>
+
+                  <NavItem
+                    onClick={() => {
+                      setOpen(false);
+                      signOut();
+                    }}
+                  >
+                    Sign out
+                  </NavItem>
+
+                </Item>
+              </List>
+            </Item>
+            )}
 
             <ScrollLock isActive={open} />
           </List>
