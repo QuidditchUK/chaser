@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Router from 'next/router';
 import PropTypes from 'prop-types';
 import Headroom from 'react-headroom';
 import styled from 'styled-components';
@@ -297,14 +298,14 @@ const Overlay = styled.div`
 `;
 
 function Navigation({ dashboard }) {
-  const [loggedIn, setLoggedIn] = useState(cookies.get('AUTHENTICATION_TOKEN'));
+  const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
   const [open, setOpen] = useState(false);
   const [navigationToggle, setNavigationToggle] = useState(1000);
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
 
   const signOut = () => {
     removeCookie('AUTHENTICATION_TOKEN');
-    setLoggedIn(false);
+    Router.push('/');
   };
 
   return (
