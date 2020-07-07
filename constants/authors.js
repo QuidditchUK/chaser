@@ -3,7 +3,7 @@ const MattBateman = '../images/authors/matt-bateman.jpg';
 const AbbyWhiteley = '../images/authors/abby-whiteley.jpg';
 const KirstyScheiby = '../images/authors/kirsty-scheiby.jpg';
 const DeclanRamsay = '../images/authors/declan-ramsay.jpg';
-const JasmineLowen = '../images/author/jasmine-lowen';
+const JasmineLowen = '../images/author/jasmine-lowen.jpg';
 
 const Logo = '../images/logo.png';
 
