@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { space, typography, border } from 'styled-system';
+import parse from 'html-react-parser';
 import { useRouter } from 'next/router';
 import Page404 from 'pages/404';
 import PageLoading from 'components/page-loading';
@@ -166,10 +167,12 @@ const ClubPage = ({ club, posts }) => {
 
             <Table>
               <tbody>
-                <TableRow>
-                  <TableData><strong>Trainings</strong></TableData>
-                  <TableData>{club.trainings}</TableData>
-                </TableRow>
+                {club.trainings && (
+                  <TableRow>
+                    <TableData><strong>Trainings</strong></TableData>
+                    <TableData>{club.trainings}</TableData>
+                  </TableRow>
+                )}
 
                 <TableRow>
                   <TableData><strong>League</strong></TableData>
@@ -181,10 +184,12 @@ const ClubPage = ({ club, posts }) => {
                   <TableData>{club.leader}</TableData>
                 </TableRow>
 
-                <TableRow>
-                  <TableData><strong>Official Website</strong></TableData>
-                  <TableData><a href={club.official_website} rel="noopener noreferrer" target="_blank">{club.official_website}</a></TableData>
-                </TableRow>
+                {club.official_website && (
+                  <TableRow>
+                    <TableData><strong>Official Website</strong></TableData>
+                    <TableData><a href={club.official_website} rel="noopener noreferrer" target="_blank">{club.official_website}</a></TableData>
+                  </TableRow>
+                )}
               </tbody>
             </Table>
 
@@ -274,9 +279,9 @@ const ClubPage = ({ club, posts }) => {
               <ClubNews posts={posts} bgColor={club.featured_color} color={club.text_color} />
 
               <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color} paddingTop="2">About {club.name}</Heading>
-              <Content paddingBottom={3}>{club.description}</Content>
+              <Content paddingBottom={3}>{parse(club.description)}</Content>
 
-              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Teams</Heading>
+              {club.teams?.length > 1 && <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Teams</Heading>}
 
               {club.teams.map((team) => (
                 <Grid
