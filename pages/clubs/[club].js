@@ -141,7 +141,7 @@ const ClubPage = ({ club, posts }) => {
       />
 
       <HeroWithLocation
-        image={club.images[0]}
+        images={club.images}
         name={club.name}
         venue={club.venue}
         featuredColor={club.featured_color}

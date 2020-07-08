@@ -7,8 +7,6 @@ import {
   GridItem,
 } from 'components/layout';
 import styled from 'styled-components';
-import { format } from 'date-fns';
-import { parseTimestamptz } from 'modules/dates';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import Type, { TYPES } from 'components/club-type';
 import Image from 'components/image';
@@ -49,7 +47,7 @@ const LocationLink = styled.a`
 `;
 
 const HeroWithLocation = ({
-  image,
+  images,
   league,
   featuredColor,
   textColor,
@@ -57,10 +55,7 @@ const HeroWithLocation = ({
   name,
   location,
   venue,
-  startTime,
 }) => {
-  const images = new Array(5).fill({ src: image });
-
   const isDesktop = useBreakpoint(base.breakpoints.l);
   return (
     <>
@@ -127,7 +122,6 @@ const HeroWithLocation = ({
           <Flex flexDirection="column">
             <Heading as="h2" fontSize={[3, 4, 5]} py="0" my="0">{name}</Heading>
 
-            {startTime && (<Box>{' '}<strong>{format(parseTimestamptz(startTime), 'EEE, d LLL H:mm a')}</strong></Box>)}
             <Flex alignItems="center">
               <LocationIcon />{' '}
               <LocationLink
@@ -147,7 +141,7 @@ const HeroWithLocation = ({
 };
 
 HeroWithLocation.defaultProps = {
-  image: null,
+  images: [],
   venue: null,
   icon: null,
   featuredColor: null,
@@ -155,11 +149,10 @@ HeroWithLocation.defaultProps = {
   league: null,
   name: null,
   location: null,
-  startTime: null,
 };
 
 HeroWithLocation.propTypes = {
-  image: PropTypes.string,
+  images: PropTypes.arrayOf(PropTypes.string),
   venue: PropTypes.string,
   icon: PropTypes.string,
   featuredColor: PropTypes.string,
@@ -167,7 +160,6 @@ HeroWithLocation.propTypes = {
   league: PropTypes.string,
   name: PropTypes.string,
   location: PropTypes.shape,
-  startTime: PropTypes.string,
 };
 
 export default HeroWithLocation;
