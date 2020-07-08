@@ -84,7 +84,7 @@ const HeroWithLocation = ({
             height="400px"
             p={4}
           >
-            {images.map(({ src }, i) => {
+            {images.map((src, i) => {
               const isFirst = i === 0;
               const width = isFirst ? 1000 : 500;
               const height = isFirst ? 721 : 350;
