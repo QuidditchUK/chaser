@@ -30,8 +30,8 @@ const Carousel = ({ images, height, width }) => {
       >
         {hasImages && images.map((image, i) => (
           <Image
-            key={`carousel-image-${image.src}-${i}`}
-            src={image.src}
+            key={`carousel-image-${image}-${i}`}
+            src={image}
             width={width}
             height={height}
           />
