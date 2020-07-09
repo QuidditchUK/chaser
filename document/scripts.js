@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 const Scripts = () => (
   <Head>
-    <script
+    {/* <script
       dangerouslySetInnerHTML={{
         __html: `
                   window.prismic = {
@@ -12,7 +12,7 @@ const Scripts = () => (
       }}
     />
 
-    <script src="https://static.cdn.prismic.io/prismic.min.js?new=true" />
+    <script src="https://static.cdn.prismic.io/prismic.min.js?new=true" /> */}
   </Head>
 );
 
