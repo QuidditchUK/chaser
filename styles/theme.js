@@ -25,6 +25,7 @@ const colors = {
   darkRed: '#1f0707',
   keeperGreen: '#34a31d',
   seekerYellow: '#f7ea34',
+  tornadoOrange: '#db781a',
 };
 
 colors.primary = colors.royalBlue;

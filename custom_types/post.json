@@ -40,7 +40,9 @@
         "options": [
           "Community",
           "Executive",
-          "Leagues"
+          "Leagues",
+          "International",
+          "Announcements"
         ],
         "label": "category"
       }
