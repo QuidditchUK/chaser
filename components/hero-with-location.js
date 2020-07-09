@@ -71,7 +71,7 @@ const HeroWithLocation = ({
           position="absolute"
           right="0"
           padding={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-          zIndex="10"
+          zIndex="1"
         >
           <Type fontWeight="bold" fontSize={[rem(10), rem(16)]} bg={TYPES[league]}>{league}</Type>
         </Box>
