@@ -26,7 +26,7 @@ const HeaderAndParagraph = (rawData) => {
         </Heading>
       )}
 
-      {data.content && <Content>{RichText.render(data.content, linkResolver)}</Content>}
+      {RichText.asText(data.content) && (<Content>{RichText.render(data.content, linkResolver)}</Content>)}
 
       {data.cta_text && (
         <Flex justifyContent="center">
