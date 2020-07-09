@@ -28,7 +28,7 @@ const HeaderAndParagraph = (rawData) => {
 
       {RichText.asText(data.content) && (<Content>{RichText.render(data.content, linkResolver)}</Content>)}
 
-      {data.cta_text && (
+      {data.cta_text && data.cta_url && (
         <Flex justifyContent="center">
           <ExternalLink href={data.cta_url}>
             <Button type="button" variant={buttonVariants[data.variant]} ml={2}>
