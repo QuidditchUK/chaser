@@ -22,7 +22,7 @@ const List = styled.ul`
 const ListItem = styled.li`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.greyDark};
-  padding: 0;
+  padding: 0 ${({ theme }) => theme.space[3]};
 
   a {
     text-decoration: none;
@@ -53,10 +53,16 @@ const NewsHeader = () => (
           <ActiveLink href="/news/community" as="/news/community"><span>Community</span></ActiveLink>
         </ListItem>
         <ListItem>
-          <ActiveLink href="/news/university" as="/news/leagues"><span>Leagues</span></ActiveLink>
+          <ActiveLink href="/news/leagues" as="/news/leagues"><span>Leagues</span></ActiveLink>
         </ListItem>
         <ListItem>
           <ActiveLink href="/news/executive" as="/news/executive"><span>Executive</span></ActiveLink>
+        </ListItem>
+        <ListItem>
+          <ActiveLink href="/news/international" as="/news/international"><span>International</span></ActiveLink>
+        </ListItem>
+        <ListItem>
+          <ActiveLink href="/news/announcements" as="/news/announcements"><span>Announcements</span></ActiveLink>
         </ListItem>
       </List>
     </Container>
