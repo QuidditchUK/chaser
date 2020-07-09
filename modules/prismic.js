@@ -3,7 +3,17 @@ import config from '../config';
 
 const { prismic } = config;
 
-export const Client = (req = null) => Prismic.client(prismic.url, { req, accessToken: prismic.token });
+const createClientOptions = (req = null, prismicAccessToken = null) => {
+  const reqOption = req ? { req } : {};
+  const accessTokenOption = prismicAccessToken ? { accessToken: prismicAccessToken } : {};
+
+  return {
+    ...reqOption,
+    ...accessTokenOption,
+  };
+};
+
+export const Client = (req = null) => Prismic.client(prismic.url, createClientOptions(req, prismic.token));
 
 export const formatMetadata = ({ meta_description, meta_title, meta_image }) => ({
   description: meta_description,
