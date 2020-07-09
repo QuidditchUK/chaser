@@ -8,7 +8,14 @@ const NewsHeaderWrapper = styled(Box)`
   border-top: 1px solid ${({ theme }) => theme.colors.greyLight};
   display: flex;
   align-items: center;
+  overflow-x: scroll;
   overflow-y: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  scrollbar-width: none;
 `;
 
 const List = styled.ul`

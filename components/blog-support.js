@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -80,15 +80,15 @@ const BlogSupport = (rawData) => {
         <Box py={2} bg="white" px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
           <Container maxWidth={rem(960)}>
             <Tags>
-              # {tags.map((tag) => (
-                <>
+              # {tags.map((tag, i) => (
+                <Fragment key={`${tag}-${i}`}>
                   <Link as={`/news/tagged/${dasherizeTag(tag)}`} href="/news/tagged/[tag]" passHref>
                     <a>
                       <span>{tag}</span>
                     </a>
                   </Link>
                   {' '}
-                </>
+                </Fragment>
             ))}
             </Tags>
           </Container>
