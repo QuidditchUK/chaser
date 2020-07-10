@@ -1,18 +1,12 @@
-import { Client, linkResolver } from 'modules/prismic';
+import { linkResolver } from 'modules/prismic';
+import Prismic from 'prismic-javascript';
+import config from '../../config';
+
+const { prismic } = config;
 
 // eslint-disable-next-line consistent-return
 export default async (req, res) => {
-  const { token: ref, documentId } = req.query;
-  try {
-    const redirectUrl = await Client(req).getPreviewResolver(ref, documentId).resolve(linkResolver, '/');
-
-    if (!redirectUrl) {
-      return res.status(401).json({ message: 'Invalid token' });
-    }
-
-    res.setPreviewData({ ref });
-    res.end();
-  } catch {
-    res.status(400).json({ message: 'Something went wrong' });
-  }
+  const { token, documentId } = req.query;
+  const redirectUrl = await Prismic.api(prismic.url).getPreviewResolver(token, documentId).resolve(linkResolver, '/');
+  res.redirect(302, redirectUrl);
 };
