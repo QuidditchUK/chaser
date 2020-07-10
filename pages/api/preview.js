@@ -11,7 +11,7 @@ export default async (req, res) => {
     }
 
     res.setPreviewData({ ref });
-    res.end();
+    res.redirect(302, redirectUrl);
   } catch {
     res.status(400).json({ message: 'Something went wrong' });
   }
