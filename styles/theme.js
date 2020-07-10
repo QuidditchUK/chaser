@@ -30,6 +30,7 @@ const colors = {
 
 colors.primary = colors.royalBlue;
 colors.secondary = colors.monarchRed;
+colors.alert = colors.monarchRed;
 
 const categoryColors = [colors.northernMagenta, colors.southernBlue, colors.royalBlue, colors.monarchRed];
 

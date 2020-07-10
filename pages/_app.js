@@ -21,7 +21,7 @@ function App({ Component, pageProps, err }) {
     <ThemeProvider theme={theme}>
       <DocumentHead />
       <Scripts />
-      <Layout>
+      <Layout {...pageProps}>
         <Component {...pageProps} err={err} />
       </Layout>
     </ThemeProvider>
