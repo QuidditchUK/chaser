@@ -11,7 +11,9 @@ export default async (req, res) => {
     }
 
     res.setPreviewData({ ref });
-    res.redirect(302, redirectUrl);
+    res.setHeader('location', redirectUrl);
+    res.statusCode = 302;
+    res.end();
   } catch {
     res.status(400).json({ message: 'Something went wrong' });
   }
