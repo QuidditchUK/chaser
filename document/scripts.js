@@ -11,8 +11,7 @@ const Scripts = () => (
                   };`,
       }}
     />
-
-    <script src="https://static.cdn.prismic.io/prismic.min.js?new=true" />
+    <script type="text/javascript" src="https://static.cdn.prismic.io/prismic.min.js?new=true" />
   </Head>
 );
 
