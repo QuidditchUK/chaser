@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
@@ -6,11 +6,10 @@ import Headroom from 'react-headroom';
 import styled from 'styled-components';
 import { space, variant } from 'styled-system';
 import { transparentize, tint, rgba } from 'polished';
-import ScrollLock from 'react-scrolllock';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import cookies from 'js-cookie';
 import HamburgerIcon from 'public/images/hamburger.svg';
 import { MAIN_NAVIGATION, DASHBOARD_NAVIGATION } from 'constants/navigation';
-
 import { removeCookie } from 'modules/cookies';
 import ActiveLink, { ParentWrapper } from './active-link';
 import { Logo, LogoLink } from './logo';
@@ -28,6 +27,7 @@ const variants = (theme) => ({
   primary: {
     bg: theme.colors.primary,
   },
+
   white: {
     bg: theme.colors.white,
   },
@@ -62,6 +62,7 @@ const List = styled.ul`
   flex-direction: row;
   list-style-type: none;
   padding-left: 0;
+  /* height: calc(100vh - 1px); */
 
   a {
     text-decoration: none;
@@ -88,7 +89,7 @@ const List = styled.ul`
   ul {
     display: flex;
     flex-direction: column;
-    max-height: 0;
+    max-height:0;
     overflow: hidden;
     justify-content: flex-start;
     transition: max-height 0.3s;
@@ -158,13 +159,14 @@ const List = styled.ul`
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    height: 100vh;
+    top: 0;
+    justify-content: flex-start;
+    overflow:scroll;
     left: 0;
-    justify-content: center;
     margin: 0;
     padding: 60px ${({ theme }) => theme.space[4]} 120px;
     position: absolute;
-    top: 0;
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
     transition: transform 0.3s;
     width: 100%;
@@ -303,6 +305,16 @@ function Navigation({ dashboard }) {
   const [navigationToggle, setNavigationToggle] = useState(1000);
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
 
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    if (open) {
+      disableBodyScroll(scrollRef.current);
+    } else {
+      enableBodyScroll(scrollRef.current);
+    }
+  }, [open]);
+
   const signOut = () => {
     removeCookie('AUTHENTICATION_TOKEN');
     Router.push('/');
@@ -322,7 +334,7 @@ function Navigation({ dashboard }) {
         </Link>
 
         <Nav>
-          <List open={open}>
+          <List open={open} ref={scrollRef}>
             {navigation.map((item, i) => (
               <Item key={item.label} pl={6}>
                 {item.list
@@ -356,45 +368,45 @@ function Navigation({ dashboard }) {
             {!loggedIn && <Item pl={4}><Link href="/login" passHref><a><Button type="button" variant="light" onClick={() => setOpen(false)}>Sign in</Button></a></Link></Item>}
 
             {loggedIn && (
-            <Item pl={4}>
-              <ParentWrapper path="/dashboard">
-                <NavItem onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)}><Button type="button" variant="light">My Account</Button></NavItem>
-              </ParentWrapper>
+              <Item pl={4}>
+                <ParentWrapper path="/dashboard">
+                  <NavItem onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)}><Button type="button" variant="light">My Account</Button></NavItem>
+                </ParentWrapper>
 
-              <List className={`${navigationToggle === 20 ? 'dropdown' : ''}`}>
-                <Item>
-                  <ActiveLink href="/dashboard" as="/dashboard">
-                    <NavItem onClick={() => setOpen(false)}>Dashboard</NavItem>
-                  </ActiveLink>
-                </Item>
-                <Item>
-                  <ActiveLink href="/dashboard/account/settings" as="/dashboard/account/settings">
-                    <NavItem onClick={() => setOpen(false)}>Settings</NavItem>
-                  </ActiveLink>
-                </Item>
-                <Item>
-                  <ActiveLink href="/dashboard/account/profile" as="/dashboard/account/profile">
-                    <NavItem onClick={() => setOpen(false)}>My profile</NavItem>
-                  </ActiveLink>
-                </Item>
-                <Item>
-
-                  <NavItem
-                    onClick={() => {
-                      setOpen(false);
-                      signOut();
-                    }}
-                  >
-                    Sign out
-                  </NavItem>
-
-                </Item>
-              </List>
-            </Item>
+                <List className={`${navigationToggle === 20 ? 'dropdown' : ''}`}>
+                  <Item>
+                    <ActiveLink href="/dashboard" as="/dashboard">
+                      <NavItem onClick={() => setOpen(false)}>Dashboard</NavItem>
+                    </ActiveLink>
+                  </Item>
+                  <Item>
+                    <ActiveLink href="/dashboard/account/settings" as="/dashboard/account/settings">
+                      <NavItem onClick={() => setOpen(false)}>Settings</NavItem>
+                    </ActiveLink>
+                  </Item>
+                  <Item>
+                    <ActiveLink href="/dashboard/account/profile" as="/dashboard/account/profile">
+                      <NavItem onClick={() => setOpen(false)}>My profile</NavItem>
+                    </ActiveLink>
+                  </Item>
+                  <Item>
+                    <Link href="/" as="/">
+                      <a>
+                        <NavItem
+                          onClick={() => {
+                            setOpen(false);
+                            signOut();
+                          }}
+                        >Sign out
+                        </NavItem>
+                      </a>
+                    </Link>
+                  </Item>
+                </List>
+              </Item>
             )}
-
-            <ScrollLock isActive={open} />
           </List>
+
           <Hamburger
             white={open || dashboard}
             aria-hidden="true"
@@ -403,6 +415,7 @@ function Navigation({ dashboard }) {
         </Nav>
       </Header>
     </Wrapper>
+
   );
 }
 

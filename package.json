@@ -10,6 +10,7 @@
     "@svgr/webpack": "5.4.0",
     "@zeit/next-source-maps": "^0.0.3",
     "axios": "^0.19.2",
+    "body-scroll-lock": "^3.0.3",
     "cookie": "^0.4.1",
     "date-fns": "2.14.0",
     "flickity": "^2.2.1",
