@@ -5,8 +5,12 @@ import { Flex } from 'components/layout';
 import Container from 'components/container';
 
 const AlertBox = styled(Flex)`
+  color: ${({ theme }) => theme.colors.white};
+  text-align: center;
+
   a {
     color: ${({ theme }) => theme.colors.white};
+    font-weight: bold;
     text-decoration: none;
 
     &:hover {
@@ -18,7 +22,7 @@ const AlertBox = styled(Flex)`
 
 export default function Alert({ children }) {
   return (
-    <AlertBox bg="alert" px="5" py="2" alignItems="center" justifyContent="center">
+    <AlertBox bg="alert" py="4" alignItems="center" justifyContent="center">
       <Container>
         {children}
       </Container>
