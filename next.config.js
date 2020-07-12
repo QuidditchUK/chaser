@@ -9,8 +9,6 @@ const {
   SENTRY_AUTH_TOKEN,
   NODE_ENV,
   API_URL,
-  COOKIE_SECURE,
-  COOKIE_DOMAIN,
 } = process.env
 
 module.exports = {
@@ -68,7 +66,5 @@ module.exports = {
   },
   publicRuntimeConfig: {
     apiUrl: API_URL,
-    cookieSecure: COOKIE_SECURE,
-    cookieDomain: COOKIE_DOMAIN,
   },
 };

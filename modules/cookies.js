@@ -1,18 +1,17 @@
 import cookies from 'js-cookie';
-import getConfig from 'next/config';
 import cookie from 'cookie';
 
-const { publicRuntimeConfig } = getConfig();
+const { NEXT_PUBLIC_COOKIE_DOMAIN, NEXT_PUBLIC_COOKIE_SECURE } = process.env;
 
 export const setCookies = (name, value) => cookies.set(name, value, {
-  ...(publicRuntimeConfig.cookieDomain && { domain: publicRuntimeConfig.cookieDomain }),
-  ...(publicRuntimeConfig.cookieSecure && { secure: publicRuntimeConfig.cookieSecure }),
+  ...(NEXT_PUBLIC_COOKIE_DOMAIN && { domain: NEXT_PUBLIC_COOKIE_DOMAIN }),
+  ...(NEXT_PUBLIC_COOKIE_SECURE && { secure: NEXT_PUBLIC_COOKIE_SECURE }),
   expires: 21,
 });
 
 export const removeCookie = (name) => cookies.remove(name, {
-  ...(publicRuntimeConfig.cookieDomain && { domain: publicRuntimeConfig.cookieDomain }),
-  ...(publicRuntimeConfig.cookieSecure && { secure: publicRuntimeConfig.cookieSecure }),
+  ...(NEXT_PUBLIC_COOKIE_DOMAIN && { domain: NEXT_PUBLIC_COOKIE_DOMAIN }),
+  ...(NEXT_PUBLIC_COOKIE_SECURE && { secure: NEXT_PUBLIC_COOKIE_SECURE }),
 });
 
 export const parseCookies = (req) => cookie.parse(req ? req.headers.cookie || '' : document.cookie);
