@@ -35,6 +35,7 @@ const variants = (theme) => ({
 });
 
 const Header = styled.header`
+  ${space};
   align-items: center;
   background: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadows.box};
@@ -43,7 +44,6 @@ const Header = styled.header`
   flex-direction: row;
   height: 60px;
   justify-content: space-between;
-  padding: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     height: 50px;
@@ -162,7 +162,7 @@ const List = styled.ul`
     height: 100vh;
     top: 0;
     justify-content: flex-start;
-    overflow:scroll;
+    overflow-y:auto;
     left: 0;
     margin: 0;
     padding: 60px ${({ theme }) => theme.space[4]} 120px;
@@ -262,12 +262,12 @@ const NavItem = styled.span`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     background: ${({ theme }) => theme.colors.white};
-    border: 1px solid ${({ theme }) => theme.colors.white};
+    border: ${({ isButton }) => (isButton ? '0' : '1px')} solid ${({ theme }) => theme.colors.white};
     border-radius: ${({ theme }) => theme.radii[0]};
     color: ${({ theme }) => theme.colors.darkBlue};
     display: block;
     font-weight: normal;
-    padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
+    padding: ${({ theme, isButton }) => (isButton ? 0 : theme.space[2])} ${({ theme, isButton }) => (isButton ? 0 : theme.space[4])};
     text-align: center;
 
     &:hover {
@@ -306,10 +306,10 @@ const LogoWrapper = styled(Flex)`
   width: initial;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    background: ${({ theme, open }) => (open ? theme.colors.primary : theme.colors.white)};
+    background: ${({ theme, open }) => (open ? theme.colors.primary : 'inherit')};
     display: flex;
     width: 100%;
-    padding: 0 ${({ theme }) => theme.space.gutter._};
+    padding: 0 ${({ theme, open }) => (open ? theme.space.gutter._ : 0)};
     height: 50px;
     align-items: center;
     z-index: 5;
@@ -340,7 +340,7 @@ function Navigation({ dashboard }) {
   return (
     <Wrapper open={open}>
       <Overlay open={open} />
-      <Header variant={dashboard ? 'primary' : 'white'}>
+      <Header variant={dashboard ? 'primary' : 'white'} px={{ _: (open ? 0 : 'gutter._') }}>
         <LogoWrapper open={open}>
           <Link href="/" passHref>
             <LogoLink onClick={() => setOpen(false)}>
@@ -399,7 +399,7 @@ function Navigation({ dashboard }) {
             {loggedIn && (
               <Item pl={4}>
                 <ParentWrapper path="/dashboard">
-                  <NavItem onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)}><Button type="button" variant="light" mb={{ _: 4, l: 0 }}>My Account</Button></NavItem>
+                  <NavItem onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)} isButton><Button type="button" variant="light" py={{ _: 3, l: 2 }}>My Account</Button></NavItem>
                 </ParentWrapper>
 
                 <List className={`${navigationToggle === 20 ? 'dropdown' : ''}`}>
