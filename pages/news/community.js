@@ -8,7 +8,7 @@ import Meta from '../../components/meta';
 
 const News = ({ posts }) => (
   <>
-    <Meta />
+    <Meta subTitle="Community" description="All community news from QuidditchUK" />
     <NewsHeader />
     <LatestNews posts={posts} category="Community" allowPagination horizontalScroll={false} />
   </>

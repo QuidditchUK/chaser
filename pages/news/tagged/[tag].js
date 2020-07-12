@@ -10,7 +10,7 @@ const unDasherizeTag = (tag) => tag.replace(/--/g, ' ').replace(/__/g, '/');
 
 const News = ({ posts, tag }) => (
   <>
-    <Meta />
+    <Meta subTitle={unDasherizeTag(tag)} description={`All news tagged ${unDasherizeTag(tag)}`} />
     <NewsHeader />
     <LatestNews posts={posts} tag={unDasherizeTag(tag)} allowPagination horizontalScroll={false} />
   </>

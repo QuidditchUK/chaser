@@ -8,7 +8,7 @@ import Meta from 'components/meta';
 
 const News = ({ posts }) => (
   <>
-    <Meta />
+    <Meta subTitle="International" description="All news about the national teams and international competitions" />
     <NewsHeader />
     <LatestNews posts={posts} category="International" allowPagination horizontalScroll={false} />
   </>
