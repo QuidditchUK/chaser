@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { space, variant } from 'styled-system';
 import { transparentize, tint, rgba } from 'polished';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { Flex } from 'components/layout';
 import cookies from 'js-cookie';
 import HamburgerIcon from 'public/images/hamburger.svg';
 import { MAIN_NAVIGATION, DASHBOARD_NAVIGATION } from 'constants/navigation';
@@ -42,7 +43,7 @@ const Header = styled.header`
   flex-direction: row;
   height: 60px;
   justify-content: space-between;
-  padding: 0 ${({ theme }) => theme.space.gutter._};
+  padding: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     height: 50px;
@@ -62,7 +63,6 @@ const List = styled.ul`
   flex-direction: row;
   list-style-type: none;
   padding-left: 0;
-  /* height: calc(100vh - 1px); */
 
   a {
     text-decoration: none;
@@ -283,7 +283,10 @@ const Hamburger = styled(HamburgerIcon)`
     color: ${({ white, theme }) => (white ? theme.colors.white : theme.colors.primary)};
     cursor: pointer;
     display: block;
-    z-index: 5;
+    z-index: 7;
+    position: absolute;
+    top: 10px;
+    right: 1rem;
   }
 `;
 
@@ -297,6 +300,20 @@ const Overlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+`;
+
+const LogoWrapper = styled(Flex)`
+  width: initial;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
+    background: ${({ theme, open }) => (open ? theme.colors.primary : theme.colors.white)};
+    display: flex;
+    width: 100%;
+    padding: 0 ${({ theme }) => theme.space.gutter._};
+    height: 50px;
+    align-items: center;
+    z-index: 5;
+  }
 `;
 
 function Navigation({ dashboard }) {
@@ -324,14 +341,16 @@ function Navigation({ dashboard }) {
     <Wrapper open={open}>
       <Overlay open={open} />
       <Header variant={dashboard ? 'primary' : 'white'}>
-        <Link href="/" passHref>
-          <LogoLink onClick={() => setOpen(false)}>
-            <>
-              <Logo src={logo} alt="Quidditch UK" white={open || dashboard} />
-              <Logo src={logoText} alt="Quidditch UK" white={open || dashboard} />
-            </>
-          </LogoLink>
-        </Link>
+        <LogoWrapper open={open}>
+          <Link href="/" passHref>
+            <LogoLink onClick={() => setOpen(false)}>
+              <>
+                <Logo src={logo} alt="Quidditch UK" white={open || dashboard} />
+                <Logo src={logoText} alt="Quidditch UK" white={open || dashboard} />
+              </>
+            </LogoLink>
+          </Link>
+        </LogoWrapper>
 
         <Nav>
           <List open={open} ref={scrollRef}>
@@ -365,12 +384,22 @@ function Navigation({ dashboard }) {
 
             <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={dashboard ? 'secondary' : { _: 'secondary', l: 'primary' }} onClick={() => setOpen(false)}>Find Quidditch</Button></a></Link></Item>
 
-            {!loggedIn && <Item pl={4}><Link href="/login" passHref><a><Button type="button" variant="light" onClick={() => setOpen(false)}>Sign in</Button></a></Link></Item>}
+            {!loggedIn && (
+              <Item pl={4}>
+                <Link href="/login" passHref>
+                  <a>
+                    <Button type="button" variant="light" onClick={() => setOpen(false)} mb={{ _: 4, l: 0 }}>
+                      Sign in
+                    </Button>
+                  </a>
+                </Link>
+              </Item>
+            )}
 
             {loggedIn && (
               <Item pl={4}>
                 <ParentWrapper path="/dashboard">
-                  <NavItem onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)}><Button type="button" variant="light">My Account</Button></NavItem>
+                  <NavItem onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)}><Button type="button" variant="light" mb={{ _: 4, l: 0 }}>My Account</Button></NavItem>
                 </ParentWrapper>
 
                 <List className={`${navigationToggle === 20 ? 'dropdown' : ''}`}>
