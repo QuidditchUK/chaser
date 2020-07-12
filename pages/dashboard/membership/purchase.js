@@ -1,0 +1,64 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import Meta from 'components/meta';
+import { parseCookies } from 'modules/cookies';
+import { Box, Grid } from 'components/layout';
+import Heading from 'components/heading';
+import Container from 'components/container';
+import { api } from 'modules/api';
+import ProductCard from 'components/product-card';
+
+const PurchaseMembership = ({ products }) => (
+  <>
+    <Meta description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more" subTitle="Manage" />
+    <Box
+      bg="greyLight"
+      py={{ _: 4, l: 10 }}
+      px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+    >
+      <Container>
+        <Heading as="h2" isBody>Purchase Membership</Heading>
+        <Grid
+          gridTemplateColumns="1fr"
+          gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+        >
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              image={product.images[0]}
+              description={product.description}
+              name={product.name}
+              price={product.price}
+            />
+          ))}
+        </Grid>
+      </Container>
+    </Box>
+  </>
+);
+
+export const getServerSideProps = async ({ req, res }) => {
+  const { AUTHENTICATION_TOKEN } = parseCookies(req);
+
+  if (!AUTHENTICATION_TOKEN) {
+    res.setHeader('location', '/login');
+    res.statusCode = 302;
+    res.end();
+    return { props: {} };
+  }
+
+  const { data } = await api.get('/products');
+
+  return {
+    props: {
+      products: data,
+    },
+  };
+};
+
+PurchaseMembership.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};
+
+export default PurchaseMembership;

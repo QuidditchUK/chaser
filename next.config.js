@@ -11,6 +11,7 @@ const {
   API_URL,
   COOKIE_DOMAIN,
   COOKIE_SECURE,
+  STRIPE_TOKEN,
 } = process.env
 
 module.exports = {
@@ -70,5 +71,6 @@ module.exports = {
     apiUrl: API_URL,
     cookiesDomain: COOKIE_DOMAIN,
     cookiesSecure: COOKIE_SECURE,
+    stripeToken: STRIPE_TOKEN,
   },
 };
