@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import getConfig from 'next/config';
-import cookie from 'js-cookie';
+import cookies from 'js-cookie';
 import axios from 'axios';
 
 const { publicRuntimeConfig } = getConfig();
@@ -8,7 +8,8 @@ const { publicRuntimeConfig } = getConfig();
 export const api = axios.create();
 
 api.interceptors.request.use((config) => {
-  const token = cookie.get('AUTHENTICATION_TOKEN');
+  const token = cookies.get('AUTHENTICATION_TOKEN');
+
   config.baseURL = publicRuntimeConfig.apiUrl;
 
   if (token) {

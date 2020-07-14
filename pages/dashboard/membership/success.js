@@ -19,7 +19,7 @@ const SuccessMembership = ({ product }) => (
     >
       <Container>
         <Heading as="h2" isBody textAlign="center">Membership Purchased</Heading>
-        <Content>Thank you for purchasing the following QuidditchUK Membership</Content>
+        <Content textAlign="center" py="4">Thank you for purchasing the following QuidditchUK Membership</Content>
 
         <Grid
           gridTemplateColumns="1fr"
@@ -48,7 +48,11 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  const { data } = await api.get('/products/me');
+  const { data } = await api.get('/products/me', {
+    headers: {
+      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
+    },
+  });
 
   return {
     props: {
