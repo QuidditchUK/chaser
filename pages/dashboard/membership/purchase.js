@@ -7,6 +7,19 @@ import Heading from 'components/heading';
 import Container from 'components/container';
 import { api } from 'modules/api';
 import ProductCard from 'components/product-card';
+import { stripePromise } from 'modules/stripe';
+
+const handleClick = async (id) => {
+  const { data } = await api.get(`/products/session?price_id=${id}`);
+
+  const stripe = await stripePromise;
+  const { error } = await stripe.redirectToCheckout({
+    sessionId: data.id,
+  });
+
+  // TODO HANDLE REDIRECT ERROR
+  console.log(error.message);
+};
 
 const PurchaseMembership = ({ products }) => (
   <>
@@ -30,6 +43,7 @@ const PurchaseMembership = ({ products }) => (
               description={product.description}
               name={product.name}
               price={product.price}
+              onClick={() => handleClick(product.price?.id)}
             />
           ))}
         </Grid>

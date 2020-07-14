@@ -27,6 +27,7 @@ export const Grid = styled.div`
   ${space}
   ${grid}
   ${color}
+  ${border}
 `;
 
 export const GridItem = styled.div`

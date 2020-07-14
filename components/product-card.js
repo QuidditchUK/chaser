@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { space, typography, color } from 'styled-system';
+import { parse, format } from 'date-fns';
 import { Box, Flex, Grid } from 'components/layout';
 import Heading from 'components/heading';
 import { formatMinorUnitsToCurrency } from 'modules/numbers';
-import { api } from 'modules/api';
-import { stripePromise } from 'modules/stripe';
 
 const StyledCard = styled(Grid)`
   border-radius: ${({ theme }) => theme.radii[1]};
@@ -38,38 +37,28 @@ const Content = styled.div`
   }
 `;
 
-const handleClick = async (id) => {
-  const { data } = await api.get(`/products/session?price_id=${id}`);
-
-  const stripe = await stripePromise;
-  const { error } = await stripe.redirectToCheckout({
-    sessionId: data.id,
-  });
-
-  // TODO HANDLE REDIRECT ERROR
-  console.log(error.message);
-};
-
 const ProductCard = ({
   image,
   name,
   description,
   price,
+  expires,
   ...cardProps
 }) => (
   <StyledCard
     {...cardProps}
     gridTemplateColumns={{ _: '1fr', m: '3fr 6fr 3fr' }}
     gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-    onClick={() => handleClick(price?.id)}
   >
     <Box
       as="section"
       position="relative"
       backgroundImage={`url(${image})`}
-      backgroundColor="primary"
-      backgroundSize="cover"
+      backgroundColor="white"
+      backgroundSize="contain"
+      backgroundRepeat="no-repeat"
       backgroundPosition="center"
+      minHeight="100px"
     />
 
     <Content>
@@ -77,8 +66,14 @@ const ProductCard = ({
       <p>{description}</p>
     </Content>
 
-    <Flex flexDirection="column" justifyContent="center" alignItems="center" padding="3">
-      <Content fontSize="4"><strong>{formatMinorUnitsToCurrency(price?.unit_amount)}</strong></Content>
+    <Flex flexDirection="column" justifyContent="center" alignItems="center" padding="3" bg={expires && parse(expires, 'dd-MM-yyyy', new Date()) < new Date() ? 'alert' : 'primary'} color="white">
+      {!!price && <Content fontSize="4"><strong>{formatMinorUnitsToCurrency(price?.unit_amount)}</strong></Content>}
+      {!!expires && (
+        <>
+          <Content fontSize="2"><strong>{parse(expires, 'dd-MM-yyyy', new Date()) > new Date() ? 'Valid until' : 'Expired'}</strong></Content>
+          <Content fontSize="4" pt="0"><strong>{format(parse(expires, 'dd-MM-yyyy', new Date()), 'EEE, d LLL yyyy')}</strong></Content>
+        </>
+      )}
     </Flex>
   </StyledCard>
 );
@@ -89,6 +84,7 @@ ProductCard.defaultProps = {
   description: null,
   id: null,
   price: null,
+  expires: null,
 };
 
 ProductCard.propTypes = {
@@ -100,6 +96,7 @@ ProductCard.propTypes = {
     unit_amount: PropTypes.number,
     id: PropTypes.string,
   }),
+  expires: PropTypes.string,
 };
 
 export default ProductCard;

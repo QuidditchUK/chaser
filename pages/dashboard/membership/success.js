@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 import Meta from 'components/meta';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid } from 'components/layout';
+import { Box, Grid, Flex } from 'components/layout';
 import Heading from 'components/heading';
 import Container from 'components/container';
 import { api } from 'modules/api';
 import ProductCard from 'components/product-card';
 import Content from 'components/content';
+import Button from 'components/button';
 
 const SuccessMembership = ({ product }) => (
   <>
@@ -19,20 +21,26 @@ const SuccessMembership = ({ product }) => (
     >
       <Container>
         <Heading as="h2" isBody textAlign="center">Membership Purchased</Heading>
-        <Content textAlign="center" py="4">Thank you for purchasing the following QuidditchUK Membership</Content>
+        <Content textAlign="center" py="4">Thank you for purchasing the following QuidditchUK Membership.<br /> A receipt has been emailed to you.</Content>
 
         <Grid
           gridTemplateColumns="1fr"
           gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
         >
-          <ProductCard
-            id={product.id}
-            image={product.images[0]}
-            description={product.description}
-            name={product.name}
-            price={product.price}
-          />
+          {product?.id && (
+            <ProductCard
+              id={product.id}
+              image={product.images[0]}
+              description={product.description}
+              name={product.name}
+              price={product.price}
+            />
+          )}
         </Grid>
+
+        <Flex alignItems="center" justifyContent="center" flexDirection="column" pt="5">
+          <Link href="/dashboard" passHref><a><Button type="button" variant="secondary">Back to Dashboard</Button></a></Link>
+        </Flex>
       </Container>
     </Box>
   </>
