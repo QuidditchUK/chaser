@@ -81,7 +81,6 @@ const HeroWithLocation = ({
             gridTemplateColumns="2fr 1fr 1fr"
             gridTemplateRows="1fr 1fr"
             gridGap={4}
-            height="400px"
             p={4}
           >
             {images.map((src, i) => {
