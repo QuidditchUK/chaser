@@ -62,7 +62,7 @@ const handleSubmit = async (values, setSubmitting, setServerError) => {
 };
 
 const ManageClub = ({ user, clubs }) => {
-  const [selectedClub, setSelectedClub] = useState(user?.club_uuid || '');
+  const [selectedClub, setSelectedClub] = useState(user?.club_uuid ? clubs.find(({ uuid }) => uuid === user.club_uuid) : '');
   const [serverError, setServerError] = useState(null);
 
   return (
