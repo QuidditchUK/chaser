@@ -35,6 +35,7 @@ const Content = styled.div`
       text-decoration: underline;
     }
   }
+  ${space}
 `;
 
 const ProductCard = ({
@@ -70,8 +71,8 @@ const ProductCard = ({
       {!!price && <Content fontSize="4"><strong>{formatMinorUnitsToCurrency(price?.unit_amount)}</strong></Content>}
       {!!expires && (
         <>
-          <Content fontSize="2"><strong>{parse(expires, 'dd-MM-yyyy', new Date()) > new Date() ? 'Valid until' : 'Expired'}</strong></Content>
-          <Content fontSize="4" pt="0"><strong>{format(parse(expires, 'dd-MM-yyyy', new Date()), 'EEE, d LLL yyyy')}</strong></Content>
+          <Content fontSize="1" py={0}><strong>{parse(expires, 'dd-MM-yyyy', new Date()) > new Date() ? 'Valid until' : 'Expired'}</strong></Content>
+          <Content fontSize="4" py={0}><strong>{format(parse(expires, 'dd-MM-yyyy', new Date()), 'd LLL yyyy')}</strong></Content>
         </>
       )}
     </Flex>
