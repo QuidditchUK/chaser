@@ -9,11 +9,6 @@ export const MAIN_NAVIGATION = [
         href: '/about/[id]',
       },
       {
-        label: 'History',
-        as: '/about/history',
-        href: '/about/[id]',
-      },
-      {
         label: 'Leadership',
         as: '/about/leadership',
         href: '/about/[id]',
