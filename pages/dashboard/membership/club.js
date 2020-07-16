@@ -88,7 +88,9 @@ const ManageClub = ({ user, clubs }) => {
 
               <Content>
                 <p>You have selected <strong>{selectedClub?.name}</strong> as your QuidditchUK Club.</p>
-                <p>Please ensure that your selected club is the correct one and is aware that you are joining them before confirming this decision. Please note that once you have locked in your club you will not be able to undo it and must submit a transfer request to QuidditchUK to request any changes.</p>
+                {user.club_uuid
+                  ? (<p>If you need to change your club, you must go through our transfer process.</p>)
+                  : (<p>Please ensure that your selected club is the correct one and is aware that you are joining them before confirming this decision. Please note that once you have locked in your club you will not be able to undo it and must submit a transfer request to QuidditchUK to request any changes.</p>)}
               </Content>
 
               {!user.club_uuid && (
