@@ -70,7 +70,7 @@ const Checkbox = ({
 }) => (
   <Label {...labelProps}>
     <input {...field} type={type} />{' '}
-    I acknowledge that I have read the disclaimer and <strong>{selectedClub}</strong> is my correct club, and I will not be able to change my mind without requesting a formal transfer.
+    I acknowledge that I have read the disclaimer above and <strong>{selectedClub}</strong> is my correct club, and that I will not be able to change my mind without requesting a formal transfer.
   </Label>
 );
 
