@@ -33,7 +33,7 @@ const StyledLink = styled.a`
 `;
 
 const SelectClubSchema = Yup.object().shape({
-  club_uuid: Yup.string().required('Required'),
+  club_uuid: Yup.string().nullable().required('Required'),
   confirm: Yup.bool().oneOf([true], 'Please confirm that you have read the disclaimer'),
 });
 
@@ -120,7 +120,7 @@ const ManageClub = ({ user, clubs }) => {
                 <Formik
                   onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError)}
                   initialValues={{
-                    club_uuid: selectedClub,
+                    club_uuid: null,
                     confirm: false,
                   }}
                   validationSchema={SelectClubSchema}
@@ -140,6 +140,7 @@ const ManageClub = ({ user, clubs }) => {
                           name="club_uuid"
                           as="select"
                         >
+                          <option disabled selected value>Select a club</option>
                           {clubs.map((club) => (<option key={club.uuid} value={club.uuid}>{club.name}</option>))}
                         </Field>
 

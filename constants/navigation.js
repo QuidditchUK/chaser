@@ -105,7 +105,7 @@ export const DASHBOARD_NAVIGATION = [
     path: '/dashboard/membership',
     list: [
       {
-        label: 'Manage QUK Membership',
+        label: 'QUK Membership',
         as: '/dashboard/membership/manage',
         href: '/dashboard/membership/[id]',
       },
@@ -114,11 +114,11 @@ export const DASHBOARD_NAVIGATION = [
         as: '/dashboard/membership/club',
         href: '/dashboard/membership/[id]',
       },
-      {
-        label: 'Transfer',
-        as: '/dashboard/membership/transfer',
-        href: '/dashboard/membership/[id]',
-      },
+      // {
+      //   label: 'Transfer',
+      //   as: '/dashboard/membership/transfer',
+      //   href: '/dashboard/membership/[id]',
+      // },
     ],
   },
   {
