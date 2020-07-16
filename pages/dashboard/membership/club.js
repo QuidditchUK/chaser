@@ -91,41 +91,43 @@ const ManageClub = ({ user, clubs }) => {
                 <p>Please ensure that your selected club is the correct one and is aware that you are joining them before confirming this decision. Please note that once you have locked in your club you will not be able to undo it and must submit a transfer request to QuidditchUK to request any changes.</p>
               </Content>
 
-              <Formik
-                onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError)}
-                initialValues={{
-                  club_uuid: selectedClub,
-                }}
-                validationSchema={SelectClubSchema}
-              >
-                {({ isSubmitting }) => (
-                  <Form>
-                    <Grid
-                      gridTemplateColumns="1fr"
-                      mt={5}
-                    >
-                      <Label htmlFor="club_uuid" mb="2">
-                        Select your club <Required />
-                      </Label>
-
-                      <Field
-                        id="club_uuid"
-                        name="club_uuid"
-                        as="select"
+              {!user.club_uuid && (
+                <Formik
+                  onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError)}
+                  initialValues={{
+                    club_uuid: selectedClub,
+                  }}
+                  validationSchema={SelectClubSchema}
+                >
+                  {({ isSubmitting }) => (
+                    <Form>
+                      <Grid
+                        gridTemplateColumns="1fr"
+                        mt={5}
                       >
-                        {clubs.map((club) => (<option key={club.uuid} value={club.uuid}>{club.name}</option>))}
-                      </Field>
+                        <Label htmlFor="club_uuid" mb="2">
+                          Select your club <Required />
+                        </Label>
 
-                      <ErrorMessage name="club_uuid" component={InlineError} marginBottom={3} />
+                        <Field
+                          id="club_uuid"
+                          name="club_uuid"
+                          as="select"
+                        >
+                          {clubs.map((club) => (<option key={club.uuid} value={club.uuid}>{club.name}</option>))}
+                        </Field>
 
-                      <p>I acknowledge that I have read the disclaimer and <strong>{selectedClub?.name}</strong> is my correct club, and I will not be able to change my mind without requesting a formal transfer.</p>
-                      <AutoValidateForm setSelectedClub={setSelectedClub} clubs={clubs} />
-                    </Grid>
+                        <ErrorMessage name="club_uuid" component={InlineError} marginBottom={3} />
 
-                    <Button mt="2" type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Select my club'}</Button>
-                  </Form>
-                )}
-              </Formik>
+                        <p>I acknowledge that I have read the disclaimer and <strong>{selectedClub?.name}</strong> is my correct club, and I will not be able to change my mind without requesting a formal transfer.</p>
+                        <AutoValidateForm setSelectedClub={setSelectedClub} clubs={clubs} />
+                      </Grid>
+
+                      <Button mt="2" type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Select my club'}</Button>
+                    </Form>
+                  )}
+                </Formik>
+              )}
 
               {serverError && (<InlineError my={3}>{serverError}</InlineError>)}
             </Box>
