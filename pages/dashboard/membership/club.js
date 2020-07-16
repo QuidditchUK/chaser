@@ -34,6 +34,7 @@ const StyledLink = styled.a`
 
 const SelectClubSchema = Yup.object().shape({
   club_uuid: Yup.string().required('Required'),
+  confirm: Yup.bool().oneOf([true], 'Please confirm that you have read the disclaimer'),
 });
 
 const AutoValidateForm = ({ setSelectedClub, clubs }) => {
@@ -47,11 +48,11 @@ const AutoValidateForm = ({ setSelectedClub, clubs }) => {
   return null;
 };
 
-const handleSubmit = async (values, setSubmitting, setServerError) => {
+const handleSubmit = async ({ club_uuid }, setSubmitting, setServerError) => {
   try {
     setServerError(null);
 
-    await api.patch('/users/me', values);
+    await api.patch('/users/me', { club_uuid });
 
     setSubmitting(false);
     Router.push('/dashboard');
@@ -59,6 +60,24 @@ const handleSubmit = async (values, setSubmitting, setServerError) => {
     setServerError(err?.response?.data?.error?.message);
     setSubmitting(false);
   }
+};
+
+const Checkbox = ({
+  field,
+  type,
+  selectedClub,
+  ...labelProps
+}) => (
+  <Label {...labelProps}>
+    <input {...field} type={type} />{' '}
+    I acknowledge that I have read the disclaimer and <strong>{selectedClub}</strong> is my correct club, and I will not be able to change my mind without requesting a formal transfer.
+  </Label>
+);
+
+Checkbox.propTypes = {
+  field: PropTypes.shape({}).isRequired,
+  type: PropTypes.string.isRequired,
+  selectedClub: PropTypes.string.isRequired,
 };
 
 const ManageClub = ({ user, clubs }) => {
@@ -87,9 +106,13 @@ const ManageClub = ({ user, clubs }) => {
               <Heading as="h2" isBody color="primary">Select your club</Heading>
 
               <Content>
-                <p>You have selected <strong>{selectedClub?.name}</strong> as your QuidditchUK Club.</p>
                 {user.club_uuid
-                  ? (<p>If you need to change your club, you must go through our transfer process.</p>)
+                  ? (
+                    <>
+                      <p>You have selected <strong>{selectedClub?.name}</strong> as your QuidditchUK Club.</p>
+                      <p>If you need to change your club, you must submit a transfer request to QuidditchUK to request any changes.</p>
+                    </>
+                  )
                   : (<p>Please ensure that your selected club is the correct one and is aware that you are joining them before confirming this decision. Please note that once you have locked in your club you will not be able to undo it and must submit a transfer request to QuidditchUK to request any changes.</p>)}
               </Content>
 
@@ -98,6 +121,7 @@ const ManageClub = ({ user, clubs }) => {
                   onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError)}
                   initialValues={{
                     club_uuid: selectedClub,
+                    confirm: false,
                   }}
                   validationSchema={SelectClubSchema}
                 >
@@ -121,7 +145,10 @@ const ManageClub = ({ user, clubs }) => {
 
                         <ErrorMessage name="club_uuid" component={InlineError} marginBottom={3} />
 
-                        <p>I acknowledge that I have read the disclaimer and <strong>{selectedClub?.name}</strong> is my correct club, and I will not be able to change my mind without requesting a formal transfer.</p>
+                        <Field mt="3" name="confirm" type="checkbox" component={Checkbox} selectedClub={selectedClub?.name} />
+
+                        <ErrorMessage name="confirm" component={InlineError} marginBottom={3} />
+
                         <AutoValidateForm setSelectedClub={setSelectedClub} clubs={clubs} />
                       </Grid>
 
