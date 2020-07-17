@@ -58,7 +58,7 @@ const Nav = styled.nav`
 `;
 
 const List = styled.ul`
-  align-items: center;
+  align-items: stretch;
   display: flex;
   flex-direction: row;
   list-style-type: none;
@@ -84,6 +84,19 @@ const List = styled.ul`
 
   li {
     cursor: pointer;
+
+    &:hover {
+      background: transparent;
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.l}) {
+      align-self: center;
+      height: auto;
+
+      &:hover {
+        background: ${({ theme }) => theme.colors.greyLight};
+      }
+    }
   }
 
   ul {
@@ -113,12 +126,12 @@ const List = styled.ul`
     justify-content: flex-start;
     position: absolute;
     width: auto;
-    top: 35px;
+    top: 34px;
     z-index: 15;
     max-height: 400px;
 
     li {
-      background: ${({ theme }) => theme.colors.white};
+      background: ${({ theme }) => theme.colors.greyLight};
       box-shadow: 0 10px 0.625rem rgba(0,0,0,0.3);
       width: 100%;
 
@@ -235,10 +248,18 @@ const List = styled.ul`
 `;
 
 const Item = styled.li`
-  ${space};
+  ${space};  
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.l}) {
+    display: flex;
+  }
 
  &:first-of-type {
    padding-left: 0;
+ }
+
+ &:hover {
+   background: ${({ theme }) => theme.colors.greyLight};
  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
@@ -253,8 +274,16 @@ const Item = styled.li`
 `;
 
 const NavItem = styled.span`
+  padding: ${({ theme }) => theme.space[5]};
+  
+  @media (min-width: ${({ theme }) => theme.breakpoints.l}) {
+    display: flex;
+    height: 100%;
+  }
+
   color: ${({ theme }) => theme.colors.greyDark};
   font-weight: bold;
+  ${space};
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
@@ -355,7 +384,7 @@ function Navigation({ dashboard }) {
         <Nav>
           <List open={open} ref={scrollRef}>
             {navigation.map((item, i) => (
-              <Item key={item.label} pl={6}>
+              <Item key={item.label} pl={1}>
                 {item.list
                   ? (
                     <ParentWrapper path={item.path}>
@@ -382,10 +411,10 @@ function Navigation({ dashboard }) {
               </Item>
             ))}
 
-            <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={dashboard ? 'secondary' : { _: 'secondary', l: 'primary' }} onClick={() => setOpen(false)}>Find Quidditch</Button></a></Link></Item>
+            <Item pl={5}><Link href="/find-quidditch" passHref><a><Button type="button" variant={dashboard ? 'secondary' : { _: 'secondary', l: 'primary' }} onClick={() => setOpen(false)}>Find Quidditch</Button></a></Link></Item>
 
             {!loggedIn && (
-              <Item pl={4}>
+              <Item pl={2}>
                 <Link href="/login" passHref>
                   <a>
                     <Button type="button" variant="light" onClick={() => setOpen(false)} mb={{ _: 4, l: 0 }}>
@@ -397,9 +426,9 @@ function Navigation({ dashboard }) {
             )}
 
             {loggedIn && (
-              <Item pl={4}>
+              <Item pl={2}>
                 <ParentWrapper path="/dashboard">
-                  <NavItem onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)} isButton><Button type="button" variant="light" py={{ _: 3, l: 2 }}>My Account</Button></NavItem>
+                  <NavItem pl="2" onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)} isButton><Button type="button" variant="light" py={{ _: 3, l: 2 }}>My Account</Button></NavItem>
                 </ParentWrapper>
 
                 <List className={`${navigationToggle === 20 ? 'dropdown' : ''}`}>
