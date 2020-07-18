@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Link from 'next/link';
@@ -11,8 +11,8 @@ import Container from 'components/container';
 import Heading from 'components/heading';
 import Content from 'components/content';
 import Image from 'components/image';
-import ProductCard, { ProductShape } from 'components/product-card';
-import ClubCard, { ClubShape } from 'components/club-card';
+import ProductCard from 'components/product-card';
+import ClubCard from 'components/club-card';
 import { CenterJustify } from 'components/image-and-content';
 
 const StyledLink = styled.a`
@@ -61,11 +61,30 @@ padding: 0;
   padding-left: 1rem;
   `;
 
-const Dashboard = ({ user, products, club }) => {
-  console.log(club);
-  const [hasMembership] = useState(!!products.length);
-  const [hasClub] = useState(user.club_uuid);
+const Dashboard = ({ user }) => {
+  const [membership, setMembership] = useState(null);
+  const [club, setClub] = useState(null);
   const [setupProfile] = useState(user.first_name && user.last_name);
+
+  useEffect(() => {
+    const fetchMembership = async () => {
+      const { data } = await api.get('/products/me');
+      setMembership(data[0]);
+    };
+
+    fetchMembership();
+  }, []);
+
+  useEffect(() => {
+    if (user.club_uuid) {
+      const fetchClub = async () => {
+        const { data } = await api.get(`/clubs/${user.club_uuid}`);
+        setClub(data);
+      };
+
+      fetchClub();
+    }
+  }, [user]);
 
   return (
     <>
@@ -90,27 +109,27 @@ const Dashboard = ({ user, products, club }) => {
                 <Content>As the new season approaches, complete the following list to be ready when the season kicks off:</Content>
 
                 <StyledList>
-                  <ListItem color={hasMembership ? 'keeperGreen' : 'white'}>
+                  <ListItem color={membership ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
                       <Link href="/dashboard/membership/manage" passHref>
-                        <StyledAnchor color={hasMembership ? 'keeperGreen' : 'white'} borderColor={hasMembership ? 'keeperGreen' : 'white'}>
+                        <StyledAnchor color={membership ? 'keeperGreen' : 'white'} borderColor={membership ? 'keeperGreen' : 'white'}>
                           Purchase your QuidditchUK Membership
                         </StyledAnchor>
                       </Link>
 
-                      {hasMembership && <Checkmark />}
+                      {membership && <Checkmark />}
                     </Flex>
                   </ListItem>
 
-                  <ListItem color={hasClub ? 'keeperGreen' : 'white'}>
+                  <ListItem color={club ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
                       <Link href="/dashboard/membership/club" passHref>
-                        <StyledAnchor color={hasClub ? 'keeperGreen' : 'white'} borderColor={hasClub ? 'keeperGreen' : 'white'}>
+                        <StyledAnchor color={club ? 'keeperGreen' : 'white'} borderColor={club ? 'keeperGreen' : 'white'}>
                           Select your club
                         </StyledAnchor>
                       </Link>
 
-                      {!!hasClub && <Checkmark />}
+                      {!!club && <Checkmark />}
                     </Flex>
                   </ListItem>
 
@@ -143,23 +162,23 @@ const Dashboard = ({ user, products, club }) => {
             gridTemplateColumns={{ _: '1fr', m: '2fr 1fr' }}
             gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
           >
-            {hasMembership && (
+            {membership && (
               <Flex flexDirection="column">
 
                 <Heading as="h2" isBody color="primary">My membership</Heading>
 
                 <ProductCard
-                  key={products[0].id}
-                  id={products[0].id}
-                  image={products[0].images[0]}
-                  description={products[0].description}
-                  name={products[0].name}
-                  expires={products[0].metadata.expires}
+                  key={membership?.id}
+                  id={membership?.id}
+                  image={membership?.images ? membership.images[0] : null}
+                  description={membership?.description}
+                  name={membership?.name}
+                  expires={membership?.metadata?.expires}
                 />
               </Flex>
             )}
 
-            {hasClub && (
+            {club && (
               <Flex flexDirection="column">
                 <Heading as="h2" isBody color="primary">My club</Heading>
 
@@ -202,37 +221,20 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  const { data: products } = await api.get('/products/me', {
-    headers: {
-      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
-    },
-  });
-
   const { data: user } = await api.get('/users/me', {
     headers: {
       Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
     },
   });
 
-  let club = null;
-  if (user.club_uuid) {
-    const { data } = await api.get(`/clubs/${user.club_uuid}`);
-    club = data;
-  }
-
   return {
     props: {
-      products,
       user,
-      club,
     },
   };
 };
 
-Dashboard.defaultProps = {
-  products: [],
-  club: null,
-};
+Dashboard.defaultProps = {};
 
 Dashboard.propTypes = {
   user: PropTypes.shape({
@@ -240,8 +242,6 @@ Dashboard.propTypes = {
     first_name: PropTypes.string,
     last_name: PropTypes.string,
   }).isRequired,
-  products: PropTypes.arrayOf(PropTypes.shape(ProductShape)),
-  club: ClubShape,
 };
 
 export default Dashboard;
