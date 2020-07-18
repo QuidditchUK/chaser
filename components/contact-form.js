@@ -32,7 +32,7 @@ const handleSubmit = async (values, setSubmitting, setServerError, setServerSucc
     setServerError(null);
     setServerSuccess(null);
 
-    await api.put('/contact/form', values);
+    await api.post('/contact/form', values);
 
     setSubmitting(false);
     setServerSuccess(true);
