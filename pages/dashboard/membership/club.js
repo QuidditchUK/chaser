@@ -115,7 +115,7 @@ const ManageClub = ({ user, clubs }) => {
                   )
                   : (
                     <>
-                      <p>PBefore confirming, please double check that you have selected the correct club and they know you are joining them this competitive season.</p>
+                      <p>Before confirming, please double check that you have selected the correct club and they know you are joining them this competitive season.</p>
                       <p>Please note that once you have chosen and locked in your club you will not be able to undo it, and any changes will have to be requested via a Club Transfer Request to QuidditchUK.</p>
                     </>
                   )}
