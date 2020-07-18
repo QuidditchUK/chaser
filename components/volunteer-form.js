@@ -24,6 +24,7 @@ import { rem } from 'styles/theme';
 const VolunteerFormSchema = Yup.object().shape({
   name: Yup.string().required('Please enter your name'),
   email: Yup.string().email('Invalid email address').required('Please enter a valid email address'),
+  role: Yup.string().required('Please enter the role you are applying for'),
   message: Yup.string().required('Required'),
 });
 
@@ -100,7 +101,7 @@ const VolunteerForm = (rawData) => {
                 <ErrorMessage name="email" component={InlineError} marginBottom={3} />
 
                 <Label htmlFor="role">
-                  Role
+                  Role <Required />
                 </Label>
 
                 <Field
@@ -108,7 +109,10 @@ const VolunteerForm = (rawData) => {
                   placeholder="The role you're applying for"
                   as={Input}
                   my={3}
+                  error={errors.role && touched.role}
                 />
+
+                <ErrorMessage name="role" component={InlineError} marginBottom={3} />
 
                 <Label htmlFor="message">
                   A bit about you <Required />
