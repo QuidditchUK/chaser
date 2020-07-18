@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { layout, space } from 'styled-system';
+import { layout, space, border } from 'styled-system';
 
 const Input = styled.input`
   background: ${({ theme }) => theme.colors.white};
@@ -10,6 +10,7 @@ const Input = styled.input`
   padding: ${({ theme }) => theme.space[2]};
   ${layout};
   ${space};
+  ${border}
 `;
 
 export default Input;

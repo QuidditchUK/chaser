@@ -65,80 +65,101 @@ const Page = () => {
     <>
       <Meta description="Join QuidditchUK to manage your QuidditchUK Membership, Account details and more" subTitle="Join QuidditchUK" />
       <Box
-        bg="greyLight"
-        py={{ _: 4, l: 10 }}
-        px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+        backgroundImage="url(https://images.prismic.io/chaser/60b691d5-72f3-42d0-b634-b2548525fd65_QD_FN-325.jpg?auto=compress,format)"
+        backgroundColor="primary"
+        backgroundSize="cover"
+        backgroundPosition="center"
+        position="relative"
       >
-        <Container maxWidth={rem(500)}>
-          <Flex justifyContent="center" alignItems="center"><Logo src={logo} alt="Quidditch UK" /></Flex>
-          <Heading as="h1" isBody textAlign="center">Join QuidditchUK</Heading>
+        <Flex
+          position="absolute"
+          height="100%"
+          zIndex={1}
+          bg="primary"
+          opacity={0.8}
+          width="100%"
+        />
 
-          <Formik
-            initialValues={{
-              email: '',
-              password: '',
-              confirm: '',
-            }}
-            onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError)}
-            validationSchema={JoinFormSchema}
-          >
-            {({ errors, touched, isSubmitting }) => (
-              <Form>
-                <Grid
-                  gridTemplateColumns="1fr"
-                >
-                  <Label htmlFor="name">
-                    Email Address <Required />
-                  </Label>
+        <Container
+          maxWidth={rem(500)}
+          py={{ _: 4, l: 10 }}
+          px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+        >
+          <Box borderRadius={1} bg="white" zIndex={2} position="relative" px={4} py={4}>
+            <Flex justifyContent="center" alignItems="center"><Logo src={logo} alt="Quidditch UK" /></Flex>
+            <Heading as="h1" isBody textAlign="center">Join QuidditchUK</Heading>
+            <Content pb={5}>Join QuidditchUK to manage your QuidditchUK and Club Membership, and register for official events</Content>
 
-                  <Field
-                    name="email"
-                    placeholder="Your email address"
-                    as={Input}
-                    my={3}
-                    error={errors.email && touched.email}
-                  />
+            <Formik
+              initialValues={{
+                email: '',
+                password: '',
+                confirm: '',
+              }}
+              onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError)}
+              validationSchema={JoinFormSchema}
+            >
+              {({ errors, touched, isSubmitting }) => (
+                <Form>
+                  <Grid
+                    gridTemplateColumns="1fr"
+                  >
+                    <Label htmlFor="name">
+                      Email Address <Required />
+                    </Label>
 
-                  <ErrorMessage name="email" component={InlineError} marginBottom={3} />
+                    <Field
+                      name="email"
+                      placeholder="Your email address"
+                      as={Input}
+                      borderColor="greyLight"
+                      my={3}
+                      error={errors.email && touched.email}
+                    />
 
-                  <Label htmlFor="password">
-                    Password <Required />
-                  </Label>
+                    <ErrorMessage name="email" component={InlineError} marginBottom={3} />
 
-                  <Field
-                    name="password"
-                    placeholder="Password"
-                    as={Input}
-                    my={3}
-                    type="password"
-                    error={errors.password && touched.password}
-                  />
-                  <ErrorMessage name="password" component={InlineError} marginBottom={3} />
+                    <Label htmlFor="password">
+                      Password <Required />
+                    </Label>
 
-                  <Label htmlFor="confirm">
-                    Confirm Password <Required />
-                  </Label>
+                    <Field
+                      name="password"
+                      placeholder="Password"
+                      as={Input}
+                      my={3}
+                      type="password"
+                      borderColor="greyLight"
+                      error={errors.password && touched.password}
+                    />
+                    <ErrorMessage name="password" component={InlineError} marginBottom={3} />
 
-                  <Field
-                    name="confirm"
-                    placeholder="Confirm your password"
-                    as={Input}
-                    my={3}
-                    type="password"
-                    error={errors.confirm && touched.confirm}
-                  />
+                    <Label htmlFor="confirm">
+                      Confirm Password <Required />
+                    </Label>
 
-                  <ErrorMessage name="confirm" component={InlineError} marginBottom={3} />
-                </Grid>
-                <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Join'}</Button>
-              </Form>
-            )}
-          </Formik>
+                    <Field
+                      name="confirm"
+                      placeholder="Confirm your password"
+                      as={Input}
+                      borderColor="greyLight"
+                      my={3}
+                      type="password"
+                      error={errors.confirm && touched.confirm}
+                    />
 
-          {serverError && <InlineError my={3}>{serverError}</InlineError>}
+                    <ErrorMessage name="confirm" component={InlineError} marginBottom={3} />
+                  </Grid>
+                  <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Join'}</Button>
+                </Form>
+              )}
+            </Formik>
 
-          <Box bg="white" px="4" py="2" mt="6" borderColor="primary" borderWidth="1px" borderStyle="solid" color="primary" borderRadius={0}>
-            <Text>Already have an account? <Link href="/login" as="/login" passHref><a>Sign in.</a></Link></Text>
+            {serverError && <InlineError my={3}>{serverError}</InlineError>}
+
+            <Box bg="white" px="4" py="2" mt="6" borderColor="primary" borderWidth="1px" borderStyle="solid" color="primary" borderRadius={0}>
+              <Text>Already have an account? <Link href="/login" as="/login" passHref><a>Sign in.</a></Link></Text>
+            </Box>
           </Box>
         </Container>
       </Box>
