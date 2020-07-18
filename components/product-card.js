@@ -72,7 +72,7 @@ const ProductCard = ({
       {!!expires && (
         <>
           <Content fontSize="1" py={0}><strong>{parse(expires, 'dd-MM-yyyy', new Date()) > new Date() ? 'Valid until' : 'Expired'}</strong></Content>
-          <Content fontSize="4" py={0}><strong>{format(parse(expires, 'dd-MM-yyyy', new Date()), 'd LLL yyyy')}</strong></Content>
+          <Content fontSize="3" py={0}><strong>{format(parse(expires, 'dd-MM-yyyy', new Date()), 'd LLL yyyy')}</strong></Content>
         </>
       )}
     </Flex>

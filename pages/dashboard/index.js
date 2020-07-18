@@ -140,7 +140,7 @@ const Dashboard = ({ user, products, club }) => {
           </Box>
 
           <Grid
-            gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
+            gridTemplateColumns={{ _: '1fr', m: '2fr 1fr' }}
             gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
           >
             {hasMembership && (
