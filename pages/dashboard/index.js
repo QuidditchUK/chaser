@@ -216,7 +216,8 @@ export const getServerSideProps = async ({ req, res }) => {
 
   let club = null;
   if (user.club_uuid) {
-    club = await api.get(`/clubs/${user.club_uuid}`);
+    const { data } = await api.get(`/clubs/${user.club_uuid}`);
+    club = data;
   }
 
   return {

@@ -52,7 +52,7 @@ const handleSubmit = async ({ club_uuid }, setSubmitting, setServerError) => {
   try {
     setServerError(null);
 
-    await api.patch('/users/me', { club_uuid });
+    await api.put('/users/me', { club_uuid });
 
     setSubmitting(false);
     Router.push('/dashboard');
