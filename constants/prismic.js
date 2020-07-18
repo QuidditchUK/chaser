@@ -12,6 +12,7 @@ const FindQuidditch = dynamic(() => import('components/find-quidditch'));
 const EmbedSlice = dynamic(() => import('components/embed-slice'));
 const EmbedAndContent = dynamic(() => import('components/embed-and-content'));
 const ContactForm = dynamic(() => import('components/contact-form'));
+const VolunteerForm = dynamic(() => import('components/volunteer-form'));
 const TwoColumnTable = dynamic(() => import('components/two-column-table-slice'));
 
 const types = {
@@ -27,6 +28,7 @@ const types = {
   embed_and_content: EmbedAndContent,
   contact_form: ContactForm,
   two_column_table: TwoColumnTable,
+  volunteer_form: VolunteerForm,
 };
 
 export default function (sections, posts) {
