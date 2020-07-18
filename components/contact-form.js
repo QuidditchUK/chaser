@@ -27,7 +27,7 @@ const ContactFormSchema = Yup.object().shape({
   message: Yup.string().required('Required'),
 });
 
-const handleSubmit = async (values, setSubmitting, setServerError, setServerSuccess) => {
+const handleSubmit = async (values, setSubmitting, resetForm, setServerError, setServerSuccess) => {
   try {
     setServerError(null);
     setServerSuccess(null);
@@ -36,6 +36,7 @@ const handleSubmit = async (values, setSubmitting, setServerError, setServerSucc
 
     setSubmitting(false);
     setServerSuccess(true);
+    resetForm({});
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
     setSubmitting(false);
@@ -61,7 +62,7 @@ const ContactForm = (rawData) => {
             subject: '',
             message: '',
           }}
-          onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError, setServerSuccess)}
+          onSubmit={(values, { setSubmitting, resetForm }) => handleSubmit(values, setSubmitting, resetForm, setServerError, setServerSuccess)}
           validationSchema={ContactFormSchema}
         >
           {({ errors, touched, isSubmitting }) => (
@@ -137,7 +138,7 @@ const ContactForm = (rawData) => {
         )}
 
         {serverSuccess && (
-          <Box bg="primary" px="4" py="2" mt="6" borderColor="primary" borderWidth="1px" borderStyle="solid" color="white" borderRadius={0}>
+          <Box bg="keeperGreen" px="4" py="2" mt="6" borderColor="keeperGreen" borderWidth="1px" borderStyle="solid" color="white" borderRadius={0}>
             <Content>Message sent</Content>
           </Box>
         )}
