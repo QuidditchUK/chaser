@@ -135,9 +135,9 @@ const Dashboard = ({ user }) => {
 
                   <ListItem color={setupProfile ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
-                      <Link href="/dashboard/account/profile" passHref>
+                      <Link href="/dashboard/account/info" passHref>
                         <StyledAnchor color={setupProfile ? 'keeperGreen' : 'white'} borderColor={setupProfile ? 'keeperGreen' : 'white'}>
-                          Setup your profile
+                          Add your user information
                         </StyledAnchor>
                       </Link>
 

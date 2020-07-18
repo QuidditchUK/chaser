@@ -409,8 +409,8 @@ function Navigation({ dashboard }) {
                     </ExactActiveLink>
                   </Item>
                   <Item>
-                    <ActiveLink href="/dashboard/account/profile" as="/dashboard/account/profile">
-                      <NavItem onClick={() => setOpen(false)}>My profile</NavItem>
+                    <ActiveLink href="/dashboard/account/info" as="/dashboard/account/info">
+                      <NavItem onClick={() => setOpen(false)}>My info</NavItem>
                     </ActiveLink>
                   </Item>
                   <Item>
