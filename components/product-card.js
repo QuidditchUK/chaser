@@ -79,16 +79,7 @@ const ProductCard = ({
   </StyledCard>
 );
 
-ProductCard.defaultProps = {
-  name: null,
-  image: null,
-  description: null,
-  id: null,
-  price: null,
-  expires: null,
-};
-
-ProductCard.propTypes = {
+export const ProductShape = {
   name: PropTypes.string,
   image: PropTypes.string,
   description: PropTypes.string,
@@ -99,5 +90,16 @@ ProductCard.propTypes = {
   }),
   expires: PropTypes.string,
 };
+
+ProductCard.defaultProps = {
+  name: null,
+  image: null,
+  description: null,
+  id: null,
+  price: null,
+  expires: null,
+};
+
+ProductCard.propTypes = ProductShape;
 
 export default ProductCard;

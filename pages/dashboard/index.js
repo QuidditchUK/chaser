@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Link from 'next/link';
@@ -11,6 +11,16 @@ import Container from 'components/container';
 import Heading from 'components/heading';
 import Content from 'components/content';
 import Image from 'components/image';
+import ProductCard, { ProductShape } from 'components/product-card';
+import ClubCard, { ClubShape } from 'components/club-card';
+import { CenterJustify } from 'components/image-and-content';
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`;
 
 const ListItem = styled.li`
   ${color};
@@ -46,13 +56,16 @@ const StyledAnchor = styled.a`
   ${border};
 `;
 
-const StyledList = styled.ol``;
+const StyledList = styled.ol`
+padding: 0;
+  padding-left: 1rem;
+  `;
 
 const Dashboard = ({ user, products, club }) => {
   console.log(club);
-  const hasMembership = useRef(!!products.length);
-  const hasClub = useRef(user.club_uuid);
-  const setupProfile = useRef(user.first_name && user.last_name);
+  const [hasMembership] = useState(!!products.length);
+  const [hasClub] = useState(user.club_uuid);
+  const [setupProfile] = useState(user.first_name && user.last_name);
 
   return (
     <>
@@ -67,63 +80,112 @@ const Dashboard = ({ user, products, club }) => {
             <Grid
               gridTemplateColumns={{ _: '1fr', m: '2fr 1fr' }}
               gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-              bg="white"
-              color="primary"
+              bg="primary"
+              color="white"
               borderRadius={1}
               overflow="hidden"
             >
-              <Flex flexDirection="column" padding={4}>
-                <Heading as="h2" isBody color="primary">Get ready for brooms up</Heading>
+              <CenterJustify px={{ _: 6, m: 8 }} py={4}>
+                <Heading as="h2" isBody mt={0}>Get ready for brooms up</Heading>
                 <Content>As the new season approaches, complete the following list to be ready when the season kicks off:</Content>
 
                 <StyledList>
-                  <ListItem color={hasMembership.current ? 'keeperGreen' : 'black'}>
+                  <ListItem color={hasMembership ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
                       <Link href="/dashboard/membership/manage" passHref>
-                        <StyledAnchor color={hasMembership.current ? 'keeperGreen' : 'black'} borderColor={hasMembership.current ? 'keeperGreen' : 'black'}>
+                        <StyledAnchor color={hasMembership ? 'keeperGreen' : 'white'} borderColor={hasMembership ? 'keeperGreen' : 'white'}>
                           Purchase your QuidditchUK Membership
                         </StyledAnchor>
                       </Link>
 
-                      {hasMembership.current && <Checkmark />}
+                      {hasMembership && <Checkmark />}
                     </Flex>
                   </ListItem>
 
-                  <ListItem color={hasClub.current ? 'keeperGreen' : 'black'}>
+                  <ListItem color={hasClub ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
                       <Link href="/dashboard/membership/club" passHref>
-                        <StyledAnchor color={hasClub.current ? 'keeperGreen' : 'black'} borderColor={hasClub.current ? 'keeperGreen' : 'black'}>
+                        <StyledAnchor color={hasClub ? 'keeperGreen' : 'white'} borderColor={hasClub ? 'keeperGreen' : 'white'}>
                           Select your club
                         </StyledAnchor>
                       </Link>
 
-                      {!!hasClub.current && <Checkmark />}
+                      {!!hasClub && <Checkmark />}
                     </Flex>
                   </ListItem>
 
-                  <ListItem color={setupProfile.current ? 'keeperGreen' : 'black'}>
+                  <ListItem color={setupProfile ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
                       <Link href="/dashboard/account/profile" passHref>
-                        <StyledAnchor color={setupProfile.current ? 'keeperGreen' : 'black'} borderColor={setupProfile.current ? 'keeperGreen' : 'black'}>
+                        <StyledAnchor color={setupProfile ? 'keeperGreen' : 'white'} borderColor={setupProfile ? 'keeperGreen' : 'white'}>
                           Setup your profile
                         </StyledAnchor>
                       </Link>
 
-                      {setupProfile.current && <Checkmark />}
+                      {setupProfile && <Checkmark />}
                     </Flex>
                   </ListItem>
                 </StyledList>
-              </Flex>
+              </CenterJustify>
 
-              <Image
-                alt="London Unbreakables line up at the keeper line ready for brooms up"
-                src="https://images.prismic.io/chaser/b97e3eab-dcb7-4474-85e0-914afe58ae74_IMG_0529.JPG?auto=compress,format"
-                height={600}
-                width={900}
-              />
+              <CenterJustify>
+                <Image
+                  alt="London Unbreakables line up at the keeper line ready for brooms up"
+                  src="https://images.prismic.io/chaser/b97e3eab-dcb7-4474-85e0-914afe58ae74_IMG_0529.JPG?auto=compress,format"
+                  height={500}
+                  width={900}
+                />
+              </CenterJustify>
             </Grid>
           </Box>
 
+          <Grid
+            gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
+            gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+          >
+            {hasMembership && (
+              <Flex flexDirection="column">
+
+                <Heading as="h2" isBody color="primary">My membership</Heading>
+
+                <ProductCard
+                  key={products[0].id}
+                  id={products[0].id}
+                  image={products[0].images[0]}
+                  description={products[0].description}
+                  name={products[0].name}
+                  expires={products[0].metadata.expires}
+                />
+              </Flex>
+            )}
+
+            {hasClub && (
+              <Flex flexDirection="column">
+                <Heading as="h2" isBody color="primary">My club</Heading>
+
+                <Link href="/clubs/[club]" as={`/clubs/${club.slug}`} passHref>
+                  <StyledLink>
+                    <ClubCard
+                      backgroundColor={club.featured_color}
+                      color={club.text_color}
+                      name={club.name}
+                      league={club.league}
+                      venue={club.venue}
+                      icon={club.icon}
+                      image={club.images ? (
+                        <Image
+                          src={club.images[0]}
+                          alt={club.name}
+                          width={1600}
+                          height={900}
+                        />
+                      ) : null}
+                    />
+                  </StyledLink>
+                </Link>
+              </Flex>
+            )}
+          </Grid>
         </Container>
       </Box>
     </>
@@ -177,8 +239,8 @@ Dashboard.propTypes = {
     first_name: PropTypes.string,
     last_name: PropTypes.string,
   }).isRequired,
-  products: PropTypes.arrayOf(PropTypes.shape({})),
-  club: PropTypes.shape({}),
+  products: PropTypes.arrayOf(PropTypes.shape(ProductShape)),
+  club: ClubShape,
 };
 
 export default Dashboard;

@@ -89,4 +89,28 @@ ClubCard.propTypes = {
   image: PropTypes.shape({}),
 };
 
+export const ClubShape = {
+  name: PropTypes.string,
+  slug: PropTypes.string,
+  images: PropTypes.arrayOf(PropTypes.string),
+  venue: PropTypes.string,
+  icon: PropTypes.string,
+  featured_color: PropTypes.string,
+  text_color: PropTypes.string,
+  league: PropTypes.string,
+  leader: PropTypes.string,
+  leader_position: PropTypes.string,
+  official_website: PropTypes.string,
+  trainings: PropTypes.string,
+  status: PropTypes.string,
+  social_facebook: PropTypes.string,
+  social_twitter: PropTypes.string,
+  social_youtube: PropTypes.string,
+  social_instagram: PropTypes.string,
+  teams: PropTypes.arrayOf(PropTypes.shape({})),
+  location: PropTypes.shape,
+  description: PropTypes.string,
+  coordinates: PropTypes.shape,
+};
+
 export default ClubCard;
