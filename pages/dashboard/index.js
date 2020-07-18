@@ -1,4 +1,5 @@
 import React from 'react';
+import { api } from 'modules/api';
 import Meta from 'components/meta';
 import { Box } from 'components/layout';
 import Heading from 'components/heading';
@@ -27,8 +28,29 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
+  const { data: product } = await api.get('/products/me', {
+    headers: {
+      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
+    },
+  });
+
+  const { data: user } = await api.get('/users/me', {
+    headers: {
+      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
+    },
+  });
+
+  let club = null;
+  if (user.club_uuid) {
+    club = await api.get(`/clubs/${user.club_uuid}`);
+  }
+
   return {
-    props: {},
+    props: {
+      product,
+      user,
+      club,
+    },
   };
 };
 

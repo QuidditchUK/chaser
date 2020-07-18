@@ -320,9 +320,8 @@ const ClubPage = ({ club, posts }) => {
   );
 };
 
-// eslint-disable-next-line no-unused-vars
 export const getServerSideProps = async ({ params: { club } }) => {
-  const { data } = await api.get(`/clubs/${club}`);
+  const { data } = await api.get(`/clubs/slug/${club}`);
 
   // const results = RESULTS.sort((a, b) => new Date(b.tournament_date).getTime() - new Date(a.tournament_date).getTime());
   const posts = await getBlogTags(data.tags, { orderings: '[my.post.date desc]', pageSize: 3 });
