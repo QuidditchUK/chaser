@@ -24,7 +24,7 @@ const StyledLink = styled.a`
 
 const ListItem = styled.li`
   ${color};
-  height: 30px;
+   margin-bottom: ${({ theme }) => theme.space[2]};
 `;
 
 const Checkmark = styled.span`
@@ -51,15 +51,19 @@ const Checkmark = styled.span`
 
 const StyledAnchor = styled.a`
   text-decoration: none;
+`;
+
+const Span = styled.span`
   border-bottom: 2px solid ${({ theme }) => theme.colors.black};
   ${color};
   ${border};
+  line-height: 1.5rem;
 `;
 
 const StyledList = styled.ol`
-padding: 0;
+  padding: 0;
   padding-left: 1rem;
-  `;
+`;
 
 const Dashboard = ({ user }) => {
   const [membership, setMembership] = useState(null);
@@ -97,7 +101,7 @@ const Dashboard = ({ user }) => {
         <Container>
           <Box bg="white" borderRadius={1}>
             <Grid
-              gridTemplateColumns={{ _: '1fr', m: '2fr 1fr' }}
+              gridTemplateColumns={{ _: '1fr', m: '1fr 1fr', l: '2fr 1fr' }}
               gridGap={{ _: 'gutter._', m: 'gutter.m' }}
               bg="primary"
               color="white"
@@ -106,14 +110,16 @@ const Dashboard = ({ user }) => {
             >
               <CenterJustify px={{ _: 6, m: 8 }} py={4}>
                 <Heading as="h2" isBody mt={0}>Get ready for brooms up</Heading>
-                <Content>As the new season approaches, complete the following list to be ready when the season kicks off:</Content>
+                <Content fontSize="1">As the new season approaches, complete the following list to be ready when the season kicks off:</Content>
 
                 <StyledList>
                   <ListItem color={membership ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
                       <Link href="/dashboard/membership/manage" passHref>
-                        <StyledAnchor color={membership ? 'keeperGreen' : 'white'} borderColor={membership ? 'keeperGreen' : 'white'}>
-                          Purchase your QuidditchUK Membership
+                        <StyledAnchor>
+                          <Span color={membership ? 'keeperGreen' : 'white'} borderColor={membership ? 'keeperGreen' : 'white'}>
+                            Purchase your QuidditchUK Membership
+                          </Span>
                         </StyledAnchor>
                       </Link>
 
@@ -124,8 +130,8 @@ const Dashboard = ({ user }) => {
                   <ListItem color={club ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
                       <Link href="/dashboard/membership/club" passHref>
-                        <StyledAnchor color={club ? 'keeperGreen' : 'white'} borderColor={club ? 'keeperGreen' : 'white'}>
-                          Select your club
+                        <StyledAnchor>
+                          <Span color={club ? 'keeperGreen' : 'white'} borderColor={club ? 'keeperGreen' : 'white'}>Select your club</Span>
                         </StyledAnchor>
                       </Link>
 
@@ -136,8 +142,8 @@ const Dashboard = ({ user }) => {
                   <ListItem color={setupProfile ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
                       <Link href="/dashboard/account/info" passHref>
-                        <StyledAnchor color={setupProfile ? 'keeperGreen' : 'white'} borderColor={setupProfile ? 'keeperGreen' : 'white'}>
-                          Add your user information
+                        <StyledAnchor>
+                          <Span color={setupProfile ? 'keeperGreen' : 'white'} borderColor={setupProfile ? 'keeperGreen' : 'white'}>Add your user information</Span>
                         </StyledAnchor>
                       </Link>
 
@@ -151,7 +157,7 @@ const Dashboard = ({ user }) => {
                 <Image
                   alt="London Unbreakables line up at the keeper line ready for brooms up"
                   src="https://images.prismic.io/chaser/b97e3eab-dcb7-4474-85e0-914afe58ae74_IMG_0529.JPG?auto=compress,format"
-                  height={500}
+                  height={600}
                   width={900}
                 />
               </CenterJustify>
