@@ -133,39 +133,34 @@ const Info = ({ user }) => {
                   />
 
                   <ErrorMessage name="email" component={InlineError} marginBottom={3} />
-                  <Grid gridTemplateColumns="1fr 1fr" gridGap="gutter._">
-                    <Flex flexDirection="column">
-                      <Label htmlFor="first_name">
-                        First name
-                      </Label>
 
-                      <Field
-                        name="first_name"
-                        placeholder="First name"
-                        as={Input}
-                        my={3}
-                        type="first_name"
-                        error={errors.first_name && touched.first_name}
-                      />
-                      <ErrorMessage name="first_name" component={InlineError} marginBottom={3} />
-                    </Flex>
+                  <Label htmlFor="first_name">
+                    First name
+                  </Label>
 
-                    <Flex flexDirection="column">
-                      <Label htmlFor="last_name">
-                        Last name
-                      </Label>
+                  <Field
+                    name="first_name"
+                    placeholder="First name"
+                    as={Input}
+                    my={3}
+                    type="first_name"
+                    error={errors.first_name && touched.first_name}
+                  />
+                  <ErrorMessage name="first_name" component={InlineError} marginBottom={3} />
 
-                      <Field
-                        name="last_name"
-                        placeholder="Last name"
-                        as={Input}
-                        my={3}
-                        type="last_name"
-                        error={errors.last_name && touched.last_name}
-                      />
-                      <ErrorMessage name="last_name" component={InlineError} marginBottom={3} />
-                    </Flex>
-                  </Grid>
+                  <Label htmlFor="last_name">
+                    Last name
+                  </Label>
+
+                  <Field
+                    name="last_name"
+                    placeholder="Last name"
+                    as={Input}
+                    my={3}
+                    type="last_name"
+                    error={errors.last_name && touched.last_name}
+                  />
+                  <ErrorMessage name="last_name" component={InlineError} marginBottom={3} />
                 </Grid>
                 <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Update Info'}</Button>
               </Form>

@@ -12,6 +12,7 @@ const {
   COOKIE_DOMAIN,
   COOKIE_SECURE,
   STRIPE_TOKEN,
+  GA_TOKEN,
 } = process.env
 
 module.exports = {
@@ -72,5 +73,6 @@ module.exports = {
     cookiesDomain: COOKIE_DOMAIN,
     cookiesSecure: COOKIE_SECURE,
     stripeToken: STRIPE_TOKEN,
+    gaToken: GA_TOKEN,
   },
 };

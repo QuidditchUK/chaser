@@ -23,6 +23,8 @@ import Content from 'components/content';
 import Required from 'components/required';
 import { api } from 'modules/api';
 import { setCookies } from 'modules/cookies';
+import { event } from 'modules/analytics';
+import { CATEGORIES } from 'constants/analytics';
 
 const Text = styled(Content)`
   a {
@@ -48,6 +50,11 @@ const handleSubmit = async ({ confirm, ...formData }, setSubmitting, setServerEr
     const { data } = await api.post('/users', formData);
 
     setCookies('AUTHENTICATION_TOKEN', data.access_token);
+
+    event({
+      action: 'Joined',
+      category: CATEGORIES.MEMBERSHIP,
+    });
 
     setSubmitting(false);
     Router.push('/dashboard');

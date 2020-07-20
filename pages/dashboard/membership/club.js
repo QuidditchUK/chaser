@@ -24,6 +24,8 @@ import Required from 'components/required';
 import { InlineError } from 'components/errors';
 import ClubCard from 'components/club-card';
 import Image from 'components/image';
+import { event } from 'modules/analytics';
+import { CATEGORIES } from 'constants/analytics';
 
 const StyledLink = styled.a`
   text-decoration: none;
@@ -53,6 +55,11 @@ const handleSubmit = async ({ club_uuid }, setSubmitting, setServerError) => {
     setServerError(null);
 
     await api.put('/users/me', { club_uuid });
+
+    event({
+      category: CATEGORIES.MEMBERSHIP,
+      action: 'Club selected',
+    });
 
     setSubmitting(false);
     Router.push('/dashboard');
