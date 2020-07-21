@@ -46,5 +46,3 @@ Disallow: /dashboard
 Disallow: /dashboard/*
 Allow: /*?utm_source=*
 
-Sitemap: https://feast-it.com/sitemap.xml
-
