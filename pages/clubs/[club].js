@@ -283,7 +283,7 @@ const ClubPage = ({ club, posts }) => {
 
               {club.teams?.length > 1 && <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Teams</Heading>}
 
-              {club.teams.map((team) => (
+              {club.teams.sort((a, b) => a.order - b.order).map((team) => (
                 <Grid
                   gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
                   gridGap={{ _: 'gutter._', m: 'gutter.m' }}
