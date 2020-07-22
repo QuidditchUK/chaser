@@ -421,7 +421,8 @@ function Navigation({ dashboard }) {
                             setOpen(false);
                             signOut();
                           }}
-                        >Sign out
+                        >
+                          Sign out
                         </NavItem>
                       </a>
                     </Link>
@@ -432,14 +433,13 @@ function Navigation({ dashboard }) {
           </List>
 
           <Hamburger
-            white={open || dashboard}
+            white={(open || dashboard) ? 'true' : undefined}
             aria-hidden="true"
             onClick={() => setOpen(!open)}
           />
         </Nav>
       </Header>
     </Wrapper>
-
   );
 }
 
