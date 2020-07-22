@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import useSWR from 'swr';
 import Link from 'next/link';
 import { color, border } from 'styled-system';
 import { api } from 'modules/api';
@@ -66,29 +67,12 @@ const StyledList = styled.ol`
 `;
 
 const Dashboard = ({ user }) => {
-  const [membership, setMembership] = useState(null);
-  const [club, setClub] = useState(null);
   const [setupProfile] = useState(user.first_name && user.last_name);
+  const { data: memberships } = useSWR('/products/me', api);
+  const { data: rawClub } = useSWR(`/clubs/${user.club_uuid}`, api);
 
-  useEffect(() => {
-    const fetchMembership = async () => {
-      const { data } = await api.get('/products/me');
-      setMembership(data[0]);
-    };
-
-    fetchMembership();
-  }, []);
-
-  useEffect(() => {
-    if (user.club_uuid) {
-      const fetchClub = async () => {
-        const { data } = await api.get(`/clubs/${user.club_uuid}`);
-        setClub(data);
-      };
-
-      fetchClub();
-    }
-  }, [user]);
+  const [membership] = memberships?.data || [];
+  const club = rawClub?.data || null;
 
   return (
     <>
