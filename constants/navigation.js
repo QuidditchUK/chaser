@@ -87,11 +87,11 @@ export const MAIN_NAVIGATION = [
     as: '/youth',
     href: '/[id]',
   },
-  {
-    label: 'Merch',
-    as: '/merch',
-    href: '/[id]',
-  },
+  // {
+  //   label: 'Merch',
+  //   as: '/merch',
+  //   href: '/[id]',
+  // },
   {
     label: 'News',
     as: '/news',
@@ -121,11 +121,11 @@ export const DASHBOARD_NAVIGATION = [
       // },
     ],
   },
-  {
-    label: 'Merch',
-    as: '/merch',
-    href: '/merch',
-  },
+  // {
+  //   label: 'Merch',
+  //   as: '/merch',
+  //   href: '/merch',
+  // },
   {
     label: 'News',
     as: '/news',
