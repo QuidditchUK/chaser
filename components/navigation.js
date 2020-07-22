@@ -12,7 +12,7 @@ import cookies from 'js-cookie';
 import HamburgerIcon from 'public/images/hamburger.svg';
 import { MAIN_NAVIGATION, DASHBOARD_NAVIGATION } from 'constants/navigation';
 import { removeCookie } from 'modules/cookies';
-import ActiveLink, { ParentWrapper } from './active-link';
+import ActiveLink, { ParentWrapper, ExactActiveLink } from './active-link';
 import { Logo, LogoLink } from './logo';
 import Button from './button';
 
@@ -404,13 +404,13 @@ function Navigation({ dashboard }) {
 
                 <List className={`${navigationToggle === 20 ? 'dropdown' : ''}`}>
                   <Item>
-                    <ActiveLink href="/dashboard" as="/dashboard">
+                    <ExactActiveLink href="/dashboard" as="/dashboard">
                       <NavItem onClick={() => setOpen(false)}>Dashboard</NavItem>
-                    </ActiveLink>
+                    </ExactActiveLink>
                   </Item>
                   <Item>
-                    <ActiveLink href="/dashboard/account/profile" as="/dashboard/account/profile">
-                      <NavItem onClick={() => setOpen(false)}>My profile</NavItem>
+                    <ActiveLink href="/dashboard/account/info" as="/dashboard/account/info">
+                      <NavItem onClick={() => setOpen(false)}>My info</NavItem>
                     </ActiveLink>
                   </Item>
                   <Item>

@@ -1,5 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 const Scripts = () => (
   <Head>
@@ -12,6 +15,24 @@ const Scripts = () => (
       }}
     />
     <script type="text/javascript" src="https://static.cdn.prismic.io/prismic.min.js?new=true" />
+
+    {/* Global Site Tag (gtag.js) - Google Analytics */}
+    <script
+      async
+      src={`https://www.googletagmanager.com/gtag/js?id=${publicRuntimeConfig.gaToken}`}
+    />
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${publicRuntimeConfig.gaToken}', {
+              page_path: window.location.pathname,
+            });
+          `,
+      }}
+    />
   </Head>
 );
 

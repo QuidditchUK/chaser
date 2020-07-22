@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'just-safe-get';
 import styled from 'styled-components';
+import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
 import { typography, space } from 'styled-system';
 import PrismicWrapper from 'components/prismic-wrapper';
 import { Box, Grid } from 'components/layout';
@@ -12,8 +13,9 @@ export const Support = styled.div`
   ${space};
 `;
 
-const Item = ({ item, forceAspectRatio }) => {
-  const { height, width } = forceAspectRatio ? { height: 9, width: 16 } : item.image.dimensions;
+const Item = ({ item }) => {
+  const { height, width } = item.image.dimensions;
+
   return (
     <Box>
       <Image alt={item.image.alt} src={item.image.url} height={height} width={width} />
@@ -34,7 +36,6 @@ Item.propTypes = {
       }),
     }),
   }).isRequired,
-  forceAspectRatio: PropTypes.bool.isRequired,
 };
 
 const ImageSlice = (rawData) => {
@@ -47,19 +48,23 @@ const ImageSlice = (rawData) => {
 
   return (
     <PrismicWrapper variant={data.variant} small>
-      <Grid
-        gridTemplateColumns={{ _: '1fr', m: `${(multipleImages ? '1fr 1fr' : '1fr')}` }}
-        gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-      >
-        {data.items.map((itemData, i) => {
-          const item = {
-            image: get(itemData, 'image'),
-            support: get(itemData, 'support'),
-          };
+      <SimpleReactLightbox>
+        <SRLWrapper options={{ settings: { transitionSpeed: 500 } }}>
+          <Grid
+            gridTemplateColumns={{ _: '1fr', m: `${(multipleImages ? '1fr 1fr' : '1fr')}` }}
+            gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+          >
+            {data.items.map((itemData, i) => {
+              const item = {
+                image: get(itemData, 'image'),
+                support: get(itemData, 'support'),
+              };
 
-          return (<Item key={`image-slice-${i}`} item={item} forceAspectRatio={multipleImages} />);
-        })}
-      </Grid>
+              return (<Item key={`image-slice-${i}`} item={item} />);
+            })}
+          </Grid>
+        </SRLWrapper>
+      </SimpleReactLightbox>
     </PrismicWrapper>
   );
 };

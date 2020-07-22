@@ -283,7 +283,7 @@ const ClubPage = ({ club, posts }) => {
 
               {club.teams?.length > 1 && <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Teams</Heading>}
 
-              {club.teams.map((team) => (
+              {club.teams.sort((a, b) => a.order - b.order).map((team) => (
                 <Grid
                   gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
                   gridGap={{ _: 'gutter._', m: 'gutter.m' }}
@@ -320,9 +320,8 @@ const ClubPage = ({ club, posts }) => {
   );
 };
 
-// eslint-disable-next-line no-unused-vars
 export const getServerSideProps = async ({ params: { club } }) => {
-  const { data } = await api.get(`/clubs/${club}`);
+  const { data } = await api.get(`/clubs/slug/${club}`);
 
   // const results = RESULTS.sort((a, b) => new Date(b.tournament_date).getTime() - new Date(a.tournament_date).getTime());
   const posts = await getBlogTags(data.tags, { orderings: '[my.post.date desc]', pageSize: 3 });

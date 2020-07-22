@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
+import Router from 'next/router';
 import * as Sentry from '@sentry/node';
-import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import dynamic from 'next/dynamic';
 import DocumentHead from 'document/head';
 import theme from 'styles/theme';
 import Layout from 'containers/layout';
+import { pageview } from 'modules/analytics';
 
 Sentry.init({
   enabled: process.env.NODE_ENV === 'production',
@@ -17,6 +19,17 @@ const Scripts = dynamic(() => import('../document/scripts'), { ssr: false });
 require('intersection-observer');
 
 function App({ Component, pageProps, err }) {
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      pageview(url);
+    };
+
+    Router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      Router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <DocumentHead />

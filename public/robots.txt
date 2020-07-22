@@ -1,2 +1,48 @@
-# https://www.robotstxt.org/robotstxt.html
+# IF THE ROBOTS WIN, WE'LL HAVE TO LISTEN TO TECHNO
+# HECK NO! (HECK NO) I'LL NEVER LISTEN TO TECHNO!
+
+User-agent: Googlebot
+Disallow: /dashboard
+Disallow: /dashboard/*
+Allow: /*?utm_source=*
+
+User-agent: Mediapartners-Google
+Disallow: /dashboard
+Disallow: /dashboard/*
+Allow: /*?utm_source=*
+
+User-agent: AdsBot-Google
+Disallow: /dashboard
+Disallow: /dashboard/*
+Allow: /*?utm_source=*
+
+User-agent: AdsBot-Google-Mobile
+Disallow: /dashboard
+Disallow: /dashboard/*
+Allow: /*?utm_source=*
+
+User-agent: Mediapartners-Google
+Disallow: /dashboard
+Disallow: /dashboard/*
+Allow: /*?utm_source=*
+
+User-agent: Bingbot
+Disallow: /dashboard
+Disallow: /dashboard/*
+Allow: /*?utm_source=*
+
+User-agent: YandexBot
+Disallow: /dashboard
+Disallow: /dashboard/*
+Allow: /*?utm_source=*
+
+User-agent: Baiduspider
+Disallow: /dashboard
+Disallow: /dashboard/*
+Allow: /*?utm_source=*
+
 User-agent: *
+Disallow: /dashboard
+Disallow: /dashboard/*
+Allow: /*?utm_source=*
+

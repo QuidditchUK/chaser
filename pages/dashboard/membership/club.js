@@ -24,6 +24,8 @@ import Required from 'components/required';
 import { InlineError } from 'components/errors';
 import ClubCard from 'components/club-card';
 import Image from 'components/image';
+import { event } from 'modules/analytics';
+import { CATEGORIES } from 'constants/analytics';
 
 const StyledLink = styled.a`
   text-decoration: none;
@@ -52,7 +54,12 @@ const handleSubmit = async ({ club_uuid }, setSubmitting, setServerError) => {
   try {
     setServerError(null);
 
-    await api.patch('/users/me', { club_uuid });
+    await api.put('/users/me', { club_uuid });
+
+    event({
+      category: CATEGORIES.MEMBERSHIP,
+      action: 'Club selected',
+    });
 
     setSubmitting(false);
     Router.push('/dashboard');
@@ -70,7 +77,7 @@ const Checkbox = ({
 }) => (
   <Label {...labelProps}>
     <input {...field} type={type} />{' '}
-    I acknowledge that I have read the disclaimer above and <strong>{selectedClub}</strong> is my correct club, and that I will not be able to change my mind without requesting a formal transfer.
+    By checking this box I acknowledge that I have read the above disclaimer and I intend for <strong>{selectedClub}</strong> to be my QuidditchUK club for 2020/2021 Season.
   </Label>
 );
 
@@ -113,7 +120,12 @@ const ManageClub = ({ user, clubs }) => {
                       <p>If you need to change your club, you must submit a transfer request to QuidditchUK to request any changes.</p>
                     </>
                   )
-                  : (<p>Please ensure that your selected club is the correct one and is aware that you are joining them before confirming this decision. Please note that once you have locked in your club you will not be able to undo it and must submit a transfer request to QuidditchUK to request any changes.</p>)}
+                  : (
+                    <>
+                      <p>Before confirming, please double check that you have selected the correct club and they know you are joining them this competitive season.</p>
+                      <p>Please note that once you have chosen and locked in your club you will not be able to undo it, and any changes will have to be requested via a Club Transfer Request to QuidditchUK.</p>
+                    </>
+                  )}
               </Content>
 
               {!user.club_uuid && (

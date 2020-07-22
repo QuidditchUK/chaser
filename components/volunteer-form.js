@@ -21,9 +21,10 @@ import { InlineError } from 'components/errors';
 import { api } from 'modules/api';
 import { rem } from 'styles/theme';
 
-const ContactFormSchema = Yup.object().shape({
+const VolunteerFormSchema = Yup.object().shape({
   name: Yup.string().required('Please enter your name'),
   email: Yup.string().email('Invalid email address').required('Please enter a valid email address'),
+  role: Yup.string().required('Please enter the role you are applying for'),
   message: Yup.string().required('Required'),
 });
 
@@ -32,7 +33,7 @@ const handleSubmit = async (values, setSubmitting, resetForm, setServerError, se
     setServerError(null);
     setServerSuccess(null);
 
-    await api.post('/contact/form', values);
+    await api.post('/contact/volunteer', values);
 
     setSubmitting(false);
     setServerSuccess(true);
@@ -43,7 +44,7 @@ const handleSubmit = async (values, setSubmitting, resetForm, setServerError, se
   }
 };
 
-const ContactForm = (rawData) => {
+const VolunteerForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
@@ -53,17 +54,17 @@ const ContactForm = (rawData) => {
 
   return (
     <PrismicWrapper variant={data.variant}>
-      <Heading as="h1" isBody textAlign="center">Contact Us</Heading>
+      <Heading as="h1" isBody textAlign="center">Apply to Volunteer</Heading>
       <Container maxWidth={rem(500)} paddingBottom={4}>
         <Formik
           initialValues={{
             name: '',
             email: '',
-            subject: '',
+            role: '',
             message: '',
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => handleSubmit(values, setSubmitting, resetForm, setServerError, setServerSuccess)}
-          validationSchema={ContactFormSchema}
+          validationSchema={VolunteerFormSchema}
         >
           {({ errors, touched, isSubmitting }) => (
             <Form>
@@ -99,24 +100,27 @@ const ContactForm = (rawData) => {
 
                 <ErrorMessage name="email" component={InlineError} marginBottom={3} />
 
-                <Label htmlFor="subject">
-                  Subject
+                <Label htmlFor="role">
+                  Role <Required />
                 </Label>
 
                 <Field
-                  name="subject"
-                  placeholder="Subject"
+                  name="role"
+                  placeholder="The role you're applying for"
                   as={Input}
                   my={3}
+                  error={errors.role && touched.role}
                 />
 
+                <ErrorMessage name="role" component={InlineError} marginBottom={3} />
+
                 <Label htmlFor="message">
-                  Your message <Required />
+                  A bit about you <Required />
                 </Label>
 
                 <Field
                   name="message"
-                  placeholder="Your message"
+                  placeholder="Tell us about yourself"
                   as={Textarea}
                   my={3}
                   error={errors.message && touched.message}
@@ -126,7 +130,7 @@ const ContactForm = (rawData) => {
 
               </Grid>
 
-              <Button type="submit" variant={buttonVariants[data.variant]} disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Contact us'}</Button>
+              <Button type="submit" variant={buttonVariants[data.variant]} disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Apply'}</Button>
             </Form>
           )}
         </Formik>
@@ -139,7 +143,7 @@ const ContactForm = (rawData) => {
 
         {serverSuccess && (
           <Box bg="keeperGreen" px="4" py="2" mt="6" borderColor="keeperGreen" borderWidth="1px" borderStyle="solid" color="white" borderRadius={0}>
-            <Content>Message sent</Content>
+            <Content>Application sent</Content>
           </Box>
         )}
       </Container>
@@ -147,4 +151,4 @@ const ContactForm = (rawData) => {
   );
 };
 
-export default ContactForm;
+export default VolunteerForm;

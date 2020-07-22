@@ -548,6 +548,4 @@ export const getServerSideProps = async ({ query }) => {
   };
 };
 
-FindQuidditch.propTypes = {};
-
 export default FindQuidditch;
