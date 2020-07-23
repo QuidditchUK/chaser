@@ -49,7 +49,7 @@ const ImageSlice = (rawData) => {
   return (
     <PrismicWrapper variant={data.variant} small>
       <SimpleReactLightbox>
-        <SRLWrapper options={{ settings: { transitionSpeed: 500 } }}>
+        <SRLWrapper options={{ settings: { lightboxTransitionSpeed: 0.3 } }}>
           <Grid
             gridTemplateColumns={{ _: '1fr', m: `${(multipleImages ? '1fr 1fr' : '1fr')}` }}
             gridGap={{ _: 'gutter._', m: 'gutter.m' }}
