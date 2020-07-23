@@ -83,11 +83,12 @@ const Dashboard = ({ user }) => {
         px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
       >
         <Container>
-          <Box bg="white" borderRadius={1}>
+          <Heading as="h1" isBody color="primary" mt={0}>Hello, {user.first_name} 👋</Heading>
+          <Box bg="primary" borderRadius={1}>
             <Grid
               gridTemplateColumns={{ _: '1fr', m: '1fr 1fr', l: '2fr 1fr' }}
               gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-              bg="primary"
+              // bg="primary"
               color="white"
               borderRadius={1}
               overflow="hidden"

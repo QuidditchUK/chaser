@@ -28,8 +28,8 @@ const InfoFormSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  first_name: Yup.string().required('Please enter your first name'),
-  last_name: Yup.string().required('Please enter your last name'),
+  first_name: Yup.string().required('Please enter the first name you go by'),
+  last_name: Yup.string().required('Please enter the last name you go by'),
 });
 
 const PasswordFormSchema = Yup.object().shape({

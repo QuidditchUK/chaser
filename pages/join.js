@@ -36,8 +36,8 @@ const JoinFormSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  first_name: Yup.string().required('Please enter your first name'),
-  last_name: Yup.string().required('Please enter your last name'),
+  first_name: Yup.string().required('Please enter the name you go by'),
+  last_name: Yup.string().required('Please enter your last name you go by'),
   password: Yup.string()
     .min(8, 'Must be at least 8 characters long')
     .required('Required'),
