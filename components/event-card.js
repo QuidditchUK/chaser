@@ -2,13 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { space } from 'styled-system';
-import Link from 'next/link';
 import { format } from 'date-fns';
 import { parseTimestamptz } from 'modules/dates';
 import { Box, Flex, Grid } from 'components/layout';
 import Heading from 'components/heading';
-import Button from 'components/button';
-import ExternalLink from 'components/external-link';
 import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 
@@ -63,7 +60,7 @@ const EventCard = ({
 }) => (
   <StyledCard
     {...cardProps}
-    gridTemplateColumns={{ _: '1fr', m: '3fr 6fr 3fr' }}
+    gridTemplateColumns={{ _: '1fr', m: '3fr 9fr' }}
     gridGap={{ _: 'gutter._', m: 'gutter.m' }}
   >
     <Box
@@ -102,11 +99,6 @@ const EventCard = ({
         {venue}
       </p>
     </Content>
-
-    <Flex flexDirection="column" justifyContent="center" alignItems="center" padding="3">
-      {registerLink && new Date() < parseTimestamptz(registerTime) && (<ExternalLink href={registerLink}><Button type="button" variant="primary" mb="3" width="1">Register</Button></ExternalLink>)}
-      <Link href="/events/[event]" as={`/events/${slug}`}><a><Button type="button" variant="light" width="1">Read More</Button></a></Link>
-    </Flex>
   </StyledCard>
 );
 

@@ -44,8 +44,8 @@ const Icon = styled.div`
 `;
 
 const SHOW_TYPES = [
-  { value: 'clubs', name: 'Clubs' },
   { value: 'events', name: 'Events' },
+  { value: 'clubs', name: 'Clubs' },
 ];
 
 const LEAGUES = [
@@ -420,10 +420,55 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
         py={{ _: 6, l: 10 }}
       >
         <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+
+          {showEvents && !!events.length
+            && (
+              <>
+                <Heading as="h2" fontSize={4} isBody mt={0} color="primary">Events</Heading>
+
+                <Grid
+                  gridTemplateColumns="1fr"
+                  gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+                >
+                  {events.map((event) => (
+                    <Flex flexDirection="column" key={event.uuid}>
+                      <Link href="/events/[event]" as={`/events/${event.slug}`} passHref>
+                        <StyledLink>
+                          <EventCard
+                            name={event.name}
+                            type={event.type}
+                            icon={event.icon}
+                            league={event.league}
+                            venue={event.venue}
+                            startTime={event.start_time}
+                            image={event.images[0]}
+                            slug={event.slug}
+                            registerLink={event.registerLink}
+                            registerTime={event.registerTime}
+                          />
+                        </StyledLink>
+                      </Link>
+                    </Flex>
+                  ))}
+                </Grid>
+              </>
+            )}
+
+          {showNoEvents && (
+            <>
+              {showClubs && !!clubs.length && (<Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>)}
+              <Flex alignItems="center" justifyContent="center" flexDirection="column">
+                <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No events matched your search</Heading>
+                <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
+                <Link href="/about/contact-us" passHref><a><Button variant="secondary" type="button">Contact us</Button></a></Link>
+              </Flex>
+            </>
+          )}
+
           {showClubs && !!clubs.length
             && (
               <>
-                <Heading as="h2" fontSize={4} mt={0} isBody color="primary">Clubs</Heading>
+                <Heading as="h2" fontSize={4} isBody color="primary">Clubs</Heading>
 
                 <Grid
                   gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
@@ -463,46 +508,6 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
               {showEvents && !!events.length && (<Heading as="h2" fontSize={4} isBody color="primary">Clubs</Heading>)}
               <Flex alignItems="center" justifyContent="center" flexDirection="column">
                 <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No clubs matched your search</Heading>
-                <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
-                <Link href="/about/contact-us" passHref><a><Button variant="secondary" type="button">Contact us</Button></a></Link>
-              </Flex>
-            </>
-          )}
-
-          {showEvents && !!events.length
-            && (
-              <>
-                <Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>
-
-                <Grid
-                  gridTemplateColumns="1fr"
-                  gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-                >
-                  {events.map((event) => (
-                    <Flex flexDirection="column" key={event.uuid}>
-                      <EventCard
-                        name={event.name}
-                        type={event.type}
-                        icon={event.icon}
-                        league={event.league}
-                        venue={event.venue}
-                        startTime={event.start_time}
-                        image={event.images[0]}
-                        slug={event.slug}
-                        registerLink={event.registerLink}
-                        registerTime={event.registerTime}
-                      />
-                    </Flex>
-                  ))}
-                </Grid>
-              </>
-            )}
-
-          {showNoEvents && (
-            <>
-              {showClubs && !!clubs.length && (<Heading as="h2" fontSize={4} isBody color="primary">Events</Heading>)}
-              <Flex alignItems="center" justifyContent="center" flexDirection="column">
-                <Heading as="h2" fontSize={4} mt={0} mb={0} isBody textAlign="center" color="primary">No events matched your search</Heading>
                 <p>We can still help! Adjust your filters, and if you&#39;re still out of luck click &#34;Contact us&#34; to help us to bring Quidditch to your area.</p>
                 <Link href="/about/contact-us" passHref><a><Button variant="secondary" type="button">Contact us</Button></a></Link>
               </Flex>
