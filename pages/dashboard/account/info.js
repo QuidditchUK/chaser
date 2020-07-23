@@ -28,8 +28,8 @@ const InfoFormSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  first_name: Yup.string(),
-  last_name: Yup.string(),
+  first_name: Yup.string().required('Please enter your first name'),
+  last_name: Yup.string().required('Please enter your last name'),
 });
 
 const PasswordFormSchema = Yup.object().shape({
@@ -135,7 +135,7 @@ const Info = ({ user }) => {
                   <ErrorMessage name="email" component={InlineError} marginBottom={3} />
 
                   <Label htmlFor="first_name">
-                    First name
+                    First name <Required />
                   </Label>
 
                   <Field
@@ -149,7 +149,7 @@ const Info = ({ user }) => {
                   <ErrorMessage name="first_name" component={InlineError} marginBottom={3} />
 
                   <Label htmlFor="last_name">
-                    Last name
+                    Last name <Required />
                   </Label>
 
                   <Field

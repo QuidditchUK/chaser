@@ -97,6 +97,18 @@ const Dashboard = ({ user }) => {
                 <Content fontSize="1">As the new season approaches, complete the following list to be ready when the season kicks off:</Content>
 
                 <StyledList>
+                  <ListItem color={setupProfile ? 'keeperGreen' : 'white'}>
+                    <Flex alignItems="center">
+                      <Link href="/dashboard/account/info" passHref>
+                        <StyledAnchor>
+                          <Span color={setupProfile ? 'keeperGreen' : 'white'} borderColor={setupProfile ? 'keeperGreen' : 'white'}>Add your user information</Span>
+                        </StyledAnchor>
+                      </Link>
+
+                      {setupProfile && <Checkmark />}
+                    </Flex>
+                  </ListItem>
+
                   <ListItem color={membership ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
                       <Link href="/dashboard/membership/manage" passHref>
@@ -120,18 +132,6 @@ const Dashboard = ({ user }) => {
                       </Link>
 
                       {!!club && <Checkmark />}
-                    </Flex>
-                  </ListItem>
-
-                  <ListItem color={setupProfile ? 'keeperGreen' : 'white'}>
-                    <Flex alignItems="center">
-                      <Link href="/dashboard/account/info" passHref>
-                        <StyledAnchor>
-                          <Span color={setupProfile ? 'keeperGreen' : 'white'} borderColor={setupProfile ? 'keeperGreen' : 'white'}>Add your user information</Span>
-                        </StyledAnchor>
-                      </Link>
-
-                      {setupProfile && <Checkmark />}
                     </Flex>
                   </ListItem>
                 </StyledList>

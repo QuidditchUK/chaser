@@ -36,6 +36,8 @@ const JoinFormSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
+  first_name: Yup.string().required('Please enter your first name'),
+  last_name: Yup.string().required('Please enter your last name'),
   password: Yup.string()
     .min(8, 'Must be at least 8 characters long')
     .required('Required'),
@@ -123,6 +125,34 @@ const Page = () => {
                       my={3}
                       error={errors.email && touched.email}
                     />
+
+                    <Label htmlFor="first_name">
+                      First name <Required />
+                    </Label>
+
+                    <Field
+                      name="first_name"
+                      placeholder="First name"
+                      as={Input}
+                      my={3}
+                      type="first_name"
+                      error={errors.first_name && touched.first_name}
+                    />
+                    <ErrorMessage name="first_name" component={InlineError} marginBottom={3} />
+
+                    <Label htmlFor="last_name">
+                      Last name <Required />
+                    </Label>
+
+                    <Field
+                      name="last_name"
+                      placeholder="Last name"
+                      as={Input}
+                      my={3}
+                      type="last_name"
+                      error={errors.last_name && touched.last_name}
+                    />
+                    <ErrorMessage name="last_name" component={InlineError} marginBottom={3} />
 
                     <ErrorMessage name="email" component={InlineError} marginBottom={3} />
 
