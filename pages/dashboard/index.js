@@ -88,7 +88,6 @@ const Dashboard = ({ user }) => {
             <Grid
               gridTemplateColumns={{ _: '1fr', m: '1fr 1fr', l: '2fr 1fr' }}
               gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-              // bg="primary"
               color="white"
               borderRadius={1}
               overflow="hidden"

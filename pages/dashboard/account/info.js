@@ -135,7 +135,7 @@ const Info = ({ user }) => {
                   <ErrorMessage name="email" component={InlineError} marginBottom={3} />
 
                   <Label htmlFor="first_name">
-                    First name <Required />
+                    Preferred first name <Required />
                   </Label>
 
                   <Field
@@ -149,7 +149,7 @@ const Info = ({ user }) => {
                   <ErrorMessage name="first_name" component={InlineError} marginBottom={3} />
 
                   <Label htmlFor="last_name">
-                    Last name <Required />
+                    Preferred last name <Required />
                   </Label>
 
                   <Field

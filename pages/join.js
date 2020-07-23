@@ -36,8 +36,8 @@ const JoinFormSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  first_name: Yup.string().required('Please enter the name you go by'),
-  last_name: Yup.string().required('Please enter your last name you go by'),
+  first_name: Yup.string().required('Please enter the first name you go by'),
+  last_name: Yup.string().required('Please enter the last name you go by'),
   password: Yup.string()
     .min(8, 'Must be at least 8 characters long')
     .required('Required'),
@@ -121,13 +121,15 @@ const Page = () => {
                       name="email"
                       placeholder="Your email address"
                       as={Input}
-                      borderColor="greyLight"
+                      borderColor={(errors.email && touched.email) ? 'alert' : 'greyLight'}
                       my={3}
                       error={errors.email && touched.email}
                     />
 
+                    <ErrorMessage name="email" component={InlineError} marginBottom={3} />
+
                     <Label htmlFor="first_name">
-                      First name <Required />
+                      Preferred first name <Required />
                     </Label>
 
                     <Field
@@ -135,13 +137,13 @@ const Page = () => {
                       placeholder="First name"
                       as={Input}
                       my={3}
-                      type="first_name"
+                      borderColor={(errors.first_name && touched.first_name) ? 'alert' : 'greyLight'}
                       error={errors.first_name && touched.first_name}
                     />
                     <ErrorMessage name="first_name" component={InlineError} marginBottom={3} />
 
                     <Label htmlFor="last_name">
-                      Last name <Required />
+                      Preferred last name <Required />
                     </Label>
 
                     <Field
@@ -149,12 +151,10 @@ const Page = () => {
                       placeholder="Last name"
                       as={Input}
                       my={3}
-                      type="last_name"
+                      borderColor={(errors.last_name && touched.last_name) ? 'alert' : 'greyLight'}
                       error={errors.last_name && touched.last_name}
                     />
                     <ErrorMessage name="last_name" component={InlineError} marginBottom={3} />
-
-                    <ErrorMessage name="email" component={InlineError} marginBottom={3} />
 
                     <Label htmlFor="password">
                       Password <Required />
@@ -166,7 +166,7 @@ const Page = () => {
                       as={Input}
                       my={3}
                       type="password"
-                      borderColor="greyLight"
+                      borderColor={(errors.password && touched.password) ? 'alert' : 'greyLight'}
                       error={errors.password && touched.password}
                     />
                     <ErrorMessage name="password" component={InlineError} marginBottom={3} />
@@ -179,7 +179,7 @@ const Page = () => {
                       name="confirm"
                       placeholder="Confirm your password"
                       as={Input}
-                      borderColor="greyLight"
+                      borderColor={(errors.confirm && touched.confirm) ? 'alert' : 'greyLight'}
                       my={3}
                       type="password"
                       error={errors.confirm && touched.confirm}
