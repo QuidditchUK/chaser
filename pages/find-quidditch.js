@@ -427,7 +427,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
                 <Heading as="h2" fontSize={4} isBody mt={0} color="primary">Events</Heading>
 
                 <Grid
-                  gridTemplateColumns="1fr"
+                  gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
                   gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
                 >
                   {events.map((event) => (
