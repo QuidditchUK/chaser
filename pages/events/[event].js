@@ -18,28 +18,11 @@ import ExternalLink from 'components/external-link';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { rem } from 'styles/theme';
 import PinIcon from 'public/images/location-pin.svg';
-
-const EVENT = {
-  uuid: '36f03565-f622-43e6-90c5-fae022c5444z',
-  name: 'Northern Cup 2020',
-  league: 'University',
-  slug: 'northern-cup-2020',
-  location: { type: 'POINT', coordinates: ['-2.811808', '56.341305'] },
-  venue: 'Sheffield Hallam University Sports Park',
-  start_time: '2020-11-14 07:00:00Z',
-  end_time: '2020-11-15 17:00:00Z',
-  images: ['https://images.prismic.io/chaser/239db290-616f-4839-8d5f-3fa0ea83ab4d_DSC04508-2000x1200.jpg?auto=compress,format'],
-  icon: 'https://images.prismic.io/chaser/65d65868-3e13-4024-871a-6f23d1467042_Northern-Cup-2019-Logo.png?auto=compress,format',
-  description: '<p>Welcome to Northern Cup 2019! The UK’s Northern teams will be competing for the title of Northern Cup Champions, as well as fighting to earn their place at the inaugural European Qualifying Tournament and the British Quidditch Cup 2019.</p><p> Welcome to Northern Cup 2019! The UK’s Northern teams will be competing for the title of Northern Cup Champions, as well as fighting to earn their place at the inaugural European Qualifying Tournament and the British Quidditch Cup 2019.</p>',
-  registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdqKtdD2MoUfobYHtlzIbItUeOsgjJgWmylPnnP4vrkOCgpUg/viewform',
-  registerTime: '2020-09-13 07:00:00Z',
-};
+import { api } from 'modules/api';
 
 const Icon = styled.img`
-  border-radius: 50%;
   height: 100px;
   width: 100px;
-  background: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadows.box};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
@@ -75,6 +58,8 @@ const EventPage = ({ event }) => {
   if (!event) {
     return <Page404 />;
   }
+
+  const location = JSON.parse(event.coordinates);
 
   return (
     <>
@@ -132,7 +117,7 @@ const EventPage = ({ event }) => {
             <Flex alignItems="center">
               <LocationIcon />{' '}
               <LocationLink
-                href={`https://www.google.com/maps/search/?api=1&query=${event.location?.coordinates[1]},${event.location?.coordinates[0]}`}
+                href={`https://www.google.com/maps/search/?api=1&query=${location?.coordinates[1]},${location?.coordinates[0]}`}
                 rel="noopener noreferrer"
                 target="_blank"
                 linkColor="primary"
@@ -163,7 +148,7 @@ const EventPage = ({ event }) => {
 
 // eslint-disable-next-line no-unused-vars
 export const getServerSideProps = async ({ params: { event } }) => {
-  const data = EVENT;
+  const { data } = await api.get(`/events/${event}`);
 
   return {
     props: {
@@ -185,6 +170,7 @@ EventPage.propTypes = {
     location: PropTypes.shape,
     registerLink: PropTypes.string,
     registerTime: PropTypes.string,
+    coordinates: PropTypes.shape,
   }).isRequired,
 };
 
