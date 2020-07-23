@@ -300,12 +300,14 @@ const ClubPage = ({ club, posts }) => {
                       <tbody>
                         <TableRow>
                           <TableDataBorder borderTopWidth="3px" borderTopStyle="solid"><strong>Current Division</strong></TableDataBorder>
-                          <TableDataBorder borderTopWidth="3px" borderTopStyle="solid">{team.current_division}</TableDataBorder>
+                          <TableDataBorder borderTopWidth="3px" borderTopStyle="solid">{team.current_division || '-'}</TableDataBorder>
                         </TableRow>
 
                         <TableRow>
                           <TableDataBorder><strong>Current Position</strong></TableDataBorder>
-                          <TableDataBorder>{team.current_position}{formatOrdinals(team.current_position)}</TableDataBorder>
+                          <TableDataBorder>
+                            {team.current_position || '-'}{team.currentPosition ? formatOrdinals(team.current_position) : null}
+                          </TableDataBorder>
                         </TableRow>
                       </tbody>
                     </Table>
