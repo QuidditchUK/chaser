@@ -15,6 +15,7 @@ const ContactForm = dynamic(() => import('components/contact-form'));
 const VolunteerForm = dynamic(() => import('components/volunteer-form'));
 const NationalTeamForm = dynamic(() => import('components/national-team-form'));
 const TwoColumnTable = dynamic(() => import('components/two-column-table-slice'));
+const HorizontalCard = dynamic(() => import('components/horizontal-card'));
 
 const types = {
   video_hero_with_cta: HomeHero,
@@ -31,6 +32,7 @@ const types = {
   two_column_table: TwoColumnTable,
   volunteer_form: VolunteerForm,
   national_team_form: NationalTeamForm,
+  horizontal_card: HorizontalCard,
 };
 
 export default function Slice(sections, posts) {

@@ -60,7 +60,7 @@ const EventCard = ({
 }) => (
   <StyledCard
     {...cardProps}
-    gridTemplateColumns={{ _: '1fr', m: '3fr 3fr' }}
+    gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
     gridGap="gutter._"
   >
     <Box
