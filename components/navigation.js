@@ -123,7 +123,7 @@ const List = styled.ul`
       width: 100%;
 
       a {
-        color: ${({ theme }) => theme.colors.greyDark};
+        color: ${({ theme, dashboard }) => (dashboard ? theme.colors.white : theme.colors.greyDark)};
         display: block;
         width: 100%;
 
@@ -253,7 +253,7 @@ const Item = styled.li`
 `;
 
 const NavItem = styled.span`
-  color: ${({ theme }) => theme.colors.greyDark};
+  color: ${({ theme, dashboard }) => (dashboard ? theme.colors.white : theme.colors.greyDark)};
   font-weight: bold;
 
   &:hover {
@@ -359,12 +359,12 @@ function Navigation({ dashboard }) {
                 {item.list
                   ? (
                     <ParentWrapper path={item.path}>
-                      <NavItem onClick={() => setNavigationToggle(navigationToggle === i ? 1000 : i)}>{item.label}</NavItem>
+                      <NavItem onClick={() => setNavigationToggle(navigationToggle === i ? 1000 : i)} dashboard={dashboard}>{item.label}</NavItem>
                     </ParentWrapper>
                   )
                   : (
                     <ActiveLink href={item.href} as={item.as}>
-                      <NavItem onClick={() => setOpen(false)}>{item.label}</NavItem>
+                      <NavItem onClick={() => setOpen(false)} dashboard={dashboard}>{item.label}</NavItem>
                     </ActiveLink>
                   )}
 
