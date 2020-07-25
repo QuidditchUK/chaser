@@ -13,6 +13,7 @@ const EmbedSlice = dynamic(() => import('components/embed-slice'));
 const EmbedAndContent = dynamic(() => import('components/embed-and-content'));
 const ContactForm = dynamic(() => import('components/contact-form'));
 const VolunteerForm = dynamic(() => import('components/volunteer-form'));
+const NationalTeamForm = dynamic(() => import('components/national-team-form'));
 const TwoColumnTable = dynamic(() => import('components/two-column-table-slice'));
 
 const types = {
@@ -29,9 +30,10 @@ const types = {
   contact_form: ContactForm,
   two_column_table: TwoColumnTable,
   volunteer_form: VolunteerForm,
+  national_team_form: NationalTeamForm,
 };
 
-export default function (sections, posts) {
+export default function Slice(sections, posts) {
   return sections.map((section, i) => {
     const Component = types[section.slice_type];
 

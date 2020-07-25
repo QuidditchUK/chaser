@@ -27,7 +27,8 @@
           "embed": [],
           "embed_and_content": [],
           "contact_form": [],
-          "volunteer_form": []
+          "volunteer_form": [],
+          "national_team_form": []
         },
         "choices": {
           "video_hero_with_cta": {
@@ -506,6 +507,27 @@
             "type": "Slice",
             "fieldset": "Volunteer Form",
             "description": "Volunteer Form",
+            "icon": "assignment",
+            "display": "list",
+            "non-repeat": {
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "variant"
+                }
+              }
+            },
+            "repeat": {}
+          },
+          "national_team_form": {
+            "type": "Slice",
+            "fieldset": "National Team Form",
+            "description": "National Team Form",
             "icon": "assignment",
             "display": "list",
             "non-repeat": {
