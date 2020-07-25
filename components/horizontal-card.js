@@ -97,7 +97,6 @@ const HorizontalCardsSlice = (rawData) => {
   return (
     <PrismicWrapper
       variant={data.variant}
-      px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
     >
       {RichText.asText(data.title) && (
         <Heading as="h2" fontSize={[3, 3, 4]} mt={2} textAlign="center" px={{ _: 0, m: 'gutter.m' }}>
@@ -118,7 +117,7 @@ const HorizontalCardsSlice = (rawData) => {
         const isImageLeft = item.layout === 'image-left';
 
         return (
-          <Flex flexDirection="column" key={`cards-${i}`}>
+          <Flex flexDirection="column" key={`cards-${i}`} mb={5}>
             <HorizontalCard
               name={item.title}
               content={item.content}
