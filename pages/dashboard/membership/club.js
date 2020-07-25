@@ -22,7 +22,7 @@ import Label from 'components/label';
 import Button from 'components/button';
 import Required from 'components/required';
 import { InlineError } from 'components/errors';
-import ClubCard from 'components/club-card';
+import ClubCard, { ACTIVE_STATUS } from 'components/club-card';
 import Image from 'components/image';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
@@ -185,6 +185,7 @@ const ManageClub = ({ user, clubs }) => {
                     league={selectedClub.league}
                     venue={selectedClub.venue}
                     icon={selectedClub.icon}
+                    status={selectedClub.status}
                     image={selectedClub.images ? (
                       <Image
                         src={selectedClub.images[0]}
@@ -224,7 +225,7 @@ export const getServerSideProps = async ({ req, res }) => {
 
   return {
     props: {
-      clubs,
+      clubs: clubs.filter(({ status }) => status === ACTIVE_STATUS),
       user,
     },
   };

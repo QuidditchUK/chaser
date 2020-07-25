@@ -165,7 +165,7 @@ EventPage.propTypes = {
     end_time: PropTypes.string,
     venue: PropTypes.string,
     icon: PropTypes.string,
-    league: PropTypes.string,
+    league: PropTypes.arrayOf(PropTypes.string),
     images: PropTypes.arrayOf(PropTypes.string),
     location: PropTypes.shape,
     registerLink: PropTypes.string,

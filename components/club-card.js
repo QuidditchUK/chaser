@@ -53,12 +53,15 @@ const Content = styled.div`
   }
 `;
 
+export const ACTIVE_STATUS = 'active';
+
 const ClubCard = ({
   image,
   name,
   league,
   icon,
   venue,
+  status,
   ...cardProps
 }) => (
   <StyledCard {...cardProps}>
@@ -67,6 +70,7 @@ const ClubCard = ({
 
     <Content>
       <Type fontWeight="bold" fontSize={(rem(10))} bg={TYPES[league]}>{league}</Type>
+      {status !== ACTIVE_STATUS && (<Type fontWeight="bold" fontSize={(rem(10))} bg="greyDark" marginLeft="1">Hiatus</Type>)}
       <Heading as="h2" fontSize={3} isBody>{name}</Heading>
       <p>{venue}</p>
     </Content>
@@ -86,6 +90,7 @@ ClubCard.propTypes = {
   league: PropTypes.string,
   venue: PropTypes.string,
   icon: PropTypes.string,
+  status: PropTypes.string.isRequired,
   image: PropTypes.shape({}),
 };
 

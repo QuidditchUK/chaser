@@ -180,6 +180,7 @@ const Dashboard = ({ user }) => {
                       name={club.name}
                       league={club.league}
                       venue={club.venue}
+                      status={club.status}
                       icon={club.icon}
                       image={club.images ? (
                         <Image
