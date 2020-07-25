@@ -275,8 +275,13 @@ const ClubPage = ({ club, posts }) => {
 
           <Box py={{ _: 3, m: 9 }} paddingRight={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }} paddingLeft={{ _: 'gutter._', s: 'gutter.s', m: 0 }}>
             <Box bg="white" py={3} px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
-              <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Latest News</Heading>
-              <ClubNews posts={posts} bgColor={club.featured_color} color={club.text_color} />
+
+              {!!posts.length && (
+                <>
+                  <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Latest News</Heading>
+                  <ClubNews posts={posts} bgColor={club.featured_color} color={club.text_color} />
+                </>
+              )}
 
               <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color} paddingTop="2">About {club.name}</Heading>
               <Content paddingBottom={3}>{parse(club.description)}</Content>
