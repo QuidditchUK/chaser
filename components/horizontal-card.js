@@ -28,7 +28,7 @@ const Content = styled.div`
 
   a {
     text-decoration: none;
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.secondary};
 
     &:hover {
       text-decoration: underline;
