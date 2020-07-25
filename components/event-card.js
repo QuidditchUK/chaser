@@ -74,7 +74,7 @@ const EventCard = ({
       <Flex
         position="absolute"
         zIndex={1}
-        bg={TYPES[league]}
+        bg={TYPES[league[0]]}
         opacity={0.2}
         width="100%"
         height="100%"
@@ -92,7 +92,10 @@ const EventCard = ({
     </Box>
 
     <Content>
-      <Type fontWeight="bold" fontSize={(rem(10))} bg={TYPES[league]}>{league}</Type>
+      {league.map((leag) => (
+        <Type key={leag} fontWeight="bold" fontSize={(rem(10))} bg={TYPES[leag]} marginRight="1">{leag}</Type>
+      ))}
+
       <Heading as="h2" fontSize={3} isBody>{name}</Heading>
       <p>
         <strong>{format(parseTimestamptz(startTime), 'EEE, d LLL H:mm a')}</strong><br />

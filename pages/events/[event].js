@@ -83,7 +83,7 @@ const EventPage = ({ event }) => {
           position="absolute"
           minHeight={BLOG_MIN_HEIGHTS}
           zIndex={1}
-          bg={TYPES[event.league]}
+          bg={TYPES[event.league[0]]}
           opacity={0.2}
           width="100%"
         />
