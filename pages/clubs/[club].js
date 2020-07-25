@@ -190,6 +190,12 @@ const ClubPage = ({ club, posts }) => {
                     <TableData><a href={club.official_website} rel="noopener noreferrer" target="_blank">{club.official_website}</a></TableData>
                   </TableRow>
                 )}
+                {club.email && (
+                  <TableRow>
+                    <TableData><strong>Email</strong></TableData>
+                    <TableData><a href={`mailto:${club.email}`} rel="noopener noreferrer" target="_blank">{club.email}</a></TableData>
+                  </TableRow>
+                )}
               </tbody>
             </Table>
 
@@ -345,6 +351,7 @@ export const getServerSideProps = async ({ params: { club } }) => {
 ClubPage.propTypes = {
   club: PropTypes.shape({
     name: PropTypes.string,
+    email: PropTypes.string,
     slug: PropTypes.string,
     images: PropTypes.arrayOf(PropTypes.string),
     venue: PropTypes.string,
