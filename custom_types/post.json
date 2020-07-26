@@ -293,6 +293,37 @@
                 }
               },
               "title": {
+                "type": "Text",
+                "config": {
+                  "label": "title"
+                }
+              },
+              "content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "Content"
+                }
+              },
+              "link": {
+                "type": "Link",
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Link (Whole Card)",
+                  "placeholder": "If using do not put links in Content"
+                }
+              }
+            }
+          },
+          "horizontal_card": {
+            "type": "Slice",
+            "fieldset": "Horizontal Cards",
+            "description": "Displays a grid of horizontal cards",
+            "icon": "view_list",
+            "display": "list",
+            "non-repeat": {
+              "title": {
                 "type": "StructuredText",
                 "config": {
                   "single": "heading2",
@@ -304,7 +335,64 @@
                 "config": {
                   "multi": "paragraph, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
                   "allowTargetBlank": true,
+                  "label": "content"
+                }
+              },
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "primary",
+                    "secondary",
+                    "dark",
+                    "white"
+                  ],
+                  "default_value": "light",
+                  "label": "Variant"
+                }
+              }
+            },
+            "repeat": {
+              "image": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "image"
+                }
+              },
+              "title": {
+                "type": "Text",
+                "config": {
+                  "label": "title"
+                }
+              },
+              "content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
+                  "allowTargetBlank": true,
                   "label": "Content"
+                }
+              },
+              "layout_content": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "image-left",
+                    "image-right"
+                  ],
+                  "default_value": "image-left",
+                  "label": "Layout content"
+                }
+              },
+              "link": {
+                "type": "Link",
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Link (Whole Card)",
+                  "placeholder": "If using do not put links in Content"
                 }
               }
             }

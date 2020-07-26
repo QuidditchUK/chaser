@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { space, grid } from 'styled-system';
-import { RichText } from 'prismic-reactjs';
+import { RichText, Link } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import PrismicWrapper from 'components/prismic-wrapper';
 import { linkResolver } from 'modules/prismic';
 import { Box, Flex, Grid } from 'components/layout';
 import Heading from 'components/heading';
+import { StyledLink } from 'components/latest-news';
 
 const StyledCard = styled(Grid)`
   border-radius: ${({ theme }) => theme.radii[1]};
@@ -112,18 +113,31 @@ const HorizontalCardsSlice = (rawData) => {
           content: get(itemData, 'content'),
           image: get(itemData, 'image'),
           layout: get(itemData, 'layout_content'),
+          link: get(itemData, 'link'),
         };
 
         const isImageLeft = item.layout === 'image-left';
 
         return (
           <Flex flexDirection="column" key={`cards-${i}`} mb={5}>
-            <HorizontalCard
-              name={item.title}
-              content={item.content}
-              image={item.image.url}
-              isImageLeft={isImageLeft}
-            />
+            {Link.url(item.link, linkResolver)
+              ? (
+                <StyledLink href={Link.url(item.link, linkResolver)} target={item.link.target}>
+                  <HorizontalCard
+                    name={item.title}
+                    content={item.content}
+                    image={item.image.url}
+                    isImageLeft={isImageLeft}
+                  />
+                </StyledLink>
+              ) : (
+                <HorizontalCard
+                  name={item.title}
+                  content={item.content}
+                  image={item.image.url}
+                  isImageLeft={isImageLeft}
+                />
+              )}
           </Flex>
         );
       })}

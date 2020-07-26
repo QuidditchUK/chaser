@@ -1,5 +1,5 @@
 import React from 'react';
-import { RichText } from 'prismic-reactjs';
+import { RichText, Link } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import PrismicWrapper from 'components/prismic-wrapper';
 import { Flex } from 'components/layout';
@@ -9,6 +9,7 @@ import Heading from 'components/heading';
 import Content from 'components/content';
 import HorizontalScrollWrapper from 'components/horizontal-scroll-wrapper';
 import { linkResolver } from 'modules/prismic';
+import { StyledLink } from 'components/latest-news';
 
 const CardsSlice = (rawData) => {
   const data = {
@@ -38,23 +39,44 @@ const CardsSlice = (rawData) => {
             title: get(itemData, 'title'),
             content: get(itemData, 'content'),
             image: get(itemData, 'image'),
+            link: get(itemData, 'link'),
           };
 
           return (
             <Flex flexDirection="column" key={`cards-${i}`}>
-              <Card
-                variant="light"
-                name={item.title}
-                content={item.content}
-                image={item.image.url ? (
-                  <Image
-                    src={item.image.url}
-                    alt={item.image.alt}
-                    width={1600}
-                    height={900}
+              {Link.url(item.link, linkResolver)
+                ? (
+                  <StyledLink href={Link.url(item.link, linkResolver)} target={item.link.target}>
+                    <Card
+                      variant="light"
+                      name={item.title}
+                      content={item.content}
+                      image={item.image.url ? (
+                        <Image
+                          src={item.image.url}
+                          alt={item.image.alt}
+                          width={1600}
+                          height={900}
+                        />
+                      ) : null}
+                    />
+                  </StyledLink>
+                )
+                : (
+                  <Card
+                    variant="light"
+                    name={item.title}
+                    content={item.content}
+                    image={item.image.url ? (
+                      <Image
+                        src={item.image.url}
+                        alt={item.image.alt}
+                        width={1600}
+                        height={900}
+                      />
+                    ) : null}
                   />
-                ) : null}
-              />
+                )}
             </Flex>
           );
         })}

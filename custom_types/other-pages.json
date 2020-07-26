@@ -348,6 +348,14 @@
                   "allowTargetBlank": true,
                   "label": "Content"
                 }
+              },
+              "link": {
+                "type": "Link",
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Link (Whole Card)",
+                  "placeholder": "If using do not put links in Content"
+                }
               }
             }
           },
@@ -420,6 +428,14 @@
                   ],
                   "default_value": "image-left",
                   "label": "Layout content"
+                }
+              },
+              "link": {
+                "type": "Link",
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Link (Whole Card)",
+                  "placeholder": "If using do not put links in Content"
                 }
               }
             }
