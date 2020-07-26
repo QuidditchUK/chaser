@@ -8466,10 +8466,10 @@ signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==
 
-simple-react-lightbox@3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/simple-react-lightbox/-/simple-react-lightbox-3.2.3.tgz#d134527c644eadb8cee4e5c9aa715f07b5f2ae9d"
-  integrity sha512-T1gWrRqQhmeS+1gowbO8cempT1RuCODGEpEF13sRxKPLXgwxKg3TFAqVisLkbTTt+fSrL0c1CT/jxfC3n0MtoA==
+simple-react-lightbox@3.2.3-3:
+  version "3.2.3-3"
+  resolved "https://registry.yarnpkg.com/simple-react-lightbox/-/simple-react-lightbox-3.2.3-3.tgz#c7526120e15bcf916ee4a3751ec0e6ad52824b36"
+  integrity sha512-+yZhiY2SyT2w6aaKngSh+8NQ2pK4INOZ80sACcyWjbcOZ5ND1ozmo/HVrFhbXKHmj5lk1rde7r3X0Ix4Xw/Urg==
   dependencies:
     fast-deep-equal "^3.1.1"
     framer-motion "^1.11.0"

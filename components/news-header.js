@@ -57,6 +57,9 @@ const NewsHeader = () => (
           <ExactActiveLink href="/news" as="/news"><span>All</span></ExactActiveLink>
         </ListItem>
         <ListItem>
+          <ActiveLink href="/news/announcements" as="/news/announcements"><span>Announcements</span></ActiveLink>
+        </ListItem>
+        <ListItem>
           <ActiveLink href="/news/community" as="/news/community"><span>Community</span></ActiveLink>
         </ListItem>
         <ListItem>
@@ -67,9 +70,6 @@ const NewsHeader = () => (
         </ListItem>
         <ListItem>
           <ActiveLink href="/news/international" as="/news/international"><span>International</span></ActiveLink>
-        </ListItem>
-        <ListItem>
-          <ActiveLink href="/news/announcements" as="/news/announcements"><span>Announcements</span></ActiveLink>
         </ListItem>
       </List>
     </Container>
