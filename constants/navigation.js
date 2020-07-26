@@ -14,6 +14,11 @@ export const MAIN_NAVIGATION = [
         href: '/about/[id]',
       },
       {
+        label: 'Meet The Team',
+        as: '/about/meet-the-team',
+        href: '/about/[id]',
+      },
+      {
         label: 'Documents & Policies',
         as: '/about/documents-and-policies',
         href: '/about/[id]',
