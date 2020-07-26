@@ -3,7 +3,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 
 const ExternalLink = ({ href, children }) => {
-  const regex = new RegExp('http', 'g');
+  const regex = new RegExp('(http)|(mailto)', 'g');
 
   return regex.test(href)
     ? <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
