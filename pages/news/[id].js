@@ -40,7 +40,7 @@ export const getStaticProps = async ({ params: { id }, preview = null, previewDa
 
   return {
     props: { page, preview },
-    unstable_revalidate: 1,
+    revalidate: 1,
   };
 };
 
