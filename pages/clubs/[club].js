@@ -120,6 +120,10 @@ const Support = styled.p`
 //   },
 // ];
 
+const BreakWord = styled.a`
+  word-break: break-all;
+`;
+
 const ACTIVE_STATUS = 'active';
 
 const ClubPage = ({ club, posts }) => {
@@ -193,7 +197,7 @@ const ClubPage = ({ club, posts }) => {
                 {club.email && (
                   <TableRow>
                     <TableData><strong>Email</strong></TableData>
-                    <TableData><a href={`mailto:${club.email}`} rel="noopener noreferrer" target="_blank">{club.email}</a></TableData>
+                    <TableData><BreakWord href={`mailto:${club.email}`} rel="noopener noreferrer" target="_blank">{club.email}</BreakWord></TableData>
                   </TableRow>
                 )}
               </tbody>

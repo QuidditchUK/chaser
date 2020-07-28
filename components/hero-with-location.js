@@ -76,7 +76,7 @@ const HeroWithLocation = ({
           <Type fontWeight="bold" fontSize={[rem(10), rem(16)]} bg={TYPES[league]}>{league}</Type>
         </Box>
 
-        {isDesktop && (
+        {isDesktop && images.length > 1 && (
           <Grid
             gridTemplateColumns="2fr 1fr 1fr"
             gridTemplateRows="1fr 1fr"
@@ -105,6 +105,7 @@ const HeroWithLocation = ({
           </Grid>
         )}
 
+        {isDesktop && images.length <= 1 && <Carousel images={images} width="600" height="175" />}
         {!isDesktop && <Carousel images={images} width="600" height="375" />}
       </Box>
       <Box

@@ -107,7 +107,7 @@ const EventCard = ({
 
 EventCard.defaultProps = {
   name: null,
-  league: null,
+  league: [],
   image: null,
   venue: null,
   icon: null,
@@ -119,7 +119,7 @@ EventCard.defaultProps = {
 
 EventCard.propTypes = {
   name: PropTypes.string,
-  league: PropTypes.string,
+  league: PropTypes.arrayOf(PropTypes.string),
   venue: PropTypes.string,
   icon: PropTypes.string,
   image: PropTypes.string,
