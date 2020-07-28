@@ -102,7 +102,7 @@ const News = ({
           {posts.map(({ uid, data }) => (
             <Flex flexDirection="column" key={uid}>
               <Link href="/news/[id]" as={`/news/${uid}`} passHref>
-                <StyledLink>
+                <StyledLink aria-label={data.title}>
                   <Card
                     variant="light"
                     name={data.title}

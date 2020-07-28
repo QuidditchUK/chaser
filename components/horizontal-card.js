@@ -110,7 +110,7 @@ const HorizontalCardsSlice = (rawData) => {
           <Flex flexDirection="column" key={`cards-${i}`} mb={5} px={{ _: 'gutter._', s: 'gutter.s', m: 0 }}>
             {Link.url(item.link, linkResolver)
               ? (
-                <StyledLink href={Link.url(item.link, linkResolver)} target={item.link.target}>
+                <StyledLink href={Link.url(item.link, linkResolver)} target={item.link.target} aria-label={item.title}>
                   <HorizontalCard
                     name={item.title}
                     content={item.content}

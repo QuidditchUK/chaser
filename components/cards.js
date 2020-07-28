@@ -46,7 +46,7 @@ const CardsSlice = (rawData) => {
             <Flex flexDirection="column" key={`cards-${i}`}>
               {Link.url(item.link, linkResolver)
                 ? (
-                  <StyledLink href={Link.url(item.link, linkResolver)} target={item.link.target}>
+                  <StyledLink href={Link.url(item.link, linkResolver)} target={item.link.target} aria-label={item.title}>
                     <Card
                       variant="light"
                       name={item.title}
