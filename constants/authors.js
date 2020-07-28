@@ -16,6 +16,6 @@ const authors = {
   'Jasmine Lowen': JasmineLowen,
 };
 
-export default function (author) {
+export default function Authors(author) {
   return authors[author] || Logo;
 }
