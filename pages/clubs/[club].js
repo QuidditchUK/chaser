@@ -73,7 +73,8 @@ const Support = styled.p`
 `;
 
 const StyledLink = styled.a`
-  ${color}
+  word-break: break-all;
+  ${color};
 `;
 
 // const TableHead = styled.th`
