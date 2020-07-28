@@ -14,11 +14,12 @@ const Scripts = () => (
                   };`,
       }}
     />
-    <script type="text/javascript" src="https://static.cdn.prismic.io/prismic.min.js?new=true" />
+    <script type="text/javascript" src="https://static.cdn.prismic.io/prismic.min.js?new=true" defer async />
 
     {/* Global Site Tag (gtag.js) - Google Analytics */}
     <script
       async
+      defer
       src={`https://www.googletagmanager.com/gtag/js?id=${publicRuntimeConfig.gaToken}`}
     />
     <script
