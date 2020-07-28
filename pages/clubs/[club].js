@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { space, typography, border } from 'styled-system';
+import {
+  space, typography, border, color,
+} from 'styled-system';
 import parse from 'html-react-parser';
 import { useRouter } from 'next/router';
 import Page404 from 'pages/404';
@@ -70,6 +72,11 @@ const Support = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.bodyCard};
 `;
 
+const StyledLink = styled.a`
+  word-break: break-all;
+  ${color};
+`;
+
 // const TableHead = styled.th`
 //   text-align: left;
 //   padding: ${({ theme }) => theme.space[1]};
@@ -119,10 +126,6 @@ const Support = styled.p`
 //     season: '18/19',
 //   },
 // ];
-
-const BreakWord = styled.a`
-  word-break: break-all;
-`;
 
 const ACTIVE_STATUS = 'active';
 
@@ -191,13 +194,13 @@ const ClubPage = ({ club, posts }) => {
                 {club.official_website && (
                   <TableRow>
                     <TableData><strong>Official Website</strong></TableData>
-                    <TableData><a href={club.official_website} rel="noopener noreferrer" target="_blank">{club.official_website}</a></TableData>
+                    <TableData><StyledLink href={club.official_website} rel="noopener noreferrer" target="_blank" color={club.featured_color}>{club.official_website}</StyledLink></TableData>
                   </TableRow>
                 )}
                 {club.email && (
                   <TableRow>
                     <TableData><strong>Email</strong></TableData>
-                    <TableData><BreakWord href={`mailto:${club.email}`} rel="noopener noreferrer" target="_blank">{club.email}</BreakWord></TableData>
+                    <TableData><StyledLink href={`mailto:${club.email}`} rel="noopener noreferrer" target="_blank" color={club.featured_color}>{club.email}</StyledLink></TableData>
                   </TableRow>
                 )}
               </tbody>
