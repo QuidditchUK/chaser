@@ -127,10 +127,10 @@
               "center_title": {
                 "type": "Boolean",
                 "config": {
-                  "placeholder_false": "Off",
-                  "placeholder_true": "On",
+                  "placeholder_false": "Left",
+                  "placeholder_true": "Center",
                   "default_value": false,
-                  "label": "Align the Title to the center"
+                  "label": "Align the Title text"
                 }
               },
               "content": {
