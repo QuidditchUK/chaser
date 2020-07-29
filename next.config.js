@@ -16,6 +16,20 @@ const {
 } = process.env
 
 module.exports = {
+  async redirects() {
+    return [
+      {
+        source: '/referees',
+        destination: '/volunteer/referees',
+        permanent: true,
+      },
+      {
+        source: '/snitches',
+        destination: '/volunteer/snitches',
+        permanent: true,
+      },
+    ]
+  },
   webpack: (config, options) => {
     // In `pages/_app.js`, Sentry is imported from @sentry/node. While
     // @sentry/browser will run in a Node.js environment, @sentry/node will use
