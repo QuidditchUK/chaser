@@ -121,6 +121,15 @@
                   "label": "Title"
                 }
               },
+              "center_title": {
+                "type": "Boolean",
+                "config": {
+                  "placeholder_false": "Off",
+                  "placeholder_true": "On",
+                  "default_value": false,
+                  "label": "Align the Title to the center"
+                }
+              },
               "content": {
                 "type": "StructuredText",
                 "config": {
