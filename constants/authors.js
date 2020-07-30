@@ -4,8 +4,7 @@ const AbbyWhiteley = '../images/authors/abby-whiteley.jpg';
 const KirstyScheiby = '../images/authors/kirsty-scheiby.jpg';
 const DeclanRamsay = '../images/authors/declan-ramsay.jpg';
 const JasmineLowen = '../images/authors/jasmine-lowen.jpg';
-
-const Logo = '../images/logo.png';
+const Logo = '../images/authors/quk-logo.png';
 
 const authors = {
   'Sam Instone': SamInstone,
