@@ -184,7 +184,7 @@ const InfoForm = ({ user }) => {
           {watchIsStudent && (
             <>
               <Label htmlFor="last_name">
-                What univeristy do you attend? <Required />
+                What university do you attend? <Required />
               </Label>
 
               <Input
