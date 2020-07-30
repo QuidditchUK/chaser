@@ -61,8 +61,8 @@ export const MAIN_NAVIGATION = [
     path: '/volunteer',
     list: [
       {
-        label: 'Staff',
-        as: '/volunteer/staff',
+        label: 'roles',
+        as: '/volunteer/roles',
         href: '/volunteer/[id]',
       },
       // {
