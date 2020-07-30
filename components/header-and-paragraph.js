@@ -12,6 +12,7 @@ import { linkResolver } from 'modules/prismic';
 const HeaderAndParagraph = (rawData) => {
   const data = {
     title: get(rawData, 'primary.title'),
+    centerTitle: get(rawData, 'primary.center_title'),
     content: get(rawData, 'primary.content'),
     variant: get(rawData, 'primary.variant'),
     cta_text: get(rawData, 'primary.cta_text'),
@@ -21,7 +22,7 @@ const HeaderAndParagraph = (rawData) => {
   return (
     <PrismicWrapper variant={data.variant} small>
       {RichText.asText(data.title) && (
-        <Heading as="h2" fontSize={[3, 3, 4]} mt={2}>
+        <Heading as="h2" fontSize={[3, 3, 4]} mt={2} textAlign={data.centerTitle ? 'center' : 'left'}>
           {RichText.asText(data.title)}
         </Heading>
       )}

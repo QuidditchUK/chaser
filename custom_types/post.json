@@ -78,6 +78,15 @@
                   "label": "Title"
                 }
               },
+              "center_title": {
+                "type": "Boolean",
+                "config": {
+                  "placeholder_false": "Left",
+                  "placeholder_true": "Center",
+                  "default_value": false,
+                  "label": "Align the Title text"
+                }
+              },
               "content": {
                 "type": "StructuredText",
                 "config": {
