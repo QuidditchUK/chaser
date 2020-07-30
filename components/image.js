@@ -75,8 +75,8 @@ ResponsiveImage.defaultProps = {
 ResponsiveImage.propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
 
 export default ResponsiveImage;
