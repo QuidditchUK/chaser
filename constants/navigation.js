@@ -65,11 +65,11 @@ export const MAIN_NAVIGATION = [
         as: '/volunteer/staff',
         href: '/volunteer/[id]',
       },
-      {
-        label: 'Coaches',
-        as: '/volunteer/coaches',
-        href: '/volunteer/[id]',
-      },
+      // {
+      //   label: 'Coaches',
+      //   as: '/volunteer/coaches',
+      //   href: '/volunteer/[id]',
+      // },
       {
         label: 'Referees',
         as: '/volunteer/referees',
