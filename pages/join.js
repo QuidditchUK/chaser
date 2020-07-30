@@ -103,6 +103,8 @@ const Page = () => {
               initialValues={{
                 email: '',
                 password: '',
+                first_name: '',
+                last_name: '',
                 confirm: '',
               }}
               onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError)}
