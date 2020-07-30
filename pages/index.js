@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getPrismicDocByUid, formatMetadata, getDocs } from '../modules/prismic';
-import renderPrismicSections from '../constants/prismic';
-import Meta from '../components/meta';
+import { getPrismicDocByUid, formatMetadata, getDocs } from 'modules/prismic';
+import renderPrismicSections from 'constants/prismic';
+import Meta from 'components/meta';
 
 const Home = ({ page, posts }) => (
   <>
