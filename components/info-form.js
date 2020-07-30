@@ -189,7 +189,7 @@ const InfoForm = ({ user }) => {
 
               <Input
                 name="university"
-                placeholder="Last name"
+                placeholder="Name of your university"
                 ref={register}
                 my={3}
                 type="university"
