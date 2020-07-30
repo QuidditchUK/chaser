@@ -37,7 +37,7 @@
     "styled-system": "5.1.5",
     "swr": "^0.2.3",
     "throttle-debounce": "^2.2.1",
-    "webpack": "4.44.0",
+    "webpack": "4.44.1",
     "yup": "^0.29.1"
   },
   "scripts": {
