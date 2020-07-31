@@ -61,15 +61,15 @@ export const MAIN_NAVIGATION = [
     path: '/volunteer',
     list: [
       {
-        label: 'Staff',
-        as: '/volunteer/staff',
+        label: 'Roles',
+        as: '/volunteer/roles',
         href: '/volunteer/[id]',
       },
-      {
-        label: 'Coaches',
-        as: '/volunteer/coaches',
-        href: '/volunteer/[id]',
-      },
+      // {
+      //   label: 'Coaches',
+      //   as: '/volunteer/coaches',
+      //   href: '/volunteer/[id]',
+      // },
       {
         label: 'Referees',
         as: '/volunteer/referees',

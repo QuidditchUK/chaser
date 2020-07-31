@@ -67,7 +67,7 @@ const StyledList = styled.ol`
 `;
 
 const Dashboard = ({ user }) => {
-  const [setupProfile] = useState(user.first_name && user.last_name);
+  const [setupProfile] = useState(user.is_student !== null);
   const { data: memberships } = useSWR('/products/me', api);
   const { data: rawClub } = useSWR(`/clubs/${user.club_uuid}`, api);
 
@@ -232,6 +232,7 @@ Dashboard.propTypes = {
     club_uuid: PropTypes.string,
     first_name: PropTypes.string,
     last_name: PropTypes.string,
+    is_student: PropTypes.bool,
   }).isRequired,
 };
 

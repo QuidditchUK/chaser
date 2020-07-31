@@ -53,10 +53,17 @@ const PurchaseMembership = ({ products }) => (
 );
 
 export const getServerSideProps = async ({ req, res }) => {
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
+  const { AUTHENTICATION_TOKEN, MEMBERSHIP_AGREED } = parseCookies(req);
 
   if (!AUTHENTICATION_TOKEN) {
     res.setHeader('location', '/login');
+    res.statusCode = 302;
+    res.end();
+    return { props: {} };
+  }
+
+  if (!MEMBERSHIP_AGREED) {
+    res.setHeader('location', '/dashboard/membership/manage');
     res.statusCode = 302;
     res.end();
     return { props: {} };
