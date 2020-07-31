@@ -8,15 +8,13 @@ import Container from 'components/container';
 import { Box, Grid, Flex } from 'components/layout';
 import { Logo } from 'components/logo';
 import Heading from 'components/heading';
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-} from 'formik';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
+
 import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';
+import Toggle from 'components/toggle';
 import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
 import Content from 'components/content';
@@ -44,9 +42,15 @@ const JoinFormSchema = Yup.object().shape({
   confirm: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
     .required('Required'),
+  is_student: Yup.bool().required(),
+  university: Yup.string().when('is_student', {
+    is: true,
+    then: Yup.string().required('We need your university for X reason'),
+    otherwise: Yup.string(),
+  }),
 });
 
-const handleSubmit = async ({ confirm, ...formData }, setSubmitting, setServerError) => {
+const handleJoinSubmit = async ({ confirm, ...formData }, setServerError) => {
   try {
     setServerError(null);
     const { data } = await api.post('/users', formData);
@@ -58,11 +62,9 @@ const handleSubmit = async ({ confirm, ...formData }, setSubmitting, setServerEr
       category: CATEGORIES.MEMBERSHIP,
     });
 
-    setSubmitting(false);
     Router.push('/dashboard');
   } catch (err) {
-    setServerError(err?.response?.data?.error?.message);
-    setSubmitting(false);
+    setServerError(err?.response?.data?.error);
   }
 };
 
@@ -70,6 +72,28 @@ const logo = '/images/logo.png';
 
 const Page = () => {
   const [serverError, setServerError] = useState(null);
+
+  const {
+    register,
+    handleSubmit,
+    errors,
+    watch,
+    formState,
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(JoinFormSchema),
+    defaultValues: {
+      email: '',
+      first_name: '',
+      last_name: '',
+      is_student: false,
+      university: '',
+    },
+  });
+
+  const { isSubmitting } = formState;
+
+  const watchIsStudent = watch('is_student');
   return (
     <>
       <Meta description="Join QuidditchUK to manage your QuidditchUK Membership, Account details and more" subTitle="Join QuidditchUK" />
@@ -99,100 +123,112 @@ const Page = () => {
             <Heading as="h1" isBody textAlign="center">Join QuidditchUK</Heading>
             <Content pb={5}>Join QuidditchUK to manage your QuidditchUK and Club Membership, and register for official events</Content>
 
-            <Formik
-              initialValues={{
-                email: '',
-                password: '',
-                first_name: '',
-                last_name: '',
-                confirm: '',
-              }}
-              onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError)}
-              validationSchema={JoinFormSchema}
-            >
-              {({ errors, touched, isSubmitting }) => (
-                <Form>
-                  <Grid
-                    gridTemplateColumns="1fr"
-                  >
-                    <Label htmlFor="name">
-                      Email Address <Required />
-                    </Label>
+            <form onSubmit={handleSubmit((values) => handleJoinSubmit(values, setServerError))}>
+              <Grid gridTemplateColumns="1fr">
 
-                    <Field
-                      name="email"
-                      placeholder="Your email address"
-                      as={Input}
-                      borderColor={(errors.email && touched.email) ? 'alert' : 'greyLight'}
-                      my={3}
-                      error={errors.email && touched.email}
-                    />
+                <Label htmlFor="name">
+                  Email Address
+                </Label>
 
-                    <ErrorMessage name="email" component={InlineError} marginBottom={3} />
+                <Input
+                  name="email"
+                  placeholder="Your email address"
+                  ref={register}
+                  my={3}
+                  error={errors.email}
+                  borderColor={errors.email ? 'alert' : 'greyLight'}
+                />
 
-                    <Label htmlFor="first_name">
-                      Preferred first name <Required />
-                    </Label>
+                {errors.email && (<InlineError marginBottom={3}>{errors.email.message}</InlineError>)}
 
-                    <Field
-                      name="first_name"
-                      placeholder="First name"
-                      as={Input}
-                      my={3}
-                      borderColor={(errors.first_name && touched.first_name) ? 'alert' : 'greyLight'}
-                      error={errors.first_name && touched.first_name}
-                    />
-                    <ErrorMessage name="first_name" component={InlineError} marginBottom={3} />
+                <Label htmlFor="first_name">
+                  Preferred first name <Required />
+                </Label>
 
+                <Input
+                  name="first_name"
+                  placeholder="First name"
+                  ref={register}
+                  my={3}
+                  type="first_name"
+                  error={errors.first_name}
+                  borderColor={errors.first_name ? 'alert' : 'greyLight'}
+                />
+
+                {errors.first_name && (<InlineError marginBottom={3}>{errors.first_name.message}</InlineError>)}
+
+                <Label htmlFor="last_name">
+                  Preferred last name <Required />
+                </Label>
+
+                <Input
+                  name="last_name"
+                  placeholder="Last name"
+                  ref={register}
+                  my={3}
+                  type="last_name"
+                  error={errors.last_name}
+                  borderColor={errors.last_name ? 'alert' : 'greyLight'}
+                />
+                {errors.last_name && (<InlineError marginBottom={3}>{errors.last_name.message}</InlineError>)}
+
+                <Label htmlFor="is_student">Are you a student? <Required /></Label>
+
+                <Toggle name="is_student" my={3} ref={register} />
+
+                {watchIsStudent && (
+                  <>
                     <Label htmlFor="last_name">
-                      Preferred last name <Required />
+                      What university do you attend? <Required />
                     </Label>
 
-                    <Field
-                      name="last_name"
-                      placeholder="Last name"
-                      as={Input}
+                    <Input
+                      name="university"
+                      placeholder="Name of your university"
+                      ref={register}
                       my={3}
-                      borderColor={(errors.last_name && touched.last_name) ? 'alert' : 'greyLight'}
-                      error={errors.last_name && touched.last_name}
+                      type="university"
+                      error={errors.university}
+                      borderColor={errors.university ? 'alert' : 'greyLight'}
                     />
-                    <ErrorMessage name="last_name" component={InlineError} marginBottom={3} />
+                    {errors.university && (<InlineError marginBottom={3}>{errors.university.message}</InlineError>)}
+                  </>
+                )}
 
-                    <Label htmlFor="password">
-                      Password <Required />
-                    </Label>
+                <Label htmlFor="password">
+                  Password <Required />
+                </Label>
 
-                    <Field
-                      name="password"
-                      placeholder="Password"
-                      as={Input}
-                      my={3}
-                      type="password"
-                      borderColor={(errors.password && touched.password) ? 'alert' : 'greyLight'}
-                      error={errors.password && touched.password}
-                    />
-                    <ErrorMessage name="password" component={InlineError} marginBottom={3} />
+                <Input
+                  name="password"
+                  placeholder="Password"
+                  ref={register}
+                  my={3}
+                  type="password"
+                  error={errors.password}
+                  borderColor={errors.password ? 'alert' : 'greyLight'}
+                />
+                {errors.password && (<InlineError marginBottom={3}>{errors.password.message}</InlineError>)}
 
-                    <Label htmlFor="confirm">
-                      Confirm Password <Required />
-                    </Label>
+                <Label htmlFor="confirm">
+                  Confirm Password <Required />
+                </Label>
 
-                    <Field
-                      name="confirm"
-                      placeholder="Confirm your password"
-                      as={Input}
-                      borderColor={(errors.confirm && touched.confirm) ? 'alert' : 'greyLight'}
-                      my={3}
-                      type="password"
-                      error={errors.confirm && touched.confirm}
-                    />
+                <Input
+                  name="confirm"
+                  placeholder="Confirm your password"
+                  my={3}
+                  ref={register}
+                  type="password"
+                  error={errors.confirm}
+                  borderColor={errors.confirm ? 'alert' : 'greyLight'}
+                />
 
-                    <ErrorMessage name="confirm" component={InlineError} marginBottom={3} />
-                  </Grid>
-                  <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Join'}</Button>
-                </Form>
-              )}
-            </Formik>
+                {errors.confirm && (<InlineError marginBottom={3}>{errors.confirm.message}</InlineError>)}
+
+              </Grid>
+              <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Join'}</Button>
+            </form>
 
             {serverError && <InlineError my={3}>{serverError}</InlineError>}
 

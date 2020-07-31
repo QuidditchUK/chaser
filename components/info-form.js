@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import styled from 'styled-components';
 import { Box, Grid } from 'components/layout';
 
 import { useForm } from 'react-hook-form';
@@ -10,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers';
 import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';
+import Toggle from 'components/toggle';
 import { InlineError } from 'components/errors';
 import Content from 'components/content';
 import { api } from 'modules/api';
@@ -28,52 +28,6 @@ const InfoFormSchema = Yup.object().shape({
     otherwise: Yup.string(),
   }),
 });
-
-const CheckBoxWrapper = styled(Box)`
-  position: relative;
-`;
-
-const CheckBoxLabel = styled.label`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 42px;
-  height: 26px;
-  border-radius: 15px;
-  background: ${({ theme }) => theme.colors.greyDark};
-  cursor: pointer;
-  &::after {
-    content: "";
-    display: block;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    margin: 3px;
-    background: #ffffff;
-    box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.2);
-    transition: 0.2s;
-  }
-`;
-const CheckBox = styled.input`
-  opacity: 0;
-  z-index: 1;
-  border-radius: 15px;
-  width: 42px;
-  height: 26px;
-  &:checked + ${CheckBoxLabel} {
-    background: ${({ theme }) => theme.colors.keeperGreen};
-
-    &::after {
-      content: "";
-      display: block;
-      border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      margin-left: 21px;
-      transition: 0.2s;
-    }
-  }
-`;
 
 const handleInfoSubmit = async (values, setServerError, setServerSuccess) => {
   try {
@@ -127,10 +81,7 @@ const InfoForm = ({ user }) => {
   return (
     <>
       <form onSubmit={handleSubmit((values) => handleInfoSubmit(values, setServerError, setServerSuccess))}>
-
-        <Grid
-          gridTemplateColumns="1fr"
-        >
+        <Grid gridTemplateColumns="1fr">
           <Label htmlFor="name">
             Email Address
           </Label>
@@ -176,10 +127,7 @@ const InfoForm = ({ user }) => {
 
           <Label htmlFor="is_student">Are you a student? <Required /></Label>
 
-          <CheckBoxWrapper my={3}>
-            <CheckBox id="is_student" name="is_student" ref={register} type="checkbox" />
-            <CheckBoxLabel htmlFor="is_student" />
-          </CheckBoxWrapper>
+          <Toggle my={3} name="is_student" ref={register} />
 
           {watchIsStudent && (
             <>

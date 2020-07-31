@@ -75,10 +75,7 @@ const InfoForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit((values) => handlePasswordSubmit(values, reset, setServerError, setServerSuccess))}>
-
-        <Grid
-          gridTemplateColumns="1fr"
-        >
+        <Grid gridTemplateColumns="1fr">
           <Label htmlFor="old_password">
             Current Password <Required />
           </Label>
