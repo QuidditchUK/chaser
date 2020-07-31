@@ -1,14 +1,19 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
+import Router from 'next/router';
 import { parse } from 'date-fns';
+import * as Yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
 import styled from 'styled-components';
 import Meta from 'components/meta';
-import { parseCookies } from 'modules/cookies';
+import { parseCookies, setCookies } from 'modules/cookies';
 import { Box, Flex, Grid } from 'components/layout';
 import Heading from 'components/heading';
 import Content from 'components/content';
 import Button from 'components/button';
+import { InlineError } from 'components/errors';
+import Label from 'components/label';
 import Container from 'components/container';
 import ProductCard from 'components/product-card';
 import { api } from 'modules/api';
@@ -25,9 +30,30 @@ const List = styled.ul`
   padding-left: 1rem;
 `;
 
+const MembershipFormSchema = Yup.object({
+  checkboxOne: Yup.boolean().oneOf([true], 'You must agree to the Individual Membership Policy').required(),
+  checkboxTwo: Yup.boolean().oneOf([true], 'You must agree to the  QuidditchUK Media Usage Policy').required(),
+  checkboxThree: Yup.boolean().oneOf([true], 'You must agree to the QuidditchUK membership and gameplay policies').required(),
+});
+
+const membershipFormSubmit = () => {
+  setCookies('MEMBERSHIP_AGREED', true);
+  Router.push('/dashboard/membership/purchase');
+};
+
 const ManageMembership = ({ products }) => {
   const currentProducts = useMemo(() => products.filter((product) => new Date() < parse(product.metadata.expires, 'dd-MM-yyyy', new Date())), [products]);
   const expiredProducts = useMemo(() => products.filter((product) => new Date() >= parse(product.metadata.expires, 'dd-MM-yyyy', new Date())), [products]);
+
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(MembershipFormSchema),
+    mode: 'onBlur',
+    defaultValues: {
+      checkboxOne: false,
+      checkboxTwo: false,
+      checkboxThree: false,
+    },
+  });
 
   return (
     <>
@@ -39,47 +65,81 @@ const ManageMembership = ({ products }) => {
       >
         <Container>
           {!currentProducts.length && (
-            <Grid
-              gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
-              gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+
+          <Grid
+            gridTemplateColumns={{ _: '1fr', m: '2fr 1fr' }}
+            gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+          >
+            <Box
               bg="white"
-              color="primary"
+              py={4}
+              px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
               borderRadius={1}
-              overflow="hidden"
             >
-              <CenterJustify>
-                <Heading px={4} as="h2" mb={0} isBody>Membership Benefits</Heading>
-                <Benefits>
-                  <p>QuidditchUK Membership entitles a member to:</p>
+              <Heading px={4} as="h2" mb={0} isBody>Membership Benefits</Heading>
+              <Benefits>
+                <p>QuidditchUK Membership entitles a member to:</p>
 
-                  <List>
-                    <li><strong>Eligibility to register for and compete at QuidditchUK official events and QuidditchUK affiliated events.</strong></li>
-                    <li>Eligibility to qualify for and compete in the European Quidditch Cup.</li>
-                    <li>Included under QuidditchUK Public Liability insurance whenever training or competing with official QuidditchUK clubs or events.</li>
-                    <li>Access to coaching, refereeing, and snitching resources and training provided by QuidditchUK.</li>
-                    <li>Access to QuidditchUK grants and funding provided via your club.</li>
-                    <li>Eligibility to be scouted and selected for QuidditchUK recognised national training squads.</li>
-                    <li>Eligibility to be selected to compete at International Quidditch Association competitions.</li>
-                    <li>Coverage and regulation of transfers within European clubs overseen by Quidditch Europe.</li>
-                    <li>Transfer between QuidditchUK Clubs.</li>
-                    <li>Access to discounts and perks from QuidditchUK through our affiliated partners.</li>
-                    <li>Register under a single QuidditchUK Club.</li>
-                  </List>
-                </Benefits>
+                <List>
+                  <li><strong>Eligibility to register for and compete at QuidditchUK official events and QuidditchUK affiliated events.</strong></li>
+                  <li>Eligibility to qualify for and compete in the European Quidditch Cup.</li>
+                  <li>Included under QuidditchUK Public Liability insurance whenever training or competing with official QuidditchUK clubs or events.</li>
+                  <li>Access to coaching, refereeing, and snitching resources and training provided by QuidditchUK.</li>
+                  <li>Access to QuidditchUK grants and funding provided via your club.</li>
+                  <li>Eligibility to be scouted and selected for QuidditchUK recognised national training squads.</li>
+                  <li>Eligibility to be selected to compete at International Quidditch Association competitions.</li>
+                  <li>Coverage and regulation of transfers within European clubs overseen by Quidditch Europe.</li>
+                  <li>Transfer between QuidditchUK Clubs.</li>
+                  <li>Access to discounts and perks from QuidditchUK through our affiliated partners.</li>
+                  <li>Register under a single QuidditchUK Club.</li>
+                </List>
+              </Benefits>
 
-                <Flex flexDirection="column" alignItems="center" py="5">
-                  <Link as="/dashboard/membership/purchase" href="/dashboard/membership/purchase"><a><Button type="button" variant="primary">Purchase Membership</Button></a></Link>
-                </Flex>
-              </CenterJustify>
-              <CenterJustify>
-                <Image
-                  alt="Benefits of QUK Membership"
-                  src="https://images.prismic.io/chaser/e8e1b385-cd00-469d-aa67-f66dca0d5491_trev_member_editQUK.jpg?auto=compress,format"
-                  height={900}
-                  width={900}
-                />
-              </CenterJustify>
-            </Grid>
+              <Flex flexDirection="column" alignItems="center" py="5">
+                <form onSubmit={handleSubmit(membershipFormSubmit)}>
+
+                  <Box my="3">
+                    <Label>
+                      <input type="checkbox" name="checkboxOne" ref={register} />{' '}
+                      I acknowledge that I have read, understood, and agree to the Individual Membership Policy
+                    </Label>
+
+                    {errors.checkboxOne && (<InlineError my="3">{errors.checkboxOne.message}</InlineError>)}
+                  </Box>
+
+                  <Box my="3">
+                    <Label>
+                      <input type="checkbox" name="checkboxTwo" ref={register} />{' '}
+                      I acknowledge that I have read, understood, and agree to the QuidditchUK Media Usage Policy
+                    </Label>
+
+                    {errors.checkboxTwo && (<InlineError my="3">{errors.checkboxTwo.message}</InlineError>)}
+                  </Box>
+
+                  <Box my="3">
+                    <Label>
+                      <input type="checkbox" name="checkboxThree" ref={register} />{' '}
+                      I agree to abide by the membership and gameplay policies set out by QuidditchUK, and will uphold their values as a member of the quidditch community.
+                    </Label>
+
+                    {errors.checkboxThree && (<InlineError my="3">{errors.checkboxThree.message}</InlineError>)}
+                  </Box>
+
+                  <Button type="submit" variant="primary">Purchase Membership</Button>
+                </form>
+              </Flex>
+            </Box>
+
+            <CenterJustify>
+              <Image
+                alt="Benefits of QUK Membership"
+                src="https://images.prismic.io/chaser/e8e1b385-cd00-469d-aa67-f66dca0d5491_trev_member_editQUK.jpg?auto=compress,format"
+                height={900}
+                width={900}
+              />
+            </CenterJustify>
+          </Grid>
+
           )}
           {!!currentProducts.length && (
             <>
