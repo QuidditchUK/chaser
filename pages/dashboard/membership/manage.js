@@ -40,26 +40,30 @@ const ManageMembership = ({ products }) => {
         <Container>
           {!currentProducts.length && (
             <Grid
-              gridTemplateColumns={{ _: '1fr', m: '2fr 1fr' }}
+              gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
               gridGap={{ _: 'gutter._', m: 'gutter.m' }}
               bg="white"
               color="primary"
               borderRadius={1}
               overflow="hidden"
             >
-              <CenterJustify order={{ _: 2, m: 1 }}>
+              <CenterJustify>
                 <Heading px={4} as="h2" mb={0} isBody>Membership Benefits</Heading>
                 <Benefits>
                   <p>QuidditchUK Membership entitles a member to:</p>
 
                   <List>
                     <li><strong>Eligibility to register for and compete at QuidditchUK official events and QuidditchUK affiliated events.</strong></li>
-                    <li>Access to coaching, refereeing, and snitching resources provided by QuidditchUK.</li>
-                    <li>Eligibility to be selected for National Teams, and compete with National Teams in international tournaments.</li>
+                    <li>Eligibility to qualify for and compete in the European Quidditch Cup.</li>
+                    <li>Included under QuidditchUK Public Liability insurance whenever training or competing with official QuidditchUK clubs or events.</li>
+                    <li>Access to coaching, refereeing, and snitching resources and training provided by QuidditchUK.</li>
+                    <li>Access to QuidditchUK grants and funding provided via your club.</li>
+                    <li>Eligibility to be scouted and selected for QuidditchUK recognised national training squads.</li>
+                    <li>Eligibility to be selected to compete at International Quidditch Association competitions.</li>
                     <li>Coverage and regulation of transfers within European clubs overseen by Quidditch Europe.</li>
+                    <li>Transfer between QuidditchUK Clubs.</li>
                     <li>Access to discounts and perks from QuidditchUK through our affiliated partners.</li>
                     <li>Register under a single QuidditchUK Club.</li>
-                    <li>Transfer between QuidditchUK Clubs.</li>
                   </List>
                 </Benefits>
 
@@ -67,7 +71,7 @@ const ManageMembership = ({ products }) => {
                   <Link as="/dashboard/membership/purchase" href="/dashboard/membership/purchase"><a><Button type="button" variant="primary">Purchase Membership</Button></a></Link>
                 </Flex>
               </CenterJustify>
-              <CenterJustify order={{ _: 1, m: 2 }}>
+              <CenterJustify>
                 <Image
                   alt="Benefits of QUK Membership"
                   src="https://images.prismic.io/chaser/e8e1b385-cd00-469d-aa67-f66dca0d5491_trev_member_editQUK.jpg?auto=compress,format"

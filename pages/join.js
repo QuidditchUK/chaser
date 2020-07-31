@@ -51,9 +51,11 @@ const JoinFormSchema = Yup.object().shape({
 });
 
 const handleJoinSubmit = async ({ confirm, ...formData }, setServerError) => {
+  const values = { ...formData, university: formData.university || null };
+
   try {
     setServerError(null);
-    const { data } = await api.post('/users', formData);
+    const { data } = await api.post('/users', values);
 
     setCookies('AUTHENTICATION_TOKEN', data.access_token);
 

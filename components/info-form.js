@@ -30,11 +30,13 @@ const InfoFormSchema = Yup.object().shape({
 });
 
 const handleInfoSubmit = async (values, setServerError, setServerSuccess) => {
+  const data = { ...values, university: values.university || null };
+
   try {
     setServerError(null);
     setServerSuccess(null);
 
-    await api.put('/users/me', values);
+    await api.put('/users/me', data);
 
     setServerSuccess(true);
   } catch (err) {
