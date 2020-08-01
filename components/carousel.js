@@ -13,6 +13,27 @@ const CarouselContainer = styled.div`
     padding-bottom: ${aspectRatio}%;
     overflow: hidden;
   `};
+
+  .flickity-prev-next-button {
+    position: absolute;
+    top:40%;
+    background: transparent;
+    fill: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 0px;
+  }
+
+  .previous {
+    left: 0;
+    padding-left: 1rem;
+  }
+
+  .next {
+    right: 0;
+    padding-right: 1rem;
+  }
 `;
 
 const Carousel = ({ images, height, width }) => {
