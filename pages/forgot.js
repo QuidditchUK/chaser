@@ -7,12 +7,9 @@ import Container from 'components/container';
 import { Box, Grid, Flex } from 'components/layout';
 import { Logo } from 'components/logo';
 import Heading from 'components/heading';
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-} from 'formik';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
+
 import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';
@@ -30,30 +27,44 @@ const Text = styled(Content)`
 
 const logo = '/images/logo.png';
 
-const LoginFormSchema = Yup.object().shape({
+const ForgotFormSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
 });
 
-const handleSubmit = async (values, setSubmitting, setServerError, setSent) => {
+const handleForgotSubmit = async (values, setServerError, setSent) => {
   try {
     setServerError(null);
     api.post('/users/forgot', values);
-    setSubmitting(false);
     setSent(true);
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
-    setSubmitting(false);
   }
 };
 
-const Page = () => {
+const Forgot = () => {
   const [serverError, setServerError] = useState(null);
   const [sent, setSent] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    errors,
+    formState,
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(ForgotFormSchema),
+    defaultValues: {
+      email: '',
+    },
+  });
+
+  const { isSubmitting } = formState;
+
   return (
     <>
-      <Meta description="Forgot your password for QuidditchUK, request a reset here" subTitle="Forgot Sent" />
+      <Meta description="Forgot your password for QuidditchUK, request a reset here" subTitle="Forgot Password" />
       <Box
         bg="greyLight"
         py={{ _: 4, l: 10 }}
@@ -65,30 +76,22 @@ const Page = () => {
 
           {!sent && (
             <>
-              <Formik
-                initialValues={{ email: '' }}
-                onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError, setSent)}
-                validationSchema={LoginFormSchema}
-              >
-                {({ errors, touched, isSubmitting }) => (
-                  <Form>
-                    <Grid gridTemplateColumns="1fr">
-                      <Label htmlFor="name">Email Address</Label>
+              <form onSubmit={handleSubmit((values) => handleForgotSubmit(values, setServerError, setSent))}>
+                <Grid gridTemplateColumns="1fr">
+                  <Label htmlFor="name">Email Address</Label>
 
-                      <Field
-                        name="email"
-                        placeholder="Your email address"
-                        as={Input}
-                        my={3}
-                        error={errors.email && touched.email}
-                      />
+                  <Input
+                    name="email"
+                    placeholder="Your email address"
+                    ref={register}
+                    my={3}
+                    error={errors.email}
+                  />
 
-                      <ErrorMessage name="email" component={InlineError} marginBottom={3} />
-                    </Grid>
-                    <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Send reset email'}</Button>
-                  </Form>
-                )}
-              </Formik>
+                  {errors.email && (<InlineError marginBottom={3}>{errors.email.message}</InlineError>)}
+                </Grid>
+                <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Send reset email'}</Button>
+              </form>
 
               {serverError && <InlineError my={3}>{serverError}</InlineError>}
             </>
@@ -119,4 +122,4 @@ export const getServerSideProps = async (ctx) => {
   };
 };
 
-export default Page;
+export default Forgot;

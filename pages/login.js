@@ -8,12 +8,8 @@ import Container from 'components/container';
 import { Box, Grid, Flex } from 'components/layout';
 import { Logo } from 'components/logo';
 import Heading from 'components/heading';
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-} from 'formik';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
 import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';
@@ -51,7 +47,7 @@ const LoginFormSchema = Yup.object().shape({
     .required('Required'),
 });
 
-const handleSubmit = async (values, setSubmitting, setServerError) => {
+const handleLoginSubmit = async (values, setServerError) => {
   try {
     setServerError(null);
 
@@ -59,16 +55,31 @@ const handleSubmit = async (values, setSubmitting, setServerError) => {
 
     setCookies('AUTHENTICATION_TOKEN', data.access_token);
 
-    setSubmitting(false);
     Router.push('/dashboard');
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
-    setSubmitting(false);
   }
 };
 
 const Page = () => {
   const [serverError, setServerError] = useState(null);
+
+  const {
+    register,
+    handleSubmit,
+    errors,
+    formState,
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(LoginFormSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const { isSubmitting } = formState;
+
   return (
     <>
       <Meta description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more" subTitle="Sign In" />
@@ -81,51 +92,43 @@ const Page = () => {
           <Flex justifyContent="center" alignItems="center"><Logo src={logo} alt="Quidditch UK" /></Flex>
           <Heading as="h1" isBody textAlign="center">Sign in to QuidditchUK</Heading>
 
-          <Formik
-            initialValues={{
-              email: '',
-              password: '',
-            }}
-            onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError)}
-            validationSchema={LoginFormSchema}
-          >
-            {({ errors, touched, isSubmitting }) => (
-              <Form>
-                <Grid
-                  gridTemplateColumns="1fr"
-                >
-                  <Label htmlFor="name">
-                    Email Address
-                  </Label>
+          <form onSubmit={handleSubmit((values) => handleLoginSubmit(values, setServerError))}>
 
-                  <Field
-                    name="email"
-                    placeholder="Your email address"
-                    as={Input}
-                    my={3}
-                    error={errors.email && touched.email}
-                  />
+            <Grid
+              gridTemplateColumns="1fr"
+            >
+              <Label htmlFor="name">
+                Email Address
+              </Label>
 
-                  <ErrorMessage name="email" component={InlineError} marginBottom={3} />
+              <Input
+                name="email"
+                placeholder="Your email address"
+                ref={register}
+                my={3}
+                error={errors.email}
+              />
 
-                  <Label htmlFor="password">
-                    Password
-                  </Label>
+              {errors.email && <InlineError marginBottom={3}>{errors.email.message}</InlineError>}
 
-                  <Field
-                    name="password"
-                    placeholder="Password"
-                    as={Input}
-                    my={3}
-                    type="password"
-                    error={errors.password && touched.password}
-                  />
-                  <ErrorMessage name="password" component={InlineError} marginBottom={3} />
-                </Grid>
-                <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Sign in'}</Button>
-              </Form>
-            )}
-          </Formik>
+              <Label htmlFor="password">
+                Password
+              </Label>
+
+              <Input
+                name="password"
+                placeholder="Password"
+                ref={register}
+                my={3}
+                type="password"
+                error={errors.password}
+              />
+              {errors.password && <InlineError marginBottom={3}>{errors.password.message}</InlineError>}
+            </Grid>
+
+            <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Sign in'}</Button>
+
+          </form>
 
           {serverError && (
             <>
