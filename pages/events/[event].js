@@ -23,7 +23,6 @@ import { api } from 'modules/api';
 const Icon = styled.img`
   height: 100px;
   width: 100px;
-  box-shadow: ${({ theme }) => theme.shadows.box};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
     height: 200px;
