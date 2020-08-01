@@ -9,6 +9,7 @@ export default styled('div')`
 
   a {
     text-decoration: none;
+    word-break: break-all;
 
     &:hover {
       text-decoration: underline;
