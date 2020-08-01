@@ -14,11 +14,11 @@ export const Support = styled.div`
 `;
 
 const Item = ({ item }) => {
-  const { height, width } = item.image.dimensions;
+  const { height, width } = item.image?.dimensions;
 
   return (
     <Box>
-      <Image alt={item.image.alt} src={item.image.url} height={height} width={width} />
+      <Image alt={item.image?.alt} src={item.image?.url} height={height} width={width} />
       {item.support && (<Support textAlign="center" pt={2} fontStyle="italic">{item.support}</Support>) }
     </Box>
   );

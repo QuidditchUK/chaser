@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { RichText } from 'prismic-reactjs';
@@ -46,7 +47,7 @@ const Item = ({ item, isImageLeft }) => (
     </CenterJustify>
 
     <CenterJustify order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}>
-      <Image alt={item.image.alt} src={item.image.url} height={item.image.dimensions.height} width={item.image.dimensions.width} />
+      <Image alt={item?.image?.alt} src={item?.image?.url} height={item.image?.dimensions?.height} width={item.image?.dimensions?.width} />
       {RichText.asText(item.support) && (<Support textAlign="center" pt={2} fontStyle="italic">{RichText.render(item.support, linkResolver)}</Support>)}
     </CenterJustify>
   </Grid>
