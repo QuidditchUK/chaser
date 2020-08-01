@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 
-const SITE_URL = 'https://chaser.quidditchuk.now.sh';
+const SITE_URL = 'https://quidditchuk.org';
 
 const Meta = ({
   subTitle,
