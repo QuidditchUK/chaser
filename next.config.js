@@ -1,5 +1,6 @@
 const withSourceMaps = require('@zeit/next-source-maps')();
 const path = require('path');
+const withOffline = require('next-offline')
 
 const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 const {
@@ -15,7 +16,7 @@ const {
   GA_TOKEN,
 } = process.env
 
-module.exports = {
+module.exports = withOffline({
   async redirects() {
     return [
       {
@@ -89,4 +90,4 @@ module.exports = {
     stripeToken: STRIPE_TOKEN,
     gaToken: GA_TOKEN,
   },
-};
+});

@@ -1,0 +1,21 @@
+{
+  "short_name": "QUK",
+  "name": "QuidditchUK",
+  "icons": [
+  {
+      "src": "/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+  },
+  {
+      "src": "/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+  }
+],
+  "start_url": "/?source=pwa",
+  "background_color": "#0e375f",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#0e375f"
+}
