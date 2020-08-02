@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
 import Router, { useRouter } from 'next/router';
 import Link from 'next/link';
-import Slider from '@material-ui/core/Slider';
+import styled from 'styled-components';
+import { space } from 'styled-system';
+import { debounce } from 'throttle-debounce';
 
 import {
   Formik,
@@ -13,23 +16,29 @@ import {
   useField,
 } from 'formik';
 import { api, createQueryString } from 'modules/api';
-import styled from 'styled-components';
-import { space } from 'styled-system';
-import { debounce } from 'throttle-debounce';
 import { Box, Flex, Grid } from 'components/layout';
 import { HeadingHero } from 'components/hero';
-import Container from 'components/container';
-import Heading from 'components/heading';
-import ClubCard from 'components/club-card';
-import EventCard from 'components/event-card';
-import Image from 'components/image';
-import Meta from 'components/meta';
-import Button from 'components/button';
+
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';
-import CloseIcon from 'public/images/close.svg';
 import Type, { TYPES } from 'components/club-type';
-import { rem } from '../styles/theme';
+import { rem } from 'styles/theme';
+
+// 28.3 kB         177 kB
+// 7.95 kB         147 kB
+// 7.73 kB         147 kB
+
+const CloseIcon = dynamic(() => import('public/images/close.svg'));
+const Container = dynamic(() => import('components/container'));
+const Heading = dynamic(() => import('components/heading'));
+
+const ClubCard = dynamic(() => import('components/club-card'));
+const EventCard = dynamic(() => import('components/event-card'));
+const Image = dynamic(() => import('components/image'));
+const Meta = dynamic(() => import('components/meta'));
+const Button = dynamic(() => import('components/button'));
+
+const Slider = dynamic(() => import('@material-ui/core/Slider'));
 
 const Icon = styled.div`
   ${space};

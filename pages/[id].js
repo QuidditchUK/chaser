@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { getPrismicDocByUid, getDocs, formatMetadata } from 'modules/prismic';
-import Meta from 'components/meta';
-import PageLoading from 'components/page-loading';
-import Page404 from 'pages/404';
 import renderPrismicSections from 'constants/prismic';
+
+const Page404 = dynamic(() => import('pages/404'));
+const PageLoading = dynamic(() => import('components/page-loading'));
+const Meta = dynamic(() => import('components/meta'));
 
 const Page = ({ page }) => {
   const router = useRouter();

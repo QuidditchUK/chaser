@@ -7,14 +7,16 @@ import {
   GridItem,
 } from 'components/layout';
 import styled from 'styled-components';
+import dynamic from 'next/dynamic';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import Type, { TYPES } from 'components/club-type';
-import Image from 'components/image';
-import base, { rem } from 'styles/theme';
 import { useBreakpoint } from 'hooks/media';
-import Heading from 'components/heading';
-import Carousel from 'components/carousel';
-import PinIcon from 'public/images/location-pin.svg';
+import base, { rem } from 'styles/theme';
+
+const Image = dynamic(() => import('components/image'));
+const Heading = dynamic(() => import('components/heading'));
+const Carousel = dynamic(() => import('components/carousel'));
+const PinIcon = dynamic(() => import('public/images/location-pin.svg'));
 
 const IconContainer = styled.div`
   padding: ${({ theme }) => theme.space[4]};

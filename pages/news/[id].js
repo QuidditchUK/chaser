@@ -1,14 +1,16 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import Page404 from 'pages/404';
 
 import { getDocs, getPrismicDocByUid, formatMetadata } from 'modules/prismic';
 import renderPrismicSections from 'constants/prismic';
-import Meta from 'components/meta';
-import BlogHero from 'components/blog-hero';
-import BlogSupport from 'components/blog-support';
-import PageLoading from 'components/page-loading';
+
+const Page404 = dynamic(() => import('pages/404'));
+const PageLoading = dynamic(() => import('components/page-loading'));
+const Meta = dynamic(() => import('components/meta'));
+const BlogSupport = dynamic(() => import('components/blog-support'));
+const BlogHero = dynamic(() => import('components/blog-hero'));
 
 const Post = ({ page }) => {
   const router = useRouter();
