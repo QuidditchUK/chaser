@@ -3,21 +3,23 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 import Router from 'next/router';
 import Link from 'next/link';
-import Meta from 'components/meta';
-import Container from 'components/container';
+import dynamic from 'next/dynamic';
 import { Box, Grid, Flex } from 'components/layout';
-import { Logo } from 'components/logo';
-import Heading from 'components/heading';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
-import Input from 'components/input';
-import Label from 'components/label';
-import Button from 'components/button';
+import { Logo } from 'components/logo';
 import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
-import Content from 'components/content';
 import { api } from 'modules/api';
 import { setCookies, parseCookies } from 'modules/cookies';
+
+const Meta = dynamic(() => import('components/meta'));
+const Container = dynamic(() => import('components/container'));
+const Heading = dynamic(() => import('components/heading'));
+const Input = dynamic(() => import('components/input'));
+const Label = dynamic(() => import('components/label'));
+const Button = dynamic(() => import('components/button'));
+const Content = dynamic(() => import('components/content'));
 
 const Text = styled(Content)`
   a {

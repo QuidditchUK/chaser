@@ -17,10 +17,6 @@ import { getBlogTags } from 'modules/prismic';
 // import { CenterJustify } from 'components/image-and-content';
 // import { formatOrdinals } from 'modules/numbers';
 
-// 19.9 kB         250 kB
-// 5.54 kB         232 kB
-// 4.4 kB          145 kB
-
 const Heading = dynamic(() => import('components/heading'));
 const HeroWithLocation = dynamic(() => import('components/hero-with-location'));
 const Content = dynamic(() => import('components/content'));

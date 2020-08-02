@@ -2,23 +2,25 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import Router, { useRouter } from 'next/router';
-import Meta from 'components/meta';
-import Container from 'components/container';
 import { Box, Grid, Flex } from 'components/layout';
 import { Logo } from 'components/logo';
-import Heading from 'components/heading';
-import Input from 'components/input';
-import Label from 'components/label';
-import Button from 'components/button';
 import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
-import Content from 'components/content';
 import { api } from 'modules/api';
 import { setCookies, parseCookies } from 'modules/cookies';
-import Required from 'components/required';
+
+const Meta = dynamic(() => import('components/meta'));
+const Container = dynamic(() => import('components/container'));
+const Heading = dynamic(() => import('components/heading'));
+const Input = dynamic(() => import('components/input'));
+const Label = dynamic(() => import('components/label'));
+const Button = dynamic(() => import('components/button'));
+const Content = dynamic(() => import('components/content'));
+const Required = dynamic(() => import('components/required'));
 
 const Text = styled(Content)`
   a {

@@ -24,10 +24,6 @@ import { postcodeRegex } from 'modules/validations';
 import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 
-// 28.3 kB         177 kB
-// 7.95 kB         147 kB
-// 7.73 kB         147 kB
-
 const CloseIcon = dynamic(() => import('public/images/close.svg'));
 const Container = dynamic(() => import('components/container'));
 const Heading = dynamic(() => import('components/heading'));

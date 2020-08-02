@@ -1,24 +1,26 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
+import dynamic from 'next/dynamic';
 import { parse } from 'date-fns';
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import styled from 'styled-components';
-import Meta from 'components/meta';
 import { parseCookies, setCookies } from 'modules/cookies';
-import { Box, Flex, Grid } from 'components/layout';
-import Heading from 'components/heading';
-import Content from 'components/content';
-import Button from 'components/button';
-import { InlineError } from 'components/errors';
-import Label from 'components/label';
-import Container from 'components/container';
-import ProductCard from 'components/product-card';
 import { api } from 'modules/api';
+import { Box, Flex, Grid } from 'components/layout';
 import { CenterJustify } from 'components/image-and-content';
-import Image from 'components/image';
+import { InlineError } from 'components/errors';
+
+const Meta = dynamic(() => import('components/meta'));
+const Heading = dynamic(() => import('components/heading'));
+const Content = dynamic(() => import('components/content'));
+const Button = dynamic(() => import('components/button'));
+const Label = dynamic(() => import('components/label'));
+const Container = dynamic(() => import('components/container'));
+const ProductCard = dynamic(() => import('components/product-card'));
+const Image = dynamic(() => import('components/image'));
 
 const Benefits = styled(Content)`
   font-size: ${({ theme }) => theme.fontSizes.bodyCard};
