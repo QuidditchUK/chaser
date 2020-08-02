@@ -71,7 +71,7 @@ const StyledList = styled.ol`
 const Dashboard = ({ user }) => {
   const [setupProfile] = useState(user.is_student !== null);
   const { data: memberships } = useSWR('/products/me', api);
-  const { data: rawClub } = useSWR(`/clubs/${user.club_uuid}`, api);
+  const { data: rawClub } = useSWR(() => `/clubs/${user.club_uuid}`, api);
 
   const [membership] = memberships?.data || [];
   const club = rawClub?.data || null;
