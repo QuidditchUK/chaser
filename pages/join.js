@@ -14,14 +14,14 @@ import { api } from 'modules/api';
 import { setCookies } from 'modules/cookies';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
+import Input from 'components/input';
+import Toggle from 'components/toggle';
 
+const Label = dynamic(() => import('components/label'));
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 const Heading = dynamic(() => import('components/heading'));
-const Input = dynamic(() => import('components/input'));
-const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
-const Toggle = dynamic(() => import('components/toggle'));
 const Content = dynamic(() => import('components/content'));
 const Required = dynamic(() => import('components/required'));
 
@@ -91,6 +91,8 @@ const Page = () => {
       last_name: '',
       is_student: false,
       university: '',
+      password: '',
+      confirm: '',
     },
   });
 

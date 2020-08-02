@@ -10,11 +10,11 @@ import {
 } from 'components/layout';
 import { Logo, LogoLink } from 'components/logo';
 import { rem } from 'styles/theme';
+import Input from 'components/input';
 
 const ActiveLink = dynamic(() => import('components/active-link'));
 const Container = dynamic(() => import('components/container'));
 const Heading = dynamic(() => import('components/heading'));
-const Input = dynamic(() => import('components/input'));
 const Button = dynamic(() => import('components/button'));
 const FacebookIcon = dynamic(() => import('public/images/facebook.svg'));
 const TwitterIcon = dynamic(() => import('public/images/twitter.svg'));

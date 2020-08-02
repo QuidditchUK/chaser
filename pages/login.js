@@ -12,11 +12,11 @@ import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { setCookies, parseCookies } from 'modules/cookies';
+import Input from 'components/input';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 const Heading = dynamic(() => import('components/heading'));
-const Input = dynamic(() => import('components/input'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
