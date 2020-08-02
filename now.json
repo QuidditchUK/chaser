@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "headers": [
+  "rewrites": [
     {
       "source": "/service-worker.js",
+      "destination": "/_next/static/service-worker.js"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/static/service-worker.js",
       "headers": [
         {
           "key": "Cache-Control",

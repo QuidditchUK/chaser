@@ -17,6 +17,12 @@ const {
 } = process.env
 
 module.exports = withOffline({
+  target: "serverless",
+  // next-offline options
+  
+  workboxOpts: {
+    swDest: "/static/service-worker.js",
+  },
   async redirects() {
     return [
       {
