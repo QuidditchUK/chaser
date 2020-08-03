@@ -21,6 +21,7 @@ const DocumentHead = () => (
     <meta property="twitter:site" content="@QuidditchUK" />
 
     <link rel="preconnect" href="//images.prismic.io" />
+    <link rel="preconnect" href="//chaser.prismic.io" />
 
     {/* Fonts */}
     <link rel="preload" href="https://use.typekit.net/rub1byg.css" as="style" />

@@ -1,14 +1,11 @@
 import React from 'react';
-import Head from 'next/head';
 import getConfig from 'next/config';
 
 const { publicRuntimeConfig } = getConfig();
 
 const Scripts = () => (
-  <Head>
-    <script async defer src="//static.cdn.prismic.io/prismic.js?repo=chaser&new=true" />
-    <link rel="preconnect" href="https://chaser.prismic.io" />
-
+  <>
+    <script defer src="//static.cdn.prismic.io/prismic.js?repo=chaser&new=true" />
     {/* Global Site Tag (gtag.js) - Google Analytics */}
     <script
       async
@@ -27,7 +24,7 @@ const Scripts = () => (
           `,
       }}
     />
-  </Head>
+  </>
 );
 
 export default Scripts;

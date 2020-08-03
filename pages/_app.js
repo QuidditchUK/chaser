@@ -32,13 +32,15 @@ function App({ Component, pageProps, err }) {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <DocumentHead />
+    <>
+      <ThemeProvider theme={theme}>
+        <DocumentHead />
+        <Layout {...pageProps}>
+          <Component {...pageProps} err={err} />
+        </Layout>
+      </ThemeProvider>
       <Scripts />
-      <Layout {...pageProps}>
-        <Component {...pageProps} err={err} />
-      </Layout>
-    </ThemeProvider>
+    </>
   );
 }
 
