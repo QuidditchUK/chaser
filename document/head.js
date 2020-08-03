@@ -24,8 +24,6 @@ const DocumentHead = () => (
     <link rel="preconnect" href="//chaser.prismic.io" />
 
     {/* Fonts */}
-    <link rel="preload" href="https://use.typekit.net/rub1byg.css" as="style" />
-    <link rel="stylesheet" href="https://use.typekit.net/rub1byg.css" />
     <link rel="manifest" href="/manifest.json" />
 
     {/* Static CSS */}
