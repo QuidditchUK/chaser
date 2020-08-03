@@ -6,15 +6,8 @@ const { publicRuntimeConfig } = getConfig();
 
 const Scripts = () => (
   <Head>
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
-                  window.prismic = {
-                    endpoint: 'https://chaser.cdn.prismic.io/api/v2'
-                  };`,
-      }}
-    />
-    <script type="text/javascript" src="https://static.cdn.prismic.io/prismic.min.js?new=true" defer async />
+    <script async defer src="//static.cdn.prismic.io/prismic.js?repo=chaser&new=true" />
+    <link rel="preconnect" href="https://chaser.prismic.io" />
 
     {/* Global Site Tag (gtag.js) - Google Analytics */}
     <script
