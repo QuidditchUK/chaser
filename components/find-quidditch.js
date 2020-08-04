@@ -38,7 +38,7 @@ const FindQuidditch = (rawData) => {
         <Heading as="h2" fontSize={4} color="white" textAlign="center" mt={0} textShadow="body">{data.title}</Heading>
         <Formik
           initialValues={{ postcode: '' }}
-          onSubmit={({ postcode }) => router.push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`).then(() => window.scroll(0, 0))}
+          onSubmit={({ postcode }) => router.push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`).then(() => window.scrollTo(0, 0))}
         >
           <Form>
             <Flex flexDirection="row">
