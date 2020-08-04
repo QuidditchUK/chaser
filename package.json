@@ -9,7 +9,6 @@
     "@sentry/node": "^5.17.0",
     "@sentry/webpack-plugin": "^1.11.1",
     "@stripe/stripe-js": "^1.8.0",
-    "@svgr/webpack": "5.4.0",
     "@zeit/next-source-maps": "^0.0.3",
     "axios": "^0.19.2",
     "body-scroll-lock": "^3.0.3",
@@ -20,7 +19,6 @@
     "html-react-parser": "^0.13.0",
     "intersection-observer": "^0.11.0",
     "js-cookie": "^2.2.1",
-    "just-debounce": "^1.0.0",
     "just-safe-get": "2.0.0",
     "next": "9.5.0",
     "next-offline": "^5.0.2",
@@ -34,7 +32,6 @@
     "react-headroom": "3.0.0",
     "react-hook-form": "^6.2.0",
     "react-intersection-observer": "^8.26.2",
-    "react-loading-skeleton": "2.1.1",
     "simple-react-lightbox": "3.2.3-3",
     "styled-components": "5.1.1",
     "styled-system": "5.1.5",
@@ -47,6 +44,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "analyze": "cross-env ANALYZE=true yarn build",
     "svg:format": "find public/images -name '*.svg' -type f -exec svgo --config svgo.json '{}' \\;"
   },
   "browserslist": {
@@ -62,10 +60,11 @@
     ]
   },
   "devDependencies": {
-    "@ava/babel": "1.0.1",
-    "ava": "3.11.0",
+    "@next/bundle-analyzer": "^9.5.1",
+    "@svgr/webpack": "^5.4.0",
     "babel-eslint": "10.1.0",
     "babel-plugin-styled-components": "^1.10.7",
+    "cross-env": "^7.0.2",
     "eslint": "7.6.0",
     "eslint-config-airbnb": "18.2.0",
     "eslint-plugin-import": "2.22.0",
