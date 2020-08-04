@@ -49,7 +49,7 @@ const HomeHero = (rawData) => {
         flexDirection="column"
         zIndex={2}
       >
-        <HeadingHero fontSize={[4, 4, 7]} mt={0} mb={8} color="white">{data.title}</HeadingHero>
+        <HeadingHero as="label" htmlFor="hero_postcode" fontSize={[4, 4, 7]} mt={0} mb={8} color="white">{data.title}</HeadingHero>
 
         <Formik
           initialValues={{ postcode: '' }}
@@ -57,7 +57,7 @@ const HomeHero = (rawData) => {
         >
           <Form>
             <Flex flexDirection="row">
-              <Field name="postcode" placeholder="Postcode" as={Input} />
+              <Field id="hero_postcode" name="postcode" placeholder="Postcode" as={Input} />
               <Button type="submit" variant="primary" ml={2}>{data.cta_text}</Button>
             </Flex>
           </Form>

@@ -35,14 +35,14 @@ const FindQuidditch = (rawData) => {
         justifyContent="center"
         flexDirection="column"
       >
-        <Heading as="h2" fontSize={4} color="white" textAlign="center" mt={0} textShadow="body">{data.title}</Heading>
+        <Heading as="label" htmlFor="prismic_postcode" fontSize={4} color="white" textAlign="center" mt={0} textShadow="body" pb="7">{data.title}</Heading>
         <Formik
           initialValues={{ postcode: '' }}
           onSubmit={({ postcode }) => router.push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`).then(() => window.scrollTo(0, 0))}
         >
           <Form>
             <Flex flexDirection="row">
-              <Field as={Input} placeholder="Enter your postcode" name="postcode" /><Button type="submit" variant={data.variant} ml={2}>Find Quidditch</Button>
+              <Field as={Input} id="prismic_postcode" placeholder="Enter your postcode" name="postcode" /><Button type="submit" variant={data.variant} ml={2}>Find Quidditch</Button>
             </Flex>
           </Form>
         </Formik>
