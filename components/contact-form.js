@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-} from 'formik';
 import * as Yup from 'yup';
+
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
+
 import get from 'just-safe-get';
 import { Grid, Box } from 'components/layout';
 import Input from 'components/input';
@@ -27,25 +25,42 @@ const ContactFormSchema = Yup.object().shape({
   message: Yup.string().required('Required'),
 });
 
-const handleSubmit = async (values, setSubmitting, resetForm, setServerError, setServerSuccess) => {
+const handleContactSubmit = async (values, resetForm, setServerError, setServerSuccess) => {
   try {
     setServerError(null);
     setServerSuccess(null);
 
     await api.post('/contact/form', values);
 
-    setSubmitting(false);
     setServerSuccess(true);
     resetForm({});
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
-    setSubmitting(false);
   }
 };
 
 const ContactForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
+
+  const {
+    register,
+    handleSubmit,
+    errors,
+    reset,
+    formState,
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(ContactFormSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+    },
+  });
+
+  const { isSubmitting } = formState;
 
   const data = {
     variant: get(rawData, 'primary.variant'),
@@ -55,81 +70,68 @@ const ContactForm = (rawData) => {
     <PrismicWrapper variant={data.variant}>
       <Heading as="h1" isBody textAlign="center">Contact Us</Heading>
       <Container maxWidth={rem(500)} paddingBottom={4}>
-        <Formik
-          initialValues={{
-            name: '',
-            email: '',
-            subject: '',
-            message: '',
-          }}
-          onSubmit={(values, { setSubmitting, resetForm }) => handleSubmit(values, setSubmitting, resetForm, setServerError, setServerSuccess)}
-          validationSchema={ContactFormSchema}
-        >
-          {({ errors, touched, isSubmitting }) => (
-            <Form>
-              <Grid
-                gridTemplateColumns="1fr"
-              >
-                <Label htmlFor="name">
-                  Your name <Required />
-                </Label>
+        <form onSubmit={handleSubmit((values) => handleContactSubmit(values, reset, setServerError, setServerSuccess))}>
+          <Grid
+            gridTemplateColumns="1fr"
+          >
+            <Label htmlFor="name">
+              Your name <Required />
+            </Label>
 
-                <Field
-                  id="name"
-                  name="name"
-                  placeholder="Your name"
-                  as={Input}
-                  my={3}
-                  error={errors.name && touched.name}
-                />
+            <Input
+              id="name"
+              name="name"
+              placeholder="Your name"
+              ref={register}
+              my={3}
+              error={errors.name}
+            />
 
-                <ErrorMessage name="name" component={InlineError} marginBottom={3} />
+            {errors.name && (<InlineError marginBottom={3}>{errors.name.message}</InlineError>)}
 
-                <Label htmlFor="email">
-                  Your email <Required />
-                </Label>
+            <Label htmlFor="email">
+              Your email <Required />
+            </Label>
 
-                <Field
-                  name="email"
-                  placeholder="Your email address"
-                  as={Input}
-                  my={3}
-                  error={errors.email && touched.email}
-                />
+            <Input
+              name="email"
+              placeholder="Your email address"
+              ref={register}
+              my={3}
+              error={errors.email}
+            />
 
-                <ErrorMessage name="email" component={InlineError} marginBottom={3} />
+            {errors.email && (<InlineError marginBottom={3}>{errors.email.message}</InlineError>)}
 
-                <Label htmlFor="subject">
-                  Subject
-                </Label>
+            <Label htmlFor="subject">
+              Subject
+            </Label>
 
-                <Field
-                  name="subject"
-                  placeholder="Subject"
-                  as={Input}
-                  my={3}
-                />
+            <Input
+              name="subject"
+              placeholder="Subject"
+              ref={register}
+              my={3}
+            />
 
-                <Label htmlFor="message">
-                  Your message <Required />
-                </Label>
+            <Label htmlFor="message">
+              Your message <Required />
+            </Label>
 
-                <Field
-                  name="message"
-                  placeholder="Your message"
-                  as={Textarea}
-                  my={3}
-                  error={errors.message && touched.message}
-                />
+            <Textarea
+              name="message"
+              placeholder="Your message"
+              my={3}
+              ref={register}
+              error={errors.message}
+            />
 
-                <ErrorMessage name="message" component={InlineError} marginBottom={3} />
+            {errors.message && (<InlineError marginBottom={3}>{errors.message.message}</InlineError>)}
 
-              </Grid>
+          </Grid>
 
-              <Button type="submit" variant={buttonVariants[data.variant]} disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Contact us'}</Button>
-            </Form>
-          )}
-        </Formik>
+          <Button type="submit" variant={buttonVariants[data.variant]} disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Contact us'}</Button>
+        </form>
 
         {serverError && (
           <>

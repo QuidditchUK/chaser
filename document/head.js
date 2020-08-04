@@ -9,12 +9,9 @@ const DocumentHead = () => (
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
     <meta name="msapplication-TileColor" content="#da532c" />
-    <meta name="theme-color" content="#ffffff" />
-
-    <meta name="theme-color" content="#fffff" />
+    <meta name="theme-color" content="#0e375f" />
 
     <meta property="og:site_name" content="QuidditchUK – Find Your Passion" />
     <meta property="og:locale" content="en_GB" />
@@ -24,10 +21,10 @@ const DocumentHead = () => (
     <meta property="twitter:site" content="@QuidditchUK" />
 
     <link rel="preconnect" href="//images.prismic.io" />
+    <link rel="preconnect" href="//chaser.prismic.io" />
 
     {/* Fonts */}
-    <link rel="preload" href="https://use.typekit.net/rub1byg.css" as="style" />
-    <link rel="stylesheet" href="https://use.typekit.net/rub1byg.css" />
+    <link rel="manifest" href="/manifest.json" />
 
     {/* Static CSS */}
     <style dangerouslySetInnerHTML={{ __html: reset }} />

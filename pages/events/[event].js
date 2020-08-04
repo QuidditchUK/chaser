@@ -1,29 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { format } from 'date-fns';
 import parse from 'html-react-parser';
 import styled from 'styled-components';
 import { Box, Flex } from 'components/layout';
-import Page404 from 'pages/404';
-import Meta from 'components/meta';
-import Container from 'components/container';
 import { TYPES } from 'components/club-type';
-import PageLoading from 'components/page-loading';
-import Heading from 'components/heading';
-import Content from 'components/content';
 import { parseTimestamptz } from 'modules/dates';
-import Button from 'components/button';
-import ExternalLink from 'components/external-link';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { rem } from 'styles/theme';
-import PinIcon from 'public/images/location-pin.svg';
 import { api } from 'modules/api';
+
+const Page404 = dynamic(() => import('pages/404'));
+const Meta = dynamic(() => import('components/meta'));
+const Container = dynamic(() => import('components/container'));
+const PageLoading = dynamic(() => import('components/page-loading'));
+const Heading = dynamic(() => import('components/heading'));
+const Content = dynamic(() => import('components/content'));
+const Button = dynamic(() => import('components/button'));
+const ExternalLink = dynamic(() => import('components/external-link'));
+const PinIcon = dynamic(() => import('public/images/location-pin.svg'));
 
 const Icon = styled.img`
   height: 100px;
   width: 100px;
-  box-shadow: ${({ theme }) => theme.shadows.box};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
     height: 200px;

@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import useSWR from 'swr';
 import Link from 'next/link';
 import { color, border } from 'styled-system';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import Meta from 'components/meta';
 import { Box, Grid, Flex } from 'components/layout';
-import Container from 'components/container';
-import Heading from 'components/heading';
-import Content from 'components/content';
-import Image from 'components/image';
-import ProductCard from 'components/product-card';
-import ClubCard from 'components/club-card';
 import { CenterJustify } from 'components/image-and-content';
+
+const Meta = dynamic(() => import('components/meta'));
+const Container = dynamic(() => import('components/container'));
+const Heading = dynamic(() => import('components/heading'));
+const Content = dynamic(() => import('components/content'));
+const Image = dynamic(() => import('components/image'));
+const ProductCard = dynamic(() => import('components/product-card'));
+const ClubCard = dynamic(() => import('components/club-card'));
 
 const StyledLink = styled.a`
   text-decoration: none;
@@ -69,7 +71,7 @@ const StyledList = styled.ol`
 const Dashboard = ({ user }) => {
   const [setupProfile] = useState(user.is_student !== null);
   const { data: memberships } = useSWR('/products/me', api);
-  const { data: rawClub } = useSWR(`/clubs/${user.club_uuid}`, api);
+  const { data: rawClub } = useSWR(() => (user.club_uuid ? `/clubs/${user.club_uuid}` : null), api);
 
   const [membership] = memberships?.data || [];
   const club = rawClub?.data || null;

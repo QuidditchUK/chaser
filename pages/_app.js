@@ -6,8 +6,9 @@ import { ThemeProvider } from 'styled-components';
 import dynamic from 'next/dynamic';
 import DocumentHead from 'document/head';
 import theme from 'styles/theme';
-import Layout from 'containers/layout';
 import { pageview } from 'modules/analytics';
+
+const Layout = dynamic(() => import('containers/layout'));
 
 Sentry.init({
   enabled: process.env.NODE_ENV === 'production',
@@ -31,13 +32,15 @@ function App({ Component, pageProps, err }) {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <DocumentHead />
+    <>
+      <ThemeProvider theme={theme}>
+        <DocumentHead />
+        <Layout {...pageProps}>
+          <Component {...pageProps} err={err} />
+        </Layout>
+      </ThemeProvider>
       <Scripts />
-      <Layout {...pageProps}>
-        <Component {...pageProps} err={err} />
-      </Layout>
-    </ThemeProvider>
+    </>
   );
 }
 

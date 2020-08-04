@@ -2,27 +2,28 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 import Router from 'next/router';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import Meta from 'components/meta';
-import Container from 'components/container';
 import { Box, Grid, Flex } from 'components/layout';
 import { Logo } from 'components/logo';
-import Heading from 'components/heading';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
-
-import Input from 'components/input';
-import Label from 'components/label';
-import Button from 'components/button';
-import Toggle from 'components/toggle';
 import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
-import Content from 'components/content';
-import Required from 'components/required';
 import { api } from 'modules/api';
 import { setCookies } from 'modules/cookies';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
+import Input from 'components/input';
+import Toggle from 'components/toggle';
+
+const Label = dynamic(() => import('components/label'));
+const Meta = dynamic(() => import('components/meta'));
+const Container = dynamic(() => import('components/container'));
+const Heading = dynamic(() => import('components/heading'));
+const Button = dynamic(() => import('components/button'));
+const Content = dynamic(() => import('components/content'));
+const Required = dynamic(() => import('components/required'));
 
 const Text = styled(Content)`
   a {
@@ -45,7 +46,7 @@ const JoinFormSchema = Yup.object().shape({
   is_student: Yup.bool().required(),
   university: Yup.string().when('is_student', {
     is: true,
-    then: Yup.string().required('We need your university for X reason'),
+    then: Yup.string().required('Please enter the university you currently attend'),
     otherwise: Yup.string(),
   }),
 });
@@ -90,6 +91,8 @@ const Page = () => {
       last_name: '',
       is_student: false,
       university: '',
+      password: '',
+      confirm: '',
     },
   });
 
@@ -193,7 +196,14 @@ const Page = () => {
                       error={errors.university}
                       borderColor={errors.university ? 'alert' : 'greyLight'}
                     />
+
                     {errors.university && (<InlineError marginBottom={3}>{errors.university.message}</InlineError>)}
+
+                    <Text fontSize={1} marginBottom={3}>
+                      We need this as there are some player restrictions in place for Student Clubs competing in QuidditchUK events.
+                      QuidditchUK may require further verification from members regarding their student status, should we need it.
+                      This information is not shared with anyone outside of QuidditchUK, and is purely for our own record.
+                    </Text>
                   </>
                 )}
 

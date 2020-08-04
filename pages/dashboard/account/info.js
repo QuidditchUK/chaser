@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Meta from 'components/meta';
-import Container from 'components/container';
+import dynamic from 'next/dynamic';
 import { Box, Flex } from 'components/layout';
 import { Logo } from 'components/logo';
-import Heading from 'components/heading';
-import InfoForm from 'components/info-form';
-import PasswordForm from 'components/password-form';
 import { rem } from 'styles/theme';
-
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
+
+const Meta = dynamic(() => import('components/meta'));
+const Container = dynamic(() => import('components/container'));
+const Heading = dynamic(() => import('components/heading'));
+const InfoForm = dynamic(() => import('components/info-form'));
+const PasswordForm = dynamic(() => import('components/password-form'));
 
 const logo = '/images/logo.png';
 

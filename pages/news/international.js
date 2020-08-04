@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import dynamic from 'next/dynamic';
 import { getBlogCategory, PAGE_SIZE } from 'modules/prismic';
 
-import LatestNews from 'components/latest-news';
-import NewsHeader from 'components/news-header';
-import Meta from 'components/meta';
+const LatestNews = dynamic(() => import('components/latest-news'));
+const NewsHeader = dynamic(() => import('components/news-header'));
+const Meta = dynamic(() => import('components/meta'));
 
 const News = ({ posts }) => (
   <>

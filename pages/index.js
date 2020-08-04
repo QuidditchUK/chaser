@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import dynamic from 'next/dynamic';
 import { getPrismicDocByUid, formatMetadata, getDocs } from 'modules/prismic';
 import renderPrismicSections from 'constants/prismic';
-import Meta from 'components/meta';
+
+const Meta = dynamic(() => import('components/meta'));
 
 const Home = ({ page, posts }) => (
   <>

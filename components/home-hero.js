@@ -12,6 +12,7 @@ import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 const Video = styled.video`
   width: 121%;
   min-height: 100%;
+  object-fit: cover;
 `;
 
 const HomeHero = (rawData) => {

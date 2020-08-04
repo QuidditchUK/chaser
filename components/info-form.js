@@ -24,7 +24,7 @@ const InfoFormSchema = Yup.object().shape({
   is_student: Yup.bool().required(),
   university: Yup.string().when('is_student', {
     is: true,
-    then: Yup.string().required('We need your university for X reason'),
+    then: Yup.string().required('Please enter the university you currently attend'),
     otherwise: Yup.string(),
   }),
 });
@@ -146,6 +146,12 @@ const InfoForm = ({ user }) => {
                 error={errors.university}
               />
               {errors.university && (<InlineError marginBottom={3}>{errors.university.message}</InlineError>)}
+
+              <Content fontSize={1} marginBottom={3}>
+                We need this as there are some player restrictions in place for Student Clubs competing in QuidditchUK events.
+                QuidditchUK may require further verification from members regarding their student status, should we need it.
+                This information is not shared with anyone outside of QuidditchUK, and is purely for our own record.
+              </Content>
             </>
           )}
 

@@ -1,20 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
+import dynamic from 'next/dynamic';
+
 import PropTypes from 'prop-types';
-import Headroom from 'react-headroom';
 import styled from 'styled-components';
+import cookies from 'js-cookie';
 import { space, variant } from 'styled-system';
 import { transparentize, tint, rgba } from 'polished';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Flex } from 'components/layout';
-import cookies from 'js-cookie';
-import HamburgerIcon from 'public/images/hamburger.svg';
 import { MAIN_NAVIGATION, DASHBOARD_NAVIGATION } from 'constants/navigation';
 import { removeCookie } from 'modules/cookies';
-import ActiveLink, { ParentWrapper, ExactActiveLink } from './active-link';
-import { Logo, LogoLink } from './logo';
-import Button from './button';
+import ActiveLink, { ParentWrapper, ExactActiveLink } from 'components/active-link';
+import { Logo, LogoLink } from 'components/logo';
+
+const HamburgerIcon = dynamic(() => import('public/images/hamburger.svg'));
+const Headroom = dynamic(() => import('react-headroom'));
+const Button = dynamic(() => import('components/button'));
 
 const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';

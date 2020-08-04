@@ -2,22 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import { space } from 'styled-system';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { Formik, Form, Field } from 'formik';
 import { useRouter } from 'next/router';
-import ActiveLink from 'components/active-link';
 import {
   Box, Grid, GridItem, Flex,
 } from 'components/layout';
 import { Logo, LogoLink } from 'components/logo';
-import Container from 'components/container';
-import Heading from 'components/heading';
-import Input from 'components/input';
-import Button from 'components/button';
 import { rem } from 'styles/theme';
-import FacebookIcon from 'public/images/facebook.svg';
-import TwitterIcon from 'public/images/twitter.svg';
-import InstagramIcon from 'public/images/instagram.svg';
-import YoutubeIcon from 'public/images/youtube.svg';
+import Input from 'components/input';
+
+const ActiveLink = dynamic(() => import('components/active-link'));
+const Container = dynamic(() => import('components/container'));
+const Heading = dynamic(() => import('components/heading'));
+const Button = dynamic(() => import('components/button'));
+const FacebookIcon = dynamic(() => import('public/images/facebook.svg'));
+const TwitterIcon = dynamic(() => import('public/images/twitter.svg'));
+const InstagramIcon = dynamic(() => import('public/images/instagram.svg'));
+const YoutubeIcon = dynamic(() => import('public/images/youtube.svg'));
 
 const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';

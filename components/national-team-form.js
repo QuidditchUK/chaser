@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-} from 'formik';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
+
 import * as Yup from 'yup';
 import get from 'just-safe-get';
 import styled from 'styled-components';
@@ -44,25 +41,44 @@ const NationalTeamFormSchema = Yup.object().shape({
   tournament: Yup.string().required('Please enter the next tournament you will be at'),
 });
 
-const handleSubmit = async (values, setSubmitting, resetForm, setServerError, setServerSuccess) => {
+const handleFormSubmit = async (values, resetForm, setServerError, setServerSuccess) => {
   try {
     setServerError(null);
     setServerSuccess(null);
 
     await api.post('/contact/national', values);
 
-    setSubmitting(false);
     setServerSuccess(true);
     resetForm({});
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
-    setSubmitting(false);
   }
 };
 
 const NationalTeamForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
+
+  const {
+    register,
+    handleSubmit,
+    errors,
+    reset,
+    formState,
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(NationalTeamFormSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      club: '',
+      team: null,
+      position: '',
+      tournament: '',
+    },
+  });
+
+  const { isSubmitting } = formState;
 
   const data = {
     variant: get(rawData, 'primary.variant'),
@@ -72,116 +88,101 @@ const NationalTeamForm = (rawData) => {
     <PrismicWrapper variant={data.variant}>
       <Heading as="h1" isBody textAlign="center">Register your interest for a National Team</Heading>
       <Container maxWidth={rem(500)} paddingBottom={4}>
-        <Formik
-          initialValues={{
-            name: '',
-            emai: '',
-            club: '',
-            team: null,
-            position: '',
-            tournament: '',
-          }}
-          onSubmit={(values, { setSubmitting, resetForm }) => handleSubmit(values, setSubmitting, resetForm, setServerError, setServerSuccess)}
-          validationSchema={NationalTeamFormSchema}
-        >
-          {({ errors, touched, isSubmitting }) => (
-            <Form>
-              <Grid
-                gridTemplateColumns="1fr"
-              >
-                <Label htmlFor="name">
-                  Your name <Required />
-                </Label>
+        <form onSubmit={handleSubmit((values) => handleFormSubmit(values, reset, setServerError, setServerSuccess))}>
+          <Grid
+            gridTemplateColumns="1fr"
+          >
+            <Label htmlFor="name">
+              Your name <Required />
+            </Label>
 
-                <Field
-                  id="name"
-                  name="name"
-                  placeholder="Your name"
-                  as={Input}
-                  my={3}
-                  error={errors.name && touched.name}
-                />
+            <Input
+              id="name"
+              name="name"
+              placeholder="Your name"
+              ref={register}
+              my={3}
+              error={errors.name}
+            />
 
-                <ErrorMessage name="name" component={InlineError} marginBottom={3} />
+            {errors.name && (<InlineError marginBottom={3}>{errors.name.message}</InlineError>)}
 
-                <Label htmlFor="email">
-                  Your email <Required />
-                </Label>
+            <Label htmlFor="email">
+              Your email <Required />
+            </Label>
 
-                <Field
-                  name="email"
-                  placeholder="Your email address"
-                  as={Input}
-                  my={3}
-                  error={errors.email && touched.email}
-                />
+            <Input
+              name="email"
+              placeholder="Your email address"
+              ref={register}
+              my={3}
+              error={errors.email}
+            />
 
-                <ErrorMessage name="email" component={InlineError} marginBottom={3} />
+            {errors.email && (<InlineError marginBottom={3}>{errors.email.message}</InlineError>)}
 
-                <Label htmlFor="club">
-                  Club <Required />
-                </Label>
+            <Label htmlFor="club">
+              Club <Required />
+            </Label>
 
-                <Field
-                  name="club"
-                  placeholder="The club you currently play for"
-                  as={Input}
-                  my={3}
-                  error={errors.club && touched.club}
-                />
+            <Input
+              name="club"
+              placeholder="The club you currently play for"
+              ref={register}
+              my={3}
+              error={errors.club}
+            />
 
-                <ErrorMessage name="club" component={InlineError} marginBottom={3} />
+            {errors.club && (<InlineError marginBottom={3}>{errors.club.message}</InlineError>)}
 
-                <Label htmlFor="team" mb="2">
-                  Team to be considered for <Required />
-                </Label>
+            <Label htmlFor="team" mb="2">
+              Team to be considered for <Required />
+            </Label>
 
-                <Field
-                  id="team"
-                  name="team"
-                  as={Select}
-                  marginBottom={3}
-                >
-                  <option disabled selected value>Select a national team</option>
-                  {NATIONAL_TEAMS.map((team) => (<option key={team} value={team}>{team}</option>))}
-                </Field>
+            <Select
+              id="team"
+              name="team"
+              ref={register}
+              marginBottom={3}
+            >
+              <option disabled selected value>Select a national team</option>
+              {NATIONAL_TEAMS.map((team) => (<option key={team} value={team}>{team}</option>))}
+            </Select>
 
-                <ErrorMessage name="team" component={InlineError} marginBottom={3} />
+            {errors.team && (<InlineError marginBottom={3}>{errors.team.message}</InlineError>)}
 
-                <Label htmlFor="position">
-                  Position <Required />
-                </Label>
+            <Label htmlFor="position">
+              Position <Required />
+            </Label>
 
-                <Field
-                  name="position"
-                  placeholder="List the positions you play"
-                  as={Input}
-                  my={3}
-                  error={errors.position && touched.position}
-                />
+            <Input
+              name="position"
+              placeholder="List the positions you play"
+              ref={register}
+              my={3}
+              error={errors.position}
+            />
 
-                <ErrorMessage name="position" component={InlineError} marginBottom={3} />
+            {errors.position && (<InlineError marginBottom={3}>{errors.position.message}</InlineError>)}
 
-                <Label htmlFor="tournament">
-                  Tournament you will next play at <Required />
-                </Label>
+            <Label htmlFor="tournament">
+              Tournament you will next play at <Required />
+            </Label>
 
-                <Field
-                  name="tournament"
-                  placeholder="Tournament"
-                  as={Input}
-                  my={3}
-                  error={errors.tournament && touched.tournament}
-                />
+            <Input
+              name="tournament"
+              placeholder="Tournament"
+              ref={register}
+              my={3}
+              error={errors.tournament}
+            />
 
-                <ErrorMessage name="tournament" component={InlineError} marginBottom={3} />
+            {errors.tournament && (<InlineError marginBottom={3}>{errors.tournament.message}</InlineError>)}
 
-              </Grid>
+          </Grid>
 
-              <Button type="submit" variant={buttonVariants[data.variant]} disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Apply'}</Button>
-            </Form>
-          )}
-        </Formik>
+          <Button type="submit" variant={buttonVariants[data.variant]} disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Apply'}</Button>
+        </form>
 
         {serverError && (
           <>

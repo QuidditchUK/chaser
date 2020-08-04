@@ -2,31 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
-  space, typography, border, color,
+  space,
+  typography,
+  color,
 } from 'styled-system';
 import parse from 'html-react-parser';
 import { useRouter } from 'next/router';
-import Page404 from 'pages/404';
-import PageLoading from 'components/page-loading';
-import Heading from 'components/heading';
+import dynamic from 'next/dynamic';
 import { api } from 'modules/api';
 
-import Meta from 'components/meta';
 import { Box, Flex, Grid } from 'components/layout';
-import HeroWithLocation from 'components/hero-with-location';
 
 import { getBlogTags } from 'modules/prismic';
-import Content from 'components/content';
-import Image from 'components/image';
-import ClubNews from 'components/club-news';
-import { CenterJustify } from 'components/image-and-content';
+// import { CenterJustify } from 'components/image-and-content';
+// import { formatOrdinals } from 'modules/numbers';
 
-import { formatOrdinals } from 'modules/numbers';
+const Heading = dynamic(() => import('components/heading'));
+const HeroWithLocation = dynamic(() => import('components/hero-with-location'));
+const Content = dynamic(() => import('components/content'));
+// const Image = dynamic(() => import('components/image'));
+const ClubNews = dynamic(() => import('components/club-news'));
 
-import FacebookIcon from 'public/images/facebook.svg';
-import TwitterIcon from 'public/images/twitter.svg';
-import InstagramIcon from 'public/images/instagram.svg';
-import YoutubeIcon from 'public/images/youtube.svg';
+const FacebookIcon = dynamic(() => import('public/images/facebook.svg'));
+const TwitterIcon = dynamic(() => import('public/images/twitter.svg'));
+const InstagramIcon = dynamic(() => import('public/images/instagram.svg'));
+const YoutubeIcon = dynamic(() => import('public/images/youtube.svg'));
+
+const Page404 = dynamic(() => import('pages/404'));
+const PageLoading = dynamic(() => import('components/page-loading'));
+const Meta = dynamic(() => import('components/meta'));
 
 const SocialIcon = styled.a`
   ${space};
@@ -55,11 +59,11 @@ const TableData = styled.td`
   padding: ${({ theme }) => theme.space[1]};
 `;
 
-const TableDataBorder = styled(TableData)`
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  ${border};
-`;
+// const TableDataBorder = styled(TableData)`
+//   border-bottom-width: 1px;
+//   border-bottom-style: solid;
+//   ${border};
+// `;
 
 const TableRow = styled.tr`
   border-collapse: separate;
@@ -299,9 +303,9 @@ const ClubPage = ({ club, posts }) => {
               <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color} paddingTop="2">About {club.name}</Heading>
               <Content paddingBottom={3}>{parse(club.description)}</Content>
 
-              {club.teams?.length > 1 && <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Teams</Heading>}
+              {/* {club.teams?.length > 1 && <Heading as="h3" fontSize={[2, 2, 3]} isBody color={club.featured_color}>Teams</Heading>} */}
 
-              {club.teams.sort((a, b) => a.order - b.order).map((team) => (
+              {/* {club.teams.sort((a, b) => a.order - b.order).map((team) => (
                 <Grid
                   gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
                   gridGap={{ _: 'gutter._', m: 'gutter.m' }}
@@ -331,7 +335,7 @@ const ClubPage = ({ club, posts }) => {
                     </Table>
                   </CenterJustify>
                 </Grid>
-              ))}
+              ))} */}
             </Box>
           </Box>
         </Grid>

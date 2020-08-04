@@ -2,27 +2,25 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
 import Router, { useRouter } from 'next/router';
-import Meta from 'components/meta';
-import Container from 'components/container';
 import { Box, Grid, Flex } from 'components/layout';
 import { Logo } from 'components/logo';
-import Heading from 'components/heading';
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-} from 'formik';
-import Input from 'components/input';
-import Label from 'components/label';
-import Button from 'components/button';
 import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
-import Content from 'components/content';
 import { api } from 'modules/api';
 import { setCookies, parseCookies } from 'modules/cookies';
-import Required from 'components/required';
+import Input from 'components/input';
+
+const Meta = dynamic(() => import('components/meta'));
+const Container = dynamic(() => import('components/container'));
+const Heading = dynamic(() => import('components/heading'));
+const Label = dynamic(() => import('components/label'));
+const Button = dynamic(() => import('components/button'));
+const Content = dynamic(() => import('components/content'));
+const Required = dynamic(() => import('components/required'));
 
 const Text = styled(Content)`
   a {
@@ -41,25 +39,40 @@ const ResetFormSchema = Yup.object().shape({
     .required('Required'),
 });
 
-const handleSubmit = async ({ confirm, ...formData }, setSubmitting, setServerError) => {
-  try {
-    setServerError(null);
-    const { data } = await api.post('/users/reset', formData);
-
-    setCookies('AUTHENTICATION_TOKEN', data.access_token);
-
-    setSubmitting(false);
-    Router.push('/dashboard');
-  } catch (err) {
-    setServerError(err?.response?.data?.error?.message);
-    setSubmitting(false);
-  }
-};
-
-const Page = () => {
+const Reset = () => {
   const [serverError, setServerError] = useState(null);
   const { query } = useRouter();
   const { token, uuid } = query;
+
+  const {
+    register,
+    handleSubmit,
+    errors,
+    formState,
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(ResetFormSchema),
+    defaultValues: {
+      password: '',
+      confirm: '',
+    },
+  });
+
+  const { isSubmitting } = formState;
+
+  const handleResetSubmit = async ({ confirm, ...formData }) => {
+    try {
+      setServerError(null);
+      const { data } = await api.post('/users/reset', { ...formData, token, uuid });
+
+      setCookies('AUTHENTICATION_TOKEN', data.access_token);
+
+      Router.push('/dashboard');
+    } catch (err) {
+      setServerError(err?.response?.data?.error?.message);
+    }
+  };
+
   return (
     <>
       <Meta description="Forgot your password for QuidditchUK, request a reset here" subTitle="Forgot Sent" />
@@ -72,52 +85,40 @@ const Page = () => {
           <Flex justifyContent="center" alignItems="center"><Logo src={logo} alt="Quidditch UK" /></Flex>
           <Heading as="h1" isBody textAlign="center">Reset Password</Heading>
 
-          <Formik
-            initialValues={{
-              password: '',
-              confirm: '',
-              token,
-              uuid,
-            }}
+          <form onSubmit={handleSubmit((values) => handleResetSubmit(values))}>
+            <Grid gridTemplateColumns="1fr">
+              <Label htmlFor="password">
+                New Password <Required />
+              </Label>
 
-            onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting, setServerError)}
-            validationSchema={ResetFormSchema}
-          >
-            {({ errors, touched, isSubmitting }) => (
-              <Form>
-                <Grid gridTemplateColumns="1fr">
-                  <Label htmlFor="password">
-                    New Password <Required />
-                  </Label>
-                  <Field
-                    name="password"
-                    placeholder="Password"
-                    as={Input}
-                    my={3}
-                    type="password"
-                    error={errors.password && touched.password}
-                  />
-                  <ErrorMessage name="password" component={InlineError} marginBottom={3} />
+              <Input
+                name="password"
+                placeholder="Password"
+                ref={register}
+                my={3}
+                type="password"
+                error={errors.password}
+              />
+              {errors.password && <InlineError marginBottom={3}>{errors.password.message}</InlineError>}
 
-                  <Label htmlFor="confirm">
-                    Confirm New Password <Required />
-                  </Label>
+              <Label htmlFor="confirm">
+                Confirm New Password <Required />
+              </Label>
 
-                  <Field
-                    name="confirm"
-                    placeholder="Confirm your new password"
-                    as={Input}
-                    my={3}
-                    type="password"
-                    error={errors.confirm && touched.confirm}
-                  />
+              <Input
+                name="confirm"
+                placeholder="Confirm your new password"
+                ref={register}
+                my={3}
+                type="password"
+                error={errors.confirm}
+              />
 
-                  <ErrorMessage name="confirm" component={InlineError} marginBottom={3} />
-                </Grid>
-                <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Reset password'}</Button>
-              </Form>
-            )}
-          </Formik>
+              {errors.confirm && <InlineError marginBottom={3}>{errors.confirm.message}</InlineError>}
+            </Grid>
+
+            <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Reset password'}</Button>
+          </form>
 
           {serverError && <InlineError my={3}>{serverError}</InlineError>}
 
@@ -143,4 +144,4 @@ export const getServerSideProps = async ({ req, res }) => {
   };
 };
 
-export default Page;
+export default Reset;

@@ -1,21 +1,11 @@
 import React from 'react';
-import Head from 'next/head';
 import getConfig from 'next/config';
 
 const { publicRuntimeConfig } = getConfig();
 
 const Scripts = () => (
-  <Head>
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
-                  window.prismic = {
-                    endpoint: 'https://chaser.cdn.prismic.io/api/v2'
-                  };`,
-      }}
-    />
-    <script type="text/javascript" src="https://static.cdn.prismic.io/prismic.min.js?new=true" defer async />
-
+  <>
+    <script defer src="//static.cdn.prismic.io/prismic.js?repo=chaser&new=true" />
     {/* Global Site Tag (gtag.js) - Google Analytics */}
     <script
       async
@@ -34,7 +24,7 @@ const Scripts = () => (
           `,
       }}
     />
-  </Head>
+  </>
 );
 
 export default Scripts;
