@@ -4,9 +4,9 @@ const withOffline = require('next-offline');
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-})
+});
 
-const SentryWebpackPlugin = require('@sentry/webpack-plugin')
+const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
   SENTRY_ORG,
@@ -18,7 +18,7 @@ const {
   COOKIE_SECURE,
   STRIPE_TOKEN,
   GA_TOKEN,
-} = process.env
+} = process.env;
 
 module.exports = withBundleAnalyzer(withOffline({
   target: 'serverless',

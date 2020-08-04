@@ -9,6 +9,7 @@
     "@sentry/node": "^5.17.0",
     "@sentry/webpack-plugin": "^1.11.1",
     "@stripe/stripe-js": "^1.8.0",
+    "@svgr/webpack": "^5.4.0",
     "@zeit/next-source-maps": "^0.0.3",
     "axios": "^0.19.2",
     "body-scroll-lock": "^3.0.3",
@@ -61,7 +62,6 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^9.5.1",
-    "@svgr/webpack": "^5.4.0",
     "babel-eslint": "10.1.0",
     "babel-plugin-styled-components": "^1.10.7",
     "cross-env": "^7.0.2",
