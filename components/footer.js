@@ -30,7 +30,7 @@ const List = styled.ul`
 `;
 
 const Item = styled.li`
-  line-height: ${rem(28)};
+  line-height: ${rem(32)};
 
   a { 
     text-decoration: none;
@@ -165,7 +165,7 @@ export const Footer = () => {
                   onSubmit={({ postcode }) => router.push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`).then(() => window.scrollTo(0, 0))}
                 >
                   <Form>
-                    <Field as={Input} placeholder="Enter your postcode" name="postcode" /><Button type="submit" variant="secondary" ml={2}>Find</Button>
+                    <Field as={Input} placeholder="Enter your postcode" name="postcode" aria-label="Find Quidditch" /><Button type="submit" variant="secondary" ml={2}>Find</Button>
                   </Form>
                 </Formik>
               </Flex>
