@@ -69,7 +69,11 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  const { data } = await api.get('/products');
+  const { data } = await api.get('/products', {
+    headers: {
+      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
+    },
+  });
 
   return {
     props: {
