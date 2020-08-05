@@ -37,18 +37,18 @@ const HorizontalCard = ({
     gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
     gridGap="gutter._"
   >
-    <Flex flexDirection="column" order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}>
-      <Box
-        order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}
-        as="section"
-        position="relative"
-        backgroundImage={`url(${image})`}
-        backgroundColor="primary"
-        backgroundSize="cover"
-        backgroundPosition="center"
-        minHeight="300px"
-      />
-    </Flex>
+    <Box
+      order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}
+      as="section"
+      position="relative"
+      backgroundImage={`url(${image})`}
+      backgroundColor="primary"
+      backgroundSize="cover"
+      backgroundPosition="center"
+      minHeight="300px"
+      height="100%"
+      width="100%"
+    />
 
     <Flex flexDirection="column" order={{ _: 2, m: `${(isImageLeft ? 2 : 1)}` }}>
       <Content px={4} py={5}>
