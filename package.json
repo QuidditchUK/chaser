@@ -33,6 +33,7 @@
     "react-headroom": "3.0.0",
     "react-hook-form": "^6.2.0",
     "react-intersection-observer": "^8.26.2",
+    "react-is": "^16.13.1",
     "simple-react-lightbox": "3.2.3-3",
     "styled-components": "5.1.1",
     "styled-system": "5.1.5",
