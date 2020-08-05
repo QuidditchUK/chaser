@@ -10,7 +10,6 @@ import styled from 'styled-components';
 import { parseCookies, setCookies } from 'modules/cookies';
 import { api } from 'modules/api';
 import { Box, Flex, Grid } from 'components/layout';
-import { CenterJustify } from 'components/image-and-content';
 import { InlineError } from 'components/errors';
 
 const Meta = dynamic(() => import('components/meta'));
@@ -20,7 +19,6 @@ const Button = dynamic(() => import('components/button'));
 const Label = dynamic(() => import('components/label'));
 const Container = dynamic(() => import('components/container'));
 const ProductCard = dynamic(() => import('components/product-card'));
-const Image = dynamic(() => import('components/image'));
 
 const Benefits = styled(Content)`
   font-size: ${({ theme }) => theme.fontSizes.bodyCard};
@@ -69,14 +67,15 @@ const ManageMembership = ({ products }) => {
           {!currentProducts.length && (
 
           <Grid
-            gridTemplateColumns={{ _: '1fr', m: '2fr 1fr' }}
+            gridTemplateColumns={{ _: '1fr', l: '2fr 1fr' }}
             gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+            borderRadius={1}
+            bg="white"
+            overflow="hidden"
           >
             <Box
-              bg="white"
               py={4}
               px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-              borderRadius={1}
             >
               <Heading px={4} as="h2" mb={0} isBody>Membership Benefits</Heading>
               <Benefits>
@@ -132,14 +131,16 @@ const ManageMembership = ({ products }) => {
               </Flex>
             </Box>
 
-            <CenterJustify>
-              <Image
-                alt="Benefits of QUK Membership"
-                src="https://images.prismic.io/chaser/e8e1b385-cd00-469d-aa67-f66dca0d5491_trev_member_editQUK.jpg?auto=compress,format"
-                height={900}
-                width={900}
-              />
-            </CenterJustify>
+            <Box
+              position="relative"
+              backgroundImage={'url("https://images.prismic.io/chaser/e8e1b385-cd00-469d-aa67-f66dca0d5491_trev_member_editQUK.jpg?auto=compress,format")'}
+              backgroundColor="primary"
+              backgroundSize="cover"
+              backgroundPosition="center"
+              height="100%"
+              width="100%"
+              minHeight="300px"
+            />
           </Grid>
 
           )}

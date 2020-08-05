@@ -139,14 +139,16 @@ const Dashboard = ({ user }) => {
                 </StyledList>
               </CenterJustify>
 
-              <CenterJustify>
-                <Image
-                  alt="London Unbreakables line up at the keeper line ready for brooms up"
-                  src="https://images.prismic.io/chaser/b97e3eab-dcb7-4474-85e0-914afe58ae74_IMG_0529.JPG?auto=compress,format"
-                  height={600}
-                  width={900}
-                />
-              </CenterJustify>
+              <Box
+                position="relative"
+                backgroundImage={'url("https://images.prismic.io/chaser/b97e3eab-dcb7-4474-85e0-914afe58ae74_IMG_0529.JPG?auto=compress,format")'}
+                backgroundColor="primary"
+                backgroundSize="cover"
+                backgroundPosition="center"
+                height="100%"
+                width="100%"
+                minHeight="300px"
+              />
             </Grid>
           </Box>
 
