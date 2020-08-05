@@ -1,8 +1,11 @@
 import React from 'react';
 import Head from 'next/head';
+import getConfig from 'next/config';
 
 import fonts from '../styles/fonts';
 import reset from '../styles/reset';
+
+const { publicRuntimeConfig } = getConfig();
 
 const DocumentHead = () => (
   <Head>
@@ -29,6 +32,25 @@ const DocumentHead = () => (
     {/* Static CSS */}
     <style dangerouslySetInnerHTML={{ __html: reset }} />
     <style dangerouslySetInnerHTML={{ __html: fonts }} />
+
+    {/* Global Site Tag (gtag.js) - Google Analytics */}
+    <script
+      async
+      defer
+      src={`https://www.googletagmanager.com/gtag/js?id=${publicRuntimeConfig.gaToken}`}
+    />
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${publicRuntimeConfig.gaToken}', {
+              page_path: window.location.pathname,
+            });
+          `,
+      }}
+    />
   </Head>
 );
 
