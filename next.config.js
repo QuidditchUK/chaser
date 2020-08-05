@@ -1,8 +1,12 @@
 const withSourceMaps = require('@zeit/next-source-maps')();
 const path = require('path');
-const withOffline = require('next-offline')
+const withOffline = require('next-offline');
 
-const SentryWebpackPlugin = require('@sentry/webpack-plugin')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
   SENTRY_ORG,
@@ -14,9 +18,9 @@ const {
   COOKIE_SECURE,
   STRIPE_TOKEN,
   GA_TOKEN,
-} = process.env
+} = process.env;
 
-module.exports = withOffline({
+module.exports = withBundleAnalyzer(withOffline({
   target: 'serverless',
   transformManifest: manifest => ['/'].concat(manifest), // add the homepage to the cache
   // Trying to set NODE_ENV=production when running yarn dev causes a build-time error so we
@@ -115,4 +119,4 @@ module.exports = withOffline({
     stripeToken: STRIPE_TOKEN,
     gaToken: GA_TOKEN,
   },
-});
+}));

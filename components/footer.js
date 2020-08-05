@@ -57,6 +57,7 @@ const Support = styled.p`
 
 const Icon = styled.a`
   ${space};
+  margin-left: ${({ theme }) => theme.space[2]};
 
   svg {
       color: ${({ theme }) => theme.colors.greyLight};
