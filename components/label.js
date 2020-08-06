@@ -5,6 +5,10 @@ const Label = styled.label`
   font-size: ${({ theme }) => theme.fontSizes.bodyCard};
   ${layout};
   ${space};
+
+  a {
+    color: ${({ theme }) => theme.colors.secondary};
+  }
 `;
 
 export default Label;

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
+import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { parse } from 'date-fns';
 import * as Yup from 'yup';
@@ -96,13 +97,13 @@ const ManageMembership = ({ products }) => {
                 </List>
               </Benefits>
 
-              <Flex flexDirection="column" alignItems="center" py="5">
+              <Flex flexDirection="column" alignItems="center" py="5" borderTopWidth="1px" borderTopStyle="solid" borderTopColor="primary">
                 <form onSubmit={handleSubmit(membershipFormSubmit)}>
 
                   <Box my="3">
                     <Label>
                       <input type="checkbox" name="checkboxOne" ref={register} />{' '}
-                      I acknowledge that I have read, understood, and agree to the Individual Membership Policy
+                      I acknowledge that I have read, understood, and agree to the <a href="https://prismic-io.s3.amazonaws.com/chaser/7a339771-8248-4244-b141-cd2eb39a0028_QuidditchUK+Individual+Membership+Policy+2020_2021.pdf" target="_blank" rel="noopener noreferrer">Individual Membership Policy</a>
                     </Label>
 
                     {errors.checkboxOne && (<InlineError my="3">{errors.checkboxOne.message}</InlineError>)}
@@ -111,7 +112,7 @@ const ManageMembership = ({ products }) => {
                   <Box my="3">
                     <Label>
                       <input type="checkbox" name="checkboxTwo" ref={register} />{' '}
-                      I acknowledge that I have read, understood, and agree to the QuidditchUK Media Usage Policy
+                      I acknowledge that I have read, understood, and agree to the <a href="https://prismic-io.s3.amazonaws.com/chaser/680b0ecd-ed85-487d-a727-3f5731f78bca_Media+Usage+Policy.pdf" target="_blank" rel="noopener noreferrer">QuidditchUK Media Usage Policy</a>
                     </Label>
 
                     {errors.checkboxTwo && (<InlineError my="3">{errors.checkboxTwo.message}</InlineError>)}
@@ -120,7 +121,7 @@ const ManageMembership = ({ products }) => {
                   <Box my="3">
                     <Label>
                       <input type="checkbox" name="checkboxThree" ref={register} />{' '}
-                      I agree to abide by the membership and gameplay policies set out by QuidditchUK, and will uphold their values as a member of the quidditch community.
+                      I agree to abide by the <Link href="/about/[id]" as="/about/documents-and-policies">membership and gameplay policies</Link> set out by QuidditchUK, and will uphold their values as a member of the quidditch community.
                     </Label>
 
                     {errors.checkboxThree && (<InlineError my="3">{errors.checkboxThree.message}</InlineError>)}

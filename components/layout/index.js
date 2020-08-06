@@ -45,4 +45,5 @@ export const Flex = styled.div`
   ${flexbox}
   ${layout}
   ${color}
+  ${border}
 `;
