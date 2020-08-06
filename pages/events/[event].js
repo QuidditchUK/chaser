@@ -114,7 +114,7 @@ const EventPage = ({ event }) => {
           <Flex flexDirection="column">
             <Heading as="h1" fontSize={[4, 5]} isBody marginTop="0" marginBottom="2">{event.name}</Heading>
 
-            {event.start_time && (<Time>{format(parseTimestamptz(event.start_time), 'EEE, d LLL H:mm a')} – {format(parseTimestamptz(event.end_time), 'EEE, d LLL H:mm a')}</Time>)}
+            {event.start_time && (<Time>{format(parseTimestamptz(event.start_time), 'EEE, d LLL h:mm a')} – {format(parseTimestamptz(event.end_time), 'EEE, d LLL h:mm a')}</Time>)}
             <Flex alignItems="center">
               <LocationIcon />{' '}
               <LocationLink
