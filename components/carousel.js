@@ -47,7 +47,11 @@ const Carousel = ({ images, height, width }) => {
         flickityRef={(ref) => {
           flickity.current = ref;
         }}
-        options={{ wrapAround: true, pageDots: false }}
+        options={{
+          wrapAround: true,
+          pageDots: false,
+          prevNextButtons: images.length > 1,
+        }}
       >
         {hasImages && images.map((image, i) => (
           <Image
