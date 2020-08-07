@@ -230,7 +230,7 @@ export const getServerSideProps = async ({ req, res }) => {
     },
   });
 
-  if (!products.filter((product) => new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())).length) {
+  if (!products.length || !products.filter((product) => new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())).length) {
     res.setHeader('location', '/dashboard/membership/manage');
     res.statusCode = 302;
     res.end();
