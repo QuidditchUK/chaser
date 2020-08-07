@@ -25,7 +25,7 @@ const Meta = ({
       <meta property="og:image" content={image} />
       <meta property="og:title" content={formattedTitle} />
       <meta property="og:type" content={type} />
-      <meta property="og:url" content={url} />
+      <meta property="og:url" content={`${SITE_URL}${url}`} />
     </Head>
   );
 };
