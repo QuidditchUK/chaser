@@ -97,6 +97,7 @@ export const Footer = () => {
                 <Item><ActiveLink as="/find-quidditch" href="/find-quidditch"><span>All Clubs</span></ActiveLink></Item>
                 <Item><a href="https://docs.google.com/spreadsheets/d/1QuGPhsj_LV81dRCXVRKHpdYvj9IrrupcxH9c8LWXZuE" target="_blank" rel="noopener noreferrer"><span>Results</span></a></Item>
                 <Item><ActiveLink as="/about/fees" href="/about/[id]"><span>Season Fees</span></ActiveLink></Item>
+                <Item><ActiveLink as="/newsletters-archive" href="/[id]"><span>Newsletters</span></ActiveLink></Item>
               </List>
             </GridItem>
 

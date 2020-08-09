@@ -9,6 +9,7 @@ import {
   ErrorMessage,
   useFormikContext,
 } from 'formik';
+import { parse } from 'date-fns';
 import Router from 'next/router';
 import * as Yup from 'yup';
 import { api } from 'modules/api';
@@ -222,6 +223,19 @@ export const getServerSideProps = async ({ req, res }) => {
       Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
     },
   });
+
+  const { data: products } = await api.get('/products/me', {
+    headers: {
+      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
+    },
+  });
+
+  if (!products.length || !products.filter((product) => new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())).length) {
+    res.setHeader('location', '/dashboard/membership/manage');
+    res.statusCode = 302;
+    res.end();
+    return { props: {} };
+  }
 
   return {
     props: {
