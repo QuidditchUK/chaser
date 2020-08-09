@@ -2,7 +2,7 @@ import Prismic from 'prismic-javascript';
 import { Client, linkResolver } from 'modules/prismic';
 
 const getPages = async (page, documents = []) => {
-  const res = await Client().query(Prismic.Predicates.any('document.type', ['page', 'post', 'volunteer', 'about', 'play', 'programmes']), { page, pageSize: 100, fetch: [] });
+  const res = await Client().query(Prismic.Predicates.any('document.type', ['pages', 'post', 'volunteer', 'about', 'play', 'programmes']), { page, pageSize: 100, fetch: [] });
   if (res.next_page !== null) {
     return getPages(page + 1, documents.concat(res.results));
   }
