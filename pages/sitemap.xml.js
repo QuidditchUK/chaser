@@ -1,4 +1,3 @@
-import React from 'react';
 import Prismic from 'prismic-javascript';
 import { Client, linkResolver } from 'modules/prismic';
 
@@ -22,7 +21,7 @@ const createSitemap = (documents) => `<?xml version="1.0" encoding="UTF-8"?>
   </urlset>
 `;
 
-const Sitemap = () => (<></>);
+const Sitemap = () => {};
 
 export const getServerSideProps = async ({ res }) => {
   const documents = await getPages(1, []);
