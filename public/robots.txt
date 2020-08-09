@@ -46,3 +46,4 @@ Disallow: /dashboard
 Disallow: /dashboard/*
 Allow: /*?utm_source=*
 
+Sitemap: https://quidditchuk.org/sitemap.xml
