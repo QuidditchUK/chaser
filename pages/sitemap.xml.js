@@ -15,7 +15,7 @@ const createSitemap = (documents) => `<?xml version="1.0" encoding="UTF-8"?>
     ${documents.map((document) => `
       <url>
         <loc>https://quidditchuk.org${linkResolver(document)}</loc>
-        <lastmod>${document.last_publication_date}</lastmod>
+        <lastmod>${new Date(document.last_publication_date).toISOString()}</lastmod>
       </url>
     `).join('')}
   </urlset>
