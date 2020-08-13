@@ -347,18 +347,27 @@ const ClubPage = ({ club, posts }) => {
 };
 
 export const getServerSideProps = async ({ params: { club } }) => {
-  const { data } = await api.get(`/clubs/slug/${club}`);
+  try {
+    const { data } = await api.get(`/clubs/slug/${club}`);
 
-  // const results = RESULTS.sort((a, b) => new Date(b.tournament_date).getTime() - new Date(a.tournament_date).getTime());
-  const posts = await getBlogTags(data.tags, { orderings: '[my.post.date desc]', pageSize: 3 });
+    // const results = RESULTS.sort((a, b) => new Date(b.tournament_date).getTime() - new Date(a.tournament_date).getTime());
+    const posts = await getBlogTags(data.tags, { orderings: '[my.post.date desc]', pageSize: 3 });
 
-  return {
-    props: {
-      club: data,
-      posts,
-      // results,
-    },
-  };
+    return {
+      props: {
+        club: data,
+        posts,
+        // results,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        club: null,
+        posts: [],
+      },
+    };
+  }
 };
 
 ClubPage.propTypes = {
