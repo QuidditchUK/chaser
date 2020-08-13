@@ -11,6 +11,7 @@ const PageLoading = dynamic(() => import('components/page-loading'));
 const Meta = dynamic(() => import('components/meta'));
 const BlogSupport = dynamic(() => import('components/blog-support'));
 const BlogHero = dynamic(() => import('components/blog-hero'));
+const SchemaArticle = dynamic(() => import('components/schema-article'));
 
 const Post = ({ page }) => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const Post = ({ page }) => {
   return (
     <>
       <Meta {...formatMetadata(page.data)} />
-
+      <SchemaArticle page={page} />
       <article>
         <BlogHero {...page.data} />
         {renderPrismicSections(page.data.body)}
