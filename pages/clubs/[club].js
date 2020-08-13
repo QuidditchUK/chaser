@@ -20,6 +20,7 @@ import { getBlogTags } from 'modules/prismic';
 const Heading = dynamic(() => import('components/heading'));
 const HeroWithLocation = dynamic(() => import('components/hero-with-location'));
 const Content = dynamic(() => import('components/content'));
+const SchemaClub = dynamic(() => import('components/schema-club'));
 // const Image = dynamic(() => import('components/image'));
 const ClubNews = dynamic(() => import('components/club-news'));
 
@@ -151,6 +152,7 @@ const ClubPage = ({ club, posts }) => {
         subTitle={club.name}
         image={club.images[0]}
       />
+      <SchemaClub club={club} />
 
       <HeroWithLocation
         images={club.images}
