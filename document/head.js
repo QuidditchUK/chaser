@@ -1,11 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
-import getConfig from 'next/config';
 
 import fonts from '../styles/fonts';
 import reset from '../styles/reset';
-
-const { publicRuntimeConfig } = getConfig();
 
 const DocumentHead = () => (
   <Head>
@@ -37,7 +34,7 @@ const DocumentHead = () => (
     <script
       async
       defer
-      src={`https://www.googletagmanager.com/gtag/js?id=${publicRuntimeConfig.gaToken}`}
+      src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TOKEN}`}
     />
     <script
       dangerouslySetInnerHTML={{
@@ -45,7 +42,7 @@ const DocumentHead = () => (
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${publicRuntimeConfig.gaToken}', {
+              gtag('config', '${process.env.GA_TOKEN}', {
                 page_path: window.location.pathname,
               });
             `,
