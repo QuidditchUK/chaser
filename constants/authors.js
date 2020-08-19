@@ -4,6 +4,7 @@ const AbbyWhiteley = '../images/authors/abby-whiteley.jpg';
 const KirstyScheiby = '../images/authors/kirsty-scheiby.jpg';
 const DeclanRamsay = '../images/authors/declan-ramsay.jpg';
 const JasmineLowen = '../images/authors/jasmine-lowen.jpg';
+const GeorgiaChallinor = '../images/authors/georgia-challinor.jpg';
 const Logo = '../images/authors/quk-logo.png';
 
 const authors = {
@@ -13,6 +14,7 @@ const authors = {
   'Kirsty Scheiby': KirstyScheiby,
   'Declan Ramsay': DeclanRamsay,
   'Jasmine Lowen': JasmineLowen,
+  'Georgia Challinor': GeorgiaChallinor,
 };
 
 export default function Authors(author) {
