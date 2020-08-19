@@ -1,11 +1,7 @@
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig } = getConfig();
-
 export const pageview = (url) => {
   if (process.env.NODE_ENV !== 'development') {
     if (typeof window !== 'undefined') {
-      window.gtag('config', publicRuntimeConfig.gaToken, {
+      window.gtag('config', process.env.gaToken, {
         page_path: url,
       });
     }
