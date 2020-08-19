@@ -2094,22 +2094,6 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@popmotion/easing@^1.0.1", "@popmotion/easing@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@popmotion/easing/-/easing-1.0.2.tgz#17d925c45b4bf44189e5a38038d149df42d8c0b4"
-  integrity sha512-IkdW0TNmRnWTeWI7aGQIVDbKXPWHVEYdGgd5ZR4SH/Ty/61p63jCjrPxX1XrR7IGkl08bjhJROStD7j+RKgoIw==
-
-"@popmotion/popcorn@^0.4.2", "@popmotion/popcorn@^0.4.4":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@popmotion/popcorn/-/popcorn-0.4.4.tgz#a5f906fccdff84526e3fcb892712d7d8a98d6adc"
-  integrity sha512-jYO/8319fKoNLMlY4ZJPiPu8Ea8occYwRZhxpaNn/kZsK4QG2E7XFlXZMJBsTWDw7I1i0uaqyC4zn1nwEezLzg==
-  dependencies:
-    "@popmotion/easing" "^1.0.1"
-    framesync "^4.0.1"
-    hey-listen "^1.0.8"
-    style-value-types "^3.1.7"
-    tslib "^1.10.0"
-
 "@rollup/plugin-node-resolve@^7.1.1":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-7.1.3.tgz#80de384edfbd7bfc9101164910f86078151a3eca"
@@ -5146,23 +5130,20 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
-framer-motion@^1.11.0:
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-1.11.1.tgz#b031d1556a78854e0989b8c7e96418c6e15aa474"
-  integrity sha512-CP6aYLPSivAWkq9UoSurefHBggxG85IT8ObYyWYkcZppgtjHzpwRzhaA8P0ljMGRqtcpeQAIybiGgPioBPlOSw==
+framer-motion@^2.3.0:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-2.5.1.tgz#6ddf5d3d35eaf91505c8685c8859a6382e4f97ff"
+  integrity sha512-ZvuaNWc6co7P4hAtjNC0Go/XWM6XfxmWHn5kT1Zfe0wR+KLRpsm1cG81XnjImlmqSgawtKxkC7baB939AuAbzw==
   dependencies:
-    "@popmotion/easing" "^1.0.2"
-    "@popmotion/popcorn" "^0.4.2"
     framesync "^4.0.4"
     hey-listen "^1.0.8"
-    popmotion "9.0.0-beta-8"
-    style-value-types "^3.1.6"
-    stylefire "^7.0.2"
+    popmotion "9.0.0-rc.5"
+    style-value-types "^3.1.9"
     tslib "^1.10.0"
   optionalDependencies:
     "@emotion/is-prop-valid" "^0.8.2"
 
-framesync@^4.0.0, framesync@^4.0.1, framesync@^4.0.4:
+framesync@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/framesync/-/framesync-4.0.4.tgz#79c42c0118f26821c078570db0ff81fb863516a2"
   integrity sha512-mdP0WvVHe0/qA62KG2LFUAOiWLng5GLpscRlwzBxu2VXOp6B8hNs5C5XlFigsMgrfDrr2YbqTsgdWZTc4RXRMQ==
@@ -5213,11 +5194,6 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
-
-fscreen@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/fscreen/-/fscreen-1.0.2.tgz#c4c51d96d819d75a19d728e0df445f9be9bb984f"
-  integrity sha1-xMUdltgZ11oZ1yjg30Rfm+m7mE8=
 
 fsevents@^1.2.7:
   version "1.2.13"
@@ -7318,16 +7294,14 @@ polished@3.6.5:
   dependencies:
     "@babel/runtime" "^7.9.2"
 
-popmotion@9.0.0-beta-8:
-  version "9.0.0-beta-8"
-  resolved "https://registry.yarnpkg.com/popmotion/-/popmotion-9.0.0-beta-8.tgz#f5a709f11737734e84f2a6b73f9bcf25ee30c388"
-  integrity sha512-6eQzqursPvnP7ePvdfPeY4wFHmS3OLzNP8rJRvmfFfEIfpFqrQgLsM50Gd9AOvGKJtYJOFknNG+dsnzCpgIdAA==
+popmotion@9.0.0-rc.5:
+  version "9.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/popmotion/-/popmotion-9.0.0-rc.5.tgz#4dbfbd905bc7d58ff8b641c39a15902c1370d315"
+  integrity sha512-0RtKQr5hOp6cGbOGLCxVNi72kROGmvl6obfpH1mmpxa6MMbw0wHMjnHEmkBTfNISjf/vk9B2TCN6uVd/zzlkMA==
   dependencies:
-    "@popmotion/easing" "^1.0.1"
-    "@popmotion/popcorn" "^0.4.2"
     framesync "^4.0.4"
     hey-listen "^1.0.8"
-    style-value-types "^3.1.6"
+    style-value-types "^3.1.9"
     tslib "^1.10.0"
 
 popper.js@1.16.1-lts:
@@ -8310,16 +8284,15 @@ signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==
 
-simple-react-lightbox@3.2.3-3:
-  version "3.2.3-3"
-  resolved "https://registry.yarnpkg.com/simple-react-lightbox/-/simple-react-lightbox-3.2.3-3.tgz#c7526120e15bcf916ee4a3751ec0e6ad52824b36"
-  integrity sha512-+yZhiY2SyT2w6aaKngSh+8NQ2pK4INOZ80sACcyWjbcOZ5ND1ozmo/HVrFhbXKHmj5lk1rde7r3X0Ix4Xw/Urg==
+simple-react-lightbox@3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/simple-react-lightbox/-/simple-react-lightbox-3.3.4.tgz#1a0df830a9a8852edd7a4ec9fa7ef1646f8ae5ca"
+  integrity sha512-cQR/GI85jYuo9J342D1fKw3zf42FUsWctvBJ9YJQRgRwmAe7qjfH7bPVfP9Z8hYh5/4l+iRdrg8DXhGEQp0Glg==
   dependencies:
     fast-deep-equal "^3.1.1"
-    framer-motion "^1.11.0"
-    fscreen "^1.0.2"
+    framer-motion "^2.3.0"
     imagesloaded "^4.1.4"
-    lodash "^4.17.15"
+    lodash "^4.17.19"
     panzoom "^9.2.4"
     react-swipeable "^5.5.1"
     react-use "^15.1.0"
@@ -8744,10 +8717,10 @@ style-to-object@0.3.0:
   dependencies:
     inline-style-parser "0.1.1"
 
-style-value-types@^3.1.6, style-value-types@^3.1.7:
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/style-value-types/-/style-value-types-3.1.7.tgz#3d7d3cf9cb9f9ee86c00e19ba65d6a181a0db33a"
-  integrity sha512-jPaG5HcAPs3vetSwOJozrBXxuHo9tjZVnbRyBjxqb00c2saIoeuBJc1/2MtvB8eRZy41u/BBDH0CpfzWixftKg==
+style-value-types@^3.1.9:
+  version "3.1.9"
+  resolved "https://registry.yarnpkg.com/style-value-types/-/style-value-types-3.1.9.tgz#faf7da660d3f284ed695cff61ea197d85b9122cc"
+  integrity sha512-050uqgB7WdvtgacoQKm+4EgKzJExVq0sieKBQQtJiU3Muh6MYcCp4T3M8+dfl6VOF2LR0NNwXBP1QYEed8DfIw==
   dependencies:
     hey-listen "^1.0.8"
     tslib "^1.10.0"
@@ -8800,17 +8773,6 @@ styled-system@5.1.5:
     "@styled-system/typography" "^5.1.2"
     "@styled-system/variant" "^5.1.5"
     object-assign "^4.1.1"
-
-stylefire@^7.0.2:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/stylefire/-/stylefire-7.0.3.tgz#9120ecbb084111788e0ddaa04074799750f20d1d"
-  integrity sha512-Q0l7NSeFz/OkX+o6/7Zg3VZxSAZeQzQpYomWmIpOehFM/rJNMSLVX5fgg6Q48ut2ETNKwdhm97mPNU643EBCoQ==
-  dependencies:
-    "@popmotion/popcorn" "^0.4.4"
-    framesync "^4.0.0"
-    hey-listen "^1.0.8"
-    style-value-types "^3.1.7"
-    tslib "^1.10.0"
 
 stylis-rule-sheet@0.0.10:
   version "0.0.10"
