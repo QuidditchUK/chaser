@@ -126,4 +126,7 @@ module.exports = withBundleAnalyzer(withOffline({
     cookiesSecure: COOKIE_SECURE,
     stripeToken: STRIPE_TOKEN,
   },
+  env: {
+    gaToken: GA_TOKEN,
+  }
 }));
