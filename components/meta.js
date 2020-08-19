@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 
-const SITE_URL = 'https://quidditchuk.org';
+const SITE_URL = 'https://quidditchuk.org'; // TODO: Use env variable
 
 const Meta = ({
   subTitle,

@@ -20,6 +20,7 @@ import { getBlogTags } from 'modules/prismic';
 const Heading = dynamic(() => import('components/heading'));
 const HeroWithLocation = dynamic(() => import('components/hero-with-location'));
 const Content = dynamic(() => import('components/content'));
+const SchemaClub = dynamic(() => import('components/schema-club'));
 // const Image = dynamic(() => import('components/image'));
 const ClubNews = dynamic(() => import('components/club-news'));
 
@@ -151,6 +152,7 @@ const ClubPage = ({ club, posts }) => {
         subTitle={club.name}
         image={club.images[0]}
       />
+      <SchemaClub club={club} />
 
       <HeroWithLocation
         images={club.images}
@@ -345,18 +347,27 @@ const ClubPage = ({ club, posts }) => {
 };
 
 export const getServerSideProps = async ({ params: { club } }) => {
-  const { data } = await api.get(`/clubs/slug/${club}`);
+  try {
+    const { data } = await api.get(`/clubs/slug/${club}`);
 
-  // const results = RESULTS.sort((a, b) => new Date(b.tournament_date).getTime() - new Date(a.tournament_date).getTime());
-  const posts = await getBlogTags(data.tags, { orderings: '[my.post.date desc]', pageSize: 3 });
+    // const results = RESULTS.sort((a, b) => new Date(b.tournament_date).getTime() - new Date(a.tournament_date).getTime());
+    const posts = await getBlogTags(data.tags, { orderings: '[my.post.date desc]', pageSize: 3 });
 
-  return {
-    props: {
-      club: data,
-      posts,
-      // results,
-    },
-  };
+    return {
+      props: {
+        club: data,
+        posts,
+        // results,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        club: null,
+        posts: [],
+      },
+    };
+  }
 };
 
 ClubPage.propTypes = {
