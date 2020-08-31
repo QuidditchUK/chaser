@@ -66,6 +66,11 @@ module.exports = withBundleAnalyzer(withOffline({
         destination: '/find-quidditch',
         permanent: true,
       },
+      {
+        source: '/teamuk',
+        destination: '/programmes/team-england',
+        permanent: true,
+      },
     ]
   },
   webpack: (config, options) => {
