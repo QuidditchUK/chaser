@@ -14,7 +14,7 @@
     "axios": "^0.19.2",
     "body-scroll-lock": "^3.0.3",
     "cookie": "^0.4.1",
-    "date-fns": "2.15.0",
+    "date-fns": "2.16.1",
     "flickity": "^2.2.1",
     "formik": "^2.1.4",
     "html-react-parser": "^0.13.0",
