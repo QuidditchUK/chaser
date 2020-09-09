@@ -12,8 +12,8 @@ const Meta = ({
   title,
   type,
 }) => {
-  const router = useRouter();
-  const url = `${router.asPath}`;
+  const { asPath } = useRouter();
+  const url = `${SITE_URL}${asPath}`;
   const formattedTitle = subTitle ? `${subTitle} | ${title}` : title;
 
   return (
@@ -25,7 +25,7 @@ const Meta = ({
       <meta property="og:image" content={image} />
       <meta property="og:title" content={formattedTitle} />
       <meta property="og:type" content={type} />
-      <meta property="og:url" content={`${SITE_URL}${url}`} />
+      <meta property="og:url" content={url} />
     </Head>
   );
 };
