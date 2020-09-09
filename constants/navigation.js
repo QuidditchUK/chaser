@@ -14,7 +14,7 @@ export const MAIN_NAVIGATION = [
         href: '/about/[id]',
       },
       {
-        label: 'Meet The Team',
+        label: 'Meet the Team',
         as: '/about/meet-the-team',
         href: '/about/[id]',
       },
