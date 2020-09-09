@@ -244,12 +244,19 @@ const Item = styled.li`
    padding-left: 0;
  }
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.xl}) {
+    button {
+      font-size: ${({ theme }) => theme.fontSizes.bodyCard};
+    }
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
     padding-left: 0;
     width: 100%;
     margin-bottom: ${({ theme }) => theme.space[4]};
 
     button {
+      font-size: ${({ theme }) => theme.fontSizes.body};
       width: 100%;
     }
   }
@@ -258,9 +265,13 @@ const Item = styled.li`
 const NavItem = styled.span`
   color: ${({ theme, dashboard }) => (dashboard ? theme.colors.white : theme.colors.greyDark)};
   font-weight: bold;
-
+  
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.xl}) {
+    font-size: ${({ theme }) => theme.fontSizes.bodyCard};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
@@ -269,6 +280,7 @@ const NavItem = styled.span`
     border-radius: ${({ theme }) => theme.radii[0]};
     color: ${({ theme }) => theme.colors.darkBlue};
     display: block;
+    font-size: ${({ theme }) => theme.fontSizes.body};
     font-weight: normal;
     padding: ${({ theme, isButton }) => (isButton ? 0 : theme.space[2])} ${({ theme, isButton }) => (isButton ? 0 : theme.space[4])};
     text-align: center;
@@ -361,7 +373,7 @@ function Navigation({ dashboard }) {
               <Item key={item.label} pl={6}>
                 {item.list
                   ? (
-                    <ParentWrapper path={item.path}>
+                    <ParentWrapper path={item.path} paths={item.paths}>
                       <NavItem onClick={() => setNavigationToggle(navigationToggle === i ? 1000 : i)} dashboard={dashboard}>{item.label}</NavItem>
                     </ParentWrapper>
                   )

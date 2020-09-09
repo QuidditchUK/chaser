@@ -92,6 +92,28 @@ export const MAIN_NAVIGATION = [
     as: '/youth',
     href: '/[id]',
   },
+  {
+    label: 'National Teams',
+    path: '/programmes/national-teams',
+    paths: ['/programmes/team-england', '/programmes/team-wales', '/programmes/team-scotland', '/programmes/national-teams'],
+    list: [
+      {
+        label: 'Team UK',
+        as: '/programmes/team-england',
+        href: '/programmes/[id]',
+      },
+      {
+        label: 'Team Scotland',
+        as: '/programmes/team-scotland',
+        href: '/programmes/[id]',
+      },
+      {
+        label: 'Team Wales / Cyrmu',
+        as: '/programmes/team-wales',
+        href: '/programmes/[id]',
+      },
+    ],
+  },
   // {
   //   label: 'Merch',
   //   as: '/merch',

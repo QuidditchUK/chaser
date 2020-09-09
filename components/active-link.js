@@ -22,13 +22,14 @@ ActiveLink.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const ParentWrapper = ({ path, children }) => {
+export const ParentWrapper = ({ path, paths = [], children }) => {
   const { asPath } = useRouter();
 
   let className = children.props.className || '';
   const regexAs = RegExp(path.replace(/\//g, '\\/'), 'g');
+  const foundPath = paths?.find((item) => item === asPath);
 
-  if (regexAs.test(asPath)) {
+  if (regexAs.test(asPath) || foundPath) {
     className = `${className} active`;
   }
 
