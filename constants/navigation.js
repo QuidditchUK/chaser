@@ -108,7 +108,7 @@ export const MAIN_NAVIGATION = [
         href: '/programmes/[id]',
       },
       {
-        label: 'Team Wales / Cyrmu',
+        label: 'Team Wales / Cymru',
         as: '/programmes/team-wales',
         href: '/programmes/[id]',
       },
