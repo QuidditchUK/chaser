@@ -370,7 +370,7 @@ function Navigation({ dashboard }) {
         <Nav>
           <List open={open} ref={scrollRef}>
             {navigation.map((item, i) => (
-              <Item key={item.label} pl={6}>
+              <Item key={item.label} pl={{ sm: 4, xl: 6 }}>
                 {item.list
                   ? (
                     <ParentWrapper path={item.path} paths={item.paths}>

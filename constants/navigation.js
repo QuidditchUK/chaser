@@ -1,4 +1,9 @@
 export const MAIN_NAVIGATION = [
+  // {
+  //   label: 'COVID',
+  //   as: '/covid',
+  //   href: '/[id]',
+  // },
   {
     label: 'About',
     path: '/about',

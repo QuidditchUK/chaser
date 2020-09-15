@@ -22,8 +22,6 @@ const DocumentHead = () => (
 
     <link rel="preconnect" href="//images.prismic.io" />
     <link rel="preconnect" href="//chaser.prismic.io" />
-
-    {/* Fonts */}
     <link rel="manifest" href="/manifest.json" />
 
     {/* Static CSS */}
