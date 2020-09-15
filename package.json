@@ -17,7 +17,7 @@
     "date-fns": "2.15.0",
     "flickity": "^2.2.1",
     "formik": "^2.1.4",
-    "html-react-parser": "^0.13.0",
+    "html-react-parser": "^0.14.0",
     "intersection-observer": "^0.11.0",
     "js-cookie": "^2.2.1",
     "just-safe-get": "2.0.0",
