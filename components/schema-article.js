@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import get from 'just-safe-get';
+import formatISO from 'date-fns/formatISO';
+import parseJSON from 'date-fns/parseJSON';
 
 const SchemaArticle = ({ page }) => {
   const data = get(page, 'data');
@@ -20,8 +22,8 @@ const SchemaArticle = ({ page }) => {
               '@type': 'NewsArticle',
               headline: data?.title,
               image: image?.url,
-              datePublished: new Date(published).toISOString(),
-              dateModified: new Date(updated).toISOString(),
+              datePublished: formatISO(parseJSON(published)),
+              dateModified: formatISO(parseJSON(updated)),
             },
           ),
         }}
