@@ -71,12 +71,14 @@ const EDICommitteeForm = (rawData) => {
   return (
     <PrismicWrapper variant={data.variant}>
       <Heading as="h1" isBody textAlign="center">EDI Committee Expression of Interest</Heading>
+
       <Container maxWidth={rem(500)} paddingBottom={4}>
-        <Content fontSize="bodyCard" fontStyle="italic" pb={4}>Applications of interest are open for both committee chair and regular member positions. These will remain open and be advertised until the first week of October, QuidditchUK will then be in contact with applicants to discuss the role(s).</Content>
+        <Content fontSize="bodyCard" fontStyle="italic" pb={4}>
+          Applications of interest are open for both committee chair and regular member positions. These will remain open and be advertised until the first week of October, QuidditchUK will then be in contact with applicants to discuss the role(s).
+        </Content>
+
         <form onSubmit={handleSubmit((values) => handleCommitteeSubmit(values, reset, setServerError, setServerSuccess))}>
-          <Grid
-            gridTemplateColumns="1fr"
-          >
+          <Grid gridTemplateColumns="1fr">
             <Label htmlFor="name">
               Your name <Required />
             </Label>
@@ -134,17 +136,12 @@ const EDICommitteeForm = (rawData) => {
             />
 
             {errors.message && (<InlineError marginBottom={3}>{errors.message.message}</InlineError>)}
-
           </Grid>
 
           <Button type="submit" variant={buttonVariants[data.variant]} disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Submit form'}</Button>
         </form>
 
-        {serverError && (
-          <>
-            <InlineError my={3}>{serverError}</InlineError>
-          </>
-        )}
+        {serverError && (<InlineError my={3}>{serverError}</InlineError>)}
 
         {serverSuccess && (
           <Box bg="keeperGreen" px="4" py="2" mt="6" borderColor="keeperGreen" borderWidth="1px" borderStyle="solid" color="white" borderRadius={0}>
