@@ -22,8 +22,8 @@ const SchemaArticle = ({ page }) => {
               '@type': 'NewsArticle',
               headline: data?.title,
               image: image?.url,
-              datePublished: formatISO(parseJSON(published)),
-              dateModified: formatISO(parseJSON(updated)),
+              datePublished: published ? formatISO(parseJSON(published)) : null,
+              dateModified: updated ? formatISO(parseJSON(updated)) : null,
             },
           ),
         }}
