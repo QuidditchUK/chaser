@@ -559,6 +559,27 @@
             },
             "repeat": {}
           },
+          "edi_committee_form": {
+            "type": "Slice",
+            "fieldset": "EDI Committee Form",
+            "description": "EDI Commmittee Form",
+            "icon": "assignment",
+            "display": "list",
+            "non-repeat": {
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "variant"
+                }
+              }
+            },
+            "repeat": {}
+          },
           "two_column_table": {
             "type": "Slice",
             "fieldset": "Two Column Table",

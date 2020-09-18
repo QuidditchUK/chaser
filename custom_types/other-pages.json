@@ -28,7 +28,8 @@
           "embed_and_content": [],
           "contact_form": [],
           "volunteer_form": [],
-          "national_team_form": []
+          "national_team_form": [],
+          "edi_committe_form": []
         },
         "choices": {
           "video_hero_with_cta": {
@@ -626,6 +627,27 @@
             "type": "Slice",
             "fieldset": "National Team Form",
             "description": "National Team Form",
+            "icon": "assignment",
+            "display": "list",
+            "non-repeat": {
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "variant"
+                }
+              }
+            },
+            "repeat": {}
+          },
+          "edi_committee_form": {
+            "type": "Slice",
+            "fieldset": "EDI Committee Form",
+            "description": "EDI Commmittee Form",
             "icon": "assignment",
             "display": "list",
             "non-repeat": {
