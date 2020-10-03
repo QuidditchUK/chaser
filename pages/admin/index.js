@@ -62,26 +62,26 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  const { data: admin } = await api.get('/users/admin', {
-    headers: {
-      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
-    },
-  });
+  try {
+    await api.get('/users/admin', {
+      headers: {
+        Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
+      },
+    });
 
-  if (!admin || !admin.isAdmin) {
+    const { data: clubs } = await api.get('/clubs/search');
+
+    return {
+      props: {
+        clubs,
+      },
+    };
+  } catch (err) {
     res.setHeader('location', '/dashboard');
     res.statusCode = 302;
     res.end();
     return { props: {} };
   }
-
-  const { data: clubs } = await api.get('/clubs/search');
-
-  return {
-    props: {
-      clubs,
-    },
-  };
 };
 
 Dashboard.defaultProps = {
