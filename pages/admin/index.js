@@ -68,7 +68,7 @@ export const getServerSideProps = async ({ req, res }) => {
     },
   });
 
-  if (!admin.isAdmin) {
+  if (!admin || !admin.isAdmin) {
     res.setHeader('location', '/dashboard');
     res.statusCode = 302;
     res.end();
