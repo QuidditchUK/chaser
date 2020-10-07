@@ -74,7 +74,7 @@ const EDICommitteeForm = (rawData) => {
 
       <Container maxWidth={rem(500)} paddingBottom={4}>
         <Content fontSize="bodyCard" fontStyle="italic" pb={4}>
-          Applications of interest are open for both committee chair and regular member positions. These will remain open and be advertised until the first week of October, QuidditchUK will then be in contact with applicants to discuss the role(s).
+          Applications of interest are open for both committee chair and regular member positions. These will remain open and be advertised until 31st October, QuidditchUK will then be in contact with applicants to discuss the role(s).
         </Content>
 
         <form onSubmit={handleSubmit((values) => handleCommitteeSubmit(values, reset, setServerError, setServerSuccess))}>
