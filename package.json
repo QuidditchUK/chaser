@@ -35,7 +35,7 @@
     "react-intersection-observer": "^8.26.2",
     "react-is": "^16.13.1",
     "simple-react-lightbox": "^3.3.4-1",
-    "styled-components": "5.1.1",
+    "styled-components": "5.2.1",
     "styled-system": "5.1.5",
     "swr": "^0.3.8-beta.2",
     "throttle-debounce": "^2.2.1",
