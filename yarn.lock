@@ -7788,10 +7788,10 @@ simple-get@^4.0.0:
     once "^1.3.1"
     simple-concat "^1.0.0"
 
-simple-react-lightbox@^3.3.4-1:
-  version "3.3.4-1"
-  resolved "https://registry.yarnpkg.com/simple-react-lightbox/-/simple-react-lightbox-3.3.4-1.tgz#fc43a307335750f4339682cf20fbd53f27a9a484"
-  integrity sha512-TJoK//SLuY6ZPP+qq7BRGhVQHn32XpmH+RS29NsH97G41CakFVxFeE8S5Jl7xVXOxWIJtnYYojWZydsWGxQM3A==
+simple-react-lightbox@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/simple-react-lightbox/-/simple-react-lightbox-3.3.4.tgz#1a0df830a9a8852edd7a4ec9fa7ef1646f8ae5ca"
+  integrity sha512-cQR/GI85jYuo9J342D1fKw3zf42FUsWctvBJ9YJQRgRwmAe7qjfH7bPVfP9Z8hYh5/4l+iRdrg8DXhGEQp0Glg==
   dependencies:
     fast-deep-equal "^3.1.1"
     framer-motion "^2.3.0"
