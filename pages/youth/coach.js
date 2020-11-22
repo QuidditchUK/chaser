@@ -18,9 +18,7 @@ const Page = () => {
 
   return (
     <>
-      <Meta
-        title="Youth interest form"
-      />
+      <Meta title="Apply to be a Youth Coach" />
       {showForm && <YouthForm />}
     </>
   );
