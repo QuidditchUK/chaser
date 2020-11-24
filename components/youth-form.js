@@ -80,7 +80,7 @@ const YouthCoachForm = () => {
       <PrismicWrapper variant="primary">
         <Heading as="h1" isBody textAlign="center">Youth Coaching</Heading>
         <Content>
-          <p>QuidditchUK’s officially endorsed youth quidditch partner, Enrich Education, are seeking assistants and coaches to help run their growing programme of bringing youth quidditch into schools throughout the country. Assistants and coaches are paid up to £70.00 per day and are expected to be available between 8:00 am and 3:30 pm.</p>
+          <p>QuidditchUK’s officially endorsed youth quidditch partner, Enrich Education, are seeking assistants and coaches to help run their growing programme of bringing youth quidditch into schools throughout the country. Assistants and coaches may be paid up to £70.00 per day and are expected to be available between 8:00 am and 3:30 pm.</p>
           <p>Selection will be made by Enrich Education who will contact you regarding potential work as it becomes available. Your role may include refereeing youth quidditch games, assisting or leading coaching sessions with children aged up to 10 years old, and keeping equipment clean and ensuring they are suitable within COVID applications. </p>
           <p>Importantly, those selected will never be expected to run a session by themselves and will always be partnered with an experienced qualified full-time member of Enrich Education. All equipment and resources required will be supplied by Enrich Education.</p>
           <p>You are required to have legal right to work in the United Kingdom to apply, as well as a valid DBS check. Those without a valid DBS check may still apply and Enrich Education will guide you in obtaining this.</p>
