@@ -124,11 +124,11 @@ export const MAIN_NAVIGATION = [
     as: '/news',
     href: '/news',
   },
-  // {
-  //   label: 'Merch',
-  //   as: '/merch',
-  //   href: '/merch',
-  // },
+  {
+    label: 'Merch',
+    as: '/merch',
+    href: '/merch',
+  },
 ];
 
 export const DASHBOARD_NAVIGATION = [
@@ -158,9 +158,9 @@ export const DASHBOARD_NAVIGATION = [
     as: '/news',
     href: '/news',
   },
-  // {
-  //   label: 'Merch',
-  //   as: '/merch',
-  //   href: '/merch',
-  // },
+  {
+    label: 'Merch',
+    as: '/merch',
+    href: '/merch',
+  },
 ];
