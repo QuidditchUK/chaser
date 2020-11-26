@@ -47,7 +47,7 @@ module.exports = withBundleAnalyzer(withOffline({
   async rewrites() {
     return [
       { 
-        source: '/',
+        source: '/merch',
         destination: 'https://www.utilityapparel.com/quidditch-uk/'
       }
     ]
