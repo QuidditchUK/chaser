@@ -119,15 +119,15 @@ export const MAIN_NAVIGATION = [
       },
     ],
   },
-  // {
-  //   label: 'Merch',
-  //   as: '/merch',
-  //   href: '/[id]',
-  // },
   {
     label: 'News',
     as: '/news',
     href: '/news',
+  },
+  {
+    label: 'Merch',
+    as: '/merch',
+    href: '/merch',
   },
 ];
 
@@ -153,14 +153,14 @@ export const DASHBOARD_NAVIGATION = [
       // },
     ],
   },
-  // {
-  //   label: 'Merch',
-  //   as: '/merch',
-  //   href: '/merch',
-  // },
   {
     label: 'News',
     as: '/news',
     href: '/news',
+  },
+  {
+    label: 'Merch',
+    as: '/merch',
+    href: '/merch',
   },
 ];

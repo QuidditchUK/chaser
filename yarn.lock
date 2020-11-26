@@ -6220,6 +6220,11 @@ next@10.0.0:
   optionalDependencies:
     sharp "0.26.2"
 
+nextjs-redirect@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/nextjs-redirect/-/nextjs-redirect-5.0.0.tgz#30a05fb189a5d1fcd5d15e46fbeee7e611579fc6"
+  integrity sha512-/AImO+Qe/BJBkqYv894wH1Gw0TWHhBQ8cXVcSc6QeGsyGDD8zWLaqzHwyRmDPXmI+Q75LoeBtUMtbx8M3rNe1A==
+
 ngraph.events@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/ngraph.events/-/ngraph.events-1.2.1.tgz#6e40425ef9dec1e074bbef6da56c8d79b9188fd8"
