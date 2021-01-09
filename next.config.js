@@ -44,6 +44,14 @@ module.exports = withBundleAnalyzer(withOffline({
       },
     ],
   },
+  async rewrites() {
+    return [
+      { 
+        source: '/merch',
+        destination: 'https://www.utilityapparel.com/quidditch-uk/'
+      }
+    ]
+  },
   async redirects() {
     return [
       {

@@ -4,46 +4,55 @@
 User-agent: Googlebot
 Disallow: /dashboard
 Disallow: /dashboard/*
+Disallow: /youth/coach
 Allow: /*?utm_source=*
 
 User-agent: Mediapartners-Google
 Disallow: /dashboard
 Disallow: /dashboard/*
+Disallow: /youth/coach
 Allow: /*?utm_source=*
 
 User-agent: AdsBot-Google
 Disallow: /dashboard
 Disallow: /dashboard/*
+Disallow: /youth/coach
 Allow: /*?utm_source=*
 
 User-agent: AdsBot-Google-Mobile
 Disallow: /dashboard
 Disallow: /dashboard/*
+Disallow: /youth/coach
 Allow: /*?utm_source=*
 
 User-agent: Mediapartners-Google
 Disallow: /dashboard
 Disallow: /dashboard/*
+Disallow: /youth/coach
 Allow: /*?utm_source=*
 
 User-agent: Bingbot
 Disallow: /dashboard
 Disallow: /dashboard/*
+Disallow: /youth/coach
 Allow: /*?utm_source=*
 
 User-agent: YandexBot
 Disallow: /dashboard
 Disallow: /dashboard/*
+Disallow: /youth/coach
 Allow: /*?utm_source=*
 
 User-agent: Baiduspider
 Disallow: /dashboard
 Disallow: /dashboard/*
+Disallow: /youth/coach
 Allow: /*?utm_source=*
 
 User-agent: *
 Disallow: /dashboard
 Disallow: /dashboard/*
+Disallow: /youth/coach
 Allow: /*?utm_source=*
 
 Sitemap: https://quidditchuk.org/sitemap.xml

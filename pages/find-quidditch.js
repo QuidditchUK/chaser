@@ -24,6 +24,8 @@ import { postcodeRegex } from 'modules/validations';
 import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 
+const Notification = dynamic(() => import('components/notification'));
+const Content = dynamic(() => import('components/content'));
 const CloseIcon = dynamic(() => import('public/images/close.svg'));
 const Container = dynamic(() => import('components/container'));
 const Heading = dynamic(() => import('components/heading'));
@@ -243,7 +245,8 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
 
   const initialValues = {
     postcode: postcode || '',
-    showTypes: showTypesInitial || ['clubs', 'events'],
+    showTypes: showTypesInitial || ['clubs'],
+    // showTypes: showTypesInitial || ['clubs', 'events'], // TODO: REMOVED DUE TO COVID, RETURN ONCE NORMALITY RESUMES
     leagues: leaguesInitial || ['Community', 'University'],
     distance: distance || 100,
   };
@@ -425,6 +428,11 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
         py={{ _: 6, l: 10 }}
       >
         <Container px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
+
+          <Notification>
+            <Heading as="h2">Events during COVID-19</Heading>
+            <Content>All QuidditchUK Events are currently postponed due to the Coronavirus Pandemic. For the latest COVID guidance head to our <Link href="/[id]" as="/covid" passHref><a>COVID page</a></Link></Content>
+          </Notification>
 
           {showEvents && !!events.length
             && (
