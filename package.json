@@ -41,7 +41,7 @@
     "swr": "^0.3.8-beta.2",
     "throttle-debounce": "^3.0.0",
     "webpack": "4.44.1",
-    "yup": "^0.30.0"
+    "yup": "^0.32.0"
   },
   "scripts": {
     "dev": "next dev",
