@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { Box, Grid, Flex } from 'components/layout';
 import { Logo } from 'components/logo';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';

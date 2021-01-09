@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { Box, Grid } from 'components/layout';
 
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import Input from 'components/input';
 import Label from 'components/label';
