@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Router, { useRouter } from 'next/router';
 import { Box, Grid, Flex } from 'components/layout';
 import { Logo } from 'components/logo';
