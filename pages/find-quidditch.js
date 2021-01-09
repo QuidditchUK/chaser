@@ -243,7 +243,8 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
 
   const initialValues = {
     postcode: postcode || '',
-    showTypes: showTypesInitial || ['clubs', 'events'],
+    showTypes: showTypesInitial || ['clubs'],
+    // showTypes: showTypesInitial || ['clubs', 'events'],
     leagues: leaguesInitial || ['Community', 'University'],
     distance: distance || 100,
   };
