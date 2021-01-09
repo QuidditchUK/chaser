@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { parse } from 'date-fns';
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers';
+import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import { parseCookies, setCookies } from 'modules/cookies';
 import { api } from 'modules/api';
