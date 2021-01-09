@@ -40,7 +40,7 @@
     "styled-system": "5.1.5",
     "swr": "^0.4.0",
     "throttle-debounce": "^3.0.0",
-    "webpack": "4.44.1",
+    "webpack": "5.12.2",
     "yup": "^0.32.0"
   },
   "scripts": {
