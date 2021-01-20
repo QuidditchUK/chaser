@@ -580,6 +580,27 @@
             },
             "repeat": {}
           },
+          "volunteer_form": {
+            "type": "Slice",
+            "fieldset": "Volunteer Form",
+            "description": "Volunteer Form",
+            "icon": "assignment",
+            "display": "list",
+            "non-repeat": {
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "dark"
+                  ],
+                  "default_value": "light",
+                  "label": "variant"
+                }
+              }
+            },
+            "repeat": {}
+          },
           "two_column_table": {
             "type": "Slice",
             "fieldset": "Two Column Table",
