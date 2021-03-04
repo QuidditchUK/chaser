@@ -1,8 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 
-import fonts from '../styles/fonts';
-import reset from '../styles/reset';
+import fonts from 'styles/fonts';
+import reset from 'styles/reset';
 
 const DocumentHead = () => (
   <Head>
@@ -23,6 +23,10 @@ const DocumentHead = () => (
     <link rel="preconnect" href="//images.prismic.io" />
     <link rel="preconnect" href="//chaser.prismic.io" />
     <link rel="manifest" href="/manifest.json" />
+
+    { /* Fonts */}
+    <link rel="preload" href="https://use.typekit.net/rub1byg.css" as="style" />
+    <link rel="stylesheet" href="https://use.typekit.net/rub1byg.css" />
 
     {/* Static CSS */}
     <style dangerouslySetInnerHTML={{ __html: reset }} />

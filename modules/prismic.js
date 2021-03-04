@@ -34,7 +34,10 @@ export const getBlogCategory = async (category, options = {}) => {
 export const getPrismicDocByUid = (type, uid, options = {}) => Client().getByUID(type, uid, options);
 
 export const getBlogTags = async (tags, options = {}) => {
-  const { results } = await Client().query(Prismic.Predicates.any('document.tags', tags), options);
+  const { results } = await Client().query([
+    Prismic.Predicates.at('document.type', 'post'),
+    Prismic.Predicates.any('document.tags', tags),
+  ], options);
   return results;
 };
 
@@ -52,6 +55,8 @@ export const linkResolver = ({ type, uid }) => {
       return `/news/${uid}`;
     case 'programmes':
       return `/programmes/${uid}`;
+    case 'clubs':
+      return `/clubs/${uid}`;
     default:
       return `/${uid}`;
   }
