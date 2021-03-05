@@ -6,6 +6,14 @@ Chaser is the QuidditchUK Web application built in Next.js and React.
 
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its [terms](CODE_OF_CONDUCT.md).
 
+## Powered by Vercel
+
+<p align="left">
+  <a aria-label="Vercel logo" href="https://vercel.com/?utm_source=quidditchuk">
+    <img src="public/images/powered-by-vercel.svg" width="212" height="44">
+  </a>
+</p>
+
 ## Development
 
 To begin developing, run the following commands:

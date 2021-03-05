@@ -20,6 +20,7 @@ const FacebookIcon = dynamic(() => import('public/images/facebook.svg'));
 const TwitterIcon = dynamic(() => import('public/images/twitter.svg'));
 const InstagramIcon = dynamic(() => import('public/images/instagram.svg'));
 const YoutubeIcon = dynamic(() => import('public/images/youtube.svg'));
+const VercelLogo = dynamic(() => import('public/images/powered-by-vercel.svg'));
 
 const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';
@@ -71,6 +72,14 @@ const Icon = styled.a`
       }
     }
 `;
+
+const Vercel = styled.a`
+  color: ${({ theme }) => theme.colors.primary};
+  svg {
+    width: 60%;
+  }
+`;
+
 export const Footer = () => {
   const router = useRouter();
   return (
@@ -139,6 +148,17 @@ export const Footer = () => {
               <Support>
                 QuidditchUK is a Non-Profit Company Registered in England and Wales, Company Registration No. 12178866
               </Support>
+
+              {/* <Flex alignItems="center" justifyContent="left"> */}
+              <Vercel
+                aria-label="Vercel"
+                href="https://vercel.com/?utm_source=quidditchuk&utm_campaign=oss"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <VercelLogo />
+              </Vercel>
+              {/* </Flex> */}
             </GridItem>
           </Grid>
         </Container>
