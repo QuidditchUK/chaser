@@ -506,6 +506,7 @@ const FindQuidditch = ({ clubs: initialClubs, events: initialEvents }) => {
                                 alt={club.name}
                                 width={1600}
                                 height={900}
+                                borderRadius="0px"
                               />
                             ) : null}
                           />

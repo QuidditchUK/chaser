@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { space, layout } from 'styled-system';
+import { space, layout, border } from 'styled-system';
 import { useInView } from 'react-intersection-observer';
 
 const calcAspectRatio = (height, width) => (height / width) * 100 || null;
@@ -15,26 +15,28 @@ export const Container = styled.div`
   padding-bottom: ${({ aspectRatio }) => aspectRatio}%;
 `;
 
-const Image = styled.div`
+const ImageWrapper = styled.div`
   width: 100%;
+`;
 
-  img {
-    vertical-align: bottom;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
+const Image = styled.img`
+  vertical-align: bottom;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
 
-    opacity: 1;
-    transition: 0.3s opacity;
+  opacity: 1;
+  transition: 0.3s opacity;
 
-    &[data-src] {
-      opacity: 0;
-    }
+  &[data-src] {
+    opacity: 0;
   }
+
+  ${border};
 `;
 
 const ResponsiveImage = ({
@@ -42,9 +44,10 @@ const ResponsiveImage = ({
   alt,
   width,
   height,
+  borderRadius = '8px',
 }) => {
   const imageProps = {
-    alt, width, height,
+    alt, width, height, borderRadius,
   };
 
   const [ref, inView] = useInView({
@@ -61,15 +64,16 @@ const ResponsiveImage = ({
 
   return (
     <Container aspectRatio={calcAspectRatio(height, width)}>
-      <Image ref={ref}>
-        {inView ? (<img src={src} ref={imageRef} data-src={src} {...imageProps} onLoad={handleOnLoad} />) : null}
-      </Image>
+      <ImageWrapper ref={ref}>
+        {inView ? (<Image src={src} ref={imageRef} data-src={src} {...imageProps} onLoad={handleOnLoad} />) : null}
+      </ImageWrapper>
     </Container>
   );
 };
 
 ResponsiveImage.defaultProps = {
   alt: '',
+  borderRadius: '8px',
 };
 
 ResponsiveImage.propTypes = {
@@ -77,6 +81,7 @@ ResponsiveImage.propTypes = {
   alt: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  borderRadius: PropTypes.string,
 };
 
 export default ResponsiveImage;

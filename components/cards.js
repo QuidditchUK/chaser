@@ -57,6 +57,7 @@ const CardsSlice = (rawData) => {
                           alt={item.image.alt}
                           width={1600}
                           height={900}
+                          borderRadius="0px"
                         />
                       ) : null}
                     />
@@ -73,6 +74,7 @@ const CardsSlice = (rawData) => {
                         alt={item.image.alt}
                         width={1600}
                         height={900}
+                        borderRadius="0px"
                       />
                     ) : null}
                   />

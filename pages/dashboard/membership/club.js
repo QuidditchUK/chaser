@@ -193,6 +193,7 @@ const ManageClub = ({ user, clubs }) => {
                         alt={selectedClub.name}
                         width={1600}
                         height={900}
+                        borderRadius="0px"
                       />
                     ) : null}
                   />

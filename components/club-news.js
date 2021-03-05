@@ -36,6 +36,7 @@ export const ClubNews = ({ posts, bgColor, color }) => {
                     alt={data.image.alt}
                     width={1600}
                     height={900}
+                    borderRadius="0px"
                   />
                   )}
               />

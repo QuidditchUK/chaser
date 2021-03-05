@@ -59,6 +59,7 @@ const Carousel = ({ images, height, width }) => {
             src={image}
             width={width}
             height={height}
+            borderRadius="0px"
           />
         ))}
       </Flickity>
