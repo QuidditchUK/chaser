@@ -53,12 +53,13 @@ const Carousel = ({ images, height, width }) => {
           prevNextButtons: images.length > 1,
         }}
       >
-        {hasImages && images.map((image, i) => (
+        {hasImages && images.map(({ image }, i) => (
           <Image
-            key={`carousel-image-${image}-${i}`}
-            src={image}
+            key={`carousel-image-${image.url}-${i}`}
+            src={image.url}
             width={width}
             height={height}
+            alt={image.alt}
             borderRadius="0px"
           />
         ))}

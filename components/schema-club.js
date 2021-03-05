@@ -1,10 +1,10 @@
+/* eslint-disable react/no-danger */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import { ClubShape } from 'components/club-card';
 
 const SchemaClub = ({ club }) => {
-  const location = JSON.parse(club?.coordinates);
+  const location = club?.coordinates;
 
   return (
     <Head>
@@ -15,18 +15,18 @@ const SchemaClub = ({ club }) => {
             {
               '@context': 'https://schema.org',
               '@type': 'SportsClub',
-              '@id': `https://quidditchuk.org/clubs/${club.slug}`,
+              '@id': `https://quidditchuk.org/clubs/${club.uid}`,
               address: {
                 '@type': 'PostalAddress',
                 addressCountry: 'UK',
               },
-              image: club?.images[0],
-              name: club?.name,
+              image: club?.images?.[0]?.image?.url,
+              name: club?.club_name,
               geo: {
-                latitude: location?.coordinates[1],
-                longitude: location?.coordinates[0],
+                latitude: location?.latitude,
+                longitude: location?.longitude,
               },
-              url: `https://quidditchuk.org/clubs/${club.slug}`,
+              url: `https://quidditchuk.org/clubs/${club.uid}`,
               priceRange: '£',
             },
           ),
@@ -37,7 +37,16 @@ const SchemaClub = ({ club }) => {
 };
 
 SchemaClub.propTypes = {
-  club: PropTypes.shape(ClubShape).isRequired,
+  club: PropTypes.shape({
+    uid: PropTypes.string,
+    club_name: PropTypes.string,
+    images: PropTypes.arrayOf(PropTypes.shape({
+      image: PropTypes.shape({
+        url: PropTypes.string,
+      }),
+    })),
+    coordinates: PropTypes.shape({}),
+  }).isRequired,
 };
 
 export default SchemaClub;

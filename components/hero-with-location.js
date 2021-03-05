@@ -54,8 +54,8 @@ const HeroWithLocation = ({
   featuredColor,
   textColor,
   icon,
-  name,
-  location,
+  club_name,
+  coordinates,
   venue,
 }) => {
   const isDesktop = useBreakpoint(base.breakpoints.l);
@@ -85,21 +85,22 @@ const HeroWithLocation = ({
             gridGap={4}
             p={4}
           >
-            {images.map((src, i) => {
+            {images.map(({ image }, i) => {
               const isFirst = i === 0;
               const width = isFirst ? 1000 : 500;
               const height = isFirst ? 721 : 350;
 
               return (
                 <GridItem
-                  key={`hero-image-${src}-${i}`}
+                  key={`hero-image-${image.url}-${i}`}
                   gridColumn={isFirst ? 1 : null}
                   gridRow={isFirst ? '1 / span 2' : null}
                 >
                   <Image
-                    src={src}
+                    src={image.url}
                     width={width}
                     height={height}
+                    alt={image.alt}
                   />
                 </GridItem>
               );
@@ -120,14 +121,14 @@ const HeroWithLocation = ({
         height="130px"
       >
         <Flex justifyContent="flex-start" alignItems="center" top={{ _: 0, m: '-60px' }} position="relative">
-          <IconContainer><Icon src={icon} alt={`${name} logo`} /></IconContainer>
+          <IconContainer><Icon src={icon?.url} alt={`${club_name} logo`} /></IconContainer>
           <Flex flexDirection="column">
-            <Heading as="h2" fontSize={[3, 4, 5]} py="0" my="0">{name}</Heading>
+            <Heading as="h2" fontSize={[3, 4, 5]} py="0" my="0">{club_name}</Heading>
 
             <Flex alignItems="center">
               <LocationIcon />{' '}
               <LocationLink
-                href={`https://www.google.com/maps/search/?api=1&query=${location?.coordinates[1]},${location?.coordinates[0]}`}
+                href={`https://www.google.com/maps/search/?api=1&query=${coordinates?.latitude},${coordinates?.longitude}`}
                 rel="noopener noreferrer"
                 target="_blank"
                 linkColor={textColor}
@@ -149,19 +150,24 @@ HeroWithLocation.defaultProps = {
   featuredColor: null,
   textColor: null,
   league: null,
-  name: null,
-  location: null,
+  club_name: null,
+  coordinates: null,
 };
 
 HeroWithLocation.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string),
+  images: PropTypes.arrayOf(PropTypes.shape({})),
   venue: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.shape({
+    url: PropTypes.string,
+  }),
   featuredColor: PropTypes.string,
   textColor: PropTypes.string,
   league: PropTypes.string,
-  name: PropTypes.string,
-  location: PropTypes.shape,
+  club_name: PropTypes.string,
+  coordinates: PropTypes.shape({
+    latitude: PropTypes.string,
+    longitude: PropTypes.string,
+  }),
 };
 
 export default HeroWithLocation;

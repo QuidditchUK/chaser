@@ -20,6 +20,7 @@ export const ClubNews = ({ posts, bgColor, color }) => {
     <Grid
       gridTemplateColumns={{ _: '1fr', l: 'repeat(auto-fit, minmax(150px, 1fr))' }}
       gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+      pb={2}
     >
       {posts.map(({ uid, data }) => (
         <Flex flexDirection="column" key={uid}>
