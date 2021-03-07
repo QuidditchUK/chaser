@@ -1,10 +1,14 @@
+/* eslint-disable react/display-name */
+import { forwardRef } from 'react';
 import { Input as ChakraInput } from 'components';
 
-export default function Input(props) {
+const Input = forwardRef((props, ref) => {
   return (
     <ChakraInput
+      ref={ref}
       bg="white"
       border="1px solid"
+      borderColor={props.error ? 'monarchRed' : 'white'}
       p={2}
       color="qukBlue"
       fontSize="md"
@@ -12,4 +16,6 @@ export default function Input(props) {
       {...props}
     />
   );
-}
+});
+
+export default Input;

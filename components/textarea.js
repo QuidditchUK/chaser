@@ -1,17 +1,19 @@
-import styled from '@emotion/styled';
-import { layout, space } from 'styled-system';
+/* eslint-disable react/display-name */
+import { forwardRef } from 'react';
+import { Textarea as ChakraTextarea } from 'components';
 
-const Textarea = styled.textarea`
-  background: ${({ theme }) => theme.colors.white};
-  border: 1px solid
-    ${({ theme, error }) =>
-      error ? theme.colors.monarchRed : theme.colors.white};
-  border-radius: ${({ theme }) => theme.radii[0]};
-  color: ${({ theme }) => theme.colors.qukBlue};
-  font-size: ${({ theme }) => theme.fontSizes.body};
-  padding: ${({ theme }) => theme.space[2]};
-  ${layout};
-  ${space};
-`;
+const Textarea = forwardRef((props, ref) => (
+  <ChakraTextarea
+    ref={ref}
+    bg="white"
+    p={2}
+    color="qukBlue"
+    border="1px solid"
+    borderColor={props.error ? 'monarchRed' : 'white'}
+    fontSize="md"
+    width="initial"
+    {...props}
+  />
+));
 
 export default Textarea;
