@@ -2,8 +2,7 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { Link, Text } from 'components';
 
-// const Navigation = dynamic(() => import('components/navigation'));
-const Navigation = dynamic(() => import('components/navigation-v2'));
+const Navigation = dynamic(() => import('components/navigation'));
 const Footer = dynamic(() => import('components/footer'));
 const Alert = dynamic(() => import('components/alert'));
 
