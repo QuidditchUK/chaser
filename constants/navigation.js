@@ -145,3 +145,14 @@ export const DASHBOARD_NAVIGATION = [
     href: '/merch',
   },
 ];
+
+export const ACCOUNT_NAVIGATION = [
+  {
+    label: 'Dashboard',
+    href: '/dashboard',
+  },
+  {
+    label: 'My info',
+    href: '/dashboard/account/info',
+  },
+];

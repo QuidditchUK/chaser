@@ -13,7 +13,9 @@ import {
   useColorModeValue,
   useDisclosure,
 } from 'components';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
+import cookies from 'js-cookie';
+import { removeCookie } from 'modules/cookies';
 import { rem } from 'styles/theme';
 
 import NextLink from 'next/link';
@@ -27,7 +29,11 @@ import {
   ChevronRightIcon,
 } from '@chakra-ui/icons';
 
-import { MAIN_NAVIGATION, DASHBOARD_NAVIGATION } from 'constants/navigation';
+import {
+  MAIN_NAVIGATION,
+  DASHBOARD_NAVIGATION,
+  ACCOUNT_NAVIGATION,
+} from 'constants/navigation';
 import { Logo, LogoLink } from 'components/logo';
 
 const logo = '/images/logo.png';
@@ -58,9 +64,16 @@ export default function Navigation({ dashboard = false }) {
           <IconButton
             onClick={onToggle}
             icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+              isOpen ? (
+                <CloseIcon w={6} h={6} color="qukBlue" />
+              ) : (
+                <HamburgerIcon w={8} h={8} color="qukBlue" />
+              )
             }
-            variant={'ghost'}
+            variant={'unstyled'}
+            border={0}
+            p={0}
+            size="lg"
             aria-label={'Toggle Navigation'}
           />
         </Flex>
@@ -71,7 +84,7 @@ export default function Navigation({ dashboard = false }) {
           width="100%"
         >
           <NextLink href="/">
-            <LogoLink onClick={onToggle}>
+            <LogoLink>
               <Logo
                 src={logo}
                 alt="Quidditch UK"
@@ -91,23 +104,7 @@ export default function Navigation({ dashboard = false }) {
           >
             <DesktopNav navigation={navigation} dashboard={dashboard} />
 
-            <Stack
-              flex={{ base: 1, xl: 0 }}
-              justify={'flex-end'}
-              direction={'row'}
-              spacing={3}
-            >
-              <Button
-                variant={dashboard ? 'secondary' : 'primary'}
-                href="/find-quidditch"
-              >
-                Find Quidditch
-              </Button>
-
-              <Button variant="light" href="login">
-                Sign In
-              </Button>
-            </Stack>
+            <DesktopCTAs dashboard={dashboard} />
           </Flex>
         </Flex>
       </Flex>
@@ -135,66 +132,73 @@ const DesktopNav = ({ navigation, dashboard }) => {
         return (
           <Box key={navItem.label}>
             <Popover trigger={'hover'} placement={'bottom-start'}>
-              <PopoverTrigger>
-                {navItem.href ? (
-                  <NextLink href={navItem.href} passHref>
-                    <Link
-                      as="a"
-                      px={2}
-                      py={0}
-                      fontSize={'md'}
-                      fontWeight="bold"
-                      color={
-                        isActive
-                          ? 'monarchRed'
-                          : dashboard
-                          ? 'white'
-                          : 'greyDark'
-                      }
-                      _hover={{
-                        textDecoration: 'none',
-                        color: 'monarchRed',
-                      }}
-                    >
-                      {navItem.label}
-                    </Link>
-                  </NextLink>
-                ) : (
-                  <Link
-                    px={2}
-                    py={0}
-                    fontSize={'md'}
-                    fontWeight="bold"
-                    color={
-                      isActive ? 'monarchRed' : dashboard ? 'white' : 'greyDark'
-                    }
-                    _hover={{
-                      textDecoration: 'none',
-                      color: 'monarchRed',
-                    }}
-                  >
-                    {navItem.label}
-                  </Link>
-                )}
-              </PopoverTrigger>
+              {({ isOpen }) => (
+                <>
+                  <PopoverTrigger>
+                    {navItem.href ? (
+                      <NextLink href={navItem.href} passHref>
+                        <Link
+                          as="a"
+                          px={2}
+                          py={0}
+                          fontSize={'md'}
+                          fontWeight="bold"
+                          color={
+                            isActive
+                              ? 'monarchRed'
+                              : dashboard
+                              ? 'white'
+                              : 'greyDark'
+                          }
+                          _hover={{
+                            textDecoration: 'none',
+                            color: 'monarchRed',
+                          }}
+                        >
+                          {navItem.label}
+                        </Link>
+                      </NextLink>
+                    ) : (
+                      <Link
+                        px={2}
+                        py={0}
+                        fontSize={'md'}
+                        fontWeight="bold"
+                        color={
+                          isOpen || isActive
+                            ? 'monarchRed'
+                            : dashboard
+                            ? 'white'
+                            : 'greyDark'
+                        }
+                        _hover={{
+                          textDecoration: 'none',
+                          color: 'monarchRed',
+                        }}
+                      >
+                        {navItem.label}
+                      </Link>
+                    )}
+                  </PopoverTrigger>
 
-              {navItem.children && (
-                <PopoverContent
-                  border={0}
-                  boxShadow={'xl'}
-                  bg={dashboard ? 'qukBlue' : 'white'}
-                  p={4}
-                  rounded={'xl'}
-                  // minW={'xs'}
-                  maxW={rem(300)}
-                  color={dashboard ? 'white' : 'greyDark'}
-                >
-                  <Stack>
-                    {navItem.children.map((child) => (
-                      <DesktopSubNav key={child.label} {...child} />
-                    ))}
-                  </Stack>
-                </PopoverContent>
+                  {navItem.children && (
+                    <PopoverContent
+                      border={0}
+                      boxShadow={'xl'}
+                      bg={dashboard ? 'qukBlue' : 'white'}
+                      p={4}
+                      rounded={'xl'}
+                      maxW={rem(300)}
+                      color={dashboard ? 'white' : 'greyDark'}
+                    >
+                      <Stack>
+                        {navItem.children.map((child) => (
+                          <DesktopSubNav key={child.label} {...child} />
+                        ))}
+                      </Stack>
+                    </PopoverContent>
+                  )}
+                </>
               )}
             </Popover>
           </Box>
@@ -248,6 +252,138 @@ const DesktopSubNav = ({ label, href }) => {
         </Stack>
       </Link>
     </NextLink>
+  );
+};
+
+const DesktopCTAs = ({ dashboard }) => {
+  const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
+
+  const signOut = () => {
+    removeCookie('AUTHENTICATION_TOKEN');
+    Router.push('/');
+  };
+
+  return (
+    <Stack direction="row" spacing={3} alignItems="center">
+      <NextLink href="/find-quidditch" passHref>
+        <Button
+          as="a"
+          variant={dashboard ? 'secondary' : 'primary'}
+          textDecoration="none"
+          _hover={{ textDecoration: 'none' }}
+        >
+          Find Quidditch
+        </Button>
+      </NextLink>
+
+      {!loggedIn && (
+        <NextLink href="/login" passHref>
+          <Button
+            variant="light"
+            as="a"
+            textDecoration="none"
+            _hover={{ textDecoration: 'none' }}
+          >
+            Sign In
+          </Button>
+        </NextLink>
+      )}
+
+      {loggedIn && (
+        <Popover trigger={'hover'} placement={'bottom-end'}>
+          {({ isOpen }) => (
+            <>
+              <PopoverTrigger>
+                <Link
+                  as="a"
+                  px={4}
+                  py={2}
+                  mb={0}
+                  lineHeight="1.2"
+                  fontSize={'md'}
+                  fontWeight="normal"
+                  bg={isOpen ? 'gray.200' : 'white'}
+                  color={'qukBlue'}
+                  border="1px solid"
+                  borderColor="qukBlue"
+                  borderRadius="md"
+                  _hover={{
+                    bg: 'gray.200',
+                    textDecoration: 'none',
+                    color: 'qukBlue',
+                  }}
+                >
+                  My Account
+                </Link>
+              </PopoverTrigger>
+
+              <PopoverContent
+                border={0}
+                boxShadow={'xl'}
+                bg={dashboard ? 'qukBlue' : 'white'}
+                p={4}
+                rounded={'xl'}
+                maxW={rem(300)}
+                mt={-1}
+                ml={2}
+                color={dashboard ? 'white' : 'greyDark'}
+              >
+                <Stack>
+                  {ACCOUNT_NAVIGATION.map((child) => (
+                    <DesktopSubNav key={child.label} {...child} />
+                  ))}
+
+                  <Box onClick={() => signOut()}>
+                    <Link
+                      role={'group'}
+                      display={'block'}
+                      py={2}
+                      px={4}
+                      rounded={'md'}
+                      bg={'inherit'}
+                      _hover={{ bg: 'red.200' }}
+                    >
+                      <Stack direction={'row'} align={'center'}>
+                        <Box>
+                          <Text
+                            transition={'all .3s ease'}
+                            _groupHover={{ color: 'monarchRed' }}
+                            fontWeight={500}
+                            my={0}
+                          >
+                            Sign out
+                          </Text>
+                        </Box>
+
+                        <Flex
+                          transition={'all .3s ease'}
+                          transform={'translateX(-10px)'}
+                          opacity={0}
+                          _groupHover={{
+                            opacity: '100%',
+                            transform: 'translateX(0)',
+                          }}
+                          justify={'flex-end'}
+                          align={'center'}
+                          flex={1}
+                        >
+                          <Icon
+                            color={'monarchRed'}
+                            w={5}
+                            h={5}
+                            as={ChevronRightIcon}
+                          />
+                        </Flex>
+                      </Stack>
+                    </Link>
+                  </Box>
+                </Stack>
+              </PopoverContent>
+            </>
+          )}
+        </Popover>
+      )}
+    </Stack>
   );
 };
 
