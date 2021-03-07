@@ -56,7 +56,7 @@ const EventCard = ({
   <StyledCard
     {...cardProps}
     gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
-    gridGap="gutter._"
+    gridGap={4}
   >
     <Box
       as="section"
@@ -68,7 +68,6 @@ const EventCard = ({
     >
       <Flex
         position="absolute"
-        zIndex={1}
         bg={TYPES[league[0]]}
         opacity={0.2}
         width="100%"
@@ -79,7 +78,6 @@ const EventCard = ({
         position="relative"
         alignItems="center"
         justifyContent="center"
-        zIndex={2}
         height="100%"
       >
         <IconContainer>

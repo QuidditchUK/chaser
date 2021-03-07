@@ -112,7 +112,6 @@ const Page = () => {
         <Flex
           position="absolute"
           height="100%"
-          zIndex={1}
           bg="qukBlue"
           opacity={0.8}
           width="100%"
@@ -123,14 +122,7 @@ const Page = () => {
           py={{ base: 4, lg: 10 }}
           px={{ base: 4, sm: 8, md: 9 }}
         >
-          <Box
-            borderRadius={1}
-            bg="white"
-            zIndex={2}
-            position="relative"
-            px={4}
-            py={4}
-          >
+          <Box borderRadius={1} bg="white" position="relative" px={4} py={4}>
             <Flex justifyContent="center" alignItems="center">
               <Logo src={logo} alt="Quidditch UK" />
             </Flex>

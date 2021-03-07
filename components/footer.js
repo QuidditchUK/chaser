@@ -263,7 +263,7 @@ export const Footer = () => {
           >
             <Flex flexDirection="column" order={{ base: 2, md: 1 }}>
               <Link href="/" passHref>
-                <ChakraLink height={{ base: '35px', xl: '45px' }} zIndex="5">
+                <ChakraLink height={{ base: '35px', xl: '45px' }}>
                   <>
                     <Logo
                       src={logo}

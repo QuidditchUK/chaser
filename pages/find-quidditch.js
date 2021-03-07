@@ -286,7 +286,6 @@ const FindQuidditch = ({
               <Flex
                 position="absolute"
                 minHeight={BLOG_MIN_HEIGHTS}
-                zIndex={1}
                 bg="qukBlue"
                 opacity={0.8}
                 width="100%"
@@ -296,7 +295,6 @@ const FindQuidditch = ({
                 position="relative"
                 minHeight={BLOG_MIN_HEIGHTS}
                 alignItems="center"
-                zIndex={2}
               >
                 <Container px={{ base: 4, sm: 8, md: 9 }}>
                   <Heading

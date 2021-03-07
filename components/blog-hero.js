@@ -45,7 +45,6 @@ const BlogHero = (rawData) => {
         <Flex
           position="absolute"
           minHeight={BLOG_MIN_HEIGHTS}
-          zIndex={1}
           bg="qukBlue"
           opacity={0.2}
           width="100%"
@@ -56,7 +55,6 @@ const BlogHero = (rawData) => {
           minHeight={BLOG_MIN_HEIGHTS}
           alignItems="center"
           justifyContent="center"
-          zIndex={2}
         >
           <Container
             maxWidth={rem(960)}

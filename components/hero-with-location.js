@@ -37,21 +37,6 @@ const HeroWithLocation = ({
         bgPositon="center"
         minHeight={BLOG_MIN_HEIGHTS}
       >
-        <Box
-          position="absolute"
-          right="0"
-          padding={{ base: 4, sm: 8, md: 9 }}
-          zIndex="1"
-        >
-          <Type
-            fontWeight="bold"
-            fontSize={[rem(10), rem(16)]}
-            bg={TYPES[league]}
-          >
-            {league}
-          </Type>
-        </Box>
-
         {isDesktop && images.length > 1 && (
           <Grid
             templateColumns="2fr 1fr 1fr"
@@ -86,6 +71,21 @@ const HeroWithLocation = ({
           <Carousel images={images} width="600" height="175" />
         )}
         {!isDesktop && <Carousel images={images} width="600" height="375" />}
+
+        <Box
+          position="absolute"
+          right="0"
+          top="0"
+          padding={{ base: 4, sm: 8, md: 9 }}
+        >
+          <Type
+            fontWeight="bold"
+            fontSize={[rem(10), rem(16)]}
+            bg={TYPES[league]}
+          >
+            {league}
+          </Type>
+        </Box>
       </Box>
       <Box
         as="section"
@@ -102,7 +102,7 @@ const HeroWithLocation = ({
           top={{ base: 0, md: '-60px' }}
           position="relative"
         >
-          <Box p={4} zIndex="3">
+          <Box p={4}>
             <ChakraImage
               borderRadius="full"
               height={{ base: '100px', md: '200px' }}
