@@ -14,6 +14,7 @@ import {
   useDisclosure,
 } from 'components';
 import { useRouter } from 'next/router';
+import { rem } from 'styles/theme';
 
 import NextLink from 'next/link';
 
@@ -184,7 +185,8 @@ const DesktopNav = ({ navigation, dashboard }) => {
                   bg={dashboard ? 'qukBlue' : 'white'}
                   p={4}
                   rounded={'xl'}
-                  minW={'sm'}
+                  // minW={'xs'}
+                  maxW={rem(300)}
                   color={dashboard ? 'white' : 'greyDark'}
                 >
                   <Stack>
@@ -215,7 +217,7 @@ const DesktopSubNav = ({ label, href }) => {
         role={'group'}
         display={'block'}
         py={2}
-        px={2}
+        px={4}
         rounded={'md'}
         bg={isActive ? 'gray.200' : 'inherit'}
         _hover={{ bg: 'gray.200' }}
@@ -227,6 +229,7 @@ const DesktopSubNav = ({ label, href }) => {
               color={isActive ? 'qukBlue' : 'inherit'}
               _groupHover={{ color: 'qukBlue' }}
               fontWeight={500}
+              my={0}
             >
               {label}
             </Text>
