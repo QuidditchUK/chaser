@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { layout, space } from 'styled-system';
 
 const Label = styled.label`
@@ -7,7 +7,7 @@ const Label = styled.label`
   ${space};
 
   a {
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.monarchRed};
   }
 `;
 

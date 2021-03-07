@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+/* eslint-disable no-unused-vars */
+import { useState } from 'react';
+import styled from '@emotion/styled';
 import * as Yup from 'yup';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Box, Grid, Flex } from 'components/layout';
+import { Box, Grid, Flex } from 'components';
 import { Logo } from 'components/logo';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -27,7 +28,7 @@ const Required = dynamic(() => import('components/required'));
 
 const Text = styled(Content)`
   a {
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.monarchRed};
   }
 `;
 
@@ -46,7 +47,9 @@ const JoinFormSchema = Yup.object().shape({
   is_student: Yup.bool().required(),
   university: Yup.string().when('is_student', {
     is: true,
-    then: Yup.string().required('Please enter the university you currently attend'),
+    then: Yup.string().required(
+      'Please enter the university you currently attend'
+    ),
     otherwise: Yup.string(),
   }),
 });
@@ -76,13 +79,7 @@ const logo = '/images/logo.png';
 const Page = () => {
   const [serverError, setServerError] = useState(null);
 
-  const {
-    register,
-    handleSubmit,
-    errors,
-    watch,
-    formState,
-  } = useForm({
+  const { register, handleSubmit, errors, watch, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(JoinFormSchema),
     defaultValues: {
@@ -101,10 +98,13 @@ const Page = () => {
   const watchIsStudent = watch('is_student');
   return (
     <>
-      <Meta description="Join QuidditchUK to manage your QuidditchUK Membership, Account details and more" subTitle="Join QuidditchUK" />
+      <Meta
+        description="Join QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+        subTitle="Join QuidditchUK"
+      />
       <Box
         backgroundImage="url(https://images.prismic.io/chaser/60b691d5-72f3-42d0-b634-b2548525fd65_QD_FN-325.jpg?auto=compress,format)"
-        backgroundColor="primary"
+        backgroundColor="qukBlue"
         backgroundSize="cover"
         backgroundPosition="center"
         position="relative"
@@ -113,27 +113,42 @@ const Page = () => {
           position="absolute"
           height="100%"
           zIndex={1}
-          bg="primary"
+          bg="qukBlue"
           opacity={0.8}
           width="100%"
         />
 
         <Container
           maxWidth={rem(500)}
-          py={{ _: 4, l: 10 }}
-          px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+          py={{ base: 4, lg: 10 }}
+          px={{ base: 4, sm: 8, md: 9 }}
         >
-          <Box borderRadius={1} bg="white" zIndex={2} position="relative" px={4} py={4}>
-            <Flex justifyContent="center" alignItems="center"><Logo src={logo} alt="Quidditch UK" /></Flex>
-            <Heading as="h1" isBody textAlign="center">Join QuidditchUK</Heading>
-            <Content pb={5}>Join QuidditchUK to manage your QuidditchUK and Club Membership, and register for official events</Content>
+          <Box
+            borderRadius={1}
+            bg="white"
+            zIndex={2}
+            position="relative"
+            px={4}
+            py={4}
+          >
+            <Flex justifyContent="center" alignItems="center">
+              <Logo src={logo} alt="Quidditch UK" />
+            </Flex>
+            <Heading as="h1" fontFamily="body" textAlign="center">
+              Join QuidditchUK
+            </Heading>
+            <Content pb={5}>
+              Join QuidditchUK to manage your QuidditchUK and Club Membership,
+              and register for official events
+            </Content>
 
-            <form onSubmit={handleSubmit((values) => handleJoinSubmit(values, setServerError))}>
+            <form
+              onSubmit={handleSubmit((values) =>
+                handleJoinSubmit(values, setServerError)
+              )}
+            >
               <Grid gridTemplateColumns="1fr">
-
-                <Label htmlFor="name">
-                  Email Address
-                </Label>
+                <Label htmlFor="name">Email Address</Label>
 
                 <Input
                   name="email"
@@ -144,7 +159,11 @@ const Page = () => {
                   borderColor={errors.email ? 'alert' : 'greyLight'}
                 />
 
-                {errors.email && (<InlineError marginBottom={3}>{errors.email.message}</InlineError>)}
+                {errors.email && (
+                  <InlineError marginBottom={3}>
+                    {errors.email.message}
+                  </InlineError>
+                )}
 
                 <Label htmlFor="first_name">
                   Preferred first name <Required />
@@ -160,7 +179,11 @@ const Page = () => {
                   borderColor={errors.first_name ? 'alert' : 'greyLight'}
                 />
 
-                {errors.first_name && (<InlineError marginBottom={3}>{errors.first_name.message}</InlineError>)}
+                {errors.first_name && (
+                  <InlineError marginBottom={3}>
+                    {errors.first_name.message}
+                  </InlineError>
+                )}
 
                 <Label htmlFor="last_name">
                   Preferred last name <Required />
@@ -175,9 +198,15 @@ const Page = () => {
                   error={errors.last_name}
                   borderColor={errors.last_name ? 'alert' : 'greyLight'}
                 />
-                {errors.last_name && (<InlineError marginBottom={3}>{errors.last_name.message}</InlineError>)}
+                {errors.last_name && (
+                  <InlineError marginBottom={3}>
+                    {errors.last_name.message}
+                  </InlineError>
+                )}
 
-                <Label htmlFor="is_student">Are you a student? <Required /></Label>
+                <Label htmlFor="is_student">
+                  Are you a student? <Required />
+                </Label>
 
                 <Toggle name="is_student" my={3} ref={register} />
 
@@ -197,12 +226,19 @@ const Page = () => {
                       borderColor={errors.university ? 'alert' : 'greyLight'}
                     />
 
-                    {errors.university && (<InlineError marginBottom={3}>{errors.university.message}</InlineError>)}
+                    {errors.university && (
+                      <InlineError marginBottom={3}>
+                        {errors.university.message}
+                      </InlineError>
+                    )}
 
                     <Text fontSize={1} marginBottom={3}>
-                      We need this as there are some player restrictions in place for Student Clubs competing in QuidditchUK events.
-                      QuidditchUK may require further verification from members regarding their student status, should we need it.
-                      This information is not shared with anyone outside of QuidditchUK, and is purely for our own record.
+                      We need this as there are some player restrictions in
+                      place for Student Clubs competing in QuidditchUK events.
+                      QuidditchUK may require further verification from members
+                      regarding their student status, should we need it. This
+                      information is not shared with anyone outside of
+                      QuidditchUK, and is purely for our own record.
                     </Text>
                   </>
                 )}
@@ -220,7 +256,11 @@ const Page = () => {
                   error={errors.password}
                   borderColor={errors.password ? 'alert' : 'greyLight'}
                 />
-                {errors.password && (<InlineError marginBottom={3}>{errors.password.message}</InlineError>)}
+                {errors.password && (
+                  <InlineError marginBottom={3}>
+                    {errors.password.message}
+                  </InlineError>
+                )}
 
                 <Label htmlFor="confirm">
                   Confirm Password <Required />
@@ -236,16 +276,36 @@ const Page = () => {
                   borderColor={errors.confirm ? 'alert' : 'greyLight'}
                 />
 
-                {errors.confirm && (<InlineError marginBottom={3}>{errors.confirm.message}</InlineError>)}
-
+                {errors.confirm && (
+                  <InlineError marginBottom={3}>
+                    {errors.confirm.message}
+                  </InlineError>
+                )}
               </Grid>
-              <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Join'}</Button>
+              <Button type="submit" variant="green" disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting' : 'Join'}
+              </Button>
             </form>
 
             {serverError && <InlineError my={3}>{serverError}</InlineError>}
 
-            <Box bg="white" px="4" py="2" mt="6" borderColor="primary" borderWidth="1px" borderStyle="solid" color="primary" borderRadius={0}>
-              <Text>Already have an account? <Link href="/login" as="/login" passHref><a>Sign in.</a></Link></Text>
+            <Box
+              bg="white"
+              px="4"
+              py="2"
+              mt="6"
+              borderColor="qukBlue"
+              borderWidth="1px"
+              borderStyle="solid"
+              color="qukBlue"
+              borderRadius={0}
+            >
+              <Text>
+                Already have an account?{' '}
+                <Link href="/login" as="/login" passHref>
+                  <a>Sign in.</a>
+                </Link>
+              </Text>
             </Box>
           </Box>
         </Container>

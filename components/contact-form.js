@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as Yup from 'yup';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import get from 'just-safe-get';
-import { Grid, Box } from 'components/layout';
+import { Grid, Box } from 'components';
 import Input from 'components/input';
 import Label from 'components/label';
 import Textarea from 'components/textarea';
@@ -21,11 +21,18 @@ import { rem } from 'styles/theme';
 
 const ContactFormSchema = Yup.object().shape({
   name: Yup.string().required('Please enter your name'),
-  email: Yup.string().email('Invalid email address').required('Please enter a valid email address'),
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Please enter a valid email address'),
   message: Yup.string().required('Required'),
 });
 
-const handleContactSubmit = async (values, resetForm, setServerError, setServerSuccess) => {
+const handleContactSubmit = async (
+  values,
+  resetForm,
+  setServerError,
+  setServerSuccess
+) => {
   try {
     setServerError(null);
     setServerSuccess(null);
@@ -43,13 +50,7 @@ const ContactForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const {
-    register,
-    handleSubmit,
-    errors,
-    reset,
-    formState,
-  } = useForm({
+  const { register, handleSubmit, errors, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(ContactFormSchema),
     defaultValues: {
@@ -68,12 +69,16 @@ const ContactForm = (rawData) => {
 
   return (
     <PrismicWrapper variant={data.variant}>
-      <Heading as="h1" isBody textAlign="center">Contact Us</Heading>
+      <Heading as="h1" fontFamily="body" textAlign="center">
+        Contact Us
+      </Heading>
       <Container maxWidth={rem(500)} paddingBottom={4}>
-        <form onSubmit={handleSubmit((values) => handleContactSubmit(values, reset, setServerError, setServerSuccess))}>
-          <Grid
-            gridTemplateColumns="1fr"
-          >
+        <form
+          onSubmit={handleSubmit((values) =>
+            handleContactSubmit(values, reset, setServerError, setServerSuccess)
+          )}
+        >
+          <Grid gridTemplateColumns="1fr">
             <Label htmlFor="name">
               Your name <Required />
             </Label>
@@ -87,7 +92,9 @@ const ContactForm = (rawData) => {
               error={errors.name}
             />
 
-            {errors.name && (<InlineError marginBottom={3}>{errors.name.message}</InlineError>)}
+            {errors.name && (
+              <InlineError marginBottom={3}>{errors.name.message}</InlineError>
+            )}
 
             <Label htmlFor="email">
               Your email <Required />
@@ -101,18 +108,13 @@ const ContactForm = (rawData) => {
               error={errors.email}
             />
 
-            {errors.email && (<InlineError marginBottom={3}>{errors.email.message}</InlineError>)}
+            {errors.email && (
+              <InlineError marginBottom={3}>{errors.email.message}</InlineError>
+            )}
 
-            <Label htmlFor="subject">
-              Subject
-            </Label>
+            <Label htmlFor="subject">Subject</Label>
 
-            <Input
-              name="subject"
-              placeholder="Subject"
-              ref={register}
-              my={3}
-            />
+            <Input name="subject" placeholder="Subject" ref={register} my={3} />
 
             <Label htmlFor="message">
               Your message <Required />
@@ -126,11 +128,20 @@ const ContactForm = (rawData) => {
               error={errors.message}
             />
 
-            {errors.message && (<InlineError marginBottom={3}>{errors.message.message}</InlineError>)}
-
+            {errors.message && (
+              <InlineError marginBottom={3}>
+                {errors.message.message}
+              </InlineError>
+            )}
           </Grid>
 
-          <Button type="submit" variant={buttonVariants[data.variant]} disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Contact us'}</Button>
+          <Button
+            type="submit"
+            variant={buttonVariants[data.variant]}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Submitting' : 'Contact us'}
+          </Button>
         </form>
 
         {serverError && (
@@ -140,7 +151,17 @@ const ContactForm = (rawData) => {
         )}
 
         {serverSuccess && (
-          <Box bg="keeperGreen" px="4" py="2" mt="6" borderColor="keeperGreen" borderWidth="1px" borderStyle="solid" color="white" borderRadius={0}>
+          <Box
+            bg="keeperGreen"
+            px="4"
+            py="2"
+            mt="6"
+            borderColor="keeperGreen"
+            borderWidth="1px"
+            borderStyle="solid"
+            color="white"
+            borderRadius={0}
+          >
             <Content>Message sent</Content>
           </Box>
         )}

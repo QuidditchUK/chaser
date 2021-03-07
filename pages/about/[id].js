@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
@@ -14,7 +12,7 @@ const Page = ({ page }) => {
   const router = useRouter();
 
   if (router.isFallback) {
-    return (<PageLoading />);
+    return <PageLoading />;
   }
 
   if (!page) {
@@ -29,9 +27,14 @@ const Page = ({ page }) => {
   );
 };
 
-export const getStaticProps = async ({ params: { id }, preview = null, previewData = {} }) => {
+export const getStaticProps = async ({
+  params: { id },
+  preview = null,
+  previewData = {},
+}) => {
   const { ref } = previewData;
-  const page = await getPrismicDocByUid('about', id, ref ? { ref } : null) || null;
+  const page =
+    (await getPrismicDocByUid('about', id, ref ? { ref } : null)) || null;
 
   return {
     props: { page, preview },
@@ -46,14 +49,6 @@ export const getStaticPaths = async () => {
     paths: allPages?.map(({ uid }) => `/about/${uid}`),
     fallback: true,
   };
-};
-
-Page.propTypes = {
-  page: PropTypes.shape({
-    data: PropTypes.shape({
-      body: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-  }).isRequired,
 };
 
 export default Page;

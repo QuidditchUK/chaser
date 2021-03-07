@@ -1,13 +1,11 @@
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
-import PropTypes from 'prop-types';
+
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
-import Heading from 'components/heading';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import { Box, Grid, Flex } from 'components/layout';
+import { Box, Grid, Flex, Heading } from 'components';
 import Image from 'components/image';
 import { Support } from 'components/image-slice';
 import Content from 'components/content';
@@ -16,24 +14,26 @@ import Button from 'components/button';
 import { linkResolver } from 'modules/prismic';
 
 export const CenterJustify = styled(Box)`
-  display: flex;  
+  display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
 const Item = ({ item, isImageLeft }) => (
   <Grid
-    gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
-    gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+    gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
+    gridGap={{ base: 4, md: 9 }}
   >
-    <CenterJustify order={{ _: 2, m: `${(isImageLeft ? 2 : 1)}` }}>
+    <CenterJustify order={{ base: 2, md: `${isImageLeft ? 2 : 1}` }}>
       {RichText.asText(item.title) && (
-        <Heading as="h2" fontSize={[3, 3, 4]} mt={2}>
+        <Heading as="h2" fontSize={{ base: 'xl', md: '3xl' }} mt={2}>
           {RichText.asText(item.title)}
         </Heading>
       )}
 
-      {item.content && <Content>{RichText.render(item.content, linkResolver)}</Content>}
+      {item.content && (
+        <Content>{RichText.render(item.content, linkResolver)}</Content>
+      )}
 
       {item.cta_text && (
         <Flex justifyContent="center">
@@ -46,32 +46,21 @@ const Item = ({ item, isImageLeft }) => (
       )}
     </CenterJustify>
 
-    <CenterJustify order={{ _: 1, m: `${(isImageLeft ? 1 : 2)}` }}>
-      <Image alt={item?.image?.alt} src={item?.image?.url} height={item.image?.dimensions?.height} width={item.image?.dimensions?.width} />
-      {RichText.asText(item.support) && (<Support textAlign="center" pt={2} fontStyle="italic">{RichText.render(item.support, linkResolver)}</Support>)}
+    <CenterJustify order={{ base: 1, md: `${isImageLeft ? 1 : 2}` }}>
+      <Image
+        alt={item?.image?.alt}
+        src={item?.image?.url}
+        height={item.image?.dimensions?.height}
+        width={item.image?.dimensions?.width}
+      />
+      {RichText.asText(item.support) && (
+        <Support textAlign="center" pt={2} fontStyle="italic">
+          {RichText.render(item.support, linkResolver)}
+        </Support>
+      )}
     </CenterJustify>
   </Grid>
 );
-
-Item.propTypes = {
-  item: PropTypes.shape({
-    title: PropTypes.array,
-    content: PropTypes.array,
-    image: PropTypes.shape({
-      alt: PropTypes.string,
-      url: PropTypes.string,
-      dimensions: PropTypes.shape({
-        height: PropTypes.number,
-        width: PropTypes.number,
-      }),
-    }),
-    support: PropTypes.array,
-    variant: PropTypes.string,
-    cta_text: PropTypes.string,
-    cta_url: PropTypes.string,
-  }).isRequired,
-  isImageLeft: PropTypes.bool.isRequired,
-};
 
 const ImageAndContent = (rawData) => {
   const data = {
@@ -96,10 +85,7 @@ const ImageAndContent = (rawData) => {
 
         return (
           <PrismicWrapper variant={item.variant} key={`image-and-content-${i}`}>
-            <Item
-              item={item}
-              isImageLeft={isImageLeft}
-            />
+            <Item item={item} isImageLeft={isImageLeft} />
           </PrismicWrapper>
         );
       })}

@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import Meta from 'components/meta';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid, Flex } from 'components/layout';
+import { Box, Grid, Flex } from 'components';
 import Heading from 'components/heading';
 import Container from 'components/container';
 import { api } from 'modules/api';
@@ -24,20 +23,25 @@ const SuccessMembership = ({ product }) => {
 
   return (
     <>
-      <Meta description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more" subTitle="Manage" />
+      <Meta
+        description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+        subTitle="Manage"
+      />
       <Box
         bg="greyLight"
-        py={{ _: 4, l: 10 }}
-        px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+        py={{ base: 4, lg: 10 }}
+        px={{ base: 4, sm: 8, md: 9 }}
       >
         <Container>
-          <Heading as="h2" isBody textAlign="center">Membership Purchased</Heading>
-          <Content textAlign="center" py="4">Thank you for purchasing the following QuidditchUK Membership.<br /> A receipt has been emailed to you.</Content>
+          <Heading as="h2" fontFamily="body" textAlign="center">
+            Membership Purchased
+          </Heading>
+          <Content textAlign="center" py="4">
+            Thank you for purchasing the following QuidditchUK Membership.
+            <br /> A receipt has been emailed to you.
+          </Content>
 
-          <Grid
-            gridTemplateColumns="1fr"
-            gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-          >
+          <Grid gridTemplateColumns="1fr" gridGap={{ base: 4, sm: 8, md: 9 }}>
             {product?.id && (
               <ProductCard
                 id={product.id}
@@ -49,8 +53,19 @@ const SuccessMembership = ({ product }) => {
             )}
           </Grid>
 
-          <Flex alignItems="center" justifyContent="center" flexDirection="column" pt="5">
-            <Link href="/dashboard" passHref><a><Button type="button" variant="secondary">Back to Dashboard</Button></a></Link>
+          <Flex
+            alignItems="center"
+            justifyContent="center"
+            flexDirection="column"
+            pt="5"
+          >
+            <Link href="/dashboard" passHref>
+              <a>
+                <Button type="button" variant="secondary">
+                  Back to Dashboard
+                </Button>
+              </a>
+            </Link>
           </Flex>
         </Container>
       </Box>
@@ -79,16 +94,6 @@ export const getServerSideProps = async ({ req, res }) => {
       product: data[0],
     },
   };
-};
-
-SuccessMembership.propTypes = {
-  product: PropTypes.shape({
-    name: PropTypes.string,
-    images: PropTypes.arrayOf(PropTypes.string),
-    description: PropTypes.string,
-    id: PropTypes.string,
-    price: PropTypes.shape({}),
-  }).isRequired,
 };
 
 export default SuccessMembership;

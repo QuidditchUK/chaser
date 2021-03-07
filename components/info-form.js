@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 import * as Yup from 'yup';
-import { Box, Grid } from 'components/layout';
+import { Box, Grid } from 'components';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -24,7 +23,9 @@ const InfoFormSchema = Yup.object().shape({
   is_student: Yup.bool().required(),
   university: Yup.string().when('is_student', {
     is: true,
-    then: Yup.string().required('Please enter the university you currently attend'),
+    then: Yup.string().required(
+      'Please enter the university you currently attend'
+    ),
     otherwise: Yup.string(),
   }),
 });
@@ -45,13 +46,7 @@ const handleInfoSubmit = async (values, setServerError, setServerSuccess) => {
 };
 
 const InfoForm = ({ user }) => {
-  const {
-    register,
-    handleSubmit,
-    errors,
-    watch,
-    formState,
-  } = useForm({
+  const { register, handleSubmit, errors, watch, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(InfoFormSchema),
     defaultValues: {
@@ -77,16 +72,18 @@ const InfoForm = ({ user }) => {
       return () => clearTimeout(timer);
     }
 
-    return () => { };
+    return () => {};
   }, [serverSuccess]);
 
   return (
     <>
-      <form onSubmit={handleSubmit((values) => handleInfoSubmit(values, setServerError, setServerSuccess))}>
+      <form
+        onSubmit={handleSubmit((values) =>
+          handleInfoSubmit(values, setServerError, setServerSuccess)
+        )}
+      >
         <Grid gridTemplateColumns="1fr">
-          <Label htmlFor="name">
-            Email Address
-          </Label>
+          <Label htmlFor="name">Email Address</Label>
 
           <Input
             name="email"
@@ -96,7 +93,9 @@ const InfoForm = ({ user }) => {
             error={errors.email}
           />
 
-          {errors.email && (<InlineError marginBottom={3}>{errors.email.message}</InlineError>)}
+          {errors.email && (
+            <InlineError marginBottom={3}>{errors.email.message}</InlineError>
+          )}
 
           <Label htmlFor="first_name">
             Preferred first name <Required />
@@ -111,7 +110,11 @@ const InfoForm = ({ user }) => {
             error={errors.first_name}
           />
 
-          {errors.first_name && (<InlineError marginBottom={3}>{errors.first_name.message}</InlineError>)}
+          {errors.first_name && (
+            <InlineError marginBottom={3}>
+              {errors.first_name.message}
+            </InlineError>
+          )}
 
           <Label htmlFor="last_name">
             Preferred last name <Required />
@@ -125,9 +128,15 @@ const InfoForm = ({ user }) => {
             type="last_name"
             error={errors.last_name}
           />
-          {errors.last_name && (<InlineError marginBottom={3}>{errors.last_name.message}</InlineError>)}
+          {errors.last_name && (
+            <InlineError marginBottom={3}>
+              {errors.last_name.message}
+            </InlineError>
+          )}
 
-          <Label htmlFor="is_student">Are you a student? <Required /></Label>
+          <Label htmlFor="is_student">
+            Are you a student? <Required />
+          </Label>
 
           <Toggle my={3} name="is_student" ref={register} />
 
@@ -145,18 +154,26 @@ const InfoForm = ({ user }) => {
                 type="university"
                 error={errors.university}
               />
-              {errors.university && (<InlineError marginBottom={3}>{errors.university.message}</InlineError>)}
+              {errors.university && (
+                <InlineError marginBottom={3}>
+                  {errors.university.message}
+                </InlineError>
+              )}
 
               <Content fontSize={1} marginBottom={3}>
-                We need this as there are some player restrictions in place for Student Clubs competing in QuidditchUK events.
-                QuidditchUK may require further verification from members regarding their student status, should we need it.
-                This information is not shared with anyone outside of QuidditchUK, and is purely for our own record.
+                We need this as there are some player restrictions in place for
+                Student Clubs competing in QuidditchUK events. QuidditchUK may
+                require further verification from members regarding their
+                student status, should we need it. This information is not
+                shared with anyone outside of QuidditchUK, and is purely for our
+                own record.
               </Content>
             </>
           )}
-
         </Grid>
-        <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Update Info'}</Button>
+        <Button type="submit" variant="green" disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting' : 'Update Info'}
+        </Button>
       </form>
 
       {serverError && (
@@ -166,22 +183,22 @@ const InfoForm = ({ user }) => {
       )}
 
       {serverSuccess && (
-        <Box bg="primary" px="4" py="2" mt="6" borderColor="primary" borderWidth="1px" borderStyle="solid" color="white" borderRadius={0}>
+        <Box
+          bg="qukBlue"
+          px="4"
+          py="2"
+          mt="6"
+          borderColor="qukBlue"
+          borderWidth="1px"
+          borderStyle="solid"
+          color="white"
+          borderRadius={0}
+        >
           <Content>User updated</Content>
         </Box>
       )}
     </>
   );
-};
-
-InfoForm.propTypes = {
-  user: PropTypes.shape({
-    first_name: PropTypes.string,
-    last_name: PropTypes.string,
-    email: PropTypes.string,
-    is_student: PropTypes.bool,
-    university: PropTypes.string,
-  }).isRequired,
 };
 
 export default InfoForm;

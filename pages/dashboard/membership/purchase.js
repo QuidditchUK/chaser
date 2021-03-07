@@ -1,8 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Meta from 'components/meta';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid } from 'components/layout';
+import { Box, Grid } from 'components';
 import Heading from 'components/heading';
 import Container from 'components/container';
 import { api } from 'modules/api';
@@ -23,18 +21,16 @@ const handleClick = async (id) => {
 
 const PurchaseMembership = ({ products }) => (
   <>
-    <Meta description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more" subTitle="Manage" />
-    <Box
-      bg="greyLight"
-      py={{ _: 4, l: 10 }}
-      px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-    >
+    <Meta
+      description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+      subTitle="Manage"
+    />
+    <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>
       <Container>
-        <Heading as="h2" isBody>Purchase Membership</Heading>
-        <Grid
-          gridTemplateColumns="1fr"
-          gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-        >
+        <Heading as="h2" fontFamily="body">
+          Purchase Membership
+        </Heading>
+        <Grid gridTemplateColumns="1fr" gridGap={{ base: 4, sm: 8, md: 9 }}>
           {products.map((product) => (
             <ProductCard
               key={product.id}
@@ -80,10 +76,6 @@ export const getServerSideProps = async ({ req, res }) => {
       products: data,
     },
   };
-};
-
-PurchaseMembership.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default PurchaseMembership;

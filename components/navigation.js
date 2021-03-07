@@ -1,340 +1,284 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Fragment } from 'react';
 import Link from 'next/link';
-import Router from 'next/router';
+// import Router from 'next/router';
 import dynamic from 'next/dynamic';
 
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import cookies from 'js-cookie';
-import { space, variant } from 'styled-system';
-import { transparentize, tint, rgba } from 'polished';
+// import styled from '@emotion/styled';
+// import cookies from 'js-cookie';
+
+// import { tint, rgba } from 'polished';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
-import { Flex } from 'components/layout';
+import {
+  Flex,
+  Box,
+  Menu,
+  Button as ChakraButton,
+  MenuList,
+  MenuItem,
+  MenuButton,
+} from 'components';
 import { MAIN_NAVIGATION, DASHBOARD_NAVIGATION } from 'constants/navigation';
-import { removeCookie } from 'modules/cookies';
-import ActiveLink, { ParentWrapper, ExactActiveLink } from 'components/active-link';
+// import { removeCookie } from 'modules/cookies';
+// import ActiveLink, { ParentWrapper, ExactActiveLink } from 'components/active-link';
 import { Logo, LogoLink } from 'components/logo';
 
 const HamburgerIcon = dynamic(() => import('public/images/hamburger.svg'));
-const Headroom = dynamic(() => import('react-headroom'));
-const Button = dynamic(() => import('components/button'));
+// const Button = dynamic(() => import('components/button'));
 
 const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';
 
-const Wrapper = styled(Headroom)`
-  position: relative;
-  z-index: ${({ open }) => (open ? 7 : 5)};
-`;
+const Header = (props) => (
+  <Flex
+    as="header"
+    direction="row"
+    height={{ base: '50px', lg: '60px' }}
+    justifyContent="space-between"
+    alignItems="center"
+    color="monarchRed"
+    bg="white"
+    boxShadow="md"
+    {...props}
+  />
+);
 
-const variants = (theme) => ({
-  primary: {
-    bg: theme.colors.primary,
-  },
+// const List = styled.ul`
+//   align-items: center;
+//   display: flex;
+//   flex-direction: row;
+//   list-style-type: none;
+//   padding-left: 0;
 
-  white: {
-    bg: theme.colors.white,
-  },
-});
+//   a {
+//     text-decoration: none;
+//   }
 
-const Header = styled.header`
-  ${space};
-  align-items: center;
-  background: ${({ theme }) => theme.colors.white};
-  box-shadow: ${({ theme }) => theme.shadows.box};
-  color: ${({ theme }) => theme.colors.secondary};
-  display: flex;
-  flex-direction: row;
-  height: 60px;
-  justify-content: space-between;
+//   span {
+//     &.active {
+//       color: ${({ theme }) => theme.colors.monarchRed};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    height: 50px;
-  }
+//       @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+//         font-weight: 700;
+//       }
+//     }
 
-  ${({ theme }) => variant({ variants: variants(theme) })};
-`;
+//     &:hover {
+//       color: ${({ theme }) => theme.colors.monarchRed};
+//     }
+//   }
 
-const Nav = styled.nav`
-  display: flex;
-  align-items: center;
-`;
+//   li {
+//     cursor: pointer;
+//   }
 
-const List = styled.ul`
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  list-style-type: none;
-  padding-left: 0;
+//   ul {
+//     display: flex;
+//     flex-direction: column;
+//     max-height:0;
+//     overflow: hidden;
+//     justify-content: flex-start;
+//     transition: max-height 0.3s;
+//     width: 0;
+//     justify-content: flex-start;
+//     position: absolute;
+//     top: 35px;
 
-  a {
-    text-decoration: none;
-  }
+//     @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+//       width: auto;
+//     }
+//   }
 
-  span {
-    &.active {
-      color: ${({ theme }) => theme.colors.secondary};
+//   li:hover > ul,
+//   li:focus > ul,
+//   li ul:focus {
+//     border-top: 25px solid ${rgba(0, 0, 0, 0)};
+//     display: flex;
+//     overflow: hidden;
+//     flex-direction: column;
+//     justify-content: flex-start;
+//     position: absolute;
+//     width: auto;
+//     top: 35px;
+//     z-index: 15;
+//     max-height: 400px;
 
-      @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-        font-weight: 700;
-      }
-    }
+//     li {
+//       background: ${({ theme }) => theme.colors.white};
+//       box-shadow: 0 10px 0.625rem rgba(0,0,0,0.3);
+//       width: 100%;
 
-    &:hover {
-      color: ${({ theme }) => theme.colors.secondary};
-    }
-  }
+//       a {
+//         color: ${({ theme, dashboard }) => (dashboard ? theme.colors.white : theme.colors.greyDark)};
+//         display: block;
+//         width: 100%;
 
-  li {
-    cursor: pointer;
-  }
+//         &:hover {
+//           color: ${({ theme }) => theme.colors.white};
+//         }
+//       }
 
-  ul {
-    display: flex;
-    flex-direction: column;
-    max-height:0;
-    overflow: hidden;
-    justify-content: flex-start;
-    transition: max-height 0.3s;
-    width: 0;
-    justify-content: flex-start;
-    position: absolute;
-    top: 35px;
+//       span {
+//         color: inherit;
+//         display: block;
+//         padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[6]};
+//         width: 100%;
+//         font-weight: normal;
 
-    @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-      width: auto;
-    }
-  }
+//         &:hover {
+//           color: ${({ theme }) => theme.colors.white};
+//         }
 
-  li:hover > ul, 
-  li:focus > ul,
-  li ul:focus {
-    border-top: 25px solid ${rgba(0, 0, 0, 0)};
-    display: flex;
-    overflow: hidden;
-    flex-direction: column;
-    justify-content: flex-start;
-    position: absolute;
-    width: auto;
-    top: 35px;
-    z-index: 15;
-    max-height: 400px;
+//         &.active {
+//           background: ${({ theme }) => theme.colors.monarchRed};
+//           color: ${({ theme }) => theme.colors.white};
+//         }
+//       }
 
-    li {
-      background: ${({ theme }) => theme.colors.white};
-      box-shadow: 0 10px 0.625rem rgba(0,0,0,0.3);
-      width: 100%;
+//       &:hover {
+//         background: ${({ theme }) => theme.colors.monarchRed};
+//         color: ${({ theme }) => theme.colors.white};
+//       }
+//     }
+//   }
 
-      a {
-        color: ${({ theme, dashboard }) => (dashboard ? theme.colors.white : theme.colors.greyDark)};
-        display: block;
-        width: 100%;
+//   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+//     display: flex;
+//     flex-direction: column;
+//     height: 100vh;
+//     top: 0;
+//     justify-content: flex-start;
+//     overflow-y:auto;
+//     left: 0;
+//     margin: 0;
+//     padding: 60px ${({ theme }) => theme.space[4]} 120px;
+//     position: absolute;
+//     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
+//     transition: transform 0.3s;
+//     width: 100%;
+//     z-index: 4;
 
-        &:hover {
-          color: ${({ theme }) => theme.colors.white};
-        }
-      }
+//     span:hover {
+//       color: ${({ theme }) => theme.colors.qukBlue};
+//     }
 
-      span {
-        color: inherit;
-        display: block;
-        padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[6]};
-        width: 100%;
-        font-weight: normal;
+//     li > ul,
+//     ul,
+//     li:hover > ul,
+//     li:focus > ul,
+//     li ul:focus {
+//       background: unset;
+//       border-top: 0;
+//       display: block;
+//       margin: initial;
+//       max-height: 0;
+//       overflow: hidden;
+//       padding: initial;
+//       position: initial;
+//       transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
+//       transition: max-height 0.3s;
 
-        &:hover {
-          color: ${({ theme }) => theme.colors.white};
-        }
+//       li {
+//         box-shadow: none;
+//         display: flex;
+//         margin: ${({ theme }) => theme.space[3]} auto;
+//         width: 100%;
 
-        &.active {
-          background: ${({ theme }) => theme.colors.secondary};
-          color: ${({ theme }) => theme.colors.white};
-        }
-      }
+//         a {
+//           width: 100%;
 
-      &:hover {
-        background: ${({ theme }) => theme.colors.secondary};
-        color: ${({ theme }) => theme.colors.white};
-      }
-    }
-  }
+//           &:hover {
+//             color: ${({ theme }) => theme.colors.monarchRed};
+//           }
+//         }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    top: 0;
-    justify-content: flex-start;
-    overflow-y:auto;
-    left: 0;
-    margin: 0;
-    padding: 60px ${({ theme }) => theme.space[4]} 120px;
-    position: absolute;
-    transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-    transition: transform 0.3s;
-    width: 100%;
-    z-index: 4;
+//         span {
+//           background: ${({ theme }) => tint(0.7, theme.colors.qukBlue)};
+//           display: block;
+//           padding: ${({ theme }) => theme.space[2]} 0;
 
-    span:hover {
-      color: ${({ theme }) => theme.colors.primary};
-    }
-    
-    li > ul,
-    ul,
-    li:hover > ul, 
-    li:focus > ul,
-    li ul:focus {
-      background: unset;
-      border-top: 0;
-      display: block;
-      margin: initial;
-      max-height: 0;
-      overflow: hidden;
-      padding: initial;
-      position: initial;
-      transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-      transition: max-height 0.3s;
+//           &.active {
+//             background: ${({ theme }) => theme.colors.qukBlue};
+//             color: ${({ theme }) => theme.colors.white};
 
-      li {
-        box-shadow: none;
-        display: flex;
-        margin: ${({ theme }) => theme.space[3]} auto;
-        width: 100%;
+//             &:hover {
+//               color: ${({ theme }) => theme.colors.qukBlue};
+//             }
+//           }
 
-        a {
-          width: 100%;
+//           &:hover {
+//             color: ${({ theme }) => theme.colors.qukBlue};
+//           }
+//         }
+//       }
 
-          &:hover {
-            color: ${({ theme }) => theme.colors.secondary};
-          }
-        }
+//       &.dropdown, .dropdown:hover {
+//         height: auto;
+//         max-height: 250px;
+//       }
+//     }
+//   }
+// `;
 
-        span {
-          background: ${({ theme }) => tint(0.7, theme.colors.primary)};
-          display: block;
-          padding: ${({ theme }) => theme.space[2]} 0;
+// const Item = (props) => (
+//   <Box
+//     as="li"
+//     width="100%"
+//     mb={{ base: 4, lg: 0 }}
+//     sx={{
+//       "&:first-of-type": {
+//         pl: { base: 'initial', lg: 0 }
+//       },
+//       pl: { base: 0, lg: 4 },
+//       "button": {
+//         fontSize: "md",
+//         width: "100%"
+//       }
+//     }}
+//     {...props}
+//   />
+// );
 
-          &.active {
-            background: ${({ theme }) => theme.colors.primary};
-            color: ${({ theme }) => theme.colors.white};
+// const NavItem = (props) => (
+//   <Box
+//     as="span"
+//     fontWeight={{ base: "normal", lg: "bold" }}
+//     fontSize={{ base: "md", lg: "sm", xl: "md" }}
+//     borderRadius={{ base: "sm", lg: "none" }}
+//     textAlign={{ base: 'center', lg: 'left' }}
+//     display={{ base: 'block', lg: 'initial' }}
+//     px={{ base: 4, lg: 'initial' }}
+//     py={{ base: 2, lg: 'initial' }}
+//     bg={{ base: 'white', lg: 'inherit' }}
+//     _hover={{
+//       color: 'qukBlue',
+//       bg: { base: '#e6ebef', lg: 'inherit' }
+//     }}
+//     borderWidth="1px"
+//     borderStyle="solid"
+//     borderColor="white"
+//     {...props}
+//   />
+// )
 
-            &:hover {
-              color: ${({ theme }) => theme.colors.primary};
-            }
-          }
+const Hamburger = (props) => (
+  <Box
+    display={{ base: 'block', lg: 'none' }}
+    cursor="pointer"
+    zIndex="7"
+    position="absolute"
+    top="10px"
+    right="1rem"
+    bg="inherit"
+    {...props}
+  />
+);
 
-          &:hover {
-            color: ${({ theme }) => theme.colors.primary};
-          }
-        }
-      }
+// const Overlay = (props) => (<Box width="100%" height="100vh" bg="rgba(14, 55, 95, 0.9)" transition="transform 0.3s" zIndex="2" position="absolute" top={0} left={0} {...props} />)
 
-      &.dropdown, .dropdown:hover {
-        height: auto;
-        max-height: 250px;
-      }
-    }
-  }
-`;
-
-const Item = styled.li`
-  ${space};
-
- &:first-of-type {
-   padding-left: 0;
- }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.xl}) {
-    button {
-      font-size: ${({ theme }) => theme.fontSizes.bodyCard};
-    }
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    padding-left: 0;
-    width: 100%;
-    margin-bottom: ${({ theme }) => theme.space[4]};
-
-    button {
-      font-size: ${({ theme }) => theme.fontSizes.body};
-      width: 100%;
-    }
-  }
-`;
-
-const NavItem = styled.span`
-  color: ${({ theme, dashboard }) => (dashboard ? theme.colors.white : theme.colors.greyDark)};
-  font-weight: bold;
-  
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.xl}) {
-    font-size: ${({ theme }) => theme.fontSizes.bodyCard};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    background: ${({ theme }) => theme.colors.white};
-    border: ${({ isButton }) => (isButton ? '0' : '1px')} solid ${({ theme }) => theme.colors.white};
-    border-radius: ${({ theme }) => theme.radii[0]};
-    color: ${({ theme }) => theme.colors.darkBlue};
-    display: block;
-    font-size: ${({ theme }) => theme.fontSizes.body};
-    font-weight: normal;
-    padding: ${({ theme, isButton }) => (isButton ? 0 : theme.space[2])} ${({ theme, isButton }) => (isButton ? 0 : theme.space[4])};
-    text-align: center;
-
-    &:hover {
-      background: ${({ theme }) => tint(0.9, theme.colors.primary)};
-    }
-  }
-`;
-
-const Hamburger = styled(HamburgerIcon)`
-  display: none;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    color: ${({ white, theme }) => (white ? theme.colors.white : theme.colors.primary)};
-    cursor: pointer;
-    display: block;
-    z-index: 7;
-    position: absolute;
-    top: 10px;
-    right: 1rem;
-  }
-`;
-
-const Overlay = styled.div`
-  width: 100%;
-  height: 100vh;
-  background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
-  transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-  transition: transform 0.3s;
-  z-index: 2;
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-
-const LogoWrapper = styled(Flex)`
-  width: initial;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    background: ${({ theme, open }) => (open ? theme.colors.primary : 'inherit')};
-    display: flex;
-    width: 100%;
-    padding: 0 ${({ theme, open }) => (open ? theme.space.gutter._ : 0)};
-    height: 50px;
-    align-items: center;
-    z-index: 5;
-  }
-`;
-
-function Navigation({ dashboard }) {
-  const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
+function Navigation({ dashboard = false }) {
+  // const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
   const [open, setOpen] = useState(false);
-  const [navigationToggle, setNavigationToggle] = useState(1000);
+  // const [navigationToggle, setNavigationToggle] = useState(1000);
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
 
   const scrollRef = useRef();
@@ -347,39 +291,74 @@ function Navigation({ dashboard }) {
     }
   }, [open]);
 
-  const signOut = () => {
-    removeCookie('AUTHENTICATION_TOKEN');
-    Router.push('/');
-  };
+  // const signOut = () => {
+  //   removeCookie('AUTHENTICATION_TOKEN');
+  //   Router.push('/');
+  // };
 
   return (
-    <Wrapper open={open}>
-      <Overlay open={open} />
-      <Header variant={dashboard ? 'primary' : 'white'} px={{ _: (open ? 0 : 'gutter._') }}>
-        <LogoWrapper open={open}>
+    <Box position="relative" zIndex={open ? 7 : 5}>
+      {/* <Overlay transform={open ? 'translateX(0)' : 'translateX(-100%)'} /> */}
+
+      <Header bg={dashboard ? 'qukBlue' : 'white'} px={open ? 0 : 4}>
+        <Flex
+          bg={open ? 'qukBlue' : 'inherit'}
+          px={open ? 4 : 0}
+          height="50px"
+          alignItems="center"
+          zIndex="5"
+          width={{ base: '100%', lg: 'initial' }}
+        >
           <Link href="/" passHref>
             <LogoLink onClick={() => setOpen(false)}>
-              <>
-                <Logo src={logo} alt="Quidditch UK" white={open || dashboard} />
-                <Logo src={logoText} alt="Quidditch UK" white={open || dashboard} />
-              </>
+              <Logo
+                src={logo}
+                alt="Quidditch UK"
+                filter={
+                  open || dashboard ? 'brightness(0) invert(1)' : 'inherit'
+                }
+              />
+              <Logo
+                src={logoText}
+                alt="Quidditch UK"
+                filter={
+                  open || dashboard ? 'brightness(0) invert(1)' : 'inherit'
+                }
+              />
             </LogoLink>
           </Link>
-        </LogoWrapper>
+        </Flex>
 
-        <Nav>
-          <List open={open} ref={scrollRef}>
+        {navigation.map((item) => (
+          <Fragment key={item.label}>
+            {item.list ? (
+              <Menu>
+                <MenuButton as={ChakraButton}>{item.label}</MenuButton>
+                <MenuList>
+                  {item.list.map((subItem) => (
+                    <MenuItem key={subItem.as}>{subItem.label}</MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
+            ) : (
+              <ChakraButton>{item.label}</ChakraButton>
+            )}
+          </Fragment>
+        ))}
+
+        <Flex as="nav" alignItems="center">
+          {/* <List open={open} ref={scrollRef}>
             {navigation.map((item, i) => (
               <Item key={item.label} pl={{ sm: 4, xl: 6 }}>
                 {item.list
                   ? (
                     <ParentWrapper path={item.path} paths={item.paths}>
-                      <NavItem onClick={() => setNavigationToggle(navigationToggle === i ? 1000 : i)} dashboard={dashboard}>{item.label}</NavItem>
+                      <NavItem onClick={() => setNavigationToggle(navigationToggle === i ? 1000 : i)} color={{ base: 'darkBlue', lg: dashboard ? 'white' : 'greyDark'}}>{item.label}</NavItem>
                     </ParentWrapper>
                   )
                   : (
                     <ActiveLink href={item.href} as={item.as}>
-                      <NavItem onClick={() => setOpen(false)} dashboard={dashboard}>{item.label}</NavItem>
+                      <NavItem onClick={() => setOpen(false)} color={{ base: 'darkBlue', lg: dashboard ? 'white' : 'greyDark' }}>{item.label}</NavItem>
                     </ActiveLink>
                   )}
 
@@ -388,7 +367,7 @@ function Navigation({ dashboard }) {
                     {item.list.map((subItem) => (
                       <Item key={subItem.as}>
                         <ActiveLink href={subItem.href} as={subItem.as}>
-                          <NavItem onClick={() => setOpen(false)}>{subItem.label}</NavItem>
+                          <NavItem onClick={() => setOpen(false)} color={{ base: 'darkBlue', lg: dashboard ? 'white' : 'greyDark' }}>{subItem.label}</NavItem>
                         </ActiveLink>
                       </Item>
                     ))}
@@ -397,13 +376,13 @@ function Navigation({ dashboard }) {
               </Item>
             ))}
 
-            <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={dashboard ? 'secondary' : { _: 'secondary', l: 'primary' }} onClick={() => setOpen(false)}>Find Quidditch</Button></a></Link></Item>
+            <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={dashboard ? 'secondary' : { base: 'secondary', lg: 'primary' }} onClick={() => setOpen(false)}>Find Quidditch</Button></a></Link></Item>
 
             {!loggedIn && (
               <Item pl={4}>
                 <Link href="/login" passHref>
                   <a>
-                    <Button type="button" variant="light" onClick={() => setOpen(false)} mb={{ _: 4, l: 0 }}>
+                    <Button type="button" variant="light" onClick={() => setOpen(false)} mb={{ base:4, lg: 0 }}>
                       Sign in
                     </Button>
                   </a>
@@ -414,18 +393,18 @@ function Navigation({ dashboard }) {
             {loggedIn && (
               <Item pl={4}>
                 <ParentWrapper path="/dashboard">
-                  <NavItem onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)} isButton><Button type="button" variant="light" py={{ _: 3, l: 2 }}>My Account</Button></NavItem>
+                  <NavItem onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)} color={{ base: 'darkBlue', lg: dashboard ? 'white' : 'greyDark' }} borderWidth="0"><Button type="button" variant="light" py={{ base:3, lg: 2 }}>My Account</Button></NavItem>
                 </ParentWrapper>
 
                 <List className={`${navigationToggle === 20 ? 'dropdown' : ''}`}>
                   <Item>
                     <ExactActiveLink href="/dashboard" as="/dashboard">
-                      <NavItem onClick={() => setOpen(false)}>Dashboard</NavItem>
+                      <NavItem onClick={() => setOpen(false)} color={{ base: 'darkBlue', lg: dashboard ? 'white' : 'greyDark' }}>Dashboard</NavItem>
                     </ExactActiveLink>
                   </Item>
                   <Item>
                     <ActiveLink href="/dashboard/account/info" as="/dashboard/account/info">
-                      <NavItem onClick={() => setOpen(false)}>My info</NavItem>
+                      <NavItem onClick={() => setOpen(false)} color={{ base: 'darkBlue', lg: dashboard ? 'white' : 'greyDark' }}>My info</NavItem>
                     </ActiveLink>
                   </Item>
                   <Item>
@@ -436,6 +415,7 @@ function Navigation({ dashboard }) {
                             setOpen(false);
                             signOut();
                           }}
+                          color={{ base: 'darkBlue', lg: dashboard ? 'white' : 'greyDark' }}
                         >
                           Sign out
                         </NavItem>
@@ -445,25 +425,18 @@ function Navigation({ dashboard }) {
                 </List>
               </Item>
             )}
-          </List>
+          </List> */}
 
           <Hamburger
-            white={(open || dashboard) ? 'true' : undefined}
+            as={HamburgerIcon}
+            color={open || dashboard ? 'white' : 'qukBlue'}
             aria-hidden="true"
             onClick={() => setOpen(!open)}
           />
-        </Nav>
+        </Flex>
       </Header>
-    </Wrapper>
+    </Box>
   );
 }
-
-Navigation.defaultProps = {
-  dashboard: false,
-};
-
-Navigation.propTypes = {
-  dashboard: PropTypes.bool,
-};
 
 export default Navigation;

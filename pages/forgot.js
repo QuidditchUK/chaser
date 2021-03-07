@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
+import styled from '@emotion/styled';
 import * as Yup from 'yup';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { Box, Grid, Flex } from 'components/layout';
+import { Box, Grid, Flex } from 'components';
 import { Logo } from 'components/logo';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,7 +22,7 @@ const Content = dynamic(() => import('components/content'));
 
 const Text = styled(Content)`
   a {
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.monarchRed};
   }
 `;
 
@@ -48,12 +48,7 @@ const Forgot = () => {
   const [serverError, setServerError] = useState(null);
   const [sent, setSent] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    errors,
-    formState,
-  } = useForm({
+  const { register, handleSubmit, errors, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(ForgotFormSchema),
     defaultValues: {
@@ -65,19 +60,30 @@ const Forgot = () => {
 
   return (
     <>
-      <Meta description="Forgot your password for QuidditchUK, request a reset here" subTitle="Forgot Password" />
+      <Meta
+        description="Forgot your password for QuidditchUK, request a reset here"
+        subTitle="Forgot Password"
+      />
       <Box
         bg="greyLight"
-        py={{ _: 4, l: 10 }}
-        px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+        py={{ base: 4, lg: 10 }}
+        px={{ base: 4, sm: 8, md: 9 }}
       >
         <Container maxWidth={rem(500)}>
-          <Flex justifyContent="center" alignItems="center"><Logo src={logo} alt="Quidditch UK" /></Flex>
-          <Heading as="h1" isBody textAlign="center">Forgot Password</Heading>
+          <Flex justifyContent="center" alignItems="center">
+            <Logo src={logo} alt="Quidditch UK" />
+          </Flex>
+          <Heading as="h1" fontFamily="body" textAlign="center">
+            Forgot Password
+          </Heading>
 
           {!sent && (
             <>
-              <form onSubmit={handleSubmit((values) => handleForgotSubmit(values, setServerError, setSent))}>
+              <form
+                onSubmit={handleSubmit((values) =>
+                  handleForgotSubmit(values, setServerError, setSent)
+                )}
+              >
                 <Grid gridTemplateColumns="1fr">
                   <Label htmlFor="name">Email Address</Label>
 
@@ -89,19 +95,44 @@ const Forgot = () => {
                     error={errors.email}
                   />
 
-                  {errors.email && (<InlineError marginBottom={3}>{errors.email.message}</InlineError>)}
+                  {errors.email && (
+                    <InlineError marginBottom={3}>
+                      {errors.email.message}
+                    </InlineError>
+                  )}
                 </Grid>
-                <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Send reset email'}</Button>
+                <Button type="submit" variant="green" disabled={isSubmitting}>
+                  {isSubmitting ? 'Submitting' : 'Send reset email'}
+                </Button>
               </form>
 
               {serverError && <InlineError my={3}>{serverError}</InlineError>}
             </>
           )}
 
-          {sent && (<Content textAlign="center">Thank you, your password reset link has been emailed to you.</Content>)}
+          {sent && (
+            <Content textAlign="center">
+              Thank you, your password reset link has been emailed to you.
+            </Content>
+          )}
 
-          <Box bg="white" px="4" py="2" mt="6" borderColor="primary" borderWidth="1px" borderStyle="solid" color="primary" borderRadius={0}>
-            <Text>Remembered your password? <Link href="/login" as="/login"><a>Sign in.</a></Link></Text>
+          <Box
+            bg="white"
+            px="4"
+            py="2"
+            mt="6"
+            borderColor="qukBlue"
+            borderWidth="1px"
+            borderStyle="solid"
+            color="qukBlue"
+            borderRadius={0}
+          >
+            <Text>
+              Remembered your password?{' '}
+              <Link href="/login" as="/login">
+                <a>Sign in.</a>
+              </Link>
+            </Text>
           </Box>
         </Container>
       </Box>

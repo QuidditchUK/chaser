@@ -1,15 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import { Box, Flex } from 'components/layout';
-import {
-  Table,
-  TableRow,
-  TableHead,
-  TableDataBorder,
-} from 'components/table';
+import { Box, Flex } from 'components';
+import { Table, TableRow, TableHead, TableDataBorder } from 'components/table';
 
 const Container = dynamic(() => import('components/container'));
 const Heading = dynamic(() => import('components/heading'));
@@ -17,15 +10,19 @@ const Button = dynamic(() => import('components/button'));
 
 const Dashboard = ({ clubs }) => (
   <>
-    <Box
-      bg="greyLight"
-      py={{ _: 4, l: 10 }}
-      px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-    >
+    <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>
       <Container>
-        <Flex justifyContent="space-between" alignItems="center" flexDirection="row">
-          <Heading as="h1" isBody color="primary" my="3">Clubs</Heading>
-          <Button variant="primary" my="3">Add Club</Button>
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          flexDirection="row"
+        >
+          <Heading as="h1" fontFamily="body" color="qukBlue" my="3">
+            Clubs
+          </Heading>
+          <Button variant="qukBlue" my="3">
+            Add Club
+          </Button>
         </Flex>
 
         <Table fontSize="3">
@@ -42,7 +39,11 @@ const Dashboard = ({ clubs }) => (
               <TableRow key={club.uuid}>
                 <TableDataBorder>{club.name}</TableDataBorder>
                 <TableDataBorder>{club.status}</TableDataBorder>
-                <TableDataBorder><Button variant="primary" my="0">Edit</Button></TableDataBorder>
+                <TableDataBorder>
+                  <Button variant="qukBlue" my="0">
+                    Edit
+                  </Button>
+                </TableDataBorder>
               </TableRow>
             ))}
           </tbody>
@@ -86,10 +87,6 @@ export const getServerSideProps = async ({ req, res }) => {
 
 Dashboard.defaultProps = {
   clubs: [],
-};
-
-Dashboard.propTypes = {
-  clubs: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default Dashboard;

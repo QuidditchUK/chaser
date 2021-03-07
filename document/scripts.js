@@ -1,9 +1,8 @@
-import React from 'react';
-
-const Scripts = () => (
-  <>
-    <script defer src="//static.cdn.prismic.io/prismic.js?repo=chaser&new=true" />
-  </>
-);
-
-export default Scripts;
+export default function Scripts() {
+  return (
+    <script
+      defer
+      src="//static.cdn.prismic.io/prismic.js?repo=chaser&new=true"
+    />
+  );
+}

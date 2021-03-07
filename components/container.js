@@ -1,16 +1,6 @@
-import styled from 'styled-components';
-import {
-  space, layout, position, color, typography, border,
-} from 'styled-system';
+import { Box } from 'components';
+import { rem } from 'styles/theme';
 
-export default styled.div`
-  margin: 0 auto;
-  max-width: ${({ theme }) => theme.containerSize};
-  width: 100%;
-  ${space}
-  ${layout}
-  ${position}
-  ${color}
-  ${typography}
-  ${border}
-`;
+export default function Container(props) {
+  return <Box my="0" mx="auto" maxWidth={rem(1280)} width="100%" {...props} />;
+}

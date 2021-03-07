@@ -1,8 +1,7 @@
 /* eslint-disable prefer-arrow-callback */
-import React, { forwardRef } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Box } from 'components/layout';
+import { forwardRef } from 'react';
+import styled from '@emotion/styled';
+import { Box } from 'components';
 
 const CheckBoxWrapper = styled(Box)`
   position: relative;
@@ -18,7 +17,7 @@ const CheckBoxLabel = styled.label`
   background: ${({ theme }) => theme.colors.greyDark};
   cursor: pointer;
   &::after {
-    content: "";
+    content: '';
     display: block;
     border-radius: 50%;
     width: 18px;
@@ -39,7 +38,7 @@ const CheckBox = styled.input`
     background: ${({ theme }) => theme.colors.keeperGreen};
 
     &::after {
-      content: "";
+      content: '';
       display: block;
       border-radius: 50%;
       width: 18px;
@@ -58,9 +57,5 @@ const Toggle = forwardRef(function ToggleInput({ name, ...wrapperProps }, ref) {
     </CheckBoxWrapper>
   );
 });
-
-Toggle.propTypes = {
-  name: PropTypes.string.isRequired,
-};
 
 export default Toggle;

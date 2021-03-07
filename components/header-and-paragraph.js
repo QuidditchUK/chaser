@@ -1,8 +1,6 @@
-import React from 'react';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import { Flex } from 'components/layout';
-import Heading from 'components/heading';
+import { Flex, Heading } from 'components';
 import Content from 'components/content';
 import Button from 'components/button';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
@@ -22,12 +20,19 @@ const HeaderAndParagraph = (rawData) => {
   return (
     <PrismicWrapper variant={data.variant} small>
       {RichText.asText(data.title) && (
-        <Heading as="h2" fontSize={[3, 3, 4]} mt={2} textAlign={data.centerTitle ? 'center' : 'left'}>
+        <Heading
+          as="h2"
+          fontSize="3xl"
+          mt={2}
+          textAlign={data.centerTitle ? 'center' : 'left'}
+        >
           {RichText.asText(data.title)}
         </Heading>
       )}
 
-      {RichText.asText(data.content) && (<Content>{RichText.render(data.content, linkResolver)}</Content>)}
+      {RichText.asText(data.content) && (
+        <Content>{RichText.render(data.content, linkResolver)}</Content>
+      )}
 
       {data.cta_text && data.cta_url && (
         <Flex justifyContent="center">

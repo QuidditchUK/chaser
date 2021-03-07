@@ -1,74 +1,63 @@
 export const MAIN_NAVIGATION = [
   {
     label: 'COVID',
-    as: '/covid',
-    href: '/[id]',
+    href: '/covid',
   },
   {
     label: 'About',
     path: '/about',
-    list: [
+    children: [
       {
         label: 'What is Quidditch',
-        as: '/about/what-is-quidditch',
-        href: '/about/[id]',
+        href: '/about/what-is-quidditch',
       },
       {
         label: 'Leadership',
-        as: '/about/leadership',
-        href: '/about/[id]',
+        href: '/about/leadership',
       },
       {
         label: 'Meet the Team',
-        as: '/about/meet-the-team',
-        href: '/about/[id]',
+        href: '/about/meet-the-team',
       },
       {
         label: 'Documents & Policies',
-        as: '/about/documents-and-policies',
-        href: '/about/[id]',
+        href: '/about/documents-and-policies',
       },
       {
         label: 'Minutes',
-        as: '/about/minutes',
-        href: '/about/[id]',
+        href: '/about/minutes',
       },
     ],
   },
   {
     label: 'Play',
     path: '/play',
-    list: [
+    children: [
       {
         label: 'Find Quidditch',
-        as: '/find-quidditch',
         href: '/find-quidditch',
       },
       {
         label: 'Getting Started',
-        as: '/play/getting-started',
-        href: '/play/[id]',
+        href: '/play/getting-started',
       },
       {
         label: 'Rulebook',
-        as: '/play/rulebook',
-        href: '/play/[id]',
+        href: '/play/rulebook',
       },
       {
         label: 'Official Events',
-        as: '/play/official-events',
-        href: '/play/[id]',
+        href: '/play/official-events',
       },
     ],
   },
   {
     label: 'Volunteer',
     path: '/volunteer',
-    list: [
+    children: [
       {
         label: 'Roles',
-        as: '/volunteer/roles',
-        href: '/volunteer/[id]',
+        href: '/volunteer/roles',
       },
       // {
       //   label: 'Coaches',
@@ -77,56 +66,52 @@ export const MAIN_NAVIGATION = [
       // },
       {
         label: 'Referees',
-        as: '/volunteer/referees',
-        href: '/volunteer/[id]',
+        href: '/volunteer/referees',
       },
       {
         label: 'Snitches',
-        as: '/volunteer/snitches',
-        href: '/volunteer/[id]',
+        href: '/volunteer/snitches',
       },
       {
         label: 'Tournaments',
-        as: '/volunteer/tournaments',
-        href: '/volunteer/[id]',
+        href: '/volunteer/tournaments',
       },
     ],
   },
   {
     label: 'Youth',
-    as: '/youth',
-    href: '/[id]',
+    href: '/youth',
   },
   {
     label: 'National Teams',
     path: '/programmes/national-teams',
-    paths: ['/programmes/team-england', '/programmes/team-wales', '/programmes/team-scotland', '/programmes/national-teams'],
-    list: [
+    paths: [
+      '/programmes/team-england',
+      '/programmes/team-wales',
+      '/programmes/team-scotland',
+      '/programmes/national-teams',
+    ],
+    children: [
       {
         label: 'Team UK',
-        as: '/programmes/team-england',
-        href: '/programmes/[id]',
+        href: '/programmes/team-england',
       },
       {
         label: 'Team Scotland',
-        as: '/programmes/team-scotland',
-        href: '/programmes/[id]',
+        href: '/programmes/team-scotland',
       },
       {
         label: 'Team Wales / Cymru',
-        as: '/programmes/team-wales',
-        href: '/programmes/[id]',
+        href: '/programmes/team-wales',
       },
     ],
   },
   {
     label: 'News',
-    as: '/news',
     href: '/news',
   },
   {
     label: 'Merch',
-    as: '/merch',
     href: '/merch',
   },
 ];
@@ -135,16 +120,14 @@ export const DASHBOARD_NAVIGATION = [
   {
     label: 'My Membership',
     path: '/dashboard/membership',
-    list: [
+    children: [
       {
         label: 'QUK Membership',
-        as: '/dashboard/membership/manage',
-        href: '/dashboard/membership/[id]',
+        href: '/dashboard/membership/manage',
       },
       {
         label: 'Club',
-        as: '/dashboard/membership/club',
-        href: '/dashboard/membership/[id]',
+        href: '/dashboard/membership/club',
       },
       // {
       //   label: 'Transfer',
@@ -155,12 +138,10 @@ export const DASHBOARD_NAVIGATION = [
   },
   {
     label: 'News',
-    as: '/news',
     href: '/news',
   },
   {
     label: 'Merch',
-    as: '/merch',
     href: '/merch',
   },
 ];

@@ -1,6 +1,4 @@
-import React from 'react';
 import dynamic from 'next/dynamic';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
 import { getDocs, getPrismicDocByUid, formatMetadata } from 'modules/prismic';
@@ -17,7 +15,7 @@ const Post = ({ page }) => {
   const router = useRouter();
 
   if (router.isFallback) {
-    return (<PageLoading />);
+    return <PageLoading />;
   }
 
   if (!page) {
@@ -37,9 +35,14 @@ const Post = ({ page }) => {
   );
 };
 
-export const getStaticProps = async ({ params: { id }, preview = null, previewData = {} }) => {
+export const getStaticProps = async ({
+  params: { id },
+  preview = null,
+  previewData = {},
+}) => {
   const { ref } = previewData;
-  const page = await getPrismicDocByUid('post', id, ref ? { ref } : null) || null;
+  const page =
+    (await getPrismicDocByUid('post', id, ref ? { ref } : null)) || null;
 
   return {
     props: { page, preview },
@@ -54,15 +57,6 @@ export const getStaticPaths = async () => {
     paths: allPages?.map(({ uid }) => `/news/${uid}`),
     fallback: true,
   };
-};
-
-Post.propTypes = {
-  page: PropTypes.shape({
-    data: PropTypes.shape({
-      body: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-    tags: PropTypes.arrayOf(PropTypes.string),
-  }).isRequired,
 };
 
 export default Post;

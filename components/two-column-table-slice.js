@@ -1,14 +1,8 @@
-import React from 'react';
 import Heading from 'components/heading';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import PrismicWrapper from 'components/prismic-wrapper';
-import {
-  Table,
-  TableRow,
-  TableHead,
-  TableDataBorder,
-} from 'components/table';
+import { Table, TableRow, TableHead, TableDataBorder } from 'components/table';
 
 const TwoColumnTable = (rawData) => {
   const data = {
@@ -22,7 +16,7 @@ const TwoColumnTable = (rawData) => {
   return (
     <PrismicWrapper variant={data.variant} small>
       {RichText.asText(data.title) && (
-        <Heading as="h2" fontSize={[3, 3, 4]} mt={2}>
+        <Heading as="h2" fontSize="xl" mt={2}>
           {RichText.asText(data.title)}
         </Heading>
       )}
@@ -37,9 +31,15 @@ const TwoColumnTable = (rawData) => {
 
         <tbody>
           {data.items.map((item, i) => (
-            <TableRow key={`${data.columnOneTitle}_${data.columnTwoTitle}_${i}`}>
-              <TableDataBorder>{RichText.asText(item.column_one)}</TableDataBorder>
-              <TableDataBorder>{RichText.asText(item.column_two)}</TableDataBorder>
+            <TableRow
+              key={`${data.columnOneTitle}_${data.columnTwoTitle}_${i}`}
+            >
+              <TableDataBorder>
+                {RichText.asText(item.column_one)}
+              </TableDataBorder>
+              <TableDataBorder>
+                {RichText.asText(item.column_two)}
+              </TableDataBorder>
             </TableRow>
           ))}
         </tbody>

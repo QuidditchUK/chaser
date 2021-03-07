@@ -1,84 +1,100 @@
-import React from 'react';
 import { RichText, Link } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import PrismicWrapper from 'components/prismic-wrapper';
-import { Flex } from 'components/layout';
+
+import { Flex, Heading, Text } from 'components';
 import Card from 'components/card';
 import Image from 'components/image';
-import Heading from 'components/heading';
-import Content from 'components/content';
 import HorizontalScrollWrapper from 'components/horizontal-scroll-wrapper';
-import { linkResolver } from 'modules/prismic';
 import { StyledLink } from 'components/latest-news';
 
+import { linkResolver } from 'modules/prismic';
+
 const CardsSlice = (rawData) => {
-  const data = {
-    title: get(rawData, 'primary.title'),
-    content: get(rawData, 'primary.content'),
-    variant: get(rawData, 'primary.variant'),
-    items: get(rawData, 'items'),
-    horizontalScroll: get(rawData, 'primary.horizontalScroll'),
-  };
+  const title = get(rawData, 'primary.title');
+  const content = get(rawData, 'primary.content');
+  const variant = get(rawData, 'primary.variant');
+  const items = get(rawData, 'items');
+  const horizontalScroll = get(rawData, 'primary.horizontalScroll');
 
   return (
     <PrismicWrapper
-      variant={data.variant}
-      px={data.horizontalScroll ? { _: 0, m: 'gutter.m' } : { _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+      variant={variant}
+      px={horizontalScroll ? { base: 0, md: 9 } : { base: 4, sm: 8, md: 9 }}
     >
-      {RichText.asText(data.title) && (
-        <Heading as="h2" fontSize={[3, 3, 4]} mt={2} textAlign="center" px={data.horizontalScroll ? { _: 'gutter._', s: 'gutter.s', m: 'gutter.m' } : { _: 0, m: 'gutter.m' }}>
-          {RichText.asText(data.title)}
+      {RichText.asText(title) && (
+        <Heading
+          as="h2"
+          size="xl"
+          mt={2}
+          textAlign="center"
+          px={horizontalScroll ? { base: 4, sm: 8, md: 9 } : { base: 0, md: 9 }}
+        >
+          {RichText.asText(title)}
         </Heading>
       )}
 
-      {data.content && <Content textAlign="center" pb={3} px={data.horizontalScroll ? { _: 'gutter._', s: 'gutter.s', m: 'gutter.m' } : { _: 0, m: 'gutter.m' }}>{RichText.render(data.content, linkResolver)}</Content>}
+      {content && (
+        <Text
+          textAlign="center"
+          pb={3}
+          px={horizontalScroll ? { base: 4, sm: 8, md: 9 } : { base: 0, md: 9 }}
+        >
+          {RichText.render(content, linkResolver)}
+        </Text>
+      )}
 
-      <HorizontalScrollWrapper horizontalScroll={data.horizontalScroll} itemsCount={data.items?.length}>
-        {data.items.map((itemData, i) => {
-          const item = {
-            title: get(itemData, 'title'),
-            content: get(itemData, 'content'),
-            image: get(itemData, 'image'),
-            link: get(itemData, 'link'),
-          };
+      <HorizontalScrollWrapper
+        horizontalScroll={horizontalScroll}
+        itemsCount={items?.length}
+      >
+        {items.map((item, i) => {
+          const title = get(item, 'title');
+          const content = get(item, 'content');
+          const image = get(item, 'image');
+          const link = get(item, 'link');
 
           return (
             <Flex flexDirection="column" key={`cards-${i}`}>
-              {Link.url(item.link, linkResolver)
-                ? (
-                  <StyledLink href={Link.url(item.link, linkResolver)} target={item.link.target} aria-label={item.title}>
-                    <Card
-                      variant="light"
-                      name={item.title}
-                      content={item.content}
-                      image={item.image.url ? (
+              {Link.url(link, linkResolver) ? (
+                <StyledLink
+                  href={Link.url(link, linkResolver)}
+                  target={link.target}
+                  aria-label={title}
+                >
+                  <Card
+                    name={title}
+                    content={content}
+                    image={
+                      image.url ? (
                         <Image
-                          src={item.image.url}
-                          alt={item.image.alt}
+                          src={image.url}
+                          alt={image.alt}
                           width={1600}
                           height={900}
                           borderRadius="0px"
                         />
-                      ) : null}
-                    />
-                  </StyledLink>
-                )
-                : (
-                  <Card
-                    variant="light"
-                    name={item.title}
-                    content={item.content}
-                    image={item.image.url ? (
+                      ) : null
+                    }
+                  />
+                </StyledLink>
+              ) : (
+                <Card
+                  name={title}
+                  content={content}
+                  image={
+                    image.url ? (
                       <Image
-                        src={item.image.url}
-                        alt={item.image.alt}
+                        src={image.url}
+                        alt={image.alt}
                         width={1600}
                         height={900}
                         borderRadius="0px"
                       />
-                    ) : null}
-                  />
-                )}
+                    ) : null
+                  }
+                />
+              )}
             </Flex>
           );
         })}

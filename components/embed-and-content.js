@@ -1,11 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 
 import Heading from 'components/heading';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import { Grid, Flex } from 'components/layout';
+import { Grid, Flex } from 'components';
 import Content from 'components/content';
 import { Embed } from 'components/embed-slice';
 import { CenterJustify } from 'components/image-and-content';
@@ -16,17 +14,19 @@ import { linkResolver } from 'modules/prismic';
 
 const Item = ({ item, isEmbedLeft }) => (
   <Grid
-    gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
-    gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+    gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
+    gridGap={{ base: 4, md: 9 }}
   >
-    <CenterJustify order={{ _: 2, m: `${(isEmbedLeft ? 2 : 1)}` }}>
+    <CenterJustify order={{ base: 2, md: `${isEmbedLeft ? 2 : 1}` }}>
       {RichText.asText(item.title) && (
-        <Heading as="h2" fontSize={[3, 3, 4]} mt={2}>
+        <Heading as="h2" fontSize="xl" mt={2}>
           {RichText.asText(item.title)}
         </Heading>
       )}
 
-      {item.content && <Content>{RichText.render(item.content, linkResolver)}</Content>}
+      {item.content && (
+        <Content>{RichText.render(item.content, linkResolver)}</Content>
+      )}
 
       {item.cta_text && (
         <Flex justifyContent="center">
@@ -39,25 +39,16 @@ const Item = ({ item, isEmbedLeft }) => (
       )}
     </CenterJustify>
 
-    <CenterJustify order={{ _: 1, m: `${(isEmbedLeft ? 1 : 2)}` }}>
+    <CenterJustify order={{ base: 1, md: `${isEmbedLeft ? 1 : 2}` }}>
       <Embed embed={item.embed} />
-      {RichText.asText(item.support) && (<Support textAlign="center" pt={2} fontStyle="italic">{RichText.render(item.support)}</Support>)}
+      {RichText.asText(item.support) && (
+        <Support textAlign="center" pt={2} fontStyle="italic">
+          {RichText.render(item.support)}
+        </Support>
+      )}
     </CenterJustify>
   </Grid>
 );
-
-Item.propTypes = {
-  item: PropTypes.shape({
-    title: PropTypes.array,
-    content: PropTypes.array,
-    embed: PropTypes.shape({}),
-    support: PropTypes.array,
-    variant: PropTypes.string,
-    cta_text: PropTypes.string,
-    cta_url: PropTypes.string,
-  }).isRequired,
-  isEmbedLeft: PropTypes.bool.isRequired,
-};
 
 const EmbedAndContent = (rawData) => {
   const data = {
@@ -82,10 +73,7 @@ const EmbedAndContent = (rawData) => {
 
         return (
           <PrismicWrapper variant={item.variant} key={`embed-and-content-${i}`}>
-            <Item
-              item={item}
-              isEmbedLeft={isEmbedLeft}
-            />
+            <Item item={item} isEmbedLeft={isEmbedLeft} />
           </PrismicWrapper>
         );
       })}

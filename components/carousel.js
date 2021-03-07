@@ -1,14 +1,16 @@
-import React, { useRef } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { useRef } from 'react';
+import { Box } from 'components';
+import styled from '@emotion/styled';
 import Flickity from 'react-flickity-component';
 import Image from 'components/image';
 
-const CarouselContainer = styled.div`
+const CarouselContainer = styled(Box)`
   position: relative;
   width: 100%;
 
-  ${({ aspectRatio }) => aspectRatio && `
+  ${({ aspectRatio }) =>
+    aspectRatio &&
+    `
     height: 0;
     padding-bottom: ${aspectRatio}%;
     overflow: hidden;
@@ -16,7 +18,7 @@ const CarouselContainer = styled.div`
 
   .flickity-prev-next-button {
     position: absolute;
-    top:40%;
+    top: 40%;
     background: transparent;
     fill: white;
     width: 50px;
@@ -53,25 +55,20 @@ const Carousel = ({ images, height, width }) => {
           prevNextButtons: images.length > 1,
         }}
       >
-        {hasImages && images.map(({ image }, i) => (
-          <Image
-            key={`carousel-image-${image.url}-${i}`}
-            src={image.url}
-            width={width}
-            height={height}
-            alt={image.alt}
-            borderRadius="0px"
-          />
-        ))}
+        {hasImages &&
+          images.map(({ image }, i) => (
+            <Image
+              key={`carousel-image-${image.url}-${i}`}
+              src={image.url}
+              width={width}
+              height={height}
+              alt={image.alt}
+              borderRadius="0px"
+            />
+          ))}
       </Flickity>
     </CarouselContainer>
   );
-};
-
-Carousel.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  height: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
 };
 
 export default Carousel;

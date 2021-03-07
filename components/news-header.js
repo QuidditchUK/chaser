@@ -1,6 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Box } from './layout';
+import styled from '@emotion/styled';
+import { Box } from 'components';
 import Container from './container';
 import ActiveLink, { ExactActiveLink } from './active-link';
 
@@ -36,40 +35,48 @@ const ListItem = styled.li`
     color: ${({ theme }) => theme.colors.greyDark};
 
     &:hover {
-      color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.qukBlue};
     }
 
     .active {
-      color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.qukBlue};
     }
   }
 `;
 
 const NewsHeader = () => (
-  <NewsHeaderWrapper
-    bg="white"
-    width="100%"
-    height="60px"
-  >
-    <Container px={{ _: 6 }} maxWidth={{ _: '100%', m: '500px' }}>
+  <NewsHeaderWrapper bg="white" width="100%" height="60px">
+    <Container px={{ base: 6 }} maxWidth={{ base: '100%', md: '500px' }}>
       <List>
         <ListItem>
-          <ExactActiveLink href="/news" as="/news"><span>All</span></ExactActiveLink>
+          <ExactActiveLink href="/news" as="/news">
+            <span>All</span>
+          </ExactActiveLink>
         </ListItem>
         <ListItem>
-          <ActiveLink href="/news/announcements" as="/news/announcements"><span>Announcements</span></ActiveLink>
+          <ActiveLink href="/news/announcements" as="/news/announcements">
+            <span>Announcements</span>
+          </ActiveLink>
         </ListItem>
         <ListItem>
-          <ActiveLink href="/news/community" as="/news/community"><span>Community</span></ActiveLink>
+          <ActiveLink href="/news/community" as="/news/community">
+            <span>Community</span>
+          </ActiveLink>
         </ListItem>
         <ListItem>
-          <ActiveLink href="/news/leagues" as="/news/leagues"><span>Leagues</span></ActiveLink>
+          <ActiveLink href="/news/leagues" as="/news/leagues">
+            <span>Leagues</span>
+          </ActiveLink>
         </ListItem>
         <ListItem>
-          <ActiveLink href="/news/executive" as="/news/executive"><span>Executive</span></ActiveLink>
+          <ActiveLink href="/news/executive" as="/news/executive">
+            <span>Executive</span>
+          </ActiveLink>
         </ListItem>
         <ListItem>
-          <ActiveLink href="/news/international" as="/news/international"><span>International</span></ActiveLink>
+          <ActiveLink href="/news/international" as="/news/international">
+            <span>International</span>
+          </ActiveLink>
         </ListItem>
       </List>
     </Container>

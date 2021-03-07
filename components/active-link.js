@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -13,13 +12,11 @@ const ActiveLink = ({ href, children, as }) => {
     className = `${className} active`;
   }
 
-  return (<Link href={href} as={as} passHref><a>{React.cloneElement(children, { className })}</a></Link>);
-};
-
-ActiveLink.propTypes = {
-  as: PropTypes.string.isRequired,
-  href: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+  return (
+    <Link href={href} as={as} passHref>
+      <a>{React.cloneElement(children, { className })}</a>
+    </Link>
+  );
 };
 
 export const ParentWrapper = ({ path, paths = [], children }) => {
@@ -33,12 +30,7 @@ export const ParentWrapper = ({ path, paths = [], children }) => {
     className = `${className} active`;
   }
 
-  return (React.cloneElement(children, { className }));
-};
-
-ParentWrapper.propTypes = {
-  path: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+  return React.cloneElement(children, { className });
 };
 
 export const ExactActiveLink = ({ href, children, as }) => {
@@ -49,13 +41,11 @@ export const ExactActiveLink = ({ href, children, as }) => {
     className = `${className} active`;
   }
 
-  return (<Link href={href} as={as} passHref><a>{React.cloneElement(children, { className })}</a></Link>);
-};
-
-ExactActiveLink.propTypes = {
-  as: PropTypes.string.isRequired,
-  href: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+  return (
+    <Link href={href} as={as} passHref>
+      <a>{React.cloneElement(children, { className })}</a>
+    </Link>
+  );
 };
 
 export default ActiveLink;

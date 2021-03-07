@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import { useRef } from 'react';
+import styled from '@emotion/styled';
 import { space, layout, border } from 'styled-system';
 import { useInView } from 'react-intersection-observer';
 
@@ -39,15 +38,12 @@ const Image = styled.img`
   ${border};
 `;
 
-const ResponsiveImage = ({
-  src,
-  alt,
-  width,
-  height,
-  borderRadius = '8px',
-}) => {
+const ResponsiveImage = ({ src, alt, width, height, borderRadius = '8px' }) => {
   const imageProps = {
-    alt, width, height, borderRadius,
+    alt,
+    width,
+    height,
+    borderRadius,
   };
 
   const [ref, inView] = useInView({
@@ -65,23 +61,18 @@ const ResponsiveImage = ({
   return (
     <Container aspectRatio={calcAspectRatio(height, width)}>
       <ImageWrapper ref={ref}>
-        {inView ? (<Image src={src} ref={imageRef} data-src={src} {...imageProps} onLoad={handleOnLoad} />) : null}
+        {inView ? (
+          <Image
+            src={src}
+            ref={imageRef}
+            data-src={src}
+            {...imageProps}
+            onLoad={handleOnLoad}
+          />
+        ) : null}
       </ImageWrapper>
     </Container>
   );
-};
-
-ResponsiveImage.defaultProps = {
-  alt: '',
-  borderRadius: '8px',
-};
-
-ResponsiveImage.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  borderRadius: PropTypes.string,
 };
 
 export default ResponsiveImage;

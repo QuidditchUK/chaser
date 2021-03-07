@@ -1,19 +1,8 @@
-import styled from 'styled-components';
+import { Link as ChakraLink, Image } from 'components';
 
-export const LogoLink = styled.a`
-  height: 45px;
-  z-index: 5;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.xl}) {
-    height: 35px;
-  }
-`;
-
-export const Logo = styled.img`
-  height: 45px;
-  filter: ${({ white }) => (white ? 'brightness(0) invert(1);' : 'inherit;')};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.xl}) {
-    height: 35px;
-  }
-`;
+export const LogoLink = (props) => (
+  <ChakraLink height={{ base: '35px', xl: '45px' }} zIndex="5" {...props} />
+);
+export const Logo = (props) => (
+  <Image height={{ base: '35px', xl: '45px' }} {...props} />
+);

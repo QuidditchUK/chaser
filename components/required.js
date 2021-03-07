@@ -1,11 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const Styled = styled.span`
-font-weight: bold;
-color: ${({ theme }) => theme.colors.secondary};
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.monarchRed};
 `;
 
-const Required = () => (<Styled>*</Styled>);
+const Required = () => <Styled>*</Styled>;
 
 export default Required;

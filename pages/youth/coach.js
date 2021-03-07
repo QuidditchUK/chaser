@@ -1,4 +1,3 @@
-import React from 'react';
 import dynamic from 'next/dynamic';
 
 const Meta = dynamic(() => import('components/meta'));

@@ -1,7 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { Grid } from 'components/layout';
+import styled from '@emotion/styled';
+import { Grid } from 'components';
 
 const Wrapper = styled.div`
   overflow-x: scroll;
@@ -13,7 +11,7 @@ const Wrapper = styled.div`
 
   scrollbar-width: none;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     overflow-x: initial;
     overflow-y: initial;
   }
@@ -22,47 +20,41 @@ const Wrapper = styled.div`
 const Spacer = styled.div`
   display: block;
 
-   @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
 `;
 
-const HorizontalScrollWrapper = ({ horizontalScroll, itemsCount, children }) => (
+const HorizontalScrollWrapper = ({
+  horizontalScroll = false,
+  itemsCount,
+  children,
+}) => (
   <>
-    {horizontalScroll
-      ? (
-        <Wrapper>
-          <Grid
-            gridTemplateColumns={{ _: `1rem repeat(${itemsCount}, calc(75% - 40px)) 2.5rem`, m: 'repeat(auto-fit, minmax(300px, 1fr))' }}
-            gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-          >
-            <Spacer />
-            {children}
-            <Spacer />
-          </Grid>
-        </Wrapper>
-      )
-      : (
+    {horizontalScroll ? (
+      <Wrapper>
         <Grid
-          gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
-          gridGap={{ _: 'gutter._', m: 'gutter.m' }}
-          px={{ _: 'gutter._', s: 'gutter.s', m: 0 }}
+          gridTemplateColumns={{
+            base: `1rem repeat(${itemsCount}, calc(75% - 40px)) 2.5rem`,
+            md: 'repeat(auto-fit, minmax(300px, 1fr))',
+          }}
+          gridGap={{ base: 4, md: 9 }}
         >
+          <Spacer />
           {children}
+          <Spacer />
         </Grid>
-      )}
+      </Wrapper>
+    ) : (
+      <Grid
+        gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
+        gridGap={{ base: 4, md: 9 }}
+        px={{ base: 4, sm: 8, md: 0 }}
+      >
+        {children}
+      </Grid>
+    )}
   </>
 );
-
-HorizontalScrollWrapper.defaultProps = {
-  horizontalScroll: false,
-  itemsCount: 0,
-};
-
-HorizontalScrollWrapper.propTypes = {
-  horizontalScroll: PropTypes.bool,
-  itemsCount: PropTypes.number,
-  children: PropTypes.node.isRequired,
-};
 
 export default HorizontalScrollWrapper;

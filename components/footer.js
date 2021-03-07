@@ -1,13 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { space } from 'styled-system';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { Formik, Form, Field } from 'formik';
 import { useRouter } from 'next/router';
-import {
-  Box, Grid, GridItem, Flex,
-} from 'components/layout';
+import { Box, Grid, Flex } from 'components';
 import { Logo, LogoLink } from 'components/logo';
 import { rem } from 'styles/theme';
 import Input from 'components/input';
@@ -35,7 +32,7 @@ const List = styled.ul`
 const Item = styled.li`
   line-height: ${rem(32)};
 
-  a { 
+  a {
     text-decoration: none;
   }
 
@@ -61,20 +58,20 @@ const Icon = styled.a`
   margin-left: ${({ theme }) => theme.space[2]};
 
   svg {
-      color: ${({ theme }) => theme.colors.greyLight};
-      height: 30px;
-      width: 30px;
-    }
+    color: ${({ theme }) => theme.colors.greyLight};
+    height: 30px;
+    width: 30px;
+  }
 
-    &:hover {
-      svg {
-        color: ${({ theme }) => theme.colors.secondary};
-      }
+  &:hover {
+    svg {
+      color: ${({ theme }) => theme.colors.monarchRed};
     }
+  }
 `;
 
 const Vercel = styled.a`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.qukBlue};
   svg {
     width: 60%;
   }
@@ -85,68 +82,160 @@ export const Footer = () => {
   return (
     <footer>
       <Box
-        bg="primary"
+        bg="qukBlue"
         color="white"
-        py={{ _: 2, l: 5 }}
-        px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+        py={{ base: 2, lg: 5 }}
+        px={{ base: 4, sm: 8, md: 9 }}
       >
         <Container pb={3}>
           <Grid
-            gridTemplateColumns={{ _: '1fr 1fr', m: '1fr 1fr 1fr 1fr' }}
-            gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+            gridTemplateColumns={{ base: '1fr 1fr', md: '1fr 1fr 1fr 1fr' }}
+            gridGap={{ base: 4, md: 9 }}
           >
-            <GridItem>
+            <Box>
               <Heading as="h3" color="white">
                 Information
               </Heading>
 
               <List>
-                <Item><ActiveLink as="/about/contact-us" href="/about/[id]"><span>Contact Us</span></ActiveLink></Item>
-                <Item><ActiveLink as="/about/leadership" href="/about/[id]"><span>Leadership</span></ActiveLink></Item>
-                <Item><ActiveLink as="/find-quidditch" href="/find-quidditch"><span>All Clubs</span></ActiveLink></Item>
-                <Item><a href="https://docs.google.com/spreadsheets/d/1QuGPhsj_LV81dRCXVRKHpdYvj9IrrupcxH9c8LWXZuE" target="_blank" rel="noopener noreferrer"><span>Results</span></a></Item>
-                <Item><ActiveLink as="/about/fees" href="/about/[id]"><span>Season Fees</span></ActiveLink></Item>
-                <Item><ActiveLink as="/newsletters-archive" href="/[id]"><span>Newsletters</span></ActiveLink></Item>
+                <Item>
+                  <ActiveLink as="/about/contact-us" href="/about/[id]">
+                    <span>Contact Us</span>
+                  </ActiveLink>
+                </Item>
+                <Item>
+                  <ActiveLink as="/about/leadership" href="/about/[id]">
+                    <span>Leadership</span>
+                  </ActiveLink>
+                </Item>
+                <Item>
+                  <ActiveLink as="/find-quidditch" href="/find-quidditch">
+                    <span>All Clubs</span>
+                  </ActiveLink>
+                </Item>
+                <Item>
+                  <a
+                    href="https://docs.google.com/spreadsheets/d/1QuGPhsj_LV81dRCXVRKHpdYvj9IrrupcxH9c8LWXZuE"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>Results</span>
+                  </a>
+                </Item>
+                <Item>
+                  <ActiveLink as="/about/fees" href="/about/[id]">
+                    <span>Season Fees</span>
+                  </ActiveLink>
+                </Item>
+                <Item>
+                  <ActiveLink as="/newsletters-archive" href="/[id]">
+                    <span>Newsletters</span>
+                  </ActiveLink>
+                </Item>
               </List>
-            </GridItem>
+            </Box>
 
-            <GridItem>
+            <Box>
               <Heading as="h3" color="white">
                 Partners
               </Heading>
 
               <List>
-                <Item><a href="http://www.enricheducationuk.com/quidditch/" target="_blank" rel="noopener noreferrer"><span>Enrich Education</span></a></Item>
-                <Item><a href="https://www.epionemedical.com/" target="_blank" rel="noopener noreferrer"><span>Epione Medical</span></a></Item>
-                <Item><a href="https://www.utilityapparel.com/" target="_blank" rel="noopener noreferrer"><span>Utility Apparel</span></a></Item>
-                <Item><a href="https://quidditcheurope.wixsite.com/quidditcheurope" target="_blank" rel="noopener noreferrer"><span>Quidditch Europe</span></a></Item>
-                <Item><a href="https://iqasport.com" target="_blank" rel="noopener noreferrer"><span>International Quidditch Association</span></a></Item>
-                <Item><a href="https://quidditchpremierleague.com" target="_blank" rel="noopener noreferrer"><span>Quidditch Premier League</span></a></Item>
+                <Item>
+                  <a
+                    href="http://www.enricheducationuk.com/quidditch/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>Enrich Education</span>
+                  </a>
+                </Item>
+                <Item>
+                  <a
+                    href="https://www.epionemedical.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>Epione Medical</span>
+                  </a>
+                </Item>
+                <Item>
+                  <a
+                    href="https://www.utilityapparel.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>Utility Apparel</span>
+                  </a>
+                </Item>
+                <Item>
+                  <a
+                    href="https://quidditcheurope.wixsite.com/quidditcheurope"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>Quidditch Europe</span>
+                  </a>
+                </Item>
+                <Item>
+                  <a
+                    href="https://iqasport.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>International Quidditch Association</span>
+                  </a>
+                </Item>
+                <Item>
+                  <a
+                    href="https://quidditchpremierleague.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>Quidditch Premier League</span>
+                  </a>
+                </Item>
               </List>
-            </GridItem>
+            </Box>
 
-            <GridItem>
+            <Box>
               <Heading as="h3" color="white">
                 Programmes
               </Heading>
 
               <List>
-                <Item><ActiveLink as="/programmes/national-teams" href="/programmes/[id]"><span>National Teams</span></ActiveLink></Item>
-                <Item><ActiveLink as="/programmes/grants" href="/programmes/[id]"><span>Grants</span></ActiveLink></Item>
+                <Item>
+                  <ActiveLink
+                    as="/programmes/national-teams"
+                    href="/programmes/[id]"
+                  >
+                    <span>National Teams</span>
+                  </ActiveLink>
+                </Item>
+                <Item>
+                  <ActiveLink as="/programmes/grants" href="/programmes/[id]">
+                    <span>Grants</span>
+                  </ActiveLink>
+                </Item>
               </List>
-            </GridItem>
+            </Box>
 
-            <GridItem>
+            <Box>
               <Heading as="h3" color="white">
                 Disclaimer
               </Heading>
 
               <Support>
-                QuidditchUK and its activities are not licensed by, sponsored by or associated with Warner Bros., J.K. Rowling or their affiliates.  ‘Quidditch,’ ‘Harry Potter’ and all related names, characters and indicia are trademarks of and &copy; Warner Bros. – Harry Potter publishing rights &copy; J.K. Rowling.
+                QuidditchUK and its activities are not licensed by, sponsored by
+                or associated with Warner Bros., J.K. Rowling or their
+                affiliates. ‘Quidditch,’ ‘Harry Potter’ and all related names,
+                characters and indicia are trademarks of and &copy; Warner Bros.
+                – Harry Potter publishing rights &copy; J.K. Rowling.
               </Support>
 
               <Support>
-                QuidditchUK is a Non-Profit Company Registered in England and Wales, Company Registration No. 12178866
+                QuidditchUK is a Non-Profit Company Registered in England and
+                Wales, Company Registration No. 12178866
               </Support>
 
               {/* <Flex alignItems="center" justifyContent="left"> */}
@@ -159,21 +248,33 @@ export const Footer = () => {
                 <VercelLogo />
               </Vercel>
               {/* </Flex> */}
-            </GridItem>
+            </Box>
           </Grid>
         </Container>
 
-        <Container borderTop="3px solid white" py={5} textAlign={{ _: 'center', m: 'left' }}>
+        <Container
+          borderTop="3px solid white"
+          py={5}
+          textAlign={{ base: 'center', md: 'left' }}
+        >
           <Grid
-            gridTemplateColumns={{ _: '1fr', m: '4fr 2fr' }}
-            gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+            gridTemplateColumns={{ base: '1fr', md: '4fr 2fr' }}
+            gridGap={{ base: 4, md: 9 }}
           >
-            <Flex flexDirection="column" order={{ _: 2, m: 1 }}>
+            <Flex flexDirection="column" order={{ base: 2, md: 1 }}>
               <Link href="/" passHref>
                 <LogoLink>
                   <>
-                    <Logo src={logo} alt="Quidditch UK" white />
-                    <Logo src={logoText} alt="Quidditch UK" white />
+                    <Logo
+                      src={logo}
+                      alt="Quidditch UK"
+                      filter="brightness(0) invert(1)"
+                    />
+                    <Logo
+                      src={logoText}
+                      alt="Quidditch UK"
+                      filter="brightness(0) invert(1)"
+                    />
                   </>
                 </LogoLink>
               </Link>
@@ -181,19 +282,39 @@ export const Footer = () => {
               <Support>All Rights Reserved &copy; {year} QuidditchUK</Support>
             </Flex>
 
-            <Flex flexDirection="column" order={{ _: 1, m: 2 }} alignItems={{ _: 'center', m: 'flex-end' }}>
+            <Flex
+              flexDirection="column"
+              order={{ base: 1, md: 2 }}
+              alignItems={{ base: 'center', md: 'flex-end' }}
+            >
               <Flex>
                 <Formik
                   initialValues={{ postcode: '' }}
-                  onSubmit={({ postcode }) => router.push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`).then(() => window.scrollTo(0, 0))}
+                  onSubmit={({ postcode }) =>
+                    router
+                      .push(
+                        `/find-quidditch${
+                          postcode ? `?postcode=${postcode}` : ''
+                        }`
+                      )
+                      .then(() => window.scrollTo(0, 0))
+                  }
                 >
                   <Form>
-                    <Field as={Input} placeholder="Enter your postcode" name="postcode" aria-label="Find Quidditch" /><Button type="submit" variant="secondary" ml={2}>Find</Button>
+                    <Field
+                      as={Input}
+                      placeholder="Enter your postcode"
+                      name="postcode"
+                      aria-label="Find Quidditch"
+                    />
+                    <Button type="submit" variant="secondary" ml={2}>
+                      Find
+                    </Button>
                   </Form>
                 </Formik>
               </Flex>
 
-              <Flex justifyContent={{ _: 'center', m: 'flex-end' }} mt={5}>
+              <Flex justifyContent={{ base: 'center', md: 'flex-end' }} mt={5}>
                 <Icon
                   aria-label="Like us on Facebook"
                   href="https://www.facebook.com/QuidditchUK"
@@ -208,7 +329,7 @@ export const Footer = () => {
                   href="https://twitter.com/QuidditchUK"
                   target="_blank"
                   rel="noopener noreferrer"
-                  pl={{ _: 5, m: 3 }}
+                  pl={{ base: 5, md: 3 }}
                 >
                   <TwitterIcon />
                 </Icon>
@@ -218,7 +339,7 @@ export const Footer = () => {
                   href="https://instagram.com/ukquidditch"
                   target="_blank"
                   rel="noopener noreferrer"
-                  pl={{ _: 5, m: 3 }}
+                  pl={{ base: 5, md: 3 }}
                 >
                   <InstagramIcon />
                 </Icon>
@@ -228,13 +349,12 @@ export const Footer = () => {
                   href="https://www.youtube.com/channel/UCef5ZmqGJvff6RIqA0KS0wQ"
                   target="_blank"
                   rel="noopener noreferrer"
-                  pl={{ _: 5, m: 3 }}
+                  pl={{ base: 5, md: 3 }}
                 >
                   <YoutubeIcon />
                 </Icon>
               </Flex>
             </Flex>
-
           </Grid>
         </Container>
       </Box>

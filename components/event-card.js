@@ -1,10 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { space } from 'styled-system';
 import { format } from 'date-fns';
 import { parseTimestamptz } from 'modules/dates';
-import { Box, Flex, Grid } from 'components/layout';
+import { Box, Flex, Grid } from 'components';
 import Heading from 'components/heading';
 import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
@@ -53,21 +51,18 @@ const EventCard = ({
   icon,
   venue,
   startTime,
-  slug,
-  registerLink,
-  registerTime,
   ...cardProps
 }) => (
   <StyledCard
     {...cardProps}
-    gridTemplateColumns={{ _: '1fr', m: '1fr 1fr' }}
+    gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
     gridGap="gutter._"
   >
     <Box
       as="section"
       position="relative"
       backgroundImage={`url(${image})`}
-      backgroundColor="primary"
+      backgroundColor="qukBlue"
       backgroundSize="cover"
       backgroundPosition="center"
     >
@@ -87,46 +82,37 @@ const EventCard = ({
         zIndex={2}
         height="100%"
       >
-        <IconContainer><Icon src={icon} alt={`${name} logo`} /></IconContainer>
+        <IconContainer>
+          <Icon src={icon} alt={`${name} logo`} />
+        </IconContainer>
       </Flex>
     </Box>
 
     <Content>
       {league.map((leag) => (
-        <Type key={leag} fontWeight="bold" fontSize={(rem(10))} bg={TYPES[leag]} marginRight="1">{leag}</Type>
+        <Type
+          key={leag}
+          fontWeight="bold"
+          fontSize={rem(10)}
+          bg={TYPES[leag]}
+          marginRight="1"
+        >
+          {leag}
+        </Type>
       ))}
 
-      <Heading as="h2" fontSize={3} isBody>{name}</Heading>
+      <Heading as="h2" fontSize={3} fontFamily="body">
+        {name}
+      </Heading>
       <p>
-        <strong>{format(parseTimestamptz(startTime), 'EEE, d LLL H:mm a')}</strong><br />
+        <strong>
+          {format(parseTimestamptz(startTime), 'EEE, d LLL H:mm a')}
+        </strong>
+        <br />
         {venue}
       </p>
     </Content>
   </StyledCard>
 );
-
-EventCard.defaultProps = {
-  name: null,
-  league: [],
-  image: null,
-  venue: null,
-  icon: null,
-  startTime: null,
-  slug: null,
-  registerLink: null,
-  registerTime: null,
-};
-
-EventCard.propTypes = {
-  name: PropTypes.string,
-  league: PropTypes.arrayOf(PropTypes.string),
-  venue: PropTypes.string,
-  icon: PropTypes.string,
-  image: PropTypes.string,
-  slug: PropTypes.string,
-  startTime: PropTypes.string,
-  registerLink: PropTypes.string,
-  registerTime: PropTypes.string,
-};
 
 export default EventCard;

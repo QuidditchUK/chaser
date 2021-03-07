@@ -1,33 +1,28 @@
-import React from 'react';
-import styled from 'styled-components';
-import { typography, color, border } from 'styled-system';
 import Link from 'next/link';
-
 import get from 'just-safe-get';
 
 import CATEGORIES from 'constants/categories';
-import { HeadingHero } from 'components/hero';
-import { Box, Flex } from 'components/layout';
+
 import Container from 'components/container';
 import { rem } from 'styles/theme';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
+import { Box, Flex, Heading, Link as ChakraLink } from 'components';
 
-const Tag = styled.span`
-  ${typography};
-  ${color};
-  ${border}
-  color: ${({ theme }) => theme.colors.white};
-  text-transform: uppercase;
-  text-decoration: none;
-  border-width: 3px;
-  border-style: solid;
-  border-radius: ${({ theme }) => theme.radii[1]};
-  padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
-`;
-
-const StyledLink = styled.a`
-  text-decoration: none;
-`;
+const Tag = (props) => (
+  <Box
+    as="span"
+    color="white"
+    textTransform="uppercase"
+    textDecoration="none"
+    borderWidth="3px"
+    borderStyle="solid"
+    borderRadius="lg"
+    py={2}
+    px={4}
+    fontWeight="bold"
+    {...props}
+  />
+);
 
 const BlogHero = (rawData) => {
   const data = {
@@ -42,17 +37,16 @@ const BlogHero = (rawData) => {
         as="section"
         position="relative"
         backgroundImage={`url(${data.image})`}
-        backgroundColor="primary"
+        backgroundColor="qukBlue"
         backgroundSize="cover"
         backgroundPosition="center"
         minHeight={BLOG_MIN_HEIGHTS}
       >
-
         <Flex
           position="absolute"
           minHeight={BLOG_MIN_HEIGHTS}
           zIndex={1}
-          bg="primary"
+          bg="qukBlue"
           opacity={0.2}
           width="100%"
         />
@@ -64,15 +58,35 @@ const BlogHero = (rawData) => {
           justifyContent="center"
           zIndex={2}
         >
-          <Container maxWidth={rem(960)} textAlign="center" px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}>
-            <HeadingHero fontSize={[3, 3, 4]} color="white" textAlign="center" pb={2}>{data.title}</HeadingHero>
+          <Container
+            maxWidth={rem(960)}
+            textAlign="center"
+            px={{ base: 4, sm: 8, md: 9 }}
+          >
+            <Heading
+              fontSize={{ base: 'xl', md: '3xl' }}
+              color="white"
+              textAlign="center"
+              pb={2}
+              textShadow="lg"
+            >
+              {data.title}
+            </Heading>
 
             <Link href={`/news/${data.category.toLowerCase()}`} passHref>
-              <StyledLink href={`/news/${data.category.toLowerCase()}`}>
-                <Tag fontWeight="bold" fontSize={[1, 1, 2]} bg={CATEGORIES[data.category]} borderColor={CATEGORIES[data.category]}>
+              <ChakraLink
+                textDecoration="none"
+                _hover={{ textDecoration: 'none' }}
+                href={`/news/${data.category.toLowerCase()}`}
+              >
+                <Tag
+                  fontSize="sm"
+                  bg={CATEGORIES[data.category]}
+                  borderColor={CATEGORIES[data.category]}
+                >
                   {data.category}
                 </Tag>
-              </StyledLink>
+              </ChakraLink>
             </Link>
           </Container>
         </Flex>
