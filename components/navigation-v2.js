@@ -17,6 +17,7 @@ import Router, { useRouter } from 'next/router';
 import cookies from 'js-cookie';
 import { removeCookie } from 'modules/cookies';
 import { rem } from 'styles/theme';
+import Headroom from 'react-headroom';
 
 import NextLink from 'next/link';
 
@@ -45,7 +46,7 @@ export default function Navigation({ dashboard = false }) {
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
 
   return (
-    <Box boxShadow="md">
+    <Box boxShadow="md" as={Headroom}>
       <Flex
         bg={dashboard ? 'qukBlue' : 'white'}
         color="greyDark"
