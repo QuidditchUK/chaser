@@ -2,7 +2,7 @@ import { RichText, Link } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import PrismicWrapper from 'components/prismic-wrapper';
 
-import { Flex, Heading, Text } from 'components';
+import { Flex, Heading, Box } from 'components';
 import Card from 'components/card';
 import Image from 'components/image';
 import HorizontalScrollWrapper from 'components/horizontal-scroll-wrapper';
@@ -35,13 +35,13 @@ const CardsSlice = (rawData) => {
       )}
 
       {content && (
-        <Text
+        <Box
           textAlign="center"
           pb={3}
           px={horizontalScroll ? { base: 4, sm: 8, md: 9 } : { base: 0, md: 9 }}
         >
           {RichText.render(content, linkResolver)}
-        </Text>
+        </Box>
       )}
 
       <HorizontalScrollWrapper

@@ -15,6 +15,7 @@ import {
 } from 'components';
 import Router, { useRouter } from 'next/router';
 import cookies from 'js-cookie';
+
 import { removeCookie } from 'modules/cookies';
 import { rem } from 'styles/theme';
 import Headroom from 'react-headroom';
@@ -35,14 +36,13 @@ import {
   DASHBOARD_NAVIGATION,
   ACCOUNT_NAVIGATION,
 } from 'constants/navigation';
-import { Logo, LogoLink } from 'components/logo';
+import { Logo } from 'components/logo';
 
 const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';
 
 export default function Navigation({ dashboard = false }) {
-  const { isOpen, onToggle } = useDisclosure();
-
+  const { isOpen, onToggle: closeTopNav } = useDisclosure();
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
 
   return (
@@ -63,7 +63,7 @@ export default function Navigation({ dashboard = false }) {
           display={{ base: 'flex', xl: 'none' }}
         >
           <IconButton
-            onClick={onToggle}
+            onClick={closeTopNav}
             icon={
               isOpen ? (
                 <CloseIcon w={6} h={6} color="qukBlue" />
@@ -84,8 +84,8 @@ export default function Navigation({ dashboard = false }) {
           direction="row"
           width="100%"
         >
-          <NextLink href="/">
-            <LogoLink>
+          <NextLink href="/" passHref>
+            <Link height={{ base: '35px', xl: '45px' }}>
               <Logo
                 src={logo}
                 alt="Quidditch UK"
@@ -96,7 +96,7 @@ export default function Navigation({ dashboard = false }) {
                 alt="Quidditch UK"
                 filter={dashboard ? 'brightness(0) invert(1)' : 'inherit'}
               />
-            </LogoLink>
+            </Link>
           </NextLink>
 
           <Flex
@@ -111,7 +111,11 @@ export default function Navigation({ dashboard = false }) {
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav navigation={navigation} />
+        <MobileNav
+          navigation={navigation}
+          dashboard={dashboard}
+          closeTopNav={closeTopNav}
+        />
       </Collapse>
     </Box>
   );
@@ -136,16 +140,38 @@ const DesktopNav = ({ navigation, dashboard }) => {
               {({ isOpen }) => (
                 <>
                   <PopoverTrigger>
-                    {navItem.href ? (
-                      <NextLink href={navItem.href} passHref>
+                    <Box>
+                      {navItem.href ? (
+                        <NextLink href={navItem.href} passHref>
+                          <Link
+                            as="a"
+                            px={2}
+                            py={0}
+                            fontSize={'md'}
+                            fontWeight="bold"
+                            color={
+                              isActive
+                                ? 'monarchRed'
+                                : dashboard
+                                ? 'white'
+                                : 'greyDark'
+                            }
+                            _hover={{
+                              textDecoration: 'none',
+                              color: 'monarchRed',
+                            }}
+                          >
+                            {navItem.label}
+                          </Link>
+                        </NextLink>
+                      ) : (
                         <Link
-                          as="a"
                           px={2}
                           py={0}
                           fontSize={'md'}
                           fontWeight="bold"
                           color={
-                            isActive
+                            isOpen || isActive
                               ? 'monarchRed'
                               : dashboard
                               ? 'white'
@@ -158,28 +184,8 @@ const DesktopNav = ({ navigation, dashboard }) => {
                         >
                           {navItem.label}
                         </Link>
-                      </NextLink>
-                    ) : (
-                      <Link
-                        px={2}
-                        py={0}
-                        fontSize={'md'}
-                        fontWeight="bold"
-                        color={
-                          isOpen || isActive
-                            ? 'monarchRed'
-                            : dashboard
-                            ? 'white'
-                            : 'greyDark'
-                        }
-                        _hover={{
-                          textDecoration: 'none',
-                          color: 'monarchRed',
-                        }}
-                      >
-                        {navItem.label}
-                      </Link>
-                    )}
+                      )}
+                    </Box>
                   </PopoverTrigger>
 
                   {navItem.children && (
@@ -295,27 +301,29 @@ const DesktopCTAs = ({ dashboard }) => {
           {({ isOpen }) => (
             <>
               <PopoverTrigger>
-                <Link
-                  as="a"
-                  px={4}
-                  py={2}
-                  mb={0}
-                  lineHeight="1.2"
-                  fontSize={'md'}
-                  fontWeight="normal"
-                  bg={isOpen ? 'gray.200' : 'white'}
-                  color={'qukBlue'}
-                  border="1px solid"
-                  borderColor="qukBlue"
-                  borderRadius="md"
-                  _hover={{
-                    bg: 'gray.200',
-                    textDecoration: 'none',
-                    color: 'qukBlue',
-                  }}
-                >
-                  My Account
-                </Link>
+                <Box>
+                  <Link
+                    as="a"
+                    px={4}
+                    py={2}
+                    mb={0}
+                    lineHeight="1.2"
+                    fontSize={'md'}
+                    fontWeight="normal"
+                    bg={isOpen ? 'gray.200' : 'white'}
+                    color={'qukBlue'}
+                    border="1px solid"
+                    borderColor="qukBlue"
+                    borderRadius="md"
+                    _hover={{
+                      bg: 'gray.200',
+                      textDecoration: 'none',
+                      color: 'qukBlue',
+                    }}
+                  >
+                    My Account
+                  </Link>
+                </Box>
               </PopoverTrigger>
 
               <PopoverContent
@@ -388,25 +396,47 @@ const DesktopCTAs = ({ dashboard }) => {
   );
 };
 
-const MobileNav = ({ navigation }) => {
+const MobileNav = ({ navigation, dashboard, closeTopNav }) => {
   return (
-    <Stack position="relative" bg="white" p={4} display={{ xl: 'none' }}>
+    <Stack
+      position="absolute"
+      bg="white"
+      p={4}
+      display={{ xl: 'none' }}
+      width="100%"
+      overflowY="scroll"
+      height="100vh"
+      fontSize="sm"
+    >
       {navigation.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
+        <MobileNavItem
+          key={navItem.label}
+          closeTopNav={closeTopNav}
+          {...navItem}
+        />
       ))}
+
+      <MobileCTAs dashboard={dashboard} closeTopNav={closeTopNav} />
     </Stack>
   );
 };
 
-const MobileNavItem = ({ label, children, href }) => {
+const MobileNavItem = ({ label, children, closeTopNav, href }) => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Stack spacing={4} onClick={children && onToggle}>
+    <Stack
+      spacing={2}
+      onClick={children && onToggle}
+      borderBottom="1px solid gray.700"
+    >
       <Flex
-        py={2}
+        borderBottom="1px solid"
+        borderColor="gray.200"
+        py={1}
         as={Link}
         href={href ?? '#'}
+        onClick={!children ? closeTopNav : () => {}}
         justify={'space-between'}
         align={'center'}
         _hover={{
@@ -414,6 +444,7 @@ const MobileNavItem = ({ label, children, href }) => {
         }}
       >
         <Text
+          my={1}
           fontWeight={600}
           color={useColorModeValue('gray.600', 'gray.200')}
         >
@@ -431,20 +462,97 @@ const MobileNavItem = ({ label, children, href }) => {
       </Flex>
 
       <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
-        <Stack
-          mt={2}
-          pl={4}
-          borderLeft={1}
-          borderStyle={'solid'}
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
-          align={'start'}
-        >
+        <Stack mt={2} pl={4} align={'start'}>
           {children &&
             children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
+              <NextLink key={child.label} href={child.href} passHref>
+                <Link py={2} href={child.href} onClick={closeTopNav}>
+                  {child.label}
+                </Link>
+              </NextLink>
+            ))}
+        </Stack>
+      </Collapse>
+    </Stack>
+  );
+};
+
+const MobileCTAs = ({ closeTopNav }) => {
+  // const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
+  const loggedIn = true;
+
+  return (
+    <>
+      <MobileNavItem
+        label="Find Quidditch"
+        href="/find-quidditch"
+        closeTopNav={closeTopNav}
+      />
+      {!loggedIn && (
+        <MobileNavItem
+          label="Sign In"
+          href="/login"
+          closeTopNav={closeTopNav}
+        />
+      )}
+
+      {loggedIn && <MobileLoggedIn closeTopNav={closeTopNav} />}
+    </>
+  );
+};
+
+const MobileLoggedIn = ({ closeTopNav }) => {
+  const { isOpen, onToggle } = useDisclosure();
+
+  const signOut = () => {
+    removeCookie('AUTHENTICATION_TOKEN');
+    closeTopNav();
+    Router.push('/');
+  };
+
+  return (
+    <Stack spacing={4} onClick={onToggle} borderBottom="1px solid gray.700">
+      <Flex
+        borderBottom="1px solid"
+        borderColor="gray.200"
+        py={1}
+        as={Link}
+        justify={'space-between'}
+        align={'center'}
+        _hover={{
+          textDecoration: 'none',
+        }}
+      >
+        <Text
+          my={1}
+          fontWeight={600}
+          color={useColorModeValue('gray.600', 'gray.200')}
+        >
+          My Account
+        </Text>
+
+        <Icon
+          as={ChevronDownIcon}
+          transition={'all .25s ease-in-out'}
+          transform={isOpen ? 'rotate(180deg)' : ''}
+          w={6}
+          h={6}
+        />
+      </Flex>
+
+      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
+        <Stack mt={2} pl={4} align={'start'}>
+          {ACCOUNT_NAVIGATION.map((child) => (
+            <NextLink key={child.label} href={child.href} passHref>
+              <Link py={2} href={child.href} onClick={closeTopNav}>
                 {child.label}
               </Link>
-            ))}
+            </NextLink>
+          ))}
+
+          <Link py={2} onClick={signOut} color="monarchRed" fontWeight="bold">
+            Sign out
+          </Link>
         </Stack>
       </Collapse>
     </Stack>

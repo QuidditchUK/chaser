@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
 
@@ -15,8 +15,10 @@ import {
   PAGE_SIZE,
 } from 'modules/prismic';
 
-export const StyledLink = (props) => (
+// eslint-disable-next-line react/display-name
+export const StyledLink = forwardRef((props, ref) => (
   <ChakraLink
+    ref={ref}
     textDecoration="none"
     display="flex"
     flexDirection="column"
@@ -24,7 +26,7 @@ export const StyledLink = (props) => (
     _hover={{ textDecoration: 'none' }}
     {...props}
   />
-);
+));
 
 const LoadMore = ({ setPage }) => {
   const [ref, inView] = useInView({ threshold: 0 });

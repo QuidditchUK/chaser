@@ -31,7 +31,7 @@ const HomeHero = (rawData) => {
       overflow="hidden"
       position="relative"
     >
-      <Box minHeight={HERO_MIN_HEIGHTS} position="absolute" zIndex={1}>
+      <Box minHeight={HERO_MIN_HEIGHTS} position="absolute">
         <Video
           src={data.video}
           poster={data.poster}
@@ -48,7 +48,6 @@ const HomeHero = (rawData) => {
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
-        zIndex={2}
       >
         <Heading
           as="label"

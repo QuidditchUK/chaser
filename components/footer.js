@@ -4,8 +4,8 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { Formik, Form, Field } from 'formik';
 import { useRouter } from 'next/router';
-import { Box, Grid, Flex } from 'components';
-import { Logo, LogoLink } from 'components/logo';
+import { Box, Grid, Flex, Link as ChakraLink } from 'components';
+import { Logo } from 'components/logo';
 import { rem } from 'styles/theme';
 import Input from 'components/input';
 
@@ -263,7 +263,7 @@ export const Footer = () => {
           >
             <Flex flexDirection="column" order={{ base: 2, md: 1 }}>
               <Link href="/" passHref>
-                <LogoLink>
+                <ChakraLink height={{ base: '35px', xl: '45px' }} zIndex="5">
                   <>
                     <Logo
                       src={logo}
@@ -276,7 +276,7 @@ export const Footer = () => {
                       filter="brightness(0) invert(1)"
                     />
                   </>
-                </LogoLink>
+                </ChakraLink>
               </Link>
 
               <Support>All Rights Reserved &copy; {year} QuidditchUK</Support>

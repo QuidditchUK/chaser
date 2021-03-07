@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { useStyleConfig } from '@chakra-ui/react';
 import { Button as ChakraButton } from 'components';
 
@@ -71,7 +72,9 @@ export const ButtonStyles = {
   },
 };
 
-export default function Button({ variant, ...rest }) {
+const Button = forwardRef(({ variant, ...rest }, ref) => {
   const styles = useStyleConfig('Button', { variant });
-  return <ChakraButton sx={styles} {...rest} />;
-}
+  return <ChakraButton sx={styles} ref={ref} {...rest} />;
+});
+
+export default Button;
