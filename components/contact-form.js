@@ -160,7 +160,7 @@ const ContactForm = (rawData) => {
             borderWidth="1px"
             borderStyle="solid"
             color="white"
-            borderRadius={0}
+            borderRadius="sm"
           >
             <Content>Message sent</Content>
           </Box>

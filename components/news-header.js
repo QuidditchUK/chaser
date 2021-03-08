@@ -1,86 +1,110 @@
-import styled from '@emotion/styled';
-import { Box } from 'components';
+import { forwardRef } from 'react';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { Link, Flex, ListItem, UnorderedList } from 'components';
 import Container from './container';
-import ActiveLink, { ExactActiveLink } from './active-link';
 
-const NewsHeaderWrapper = styled(Box)`
-  border-top: 1px solid ${({ theme }) => theme.colors.greyLight};
-  display: flex;
-  align-items: center;
-  overflow-x: scroll;
-  overflow-y: hidden;
+const ChakraLink = forwardRef(function ChakraLink(props, ref) {
+  return (
+    <Link
+      textDecoration="none"
+      _hover={{ color: 'qukBlue' }}
+      ref={ref}
+      {...props}
+    />
+  );
+});
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  scrollbar-width: none;
-`;
-
-const List = styled.ul`
-  align-items: center;
-  display: flex;
-  list-style-type: none;
-  padding-left: 0;
-  justify-content: space-between;
-`;
-
-const ListItem = styled.li`
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.greyDark};
-  padding: 0 ${({ theme }) => theme.space[3]};
-
-  a {
-    text-decoration: none;
-    color: ${({ theme }) => theme.colors.greyDark};
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.qukBlue};
-    }
-
-    .active {
-      color: ${({ theme }) => theme.colors.qukBlue};
-    }
-  }
-`;
-
-const NewsHeader = () => (
-  <NewsHeaderWrapper bg="white" width="100%" height="60px">
-    <Container px={{ base: 6 }} maxWidth={{ base: '100%', md: '500px' }}>
-      <List>
-        <ListItem>
-          <ExactActiveLink href="/news" as="/news">
-            <span>All</span>
-          </ExactActiveLink>
-        </ListItem>
-        <ListItem>
-          <ActiveLink href="/news/announcements" as="/news/announcements">
-            <span>Announcements</span>
-          </ActiveLink>
-        </ListItem>
-        <ListItem>
-          <ActiveLink href="/news/community" as="/news/community">
-            <span>Community</span>
-          </ActiveLink>
-        </ListItem>
-        <ListItem>
-          <ActiveLink href="/news/leagues" as="/news/leagues">
-            <span>Leagues</span>
-          </ActiveLink>
-        </ListItem>
-        <ListItem>
-          <ActiveLink href="/news/executive" as="/news/executive">
-            <span>Executive</span>
-          </ActiveLink>
-        </ListItem>
-        <ListItem>
-          <ActiveLink href="/news/international" as="/news/international">
-            <span>International</span>
-          </ActiveLink>
-        </ListItem>
-      </List>
-    </Container>
-  </NewsHeaderWrapper>
+const Item = (props) => (
+  <ListItem fontWeight="bold" color="greyDark" py={0} px={3} {...props} />
 );
 
-export default NewsHeader;
+export default function NewsHeader() {
+  const { asPath } = useRouter();
+
+  return (
+    <Flex
+      align="center"
+      overflowX="scroll"
+      overflowY="hidden"
+      borderTop="1px solid"
+      borderColor="greyLight"
+      w="100%"
+      h="60px"
+      bg="white"
+      sx={{
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+        'scrollbar-width': 'none',
+      }}
+    >
+      <Container px={6} maxWidth={{ base: '100%', md: '700px' }}>
+        <UnorderedList
+          display="flex"
+          alignItems="center"
+          listStyleType="none"
+          pl={0}
+          justifyContent="space-between"
+        >
+          <Item>
+            <NextLink href="/news" passHref>
+              <ChakraLink color={asPath === '/news' ? 'qukBlue' : 'greyDark'}>
+                All
+              </ChakraLink>
+            </NextLink>
+          </Item>
+          <Item>
+            <NextLink href="/news/announcements" passHref>
+              <ChakraLink
+                color={
+                  asPath === '/news/announcements' ? 'qukBlue' : 'greyDark'
+                }
+              >
+                Announcements
+              </ChakraLink>
+            </NextLink>
+          </Item>
+          <Item>
+            <NextLink href="/news/community" passHref>
+              <ChakraLink
+                color={asPath === '/news/community' ? 'qukBlue' : 'greyDark'}
+              >
+                Community
+              </ChakraLink>
+            </NextLink>
+          </Item>
+          <Item>
+            <NextLink href="/news/leagues" passHref>
+              <ChakraLink
+                color={asPath === '/news/leagues' ? 'qukBlue' : 'greyDark'}
+              >
+                Leagues
+              </ChakraLink>
+            </NextLink>
+          </Item>
+          <Item>
+            <NextLink href="/news/executive" passHref>
+              <ChakraLink
+                color={asPath === '/news/executive' ? 'qukBlue' : 'greyDark'}
+              >
+                Executive
+              </ChakraLink>
+            </NextLink>
+          </Item>
+          <Item>
+            <NextLink href="/news/international" passHref>
+              <ChakraLink
+                color={
+                  asPath === '/news/international' ? 'qukBlue' : 'greyDark'
+                }
+              >
+                International
+              </ChakraLink>
+            </NextLink>
+          </Item>
+        </UnorderedList>
+      </Container>
+    </Flex>
+  );
+}

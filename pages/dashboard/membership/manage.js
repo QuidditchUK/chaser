@@ -6,29 +6,21 @@ import { parse } from 'date-fns';
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import styled from '@emotion/styled';
+
 import { parseCookies, setCookies } from 'modules/cookies';
 import { api } from 'modules/api';
-import { Box, Flex, Grid } from 'components';
+import { Box, Flex, Grid, Heading, UnorderedList } from 'components';
 import { InlineError } from 'components/errors';
 
 const Meta = dynamic(() => import('components/meta'));
-const Heading = dynamic(() => import('components/heading'));
 const Content = dynamic(() => import('components/content'));
 const Button = dynamic(() => import('components/button'));
 const Label = dynamic(() => import('components/label'));
 const Container = dynamic(() => import('components/container'));
 const ProductCard = dynamic(() => import('components/product-card'));
 
-const Benefits = styled(Content)`
-  font-size: ${({ theme }) => theme.fontSizes.bodyCard};
-  padding: ${({ theme }) => theme.space[4]};
-`;
-
-const List = styled.ul`
-  padding: 0;
-  padding-left: 1rem;
-`;
+const Benefits = (props) => <Content fontSize="md" p={4} {...props} />;
+const List = (props) => <UnorderedList p={0} pl={4} {...props} />;
 
 const MembershipFormSchema = Yup.object({
   checkboxOne: Yup.boolean()

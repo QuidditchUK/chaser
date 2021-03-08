@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import styled from '@emotion/styled';
 import * as Yup from 'yup';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
-import { Box, Grid, Flex } from 'components';
+import { Box, Grid, Flex, Link } from 'components';
 import { Logo } from 'components/logo';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,12 +18,6 @@ const Container = dynamic(() => import('components/container'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
-
-const Text = styled(Content)`
-  a {
-    color: ${({ theme }) => theme.colors.monarchRed};
-  }
-`;
 
 const logo = '/images/logo.png';
 
@@ -125,14 +118,14 @@ const Forgot = () => {
             borderWidth="1px"
             borderStyle="solid"
             color="qukBlue"
-            borderRadius={0}
+            borderRadius="sm"
           >
-            <Text>
+            <Content>
               Remembered your password?{' '}
-              <Link href="/login" as="/login">
-                <a>Sign in.</a>
-              </Link>
-            </Text>
+              <NextLink href="/login" passHref>
+                <Link color="monarchRed">Sign in.</Link>
+              </NextLink>
+            </Content>
           </Box>
         </Container>
       </Box>

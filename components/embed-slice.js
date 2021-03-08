@@ -1,32 +1,10 @@
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import styled from '@emotion/styled';
-import { typography, space } from 'styled-system';
 import PrismicWrapper from 'components/prismic-wrapper';
-import { Box, Grid } from 'components';
-import Heading from 'components/heading';
+import { Box, Grid, Heading } from 'components';
+
 import Content from 'components/content';
 import { linkResolver } from 'modules/prismic';
-
-const Support = styled.div`
-  ${typography};
-  ${space};
-`;
-
-const VideoContainer = styled(Box)`
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
-`;
-
-const Video = styled.iframe`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-`;
 
 export const Embed = ({ embed }) => {
   let url = null;
@@ -39,9 +17,21 @@ export const Embed = ({ embed }) => {
   return (
     <>
       {url ? (
-        <VideoContainer>
-          <Video src={url} frameborder="0" allowfullscreen />
-        </VideoContainer>
+        <Box position="relative" width="100%" pb="56.25%">
+          <Box
+            as="iframe"
+            position="absolute"
+            borderRadius="md"
+            top="0"
+            left="0"
+            width="100%"
+            height="100%"
+            border="0"
+            src={url}
+            frameBorder="0"
+            allowFullScreen
+          />
+        </Box>
       ) : (
         <div dangerouslySetInnerHTML={{ __html: embed.html }} />
       )}
@@ -49,39 +39,37 @@ export const Embed = ({ embed }) => {
   );
 };
 
-export const Item = ({ item }) => (
+export const Item = ({ embed, support }) => (
   <Box>
-    <Embed embed={item.embed} />
+    <Embed embed={embed} />
 
-    {item.support && (
-      <Support textAlign="center" pt={2} fontStyle="italic">
-        {item.support}
-      </Support>
+    {support && (
+      <Box textAlign="center" pt={2} fontStyle="italic">
+        {support}
+      </Box>
     )}
   </Box>
 );
 
 const EmbedSlice = (rawData) => {
-  const data = {
-    title: get(rawData, 'primary.title'),
-    content: get(rawData, 'primary.content'),
-    items: get(rawData, 'items'),
-    variant: get(rawData, 'primary.variant'),
-  };
+  const title = get(rawData, 'primary.title');
+  const content = get(rawData, 'primary.content');
+  const items = get(rawData, 'items');
+  const variant = get(rawData, 'primary.variant');
 
-  const multipleEmbeds = data.items.length > 1;
+  const multipleEmbeds = items.length > 1;
 
   return (
-    <PrismicWrapper variant={data.variant} small={!multipleEmbeds}>
-      {RichText.asText(data.title) && (
+    <PrismicWrapper variant={variant} small={!multipleEmbeds}>
+      {RichText.asText(title) && (
         <Heading as="h2" fontSize="xl" mt={2} textAlign="center">
-          {RichText.asText(data.title)}
+          {RichText.asText(title)}
         </Heading>
       )}
 
-      {data.content && (
+      {content && (
         <Content textAlign="center" pb={3}>
-          {RichText.render(data.content, linkResolver)}
+          {RichText.render(content, linkResolver)}
         </Content>
       )}
 
@@ -92,13 +80,13 @@ const EmbedSlice = (rawData) => {
         }}
         gridGap={{ base: 4, md: 9 }}
       >
-        {data.items.map((itemData, i) => {
-          const item = {
-            embed: get(itemData, 'embed'),
-            support: get(itemData, 'support'),
-          };
+        {items.map((itemData, i) => {
+          const embed = get(itemData, 'embed');
+          const support = get(itemData, 'support');
 
-          return <Item key={`embed-slice-${i}`} item={item} />;
+          return (
+            <Item key={`embed-slice-${i}`} embed={embed} support={support} />
+          );
         })}
       </Grid>
     </PrismicWrapper>

@@ -324,7 +324,7 @@ const YouthCoachForm = () => {
               borderWidth="1px"
               borderStyle="solid"
               color="white"
-              borderRadius={0}
+              borderRadius="sm"
             >
               <Content>Application sent</Content>
             </Box>

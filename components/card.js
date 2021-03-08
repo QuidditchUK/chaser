@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { RichText } from 'prismic-reactjs';
 import CATEGORIES from 'constants/categories';
 import { Heading, Text, Box } from 'components';
@@ -24,15 +23,19 @@ const StyledCard = (props) => (
   />
 );
 
-const ContentBox = styled(Box)`
-  a {
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
+const ContentBox = (props) => (
+  <Box
+    sx={{
+      a: {
+        textDecoration: 'none',
+        '&:hover': {
+          textDecoration: 'underline',
+        },
+      },
+    }}
+    {...props}
+  />
+);
 
 const Card = ({ image, name, category, content, ...cardProps }) => (
   <StyledCard {...cardProps}>

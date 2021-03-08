@@ -1,17 +1,8 @@
-import styled from '@emotion/styled';
-import { layout, space } from 'styled-system';
+import { Box } from 'components';
 
-const Error = styled.div`
-  display: block;
-  ${layout};
-  ${space};
-
-  color: ${({ theme }) => theme.colors.monarchRed};
-
-  span {
-    font-size: ${({ theme }) => theme.fontSizes.bodyCard};
-  }
-`;
+const Error = (props) => (
+  <Box display="block" color="monarchRed" fontSize="sm" {...props} />
+);
 
 export const InlineError = ({ children, ...errorProps }) => (
   <Error {...errorProps}>

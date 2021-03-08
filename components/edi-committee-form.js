@@ -5,14 +5,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import get from 'just-safe-get';
-import { Grid, Box } from 'components';
+import { Grid, Box, Heading } from 'components';
 import Input from 'components/input';
 import Label from 'components/label';
 import Textarea from 'components/textarea';
 import Button from 'components/button';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
 import Container from 'components/container';
-import Heading from 'components/heading';
 import Content from 'components/content';
 import Required from 'components/required';
 import Toggle from 'components/toggle';
@@ -184,7 +183,7 @@ const EDICommitteeForm = (rawData) => {
             borderWidth="1px"
             borderStyle="solid"
             color="white"
-            borderRadius={0}
+            borderRadius="sm"
           >
             <Content>Message sent</Content>
           </Box>

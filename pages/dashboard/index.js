@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import dynamic from 'next/dynamic';
-import styled from '@emotion/styled';
+import { StyledLink } from 'components/latest-news';
 import useSWR from 'swr';
 import Link from 'next/link';
-import { color, border } from 'styled-system';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid, Flex } from 'components';
+import { Box, Grid, Flex, ListItem, Text, OrderedList } from 'components';
 import { CenterJustify } from 'components/image-and-content';
 
 const Meta = dynamic(() => import('components/meta'));
@@ -17,55 +16,41 @@ const Image = dynamic(() => import('components/image'));
 const ProductCard = dynamic(() => import('components/product-card'));
 const ClubCard = dynamic(() => import('components/club-card'));
 
-const StyledLink = styled.a`
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-`;
+const Checkmark = (props) => (
+  <Box
+    ml={3}
+    h="25px"
+    w="25px"
+    borderRadius="full"
+    bg="keeperGreen"
+    _after={{
+      content: '',
+      display: 'block',
+      position: 'relative',
+      left: '10px',
+      top: '7px',
+      width: '5px',
+      height: '10px',
+      borderStyle: 'solid',
+      borderWidth: '0 3px 3px 0',
+      transform: 'rotate(45deg)',
+    }}
+    {...props}
+  />
+);
 
-const ListItem = styled.li`
-  ${color};
-  margin-bottom: ${({ theme }) => theme.space[2]};
-`;
+const StyledAnchor = forwardRef(function StyledAnchor(props, ref) {
+  return <Box textDecoration="none" ref={ref} {...props} />;
+});
 
-const Checkmark = styled.span`
-  margin-left: ${({ theme }) => theme.space[3]};
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
-  display: inline-block;
-  background-color: ${({ theme }) => theme.colors.keeperGreen};
-
-  &:after {
-    content: '';
-    display: block;
-    position: relative;
-    left: 10px;
-    top: 7px;
-    width: 5px;
-    height: 10px;
-    border: solid ${({ theme }) => theme.colors.white};
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-  }
-`;
-
-const StyledAnchor = styled.a`
-  text-decoration: none;
-`;
-
-const Span = styled.span`
-  border-bottom: 2px solid ${({ theme }) => theme.colors.black};
-  ${color};
-  ${border};
-  line-height: 1.5rem;
-`;
-
-const StyledList = styled.ol`
-  padding: 0;
-  padding-left: 1rem;
-`;
+const Span = (props) => (
+  <Text
+    as="span"
+    borderBottom="2px solid black"
+    lineHeight="1.5rem"
+    {...props}
+  />
+);
 
 const Dashboard = ({ user }) => {
   const [setupProfile] = useState(user.is_student !== null);
@@ -114,8 +99,11 @@ const Dashboard = ({ user }) => {
                   be ready when the season kicks off:
                 </Content>
 
-                <StyledList>
-                  <ListItem color={setupProfile ? 'keeperGreen' : 'white'}>
+                <OrderedList p={0} pl={4}>
+                  <ListItem
+                    mb={2}
+                    color={setupProfile ? 'keeperGreen' : 'white'}
+                  >
                     <Flex alignItems="center">
                       <Link href="/dashboard/account/info" passHref>
                         <StyledAnchor>
@@ -132,7 +120,7 @@ const Dashboard = ({ user }) => {
                     </Flex>
                   </ListItem>
 
-                  <ListItem color={membership ? 'keeperGreen' : 'white'}>
+                  <ListItem mb={2} color={membership ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
                       <Link href="/dashboard/membership/manage" passHref>
                         <StyledAnchor>
@@ -149,7 +137,7 @@ const Dashboard = ({ user }) => {
                     </Flex>
                   </ListItem>
 
-                  <ListItem color={club ? 'keeperGreen' : 'white'}>
+                  <ListItem mb={2} color={club ? 'keeperGreen' : 'white'}>
                     <Flex alignItems="center">
                       <Link href="/dashboard/membership/club" passHref>
                         <StyledAnchor>
@@ -165,7 +153,7 @@ const Dashboard = ({ user }) => {
                       {!!club && <Checkmark />}
                     </Flex>
                   </ListItem>
-                </StyledList>
+                </OrderedList>
               </CenterJustify>
 
               <Box

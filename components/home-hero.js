@@ -1,27 +1,23 @@
 import { useRouter } from 'next/router';
 import get from 'just-safe-get';
 import { Formik, Form, Field } from 'formik';
-import styled from '@emotion/styled';
+
 import Input from 'components/input';
 import Button from 'components/button';
 import { Flex, Box, Heading } from 'components';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 
-const Video = styled.video`
-  width: 121%;
-  min-height: 100%;
-  object-fit: cover;
-`;
+const Video = (props) => (
+  <Box as="video" w="121%" minH="100%" objectFit="cover" {...props} />
+);
 
 const HomeHero = (rawData) => {
   const router = useRouter();
 
-  const data = {
-    title: get(rawData, 'primary.slug'),
-    cta_text: get(rawData, 'primary.cta_text'),
-    video: get(rawData, 'primary.video_url.url'),
-    poster: get(rawData, 'primary.poster.url'),
-  };
+  const title = get(rawData, 'primary.slug');
+  const cta_text = get(rawData, 'primary.cta_text');
+  const video = get(rawData, 'primary.video_url.url');
+  const poster = get(rawData, 'primary.poster.url');
 
   return (
     <Box
@@ -33,8 +29,8 @@ const HomeHero = (rawData) => {
     >
       <Box minHeight={HERO_MIN_HEIGHTS} position="absolute">
         <Video
-          src={data.video}
-          poster={data.poster}
+          src={video}
+          poster={poster}
           preload="metadata"
           autoPlay
           loop
@@ -58,7 +54,7 @@ const HomeHero = (rawData) => {
           color="white"
           textShadow="lg"
         >
-          {data.title}
+          {title}
         </Heading>
 
         <Formik
@@ -78,7 +74,7 @@ const HomeHero = (rawData) => {
                 as={Input}
               />
               <Button type="submit" variant="primary" ml={2}>
-                {data.cta_text}
+                {cta_text}
               </Button>
             </Flex>
           </Form>

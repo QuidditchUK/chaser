@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import * as Yup from 'yup';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
-import { Box, Grid, Flex } from 'components';
+import NextLink from 'next/link';
+import { Box, Grid, Flex, Heading, Text, Link } from 'components';
 import { Logo } from 'components/logo';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,16 +21,9 @@ import Toggle from 'components/toggle';
 const Label = dynamic(() => import('components/label'));
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
-const Heading = dynamic(() => import('components/heading'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
 const Required = dynamic(() => import('components/required'));
-
-const Text = styled(Content)`
-  a {
-    color: ${({ theme }) => theme.colors.monarchRed};
-  }
-`;
 
 const JoinFormSchema = Yup.object().shape({
   email: Yup.string()
@@ -290,14 +283,14 @@ const Page = () => {
               borderWidth="1px"
               borderStyle="solid"
               color="qukBlue"
-              borderRadius={0}
+              borderRadius="sm"
             >
-              <Text>
+              <Content>
                 Already have an account?{' '}
-                <Link href="/login" as="/login" passHref>
-                  <a>Sign in.</a>
-                </Link>
-              </Text>
+                <NextLink href="/login" passHref>
+                  <Link color="monarchRed">Sign in.</Link>
+                </NextLink>
+              </Content>
             </Box>
           </Box>
         </Container>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import styled from '@emotion/styled';
+import { StyledLink } from 'components/latest-news';
 import { Formik, Form, Field, ErrorMessage, useFormikContext } from 'formik';
 import { parse } from 'date-fns';
 import Router from 'next/router';
@@ -20,13 +20,6 @@ import ClubCard, { ACTIVE_STATUS } from 'components/club-card';
 import Image from 'components/image';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
-
-const StyledLink = styled.a`
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-`;
 
 const SelectClubSchema = Yup.object().shape({
   club_uuid: Yup.string().nullable().required('Required'),

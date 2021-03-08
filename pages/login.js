@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import styled from '@emotion/styled';
 import * as Yup from 'yup';
 import Router from 'next/router';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
-import { Box, Grid, Flex } from 'components';
+import { Box, Grid, Flex, Link, Heading } from 'components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Logo } from 'components/logo';
@@ -16,27 +15,9 @@ import Input from 'components/input';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
-const Heading = dynamic(() => import('components/heading'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
-
-const Text = styled(Content)`
-  a {
-    color: ${({ theme }) => theme.colors.monarchRed};
-  }
-`;
-
-const AlertText = styled(Content)`
-  a {
-    color: ${({ theme }) => theme.colors.white};
-    border-bottom: 1px solid ${({ theme }) => theme.colors.white};
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
-`;
 
 const logo = '/images/logo.png';
 
@@ -152,14 +133,21 @@ const Page = () => {
                 borderWidth="1px"
                 borderStyle="solid"
                 color="white"
-                borderRadius={0}
+                borderRadius="sm"
               >
-                <AlertText>
+                <Content>
                   Forgot password?{' '}
-                  <Link href="/forgot" as="/forgot">
-                    <a>Request a reset.</a>
-                  </Link>
-                </AlertText>
+                  <NextLink href="/forgot" passHref>
+                    <Link
+                      color="white"
+                      borderColor="white"
+                      borderBottom="1px solid"
+                      _hover={{ textDecoration: 'none' }}
+                    >
+                      Request a reset.
+                    </Link>
+                  </NextLink>
+                </Content>
               </Box>
             </>
           )}
@@ -173,14 +161,14 @@ const Page = () => {
             borderWidth="1px"
             borderStyle="solid"
             color="qukBlue"
-            borderRadius={0}
+            borderRadius="sm"
           >
-            <Text>
+            <Content>
               New to QuidditchUK?{' '}
-              <Link href="/join" as="/join">
-                <a>Create an account.</a>
-              </Link>
-            </Text>
+              <NextLink href="/join" passHref>
+                <Link>Create an account.</Link>
+              </NextLink>
+            </Content>
           </Box>
         </Container>
       </Box>

@@ -42,11 +42,11 @@ const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';
 
 export default function Navigation({ dashboard = false }) {
-  const { isOpen, onToggle: closeTopNav } = useDisclosure();
+  const { isOpen, onToggle: closeTopNav, onClose } = useDisclosure();
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
 
   return (
-    <Box boxShadow="md" as={Headroom}>
+    <Box as={Headroom}>
       <Flex
         bg={dashboard ? 'qukBlue' : 'white'}
         color="greyDark"
@@ -56,6 +56,7 @@ export default function Navigation({ dashboard = false }) {
         align="center"
         justifyContent="space-between"
         width="100%"
+        boxShadow="md"
       >
         <Flex
           flex={{ base: 1, xl: 'auto' }}
@@ -85,7 +86,7 @@ export default function Navigation({ dashboard = false }) {
           width="100%"
         >
           <NextLink href="/" passHref>
-            <Link height={{ base: '35px', xl: '45px' }}>
+            <Link height={{ base: '35px', xl: '45px' }} onClick={onClose}>
               <Logo
                 src={logo}
                 alt="Quidditch UK"

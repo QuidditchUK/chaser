@@ -192,7 +192,7 @@ const InfoForm = ({ user }) => {
           borderWidth="1px"
           borderStyle="solid"
           color="white"
-          borderRadius={0}
+          borderRadius="sm"
         >
           <Content>User updated</Content>
         </Box>
