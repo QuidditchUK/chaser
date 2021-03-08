@@ -15,18 +15,19 @@ import {
   PAGE_SIZE,
 } from 'modules/prismic';
 
-// eslint-disable-next-line react/display-name
-export const StyledLink = forwardRef((props, ref) => (
-  <ChakraLink
-    ref={ref}
-    textDecoration="none"
-    display="flex"
-    flexDirection="column"
-    flexGrow="1"
-    _hover={{ textDecoration: 'none' }}
-    {...props}
-  />
-));
+export const StyledLink = forwardRef(function StyledLink(props, ref) {
+  return (
+    <ChakraLink
+      ref={ref}
+      textDecoration="none"
+      display="flex"
+      flexDirection="column"
+      flexGrow="1"
+      _hover={{ textDecoration: 'none' }}
+      {...props}
+    />
+  );
+});
 
 const LoadMore = ({ setPage }) => {
   const [ref, inView] = useInView({ threshold: 0 });

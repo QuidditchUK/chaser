@@ -1,55 +1,6 @@
-import styled from '@emotion/styled';
-import { space, color } from 'styled-system';
-import Heading from 'components/heading';
+import { Box, Image as ChakraImage, Heading } from 'components';
 import Type, { TYPES } from 'components/club-type';
-import { rem } from '../styles/theme';
-
-const StyledCard = styled.article`
-  border-radius: ${({ theme }) => theme.radii[1]};
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  overflow: hidden;
-  position: relative;
-  transition: box-shadow 0.125s;
-
-  ${color};
-  ${space};
-
-  &:hover {
-    box-shadow: ${({ theme }) => theme.shadows.box};
-  }
-`;
-
-const Image = styled.div`
-  position: relative;
-  z-index: 2;
-`;
-
-const IconContainer = styled.div`
-  padding: ${({ theme }) => theme.space[4]};
-  position: absolute;
-  right: 0;
-  z-index: 3;
-`;
-
-const Icon = styled.img`
-  border-radius: 50%;
-  height: 75px;
-  width: 75px;
-`;
-
-const Content = styled.div`
-  padding: ${({ theme }) => theme.space[5]} ${({ theme }) => theme.space[4]};
-
-  a {
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
+import { rem } from 'styles/theme';
 
 export const ACTIVE_STATUS = 'active';
 
@@ -62,17 +13,36 @@ const ClubCard = ({
   status,
   ...cardProps
 }) => (
-  <StyledCard {...cardProps}>
-    {image ? <Image>{image}</Image> : null}
-    <IconContainer>
-      <Icon src={icon} alt={`${name} logo`} />
-    </IconContainer>
+  <Box
+    as="article"
+    display="flex"
+    flexDirection="column"
+    flexGrow="1"
+    overflow="hidden"
+    position="relative"
+    borderRadius="lg"
+    transition="box-shadow 0.125s"
+    _hover={{
+      boxShadow: 'md',
+    }}
+    {...cardProps}
+  >
+    {image ? <Box position="relative">{image}</Box> : null}
+    <Box p={4} position="absolute" right="0">
+      <ChakraImage
+        h="75px"
+        w="75px"
+        borderRadius="full"
+        src={icon}
+        alt={`${name} logo`}
+      />
+    </Box>
 
-    <Content>
+    <Box py={5} px={4}>
       <Type fontWeight="bold" fontSize={rem(10)} bg={TYPES[league]}>
         {league}
       </Type>
-      {status !== ACTIVE_STATUS && (
+      {!status && (
         <Type fontWeight="bold" fontSize={rem(10)} bg="greyDark" marginLeft="1">
           Hiatus
         </Type>
@@ -81,8 +51,8 @@ const ClubCard = ({
         {name}
       </Heading>
       <p>{venue}</p>
-    </Content>
-  </StyledCard>
+    </Box>
+  </Box>
 );
 
 export default ClubCard;

@@ -1,264 +1,310 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import dynamic from 'next/dynamic';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
+// import Router, { useRouter } from 'next/router';
 import Link from 'next/link';
-import styled from '@emotion/styled';
-import { space } from 'styled-system';
-import { debounce } from 'throttle-debounce';
+import axios from 'axios';
+// import { debounce } from 'throttle-debounce';
+
+import { useForm } from 'react-hook-form';
 
 import {
-  Formik,
-  Form,
-  Field,
-  useFormikContext,
-  FieldArray,
-  useField,
-} from 'formik';
-import { api, createQueryString } from 'modules/api';
-import { Box, Flex, Grid, Heading } from 'components';
+  Box,
+  Flex,
+  Grid,
+  Heading,
+  Input as ChakraInput,
+  Link as ChakraLink,
+  Slider,
+} from 'components';
+// import { Box, Flex, Grid, Heading, Label as ChakraLabel, Input as ChakraInput, Link as ChakraLink, Slider } from 'components';
 
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';
-import Type, { TYPES } from 'components/club-type';
-import { rem } from 'styles/theme';
+// import Type, { TYPES } from 'components/club-type';
+// import { rem } from 'styles/theme';
+import {
+  getAllClubs,
+  getClubs,
+  getEvents,
+  getAllEvents,
+} from 'modules/prismic';
 
 const Notification = dynamic(() => import('components/notification'));
 const Content = dynamic(() => import('components/content'));
 const CloseIcon = dynamic(() => import('public/images/close.svg'));
 const Container = dynamic(() => import('components/container'));
-// const Heading = dynamic(() => import('components/heading'));
 
 const ClubCard = dynamic(() => import('components/club-card'));
-const EventCard = dynamic(() => import('components/event-card'));
+// const EventCard = dynamic(() => import('components/event-card'));
 const Image = dynamic(() => import('components/image'));
 const Meta = dynamic(() => import('components/meta'));
 const Button = dynamic(() => import('components/button'));
 
-const Slider = dynamic(() => import('@material-ui/core/Slider'));
+// const Slider = dynamic(() => import('@material-ui/core/Slider'));
 
-const Icon = styled.div`
-  ${space};
-  display: inline-block;
-  width: 30px;
+// const SHOW_TYPES = [
+//   { value: 'events', name: 'Events' },
+//   { value: 'clubs', name: 'Clubs' },
+// ];
 
-  svg {
-    height: 30px;
-    width: 30px;
-    filter: drop-shadow(0 0 0.2rem rgb(0, 0, 0));
-  }
-`;
+// const LEAGUES = [
+//   { value: 'Community', name: 'Community' },
+//   { value: 'University', name: 'University' },
+// ];
 
-const SHOW_TYPES = [
-  { value: 'events', name: 'Events' },
-  { value: 'clubs', name: 'Clubs' },
-];
+const IconWrapper = (props) => (
+  <Box display="inline-block" w="30px" {...props} />
+);
+const Icon = (props) => (
+  <Box
+    h="30px"
+    w="30px"
+    sx={{ filter: 'drop-shadow(0 0 0.2rem rgb(0, 0, 0))' }}
+    {...props}
+  />
+);
 
-const LEAGUES = [
-  { value: 'Community', name: 'Community' },
-  { value: 'University', name: 'University' },
-];
-
-const Label = styled.label`
-  padding: ${({ theme }) => theme.space[1]} ${({ theme }) => theme.space[2]};
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  font-size: ${({ theme }) => theme.fontSizes[1]};
-
-  border-radius: ${({ theme }) => theme.radii[1]};
-  margin-bottom: ${({ theme }) => theme.space[1]};
-  border: 1px solid;
-  border-color: transparent;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.greyLight};
-    border-color: ${({ theme }) => theme.colors.qukBlue};
-  }
-`;
-
-const Checkbox = styled.input`
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-`;
-
-const Checkmark = styled.span`
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
-
-  &:after {
-    content: '';
-    display: none;
-    position: relative;
-    left: 10px;
-    top: 7px;
-    width: 5px;
-    height: 10px;
-    border: solid ${({ theme }) => theme.colors.white};
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-  }
-
-  input:checked ~ & {
-    background-color: ${({ theme }) => theme.colors.qukBlue};
-  }
-
-  input:checked ~ &:after {
-    display: block;
-  }
-`;
-
-const Input = styled.input`
-  background: transparent;
-  border: 0;
-  border-bottom: 3px solid ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.white};
-  outline: 0;
-  ${space};
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.white};
-    opacity: 0.8;
-  }
-`;
-
-const StyledLink = styled.a`
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-`;
-
-const DistanceSlider = ({ min, max, defaultValue, ...props }) => {
-  const [field, , helpers] = useField(props);
-
+const Input = forwardRef(function Input(props, ref) {
   return (
-    <Slider
-      {...field}
+    <ChakraInput
+      ref={ref}
+      bg="transparent"
+      border="0"
+      borderBottom="3px solid"
+      borderColor="white"
+      color="white"
+      outline="0"
+      _placeholder={{
+        color: 'white',
+        opacity: 0.8,
+      }}
       {...props}
-      onBlur={(e) => helpers.setTouched(e)}
-      onChange={(e, v) => helpers.setValue(v)}
-      defaultValue={defaultValue}
-      valueLabelDisplay="auto"
-      min={min}
-      max={max}
     />
-  );
-};
-
-const handleChange = debounce(1000, async (values, setClubs, setEvents) => {
-  const { postcode, showTypes, leagues, distance } = values;
-  const validPostcode = !postcode || !!postcode.match(postcodeRegex);
-  if (!validPostcode) {
-    return;
-  }
-
-  const searchLeagues =
-    leagues.length > 0 ? leagues : ['Community', 'University'];
-  const searchQuery = {
-    ...values,
-    leagues: searchLeagues,
-    distance: distance * 1000,
-  };
-  const queryString = createQueryString(searchQuery);
-  const { data } = await api.get(`/search?${queryString}`);
-
-  setClubs(data.clubs);
-  setEvents(data.events);
-
-  Router.push(
-    {
-      pathname: Router.pathname,
-      query: {
-        postcode,
-        showTypes,
-        leagues,
-        distance,
-      },
-    },
-    {
-      pathname: Router.pathname,
-      query: {
-        postcode,
-        showTypes,
-        leagues,
-        distance,
-      },
-    },
-    { shallow: true }
   );
 });
 
-const AutoValidateForm = ({ setClubs, setEvents }) => {
-  const { values } = useFormikContext();
+const StyledLink = forwardRef(function StyledLink(props, ref) {
+  return (
+    <ChakraLink
+      ref={ref}
+      textDecoration="none"
+      display="flex"
+      flexDirection="column"
+      flexGrow="1"
+      _hover={{ textDecoration: 'none' }}
+      {...props}
+    />
+  );
+});
 
-  useEffect(() => {
-    handleChange(values, setClubs, setEvents);
-  }, [values, setClubs, setEvents]);
+// const DistanceSlider = ({ min, max, defaultValue, ...props }) => {
+//   // const [field, , helpers] = useField(props);
 
-  return null;
-};
+//   return (
+//     <Slider
+//       // {...field}
+//       // {...props}
+//       // onBlur={(e) => helpers.setTouched(e)}
+//       // onChange={(e, v) => helpers.setValue(v)}
+//       defaultValue={defaultValue}
+//       valueLabelDisplay="auto"
+//       min={min}
+//       max={max}
+//     />
+//   );
+// };
 
-const validatePostcode = (value) => {
-  let error;
-  if (value && !value.match(postcodeRegex)) {
-    error = true;
-  }
-  return error;
-};
+// const handleChange = debounce(1000, async (values, setClubs, setEvents) => {
+//   const { postcode, showTypes, leagues, distance } = values;
+//   const validPostcode = !postcode || !!postcode.match(postcodeRegex);
+//   if (!validPostcode) {
+//     return;
+//   }
+
+//   const searchLeagues =
+//     leagues.length > 0 ? leagues : ['Community', 'University'];
+//   const searchQuery = {
+//     ...values,
+//     leagues: searchLeagues,
+//     distance,
+//   };
+//   // const queryString = createQueryString(searchQuery);
+//   // const { data } = await api.get(`/search?${queryString}`);
+
+//   setClubs(data.clubs);
+//   setEvents(data.events);
+
+//   Router.push(
+//     {
+//       pathname: Router.pathname,
+//       query: {
+//         postcode,
+//         showTypes,
+//         leagues,
+//         distance,
+//       },
+//     },
+//     {
+//       pathname: Router.pathname,
+//       query: {
+//         postcode,
+//         showTypes,
+//         leagues,
+//         distance,
+//       },
+//     },
+//     { shallow: true }
+//   );
+// });
+
+const validPostcode = (value) => value && value.match(postcodeRegex);
 
 const FindQuidditch = ({
   clubs: initialClubs = [],
-  events: initialEvents = [],
+  // events: initialEvents = [],
 }) => {
   const { query } = useRouter();
-  const { postcode, showTypes, leagues, distance } = query;
+  const { postcode, showCommunity, showUniversity, distance = 100 } = query;
 
   const [showFilters, setShowFilters] = useState(false);
+  const showClubs = true;
+  const showEvents = false;
+  // const [showClubs, setShowClubs] = useState(true);
+  // const [showEvents, setShowEvents] = useState(false);
 
   const [clubs, setClubs] = useState(initialClubs);
-  const [events, setEvents] = useState(initialEvents);
+  const [, setEvents] = useState(null);
+  // const [events, setEvents] = useState(initialEvents);
 
-  let showTypesInitial;
+  const { register, handleSubmit, errors, watch } = useForm({
+    mode: 'on',
+    defaultValues: {
+      showCommunity: showCommunity || true,
+      showUniversity: showUniversity || true,
+      postcode: postcode || '',
+      distance: distance || 100,
+    },
+  });
 
-  if (!showTypes) {
-    showTypesInitial = null;
-  } else if (Array.isArray(showTypes)) {
-    showTypesInitial = showTypes;
-  } else {
-    showTypesInitial = [showTypes];
-  }
+  const values = watch();
 
-  let leaguesInitial;
+  useEffect(() => {
+    const refreshQuery = async () => {
+      if (!showClubs) {
+        return;
+      }
 
-  if (!leagues) {
-    leaguesInitial = null;
-  } else if (Array.isArray(leagues)) {
-    leaguesInitial = leagues;
-  } else {
-    leaguesInitial = [leagues];
-  }
+      if (!validPostcode(values.postcode)) {
+        const clubs = await getAllClubs();
+        setClubs(clubs);
+        return;
+      }
 
-  const initialValues = {
-    postcode: postcode || '',
-    showTypes: showTypesInitial || ['clubs'],
-    // showTypes: showTypesInitial || ['clubs', 'events'], // TODO: REMOVED DUE TO COVID, RETURN ONCE NORMALITY RESUMES
-    leagues: leaguesInitial || ['Community', 'University'],
-    distance: distance || 100,
-  };
+      try {
+        const { data } = await axios.get(
+          `https://api.postcodes.io/postcodes/${values.postcode}`
+        );
 
-  const showClubs = initialValues.showTypes?.includes('clubs');
-  const showEvents = initialValues.showTypes?.includes('events');
+        const clubs = await getClubs({
+          longitude: data.result.longitude,
+          latitude: data.result.latitude,
+          distance: distance,
+          community: values.showCommunity,
+          university: values.showUniversity,
+        });
+        setClubs(clubs);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-  const showNoClubsOrEvents =
-    showClubs && showEvents && !clubs.length && !events.length;
-  const showNoClubs = showClubs && !clubs.length && !showNoClubsOrEvents;
-  const showNoEvents = showEvents && !events.length && !showNoClubsOrEvents;
+    refreshQuery();
+  }, [
+    values.postcode,
+    distance,
+    values.showCommunity,
+    values.showUniversity,
+    setClubs,
+    showClubs,
+  ]);
+
+  useEffect(() => {
+    const refreshQuery = async () => {
+      if (!showEvents) {
+        return;
+      }
+
+      if (!validPostcode(values.postcode)) {
+        const clubs = await getAllEvents();
+        setEvents(clubs);
+        return;
+      }
+
+      try {
+        const { data } = await axios.get(
+          `https://api.postcodes.io/postcodes/${values.postcode}`
+        );
+
+        const events = await getEvents({
+          longitude: data.result.longitude,
+          latitude: data.result.latitude,
+          distance: values.distance,
+          community: values.showCommunity,
+          university: values.showUniversity,
+        });
+
+        setEvents(events);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    refreshQuery();
+  }, [
+    values.postcode,
+    values.distance,
+    values.showCommunity,
+    values.showUniversity,
+    setEvents,
+    showEvents,
+  ]);
+
+  // let showTypesInitial;
+
+  // if (!showTypes) {
+  //   showTypesInitial = null;
+  // } else if (Array.isArray(showTypes)) {
+  //   showTypesInitial = showTypes;
+  // } else {
+  //   showTypesInitial = [showTypes];
+  // }
+
+  // let leaguesInitial;
+
+  // if (!leagues) {
+  //   leaguesInitial = null;
+  // } else if (Array.isArray(leagues)) {
+  //   leaguesInitial = leagues;
+  // } else {
+  //   leaguesInitial = [leagues];
+  // }
+
+  // const initialValues = {
+  //   postcode: postcode || '',
+  //   showTypes: showTypesInitial || ['clubs'],
+  //   // showTypes: showTypesInitial || ['clubs', 'events'], // TODO: REMOVED DUE TO COVID, RETURN ONCE NORMALITY RESUMES
+  //   leagues: leaguesInitial || ['Community', 'University'],
+  //   distance: distance || 100,
+  // };
+
+  // const showClubs = initialValues.showTypes?.includes('clubs');
+  // const showEvents = initialValues.showTypes?.includes('events');
+
+  // const showNoClubsOrEvents =
+  //   showClubs && showEvents && !clubs.length && !events.length;
+  // const showNoClubs = showClubs && !clubs.length && !showNoClubsOrEvents;
+  // const showNoEvents = showEvents && !events.length && !showNoClubsOrEvents;
 
   return (
     <>
@@ -267,110 +313,93 @@ const FindQuidditch = ({
         description="Find your nearest clubs and upcoming Quidditch events in the UK"
         image="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959"
       />
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {}}
-        enableReinitialize
-      >
-        {({ errors, touched, values }) => (
-          <Form>
-            <Box
-              as="section"
-              position="relative"
-              backgroundImage="url(https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959)"
-              backgroundColor="qukBlue"
-              backgroundSize="cover"
-              backgroundPosition="center"
-              minHeight={BLOG_MIN_HEIGHTS}
-            >
-              <Flex
-                position="absolute"
-                minHeight={BLOG_MIN_HEIGHTS}
-                bg="qukBlue"
-                opacity={0.8}
-                width="100%"
-              />
+      <form onSubmit={handleSubmit()}>
+        <Box
+          as="section"
+          position="relative"
+          backgroundImage="url(https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959)"
+          backgroundColor="qukBlue"
+          backgroundSize="cover"
+          backgroundPosition="center"
+          minHeight={BLOG_MIN_HEIGHTS}
+        >
+          <Flex
+            position="absolute"
+            minHeight={BLOG_MIN_HEIGHTS}
+            bg="qukBlue"
+            opacity={0.8}
+            width="100%"
+          />
 
-              <Flex
-                position="relative"
-                minHeight={BLOG_MIN_HEIGHTS}
-                alignItems="center"
+          <Flex
+            position="relative"
+            minHeight={BLOG_MIN_HEIGHTS}
+            alignItems="center"
+          >
+            <Container px={{ base: 4, sm: 8, md: 9 }}>
+              <Heading
+                fontSize={{ base: '3xl', lg: '5xl' }}
+                color="white"
+                fontFamily="body"
+                textShadow="lg"
               >
-                <Container px={{ base: 4, sm: 8, md: 9 }}>
-                  <Heading
-                    fontSize={[4, 4, 6]}
-                    color="white"
-                    fontFamily="body"
-                    textShadow="lg"
-                  >
-                    Quidditch near
-                    <Box display="inline-block">
-                      <Field
-                        name="postcode"
-                        placeholder="Postcode"
-                        as={Input}
-                        size="8"
-                        marginLeft={[2, 4]}
-                        validate={validatePostcode}
-                      />
-                      {errors.postcode && touched.postcode && (
-                        <Icon>
-                          <CloseIcon />
-                        </Icon>
-                      )}
-                    </Box>
-                    <AutoValidateForm
-                      setClubs={setClubs}
-                      setEvents={setEvents}
-                    />
-                  </Heading>
-                </Container>
-              </Flex>
-            </Box>
+                Quidditch near
+                <Box display="inline-block">
+                  <Input
+                    name="postcode"
+                    placeholder="Postcode"
+                    ref={register}
+                    size="8"
+                    marginLeft={[2, 4]}
+                  />
+                  {errors.postcode && (
+                    <IconWrapper>
+                      <Icon as={CloseIcon} />
+                    </IconWrapper>
+                  )}
+                </Box>
+              </Heading>
+            </Container>
+          </Flex>
+        </Box>
 
-            <Box bg="white" py={5}>
-              <Container px={{ base: 4, sm: 8, md: 9 }}>
-                <Button
-                  variant="light"
-                  type="button"
-                  onClick={() => setShowFilters(!showFilters)}
+        <Box bg="white" py={5}>
+          <Container px={{ base: 4, sm: 8, md: 9 }}>
+            <Button
+              variant="light"
+              type="button"
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              {showFilters ? 'Hide' : 'Show'} filters
+            </Button>
+          </Container>
+        </Box>
+        {showFilters && (
+          <Box bg="white" py={5}>
+            <Container px={{ base: 4, sm: 8, md: 9 }}>
+              <Grid
+                gridGap={{ base: 4, md: 0 }}
+                gridTemplateColumns={{ base: '1fr 1fr', md: '1fr 1fr 1fr' }}
+                gridTemplateAreas={{
+                  base: '"types leagues" "distance distance"',
+                  md: '"types leagues distance"',
+                }}
+              >
+                <Box
+                  borderLeftStyle="solid"
+                  borderLeftWidth={{ base: '0', md: '1px' }}
+                  borderRightStyle="solid"
+                  borderRightWidth="1px"
+                  borderColor="lightGrey"
+                  px="4"
+                  gridArea="types"
                 >
-                  {showFilters ? 'Hide' : 'Show'} filters
-                </Button>
-              </Container>
-            </Box>
-            {showFilters && (
-              <Box bg="white" py={5}>
-                <Container px={{ base: 4, sm: 8, md: 9 }}>
-                  <Grid
-                    gridGap={{ base: 4, md: 0 }}
-                    gridTemplateColumns={{ base: '1fr 1fr', md: '1fr 1fr 1fr' }}
-                    gridTemplateAreas={{
-                      base: '"types leagues" "distance distance"',
-                      md: '"types leagues distance"',
-                    }}
-                  >
-                    <Box
-                      borderLeftStyle="solid"
-                      borderLeftWidth={{ base: '0', md: '1px' }}
-                      borderRightStyle="solid"
-                      borderRightWidth="1px"
-                      borderColor="lightGrey"
-                      px="4"
-                      gridArea="types"
-                    >
-                      <Heading
-                        as="h3"
-                        fontSize="2"
-                        fontFamily="body"
-                        mt="0"
-                        px="2"
-                      >
-                        Types{' '}
-                        {values.showTypes.length > 0 &&
-                          `(${values.showTypes.length})`}
-                      </Heading>
-                      <FieldArray
+                  <Heading as="h3" fontSize="2" fontFamily="body" mt="0" px="2">
+                    Types{' '}
+                    {values.showTypes.length > 0 &&
+                      `(${values.showTypes.length})`}
+                  </Heading>
+                  {/* <FieldArray
                         name="showTypes"
                         render={(arrayHelpers) => (
                           <Flex flexDirection="column">
@@ -399,28 +428,21 @@ const FindQuidditch = ({
                             ))}
                           </Flex>
                         )}
-                      />
-                    </Box>
+                      /> */}
+                </Box>
 
-                    <Box
-                      borderRightStyle="solid"
-                      borderRightWidth={{ base: '0', md: '1px' }}
-                      borderColor="lightGrey"
-                      px="4"
-                      gridArea="leagues"
-                    >
-                      <Heading
-                        as="h3"
-                        fontSize="2"
-                        fontFamily="body"
-                        mt="0"
-                        px="2"
-                      >
-                        Leagues{' '}
-                        {values.leagues.length > 0 &&
-                          `(${values.leagues.length})`}
-                      </Heading>
-                      <FieldArray
+                <Box
+                  borderRightStyle="solid"
+                  borderRightWidth={{ base: '0', md: '1px' }}
+                  borderColor="lightGrey"
+                  px="4"
+                  gridArea="leagues"
+                >
+                  <Heading as="h3" fontSize="2" fontFamily="body" mt="0" px="2">
+                    Leagues{' '}
+                    {values.leagues.length > 0 && `(${values.leagues.length})`}
+                  </Heading>
+                  {/* <FieldArray
                         name="leagues"
                         render={(arrayHelpers) => (
                           <Flex flexDirection="column">
@@ -455,51 +477,49 @@ const FindQuidditch = ({
                             ))}
                           </Flex>
                         )}
-                      />
-                    </Box>
+                      /> */}
+                </Box>
 
-                    <Box
-                      borderTopStyle="solid"
-                      borderRightStyle="solid"
-                      borderTopWidth={{ base: '1px', md: '0px' }}
-                      borderRightWidth={{ base: '0px', md: '1px' }}
-                      borderColor="lightGrey"
-                      px="4"
-                      py={{ base: 4, md: 0 }}
-                      gridArea="distance"
-                    >
-                      <Heading
-                        as="h3"
-                        fontSize="2"
-                        fontFamily="body"
-                        mt="0"
-                        px="0"
-                        paddingBottom={2}
-                      >
-                        Distance ({values.distance}km)
-                      </Heading>
-                      <Box px="5">
-                        <DistanceSlider
-                          id="distanceSlider"
-                          name="distance"
-                          min={1}
-                          max={500}
-                          defaultValue={values.distance}
-                          marks={[
-                            { value: 1, label: '1km' },
-                            { value: 100, label: '100km' },
-                            { value: 500, label: '500km' },
-                          ]}
-                        />
-                      </Box>
-                    </Box>
-                  </Grid>
-                </Container>
-              </Box>
-            )}
-          </Form>
+                <Box
+                  borderTopStyle="solid"
+                  borderRightStyle="solid"
+                  borderTopWidth={{ base: '1px', md: '0px' }}
+                  borderRightWidth={{ base: '0px', md: '1px' }}
+                  borderColor="lightGrey"
+                  px="4"
+                  py={{ base: 4, md: 0 }}
+                  gridArea="distance"
+                >
+                  <Heading
+                    as="h3"
+                    fontSize="2"
+                    fontFamily="body"
+                    mt="0"
+                    px="0"
+                    paddingBottom={2}
+                  >
+                    Distance ({values.distance}km)
+                  </Heading>
+                  <Box px="5">
+                    <Slider
+                      id="distanceSlider"
+                      name="distance"
+                      min={1}
+                      max={500}
+                      defaultValue={values.distance}
+                      marks={[
+                        { value: 1, label: '1km' },
+                        { value: 100, label: '100km' },
+                        { value: 500, label: '500km' },
+                      ]}
+                    />
+                  </Box>
+                </Box>
+              </Grid>
+            </Container>
+          </Box>
         )}
-      </Formik>
+      </form>
 
       <Box bg="greyLight" py={{ base: 6, lg: 10 }}>
         <Container px={{ base: 4, sm: 8, md: 9 }}>
@@ -514,7 +534,7 @@ const FindQuidditch = ({
             </Content>
           </Notification>
 
-          {showEvents && !!events.length && (
+          {/* {showEvents && !!events.length && (
             <>
               <Heading
                 as="h2"
@@ -595,7 +615,7 @@ const FindQuidditch = ({
                 </Link>
               </Flex>
             </>
-          )}
+          )} */}
 
           {showClubs && !!clubs.length && (
             <>
@@ -609,26 +629,22 @@ const FindQuidditch = ({
                 pb={3}
               >
                 {clubs.map((club) => (
-                  <Flex flexDirection="column" key={club.uuid}>
-                    <Link
-                      href="/clubs/[club]"
-                      as={`/clubs/${club.slug}`}
-                      passHref
-                    >
+                  <Flex flexDirection="column" key={club.uid}>
+                    <Link href={`/clubs/${club.uid}`} passHref>
                       <StyledLink>
                         <ClubCard
-                          backgroundColor={club.featured_color}
-                          color={club.text_color}
-                          name={club.name}
-                          league={club.league}
-                          venue={club.venue}
-                          icon={club.icon}
-                          status={club.status}
+                          backgroundColor={club.data.featured_color}
+                          color={club.data.text_color}
+                          name={club.data.club_name}
+                          league={club.data.league}
+                          venue={club.data.venue}
+                          icon={club.data.icon.url}
+                          status={club.data.active}
                           image={
-                            club.images ? (
+                            club.data.images ? (
                               <Image
-                                src={club.images[0]}
-                                alt={club.name}
+                                src={club.data.images?.[0].image.url}
+                                alt={club.club_name}
                                 width={1600}
                                 height={900}
                                 borderRadius="0px"
@@ -644,7 +660,7 @@ const FindQuidditch = ({
             </>
           )}
 
-          {showNoClubs && (
+          {/* {showNoClubs && (
             <>
               {showEvents && !!events.length && (
                 <Heading as="h2" fontSize={4} fontFamily="body" color="qukBlue">
@@ -681,9 +697,9 @@ const FindQuidditch = ({
                 </Link>
               </Flex>
             </>
-          )}
+          )} */}
 
-          {showNoClubsOrEvents && (
+          {/* {showNoClubsOrEvents && (
             <Flex
               alignItems="center"
               justifyContent="center"
@@ -713,7 +729,7 @@ const FindQuidditch = ({
                 </a>
               </Link>
             </Flex>
-          )}
+          )} */}
         </Container>
       </Box>
     </>
@@ -721,22 +737,21 @@ const FindQuidditch = ({
 };
 
 export const getServerSideProps = async ({ query }) => {
-  const leagues = query.leagues || ['Community', 'University'];
-  const searchQuery = {
-    ...query,
-    leagues,
-    distance: (query.distance || 100) * 1000,
-  };
-  const queryString = createQueryString(searchQuery);
+  const invalidPostcode =
+    !query.postcode || !!query.postcode.match(postcodeRegex);
 
-  const { data } = await api.get(`/search?${queryString}`);
+  if (invalidPostcode) {
+    const clubs = await getAllClubs();
+    // const events = await getAllEvents();
+    const events = [];
 
-  return {
-    props: {
-      clubs: data.clubs,
-      events: data.events,
-    },
-  };
+    return {
+      props: {
+        clubs,
+        events,
+      },
+    };
+  }
 };
 
 export default FindQuidditch;

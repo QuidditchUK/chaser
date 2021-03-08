@@ -1,8 +1,7 @@
-/* eslint-disable react/display-name */
 import { forwardRef } from 'react';
 import { Input as ChakraInput } from 'components';
 
-const Input = forwardRef((props, ref) => {
+const Input = forwardRef(function Input(props, ref) {
   return (
     <ChakraInput
       ref={ref}
