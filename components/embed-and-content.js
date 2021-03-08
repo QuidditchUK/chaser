@@ -1,9 +1,8 @@
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 
-import Heading from 'components/heading';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import { Grid, Flex } from 'components';
+import { Grid, Flex, Heading } from 'components';
 import Content from 'components/content';
 import { Embed } from 'components/embed-slice';
 import { CenterJustify } from 'components/image-and-content';
@@ -51,13 +50,11 @@ const Item = ({ item, isEmbedLeft }) => (
 );
 
 const EmbedAndContent = (rawData) => {
-  const data = {
-    items: get(rawData, 'items'),
-  };
+  const items = get(rawData, 'items');
 
   return (
     <>
-      {data.items.map((itemData, i) => {
+      {items.map((itemData, i) => {
         const item = {
           title: get(itemData, 'title'),
           content: get(itemData, 'content'),
