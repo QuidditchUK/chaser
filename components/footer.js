@@ -99,17 +99,17 @@ export const Footer = () => {
 
               <List>
                 <Item>
-                  <ActiveLink as="/about/contact-us" href="/about/[id]">
+                  <ActiveLink href="/about/contact-us">
                     <span>Contact Us</span>
                   </ActiveLink>
                 </Item>
                 <Item>
-                  <ActiveLink as="/about/leadership" href="/about/[id]">
+                  <ActiveLink href="/about/leadership">
                     <span>Leadership</span>
                   </ActiveLink>
                 </Item>
                 <Item>
-                  <ActiveLink as="/find-quidditch" href="/find-quidditch">
+                  <ActiveLink href="/find-quidditch">
                     <span>All Clubs</span>
                   </ActiveLink>
                 </Item>
@@ -123,12 +123,12 @@ export const Footer = () => {
                   </a>
                 </Item>
                 <Item>
-                  <ActiveLink as="/about/fees" href="/about/[id]">
+                  <ActiveLink href="/about/fees">
                     <span>Season Fees</span>
                   </ActiveLink>
                 </Item>
                 <Item>
-                  <ActiveLink as="/newsletters-archive" href="/[id]">
+                  <ActiveLink href="/newsletters-archive">
                     <span>Newsletters</span>
                   </ActiveLink>
                 </Item>
@@ -205,15 +205,12 @@ export const Footer = () => {
 
               <List>
                 <Item>
-                  <ActiveLink
-                    as="/programmes/national-teams"
-                    href="/programmes/[id]"
-                  >
+                  <ActiveLink href="/programmes/national-teams">
                     <span>National Teams</span>
                   </ActiveLink>
                 </Item>
                 <Item>
-                  <ActiveLink as="/programmes/grants" href="/programmes/[id]">
+                  <ActiveLink href="/programmes/grants">
                     <span>Grants</span>
                   </ActiveLink>
                 </Item>
@@ -238,7 +235,6 @@ export const Footer = () => {
                 Wales, Company Registration No. 12178866
               </Support>
 
-              {/* <Flex alignItems="center" justifyContent="left"> */}
               <Vercel
                 aria-label="Vercel"
                 href="https://vercel.com/?utm_source=quidditchuk&utm_campaign=oss"
@@ -247,7 +243,6 @@ export const Footer = () => {
               >
                 <VercelLogo />
               </Vercel>
-              {/* </Flex> */}
             </Box>
           </Grid>
         </Container>
