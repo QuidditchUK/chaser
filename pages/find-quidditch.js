@@ -2,7 +2,7 @@ import { useState, useEffect, forwardRef } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 // import Router, { useRouter } from 'next/router';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import axios from 'axios';
 // import { debounce } from 'throttle-debounce';
 
@@ -14,7 +14,7 @@ import {
   Grid,
   Heading,
   Input as ChakraInput,
-  Link as ChakraLink,
+  Link,
   Slider,
 } from 'components';
 // import { Box, Flex, Grid, Heading, Label as ChakraLabel, Input as ChakraInput, Link as ChakraLink, Slider } from 'components';
@@ -86,7 +86,7 @@ const Input = forwardRef(function Input(props, ref) {
 
 const StyledLink = forwardRef(function StyledLink(props, ref) {
   return (
-    <ChakraLink
+    <Link
       ref={ref}
       textDecoration="none"
       display="flex"
@@ -524,13 +524,15 @@ const FindQuidditch = ({
       <Box bg="greyLight" py={{ base: 6, lg: 10 }}>
         <Container px={{ base: 4, sm: 8, md: 9 }}>
           <Notification>
-            <Heading as="h2">Events during COVID-19</Heading>
+            <Heading as="h2" fontSize="xl" fontFamily="body">
+              Events during COVID-19
+            </Heading>
             <Content>
               All QuidditchUK Events are currently postponed due to the
               Coronavirus Pandemic. For the latest COVID guidance head to our{' '}
-              <Link href="/[id]" as="/covid" passHref>
-                <a>COVID page</a>
-              </Link>
+              <NextLink href="/[id]" as="/covid" passHref>
+                <Link color="monarchRed">COVID page</Link>
+              </NextLink>
             </Content>
           </Notification>
 
@@ -619,7 +621,7 @@ const FindQuidditch = ({
 
           {showClubs && !!clubs.length && (
             <>
-              <Heading as="h2" fontSize={4} fontFamily="body" color="qukBlue">
+              <Heading as="h2" fontSize="3xl" fontFamily="body" color="qukBlue">
                 Clubs
               </Heading>
 
@@ -630,7 +632,7 @@ const FindQuidditch = ({
               >
                 {clubs.map((club) => (
                   <Flex flexDirection="column" key={club.uid}>
-                    <Link href={`/clubs/${club.uid}`} passHref>
+                    <NextLink href={`/clubs/${club.uid}`} passHref>
                       <StyledLink>
                         <ClubCard
                           backgroundColor={club.data.featured_color}
@@ -653,7 +655,7 @@ const FindQuidditch = ({
                           }
                         />
                       </StyledLink>
-                    </Link>
+                    </NextLink>
                   </Flex>
                 ))}
               </Grid>

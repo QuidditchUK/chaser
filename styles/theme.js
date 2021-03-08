@@ -1,5 +1,4 @@
 import { extendTheme } from '@chakra-ui/react';
-import { rgba } from 'polished';
 import { createBreakpoints } from '@chakra-ui/theme-tools';
 import { ButtonStyles } from 'components/button';
 import { PrismicStyles } from 'components/prismic-wrapper';
@@ -47,9 +46,9 @@ export default extendTheme({
   },
 
   shadows: {
-    sm: `0 0 ${rem(6.5)} ${rgba(0, 0, 0, 0.5)}`,
-    md: `0 0 ${rem(10)} ${rgba(0, 0, 0, 0.3)}`,
-    lg: `0 0 ${rem(50)} ${rgba(0, 0, 0, 0.3)}`,
+    sm: `0 0 ${rem(6.5)} rgba(0, 0, 0, 0.5)`,
+    md: `0 0 ${rem(10)} rgba(0, 0, 0, 0.3)`,
+    lg: `0 0 ${rem(50)} rgba(0, 0, 0, 0.3)`,
   },
 
   styles: {

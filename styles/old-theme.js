@@ -1,5 +1,3 @@
-import { rgba } from 'polished';
-
 const emBase = 16;
 
 export const rem = (value) => `${value / emBase}rem`;
@@ -75,9 +73,9 @@ const sizes = [rem(250), rem(300), rem(400), rem(540)];
 const radii = [rem(3), rem(10)];
 
 const shadows = {
-  box: `0 0 ${rem(10)} ${rgba(0, 0, 0, 0.3)}`,
-  heading: `0 0 ${rem(50)} ${rgba(0, 0, 0, 0.3)}`,
-  body: `0 0 ${rem(6.5)} ${rgba(0, 0, 0, 0.5)}`,
+  box: `0 0 ${rem(10)} rgba(0, 0, 0, 0.3)`,
+  heading: `0 0 ${rem(50)} rgba(0, 0, 0, 0.3)`,
+  body: `0 0 ${rem(6.5)} rgba(0, 0, 0, 0.5)`,
 };
 
 const space = [
