@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import get from 'just-safe-get';
 
 import CATEGORIES from 'constants/categories';
@@ -25,23 +26,25 @@ const Tag = (props) => (
 );
 
 const BlogHero = (rawData) => {
-  const data = {
-    title: get(rawData, 'title'),
-    image: get(rawData, 'image.url'),
-    category: get(rawData, 'category'),
-  };
+  const title = get(rawData, 'title');
+  const image = get(rawData, 'image');
+  const category = get(rawData, 'category');
 
   return (
     <>
       <Box
         as="section"
         position="relative"
-        backgroundImage={`url(${data.image})`}
         backgroundColor="qukBlue"
-        backgroundSize="cover"
-        backgroundPosition="center"
         minHeight={BLOG_MIN_HEIGHTS}
       >
+        <Image
+          src={image.url}
+          alt={image.alt}
+          layout="fill"
+          objectPosition="center center"
+          objectFit="cover"
+        />
         <Flex
           position="absolute"
           minHeight={BLOG_MIN_HEIGHTS}
@@ -68,21 +71,21 @@ const BlogHero = (rawData) => {
               pb={2}
               textShadow="lg"
             >
-              {data.title}
+              {title}
             </Heading>
 
-            <Link href={`/news/${data.category.toLowerCase()}`} passHref>
+            <Link href={`/news/${category.toLowerCase()}`} passHref>
               <ChakraLink
                 textDecoration="none"
                 _hover={{ textDecoration: 'none' }}
-                href={`/news/${data.category.toLowerCase()}`}
+                href={`/news/${category.toLowerCase()}`}
               >
                 <Tag
                   fontSize="sm"
-                  bg={CATEGORIES[data.category]}
-                  borderColor={CATEGORIES[data.category]}
+                  bg={CATEGORIES[category]}
+                  borderColor={CATEGORIES[category]}
                 >
-                  {data.category}
+                  {category}
                 </Tag>
               </ChakraLink>
             </Link>
