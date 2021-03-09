@@ -29,9 +29,8 @@ You will need a `.env.local` file to set environment variables - use `.env.examp
 
 - [Next.js](https://nextjs.org/docs)
 - [React](https://reactjs.org/docs/getting-started.html)
-- [Styled Components](https://styled-components.com/docs)
-- [Styled System](https://styled-system.com/api)
-- [Polished](https://polished.js.org/docs/)
+- [ChakraUI]()
+- [Emotion]()
 - [Prismic (CMS)](https://prismic.io/docs/reactjs/getting-started/getting-started-from-scratch)
 
 ## Deployment
