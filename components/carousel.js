@@ -1,42 +1,40 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { useRef } from 'react';
-import { Box } from 'components';
-import styled from '@emotion/styled';
 import Flickity from 'react-flickity-component';
-import Image from 'components/image';
+import { Box } from 'components';
+import Image from 'components/carousel-image';
 
-const CarouselContainer = styled(Box)`
-  position: relative;
-  width: 100%;
+const CarouselContainer = (props) => (
+  <Box
+    position="relative"
+    w="100%"
+    h="0"
+    overflow="hidden"
+    {...props}
+    sx={{
+      '.flickity-prev-next-button': {
+        position: 'absolute',
+        top: '40%',
+        background: 'transparent',
+        fill: 'white',
+        width: '50px',
+        height: '50px',
+        borderRadius: '50%',
+        border: '0',
+      },
 
-  ${({ aspectRatio }) =>
-    aspectRatio &&
-    `
-    height: 0;
-    padding-bottom: ${aspectRatio}%;
-    overflow: hidden;
-  `};
+      '.previous': {
+        left: '0',
+        paddingLeft: '1rem',
+      },
 
-  .flickity-prev-next-button {
-    position: absolute;
-    top: 40%;
-    background: transparent;
-    fill: white;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 0px;
-  }
-
-  .previous {
-    left: 0;
-    padding-left: 1rem;
-  }
-
-  .next {
-    right: 0;
-    padding-right: 1rem;
-  }
-`;
+      '.next': {
+        right: '0',
+        paddingRight: '1rem',
+      },
+    }}
+  />
+);
 
 const Carousel = ({ images, height, width }) => {
   const aspectRatio = (height / width) * 100;
@@ -44,7 +42,7 @@ const Carousel = ({ images, height, width }) => {
   const hasImages = images && !!images.length;
 
   return (
-    <CarouselContainer aspectRatio={aspectRatio}>
+    <CarouselContainer pb={`${aspectRatio}%`}>
       <Flickity
         flickityRef={(ref) => {
           flickity.current = ref;
@@ -63,7 +61,6 @@ const Carousel = ({ images, height, width }) => {
               width={width}
               height={height}
               alt={image.alt}
-              borderRadius="0px"
             />
           ))}
       </Flickity>
