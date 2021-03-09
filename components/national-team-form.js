@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import get from 'just-safe-get';
 import styled from '@emotion/styled';
 import { space } from 'styled-system';
-import { Grid, Box } from 'components';
+import { Grid, Box } from '@chakra-ui/react';
 import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';

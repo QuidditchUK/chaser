@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { format } from 'date-fns';
 import parse from 'html-react-parser';
 import styled from '@emotion/styled';
-import { Box, Flex } from 'components';
+import { Box, Flex } from '@chakra-ui/react';
 import { TYPES } from 'components/club-type';
 import { parseTimestamptz } from 'modules/dates';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';

@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { Textarea as ChakraTextarea } from 'components';
+import { Textarea as ChakraTextarea } from '@chakra-ui/react';
 
 const Textarea = forwardRef(function Textarea(props, ref) {
   return (

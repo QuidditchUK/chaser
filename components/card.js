@@ -1,6 +1,6 @@
 import { RichText } from 'prismic-reactjs';
 import CATEGORIES from 'constants/categories';
-import { Heading, Text, Box } from 'components';
+import { Heading, Text, Box } from '@chakra-ui/react';
 import { rem } from 'styles/theme';
 import { linkResolver } from 'modules/prismic';
 

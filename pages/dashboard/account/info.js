@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { Box, Flex } from 'components';
+import { Box, Flex } from '@chakra-ui/react';
 import { Logo } from 'components/logo';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';

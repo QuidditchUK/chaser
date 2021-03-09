@@ -2,7 +2,7 @@ import get from 'just-safe-get';
 import { Formik, Form, Field } from 'formik';
 import { useRouter } from 'next/router';
 
-import { Box, Flex, Heading } from 'components';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import Button from 'components/button';
 import Input from 'components/input';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';

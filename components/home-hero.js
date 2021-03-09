@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 
 import Input from 'components/input';
 import Button from 'components/button';
-import { Flex, Box, Heading } from 'components';
+import { Flex, Box, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 
 const Video = (props) => (

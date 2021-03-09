@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Container from 'components/container';
-import { Flex, Box, Heading } from 'components';
+import { Flex, Box, Heading } from '@chakra-ui/react';
 
 import Content from 'components/content';
 import Image from 'components/image';

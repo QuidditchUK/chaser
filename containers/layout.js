@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { Link, Text } from 'components';
+import { Link, Text } from '@chakra-ui/react';
 
 const Navigation = dynamic(() => import('components/navigation'));
 const Footer = dynamic(() => import('components/footer'));

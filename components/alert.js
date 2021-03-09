@@ -1,4 +1,4 @@
-import { Flex } from 'components';
+import { Flex } from '@chakra-ui/react';
 import Container from 'components/container';
 
 export default function Alert({ children }) {

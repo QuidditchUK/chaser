@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Router, { useRouter } from 'next/router';
-import { Box, Grid, Flex, Link } from 'components';
+import { Box, Grid, Flex, Link } from '@chakra-ui/react';
 import { Logo } from 'components/logo';
 import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';

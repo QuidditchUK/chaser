@@ -5,7 +5,7 @@ import {
   Heading,
   Image as ChakraImage,
   Link as ChakraLink,
-} from 'components';
+} from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import Type, { TYPES } from 'components/club-type';

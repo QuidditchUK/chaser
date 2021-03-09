@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { useStyleConfig } from '@chakra-ui/react';
-import { Button as ChakraButton } from 'components';
+import { Button as ChakraButton } from '@chakra-ui/react';
 
 export const ButtonStyles = {
   baseStyle: {

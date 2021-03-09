@@ -2,7 +2,7 @@ import { RichText, Link } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import PrismicWrapper from 'components/prismic-wrapper';
 
-import { Flex, Heading, Box } from 'components';
+import { Flex, Heading, Box } from '@chakra-ui/react';
 import Card from 'components/card';
 import Image from 'components/image';
 import HorizontalScrollWrapper from 'components/horizontal-scroll-wrapper';

@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import Router from 'next/router';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
-import { Box, Grid, Flex, Link, Heading } from 'components';
+import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Logo } from 'components/logo';

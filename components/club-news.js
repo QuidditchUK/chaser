@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Grid, Flex } from 'components';
+import { Grid, Flex } from '@chakra-ui/react';
 import Card from 'components/card';
 import Image from 'components/image';
 import { StyledLink } from 'components/latest-news';

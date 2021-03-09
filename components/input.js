@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { Input as ChakraInput } from 'components';
+import { Input as ChakraInput } from '@chakra-ui/react';
 
 const Input = forwardRef(function Input(props, ref) {
   return (

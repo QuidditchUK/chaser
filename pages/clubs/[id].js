@@ -22,7 +22,7 @@ import {
   Thead,
   Link as ChakraLink,
   Text,
-} from 'components';
+} from '@chakra-ui/react';
 
 const HeroWithLocation = dynamic(() => import('components/hero-with-location'));
 const Content = dynamic(() => import('components/content'));

@@ -1,5 +1,5 @@
 import { useStyleConfig } from '@chakra-ui/react';
-import { Box } from 'components';
+import { Box } from '@chakra-ui/react';
 import Container from 'components/container';
 import { rem } from 'styles/theme';
 

@@ -1,4 +1,4 @@
-import { Box } from 'components';
+import { Box } from '@chakra-ui/react';
 
 export default function Notification(props) {
   return (

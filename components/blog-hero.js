@@ -6,7 +6,7 @@ import CATEGORIES from 'constants/categories';
 import Container from 'components/container';
 import { rem } from 'styles/theme';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
-import { Box, Flex, Heading, Link as ChakraLink } from 'components';
+import { Box, Flex, Heading, Link as ChakraLink } from '@chakra-ui/react';
 
 const Tag = (props) => (
   <Box

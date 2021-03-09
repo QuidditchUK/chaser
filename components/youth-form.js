@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as Yup from 'yup';
-import { Grid, Box } from 'components';
+import { Grid, Box } from '@chakra-ui/react';
 import Input from 'components/input';
 import Label from 'components/label';
 import Toggle from 'components/toggle';

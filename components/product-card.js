@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { space, typography, color } from 'styled-system';
 import { parse, format } from 'date-fns';
-import { Box, Flex, Grid } from 'components';
+import { Box, Flex, Grid } from '@chakra-ui/react';
 import Heading from 'components/heading';
 import { formatMinorUnitsToCurrency } from 'modules/numbers';
 

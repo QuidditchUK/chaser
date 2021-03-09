@@ -1,7 +1,7 @@
 import get from 'just-safe-get';
 import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
 import PrismicWrapper from 'components/prismic-wrapper';
-import { Box, Grid, Text } from 'components';
+import { Box, Grid, Text } from '@chakra-ui/react';
 import Image from 'components/carousel-image';
 
 const Item = ({ item }) => {

@@ -1,4 +1,4 @@
-import { Link as ChakraLink, Image } from 'components';
+import { Link as ChakraLink, Image } from '@chakra-ui/react';
 
 export const LogoLink = (props) => (
   <ChakraLink height={{ base: '35px', xl: '45px' }} {...props} />

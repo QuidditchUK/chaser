@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
-import { Box, Grid, Flex, Heading, Text, Link } from 'components';
+import { Box, Grid, Flex, Heading, Text, Link } from '@chakra-ui/react';
 import { Logo } from 'components/logo';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

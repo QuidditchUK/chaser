@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as Yup from 'yup';
 import get from 'just-safe-get';
-import { Grid, Box } from 'components';
+import { Grid, Box } from '@chakra-ui/react';
 import Input from 'components/input';
 import Label from 'components/label';
 import Textarea from 'components/textarea';

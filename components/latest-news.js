@@ -2,7 +2,7 @@ import { useState, useEffect, forwardRef } from 'react';
 import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
 
-import { Flex, Box, Heading, Link as ChakraLink } from 'components';
+import { Flex, Box, Heading, Link as ChakraLink } from '@chakra-ui/react';
 import Card from 'components/card';
 import Image from 'components/image';
 import Button from 'components/button';

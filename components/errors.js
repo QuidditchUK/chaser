@@ -1,4 +1,4 @@
-import { Box } from 'components';
+import { Box } from '@chakra-ui/react';
 
 const Error = (props) => (
   <Box display="block" color="monarchRed" fontSize="sm" {...props} />

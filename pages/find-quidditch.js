@@ -16,8 +16,8 @@ import {
   Input as ChakraInput,
   Link,
   Slider,
-} from 'components';
-// import { Box, Flex, Grid, Heading, Label as ChakraLabel, Input as ChakraInput, Link as ChakraLink, Slider } from 'components';
+} from '@chakra-ui/react';
+// import { Box, Flex, Grid, Heading, Label as ChakraLabel, Input as ChakraInput, Link as ChakraLink, Slider } from '@chakra-ui/react';
 
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';

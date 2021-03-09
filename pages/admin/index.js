@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import { Box, Flex } from 'components';
+import { Box, Flex } from '@chakra-ui/react';
 import { Table, TableRow, TableHead, TableDataBorder } from 'components/table';
 
 const Container = dynamic(() => import('components/container'));

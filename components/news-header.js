@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { Link, Flex, ListItem, UnorderedList } from 'components';
+import { Link, Flex, ListItem, UnorderedList } from '@chakra-ui/react';
 import Container from './container';
 
 const ChakraLink = forwardRef(function ChakraLink(props, ref) {

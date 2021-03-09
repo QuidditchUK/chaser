@@ -7,7 +7,7 @@ import Router from 'next/router';
 import * as Yup from 'yup';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid, Flex } from 'components';
+import { Box, Grid, Flex } from '@chakra-ui/react';
 import Meta from 'components/meta';
 import Container from 'components/container';
 import Heading from 'components/heading';

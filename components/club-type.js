@@ -1,4 +1,4 @@
-import { Text } from 'components';
+import { Text } from '@chakra-ui/react';
 
 export const TYPES = {
   University: 'keeperGreen',

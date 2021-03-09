@@ -1,4 +1,4 @@
-import { Box, Image as ChakraImage, Heading } from 'components';
+import { Box, Image as ChakraImage, Heading } from '@chakra-ui/react';
 import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 

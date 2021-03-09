@@ -1,4 +1,4 @@
-import { Box } from 'components';
+import { Box } from '@chakra-ui/react';
 import { rem } from 'styles/theme';
 
 export default function Container(props) {

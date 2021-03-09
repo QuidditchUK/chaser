@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import PrismicWrapper from 'components/prismic-wrapper';
 import Container from 'components/container';
 
-import { Box, Flex, Text, Link as ChakraLink, Image } from 'components';
+import { Box, Flex, Text, Link as ChakraLink, Image } from '@chakra-ui/react';
 import renderAuthor from 'constants/authors';
 import { rem } from 'styles/theme';
 import FacebookIcon from 'public/images/facebook.svg';

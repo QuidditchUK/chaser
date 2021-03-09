@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid, Flex, ListItem, Text, OrderedList } from 'components';
+import { Box, Grid, Flex, ListItem, Text, OrderedList } from '@chakra-ui/react';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));

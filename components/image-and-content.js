@@ -2,7 +2,7 @@ import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import { Grid, Flex, Heading, Text } from 'components';
+import { Grid, Flex, Heading, Text } from '@chakra-ui/react';
 import Image from 'components/image';
 
 import Content from 'components/content';

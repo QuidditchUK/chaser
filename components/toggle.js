@@ -1,7 +1,7 @@
 /* eslint-disable prefer-arrow-callback */
 import { forwardRef } from 'react';
 import styled from '@emotion/styled';
-import { Box } from 'components';
+import { Box } from '@chakra-ui/react';
 
 const CheckBoxWrapper = styled(Box)`
   position: relative;

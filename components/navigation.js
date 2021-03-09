@@ -12,7 +12,7 @@ import {
   PopoverContent,
   useColorModeValue,
   useDisclosure,
-} from 'components';
+} from '@chakra-ui/react';
 import Router, { useRouter } from 'next/router';
 import cookies from 'js-cookie';
 

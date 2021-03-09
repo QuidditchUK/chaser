@@ -2,7 +2,7 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
-import { Box, Grid, Flex, Link } from 'components';
+import { Box, Grid, Flex, Link } from '@chakra-ui/react';
 import { Logo } from 'components/logo';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

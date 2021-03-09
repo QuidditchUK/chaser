@@ -1,5 +1,5 @@
 import Container from 'components/container';
-import { Flex } from 'components';
+import { Flex } from '@chakra-ui/react';
 import Heading from 'components/heading';
 
 export default function PageLoading() {

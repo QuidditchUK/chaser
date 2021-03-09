@@ -1,5 +1,5 @@
 import NextImage from 'next/image';
-import { chakra } from 'components';
+import { chakra } from '@chakra-ui/react';
 
 const Image = chakra(NextImage, {
   baseStyle: {

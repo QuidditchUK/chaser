@@ -4,7 +4,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { Formik, Form, Field } from 'formik';
 import { useRouter } from 'next/router';
-import { Box, Grid, Flex, Link as ChakraLink } from 'components';
+import { Box, Grid, Flex, Link as ChakraLink } from '@chakra-ui/react';
 import { Logo } from 'components/logo';
 import { rem } from 'styles/theme';
 import Input from 'components/input';

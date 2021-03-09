@@ -2,7 +2,7 @@ import { RichText, Link } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import PrismicWrapper from 'components/prismic-wrapper';
 import { linkResolver } from 'modules/prismic';
-import { Box, Flex, Grid, Heading } from 'components';
+import { Box, Flex, Grid, Heading } from '@chakra-ui/react';
 
 import Content from 'components/content';
 import { StyledLink } from 'components/latest-news';

@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { parseCookies, setCookies } from 'modules/cookies';
 import { api } from 'modules/api';
-import { Box, Flex, Grid, Heading, UnorderedList } from 'components';
+import { Box, Flex, Grid, Heading, UnorderedList } from '@chakra-ui/react';
 import { InlineError } from 'components/errors';
 
 const Meta = dynamic(() => import('components/meta'));

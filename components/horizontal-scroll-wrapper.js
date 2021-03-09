@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Grid } from 'components';
+import { Grid } from '@chakra-ui/react';
 
 const Wrapper = styled.div`
   overflow-x: scroll;

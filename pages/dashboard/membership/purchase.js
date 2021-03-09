@@ -1,6 +1,6 @@
 import Meta from 'components/meta';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid } from 'components';
+import { Box, Grid } from '@chakra-ui/react';
 import Heading from 'components/heading';
 import Container from 'components/container';
 import { api } from 'modules/api';

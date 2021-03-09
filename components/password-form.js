@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import * as Yup from 'yup';
-import { Box, Grid } from 'components';
+import { Box, Grid } from '@chakra-ui/react';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
