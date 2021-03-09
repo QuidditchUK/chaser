@@ -1,16 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { StyledLink } from 'components/latest-news';
-import { Formik, Form, Field, ErrorMessage, useFormikContext } from 'formik';
+
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { parse } from 'date-fns';
 import Router from 'next/router';
 import * as Yup from 'yup';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid, Flex } from '@chakra-ui/react';
+import { Box, Grid, Flex, Heading, Select, Checkbox } from '@chakra-ui/react';
 import Meta from 'components/meta';
 import Container from 'components/container';
-import Heading from 'components/heading';
 import Content from 'components/content';
 import Label from 'components/label';
 import Button from 'components/button';
@@ -29,18 +30,7 @@ const SelectClubSchema = Yup.object().shape({
   ),
 });
 
-const AutoValidateForm = ({ setSelectedClub, clubs }) => {
-  const { values } = useFormikContext();
-
-  useEffect(() => {
-    const club = clubs.find(({ uuid }) => uuid === values.club_uuid);
-    setSelectedClub(club);
-  }, [values, setSelectedClub, clubs]);
-
-  return null;
-};
-
-const handleSubmit = async ({ club_uuid }, setSubmitting, setServerError) => {
+const handleClubSubmit = async ({ club_uuid }, setServerError) => {
   try {
     setServerError(null);
 
@@ -51,28 +41,34 @@ const handleSubmit = async ({ club_uuid }, setSubmitting, setServerError) => {
       action: 'Club selected',
     });
 
-    setSubmitting(false);
     Router.push('/dashboard');
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
-    setSubmitting(false);
   }
 };
-
-const Checkbox = ({ field, type, selectedClub, ...labelProps }) => (
-  <Label {...labelProps}>
-    <input {...field} type={type} /> By checking this box I acknowledge that I
-    have read the above disclaimer and I intend for{' '}
-    <strong>{selectedClub}</strong> to be my QuidditchUK club for 2020/2021
-    Season.
-  </Label>
-);
 
 const ManageClub = ({ user, clubs = [] }) => {
   const [selectedClub, setSelectedClub] = useState(
     user?.club_uuid ? clubs.find(({ uuid }) => uuid === user.club_uuid) : ''
   );
   const [serverError, setServerError] = useState(null);
+
+  const { register, errors, handleSubmit, watch, formState } = useForm({
+    resolver: yupResolver(SelectClubSchema),
+    defaultValues: {
+      club_uuid: null,
+      confirm: false,
+    },
+  });
+
+  const { isSubmitting } = formState;
+  const currentSelectedClub = watch('club_uuid');
+
+  useEffect(() => {
+    if (currentSelectedClub !== selectedClub) {
+      setSelectedClub(currentSelectedClub);
+    }
+  }, [currentSelectedClub, selectedClub, setSelectedClub]);
 
   return (
     <>
@@ -130,71 +126,60 @@ const ManageClub = ({ user, clubs = [] }) => {
               </Content>
 
               {!user.club_uuid && (
-                <Formik
-                  onSubmit={(values, { setSubmitting }) =>
-                    handleSubmit(values, setSubmitting, setServerError)
-                  }
-                  initialValues={{
-                    club_uuid: null,
-                    confirm: false,
-                  }}
-                  validationSchema={SelectClubSchema}
-                >
-                  {({ isSubmitting }) => (
-                    <Form>
-                      <Grid gridTemplateColumns="1fr" mt={5}>
-                        <Label htmlFor="club_uuid" mb="2">
-                          Select your club <Required />
-                        </Label>
-
-                        <Field id="club_uuid" name="club_uuid" as="select">
-                          <option disabled selected value>
-                            Select a club
-                          </option>
-                          {clubs.map((club) => (
-                            <option key={club.uuid} value={club.uuid}>
-                              {club.name}
-                            </option>
-                          ))}
-                        </Field>
-
-                        <ErrorMessage
-                          name="club_uuid"
-                          component={InlineError}
-                          marginBottom={3}
-                        />
-
-                        <Field
-                          mt="3"
-                          name="confirm"
-                          type="checkbox"
-                          component={Checkbox}
-                          selectedClub={selectedClub?.name}
-                        />
-
-                        <ErrorMessage
-                          name="confirm"
-                          component={InlineError}
-                          marginBottom={3}
-                        />
-
-                        <AutoValidateForm
-                          setSelectedClub={setSelectedClub}
-                          clubs={clubs}
-                        />
-                      </Grid>
-
-                      <Button
-                        mt="2"
-                        type="submit"
-                        variant="green"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? 'Submitting' : 'Select my club'}
-                      </Button>
-                    </Form>
+                <form
+                  onSubmit={handleSubmit((values) =>
+                    handleClubSubmit(values, setServerError)
                   )}
-                </Formik>
+                >
+                  <Grid gridTemplateColumns="1fr" mt={5}>
+                    <Label htmlFor="club_uuid" mb="2">
+                      Select your club <Required />
+                    </Label>
+
+                    <Select
+                      id="club_uuid"
+                      name="club_uuid"
+                      as="select"
+                      ref={register}
+                    >
+                      <option disabled selected value>
+                        Select a club
+                      </option>
+                      {clubs.map((club) => (
+                        <option key={club.uuid} value={club.uuid}>
+                          {club.name}
+                        </option>
+                      ))}
+                    </Select>
+
+                    {errors.club_uuid && (
+                      <InlineError mb={3}>
+                        {errors.club_uuid.message}
+                      </InlineError>
+                    )}
+                    <Label mt="3">
+                      <Checkbox name="confirm" ref={register}>
+                        By checking this box I acknowledge that I have read the
+                        above disclaimer and I intend for{' '}
+                        <strong>{selectedClub.name}</strong> to be my
+                        QuidditchUK club for the 2021/2022 Season.
+                      </Checkbox>
+                    </Label>
+
+                    {errors.confirm && (
+                      <InlineError mb={3}>{errors.confirm.message}</InlineError>
+                    )}
+                  </Grid>
+
+                  <Button
+                    mt="2"
+                    type="submit"
+                    variant="green"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Submitting' : 'Select my club'}
+                  </Button>
+                </form>
               )}
 
               {serverError && <InlineError my={3}>{serverError}</InlineError>}

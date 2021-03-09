@@ -17,7 +17,6 @@ import {
   Link,
   Slider,
 } from '@chakra-ui/react';
-// import { Box, Flex, Grid, Heading, Label as ChakraLabel, Input as ChakraInput, Link as ChakraLink, Slider } from '@chakra-ui/react';
 
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';
@@ -178,7 +177,7 @@ const FindQuidditch = ({
   // const [events, setEvents] = useState(initialEvents);
 
   const { register, handleSubmit, errors, watch } = useForm({
-    mode: 'on',
+    mode: 'onBlur',
     defaultValues: {
       showCommunity: showCommunity || true,
       showUniversity: showUniversity || true,

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { space } from 'styled-system';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { Formik, Form, Field } from 'formik';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { Box, Grid, Flex, Link as ChakraLink } from '@chakra-ui/react';
 import { Logo } from 'components/logo';
@@ -77,8 +77,19 @@ const Vercel = styled.a`
   }
 `;
 
+const handleFindQuidditch = async ({ postcode }, router) => {
+  await router.push(
+    `/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`
+  );
+  window.scrollTo(0, 0);
+};
+
 export const Footer = () => {
   const router = useRouter();
+  const { register, handleSubmit } = useForm({
+    defaultValues: { postcode: '' },
+  });
+
   return (
     <footer>
       <Box
@@ -282,32 +293,24 @@ export const Footer = () => {
               order={{ base: 1, md: 2 }}
               alignItems={{ base: 'center', md: 'flex-end' }}
             >
-              <Flex>
-                <Formik
-                  initialValues={{ postcode: '' }}
-                  onSubmit={({ postcode }) =>
-                    router
-                      .push(
-                        `/find-quidditch${
-                          postcode ? `?postcode=${postcode}` : ''
-                        }`
-                      )
-                      .then(() => window.scrollTo(0, 0))
-                  }
-                >
-                  <Form>
-                    <Field
-                      as={Input}
-                      placeholder="Enter your postcode"
-                      name="postcode"
-                      aria-label="Find Quidditch"
-                    />
-                    <Button type="submit" variant="secondary" ml={2}>
-                      Find
-                    </Button>
-                  </Form>
-                </Formik>
-              </Flex>
+              <form
+                onSubmit={handleSubmit((values) =>
+                  handleFindQuidditch(values, router)
+                )}
+              >
+                <Flex alignItems="center">
+                  <Input
+                    placeholder="Enter your postcode"
+                    ref={register}
+                    name="postcode"
+                    aria-label="Find Quidditch"
+                    m={0}
+                  />
+                  <Button type="submit" variant="secondary" ml={2} py={0}>
+                    Find
+                  </Button>
+                </Flex>
+              </form>
 
               <Flex justifyContent={{ base: 'center', md: 'flex-end' }} mt={5}>
                 <Icon

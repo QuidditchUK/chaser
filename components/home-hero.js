@@ -1,11 +1,18 @@
 import { useRouter } from 'next/router';
 import get from 'just-safe-get';
-import { Formik, Form, Field } from 'formik';
+import { useForm } from 'react-hook-form';
 
 import Input from 'components/input';
 import Button from 'components/button';
 import { Flex, Box, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
+
+const handleFindQuidditch = async ({ postcode }, router) => {
+  await router.push(
+    `/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`
+  );
+  window.scrollTo(0, 0);
+};
 
 const Video = (props) => (
   <Box as="video" w="121%" minH="100%" objectFit="cover" {...props} />
@@ -13,6 +20,9 @@ const Video = (props) => (
 
 const HomeHero = (rawData) => {
   const router = useRouter();
+  const { register, handleSubmit } = useForm({
+    defaultValues: { postcode: '' },
+  });
 
   const title = get(rawData, 'primary.slug');
   const cta_text = get(rawData, 'primary.cta_text');
@@ -57,28 +67,18 @@ const HomeHero = (rawData) => {
           {title}
         </Heading>
 
-        <Formik
-          initialValues={{ postcode: '' }}
-          onSubmit={({ postcode }) =>
-            router
-              .push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`)
-              .then(() => window.scrollTo(0, 0))
-          }
+        <form
+          onSubmit={handleSubmit((values) =>
+            handleFindQuidditch(values, router)
+          )}
         >
-          <Form>
-            <Flex flexDirection="row">
-              <Field
-                id="hero_postcode"
-                name="postcode"
-                placeholder="Postcode"
-                as={Input}
-              />
-              <Button type="submit" variant="primary" ml={2}>
-                {cta_text}
-              </Button>
-            </Flex>
-          </Form>
-        </Formik>
+          <Flex flexDirection="row">
+            <Input ref={register} name="postcode" placeholder="Postcode" />
+            <Button type="submit" variant="primary" ml={2}>
+              {cta_text}
+            </Button>
+          </Flex>
+        </form>
       </Flex>
     </Box>
   );

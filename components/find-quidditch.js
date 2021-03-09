@@ -1,31 +1,44 @@
 import get from 'just-safe-get';
-import { Formik, Form, Field } from 'formik';
 import { useRouter } from 'next/router';
-
+import Image from 'next/image';
+import { useForm } from 'react-hook-form';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import Button from 'components/button';
 import Input from 'components/input';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 
+const handleFindQuidditch = async ({ postcode }, router) => {
+  await router.push(
+    `/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`
+  );
+  window.scrollTo(0, 0);
+};
+
 const FindQuidditch = (rawData) => {
   const router = useRouter();
-  const data = {
-    title: get(rawData, 'primary.title'),
-    image: get(rawData, 'primary.image.url'),
-    variant: get(rawData, 'primary.variant'),
-  };
+  const title = get(rawData, 'primary.title');
+  const image = get(rawData, 'primary.image');
+  const variant = get(rawData, 'primary.variant');
+
+  const { register, handleSubmit } = useForm({
+    defaultValues: { postcode: '' },
+  });
 
   return (
     <Box
       as="section"
       position="relative"
-      backgroundImage={`url(${data.image})`}
       backgroundColor="qukBlue"
-      backgroundSize="cover"
-      backgroundPosition="center"
       minHeight={HERO_MIN_HEIGHTS}
       px={{ base: 4, sm: 8, md: 9 }}
     >
+      <Image
+        src={image.url}
+        alt={image.alt}
+        layout="fill"
+        objectPosition="center center"
+        objectFit="cover"
+      />
       <Flex
         position="relative"
         minHeight={HERO_MIN_HEIGHTS}
@@ -36,37 +49,31 @@ const FindQuidditch = (rawData) => {
         <Heading
           as="label"
           htmlFor="prismic_postcode"
-          fontSize="3xl"
+          fontSize={{ base: '3xl', md: '4xl' }}
           color="white"
           textAlign="center"
           mt={0}
           textShadow="lg"
           pb="7"
         >
-          {data.title}
+          {title}
         </Heading>
-        <Formik
-          initialValues={{ postcode: '' }}
-          onSubmit={({ postcode }) =>
-            router
-              .push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`)
-              .then(() => window.scrollTo(0, 0))
-          }
+        <form
+          onSubmit={handleSubmit((values) =>
+            handleFindQuidditch(values, router)
+          )}
         >
-          <Form>
-            <Flex flexDirection="row">
-              <Field
-                as={Input}
-                id="prismic_postcode"
-                placeholder="Enter your postcode"
-                name="postcode"
-              />
-              <Button type="submit" variant={data.variant} ml={2}>
-                Find Quidditch
-              </Button>
-            </Flex>
-          </Form>
-        </Formik>
+          <Flex flexDirection="row">
+            <Input
+              ref={register}
+              placeholder="Enter your postcode"
+              name="postcode"
+            />
+            <Button type="submit" variant={variant} ml={2}>
+              Find Quidditch
+            </Button>
+          </Flex>
+        </form>
       </Flex>
     </Box>
   );
