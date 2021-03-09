@@ -17,8 +17,6 @@ Sentry.init({
 
 const Scripts = dynamic(() => import('../document/scripts'), { ssr: false });
 
-require('intersection-observer');
-
 function App({ Component, pageProps, err }) {
   useEffect(() => {
     const handleRouteChange = (url) => {

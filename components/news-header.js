@@ -36,7 +36,7 @@ export default function NewsHeader() {
         '&::-webkit-scrollbar': {
           display: 'none',
         },
-        'scrollbar-width': 'none',
+        scrollbarWidth: 'none',
       }}
     >
       <Container px={6} maxWidth={{ base: '100%', md: '700px' }}>
