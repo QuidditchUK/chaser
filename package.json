@@ -37,7 +37,6 @@
     "react-hook-form": "^6.10.0",
     "react-intersection-observer": "^8.26.2",
     "react-is": "^17.0.0",
-    "simple-react-lightbox": "3.6.0",
     "styled-system": "5.1.5",
     "swr": "^0.4.0",
     "throttle-debounce": "^3.0.0",
