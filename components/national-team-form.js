@@ -4,9 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as Yup from 'yup';
 import get from 'just-safe-get';
-import styled from '@emotion/styled';
-import { space } from 'styled-system';
-import { Grid, Box } from '@chakra-ui/react';
+import { Grid, Box, Select } from '@chakra-ui/react';
 import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';
@@ -20,13 +18,6 @@ import { api } from 'modules/api';
 import { rem } from 'styles/theme';
 
 const NATIONAL_TEAMS = ['UK', 'Scotland', 'Wales'];
-
-const Select = styled.select`
-  color: ${({ theme }) => theme.colors.qukBlue};
-  font-size: ${({ theme }) => theme.fontSizes.body};
-  padding: 0;
-  ${space};
-`;
 
 const NationalTeamFormSchema = Yup.object().shape({
   name: Yup.string().required('Please enter your name'),
@@ -152,7 +143,14 @@ const NationalTeamForm = (rawData) => {
               Team to be considered for <Required />
             </Label>
 
-            <Select id="team" name="team" ref={register} marginBottom={3}>
+            <Select
+              id="team"
+              name="team"
+              ref={register}
+              marginBottom={3}
+              bg="white"
+              color="qukBlue"
+            >
               <option disabled selected value>
                 Select a national team
               </option>

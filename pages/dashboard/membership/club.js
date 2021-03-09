@@ -141,6 +141,8 @@ const ManageClub = ({ user, clubs = [] }) => {
                       name="club_uuid"
                       as="select"
                       ref={register}
+                      bg="white"
+                      color="qukBlue"
                     >
                       <option disabled selected value>
                         Select a club
