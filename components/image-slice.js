@@ -31,7 +31,12 @@ const Item = ({ item }) => {
         )}
       </Box>
 
-      <Modal isOpen={isOpen} size="full" onClose={onClose}>
+      <Modal
+        isOpen={isOpen}
+        size="full"
+        onClose={onClose}
+        allowPinchZoom={true}
+      >
         <ModalOverlay />
         <ModalContent mx={{ base: 4, xl: 20 }} h="initial" bg="none">
           <Image
