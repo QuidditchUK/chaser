@@ -1,30 +1,25 @@
-/* eslint-disable react/forbid-prop-types */
-
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import styled from '@emotion/styled';
 
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import { Box, Grid, Flex, Heading } from 'components';
+import { Grid, Flex, Heading, Text } from 'components';
 import Image from 'components/image';
-import { Support } from 'components/image-slice';
+
 import Content from 'components/content';
 import ExternalLink from 'components/external-link';
 import Button from 'components/button';
 import { linkResolver } from 'modules/prismic';
-
-export const CenterJustify = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
 
 const Item = ({ item, isImageLeft }) => (
   <Grid
     gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
     gridGap={{ base: 4, md: 9 }}
   >
-    <CenterJustify order={{ base: 2, md: `${isImageLeft ? 2 : 1}` }}>
+    <Flex
+      direction="column"
+      justifyContent="center"
+      order={{ base: 2, md: `${isImageLeft ? 2 : 1}` }}
+    >
       {RichText.asText(item.title) && (
         <Heading as="h2" fontSize={{ base: 'xl', md: '3xl' }} mt={2}>
           {RichText.asText(item.title)}
@@ -44,9 +39,13 @@ const Item = ({ item, isImageLeft }) => (
           </ExternalLink>
         </Flex>
       )}
-    </CenterJustify>
+    </Flex>
 
-    <CenterJustify order={{ base: 1, md: `${isImageLeft ? 1 : 2}` }}>
+    <Flex
+      direction="column"
+      justifyContent="center"
+      order={{ base: 1, md: `${isImageLeft ? 1 : 2}` }}
+    >
       <Image
         alt={item?.image?.alt}
         src={item?.image?.url}
@@ -54,11 +53,11 @@ const Item = ({ item, isImageLeft }) => (
         width={item.image?.dimensions?.width}
       />
       {RichText.asText(item.support) && (
-        <Support textAlign="center" pt={2} fontStyle="italic">
+        <Text textAlign="center" pt={2} fontStyle="italic">
           {RichText.render(item.support, linkResolver)}
-        </Support>
+        </Text>
       )}
-    </CenterJustify>
+    </Flex>
   </Grid>
 );
 

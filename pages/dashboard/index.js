@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 import { Box, Grid, Flex, ListItem, Text, OrderedList } from 'components';
-import { CenterJustify } from 'components/image-and-content';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
@@ -90,7 +89,12 @@ const Dashboard = ({ user }) => {
               borderRadius={1}
               overflow="hidden"
             >
-              <CenterJustify px={{ base: 6, md: 8 }} py={4}>
+              <Flex
+                direction="column"
+                justifyContent="center"
+                px={{ base: 6, md: 8 }}
+                py={4}
+              >
                 <Heading as="h2" fontFamily="body" mt={0}>
                   Get ready for brooms up
                 </Heading>
@@ -154,7 +158,7 @@ const Dashboard = ({ user }) => {
                     </Flex>
                   </ListItem>
                 </OrderedList>
-              </CenterJustify>
+              </Flex>
 
               <Box
                 position="relative"

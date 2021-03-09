@@ -1,15 +1,8 @@
 import get from 'just-safe-get';
-import styled from '@emotion/styled';
 import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
-import { typography, space } from 'styled-system';
 import PrismicWrapper from 'components/prismic-wrapper';
-import { Box, Grid } from 'components';
-import Image from 'components/image';
-
-export const Support = styled.div`
-  ${typography};
-  ${space};
-`;
+import { Box, Grid, Text } from 'components';
+import Image from 'components/carousel-image';
 
 const Item = ({ item }) => {
   const { height, width } = item.image?.dimensions;
@@ -23,24 +16,22 @@ const Item = ({ item }) => {
         width={width}
       />
       {item.support && (
-        <Support textAlign="center" pt={2} fontStyle="italic">
+        <Text textAlign="center" pt={2} fontStyle="italic">
           {item.support}
-        </Support>
+        </Text>
       )}
     </Box>
   );
 };
 
 const ImageSlice = (rawData) => {
-  const data = {
-    items: get(rawData, 'items'),
-    variant: get(rawData, 'primary.variant'),
-  };
+  const items = get(rawData, 'items');
+  const variant = get(rawData, 'primary.variant');
 
-  const multipleImages = data.items.length > 1;
+  const multipleImages = items.length > 1;
 
   return (
-    <PrismicWrapper variant={data.variant} small>
+    <PrismicWrapper variant={variant} small>
       <SimpleReactLightbox>
         <SRLWrapper options={{ settings: { lightboxTransitionSpeed: 0.3 } }}>
           <Grid
@@ -50,7 +41,7 @@ const ImageSlice = (rawData) => {
             }}
             gridGap={{ base: 4, md: 9 }}
           >
-            {data.items.map((itemData, i) => {
+            {items.map((itemData, i) => {
               const item = {
                 image: get(itemData, 'image'),
                 support: get(itemData, 'support'),

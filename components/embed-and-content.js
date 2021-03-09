@@ -2,11 +2,10 @@ import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import { Grid, Flex, Heading } from 'components';
+import { Grid, Flex, Heading, Text } from 'components';
 import Content from 'components/content';
 import { Embed } from 'components/embed-slice';
-import { CenterJustify } from 'components/image-and-content';
-import { Support } from 'components/image-slice';
+
 import ExternalLink from 'components/external-link';
 import Button from 'components/button';
 import { linkResolver } from 'modules/prismic';
@@ -16,7 +15,11 @@ const Item = ({ item, isEmbedLeft }) => (
     gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
     gridGap={{ base: 4, md: 9 }}
   >
-    <CenterJustify order={{ base: 2, md: `${isEmbedLeft ? 2 : 1}` }}>
+    <Flex
+      direction="column"
+      justifyContent="center"
+      order={{ base: 2, md: `${isEmbedLeft ? 2 : 1}` }}
+    >
       {RichText.asText(item.title) && (
         <Heading as="h2" fontSize="xl" mt={2}>
           {RichText.asText(item.title)}
@@ -36,16 +39,20 @@ const Item = ({ item, isEmbedLeft }) => (
           </ExternalLink>
         </Flex>
       )}
-    </CenterJustify>
+    </Flex>
 
-    <CenterJustify order={{ base: 1, md: `${isEmbedLeft ? 1 : 2}` }}>
+    <Flex
+      direction="column"
+      justifyContent="center"
+      order={{ base: 1, md: `${isEmbedLeft ? 1 : 2}` }}
+    >
       <Embed embed={item.embed} />
       {RichText.asText(item.support) && (
-        <Support textAlign="center" pt={2} fontStyle="italic">
+        <Text textAlign="center" pt={2} fontStyle="italic">
           {RichText.render(item.support)}
-        </Support>
+        </Text>
       )}
-    </CenterJustify>
+    </Flex>
   </Grid>
 );
 
