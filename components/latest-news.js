@@ -2,7 +2,13 @@ import { useState, useEffect, forwardRef } from 'react';
 import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
 
-import { Flex, Box, Heading, Link as ChakraLink } from '@chakra-ui/react';
+import {
+  Flex,
+  Box,
+  Heading,
+  Link as ChakraLink,
+  usePrefersReducedMotion,
+} from '@chakra-ui/react';
 import Card from 'components/card';
 import Image from 'components/image';
 import Button from 'components/button';
@@ -16,6 +22,9 @@ import {
 } from 'modules/prismic';
 
 export const StyledLink = forwardRef(function StyledLink(props, ref) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const scale = prefersReducedMotion ? '1.0' : '1.1';
+
   return (
     <ChakraLink
       ref={ref}
@@ -23,7 +32,17 @@ export const StyledLink = forwardRef(function StyledLink(props, ref) {
       display="flex"
       flexDirection="column"
       flexGrow="1"
-      _hover={{ textDecoration: 'none' }}
+      _hover={{
+        textDecoration: 'none',
+        img: {
+          scale,
+        },
+      }}
+      sx={{
+        img: {
+          transition: 'scale 1s',
+        },
+      }}
       {...props}
     />
   );

@@ -33,8 +33,6 @@ const HeroWithLocation = ({
         as="section"
         position="relative"
         bg="greyLight"
-        bgSize="cover"
-        bgPositon="center"
         minHeight={BLOG_MIN_HEIGHTS}
       >
         {isDesktop && images.length > 1 && (
