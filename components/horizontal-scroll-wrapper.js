@@ -10,8 +10,10 @@ const HorizontalScrollWrapper = ({
       <Box
         overflowX={{ base: 'scroll', md: 'initial' }}
         overflowY={{ base: 'hidden', md: 'initial' }}
-        scrollbarWidth="none"
-        sx={{ '&::-webkit-scrollbar': { display: 'none' } }}
+        sx={{
+          '&::-webkit-scrollbar': { display: 'none' },
+          scrollbarWidth: 'none',
+        }}
       >
         <Grid
           gridTemplateColumns={{
