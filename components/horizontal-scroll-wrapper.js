@@ -1,29 +1,4 @@
-import styled from '@emotion/styled';
-import { Grid } from '@chakra-ui/react';
-
-const Wrapper = styled.div`
-  overflow-x: scroll;
-  overflow-y: hidden;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  scrollbar-width: none;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    overflow-x: initial;
-    overflow-y: initial;
-  }
-`;
-
-const Spacer = styled.div`
-  display: block;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: none;
-  }
-`;
+import { Grid, Box } from '@chakra-ui/react';
 
 const HorizontalScrollWrapper = ({
   horizontalScroll = false,
@@ -32,7 +7,12 @@ const HorizontalScrollWrapper = ({
 }) => (
   <>
     {horizontalScroll ? (
-      <Wrapper>
+      <Box
+        overflowX={{ base: 'scroll', md: 'initial' }}
+        overflowY={{ base: 'hidden', md: 'initial' }}
+        scrollbarWidth="none"
+        sx={{ '&::-webkit-scrollbar': { display: 'none' } }}
+      >
         <Grid
           gridTemplateColumns={{
             base: `1rem repeat(${itemsCount}, calc(75% - 40px)) 2.5rem`,
@@ -40,11 +20,11 @@ const HorizontalScrollWrapper = ({
           }}
           gridGap={{ base: 4, md: 9 }}
         >
-          <Spacer />
+          <Box display={{ base: 'block', md: 'none' }} />
           {children}
-          <Spacer />
+          <Box display={{ base: 'block', md: 'none' }} />
         </Grid>
-      </Wrapper>
+      </Box>
     ) : (
       <Grid
         gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"

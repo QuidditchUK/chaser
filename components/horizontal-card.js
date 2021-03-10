@@ -57,16 +57,14 @@ const HorizontalCard = ({
 );
 
 const HorizontalCardsSlice = (rawData) => {
-  const data = {
-    title: get(rawData, 'primary.title'),
-    content: get(rawData, 'primary.content'),
-    variant: get(rawData, 'primary.variant'),
-    items: get(rawData, 'items'),
-  };
+  const title = get(rawData, 'primary.title');
+  const content = get(rawData, 'primary.content');
+  const variant = get(rawData, 'primary.variant');
+  const items = get(rawData, 'items');
 
   return (
-    <PrismicWrapper variant={data.variant} px={{ base: 4, sm: 8, md: 9 }}>
-      {RichText.asText(data.title) && (
+    <PrismicWrapper variant={variant} px={{ base: 4, sm: 8, md: 9 }}>
+      {RichText.asText(title) && (
         <Heading
           as="h2"
           fontSize="3xl"
@@ -74,17 +72,17 @@ const HorizontalCardsSlice = (rawData) => {
           textAlign="center"
           px={{ base: 4, sm: 8, md: 9 }}
         >
-          {RichText.asText(data.title)}
+          {RichText.asText(title)}
         </Heading>
       )}
 
-      {data.content && (
+      {content && (
         <Content textAlign="center" pb={3} px={{ base: 4, sm: 8, md: 9 }}>
-          {RichText.render(data.content, linkResolver)}
+          {RichText.render(content, linkResolver)}
         </Content>
       )}
 
-      {data.items.map((itemData, i) => {
+      {items.map((itemData, i) => {
         const item = {
           title: get(itemData, 'title'),
           content: get(itemData, 'content'),
