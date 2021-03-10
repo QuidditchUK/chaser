@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import * as Yup from 'yup';
-import { Box, Grid } from '@chakra-ui/react';
+import { Flex, Grid, Text } from '@chakra-ui/react';
+import { CheckIcon } from '@chakra-ui/icons';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,7 +11,6 @@ import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';
 import { InlineError } from 'components/errors';
-import Content from 'components/content';
 import { api } from 'modules/api';
 import Required from 'components/required';
 
@@ -146,19 +146,20 @@ const InfoForm = () => {
       )}
 
       {serverSuccess && (
-        <Box
-          bg="qukBlue"
-          px="4"
-          py="2"
-          mt="6"
-          borderColor="qukBlue"
+        <Flex
+          alignItems="center"
+          bg="keeperGreen"
+          px={4}
+          py={1}
+          mt={6}
+          borderColor="keeperGreen"
           borderWidth="1px"
           borderStyle="solid"
           color="white"
-          borderRadius="sm"
+          borderRadius="md"
         >
-          <Content>Password updated</Content>
-        </Box>
+          <CheckIcon mr={3} /> <Text fontWeight="bold">Password updated</Text>
+        </Flex>
       )}
     </>
   );

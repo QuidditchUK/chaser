@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as Yup from 'yup';
-import { Box, Grid } from '@chakra-ui/react';
+import { Flex, Grid, Switch, Text } from '@chakra-ui/react';
+import { CheckIcon } from '@chakra-ui/icons';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,7 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';
-import Toggle from 'components/toggle';
 import { InlineError } from 'components/errors';
 import Content from 'components/content';
 import { api } from 'modules/api';
@@ -136,9 +136,15 @@ const InfoForm = ({ user }) => {
 
           <Label htmlFor="is_student">
             Are you a student? <Required />
+            <Switch
+              name="is_student"
+              ref={register}
+              colorScheme="green"
+              ml={3}
+              my={3}
+              size="lg"
+            />
           </Label>
-
-          <Toggle my={3} name="is_student" ref={register} />
 
           {watchIsStudent && (
             <>
@@ -183,19 +189,20 @@ const InfoForm = ({ user }) => {
       )}
 
       {serverSuccess && (
-        <Box
-          bg="qukBlue"
-          px="4"
-          py="2"
-          mt="6"
-          borderColor="qukBlue"
+        <Flex
+          alignItems="center"
+          bg="keeperGreen"
+          px={4}
+          py={1}
+          mt={6}
+          borderColor="keeperGreen"
           borderWidth="1px"
           borderStyle="solid"
           color="white"
-          borderRadius="sm"
+          borderRadius="md"
         >
-          <Content>User updated</Content>
-        </Box>
+          <CheckIcon mr={3} /> <Text fontWeight="bold">User updated</Text>
+        </Flex>
       )}
     </>
   );

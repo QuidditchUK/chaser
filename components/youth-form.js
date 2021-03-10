@@ -4,15 +4,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as Yup from 'yup';
-import { Grid, Box, Heading } from '@chakra-ui/react';
+import { Grid, Flex, Heading, Switch, Text } from '@chakra-ui/react';
+import { CheckIcon } from '@chakra-ui/icons';
 import Input from 'components/input';
 import Label from 'components/label';
-import Toggle from 'components/toggle';
 import Textarea from 'components/textarea';
 import Button from 'components/button';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
 import Container from 'components/container';
-import Content from 'components/content';
 import Required from 'components/required';
 import { InlineError } from 'components/errors';
 import { api } from 'modules/api';
@@ -87,36 +86,33 @@ const YouthCoachForm = () => {
         <Heading as="h1" fontFamily="body" textAlign="center">
           Youth Coaching
         </Heading>
-        <Content>
-          <p>
-            QuidditchUK’s officially endorsed youth quidditch partner, Enrich
-            Education, are seeking assistants and coaches to help run their
-            growing programme of bringing youth quidditch into schools
-            throughout the country. Assistants and coaches may be paid up to
-            £70.00 per day and are expected to be available between 8:00 am and
-            3:30 pm.
-          </p>
-          <p>
-            Selection will be made by Enrich Education who will contact you
-            regarding potential work as it becomes available. Your role may
-            include refereeing youth quidditch games, assisting or leading
-            coaching sessions with children aged up to 10 years old, and keeping
-            equipment clean and ensuring they are suitable within COVID
-            applications.{' '}
-          </p>
-          <p>
-            Importantly, those selected will never be expected to run a session
-            by themselves and will always be partnered with an experienced
-            qualified full-time member of Enrich Education. All equipment and
-            resources required will be supplied by Enrich Education.
-          </p>
-          <p>
-            You are required to have legal right to work in the United Kingdom
-            to apply, as well as a valid DBS check. Those without a valid DBS
-            check may still apply and Enrich Education will guide you in
-            obtaining this.
-          </p>
-        </Content>
+
+        <Text>
+          QuidditchUK’s officially endorsed youth quidditch partner, Enrich
+          Education, are seeking assistants and coaches to help run their
+          growing programme of bringing youth quidditch into schools throughout
+          the country. Assistants and coaches may be paid up to £70.00 per day
+          and are expected to be available between 8:00 am and 3:30 pm.
+        </Text>
+        <Text>
+          Selection will be made by Enrich Education who will contact you
+          regarding potential work as it becomes available. Your role may
+          include refereeing youth quidditch games, assisting or leading
+          coaching sessions with children aged up to 10 years old, and keeping
+          equipment clean and ensuring they are suitable within COVID
+          applications.{' '}
+        </Text>
+        <Text>
+          Importantly, those selected will never be expected to run a session by
+          themselves and will always be partnered with an experienced qualified
+          full-time member of Enrich Education. All equipment and resources
+          required will be supplied by Enrich Education.
+        </Text>
+        <Text>
+          You are required to have legal right to work in the United Kingdom to
+          apply, as well as a valid DBS check. Those without a valid DBS check
+          may still apply and Enrich Education will guide you in obtaining this.
+        </Text>
       </PrismicWrapper>
       <PrismicWrapper variant="light">
         <Heading as="h1" fontFamily="body" textAlign="center">
@@ -233,15 +229,29 @@ const YouthCoachForm = () => {
                 </InlineError>
               )}
 
-              <Label htmlFor="dbs">Do you have a valid DBS clearance?</Label>
-
-              <Toggle name="dbs" my={3} ref={register} />
+              <Label htmlFor="dbs">
+                Do you have a valid DBS clearance?
+                <Switch
+                  name="dbs"
+                  ref={register}
+                  colorScheme="green"
+                  ml={3}
+                  my={3}
+                  size="lg"
+                />
+              </Label>
 
               <Label htmlFor="rightToWork">
                 Do you have a right to work in the UK? <Required />
+                <Switch
+                  name="rightToWork"
+                  ref={register}
+                  colorScheme="green"
+                  ml={3}
+                  my={3}
+                  size="lg"
+                />
               </Label>
-
-              <Toggle name="rightToWork" my={3} ref={register} />
 
               <Label htmlFor="region">
                 What area(s) of the UK would you be able to coach in?{' '}
@@ -300,33 +310,35 @@ const YouthCoachForm = () => {
             </Button>
           </form>
 
-          <Content pt={3}>
+          <Text pt={3}>
             Please note your information will be shared with relevant third
             parties for the purposes of selecting and hiring potential coaches
             and/or assistants. This includes Enrich Education and any of their
             staff, contractors, or subsidiaries.
-          </Content>
+          </Text>
 
-          {serverError && (
+          {!serverError && (
             <>
               <InlineError my={3}>{serverError}</InlineError>
             </>
           )}
 
           {serverSuccess && (
-            <Box
+            <Flex
+              alignItems="center"
               bg="keeperGreen"
-              px="4"
-              py="2"
-              mt="6"
+              px={4}
+              py={1}
+              mt={6}
               borderColor="keeperGreen"
               borderWidth="1px"
               borderStyle="solid"
               color="white"
-              borderRadius="sm"
+              borderRadius="md"
             >
-              <Content>Application sent</Content>
-            </Box>
+              <CheckIcon mr={3} />{' '}
+              <Text fontWeight="bold">Application sent</Text>
+            </Flex>
           )}
         </Container>
       </PrismicWrapper>

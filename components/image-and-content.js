@@ -62,13 +62,11 @@ const Item = ({ item, isImageLeft }) => (
 );
 
 const ImageAndContent = (rawData) => {
-  const data = {
-    items: get(rawData, 'items'),
-  };
+  const items = get(rawData, 'items');
 
   return (
     <>
-      {data.items.map((itemData, i) => {
+      {items.map((itemData, i) => {
         const item = {
           title: get(itemData, 'title'),
           content: get(itemData, 'content'),

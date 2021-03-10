@@ -5,7 +5,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import get from 'just-safe-get';
-import { Grid, Box, Heading } from '@chakra-ui/react';
+import { Grid, Flex, Heading, Switch, Text } from '@chakra-ui/react';
+import { CheckIcon } from '@chakra-ui/icons';
 import Input from 'components/input';
 import Label from 'components/label';
 import Textarea from 'components/textarea';
@@ -14,7 +15,6 @@ import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
 import Container from 'components/container';
 import Content from 'components/content';
 import Required from 'components/required';
-import Toggle from 'components/toggle';
 import { InlineError } from 'components/errors';
 import { api } from 'modules/api';
 import { rem } from 'styles/theme';
@@ -136,9 +136,15 @@ const EDICommitteeForm = (rawData) => {
             <Label htmlFor="chair">
               Do you wish to be considered for the EDI Committee Chair?{' '}
               <Required />
+              <Switch
+                name="chair"
+                ref={register}
+                colorScheme="green"
+                ml={3}
+                my={3}
+                size="lg"
+              />
             </Label>
-
-            <Toggle name="chair" my={3} ref={register} />
 
             <Label htmlFor="message">
               Do you have any questions or queries related to the role,
@@ -172,19 +178,20 @@ const EDICommitteeForm = (rawData) => {
         {serverError && <InlineError my={3}>{serverError}</InlineError>}
 
         {serverSuccess && (
-          <Box
+          <Flex
+            alignItems="center"
             bg="keeperGreen"
-            px="4"
-            py="2"
-            mt="6"
+            px={4}
+            py={1}
+            mt={6}
             borderColor="keeperGreen"
             borderWidth="1px"
             borderStyle="solid"
             color="white"
-            borderRadius="sm"
+            borderRadius="md"
           >
-            <Content>Message sent</Content>
-          </Box>
+            <CheckIcon mr={3} /> <Text fontWeight="bold">Message sent</Text>
+          </Flex>
         )}
       </Container>
     </PrismicWrapper>

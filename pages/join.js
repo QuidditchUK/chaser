@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import styled from '@emotion/styled';
 import * as Yup from 'yup';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
-import { Box, Grid, Flex, Heading, Text, Link } from '@chakra-ui/react';
+import { Box, Grid, Flex, Heading, Text, Link, Switch } from '@chakra-ui/react';
 import { Logo } from 'components/logo';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,7 +15,6 @@ import { setCookies } from 'modules/cookies';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
 import Input from 'components/input';
-import Toggle from 'components/toggle';
 
 const Label = dynamic(() => import('components/label'));
 const Meta = dynamic(() => import('components/meta'));
@@ -122,10 +120,10 @@ const Page = () => {
             <Heading as="h1" fontFamily="body" textAlign="center">
               Join QuidditchUK
             </Heading>
-            <Content pb={5}>
+            <Text pb={5} textAlign="center">
               Join QuidditchUK to manage your QuidditchUK and Club Membership,
               and register for official events
-            </Content>
+            </Text>
 
             <form
               onSubmit={handleSubmit((values) =>
@@ -191,9 +189,15 @@ const Page = () => {
 
                 <Label htmlFor="is_student">
                   Are you a student? <Required />
+                  <Switch
+                    name="is_student"
+                    ref={register}
+                    colorScheme="green"
+                    ml={3}
+                    my={3}
+                    size="lg"
+                  />
                 </Label>
-
-                <Toggle name="is_student" my={3} ref={register} />
 
                 {watchIsStudent && (
                   <>

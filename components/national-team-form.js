@@ -4,13 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as Yup from 'yup';
 import get from 'just-safe-get';
-import { Grid, Box, Select, Heading } from '@chakra-ui/react';
+import { Grid, Flex, Select, Heading, Text } from '@chakra-ui/react';
+import { CheckIcon } from '@chakra-ui/react';
 import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
 import Container from 'components/container';
-import Content from 'components/content';
 import Required from 'components/required';
 import { InlineError } from 'components/errors';
 import { api } from 'modules/api';
@@ -217,19 +217,20 @@ const NationalTeamForm = (rawData) => {
         )}
 
         {serverSuccess && (
-          <Box
+          <Flex
+            alignItems="center"
             bg="keeperGreen"
-            px="4"
-            py="2"
-            mt="6"
+            px={4}
+            py={1}
+            mt={6}
             borderColor="keeperGreen"
             borderWidth="1px"
             borderStyle="solid"
             color="white"
-            borderRadius="sm"
+            borderRadius="md"
           >
-            <Content>Application sent</Content>
-          </Box>
+            <CheckIcon mr={3} /> <Text fontWeight="bold">Application sent</Text>
+          </Flex>
         )}
       </Container>
     </PrismicWrapper>
