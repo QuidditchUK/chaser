@@ -33,7 +33,7 @@ const ClubCard = ({
       transition="box-shadow 0.125s"
       _hover={{
         boxShadow: 'md',
-        img: {
+        'img:not(#icon)': {
           scale,
         },
       }}
@@ -47,6 +47,7 @@ const ClubCard = ({
       {image ? <Box position="relative">{image}</Box> : null}
       <Box p={4} position="absolute" right="0">
         <ChakraImage
+          id="icon"
           h="75px"
           w="75px"
           borderRadius="full"
