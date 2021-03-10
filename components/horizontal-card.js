@@ -3,6 +3,7 @@ import get from 'just-safe-get';
 import PrismicWrapper from 'components/prismic-wrapper';
 import { linkResolver } from 'modules/prismic';
 import { Box, Flex, Grid, Heading } from '@chakra-ui/react';
+import Image from 'components/image';
 
 import Content from 'components/content';
 import { StyledLink } from 'components/latest-news';
@@ -13,48 +14,61 @@ const HorizontalCard = ({
   content,
   isImageLeft,
   ...cardProps
-}) => (
-  <Grid
-    {...cardProps}
-    gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
-    gridGap={4}
-    overflow="hidden"
-    bg="white"
-    color="qukBlue"
-    transition="box-shadow 0.125s"
-    borderRadius="lg"
-    _hover={{
-      boxShadow: 'md',
-    }}
-  >
-    <Box
-      order={{ base: 1, md: `${isImageLeft ? 1 : 2}` }}
-      as="section"
-      position="relative"
-      backgroundImage={`url(${image})`}
-      backgroundColor="qukBlue"
-      backgroundSize="cover"
-      backgroundPosition="center"
-      minHeight="300px"
-      height="100%"
-      width="100%"
-    />
-
-    <Flex
-      flexDirection="column"
-      order={{ base: 2, md: `${isImageLeft ? 2 : 1}` }}
+}) => {
+  const clipPath = isImageLeft
+    ? 'polygon(0 0, 100% 0, 90% 100%, 0 100%)'
+    : 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)';
+  return (
+    <Grid
+      {...cardProps}
+      gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
+      gridGap={4}
+      overflow="hidden"
+      bg="white"
+      color="qukBlue"
+      transition="box-shadow 0.125s"
+      borderRadius="lg"
+      alignItems="center"
+      _hover={{
+        boxShadow: 'md',
+      }}
     >
-      <Content px={4} py={5}>
-        {name && (
-          <Heading as="h2" fontSize="xl" fontFamily="body">
-            {name}
-          </Heading>
-        )}
-        {content && <>{RichText.render(content, linkResolver)}</>}
-      </Content>
-    </Flex>
-  </Grid>
-);
+      <Box
+        order={{ base: 1, md: `${isImageLeft ? 1 : 2}` }}
+        as="section"
+        position="relative"
+        backgroundColor="white"
+        minHeight="300px"
+        height="100%"
+        width="100%"
+      >
+        <Image
+          layout="fill"
+          height={image.height}
+          width={image.width}
+          alt={image.alt}
+          src={image.url}
+          borderRadius="0"
+          clipPath={{ base: 'none', md: clipPath }}
+        />
+      </Box>
+
+      <Flex
+        flexDirection="column"
+        order={{ base: 2, md: `${isImageLeft ? 2 : 1}` }}
+      >
+        <Content px={4} py={5}>
+          {name && (
+            <Heading as="h2" fontSize="xl" fontFamily="body">
+              {name}
+            </Heading>
+          )}
+          {content && <>{RichText.render(content, linkResolver)}</>}
+        </Content>
+      </Flex>
+    </Grid>
+  );
+};
 
 const HorizontalCardsSlice = (rawData) => {
   const title = get(rawData, 'primary.title');
@@ -109,7 +123,7 @@ const HorizontalCardsSlice = (rawData) => {
                 <HorizontalCard
                   name={item.title}
                   content={item.content}
-                  image={item.image.url}
+                  image={item.image}
                   isImageLeft={isImageLeft}
                 />
               </StyledLink>
@@ -117,7 +131,7 @@ const HorizontalCardsSlice = (rawData) => {
               <HorizontalCard
                 name={item.title}
                 content={item.content}
-                image={item.image.url}
+                image={item.image}
                 isImageLeft={isImageLeft}
               />
             )}
