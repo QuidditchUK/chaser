@@ -37,7 +37,6 @@ const HorizontalCard = ({
         order={{ base: 1, md: `${isImageLeft ? 1 : 2}` }}
         as="section"
         position="relative"
-        backgroundColor="white"
         minHeight="300px"
         height="100%"
         width="100%"
@@ -57,7 +56,7 @@ const HorizontalCard = ({
         flexDirection="column"
         order={{ base: 2, md: `${isImageLeft ? 2 : 1}` }}
       >
-        <Content px={4} py={5}>
+        <Content pl={isImageLeft ? 4 : 8} pr={isImageLeft ? 8 : 4} py={5}>
           {name && (
             <Heading as="h2" fontSize="xl" fontFamily="body">
               {name}
