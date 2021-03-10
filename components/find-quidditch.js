@@ -1,6 +1,6 @@
 import get from 'just-safe-get';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
+import Image from 'components/image';
 import { useForm } from 'react-hook-form';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import Button from 'components/button';

@@ -1,5 +1,5 @@
 import get from 'just-safe-get';
-import Image from 'next/image';
+import Image from 'components/image';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 

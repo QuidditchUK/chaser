@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from 'components/image';
 import get from 'just-safe-get';
 
 import CATEGORIES from 'constants/categories';
