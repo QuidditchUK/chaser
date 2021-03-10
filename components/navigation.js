@@ -195,6 +195,7 @@ const DesktopNav = ({ navigation, dashboard }) => {
                       boxShadow={'xl'}
                       bg={dashboard ? 'qukBlue' : 'white'}
                       p={4}
+                      ml={-4}
                       rounded={'xl'}
                       maxW={rem(300)}
                       color={dashboard ? 'white' : 'greyDark'}
