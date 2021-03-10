@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import Router from 'next/router';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
 import { parse } from 'date-fns';
 import * as Yup from 'yup';
@@ -9,7 +9,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { parseCookies, setCookies } from 'modules/cookies';
 import { api } from 'modules/api';
-import { Box, Flex, Grid, Heading, UnorderedList } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Grid,
+  Heading,
+  UnorderedList,
+  Link,
+} from '@chakra-ui/react';
 import { InlineError } from 'components/errors';
 
 const Meta = dynamic(() => import('components/meta'));
@@ -210,12 +217,11 @@ const ManageMembership = ({ products = [] }) => {
                           ref={register}
                         />{' '}
                         I agree to abide by the{' '}
-                        <Link
-                          href="/about/[id]"
-                          as="/about/documents-and-policies"
-                        >
-                          membership and gameplay policies
-                        </Link>{' '}
+                        <NextLink href="/about/documents-and-policies" passHref>
+                          <Link color="monarchRed">
+                            membership and gameplay policies
+                          </Link>
+                        </NextLink>{' '}
                         set out by QuidditchUK, and will uphold their values as
                         a member of the quidditch community.
                       </Label>

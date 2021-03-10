@@ -73,12 +73,10 @@ const NationalTeamForm = (rawData) => {
 
   const { isSubmitting } = formState;
 
-  const data = {
-    variant: get(rawData, 'primary.variant'),
-  };
+  const variant = get(rawData, 'primary.variant');
 
   return (
-    <PrismicWrapper variant={data.variant}>
+    <PrismicWrapper variant={variant}>
       <Heading as="h1" fontFamily="body" textAlign="center">
         Register your interest for a National Team
       </Heading>
@@ -203,7 +201,7 @@ const NationalTeamForm = (rawData) => {
 
           <Button
             type="submit"
-            variant={buttonVariants[data.variant]}
+            variant={buttonVariants[variant]}
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Submitting' : 'Apply'}

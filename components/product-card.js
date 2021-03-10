@@ -1,39 +1,36 @@
-import styled from '@emotion/styled';
-import { space, typography, color } from 'styled-system';
 import { parse, format } from 'date-fns';
-import { Box, Flex, Grid, Heading } from '@chakra-ui/react';
+import { Box, Flex, Grid, Heading, Text } from '@chakra-ui/react';
 import { formatMinorUnitsToCurrency } from 'modules/numbers';
 
-const StyledCard = styled(Grid)`
-  border-radius: ${({ theme }) => theme.radii[1]};
-  overflow: hidden;
-  transition: box-shadow 0.125s;
-  background: ${({ theme }) => theme.colors.white};
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.black};
+const StyledCard = (props) => (
+  <Grid
+    borderRadius="md"
+    overflow="hidden"
+    transition="box-shadow 0.125s"
+    bg="white"
+    cursor="pointer"
+    color="black"
+    _hover={{ boxShadow: 'md' }}
+    {...props}
+  />
+);
 
-  ${space};
-
-  &:hover {
-    box-shadow: ${({ theme }) => theme.shadows.box};
-  }
-`;
-
-const Content = styled.div`
-  ${typography};
-  ${color};
-  padding: ${({ theme }) => theme.space[5]} ${({ theme }) => theme.space[4]};
-
-  a {
-    text-decoration: none;
-    color: ${({ theme }) => theme.colors.black};
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-  ${space}
-`;
+const Content = (props) => (
+  <Box
+    py={5}
+    px={4}
+    sx={{
+      a: {
+        textDecoration: 'none',
+        color: 'black',
+        '&:hover': {
+          textDecoration: 'underline',
+        },
+      },
+    }}
+    {...props}
+  />
+);
 
 const ProductCard = ({
   image,
@@ -63,7 +60,7 @@ const ProductCard = ({
       <Heading as="h2" fontSize="3xl" fontFamily="body">
         {name}
       </Heading>
-      <p>{description}</p>
+      <Text>{description}</Text>
     </Content>
 
     <Flex
