@@ -1,21 +1,20 @@
 import { useState } from 'react';
-
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import * as Yup from 'yup';
 import get from 'just-safe-get';
-import { Grid, Box } from '@chakra-ui/react';
+
+import { Grid, Box, Heading } from '@chakra-ui/react';
 import Input from 'components/input';
 import Label from 'components/label';
 import Textarea from 'components/textarea';
 import Button from 'components/button';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
 import Container from 'components/container';
-import Heading from 'components/heading';
 import Content from 'components/content';
 import Required from 'components/required';
 import { InlineError } from 'components/errors';
+
 import { api } from 'modules/api';
 import { rem } from 'styles/theme';
 

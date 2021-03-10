@@ -166,7 +166,7 @@ const Page = () => {
             <Content>
               New to QuidditchUK?{' '}
               <NextLink href="/join" passHref>
-                <Link>Create an account.</Link>
+                <Link color="monarchRed">Create an account.</Link>
               </NextLink>
             </Content>
           </Box>

@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import { useRef } from 'react';
 import styled from '@emotion/styled';
 import { space, layout, border } from 'styled-system';

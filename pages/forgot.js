@@ -2,7 +2,7 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
-import { Box, Grid, Flex, Link } from '@chakra-ui/react';
+import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
 import { Logo } from 'components/logo';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,7 +12,6 @@ import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 import Input from 'components/input';
 
-const Heading = dynamic(() => import('components/heading'));
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 const Label = dynamic(() => import('components/label'));

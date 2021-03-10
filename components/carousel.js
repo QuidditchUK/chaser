@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import { useRef } from 'react';
 import Flickity from 'react-flickity-component';
 import { Box } from '@chakra-ui/react';

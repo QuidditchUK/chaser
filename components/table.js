@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { typography, border } from 'styled-system';
+import { typography } from 'styled-system';
 
 export const Table = styled.table`
   ${typography};
@@ -15,7 +15,7 @@ export const TableData = styled.td`
 export const TableDataBorder = styled(TableData)`
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  ${border};
+  border-color: ${({ theme }) => theme.colors.black};
 `;
 
 export const TableRow = styled.tr`
@@ -27,6 +27,7 @@ export const TableRow = styled.tr`
 export const TableHead = styled.th`
   text-align: left;
   padding: ${({ theme }) => theme.space[1]};
+  border-color: ${({ theme }) => theme.colors.black};
   border-bottom-style: solid;
   border-bottom-width: 3px;
 `;

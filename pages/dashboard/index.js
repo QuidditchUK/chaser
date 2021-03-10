@@ -5,11 +5,19 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid, Flex, ListItem, Text, OrderedList } from '@chakra-ui/react';
+import {
+  Box,
+  Grid,
+  Flex,
+  ListItem,
+  Text,
+  OrderedList,
+  Heading,
+} from '@chakra-ui/react';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
-const Heading = dynamic(() => import('components/heading'));
+
 const Content = dynamic(() => import('components/content'));
 const Image = dynamic(() => import('components/image'));
 const ProductCard = dynamic(() => import('components/product-card'));

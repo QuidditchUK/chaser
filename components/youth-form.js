@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as Yup from 'yup';
-import { Grid, Box } from '@chakra-ui/react';
+import { Grid, Box, Heading } from '@chakra-ui/react';
 import Input from 'components/input';
 import Label from 'components/label';
 import Toggle from 'components/toggle';
@@ -12,7 +12,6 @@ import Textarea from 'components/textarea';
 import Button from 'components/button';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
 import Container from 'components/container';
-import Heading from 'components/heading';
 import Content from 'components/content';
 import Required from 'components/required';
 import { InlineError } from 'components/errors';

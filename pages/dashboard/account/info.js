@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import { Logo } from 'components/logo';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
@@ -7,7 +7,7 @@ import { parseCookies } from 'modules/cookies';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
-const Heading = dynamic(() => import('components/heading'));
+
 const InfoForm = dynamic(() => import('components/info-form'));
 const PasswordForm = dynamic(() => import('components/password-form'));
 

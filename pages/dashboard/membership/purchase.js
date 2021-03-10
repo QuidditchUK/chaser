@@ -1,7 +1,6 @@
 import Meta from 'components/meta';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid } from '@chakra-ui/react';
-import Heading from 'components/heading';
+import { Box, Grid, Heading } from '@chakra-ui/react';
 import Container from 'components/container';
 import { api } from 'modules/api';
 import ProductCard from 'components/product-card';

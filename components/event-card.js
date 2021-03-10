@@ -2,8 +2,7 @@ import styled from '@emotion/styled';
 import { space } from 'styled-system';
 import { format } from 'date-fns';
 import { parseTimestamptz } from 'modules/dates';
-import { Box, Flex, Grid } from '@chakra-ui/react';
-import Heading from 'components/heading';
+import { Box, Flex, Grid, Heading } from '@chakra-ui/react';
 import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 

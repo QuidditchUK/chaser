@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Router, { useRouter } from 'next/router';
-import { Box, Grid, Flex, Link } from '@chakra-ui/react';
+import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
 import { Logo } from 'components/logo';
 import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
@@ -16,7 +16,6 @@ import Input from 'components/input';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
-const Heading = dynamic(() => import('components/heading'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));

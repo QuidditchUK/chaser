@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import { space, typography, color } from 'styled-system';
 import { parse, format } from 'date-fns';
-import { Box, Flex, Grid } from '@chakra-ui/react';
-import Heading from 'components/heading';
+import { Box, Flex, Grid, Heading } from '@chakra-ui/react';
 import { formatMinorUnitsToCurrency } from 'modules/numbers';
 
 const StyledCard = styled(Grid)`
@@ -61,7 +60,7 @@ const ProductCard = ({
     />
 
     <Content>
-      <Heading as="h2" fontSize={3} fontFamily="body">
+      <Heading as="h2" fontSize="3xl" fontFamily="body">
         {name}
       </Heading>
       <p>{description}</p>

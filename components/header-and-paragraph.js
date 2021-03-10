@@ -8,37 +8,35 @@ import ExternalLink from 'components/external-link';
 import { linkResolver } from 'modules/prismic';
 
 const HeaderAndParagraph = (rawData) => {
-  const data = {
-    title: get(rawData, 'primary.title'),
-    centerTitle: get(rawData, 'primary.center_title'),
-    content: get(rawData, 'primary.content'),
-    variant: get(rawData, 'primary.variant'),
-    cta_text: get(rawData, 'primary.cta_text'),
-    cta_url: get(rawData, 'primary.cta_url'),
-  };
+  const title = get(rawData, 'primary.title');
+  const centerTitle = get(rawData, 'primary.center_title');
+  const content = get(rawData, 'primary.content');
+  const variant = get(rawData, 'primary.variant');
+  const cta_text = get(rawData, 'primary.cta_text');
+  const cta_url = get(rawData, 'primary.cta_url');
 
   return (
-    <PrismicWrapper variant={data.variant} small>
-      {RichText.asText(data.title) && (
+    <PrismicWrapper variant={variant} small>
+      {RichText.asText(title) && (
         <Heading
           as="h2"
           fontSize="3xl"
           mt={2}
-          textAlign={data.centerTitle ? 'center' : 'left'}
+          textAlign={centerTitle ? 'center' : 'left'}
         >
-          {RichText.asText(data.title)}
+          {RichText.asText(title)}
         </Heading>
       )}
 
-      {RichText.asText(data.content) && (
-        <Content>{RichText.render(data.content, linkResolver)}</Content>
+      {RichText.asText(content) && (
+        <Content>{RichText.render(content, linkResolver)}</Content>
       )}
 
-      {data.cta_text && data.cta_url && (
+      {cta_text && cta_url && (
         <Flex justifyContent="center">
-          <ExternalLink href={data.cta_url}>
-            <Button type="button" variant={buttonVariants[data.variant]} ml={2}>
-              {data.cta_text}
+          <ExternalLink href={cta_url}>
+            <Button type="button" variant={buttonVariants[variant]} ml={2}>
+              {cta_text}
             </Button>
           </ExternalLink>
         </Flex>

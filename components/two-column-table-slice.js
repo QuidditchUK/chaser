@@ -1,7 +1,7 @@
-import Heading from 'components/heading';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import PrismicWrapper from 'components/prismic-wrapper';
+import { Heading } from '@chakra-ui/react';
 import { Table, TableRow, TableHead, TableDataBorder } from 'components/table';
 
 const TwoColumnTable = (rawData) => {
@@ -16,12 +16,12 @@ const TwoColumnTable = (rawData) => {
   return (
     <PrismicWrapper variant={data.variant} small>
       {RichText.asText(data.title) && (
-        <Heading as="h2" fontSize="xl" mt={2}>
+        <Heading as="h2" fontSize="3xl" mt={2}>
           {RichText.asText(data.title)}
         </Heading>
       )}
 
-      <Table fontSize={2}>
+      <Table>
         <thead>
           <TableRow>
             <TableHead>{RichText.asText(data.columnOneTitle)}</TableHead>

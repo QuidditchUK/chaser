@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { format } from 'date-fns';
 import parse from 'html-react-parser';
 import styled from '@emotion/styled';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import { TYPES } from 'components/club-type';
 import { parseTimestamptz } from 'modules/dates';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
@@ -14,7 +14,6 @@ const Page404 = dynamic(() => import('pages/404'));
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 const PageLoading = dynamic(() => import('components/page-loading'));
-const Heading = dynamic(() => import('components/heading'));
 const Content = dynamic(() => import('components/content'));
 const Button = dynamic(() => import('components/button'));
 const ExternalLink = dynamic(() => import('components/external-link'));
@@ -116,7 +115,7 @@ const EventPage = ({ event }) => {
           <Flex flexDirection="column">
             <Heading
               as="h1"
-              fontSize={[4, 5]}
+              fontSize="4xl"
               fontFamily="body"
               marginTop="0"
               marginBottom="2"

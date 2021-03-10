@@ -1,17 +1,21 @@
-import styled from '@emotion/styled';
-import { space } from 'styled-system';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { Box, Grid, Flex, Link as ChakraLink } from '@chakra-ui/react';
+import {
+  Box,
+  Grid,
+  Flex,
+  Link as ChakraLink,
+  Text,
+  Heading,
+  UnorderedList,
+  ListItem,
+} from '@chakra-ui/react';
 import { Logo } from 'components/logo';
-import { rem } from 'styles/theme';
 import Input from 'components/input';
 
-const ActiveLink = dynamic(() => import('components/active-link'));
 const Container = dynamic(() => import('components/container'));
-const Heading = dynamic(() => import('components/heading'));
 const Button = dynamic(() => import('components/button'));
 const FacebookIcon = dynamic(() => import('public/images/facebook.svg'));
 const TwitterIcon = dynamic(() => import('public/images/twitter.svg'));
@@ -24,58 +28,44 @@ const logoText = '/images/logo-text.png';
 
 const year = new Date().getFullYear();
 
-const List = styled.ul`
-  list-style-type: none;
-  padding-left: 0;
-`;
+const IconWrapper = (props) => (
+  <ChakraLink height="30px" width="30px" ml={6} {...props} />
+);
 
-const Item = styled.li`
-  line-height: ${rem(32)};
+const Icon = (props) => (
+  <Box color="greyLight" _hover={{ color: 'monarchRed' }} {...props} />
+);
 
-  a {
-    text-decoration: none;
-  }
+const Item = (props) => <ListItem lineHeight="32px" {...props} />;
 
-  span {
-    color: ${({ theme }) => theme.colors.white};
+const ActiveLink = ({ href, children }) => {
+  const { asPath } = useRouter();
+  const regexAs = RegExp(href.replace(/\//g, '\\/'), 'g');
 
-    &:hover {
-      border-bottom: 2px solid ${({ theme }) => theme.colors.white};
-    }
+  const isActive = regexAs.test(asPath);
 
-    &.active {
-      font-weight: 700;
-    }
-  }
-`;
+  return (
+    <Link href={href} passHref>
+      <ChakraLink
+        textDecoration="none"
+        color="white"
+        fontWeight={isActive ? 'bold' : 'normal'}
+        _hover={{ borderBottom: '2px solid', borderColor: 'white' }}
+      >
+        {children}
+      </ChakraLink>
+    </Link>
+  );
+};
 
-const Support = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.bodyCard};
-`;
-
-const Icon = styled.a`
-  ${space};
-  margin-left: ${({ theme }) => theme.space[2]};
-
-  svg {
-    color: ${({ theme }) => theme.colors.greyLight};
-    height: 30px;
-    width: 30px;
-  }
-
-  &:hover {
-    svg {
-      color: ${({ theme }) => theme.colors.monarchRed};
-    }
-  }
-`;
-
-const Vercel = styled.a`
-  color: ${({ theme }) => theme.colors.qukBlue};
-  svg {
-    width: 60%;
-  }
-`;
+const ExternalLink = (props) => (
+  <ChakraLink
+    color="white"
+    textDecoration="none"
+    _hover={{ borderBottom: '2px solid', borderColor: 'white' }}
+    {...props}
+  />
+);
 
 const handleFindQuidditch = async ({ postcode }, router) => {
   await router.push(
@@ -104,11 +94,11 @@ export const Footer = () => {
             gridGap={{ base: 4, md: 9 }}
           >
             <Box>
-              <Heading as="h3" color="white">
+              <Heading as="h3" fontSize="lg">
                 Information
               </Heading>
 
-              <List>
+              <UnorderedList pl={0} ml={0} styleType="none">
                 <Item>
                   <ActiveLink href="/about/contact-us">
                     <span>Contact Us</span>
@@ -125,13 +115,13 @@ export const Footer = () => {
                   </ActiveLink>
                 </Item>
                 <Item>
-                  <a
+                  <ExternalLink
                     href="https://docs.google.com/spreadsheets/d/1QuGPhsj_LV81dRCXVRKHpdYvj9IrrupcxH9c8LWXZuE"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <span>Results</span>
-                  </a>
+                  </ExternalLink>
                 </Item>
                 <Item>
                   <ActiveLink href="/about/fees">
@@ -143,78 +133,78 @@ export const Footer = () => {
                     <span>Newsletters</span>
                   </ActiveLink>
                 </Item>
-              </List>
+              </UnorderedList>
             </Box>
 
             <Box>
-              <Heading as="h3" color="white">
+              <Heading as="h3" fontSize="lg">
                 Partners
               </Heading>
 
-              <List>
+              <UnorderedList pl={0} ml={0} styleType="none">
                 <Item>
-                  <a
+                  <ExternalLink
                     href="http://www.enricheducationuk.com/quidditch/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <span>Enrich Education</span>
-                  </a>
+                  </ExternalLink>
                 </Item>
                 <Item>
-                  <a
+                  <ExternalLink
                     href="https://www.epionemedical.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <span>Epione Medical</span>
-                  </a>
+                  </ExternalLink>
                 </Item>
                 <Item>
-                  <a
+                  <ExternalLink
                     href="https://www.utilityapparel.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <span>Utility Apparel</span>
-                  </a>
+                  </ExternalLink>
                 </Item>
                 <Item>
-                  <a
+                  <ExternalLink
                     href="https://quidditcheurope.wixsite.com/quidditcheurope"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <span>Quidditch Europe</span>
-                  </a>
+                  </ExternalLink>
                 </Item>
                 <Item>
-                  <a
+                  <ExternalLink
                     href="https://iqasport.com"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <span>International Quidditch Association</span>
-                  </a>
+                  </ExternalLink>
                 </Item>
                 <Item>
-                  <a
+                  <ExternalLink
                     href="https://quidditchpremierleague.com"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <span>Quidditch Premier League</span>
-                  </a>
+                  </ExternalLink>
                 </Item>
-              </List>
+              </UnorderedList>
             </Box>
 
             <Box>
-              <Heading as="h3" color="white">
+              <Heading as="h3" fontSize="lg">
                 Programmes
               </Heading>
 
-              <List>
+              <UnorderedList pl={0} ml={0} styleType="none">
                 <Item>
                   <ActiveLink href="/programmes/national-teams">
                     <span>National Teams</span>
@@ -225,35 +215,36 @@ export const Footer = () => {
                     <span>Grants</span>
                   </ActiveLink>
                 </Item>
-              </List>
+              </UnorderedList>
             </Box>
 
             <Box>
-              <Heading as="h3" color="white">
+              <Heading as="h3" fontSize="lg">
                 Disclaimer
               </Heading>
 
-              <Support>
+              <Text fontSize="sm">
                 QuidditchUK and its activities are not licensed by, sponsored by
                 or associated with Warner Bros., J.K. Rowling or their
                 affiliates. ‘Quidditch,’ ‘Harry Potter’ and all related names,
                 characters and indicia are trademarks of and &copy; Warner Bros.
                 – Harry Potter publishing rights &copy; J.K. Rowling.
-              </Support>
+              </Text>
 
-              <Support>
+              <Text fontSize="sm">
                 QuidditchUK is a Non-Profit Company Registered in England and
                 Wales, Company Registration No. 12178866
-              </Support>
+              </Text>
 
-              <Vercel
+              <ChakraLink
+                color="qukBlue"
                 aria-label="Vercel"
                 href="https://vercel.com/?utm_source=quidditchuk&utm_campaign=oss"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <VercelLogo />
-              </Vercel>
+                <Box as={VercelLogo} w={{ base: '100%', md: '60%' }} />
+              </ChakraLink>
             </Box>
           </Grid>
         </Container>
@@ -285,7 +276,9 @@ export const Footer = () => {
                 </ChakraLink>
               </Link>
 
-              <Support>All Rights Reserved &copy; {year} QuidditchUK</Support>
+              <Text fontSize="sm">
+                All Rights Reserved &copy; {year} QuidditchUK
+              </Text>
             </Flex>
 
             <Flex
@@ -313,44 +306,41 @@ export const Footer = () => {
               </form>
 
               <Flex justifyContent={{ base: 'center', md: 'flex-end' }} mt={5}>
-                <Icon
+                <IconWrapper
                   aria-label="Like us on Facebook"
                   href="https://www.facebook.com/QuidditchUK"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <FacebookIcon />
-                </Icon>
+                  <Icon as={FacebookIcon} />
+                </IconWrapper>
 
-                <Icon
+                <IconWrapper
                   aria-label="Follow us on Twitter"
                   href="https://twitter.com/QuidditchUK"
                   target="_blank"
                   rel="noopener noreferrer"
-                  pl={{ base: 5, md: 3 }}
                 >
-                  <TwitterIcon />
-                </Icon>
+                  <Icon as={TwitterIcon} />
+                </IconWrapper>
 
-                <Icon
+                <IconWrapper
                   aria-label="Follow us on Instagram"
                   href="https://instagram.com/ukquidditch"
                   target="_blank"
                   rel="noopener noreferrer"
-                  pl={{ base: 5, md: 3 }}
                 >
-                  <InstagramIcon />
-                </Icon>
+                  <Icon as={InstagramIcon} />
+                </IconWrapper>
 
-                <Icon
+                <IconWrapper
                   aria-label="Subscribe to our Youtube Channel"
                   href="https://www.youtube.com/channel/UCef5ZmqGJvff6RIqA0KS0wQ"
                   target="_blank"
                   rel="noopener noreferrer"
-                  pl={{ base: 5, md: 3 }}
                 >
-                  <YoutubeIcon />
-                </Icon>
+                  <Icon as={YoutubeIcon} />
+                </IconWrapper>
               </Flex>
             </Flex>
           </Grid>

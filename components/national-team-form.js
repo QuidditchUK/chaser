@@ -4,13 +4,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as Yup from 'yup';
 import get from 'just-safe-get';
-import { Grid, Box, Select } from '@chakra-ui/react';
+import { Grid, Box, Select, Heading } from '@chakra-ui/react';
 import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
 import Container from 'components/container';
-import Heading from 'components/heading';
 import Content from 'components/content';
 import Required from 'components/required';
 import { InlineError } from 'components/errors';
