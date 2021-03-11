@@ -24,6 +24,7 @@ const Hero = (rawData) => {
         objectPosition="center center"
         objectFit="cover"
         borderRadius={0}
+        priority={true}
       />
       <Flex
         position="relative"

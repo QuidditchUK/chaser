@@ -21,6 +21,7 @@ const Image = chakra(NextImage, {
       'objectPosition',
       'onLoad',
       'layout',
+      'priority',
     ].includes(prop),
 });
 
