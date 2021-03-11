@@ -25,7 +25,6 @@ const CardsSlice = (rawData) => {
       {RichText.asText(title) && (
         <Heading
           as="h2"
-          size="xl"
           mt={2}
           textAlign="center"
           px={horizontalScroll ? { base: 4, sm: 8, md: 9 } : { base: 0, md: 9 }}
