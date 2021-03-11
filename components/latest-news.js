@@ -1,6 +1,7 @@
-import { useState, useEffect, forwardRef } from 'react';
+import { forwardRef } from 'react';
+// import { useState, useEffect, forwardRef } from 'react';
 import Link from 'next/link';
-import { useInView } from 'react-intersection-observer';
+// import { useInView } from 'react-intersection-observer';
 
 import {
   Flex,
@@ -11,15 +12,15 @@ import {
 } from '@chakra-ui/react';
 import Card from 'components/card';
 import Image from 'components/image';
-import Button from 'components/button';
+// import Button from 'components/button';
 import Container from 'components/container';
 import HorizontalScrollWrapper from 'components/horizontal-scroll-wrapper';
-import {
-  getDocs,
-  getBlogCategory,
-  getBlogTags,
-  PAGE_SIZE,
-} from 'modules/prismic';
+// import {
+//   getDocs,
+//   getBlogCategory,
+//   getBlogTags,
+//   PAGE_SIZE,
+// } from 'modules/prismic';
 
 export const StyledLink = forwardRef(function StyledLink(props, ref) {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -48,79 +49,73 @@ export const StyledLink = forwardRef(function StyledLink(props, ref) {
   );
 });
 
-const LoadMore = ({ setPage }) => {
-  const [ref, inView] = useInView({ threshold: 0 });
+// const LoadMore = ({ setPage }) => {
+//   const [ref, inView] = useInView({ threshold: 0 });
 
-  useEffect(() => {
-    if (inView) {
-      setPage((currentPage) => currentPage + 1);
-    }
-  }, [inView, setPage]);
+//   useEffect(() => {
+//     if (inView) {
+//       setPage((currentPage) => currentPage + 1);
+//     }
+//   }, [inView, setPage]);
 
-  return (
-    <Flex alignItems="center" justifyContent="center" py={5} ref={ref}>
-      <Button variant="light">Load More</Button>
-    </Flex>
-  );
-};
+//   return (
+//     <Flex alignItems="center" justifyContent="center" py={5} ref={ref}>
+//       <Button variant="light">Load More</Button>
+//     </Flex>
+//   );
+// };
 
-const News = ({
-  posts: initialPosts = [],
-  category,
-  allowPagination = false,
-  horizontalScroll = true,
-  tag,
-}) => {
-  const [loading, setLoading] = useState(false);
-  const [showLoadMore, setShowLoadMore] = useState(allowPagination);
-  const [page, setPage] = useState(1);
-  const [posts, setPosts] = useState(initialPosts);
+const News = ({ posts, category, horizontalScroll = true, tag }) => {
+  // const [loading, setLoading] = useState(false);
+  // const [showLoadMore, setShowLoadMore] = useState(allowPagination);
+  // const [page, setPage] = useState(1);
+  // const [posts, setPosts] = useState(initialPosts);
 
-  useEffect(() => {
-    if (page !== 1) {
-      setLoading(true);
+  // useEffect(() => {
+  //   if (page !== 1) {
+  //     setLoading(true);
 
-      const fetchData = async () => {
-        let getPages;
+  //     const fetchData = async () => {
+  //       let getPages;
 
-        if (category) {
-          getPages = getBlogCategory(category, {
-            orderings: '[my.post.date desc]',
-            pageSize: PAGE_SIZE,
-            page,
-          });
-        } else if (tag) {
-          getPages = getBlogTags([tag], {
-            orderings: '[my.post.date desc]',
-            pageSize: PAGE_SIZE,
-            page,
-          });
-        } else {
-          getPages = getDocs('post', {
-            orderings: '[my.post.date desc]',
-            pageSize: PAGE_SIZE,
-            page,
-          });
-        }
+  //       if (category) {
+  //         getPages = getBlogCategory(category, {
+  //           orderings: '[my.post.date desc]',
+  //           pageSize: PAGE_SIZE,
+  //           page,
+  //         });
+  //       } else if (tag) {
+  //         getPages = getBlogTags([tag], {
+  //           orderings: '[my.post.date desc]',
+  //           pageSize: PAGE_SIZE,
+  //           page,
+  //         });
+  //       } else {
+  //         getPages = getDocs('post', {
+  //           orderings: '[my.post.date desc]',
+  //           pageSize: PAGE_SIZE,
+  //           page,
+  //         });
+  //       }
 
-        const newPages = await getPages;
-        if (newPages.length === 0) {
-          setShowLoadMore(false);
-        }
+  //       const newPages = await getPages;
+  //       if (newPages.length === 0) {
+  //         setShowLoadMore(false);
+  //       }
 
-        setPosts((oldPages) => [...oldPages, ...newPages]);
-        setLoading(false);
-      };
+  //       setPosts((oldPages) => [...oldPages, ...newPages]);
+  //       setLoading(false);
+  //     };
 
-      fetchData();
-    }
-  }, [category, page, tag]);
+  //     fetchData();
+  //   }
+  // }, [category, page, tag]);
 
-  useEffect(() => {
-    if (posts.length % PAGE_SIZE !== 0) {
-      setShowLoadMore(false);
-    }
-  }, [posts]);
+  // useEffect(() => {
+  //   if (posts.length % PAGE_SIZE !== 0) {
+  //     setShowLoadMore(false);
+  //   }
+  // }, [posts]);
 
   return (
     <Box bg="greyLight" py={{ base: 6, lg: 10 }} px={{ base: 0, md: 9 }}>
@@ -163,7 +158,7 @@ const News = ({
           ))}
         </HorizontalScrollWrapper>
 
-        {loading && (
+        {/* {loading && (
           <Flex
             alignItems="center"
             justifyContent="center"
@@ -173,7 +168,7 @@ const News = ({
             Loading...
           </Flex>
         )}
-        {showLoadMore && !loading && <LoadMore setPage={setPage} />}
+        {showLoadMore && !loading && <LoadMore setPage={setPage} />} */}
       </Container>
     </Box>
   );

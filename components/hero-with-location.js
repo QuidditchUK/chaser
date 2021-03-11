@@ -102,11 +102,11 @@ const HeroWithLocation = ({
         >
           <Box p={4}>
             <ChakraImage
-              borderRadius="full"
+              // borderRadius="full"
               height={{ base: '100px', md: '200px' }}
               width={{ base: '100px', md: '200px' }}
-              bg="white"
-              boxShadow="md"
+              // bg="white"
+              // boxShadow="md"
               src={icon?.url}
               alt={`${club_name} logo`}
             />

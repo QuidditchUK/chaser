@@ -1,7 +1,8 @@
 import { RichText } from 'prismic-reactjs';
 import { useRouter } from 'next/router';
-import get from 'just-safe-get';
 import dynamic from 'next/dynamic';
+import { useQuery } from 'react-query';
+import get from 'just-safe-get';
 import {
   linkResolver,
   getDocs,
@@ -54,8 +55,19 @@ const Th = (props) => (
   />
 );
 
-const ClubPage = ({ page, posts }) => {
+const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
   const router = useRouter();
+  const { data: page } = useQuery(
+    ['clubs', router.query.id],
+    () => getPrismicDocByUid('clubs', router.query.id),
+    { initialData: initialPage }
+  );
+  const { data: posts } = useQuery(
+    ['posts', router.query.id],
+    () =>
+      getBlogTags(page.tags, { orderings: '[my.post.date desc]', pageSize: 3 }),
+    { initialData: initialPosts }
+  );
 
   if (router.isFallback) {
     return <PageLoading />;

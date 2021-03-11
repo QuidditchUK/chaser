@@ -44,8 +44,9 @@ export const getBlogCategory = async (category, options = {}) => {
   return results;
 };
 
-export const getPrismicDocByUid = (type, uid, options = {}) =>
-  Client().getByUID(type, uid, options);
+export const getPrismicDocByUid = (type, uid, options = {}) => {
+  return Client().getByUID(type, uid, options);
+};
 
 export const getBlogTags = async (tags, options = {}) => {
   const { results } = await Client().query(

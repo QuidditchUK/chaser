@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import { useQuery } from 'react-query';
 
 import { getPrismicDocByUid, getDocs, formatMetadata } from 'modules/prismic';
 import renderPrismicSections from 'constants/prismic';
@@ -8,8 +9,13 @@ const Page404 = dynamic(() => import('pages/404'));
 const PageLoading = dynamic(() => import('components/page-loading'));
 const Meta = dynamic(() => import('components/meta'));
 
-const Page = ({ page }) => {
+const Page = ({ page: initialPage }) => {
   const router = useRouter();
+  const { data: page } = useQuery(
+    ['about', router.query.id],
+    () => getPrismicDocByUid('about', router.query.id),
+    { initialData: initialPage }
+  );
 
   if (router.isFallback) {
     return <PageLoading />;
