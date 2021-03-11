@@ -239,6 +239,7 @@ const FindQuidditch = ({
             objectFit="cover"
             borderRadius="0"
             objectPosition="center center"
+            priority={true}
           />
           <Flex
             position="absolute"
