@@ -45,6 +45,7 @@ const BlogHero = (rawData) => {
           objectPosition="center center"
           objectFit="cover"
           borderRadius={0}
+          priority={true}
         />
         <Flex
           position="absolute"

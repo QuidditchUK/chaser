@@ -14,7 +14,7 @@ const CardsSlice = (rawData) => {
   const title = get(rawData, 'primary.title');
   const content = get(rawData, 'primary.content');
   const variant = get(rawData, 'primary.variant');
-  const items = get(rawData, 'items');
+  const items = get(rawData, 'items') || [];
   const horizontalScroll = get(rawData, 'primary.horizontalScroll');
 
   return (
@@ -25,7 +25,6 @@ const CardsSlice = (rawData) => {
       {RichText.asText(title) && (
         <Heading
           as="h2"
-          size="xl"
           mt={2}
           textAlign="center"
           px={horizontalScroll ? { base: 4, sm: 8, md: 9 } : { base: 0, md: 9 }}

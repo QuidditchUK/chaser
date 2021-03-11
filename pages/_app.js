@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Router from 'next/router';
 import * as Sentry from '@sentry/node';
+import { QueryClientProvider, QueryClient } from 'react-query';
 
 import { Chakra } from 'styles/chakra';
 import dynamic from 'next/dynamic';
@@ -16,6 +17,7 @@ Sentry.init({
 });
 
 const Scripts = dynamic(() => import('../document/scripts'), { ssr: false });
+const queryClient = new QueryClient();
 
 function App({ Component, pageProps, err }) {
   useEffect(() => {
@@ -31,12 +33,14 @@ function App({ Component, pageProps, err }) {
 
   return (
     <>
-      <Chakra>
-        <DocumentHead />
-        <Layout {...pageProps}>
-          <Component {...pageProps} err={err} />
-        </Layout>
-      </Chakra>
+      <QueryClientProvider client={queryClient}>
+        <Chakra>
+          <DocumentHead />
+          <Layout {...pageProps}>
+            <Component {...pageProps} err={err} />
+          </Layout>
+        </Chakra>
+      </QueryClientProvider>
       <Scripts />
     </>
   );

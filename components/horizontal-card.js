@@ -80,7 +80,6 @@ const HorizontalCardsSlice = (rawData) => {
       {RichText.asText(title) && (
         <Heading
           as="h2"
-          fontSize="3xl"
           mt={2}
           textAlign="center"
           px={{ base: 4, sm: 8, md: 9 }}
