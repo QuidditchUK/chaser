@@ -82,6 +82,7 @@ export default function Navigation({ dashboard = false }) {
 
         <Flex
           justify={{ base: 'center', xl: 'space-between' }}
+          alignItems="center"
           direction="row"
           width="100%"
         >

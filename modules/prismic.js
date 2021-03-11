@@ -61,11 +61,13 @@ export const getBlogTags = async (tags, options = {}) => {
 
 // FIND QUIDDITCH
 
-export const getAllClubs = async ({ community, university }) => {
-  const leagues = [
-    community ? 'Community' : null,
-    university ? 'University' : null,
+export const getAllClubs = async ({ showCommunity, showUniversity }) => {
+  let leagues = [
+    showCommunity ? 'Community' : null,
+    showUniversity ? 'University' : null,
   ].filter((league) => league);
+
+  if (!leagues.length) leagues = ['Community', 'University'];
 
   const { results } = await Client().query(
     [Prismic.Predicates.any('my.clubs.league', leagues)],
@@ -79,12 +81,12 @@ export const getClubs = async ({
   longitude,
   latitude,
   distance,
-  community,
-  university,
+  showCommunity,
+  showUniversity,
 }) => {
-  const leagues = [
-    community ? 'Community' : null,
-    university ? 'University' : null,
+  let leagues = [
+    showCommunity ? 'Community' : null,
+    showUniversity ? 'University' : null,
   ].filter((league) => league);
 
   const { results } = await Client().query(
@@ -107,12 +109,12 @@ export const getEvents = async ({
   longitude,
   latitude,
   distance,
-  community,
-  university,
+  showCommunity,
+  showUniversity,
 }) => {
-  const leagues = [
-    community ? 'Community' : null,
-    university ? 'University' : null,
+  let leagues = [
+    showCommunity ? 'Community' : null,
+    showUniversity ? 'University' : null,
   ].filter((league) => league);
 
   const { results } = await Client().query(

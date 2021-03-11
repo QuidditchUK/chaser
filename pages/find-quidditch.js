@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import {
   Box,
@@ -12,17 +12,20 @@ import {
   Heading,
   Input as ChakraInput,
   Link,
-  // Slider,
+  Checkbox,
+  Stack,
+  Slider,
+  SliderThumb,
+  SliderTrack,
+  SliderFilledTrack,
 } from '@chakra-ui/react';
 
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';
-// import Type, { TYPES } from 'components/club-type';
-// import { rem } from 'styles/theme';
 import {
   getAllClubs,
   getClubs,
-  getEvents,
+  // getEvents,
   // getAllEvents,
 } from 'modules/prismic';
 
@@ -91,8 +94,8 @@ const FindQuidditch = ({
   const router = useRouter();
   const {
     postcode,
-    showCommunity,
     showUniversity,
+    showCommunity,
     showClubs,
     showEvents,
     distance = 100,
@@ -101,33 +104,36 @@ const FindQuidditch = ({
   const [showFilters, setShowFilters] = useState(false);
 
   const [clubs, setClubs] = useState(initialClubs);
-  const [, setEvents] = useState(null);
-  // const [events, setEvents] = useState(initialEvents);
 
-  const { register, handleSubmit, errors, watch } = useForm({
+  const { register, handleSubmit, errors, watch, control } = useForm({
     mode: 'onBlur',
     defaultValues: {
       showClubs: showClubs ?? true,
       showEvents: showEvents ?? true,
-      showCommunity: showCommunity ?? true,
       showUniversity: showUniversity ?? true,
+      showCommunity: showCommunity ?? true,
       postcode: postcode || '',
       distance: distance ?? 100,
     },
   });
 
-  const values = watch();
+  const watchShowUniversity = watch('showUniversity', showUniversity ?? true);
+  const watchShowCommunity = watch('showCommunity', showCommunity ?? true);
+  const watchShowEvents = watch('showEvents', showEvents ?? true);
+  const watchShowClubs = watch('showClubs', showClubs ?? true);
+  const watchPostcode = watch('postcode', postcode ?? '');
+  const watchDistance = watch('distance', postcode ?? 100);
 
   useEffect(() => {
     const refreshQuery = async () => {
-      if (!showClubs) {
+      if (!watchShowClubs) {
         return;
       }
 
-      if (!validPostcode(values.postcode)) {
+      if (!validPostcode(watchPostcode)) {
         const clubs = await getAllClubs({
-          community: values.showCommunity,
-          university: values.showUniversity,
+          showCommunity: watchShowCommunity,
+          showUniversity: watchShowUniversity,
         });
         setClubs(clubs);
         return;
@@ -135,15 +141,15 @@ const FindQuidditch = ({
 
       try {
         const { data } = await axios.get(
-          `https://api.postcodes.io/postcodes/${values.postcode}`
+          `https://api.postcodes.io/postcodes/${watchPostcode}`
         );
 
         const clubs = await getClubs({
           longitude: data.result.longitude,
           latitude: data.result.latitude,
-          distance: distance,
-          community: values.showCommunity,
-          university: values.showUniversity,
+          distance: watchDistance,
+          showCommunity: watchShowCommunity,
+          showUniversity: watchShowUniversity,
         });
         setClubs(clubs);
       } catch (err) {
@@ -153,71 +159,29 @@ const FindQuidditch = ({
 
     refreshQuery();
   }, [
-    values.postcode,
-    distance,
-    values.showCommunity,
-    values.showUniversity,
+    watchPostcode,
+    watchDistance,
+    watchShowCommunity,
+    watchShowUniversity,
     setClubs,
-    showClubs,
-  ]);
-
-  useEffect(() => {
-    const refreshQuery = async () => {
-      if (!showEvents) {
-        return;
-      }
-
-      if (!validPostcode(values.postcode)) {
-        // const clubs = await getAllEvents();
-        const events = [];
-        setEvents(events);
-        return;
-      }
-
-      try {
-        const { data } = await axios.get(
-          `https://api.postcodes.io/postcodes/${values.postcode}`
-        );
-
-        const events = await getEvents({
-          longitude: data.result.longitude,
-          latitude: data.result.latitude,
-          distance: values.distance,
-          community: values.showCommunity,
-          university: values.showUniversity,
-        });
-
-        setEvents(events);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    refreshQuery();
-  }, [
-    values.postcode,
-    values.distance,
-    values.showCommunity,
-    values.showUniversity,
-    setEvents,
-    showEvents,
+    watchShowClubs,
   ]);
 
   // useEffect(() => {
   //   router.push({
   //     pathname: router.pathname,
   //     query: {
-  //       postcode: values.postcode,
-  //       distance: values.distance,
-  //       showCommunity: values.showCommunity,
-  //       showUniversity: values.showUniversity,
-  //       showClubs: values.showClubs,
-  //       showEvents: values.showEvents,
+  //       postcode: watchPostcode,
+  //       distance: watchDistance,
+  //       ...(watchShowCommunity && { showCommunity: watchShowCommunity}),
+  //       ...(watchShowUniversity && { hideUniversity: watchShowCommunity }),
+  //       ...(watchShowClubs && { showClubs: watchShowClubs }),
+  //       ...(watchShowEvents && { showEvents: watchShowEvents }),
   //     },
   //   },
-  //   { shallow: true }
+  //   { shallow: true, scroll: false }
   // );
-  // }, [values.postcode, values.distance, values.showCommunity, values.showUniversity, values.showClubs, values.showEvents, router]);
+  // }, [watchPostcode, watchDistance, watchShowCommunity, watchShowUniversity, watchShowClubs, watchShowEvents, router]);
 
   return (
     <>
@@ -226,6 +190,7 @@ const FindQuidditch = ({
         description="Find your nearest clubs and upcoming Quidditch events in the UK"
         image="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959"
       />
+      {/* TODO ADD HANDLE SUBMIT */}
       <form onSubmit={handleSubmit()}>
         <Box
           as="section"
@@ -312,14 +277,48 @@ const FindQuidditch = ({
                   px="4"
                   gridArea="types"
                 >
-                  <Heading as="h3" fontSize="2" fontFamily="body" mt="0" px="2">
+                  <Heading as="h3" fontSize="2" fontFamily="body" mt="0">
                     Types (
-                    {
-                      [values.showClubs, values.showEvents].filter((v) => v)
-                        .length
-                    }
-                    )
+                    {[watchShowClubs, watchShowEvents].filter((v) => v).length})
                   </Heading>
+                  <Stack spacing={2} direction="column">
+                    <Box
+                      _hover={{ bg: 'gray.200' }}
+                      rounded="md"
+                      width="100%"
+                      transition={'all .3s ease'}
+                      px={2}
+                      py={2}
+                    >
+                      <Checkbox
+                        ref={register}
+                        name="showClubs"
+                        size="md"
+                        w="100%"
+                      >
+                        Clubs
+                      </Checkbox>
+                    </Box>
+
+                    <Box
+                      _hover={{ bg: 'gray.200' }}
+                      rounded="md"
+                      width="100%"
+                      transition={'all .3s ease'}
+                      px={2}
+                      py={2}
+                    >
+                      <Checkbox
+                        ref={register}
+                        name="showEvents"
+                        size="md"
+                        w="100%"
+                        isDisabled
+                      >
+                        Events
+                      </Checkbox>
+                    </Box>
+                  </Stack>
                 </Box>
 
                 <Box
@@ -329,15 +328,49 @@ const FindQuidditch = ({
                   px="4"
                   gridArea="leagues"
                 >
-                  <Heading as="h3" fontSize="2" fontFamily="body" mt="0" px="2">
+                  <Heading as="h3" fontSize="2" fontFamily="body" mt="0">
                     Leagues (
                     {
-                      [values.showCommunity, values.showUniversity].filter(
-                        (v) => v
-                      ).length
+                      [watchShowCommunity, watchShowUniversity].filter((v) => v)
+                        .length
                     }
                     )
                   </Heading>
+                  <Stack spacing={2} direction="column">
+                    <Box
+                      _hover={{ bg: 'purple.200' }}
+                      rounded="md"
+                      width="100%"
+                      transition={'all .3s ease'}
+                      p={2}
+                    >
+                      <Checkbox
+                        ref={register}
+                        name="showCommunity"
+                        size="md"
+                        w="100%"
+                      >
+                        Community
+                      </Checkbox>
+                    </Box>
+
+                    <Box
+                      _hover={{ bg: 'green.200' }}
+                      rounded="md"
+                      width="100%"
+                      transition={'all .3s ease'}
+                      p={2}
+                    >
+                      <Checkbox
+                        ref={register}
+                        name="showUniversity"
+                        size="md"
+                        w="100%"
+                      >
+                        University
+                      </Checkbox>
+                    </Box>
+                  </Stack>
                 </Box>
 
                 <Box
@@ -358,21 +391,27 @@ const FindQuidditch = ({
                     px="0"
                     paddingBottom={2}
                   >
-                    Distance ({values.distance}km)
+                    Distance ({watchDistance}km)
                   </Heading>
                   <Box px="5">
-                    {/* <Slider
-                      id="distanceSlider"
+                    <Controller
+                      control={control}
                       name="distance"
-                      min={1}
-                      max={500}
-                      defaultValue={values.distance}
-                      marks={[
-                        { value: 1, label: '1km' },
-                        { value: 100, label: '100km' },
-                        { value: 500, label: '500km' },
-                      ]}
-                    /> */}
+                      render={({ onChange }) => (
+                        <Slider
+                          defaultValue={100}
+                          onChangeEnd={onChange}
+                          min={1}
+                          max={500}
+                          aria-label="Distance Slider"
+                        >
+                          <SliderTrack>
+                            <SliderFilledTrack />
+                          </SliderTrack>
+                          <SliderThumb />
+                        </Slider>
+                      )}
+                    />
                   </Box>
                 </Box>
               </Grid>
@@ -396,7 +435,7 @@ const FindQuidditch = ({
             </Content>
           </Notification>
 
-          {values.showClubs && !!clubs.length && (
+          {watchShowClubs && !!clubs.length && (
             <>
               <Heading as="h2" fontSize="3xl" fontFamily="body" color="qukBlue">
                 Clubs
@@ -412,7 +451,7 @@ const FindQuidditch = ({
                     <NextLink href={`/clubs/${club.uid}`} passHref>
                       <StyledLink>
                         <ClubCard
-                          backgroundColor={club.data.featured_color}
+                          backgroundColor={club?.data?.featured_color}
                           color={club.data.text_color}
                           name={club.data.club_name}
                           league={club.data.league}
@@ -445,13 +484,10 @@ const FindQuidditch = ({
 };
 
 export const getServerSideProps = async ({ query }) => {
-  const invalidPostcode =
-    !query.postcode || !!query.postcode.match(postcodeRegex);
-
-  if (invalidPostcode) {
+  if (!validPostcode(query.postcode)) {
     const clubs = await getAllClubs({
-      community: query.showCommunity ?? true,
-      university: query.showUniversity ?? true,
+      showCommunity: query.hideshowCommunity ?? false,
+      hideUniversity: query.hideUniversity ?? false,
     });
     // const events = await getAllEvents();
     const events = [];
@@ -471,25 +507,15 @@ export const getServerSideProps = async ({ query }) => {
   let clubs = [];
   let events = [];
 
-  if (query.clubs) {
+  if (!query.showClubs) {
     clubs = await getClubs({
       longitude: data.result.longitude,
       latitude: data.result.latitude,
       distance: query.distance ?? 100,
-      community: query.showCommunity ?? true,
-      university: query.showUniversity ?? true,
+      showCommunity: query.showCommunity,
+      hideUniversity: query.hideUniversity,
     });
   }
-
-  // if (query.events) {
-  //   events = await getEvents({
-  //     longitude: data.result.longitude,
-  //     latitude: data.result.latitude,
-  //     distance: (query.distance ?? 100),
-  //     community: (query.showCommunity ?? true),
-  //     university: (query.showUniversity ?? true)
-  //   });
-  // }
 
   return {
     props: { clubs, events },
