@@ -14,7 +14,7 @@ const CardsSlice = (rawData) => {
   const title = get(rawData, 'primary.title');
   const content = get(rawData, 'primary.content');
   const variant = get(rawData, 'primary.variant');
-  const items = get(rawData, 'items');
+  const items = get(rawData, 'items') || [];
   const horizontalScroll = get(rawData, 'primary.horizontalScroll');
 
   return (
