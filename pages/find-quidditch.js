@@ -1,11 +1,8 @@
 import { useState, useEffect, forwardRef } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-// import Router, { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import axios from 'axios';
-// import { debounce } from 'throttle-debounce';
-
 import { useForm } from 'react-hook-form';
 
 import {
@@ -15,7 +12,7 @@ import {
   Heading,
   Input as ChakraInput,
   Link,
-  Slider,
+  // Slider,
 } from '@chakra-ui/react';
 
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
@@ -26,7 +23,7 @@ import {
   getAllClubs,
   getClubs,
   getEvents,
-  getAllEvents,
+  // getAllEvents,
 } from 'modules/prismic';
 
 const Notification = dynamic(() => import('components/notification'));
@@ -39,18 +36,6 @@ const ClubCard = dynamic(() => import('components/club-card'));
 const Image = dynamic(() => import('components/image'));
 const Meta = dynamic(() => import('components/meta'));
 const Button = dynamic(() => import('components/button'));
-
-// const Slider = dynamic(() => import('@material-ui/core/Slider'));
-
-// const SHOW_TYPES = [
-//   { value: 'events', name: 'Events' },
-//   { value: 'clubs', name: 'Clubs' },
-// ];
-
-// const LEAGUES = [
-//   { value: 'Community', name: 'Community' },
-//   { value: 'University', name: 'University' },
-// ];
 
 const IconWrapper = (props) => (
   <Box display="inline-block" w="30px" {...props} />
@@ -97,80 +82,23 @@ const StyledLink = forwardRef(function StyledLink(props, ref) {
   );
 });
 
-// const DistanceSlider = ({ min, max, defaultValue, ...props }) => {
-//   // const [field, , helpers] = useField(props);
-
-//   return (
-//     <Slider
-//       // {...field}
-//       // {...props}
-//       // onBlur={(e) => helpers.setTouched(e)}
-//       // onChange={(e, v) => helpers.setValue(v)}
-//       defaultValue={defaultValue}
-//       valueLabelDisplay="auto"
-//       min={min}
-//       max={max}
-//     />
-//   );
-// };
-
-// const handleChange = debounce(1000, async (values, setClubs, setEvents) => {
-//   const { postcode, showTypes, leagues, distance } = values;
-//   const validPostcode = !postcode || !!postcode.match(postcodeRegex);
-//   if (!validPostcode) {
-//     return;
-//   }
-
-//   const searchLeagues =
-//     leagues.length > 0 ? leagues : ['Community', 'University'];
-//   const searchQuery = {
-//     ...values,
-//     leagues: searchLeagues,
-//     distance,
-//   };
-//   // const queryString = createQueryString(searchQuery);
-//   // const { data } = await api.get(`/search?${queryString}`);
-
-//   setClubs(data.clubs);
-//   setEvents(data.events);
-
-//   Router.push(
-//     {
-//       pathname: Router.pathname,
-//       query: {
-//         postcode,
-//         showTypes,
-//         leagues,
-//         distance,
-//       },
-//     },
-//     {
-//       pathname: Router.pathname,
-//       query: {
-//         postcode,
-//         showTypes,
-//         leagues,
-//         distance,
-//       },
-//     },
-//     { shallow: true }
-//   );
-// });
-
 const validPostcode = (value) => value && value.match(postcodeRegex);
 
 const FindQuidditch = ({
   clubs: initialClubs = [],
   // events: initialEvents = [],
 }) => {
-  const { query } = useRouter();
-  const { postcode, showCommunity, showUniversity, distance = 100 } = query;
+  const router = useRouter();
+  const {
+    postcode,
+    showCommunity,
+    showUniversity,
+    showClubs,
+    showEvents,
+    distance = 100,
+  } = router.query;
 
   const [showFilters, setShowFilters] = useState(false);
-  const showClubs = true;
-  const showEvents = false;
-  // const [showClubs, setShowClubs] = useState(true);
-  // const [showEvents, setShowEvents] = useState(false);
 
   const [clubs, setClubs] = useState(initialClubs);
   const [, setEvents] = useState(null);
@@ -179,10 +107,12 @@ const FindQuidditch = ({
   const { register, handleSubmit, errors, watch } = useForm({
     mode: 'onBlur',
     defaultValues: {
-      showCommunity: showCommunity || true,
-      showUniversity: showUniversity || true,
+      showClubs: showClubs ?? true,
+      showEvents: showEvents ?? true,
+      showCommunity: showCommunity ?? true,
+      showUniversity: showUniversity ?? true,
       postcode: postcode || '',
-      distance: distance || 100,
+      distance: distance ?? 100,
     },
   });
 
@@ -195,7 +125,10 @@ const FindQuidditch = ({
       }
 
       if (!validPostcode(values.postcode)) {
-        const clubs = await getAllClubs();
+        const clubs = await getAllClubs({
+          community: values.showCommunity,
+          university: values.showUniversity,
+        });
         setClubs(clubs);
         return;
       }
@@ -235,8 +168,9 @@ const FindQuidditch = ({
       }
 
       if (!validPostcode(values.postcode)) {
-        const clubs = await getAllEvents();
-        setEvents(clubs);
+        // const clubs = await getAllEvents();
+        const events = [];
+        setEvents(events);
         return;
       }
 
@@ -269,41 +203,21 @@ const FindQuidditch = ({
     showEvents,
   ]);
 
-  // let showTypesInitial;
-
-  // if (!showTypes) {
-  //   showTypesInitial = null;
-  // } else if (Array.isArray(showTypes)) {
-  //   showTypesInitial = showTypes;
-  // } else {
-  //   showTypesInitial = [showTypes];
-  // }
-
-  // let leaguesInitial;
-
-  // if (!leagues) {
-  //   leaguesInitial = null;
-  // } else if (Array.isArray(leagues)) {
-  //   leaguesInitial = leagues;
-  // } else {
-  //   leaguesInitial = [leagues];
-  // }
-
-  // const initialValues = {
-  //   postcode: postcode || '',
-  //   showTypes: showTypesInitial || ['clubs'],
-  //   // showTypes: showTypesInitial || ['clubs', 'events'], // TODO: REMOVED DUE TO COVID, RETURN ONCE NORMALITY RESUMES
-  //   leagues: leaguesInitial || ['Community', 'University'],
-  //   distance: distance || 100,
-  // };
-
-  // const showClubs = initialValues.showTypes?.includes('clubs');
-  // const showEvents = initialValues.showTypes?.includes('events');
-
-  // const showNoClubsOrEvents =
-  //   showClubs && showEvents && !clubs.length && !events.length;
-  // const showNoClubs = showClubs && !clubs.length && !showNoClubsOrEvents;
-  // const showNoEvents = showEvents && !events.length && !showNoClubsOrEvents;
+  // useEffect(() => {
+  //   router.push({
+  //     pathname: router.pathname,
+  //     query: {
+  //       postcode: values.postcode,
+  //       distance: values.distance,
+  //       showCommunity: values.showCommunity,
+  //       showUniversity: values.showUniversity,
+  //       showClubs: values.showClubs,
+  //       showEvents: values.showEvents,
+  //     },
+  //   },
+  //   { shallow: true }
+  // );
+  // }, [values.postcode, values.distance, values.showCommunity, values.showUniversity, values.showClubs, values.showEvents, router]);
 
   return (
     <>
@@ -316,12 +230,16 @@ const FindQuidditch = ({
         <Box
           as="section"
           position="relative"
-          backgroundImage="url(https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959)"
           backgroundColor="qukBlue"
-          backgroundSize="cover"
-          backgroundPosition="center"
           minHeight={BLOG_MIN_HEIGHTS}
         >
+          <Image
+            src="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959"
+            layout="fill"
+            objectFit="cover"
+            borderRadius="0"
+            objectPosition="center center"
+          />
           <Flex
             position="absolute"
             minHeight={BLOG_MIN_HEIGHTS}
@@ -394,40 +312,13 @@ const FindQuidditch = ({
                   gridArea="types"
                 >
                   <Heading as="h3" fontSize="2" fontFamily="body" mt="0" px="2">
-                    Types{' '}
-                    {values.showTypes.length > 0 &&
-                      `(${values.showTypes.length})`}
+                    Types (
+                    {
+                      [values.showClubs, values.showEvents].filter((v) => v)
+                        .length
+                    }
+                    )
                   </Heading>
-                  {/* <FieldArray
-                        name="showTypes"
-                        render={(arrayHelpers) => (
-                          <Flex flexDirection="column">
-                            {SHOW_TYPES.map((type) => (
-                              <Label key={type.value}>
-                                <Checkbox
-                                  name="showTypes"
-                                  type="checkbox"
-                                  value={type.value}
-                                  checked={values.showTypes.includes(
-                                    type.value
-                                  )}
-                                  onChange={(e) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(type.value);
-                                    } else {
-                                      arrayHelpers.remove(
-                                        values.showTypes.indexOf(type.value)
-                                      );
-                                    }
-                                  }}
-                                />{' '}
-                                {type.name}
-                                <Checkmark />
-                              </Label>
-                            ))}
-                          </Flex>
-                        )}
-                      /> */}
                 </Box>
 
                 <Box
@@ -438,45 +329,14 @@ const FindQuidditch = ({
                   gridArea="leagues"
                 >
                   <Heading as="h3" fontSize="2" fontFamily="body" mt="0" px="2">
-                    Leagues{' '}
-                    {values.leagues.length > 0 && `(${values.leagues.length})`}
+                    Leagues (
+                    {
+                      [values.showCommunity, values.showUniversity].filter(
+                        (v) => v
+                      ).length
+                    }
+                    )
                   </Heading>
-                  {/* <FieldArray
-                        name="leagues"
-                        render={(arrayHelpers) => (
-                          <Flex flexDirection="column">
-                            {LEAGUES.map((league) => (
-                              <Label key={league.value}>
-                                <Checkbox
-                                  name="leagues"
-                                  type="checkbox"
-                                  value={league.value}
-                                  checked={values.leagues.includes(
-                                    league.value
-                                  )}
-                                  onChange={(e) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(league.value);
-                                    } else {
-                                      arrayHelpers.remove(
-                                        values.leagues.indexOf(league.value)
-                                      );
-                                    }
-                                  }}
-                                />{' '}
-                                <Type
-                                  fontWeight="bold"
-                                  fontSize={rem(10)}
-                                  bg={TYPES[league.name]}
-                                >
-                                  {league.name}
-                                </Type>
-                                <Checkmark />
-                              </Label>
-                            ))}
-                          </Flex>
-                        )}
-                      /> */}
                 </Box>
 
                 <Box
@@ -500,7 +360,7 @@ const FindQuidditch = ({
                     Distance ({values.distance}km)
                   </Heading>
                   <Box px="5">
-                    <Slider
+                    {/* <Slider
                       id="distanceSlider"
                       name="distance"
                       min={1}
@@ -511,7 +371,7 @@ const FindQuidditch = ({
                         { value: 100, label: '100km' },
                         { value: 500, label: '500km' },
                       ]}
-                    />
+                    /> */}
                   </Box>
                 </Box>
               </Grid>
@@ -535,90 +395,7 @@ const FindQuidditch = ({
             </Content>
           </Notification>
 
-          {/* {showEvents && !!events.length && (
-            <>
-              <Heading
-                as="h2"
-                fontSize={4}
-                fontFamily="body"
-                mt={0}
-                color="qukBlue"
-              >
-                Events
-              </Heading>
-
-              <Grid
-                gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
-                gridGap={{ base: 4, sm: 8, md: 9 }}
-              >
-                {events.map((event) => (
-                  <Flex flexDirection="column" key={event.uuid}>
-                    <Link
-                      href="/events/[event]"
-                      as={`/events/${event.slug}`}
-                      passHref
-                    >
-                      <StyledLink>
-                        <EventCard
-                          name={event.name}
-                          type={event.type}
-                          icon={event.icon}
-                          league={event.league}
-                          venue={event.venue}
-                          startTime={event.start_time}
-                          image={event.images[0]}
-                          slug={event.slug}
-                          registerLink={event.registerLink}
-                          registerTime={event.registerTime}
-                        />
-                      </StyledLink>
-                    </Link>
-                  </Flex>
-                ))}
-              </Grid>
-            </>
-          )}
-
-          {showNoEvents && (
-            <>
-              {showClubs && !!clubs.length && (
-                <Heading as="h2" fontSize={4} fontFamily="body" color="qukBlue">
-                  Events
-                </Heading>
-              )}
-              <Flex
-                alignItems="center"
-                justifyContent="center"
-                flexDirection="column"
-              >
-                <Heading
-                  as="h2"
-                  fontSize={4}
-                  mt={0}
-                  mb={0}
-                  fontFamily="body"
-                  textAlign="center"
-                  color="qukBlue"
-                >
-                  No events matched your search
-                </Heading>
-                <p>
-                  We can still help! Adjust your filters, and if you&#39;re
-                  still out of luck click &#34;Contact us&#34; to help us to
-                  bring Quidditch to your area.
-                </p>
-                <Link href="/about/contact-us" passHref>
-                  <a>
-                    <Button variant="secondary" type="button">
-                      Contact us
-                    </Button>
-                  </a>
-                </Link>
-              </Flex>
-            </>
-          )} */}
-
-          {showClubs && !!clubs.length && (
+          {values.showClubs && !!clubs.length && (
             <>
               <Heading as="h2" fontSize="3xl" fontFamily="body" color="qukBlue">
                 Clubs
@@ -660,77 +437,6 @@ const FindQuidditch = ({
               </Grid>
             </>
           )}
-
-          {/* {showNoClubs && (
-            <>
-              {showEvents && !!events.length && (
-                <Heading as="h2" fontSize={4} fontFamily="body" color="qukBlue">
-                  Clubs
-                </Heading>
-              )}
-              <Flex
-                alignItems="center"
-                justifyContent="center"
-                flexDirection="column"
-              >
-                <Heading
-                  as="h2"
-                  fontSize={4}
-                  mt={0}
-                  mb={0}
-                  fontFamily="body"
-                  textAlign="center"
-                  color="qukBlue"
-                >
-                  No clubs matched your search
-                </Heading>
-                <p>
-                  We can still help! Adjust your filters, and if you&#39;re
-                  still out of luck click &#34;Contact us&#34; to help us to
-                  bring Quidditch to your area.
-                </p>
-                <Link href="/about/contact-us" passHref>
-                  <a>
-                    <Button variant="secondary" type="button">
-                      Contact us
-                    </Button>
-                  </a>
-                </Link>
-              </Flex>
-            </>
-          )} */}
-
-          {/* {showNoClubsOrEvents && (
-            <Flex
-              alignItems="center"
-              justifyContent="center"
-              flexDirection="column"
-            >
-              <Heading
-                as="h2"
-                fontSize={4}
-                mt={0}
-                mb={0}
-                fontFamily="body"
-                textAlign="center"
-                color="qukBlue"
-              >
-                No clubs or events matched your search
-              </Heading>
-              <p>
-                We can still help! Adjust your filters, and if you&#39;re still
-                out of luck click &#34;Contact us&#34; to help us to bring
-                Quidditch to your area.
-              </p>
-              <Link href="/about/contact-us" passHref>
-                <a>
-                  <Button variant="secondary" type="button">
-                    Contact us
-                  </Button>
-                </a>
-              </Link>
-            </Flex>
-          )} */}
         </Container>
       </Box>
     </>
@@ -742,7 +448,10 @@ export const getServerSideProps = async ({ query }) => {
     !query.postcode || !!query.postcode.match(postcodeRegex);
 
   if (invalidPostcode) {
-    const clubs = await getAllClubs();
+    const clubs = await getAllClubs({
+      community: query.showCommunity ?? true,
+      university: query.showUniversity ?? true,
+    });
     // const events = await getAllEvents();
     const events = [];
 
@@ -753,6 +462,37 @@ export const getServerSideProps = async ({ query }) => {
       },
     };
   }
+
+  const { data } = await axios.get(
+    `https://api.postcodes.io/postcodes/${query.postcode}`
+  );
+
+  let clubs = [];
+  let events = [];
+
+  if (query.clubs) {
+    clubs = await getClubs({
+      longitude: data.result.longitude,
+      latitude: data.result.latitude,
+      distance: query.distance ?? 100,
+      community: query.showCommunity ?? true,
+      university: query.showUniversity ?? true,
+    });
+  }
+
+  // if (query.events) {
+  //   events = await getEvents({
+  //     longitude: data.result.longitude,
+  //     latitude: data.result.latitude,
+  //     distance: (query.distance ?? 100),
+  //     community: (query.showCommunity ?? true),
+  //     university: (query.showUniversity ?? true)
+  //   });
+  // }
+
+  return {
+    props: { clubs, events },
+  };
 };
 
 export default FindQuidditch;

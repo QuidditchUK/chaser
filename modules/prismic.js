@@ -60,11 +60,17 @@ export const getBlogTags = async (tags, options = {}) => {
 
 // FIND QUIDDITCH
 
-export const getAllClubs = async () => {
+export const getAllClubs = async ({ community, university }) => {
+  const leagues = [
+    community ? 'Community' : null,
+    university ? 'University' : null,
+  ].filter((league) => league);
+
   const { results } = await Client().query(
-    Prismic.Predicates.at('document.type', 'clubs'),
+    [Prismic.Predicates.any('my.clubs.league', leagues)],
     { orderings: '[my.clubs.club_name]', pageSize: 100 }
   );
+
   return results;
 };
 
