@@ -126,7 +126,7 @@ const DesktopNav = ({ navigation, dashboard }) => {
   const { asPath } = useRouter();
 
   return (
-    <Stack direction={'row'} spacing={3} mr={4}>
+    <Stack direction={'row'} spacing={3} mr={4} alignItems="center">
       {navigation.map((navItem) => {
         const regex = navItem?.path
           ? RegExp(navItem?.path.replace(/\//g, '\\/'), 'g')
@@ -166,11 +166,12 @@ const DesktopNav = ({ navigation, dashboard }) => {
                           </Link>
                         </NextLink>
                       ) : (
-                        <Link
+                        <Text
                           px={2}
                           py={0}
                           fontSize={'md'}
                           fontWeight="bold"
+                          cursor="pointer"
                           color={
                             isOpen || isActive
                               ? 'monarchRed'
@@ -184,7 +185,7 @@ const DesktopNav = ({ navigation, dashboard }) => {
                           }}
                         >
                           {navItem.label}
-                        </Link>
+                        </Text>
                       )}
                     </Box>
                   </PopoverTrigger>
