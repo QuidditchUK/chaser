@@ -49,7 +49,7 @@ const News = ({ posts: initialPosts = [] }) => {
     initialPosts;
 
   useEffect(() => {
-    if (posts.length % PAGE_SIZE !== 0) {
+    if (posts?.length % PAGE_SIZE !== 0) {
       setShowLoadMore(false);
     }
   }, [posts]);
