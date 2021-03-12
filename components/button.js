@@ -66,6 +66,12 @@ export const ButtonStyles = {
         borderColor: '#247214',
       },
     },
+    transparent: {
+      bg: 'transparent',
+      border: '1px solid',
+      borderColor: 'white',
+      color: 'white',
+    },
   },
   defaultProps: {
     variant: 'primary',

@@ -22,7 +22,7 @@ import {
   Collapse,
 } from '@chakra-ui/react';
 
-import { FIND_QUIDDITCH_MIN_HEIGHTS } from 'styles/hero-heights';
+import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';
 import {
   getAllClubs,
@@ -194,11 +194,13 @@ const FindQuidditch = ({
         image="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959"
       />
       <form onSubmit={handleSubmit(() => {})}>
-        <Box
+        <Flex
           as="section"
           position="relative"
           backgroundColor="qukBlue"
-          minHeight={FIND_QUIDDITCH_MIN_HEIGHTS}
+          minHeight={BLOG_MIN_HEIGHTS}
+          justifyContent="space-between"
+          flexDirection="column"
         >
           <Image
             src="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959"
@@ -210,23 +212,29 @@ const FindQuidditch = ({
           />
           <Flex
             position="absolute"
-            minHeight={FIND_QUIDDITCH_MIN_HEIGHTS}
+            minHeight={BLOG_MIN_HEIGHTS}
             bg="qukBlue"
             opacity={0.8}
             width="100%"
+            height="100%"
           />
 
           <Flex
             position="relative"
-            minHeight={FIND_QUIDDITCH_MIN_HEIGHTS}
-            alignItems="center"
+            minHeight={BLOG_MIN_HEIGHTS}
+            direction="column"
+            justifyContent="center"
+            bgGradient={
+              isOpen ? 'linear(to-t, qukBlue, rgba(0, 0, 0, 0))' : 'none'
+            }
           >
-            <Container px={{ base: 4, sm: 8, md: 9 }}>
+            <Container px={{ base: 4, sm: 8, md: 9 }} width="100%">
               <Heading
                 fontSize={{ base: '3xl', lg: '5xl' }}
                 color="white"
                 fontFamily="body"
                 textShadow="lg"
+                pb="0"
               >
                 Quidditch near
                 <Box display="inline-block">
@@ -245,178 +253,166 @@ const FindQuidditch = ({
                   )}
                 </Box>
               </Heading>
+              <Collapse in={!isOpen} animateOpacity>
+                <Button variant="transparent" type="button" onClick={onToggle}>
+                  Show filters
+                </Button>
+              </Collapse>
             </Container>
-          </Flex>
-        </Box>
 
-        <Box bg="white" py={5}>
-          <Container px={{ base: 4, sm: 8, md: 9 }}>
-            <Button variant="light" type="button" onClick={onToggle}>
-              {isOpen ? 'Hide' : 'Show'} filters
-            </Button>
-          </Container>
-        </Box>
-        <Collapse in={isOpen} animateOpacity>
-          <Box bg="white" py={5}>
-            <Container px={{ base: 4, sm: 8, md: 9 }}>
-              <Grid
-                gridGap={{ base: 4, md: 0 }}
-                gridTemplateColumns={{ base: '1fr 1fr', md: '1fr 1fr 1fr' }}
-                gridTemplateAreas={{
-                  base: '"types leagues" "distance distance"',
-                  md: '"types leagues distance"',
-                }}
-              >
-                <Box
-                  borderLeftStyle="solid"
-                  borderLeftWidth={{ base: '0', md: '1px' }}
-                  borderRightStyle="solid"
-                  borderRightWidth="1px"
-                  borderColor="lightGrey"
-                  px="4"
-                  gridArea="types"
-                >
-                  <Heading as="h3" fontSize="2" fontFamily="body" mt="0">
-                    Types (
-                    {[watchShowClubs, watchShowEvents].filter((v) => v).length})
-                  </Heading>
-                  <Stack spacing={2} direction="column">
-                    <Box
-                      _hover={{ bg: 'gray.200' }}
-                      rounded="md"
-                      width="100%"
-                      transition={'all .3s ease'}
-                      px={2}
-                      py={2}
-                    >
-                      <Checkbox
-                        ref={register}
-                        name="showClubs"
-                        size="md"
-                        w="100%"
-                      >
-                        Clubs
-                      </Checkbox>
-                    </Box>
-
-                    <Box
-                      _hover={{ bg: 'gray.200' }}
-                      rounded="md"
-                      width="100%"
-                      transition={'all .3s ease'}
-                      px={2}
-                      py={2}
-                    >
-                      <Checkbox
-                        ref={register}
-                        name="showEvents"
-                        size="md"
-                        w="100%"
-                        isDisabled
-                      >
-                        Events
-                      </Checkbox>
-                    </Box>
-                  </Stack>
-                </Box>
-
-                <Box
-                  borderRightStyle="solid"
-                  borderRightWidth={{ base: '0', md: '1px' }}
-                  borderColor="lightGrey"
-                  px="4"
-                  gridArea="leagues"
-                >
-                  <Heading as="h3" fontSize="2" fontFamily="body" mt="0">
-                    Leagues (
-                    {
-                      [watchShowCommunity, watchShowUniversity].filter((v) => v)
-                        .length
-                    }
-                    )
-                  </Heading>
-                  <Stack spacing={2} direction="column">
-                    <Box
-                      _hover={{ bg: 'purple.200' }}
-                      rounded="md"
-                      width="100%"
-                      transition={'all .3s ease'}
-                      p={2}
-                    >
-                      <Checkbox
-                        ref={register}
-                        name="showCommunity"
-                        size="md"
-                        w="100%"
-                      >
-                        Community
-                      </Checkbox>
-                    </Box>
-
-                    <Box
-                      _hover={{ bg: 'green.200' }}
-                      rounded="md"
-                      width="100%"
-                      transition={'all .3s ease'}
-                      p={2}
-                    >
-                      <Checkbox
-                        ref={register}
-                        name="showUniversity"
-                        size="md"
-                        w="100%"
-                      >
-                        University
-                      </Checkbox>
-                    </Box>
-                  </Stack>
-                </Box>
-
-                <Box
-                  borderTopStyle="solid"
-                  borderRightStyle="solid"
-                  borderTopWidth={{ base: '1px', md: '0px' }}
-                  borderRightWidth={{ base: '0px', md: '1px' }}
-                  borderColor="lightGrey"
-                  px="4"
-                  py={{ base: 4, md: 0 }}
-                  gridArea="distance"
-                >
-                  <Heading
-                    as="h3"
-                    fontSize="2"
-                    fontFamily="body"
-                    mt="0"
-                    px="0"
-                    paddingBottom={2}
+            <Collapse in={isOpen} animateOpacity>
+              <Box py={5} color="white">
+                <Container px={{ base: 4, sm: 8, md: 9 }}>
+                  <Grid
+                    gridGap={{ base: 4, md: 0 }}
+                    gridTemplateColumns={{ base: '1fr 1fr', md: '1fr 1fr 1fr' }}
+                    gridTemplateAreas={{
+                      base: '"types leagues" "distance distance"',
+                      md: '"types leagues distance"',
+                    }}
                   >
-                    Distance ({watchDistance}km)
-                  </Heading>
-                  <Box>
-                    <Controller
-                      control={control}
-                      name="distance"
-                      render={({ onChange }) => (
-                        <Slider
-                          defaultValue={100}
-                          onChangeEnd={onChange}
-                          min={1}
-                          max={500}
-                          aria-label="Distance Slider"
+                    <Box p="4" gridArea="types">
+                      <Heading as="h3" fontSize="2" fontFamily="body" mt="0">
+                        Types (
+                        {
+                          [watchShowClubs, watchShowEvents].filter((v) => v)
+                            .length
+                        }
+                        )
+                      </Heading>
+                      <Stack spacing={2} direction="column">
+                        <Box
+                          _hover={{ bg: 'blue.700' }}
+                          rounded="md"
+                          width="100%"
+                          transition={'all .3s ease'}
+                          px={2}
+                          py={2}
                         >
-                          <SliderTrack>
-                            <SliderFilledTrack />
-                          </SliderTrack>
-                          <SliderThumb />
-                        </Slider>
-                      )}
-                    />
-                  </Box>
-                </Box>
-              </Grid>
-            </Container>
-          </Box>
-        </Collapse>
+                          <Checkbox
+                            ref={register}
+                            name="showClubs"
+                            size="md"
+                            w="100%"
+                          >
+                            Clubs
+                          </Checkbox>
+                        </Box>
+
+                        <Box
+                          _hover={{ bg: 'blue.700' }}
+                          rounded="md"
+                          width="100%"
+                          transition={'all .3s ease'}
+                          px={2}
+                          py={2}
+                        >
+                          <Checkbox
+                            ref={register}
+                            name="showEvents"
+                            size="md"
+                            w="100%"
+                            isDisabled
+                          >
+                            Events
+                          </Checkbox>
+                        </Box>
+                      </Stack>
+                    </Box>
+
+                    <Box p="4" gridArea="leagues">
+                      <Heading as="h3" fontSize="2" fontFamily="body" mt="0">
+                        Leagues (
+                        {
+                          [watchShowCommunity, watchShowUniversity].filter(
+                            (v) => v
+                          ).length
+                        }
+                        )
+                      </Heading>
+                      <Stack spacing={2} direction="column">
+                        <Box
+                          _hover={{ bg: 'purple.700' }}
+                          rounded="md"
+                          width="100%"
+                          transition={'all .3s ease'}
+                          p={2}
+                        >
+                          <Checkbox
+                            ref={register}
+                            name="showCommunity"
+                            size="md"
+                            w="100%"
+                          >
+                            Community
+                          </Checkbox>
+                        </Box>
+
+                        <Box
+                          _hover={{ bg: 'green.700' }}
+                          rounded="md"
+                          width="100%"
+                          transition={'all .3s ease'}
+                          p={2}
+                        >
+                          <Checkbox
+                            ref={register}
+                            name="showUniversity"
+                            size="md"
+                            w="100%"
+                          >
+                            University
+                          </Checkbox>
+                        </Box>
+                      </Stack>
+                    </Box>
+
+                    <Box borderRadius="md" p={4} gridArea="distance">
+                      <Heading
+                        as="h3"
+                        fontSize="2"
+                        fontFamily="body"
+                        px="0"
+                        mt="0"
+                        paddingBottom={2}
+                      >
+                        Distance ({watchDistance}km)
+                      </Heading>
+                      <Box>
+                        <Controller
+                          control={control}
+                          name="distance"
+                          render={({ onChange }) => (
+                            <Slider
+                              defaultValue={100}
+                              onChangeEnd={onChange}
+                              min={1}
+                              max={500}
+                              aria-label="Distance Slider"
+                            >
+                              <SliderTrack>
+                                <SliderFilledTrack />
+                              </SliderTrack>
+                              <SliderThumb />
+                            </Slider>
+                          )}
+                        />
+                      </Box>
+                      <Button
+                        mt={3}
+                        variant="transparent"
+                        type="button"
+                        onClick={onToggle}
+                      >
+                        Hide filters
+                      </Button>
+                    </Box>
+                  </Grid>
+                </Container>
+              </Box>
+            </Collapse>
+          </Flex>
+        </Flex>
       </form>
 
       <Box bg="greyLight" py={{ base: 6, lg: 10 }}>
