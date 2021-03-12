@@ -16,7 +16,7 @@ const Meta = ({
 
   return (
     <Head>
-      <title>{title}</title>
+      <title>{formattedTitle}</title>
       <link rel="canonical" href={url} />
       <meta name="description" content={description} />
       <meta property="og:description" content={description} />
