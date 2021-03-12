@@ -17,7 +17,7 @@ const getPagedDocs = ({ pageParam = 0 }) =>
     page: pageParam,
   });
 
-const LoadMore = ({ fetchNextPage }) => {
+export const LoadMore = ({ fetchNextPage }) => {
   const [ref, inView] = useInView({ threshold: 0 });
 
   useEffect(() => {
