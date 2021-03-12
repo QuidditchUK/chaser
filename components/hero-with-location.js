@@ -112,7 +112,12 @@ const HeroWithLocation = ({
             />
           </Box>
           <Flex flexDirection="column">
-            <Heading as="h2" py="0" my="0">
+            <Heading
+              as="h2"
+              py="0"
+              my="0"
+              fontSize={{ base: '2xl', md: '4xl' }}
+            >
               {club_name}
             </Heading>
 
