@@ -454,24 +454,17 @@ const FindQuidditch = ({
         </Flex>
       </form>
 
-      <Box bg="greyLight" py={{ base: 6, lg: 10 }}>
+      <Box bg="greyLight" py={{ base: 6 }}>
         <Container px={{ base: 4, sm: 8, md: 9 }}>
-          <Notification>
-            <Heading as="h2" fontSize="xl" fontFamily="body">
-              Events during COVID-19
-            </Heading>
-            <Content>
-              All QuidditchUK Events are currently postponed due to the
-              Coronavirus Pandemic. For the latest COVID guidance head to our{' '}
-              <NextLink href="/[id]" as="/covid" passHref>
-                <Link color="monarchRed">COVID page</Link>
-              </NextLink>
-            </Content>
-          </Notification>
-
           {watchShowClubs && !!clubs.length && (
             <>
-              <Heading as="h2" fontSize="3xl" fontFamily="body" color="qukBlue">
+              <Heading
+                as="h2"
+                fontSize="3xl"
+                fontFamily="body"
+                color="qukBlue"
+                mt={3}
+              >
                 Clubs
               </Heading>
 
@@ -542,6 +535,19 @@ const FindQuidditch = ({
               </Link>
             </Flex>
           )}
+
+          <Notification mt={4}>
+            <Heading as="h2" fontSize="xl" fontFamily="body">
+              Events during COVID-19
+            </Heading>
+            <Content>
+              All QuidditchUK Events are currently postponed due to the
+              Coronavirus Pandemic. For the latest COVID guidance head to our{' '}
+              <NextLink href="/[id]" as="/covid" passHref>
+                <Link color="monarchRed">COVID page</Link>
+              </NextLink>
+            </Content>
+          </Notification>
         </Container>
       </Box>
     </>
