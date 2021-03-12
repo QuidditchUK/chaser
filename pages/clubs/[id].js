@@ -242,46 +242,6 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
                 </a>
               </Text>
             )}
-
-            {club.tournament_results.length !== 0 ? (
-              <>
-                <Heading
-                  as="h3"
-                  fontSize="xl"
-                  fontFamily="body"
-                  color={club.featured_color}
-                >
-                  Club Achievements
-                </Heading>
-
-                <Table variant="striped">
-                  <Thead>
-                    <Tr>
-                      <Th>Position</Th>
-                      <Th>Season</Th>
-                      <Th>Tournament</Th>
-                      <Th>Team</Th>
-                    </Tr>
-                  </Thead>
-
-                  <Tbody>
-                    {club?.tournament_results?.map((result) => (
-                      <Tr
-                        key={`${club.club_name}_${result.team_name}_${result.tournament_name}_${result.season}`}
-                      >
-                        <Td>
-                          {result.position}
-                          {formatOrdinals(result.position)}
-                        </Td>
-                        <Td>{result.season}</Td>
-                        <Td>{result.tournament_name}</Td>
-                        <Td>{result.team_name}</Td>
-                      </Tr>
-                    ))}
-                  </Tbody>
-                </Table>
-              </>
-            ) : null}
           </Box>
 
           <Box
@@ -327,6 +287,46 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
                   />
                 </>
               )}
+
+              {club.tournament_results.length !== 0 ? (
+                <>
+                  <Heading
+                    as="h3"
+                    fontSize="xl"
+                    fontFamily="body"
+                    color={club.featured_color}
+                  >
+                    Club Achievements
+                  </Heading>
+
+                  <Table variant="striped">
+                    <Thead>
+                      <Tr>
+                        <Th>Position</Th>
+                        <Th>Season</Th>
+                        <Th>Tournament</Th>
+                        <Th>Team</Th>
+                      </Tr>
+                    </Thead>
+
+                    <Tbody>
+                      {club?.tournament_results?.map((result) => (
+                        <Tr
+                          key={`${club.club_name}_${result.team_name}_${result.tournament_name}_${result.season}`}
+                        >
+                          <Td>
+                            {result.position}
+                            {formatOrdinals(result.position)}
+                          </Td>
+                          <Td>{result.season}</Td>
+                          <Td>{result.tournament_name}</Td>
+                          <Td>{result.team_name}</Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+                </>
+              ) : null}
             </Box>
           </Box>
         </Grid>
