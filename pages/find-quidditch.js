@@ -234,7 +234,7 @@ const FindQuidditch = ({
                 color="white"
                 fontFamily="body"
                 textShadow="lg"
-                pb="0"
+                mb={2}
               >
                 Quidditch near
                 <Box display="inline-block">
@@ -374,7 +374,6 @@ const FindQuidditch = ({
                         fontFamily="body"
                         px="0"
                         mt="0"
-                        paddingBottom={2}
                       >
                         Distance ({watchDistance}km)
                       </Heading>
@@ -399,7 +398,7 @@ const FindQuidditch = ({
                         />
                       </Box>
                       <Button
-                        mt={3}
+                        mt={4}
                         variant="transparent"
                         type="button"
                         onClick={onToggle}

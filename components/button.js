@@ -71,6 +71,10 @@ export const ButtonStyles = {
       border: '1px solid',
       borderColor: 'white',
       color: 'white',
+
+      _hover: {
+        bg: 'rgba(255,255,255,0.1)',
+      },
     },
   },
   defaultProps: {
