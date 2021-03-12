@@ -107,6 +107,7 @@ const FindQuidditch = ({
   const { isOpen, onToggle } = useDisclosure();
 
   const [clubs, setClubs] = useState(initialClubs);
+  const [distanceIndicator, setDistanceIndicator] = useState(100);
 
   const { register, handleSubmit, errors, watch, control } = useForm({
     mode: 'onBlur',
@@ -375,7 +376,7 @@ const FindQuidditch = ({
                         px="0"
                         mt="0"
                       >
-                        Distance ({watchDistance}km)
+                        Distance ({distanceIndicator}km)
                       </Heading>
                       <Box>
                         <Controller
@@ -385,6 +386,7 @@ const FindQuidditch = ({
                             <Slider
                               defaultValue={100}
                               onChangeEnd={onChange}
+                              onChange={(val) => setDistanceIndicator(val)}
                               min={1}
                               max={500}
                               aria-label="Distance Slider"
