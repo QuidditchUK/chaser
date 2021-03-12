@@ -243,9 +243,11 @@ const FindQuidditch = ({
                 textShadow="lg"
                 mb={2}
               >
-                Quidditch near
+                <Box as="span" display="inline-block" mr={[2, 4]}>
+                  {' '}
+                  Quidditch near
+                </Box>
                 <Box
-                  ml={[2, 4]}
                   onClick={() => setShowLocation(false)}
                   opacity={showLocation ? 1 : 0}
                   display={showLocation ? 'inline-block' : 'none'}
@@ -271,7 +273,6 @@ const FindQuidditch = ({
                     placeholder="Postcode"
                     ref={register}
                     size="8"
-                    marginLeft={[2, 4]}
                     width={{ base: '200px', md: '300px' }}
                     onBlur={postcodeData ? () => setShowLocation(true) : null}
                   />
@@ -283,7 +284,12 @@ const FindQuidditch = ({
                 </Box>
               </Heading>
               <Collapse in={!isOpen} animateOpacity>
-                <Button variant="transparent" type="button" onClick={onToggle}>
+                <Button
+                  variant="transparent"
+                  type="button"
+                  onClick={onToggle}
+                  mt={{ base: 1, sm: 'inherit' }}
+                >
                   Show filters
                 </Button>
               </Collapse>
