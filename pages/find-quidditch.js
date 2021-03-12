@@ -11,6 +11,7 @@ import {
   Grid,
   Heading,
   Input as ChakraInput,
+  Text,
   Link,
   Checkbox,
   Stack,
@@ -103,8 +104,9 @@ const FindQuidditch = ({
     distance = 100,
   } = router.query;
 
-  // const [showFilters, setShowFilters] = useState(false);
   const { isOpen, onToggle } = useDisclosure();
+  const [postcodeData, setPostcodeData] = useState(null);
+  const [showLocation, setShowLocation] = useState(false);
 
   const [clubs, setClubs] = useState(initialClubs);
   const [distanceIndicator, setDistanceIndicator] = useState(100);
@@ -139,6 +141,7 @@ const FindQuidditch = ({
           showCommunity: watchShowCommunity,
           showUniversity: watchShowUniversity,
         });
+        setPostcodeData(null);
         setClubs(clubs);
         return;
       }
@@ -147,6 +150,8 @@ const FindQuidditch = ({
         const { data } = await axios.get(
           `https://api.postcodes.io/postcodes/${watchPostcode}`
         );
+
+        setPostcodeData(data?.result);
 
         const clubs = await getClubs({
           longitude: data.result.longitude,
@@ -169,6 +174,7 @@ const FindQuidditch = ({
     watchShowUniversity,
     setClubs,
     watchShowClubs,
+    setPostcodeData,
   ]);
 
   // useEffect(() => {
@@ -238,7 +244,28 @@ const FindQuidditch = ({
                 mb={2}
               >
                 Quidditch near
-                <Box display="inline-block">
+                <Box
+                  ml={[2, 4]}
+                  onClick={() => setShowLocation(false)}
+                  opacity={showLocation ? 1 : 0}
+                  display={showLocation ? 'inline-block' : 'none'}
+                >
+                  <Text
+                    fontWeight="normal"
+                    pt={'6px'}
+                    m={0}
+                    borderBottom="3px solid"
+                    borderColor="white"
+                    pb={'7px'}
+                    minWidth={{ base: '200px', md: '300px' }}
+                  >
+                    {postcodeData?.parliamentary_constituency}
+                  </Text>
+                </Box>
+                <Box
+                  display={showLocation ? 'none' : 'inline-block'}
+                  opacity={showLocation ? 0 : 1}
+                >
                   <Input
                     name="postcode"
                     placeholder="Postcode"
@@ -246,6 +273,7 @@ const FindQuidditch = ({
                     size="8"
                     marginLeft={[2, 4]}
                     width={{ base: '200px', md: '300px' }}
+                    onBlur={postcodeData ? () => setShowLocation(true) : null}
                   />
                   {errors.postcode && (
                     <IconWrapper>
