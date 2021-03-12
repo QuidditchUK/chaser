@@ -84,7 +84,7 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
       <Meta
         description={`Club page of ${club.club_name} with all their latest news, results and details`}
         subTitle={club.club_name}
-        image={club.images?.[0]?.url}
+        image={club.images?.[0]?.image?.url}
       />
       <SchemaClub club={club} />
 
