@@ -295,6 +295,7 @@ const FindQuidditch = ({
                             name="showClubs"
                             size="md"
                             w="100%"
+                            colorScheme="white"
                           >
                             Clubs
                           </Checkbox>
@@ -344,6 +345,7 @@ const FindQuidditch = ({
                             name="showCommunity"
                             size="md"
                             w="100%"
+                            colorScheme="white"
                           >
                             Community
                           </Checkbox>
@@ -361,6 +363,7 @@ const FindQuidditch = ({
                             name="showUniversity"
                             size="md"
                             w="100%"
+                            colorScheme="white"
                           >
                             University
                           </Checkbox>
@@ -390,9 +393,10 @@ const FindQuidditch = ({
                               min={1}
                               max={500}
                               aria-label="Distance Slider"
+                              colorScheme="white"
                             >
                               <SliderTrack>
-                                <SliderFilledTrack />
+                                <SliderFilledTrack bg="monarchRed" />
                               </SliderTrack>
                               <SliderThumb />
                             </Slider>
