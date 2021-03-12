@@ -56,7 +56,7 @@ const News = ({ posts: initialPosts = [] }) => {
 
   return (
     <>
-      <Meta />
+      <Meta subTitle="News" />
       <NewsHeader />
       <LatestNews posts={posts} horizontalScroll={false} />
       {isFetching && (
