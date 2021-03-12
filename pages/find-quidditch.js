@@ -193,8 +193,7 @@ const FindQuidditch = ({
         description="Find your nearest clubs and upcoming Quidditch events in the UK"
         image="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959"
       />
-      {/* TODO ADD HANDLE SUBMIT */}
-      <form onSubmit={handleSubmit()}>
+      <form onSubmit={handleSubmit(() => {})}>
         <Box
           as="section"
           position="relative"
