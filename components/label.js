@@ -1,14 +1,5 @@
-import styled from 'styled-components';
-import { layout, space } from 'styled-system';
+import { Box } from '@chakra-ui/react';
 
-const Label = styled.label`
-  font-size: ${({ theme }) => theme.fontSizes.bodyCard};
-  ${layout};
-  ${space};
-
-  a {
-    color: ${({ theme }) => theme.colors.secondary};
-  }
-`;
-
-export default Label;
+export default function Label(props) {
+  return <Box as="label" fontSize="sm" {...props} />;
+}

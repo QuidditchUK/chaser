@@ -1,7 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
-import { Box, Flex } from 'components/layout';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import { Logo } from 'components/logo';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
@@ -9,7 +7,7 @@ import { parseCookies } from 'modules/cookies';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
-const Heading = dynamic(() => import('components/heading'));
+
 const InfoForm = dynamic(() => import('components/info-form'));
 const PasswordForm = dynamic(() => import('components/password-form'));
 
@@ -17,19 +15,24 @@ const logo = '/images/logo.png';
 
 const Info = ({ user }) => (
   <>
-    <Meta description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more" subTitle="Sign In" />
-    <Box
-      bg="greyLight"
-      py={{ _: 4, l: 10 }}
-      px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-    >
+    <Meta
+      description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+      subTitle="Sign In"
+    />
+    <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>
       <Container maxWidth={rem(500)}>
-        <Flex justifyContent="center" alignItems="center"><Logo src={logo} alt="Quidditch UK" /></Flex>
-        <Heading as="h1" isBody textAlign="center">Update your Info</Heading>
+        <Flex justifyContent="center" alignItems="center">
+          <Logo src={logo} alt="Quidditch UK" />
+        </Flex>
+        <Heading as="h1" fontFamily="body" textAlign="center">
+          Update your Info
+        </Heading>
 
         <InfoForm user={user} />
 
-        <Heading as="h3" isBody color="primary">Change your password</Heading>
+        <Heading as="h3" fontFamily="body" color="qukBlue" fontSize="xl">
+          Change your password
+        </Heading>
 
         <PasswordForm />
       </Container>
@@ -58,14 +61,6 @@ export const getServerSideProps = async ({ req, res }) => {
       user,
     },
   };
-};
-
-Info.propTypes = {
-  user: PropTypes.shape({
-    first_name: PropTypes.string,
-    last_name: PropTypes.string,
-    email: PropTypes.string,
-  }).isRequired,
 };
 
 export default Info;

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
 import * as Yup from 'yup';
 import Router from 'next/router';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
-import { Box, Grid, Flex } from 'components/layout';
+import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Logo } from 'components/logo';
@@ -16,27 +15,9 @@ import Input from 'components/input';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
-const Heading = dynamic(() => import('components/heading'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
-
-const Text = styled(Content)`
-  a {
-    color: ${({ theme }) => theme.colors.secondary};
-  }
-`;
-
-const AlertText = styled(Content)`
-  a {
-    color: ${({ theme }) => theme.colors.white};
-    border-bottom: 1px solid ${({ theme }) => theme.colors.white};
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
-`;
 
 const logo = '/images/logo.png';
 
@@ -66,12 +47,7 @@ const handleLoginSubmit = async (values, setServerError) => {
 const Page = () => {
   const [serverError, setServerError] = useState(null);
 
-  const {
-    register,
-    handleSubmit,
-    errors,
-    formState,
-  } = useForm({
+  const { register, handleSubmit, errors, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(LoginFormSchema),
     defaultValues: {
@@ -84,24 +60,30 @@ const Page = () => {
 
   return (
     <>
-      <Meta description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more" subTitle="Sign In" />
+      <Meta
+        description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+        subTitle="Sign In"
+      />
       <Box
         bg="greyLight"
-        py={{ _: 4, l: 10 }}
-        px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+        py={{ base: 4, lg: 10 }}
+        px={{ base: 4, sm: 8, md: 9 }}
       >
         <Container maxWidth={rem(500)}>
-          <Flex justifyContent="center" alignItems="center"><Logo src={logo} alt="Quidditch UK" /></Flex>
-          <Heading as="h1" isBody textAlign="center">Sign in to QuidditchUK</Heading>
+          <Flex justifyContent="center" alignItems="center">
+            <Logo src={logo} alt="Quidditch UK" />
+          </Flex>
+          <Heading as="h1" fontFamily="body" textAlign="center">
+            Sign in to QuidditchUK
+          </Heading>
 
-          <form onSubmit={handleSubmit((values) => handleLoginSubmit(values, setServerError))}>
-
-            <Grid
-              gridTemplateColumns="1fr"
-            >
-              <Label htmlFor="name">
-                Email Address
-              </Label>
+          <form
+            onSubmit={handleSubmit((values) =>
+              handleLoginSubmit(values, setServerError)
+            )}
+          >
+            <Grid gridTemplateColumns="1fr">
+              <Label htmlFor="name">Email Address</Label>
 
               <Input
                 name="email"
@@ -111,11 +93,13 @@ const Page = () => {
                 error={errors.email}
               />
 
-              {errors.email && <InlineError marginBottom={3}>{errors.email.message}</InlineError>}
+              {errors.email && (
+                <InlineError marginBottom={3}>
+                  {errors.email.message}
+                </InlineError>
+              )}
 
-              <Label htmlFor="password">
-                Password
-              </Label>
+              <Label htmlFor="password">Password</Label>
 
               <Input
                 name="password"
@@ -125,26 +109,67 @@ const Page = () => {
                 type="password"
                 error={errors.password}
               />
-              {errors.password && <InlineError marginBottom={3}>{errors.password.message}</InlineError>}
+              {errors.password && (
+                <InlineError marginBottom={3}>
+                  {errors.password.message}
+                </InlineError>
+              )}
             </Grid>
 
-            <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Sign in'}</Button>
-
+            <Button type="submit" variant="green" disabled={isSubmitting}>
+              {isSubmitting ? 'Submitting' : 'Sign in'}
+            </Button>
           </form>
 
           {serverError && (
             <>
               <InlineError my={3}>{serverError}</InlineError>
-              <Box bg="secondary" px="4" py="2" mt="6" borderColor="secondary" borderWidth="1px" borderStyle="solid" color="white" borderRadius={0}>
-                <AlertText>Forgot password? <Link href="/forgot" as="/forgot"><a>Request a reset.</a></Link></AlertText>
+              <Box
+                bg="monarchRed"
+                px="4"
+                py="2"
+                mt="6"
+                borderColor="monarchRed"
+                borderWidth="1px"
+                borderStyle="solid"
+                color="white"
+                borderRadius="sm"
+              >
+                <Content>
+                  Forgot password?{' '}
+                  <NextLink href="/forgot" passHref>
+                    <Link
+                      color="white"
+                      borderColor="white"
+                      borderBottom="1px solid"
+                      _hover={{ textDecoration: 'none' }}
+                    >
+                      Request a reset.
+                    </Link>
+                  </NextLink>
+                </Content>
               </Box>
             </>
           )}
 
-          <Box bg="white" px="4" py="2" mt="6" borderColor="primary" borderWidth="1px" borderStyle="solid" color="primary" borderRadius={0}>
-            <Text>New to QuidditchUK? <Link href="/join" as="/join"><a>Create an account.</a></Link></Text>
+          <Box
+            bg="white"
+            px="4"
+            py="2"
+            mt="6"
+            borderColor="qukBlue"
+            borderWidth="1px"
+            borderStyle="solid"
+            color="qukBlue"
+            borderRadius="sm"
+          >
+            <Content>
+              New to QuidditchUK?{' '}
+              <NextLink href="/join" passHref>
+                <Link color="monarchRed">Create an account.</Link>
+              </NextLink>
+            </Content>
           </Box>
-
         </Container>
       </Box>
     </>

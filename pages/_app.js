@@ -1,14 +1,13 @@
-/* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Router from 'next/router';
 import * as Sentry from '@sentry/node';
-import { ThemeProvider } from 'styled-components';
+import { QueryClientProvider, QueryClient } from 'react-query';
+
+import { Chakra } from 'styles/chakra';
 import dynamic from 'next/dynamic';
 import DocumentHead from 'document/head';
-import normalTheme from 'styles/theme';
-import capeTheme from 'styles/cape';
+
 import { pageview } from 'modules/analytics';
-import useCapeMode from 'hooks/useCapeMode';
 
 const Layout = dynamic(() => import('containers/layout'));
 
@@ -18,12 +17,9 @@ Sentry.init({
 });
 
 const Scripts = dynamic(() => import('../document/scripts'), { ssr: false });
-
-require('intersection-observer');
+const queryClient = new QueryClient();
 
 function App({ Component, pageProps, err }) {
-  const [theme] = useCapeMode();
-
   useEffect(() => {
     const handleRouteChange = (url) => {
       pageview(url);
@@ -35,16 +31,16 @@ function App({ Component, pageProps, err }) {
     };
   }, []);
 
-  const themeMode = theme === 'normal' ? normalTheme : capeTheme;
-
   return (
     <>
-      <ThemeProvider theme={themeMode}>
-        <DocumentHead />
-        <Layout {...pageProps}>
-          <Component {...pageProps} err={err} />
-        </Layout>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <Chakra>
+          <DocumentHead />
+          <Layout {...pageProps}>
+            <Component {...pageProps} err={err} />
+          </Layout>
+        </Chakra>
+      </QueryClientProvider>
       <Scripts />
     </>
   );

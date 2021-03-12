@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { typography, color, space } from 'styled-system';
+import { Text } from '@chakra-ui/react';
 
 export const TYPES = {
   University: 'keeperGreen',
@@ -7,14 +6,16 @@ export const TYPES = {
   Youth: 'southernBlue',
 };
 
-const Type = styled.span`
-  ${typography};
-  ${color};
-  color: ${({ theme }) => theme.colors.white};
-  text-transform: uppercase;
-  border-radius: ${({ theme }) => theme.radii[1]};
-  padding: ${({ theme }) => theme.space[1]} ${({ theme }) => theme.space[2]};
-  ${space};
-`;
-
-export default Type;
+export default function Type(props) {
+  return (
+    <Text
+      as="span"
+      color="white"
+      textTransform="uppercase"
+      borderRadius="md"
+      py={1}
+      px={2}
+      {...props}
+    />
+  );
+}

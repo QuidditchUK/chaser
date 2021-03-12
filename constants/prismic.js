@@ -1,10 +1,11 @@
-import React from 'react';
 import dynamic from 'next/dynamic';
 
 const HomeHero = dynamic(() => import('components/home-hero'));
 const Hero = dynamic(() => import('components/hero'));
 const LatestNews = dynamic(() => import('components/latest-news'));
-const HeaderAndParagraph = dynamic(() => import('components/header-and-paragraph'));
+const HeaderAndParagraph = dynamic(() =>
+  import('components/header-and-paragraph')
+);
 const ImageSlice = dynamic(() => import('components/image-slice'));
 const ImageAndContent = dynamic(() => import('components/image-and-content'));
 const Cards = dynamic(() => import('components/cards'));
@@ -14,7 +15,9 @@ const EmbedAndContent = dynamic(() => import('components/embed-and-content'));
 const ContactForm = dynamic(() => import('components/contact-form'));
 const VolunteerForm = dynamic(() => import('components/volunteer-form'));
 const NationalTeamForm = dynamic(() => import('components/national-team-form'));
-const TwoColumnTable = dynamic(() => import('components/two-column-table-slice'));
+const TwoColumnTable = dynamic(() =>
+  import('components/two-column-table-slice')
+);
 const HorizontalCard = dynamic(() => import('components/horizontal-card'));
 const EDICommitteeForm = dynamic(() => import('components/edi-committee-form'));
 
@@ -46,8 +49,6 @@ export default function Slice(sections, posts) {
       return null;
     }
 
-    return (
-      <Component key={`prismic${i}`} {...section} posts={posts} />
-    );
+    return <Component key={`prismic${i}`} {...section} posts={posts} />;
   });
 }

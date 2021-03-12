@@ -1,165 +1,212 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState, forwardRef } from 'react';
 import dynamic from 'next/dynamic';
-import styled from 'styled-components';
-import useSWR from 'swr';
+import { StyledLink } from 'components/latest-news';
+import { useQuery } from 'react-query';
 import Link from 'next/link';
-import { color, border } from 'styled-system';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid, Flex } from 'components/layout';
-import { CenterJustify } from 'components/image-and-content';
+import {
+  Box,
+  Grid,
+  Flex,
+  ListItem,
+  Text,
+  OrderedList,
+  Heading,
+  Link as ChakraLink,
+} from '@chakra-ui/react';
+import { CheckCircleIcon } from '@chakra-ui/icons';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
-const Heading = dynamic(() => import('components/heading'));
+
 const Content = dynamic(() => import('components/content'));
 const Image = dynamic(() => import('components/image'));
 const ProductCard = dynamic(() => import('components/product-card'));
 const ClubCard = dynamic(() => import('components/club-card'));
 
-const StyledLink = styled.a`
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-`;
+const StyledAnchor = forwardRef(function StyledAnchor(props, ref) {
+  return (
+    <ChakraLink
+      textDecoration="none"
+      cursor="pointer"
+      _hover={{ textDecoration: 'none' }}
+      ref={ref}
+      {...props}
+    />
+  );
+});
 
-const ListItem = styled.li`
-  ${color};
-   margin-bottom: ${({ theme }) => theme.space[2]};
-`;
-
-const Checkmark = styled.span`
-  margin-left: ${({ theme }) => theme.space[3]};
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
-  display: inline-block;
-    background-color: ${({ theme }) => theme.colors.keeperGreen};
-
-  &:after {
-    content: "";
-    display: block;
-    position: relative;
-    left: 10px;
-    top: 7px;
-    width: 5px;
-    height: 10px;
-    border: solid ${({ theme }) => theme.colors.white};
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-  }
-`;
-
-const StyledAnchor = styled.a`
-  text-decoration: none;
-`;
-
-const Span = styled.span`
-  border-bottom: 2px solid ${({ theme }) => theme.colors.black};
-  ${color};
-  ${border};
-  line-height: 1.5rem;
-`;
-
-const StyledList = styled.ol`
-  padding: 0;
-  padding-left: 1rem;
-`;
+const Span = (props) => (
+  <Text
+    as="span"
+    borderBottom="2px solid black"
+    lineHeight="1.5rem"
+    {...props}
+  />
+);
 
 const Dashboard = ({ user }) => {
   const [setupProfile] = useState(user.is_student !== null);
-  const { data: memberships } = useSWR('/products/me', api);
-  const { data: rawClub } = useSWR(() => (user.club_uuid ? `/clubs/${user.club_uuid}` : null), api);
+  const { data: memberships } = useQuery(['/products/me'], () =>
+    api.get('/products/me')
+  );
+  const { data: rawClub } = useQuery(
+    ['/clubs/', user.club_uuid],
+    () => api.get(`/clubs/${user.club_uuid}`),
+    { enabled: Boolean(user?.club_uuid) }
+  );
 
   const [membership] = memberships?.data || [];
   const club = rawClub?.data || null;
 
   return (
     <>
-      <Meta description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more" subTitle="Dashboard" />
+      <Meta
+        description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+        subTitle="Dashboard"
+      />
       <Box
         bg="greyLight"
-        py={{ _: 4, l: 10 }}
-        px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+        py={{ base: 4, lg: 10 }}
+        px={{ base: 4, sm: 8, md: 9 }}
       >
         <Container>
-          <Heading as="h1" isBody color="primary" mt={0}>Hello, {user.first_name} 👋</Heading>
-          <Box bg="primary" borderRadius={1}>
+          <Heading
+            as="h1"
+            fontFamily="body"
+            color="qukBlue"
+            mt={0}
+            fontSize="3xl"
+          >
+            Hello, {user.first_name} 👋
+          </Heading>
+
+          <Box bg="qukBlue" borderRadius="md">
             <Grid
-              gridTemplateColumns={{ _: '1fr', m: '1fr 1fr', l: '2fr 1fr' }}
-              gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+              gridTemplateColumns={{
+                base: '1fr',
+                md: '1fr 1fr',
+                lg: '2fr 1fr',
+              }}
+              gridGap={{ base: 4, md: 9 }}
               color="white"
-              borderRadius={1}
+              borderRadius="md"
               overflow="hidden"
             >
-              <CenterJustify px={{ _: 6, m: 8 }} py={4}>
-                <Heading as="h2" isBody mt={0}>Get ready for brooms up</Heading>
-                <Content fontSize="1">As the new season approaches, complete the following list to be ready when the season kicks off:</Content>
+              <Flex
+                direction="column"
+                justifyContent="center"
+                px={{ base: 6, md: 8 }}
+                py={4}
+              >
+                <Heading as="h2" fontFamily="body" mt={0} fontSize="2xl">
+                  Get ready for brooms up
+                </Heading>
+                <Content fontSize="md">
+                  As the new season approaches, complete the following list to
+                  be ready when the season kicks off:
+                </Content>
 
-                <StyledList>
-                  <ListItem color={setupProfile ? 'keeperGreen' : 'white'}>
-                    <Flex alignItems="center">
+                <OrderedList p={0}>
+                  <ListItem
+                    mb={2}
+                    color={setupProfile ? 'keeperGreen' : 'white'}
+                  >
+                    <Flex
+                      alignItems="center"
+                      ml={4}
+                      justifyContent="flex-start"
+                    >
                       <Link href="/dashboard/account/info" passHref>
                         <StyledAnchor>
-                          <Span color={setupProfile ? 'keeperGreen' : 'white'} borderColor={setupProfile ? 'keeperGreen' : 'white'}>Add your user information</Span>
+                          <Span
+                            color={setupProfile ? 'keeperGreen' : 'white'}
+                            borderColor={setupProfile ? 'keeperGreen' : 'white'}
+                          >
+                            Add your user information
+                          </Span>
                         </StyledAnchor>
                       </Link>
 
-                      {setupProfile && <Checkmark />}
+                      {setupProfile && (
+                        <CheckCircleIcon ml={2} color="keeperGreen" />
+                      )}
                     </Flex>
                   </ListItem>
 
-                  <ListItem color={membership ? 'keeperGreen' : 'white'}>
-                    <Flex alignItems="center">
+                  <ListItem mb={2} color={membership ? 'keeperGreen' : 'white'}>
+                    <Flex alignItems="center" ml={4}>
                       <Link href="/dashboard/membership/manage" passHref>
                         <StyledAnchor>
-                          <Span color={membership ? 'keeperGreen' : 'white'} borderColor={membership ? 'keeperGreen' : 'white'}>
+                          <Span
+                            color={membership ? 'keeperGreen' : 'white'}
+                            borderColor={membership ? 'keeperGreen' : 'white'}
+                          >
                             Purchase your QuidditchUK Membership
                           </Span>
                         </StyledAnchor>
                       </Link>
 
-                      {membership && <Checkmark />}
+                      {membership && (
+                        <CheckCircleIcon ml={2} color="keeperGreen" />
+                      )}
                     </Flex>
                   </ListItem>
 
-                  <ListItem color={club ? 'keeperGreen' : 'white'}>
-                    <Flex alignItems="center">
+                  <ListItem mb={2} color={club ? 'keeperGreen' : 'white'}>
+                    <Flex alignItems="center" ml={4}>
                       <Link href="/dashboard/membership/club" passHref>
                         <StyledAnchor>
-                          <Span color={club ? 'keeperGreen' : 'white'} borderColor={club ? 'keeperGreen' : 'white'}>Select your club</Span>
+                          <Span
+                            color={club ? 'keeperGreen' : 'white'}
+                            borderColor={club ? 'keeperGreen' : 'white'}
+                          >
+                            Select your club
+                          </Span>
                         </StyledAnchor>
                       </Link>
 
-                      {!!club && <Checkmark />}
+                      {!!club && <CheckCircleIcon ml={2} color="keeperGreen" />}
                     </Flex>
                   </ListItem>
-                </StyledList>
-              </CenterJustify>
+                </OrderedList>
+              </Flex>
 
               <Box
                 position="relative"
-                backgroundImage={'url("https://images.prismic.io/chaser/b97e3eab-dcb7-4474-85e0-914afe58ae74_IMG_0529.JPG?auto=compress,format")'}
-                backgroundColor="primary"
-                backgroundSize="cover"
-                backgroundPosition="center"
+                minHeight="300px"
                 height="100%"
                 width="100%"
-                minHeight="300px"
-              />
+              >
+                <Image
+                  layout="fill"
+                  alt="London Unbreakables line up at the keeper line before the start of a Quidditch match"
+                  src="https://images.prismic.io/chaser/b97e3eab-dcb7-4474-85e0-914afe58ae74_IMG_0529.JPG?auto=compress,format"
+                  borderRadius="0"
+                  clipPath={{
+                    base: 'none',
+                    lg: 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)',
+                  }}
+                />
+              </Box>
             </Grid>
           </Box>
 
           <Grid
-            gridTemplateColumns={{ _: '1fr', m: '2fr 1fr' }}
-            gridGap={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+            gridTemplateColumns={{ base: '1fr', md: '2fr 1fr' }}
+            gridGap={{ base: 4, sm: 8, md: 9 }}
           >
             {membership && (
               <Flex flexDirection="column">
-
-                <Heading as="h2" isBody color="primary">My membership</Heading>
+                <Heading
+                  as="h2"
+                  fontFamily="body"
+                  color="qukBlue"
+                  fontSize="2xl"
+                >
+                  My membership
+                </Heading>
 
                 <ProductCard
                   key={membership?.id}
@@ -174,7 +221,14 @@ const Dashboard = ({ user }) => {
 
             {club && (
               <Flex flexDirection="column">
-                <Heading as="h2" isBody color="primary">My club</Heading>
+                <Heading
+                  as="h2"
+                  fontFamily="body"
+                  color="qukBlue"
+                  fontSize="2xl"
+                >
+                  My club
+                </Heading>
 
                 <Link href="/clubs/[club]" as={`/clubs/${club.slug}`} passHref>
                   <StyledLink>
@@ -186,15 +240,17 @@ const Dashboard = ({ user }) => {
                       venue={club.venue}
                       status={club.status}
                       icon={club.icon}
-                      image={club.images ? (
-                        <Image
-                          src={club.images[0]}
-                          alt={club.name}
-                          width={1600}
-                          height={900}
-                          borderRadius="0px"
-                        />
-                      ) : null}
+                      image={
+                        club.images ? (
+                          <Image
+                            src={club.images[0]}
+                            alt={club.name}
+                            width={1600}
+                            height={900}
+                            borderRadius="0px"
+                          />
+                        ) : null
+                      }
                     />
                   </StyledLink>
                 </Link>
@@ -228,17 +284,6 @@ export const getServerSideProps = async ({ req, res }) => {
       user,
     },
   };
-};
-
-Dashboard.defaultProps = {};
-
-Dashboard.propTypes = {
-  user: PropTypes.shape({
-    club_uuid: PropTypes.string,
-    first_name: PropTypes.string,
-    last_name: PropTypes.string,
-    is_student: PropTypes.bool,
-  }).isRequired,
 };
 
 export default Dashboard;

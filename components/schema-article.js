@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Head from 'next/head';
 import get from 'just-safe-get';
 import formatISO from 'date-fns/formatISO';
@@ -16,24 +14,18 @@ const SchemaArticle = ({ page }) => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            {
-              '@context': 'https://schema.org',
-              '@type': 'NewsArticle',
-              headline: data?.title,
-              image: image?.url,
-              datePublished: published ? formatISO(parseJSON(published)) : null,
-              dateModified: updated ? formatISO(parseJSON(updated)) : null,
-            },
-          ),
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'NewsArticle',
+            headline: data?.title,
+            image: image?.url,
+            datePublished: published ? formatISO(parseJSON(published)) : null,
+            dateModified: updated ? formatISO(parseJSON(updated)) : null,
+          }),
         }}
       />
     </Head>
   );
-};
-
-SchemaArticle.propTypes = {
-  page: PropTypes.shape({}).isRequired,
 };
 
 export default SchemaArticle;

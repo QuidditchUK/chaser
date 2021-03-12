@@ -1,12 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Box,
   Flex,
   Grid,
-  GridItem,
-} from 'components/layout';
-import styled from 'styled-components';
+  Heading,
+  Image as ChakraImage,
+  Link as ChakraLink,
+} from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import Type, { TYPES } from 'components/club-type';
@@ -14,39 +13,8 @@ import { useBreakpoint } from 'hooks/media';
 import base, { rem } from 'styles/theme';
 
 const Image = dynamic(() => import('components/image'));
-const Heading = dynamic(() => import('components/heading'));
 const Carousel = dynamic(() => import('components/carousel'));
 const PinIcon = dynamic(() => import('public/images/location-pin.svg'));
-
-const IconContainer = styled.div`
-  padding: ${({ theme }) => theme.space[4]};
-  z-index: 3;
-`;
-
-const Icon = styled.img`
-  border-radius: 50%;
-  height: 100px;
-  width: 100px;
-  background: ${({ theme }) => theme.colors.white};
-  box-shadow: ${({ theme }) => theme.shadows.box};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.m}) {
-    height: 200px;
-    width: 200px;
-  }
-`;
-
-const LocationIcon = styled(PinIcon)`
-  height: 15px;
-  width: 15px;
-`;
-
-const LocationLink = styled.a`
-  padding: ${({ theme }) => theme.space[1]};
-  text-decoration: none;
-  color: ${({ linkColor }) => linkColor};
-  border-bottom: 2px dotted ${({ linkColor }) => linkColor};
-`;
 
 const HeroWithLocation = ({
   images,
@@ -54,114 +22,125 @@ const HeroWithLocation = ({
   featuredColor,
   textColor,
   icon,
-  name,
-  location,
+  club_name,
+  coordinates,
   venue,
 }) => {
-  const isDesktop = useBreakpoint(base.breakpoints.l);
+  const isDesktop = useBreakpoint(base.breakpoints.lg);
   return (
     <>
       <Box
         as="section"
         position="relative"
-        backgroundColor="greyLight"
-        backgroundSize="cover"
-        backgroundPosition="center"
+        bg="greyLight"
         minHeight={BLOG_MIN_HEIGHTS}
       >
-        <Box
-          position="absolute"
-          right="0"
-          padding={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-          zIndex="1"
-        >
-          <Type fontWeight="bold" fontSize={[rem(10), rem(16)]} bg={TYPES[league]}>{league}</Type>
-        </Box>
-
         {isDesktop && images.length > 1 && (
           <Grid
-            gridTemplateColumns="2fr 1fr 1fr"
-            gridTemplateRows="1fr 1fr"
-            gridGap={4}
+            templateColumns="2fr 1fr 1fr"
+            templateRows="1fr 1fr"
+            gap={4}
             p={4}
           >
-            {images.map((src, i) => {
+            {images.map(({ image }, i) => {
               const isFirst = i === 0;
               const width = isFirst ? 1000 : 500;
               const height = isFirst ? 721 : 350;
 
               return (
-                <GridItem
-                  key={`hero-image-${src}-${i}`}
+                <Box
+                  key={`hero-image-${image.url}-${i}`}
                   gridColumn={isFirst ? 1 : null}
                   gridRow={isFirst ? '1 / span 2' : null}
                 >
                   <Image
-                    src={src}
+                    src={image.url}
                     width={width}
                     height={height}
+                    alt={image.alt}
                   />
-                </GridItem>
+                </Box>
               );
             })}
           </Grid>
         )}
 
-        {isDesktop && images.length <= 1 && <Carousel images={images} width="600" height="175" />}
+        {isDesktop && images.length <= 1 && (
+          <Carousel images={images} width="600" height="175" />
+        )}
         {!isDesktop && <Carousel images={images} width="600" height="375" />}
+
+        <Box
+          position="absolute"
+          right="0"
+          top="0"
+          padding={{ base: 4, sm: 8, md: 9 }}
+        >
+          <Type
+            fontWeight="bold"
+            fontSize={[rem(10), rem(16)]}
+            bg={TYPES[league]}
+          >
+            {league}
+          </Type>
+        </Box>
       </Box>
       <Box
         as="section"
         position="relative"
-        backgroundColor={featuredColor}
+        bg={featuredColor}
         color={textColor}
-        px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+        px={{ base: 4, sm: 8, md: 9 }}
         py="0"
         height="130px"
       >
-        <Flex justifyContent="flex-start" alignItems="center" top={{ _: 0, m: '-60px' }} position="relative">
-          <IconContainer><Icon src={icon} alt={`${name} logo`} /></IconContainer>
+        <Flex
+          justifyContent="flex-start"
+          alignItems="center"
+          top={{ base: 0, md: '-60px' }}
+          position="relative"
+        >
+          <Box p={4}>
+            <ChakraImage
+              borderRadius="full"
+              height={{ base: '100px', md: '200px' }}
+              width={{ base: '100px', md: '200px' }}
+              bg="white"
+              boxShadow="md"
+              src={icon?.url}
+              alt={`${club_name} logo`}
+            />
+          </Box>
           <Flex flexDirection="column">
-            <Heading as="h2" fontSize={[3, 4, 5]} py="0" my="0">{name}</Heading>
+            <Heading
+              as="h2"
+              py="0"
+              my="0"
+              fontSize={{ base: '2xl', md: '4xl' }}
+            >
+              {club_name}
+            </Heading>
 
             <Flex alignItems="center">
-              <LocationIcon />{' '}
-              <LocationLink
-                href={`https://www.google.com/maps/search/?api=1&query=${location?.coordinates[1]},${location?.coordinates[0]}`}
+              <ChakraImage as={PinIcon} height="15px" width="15px" />{' '}
+              <ChakraLink
+                p={1}
+                textDecoration="none"
+                _hover={{ textDecoration: 'none' }}
+                color={textColor}
+                borderBottom={`2px dotted ${textColor}`}
+                href={`https://www.google.com/maps/search/?api=1&query=${coordinates?.latitude},${coordinates?.longitude}`}
                 rel="noopener noreferrer"
                 target="_blank"
-                linkColor={textColor}
               >
                 {venue}
-              </LocationLink>
+              </ChakraLink>
             </Flex>
           </Flex>
         </Flex>
       </Box>
     </>
   );
-};
-
-HeroWithLocation.defaultProps = {
-  images: [],
-  venue: null,
-  icon: null,
-  featuredColor: null,
-  textColor: null,
-  league: null,
-  name: null,
-  location: null,
-};
-
-HeroWithLocation.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string),
-  venue: PropTypes.string,
-  icon: PropTypes.string,
-  featuredColor: PropTypes.string,
-  textColor: PropTypes.string,
-  league: PropTypes.string,
-  name: PropTypes.string,
-  location: PropTypes.shape,
 };
 
 export default HeroWithLocation;

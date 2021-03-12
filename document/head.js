@@ -1,4 +1,3 @@
-import React from 'react';
 import Head from 'next/head';
 
 import fonts from 'styles/fonts';
@@ -24,7 +23,7 @@ const DocumentHead = () => (
     <link rel="preconnect" href="//chaser.prismic.io" />
     <link rel="manifest" href="/manifest.json" />
 
-    { /* Fonts */}
+    {/* Fonts */}
     <link rel="preload" href="https://use.typekit.net/rub1byg.css" as="style" />
     <link rel="stylesheet" href="https://use.typekit.net/rub1byg.css" />
 

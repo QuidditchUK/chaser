@@ -1,46 +1,49 @@
-import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { variant as styledVariant } from 'styled-system';
-import { Box } from './layout';
-import Container from './container';
-import { rem } from '../styles/theme';
+import { useStyleConfig } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
+import Container from 'components/container';
+import { rem } from 'styles/theme';
 
-const variants = {
-  light: {
-    color: 'darkBlue',
-    bg: 'greyLight',
-    a: {
-      color: 'secondary',
-    },
-  },
-  primary: {
-    color: 'white',
-    bg: 'primary',
-    a: {
-      color: 'secondary',
-    },
-  },
-  secondary: {
-    color: 'white',
-    bg: 'secondary',
-    a: {
+export const PrismicStyles = {
+  variants: {
+    light: {
       color: 'darkBlue',
+      bg: 'greyLight',
+      a: {
+        color: 'monarchRed',
+      },
+    },
+    primary: {
+      color: 'white',
+      bg: 'qukBlue',
+      a: {
+        color: 'monarchRed',
+      },
+    },
+    secondary: {
+      color: 'white',
+      bg: 'monarchRed',
+      a: {
+        color: 'darkBlue',
+      },
+    },
+    white: {
+      color: 'darkBlue',
+      bg: 'white',
+      a: {
+        color: 'monarchRed',
+      },
+    },
+    dark: {
+      color: 'white',
+      bg: 'darkBlue',
+      a: {
+        color: 'monarchRed',
+      },
     },
   },
-  white: {
-    color: 'darkBlue',
-    bg: 'white',
-    a: {
-      color: 'secondary',
-    },
-  },
-  dark: {
-    color: 'white',
-    bg: 'darkBlue',
-    a: {
-      color: 'secondary',
-    },
+
+  defaultProps: {
+    variant: 'primary',
   },
 };
 
@@ -52,39 +55,21 @@ export const buttonVariants = {
   dark: 'secondary',
 };
 
-const Wrapper = styled(Box)(
-  styledVariant({ variants }),
-);
-
-export const PrismicWrapper = ({
-  children,
-  variant,
-  small,
+export default function PrismicWrapper({
+  variant = 'light',
+  small = false,
   px,
-}) => (
-  <Wrapper
-    py={{ _: 4, l: 5 }}
-    px={px || { _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
-    as="section"
-    variant={variant}
-  >
-    <Container maxWidth={small ? rem(960) : ''}>
-      {children}
-    </Container>
-  </Wrapper>
-);
-
-PrismicWrapper.defaultProps = {
-  variant: 'light',
-  small: false,
-  px: null,
-};
-
-PrismicWrapper.propTypes = {
-  children: PropTypes.node.isRequired,
-  variant: PropTypes.string,
-  small: PropTypes.bool,
-  px: PropTypes.shape({}),
-};
-
-export default PrismicWrapper;
+  children,
+}) {
+  const styles = useStyleConfig('Prismic', { variant });
+  return (
+    <Box
+      py={{ base: 4, lg: 5 }}
+      px={px || { base: 4, sm: 8, md: 9 }}
+      as="section"
+      sx={styles}
+    >
+      <Container maxWidth={small ? rem(960) : rem(1280)}>{children}</Container>
+    </Box>
+  );
+}

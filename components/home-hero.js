@@ -1,44 +1,51 @@
-import React from 'react';
 import { useRouter } from 'next/router';
 import get from 'just-safe-get';
-import { Formik, Form, Field } from 'formik';
-import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+
 import Input from 'components/input';
 import Button from 'components/button';
-import { HeadingHero } from 'components/hero';
-import { Flex, Box } from 'components/layout';
+import { Flex, Box, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 
-const Video = styled.video`
-  width: 121%;
-  min-height: 100%;
-  object-fit: cover;
-`;
+const handleFindQuidditch = async ({ postcode }, router) => {
+  await router.push(
+    `/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`
+  );
+  window.scrollTo(0, 0);
+};
+
+const Video = (props) => (
+  <Box as="video" w="121%" minH="100%" objectFit="cover" {...props} />
+);
 
 const HomeHero = (rawData) => {
   const router = useRouter();
+  const { register, handleSubmit } = useForm({
+    defaultValues: { postcode: '' },
+  });
 
-  const data = {
-    title: get(rawData, 'primary.slug'),
-    cta_text: get(rawData, 'primary.cta_text'),
-    video: get(rawData, 'primary.video_url.url'),
-    poster: get(rawData, 'primary.poster.url'),
-  };
+  const title = get(rawData, 'primary.slug');
+  const cta_text = get(rawData, 'primary.cta_text');
+  const video = get(rawData, 'primary.video_url.url');
+  const poster = get(rawData, 'primary.poster.url');
 
   return (
     <Box
       as="section"
-      backgroundColor="primary"
+      backgroundColor="qukBlue"
       minHeight={HERO_MIN_HEIGHTS}
       overflow="hidden"
       position="relative"
     >
-      <Box
-        minHeight={HERO_MIN_HEIGHTS}
-        position="absolute"
-        zIndex={1}
-      >
-        <Video src={data.video} poster={data.poster} preload="metadata" autoPlay loop muted />
+      <Box minHeight={HERO_MIN_HEIGHTS} position="absolute">
+        <Video
+          src={video}
+          poster={poster}
+          preload="metadata"
+          autoPlay
+          loop
+          muted
+        />
       </Box>
 
       <Flex
@@ -47,21 +54,31 @@ const HomeHero = (rawData) => {
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
-        zIndex={2}
       >
-        <HeadingHero as="label" htmlFor="hero_postcode" fontSize={[4, 4, 7]} mt={0} mb={8} color="white">{data.title}</HeadingHero>
-
-        <Formik
-          initialValues={{ postcode: '' }}
-          onSubmit={({ postcode }) => router.push(`/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`).then(() => window.scrollTo(0, 0))}
+        <Heading
+          as="label"
+          htmlFor="hero_postcode"
+          fontSize={{ base: '4xl', md: '7xl' }}
+          mt={0}
+          mb={8}
+          color="white"
+          textShadow="lg"
         >
-          <Form>
-            <Flex flexDirection="row">
-              <Field id="hero_postcode" name="postcode" placeholder="Postcode" as={Input} />
-              <Button type="submit" variant="primary" ml={2}>{data.cta_text}</Button>
-            </Flex>
-          </Form>
-        </Formik>
+          {title}
+        </Heading>
+
+        <form
+          onSubmit={handleSubmit((values) =>
+            handleFindQuidditch(values, router)
+          )}
+        >
+          <Flex flexDirection="row">
+            <Input ref={register} name="postcode" placeholder="Postcode" />
+            <Button type="submit" variant="primary" ml={2}>
+              {cta_text}
+            </Button>
+          </Flex>
+        </form>
       </Flex>
     </Box>
   );

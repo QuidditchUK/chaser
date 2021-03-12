@@ -1,43 +1,40 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import useCapeMode from 'hooks/useCapeMode';
+import { Link, Text } from '@chakra-ui/react';
 
 const Navigation = dynamic(() => import('components/navigation'));
 const Footer = dynamic(() => import('components/footer'));
 const Alert = dynamic(() => import('components/alert'));
-const Cape = dynamic(() => import('components/cape'));
 
-const Layout = ({ children, preview }) => {
+const Layout = ({ children, preview = false }) => {
   const { asPath } = useRouter();
   const dashboard = RegExp(/\/dashboard/, 'g').test(asPath);
-  const [theme] = useCapeMode();
 
   return (
     <>
       {preview && (
         <Alert>
-          <span>This page is a preview. <a href="/api/exit-preview">Click here</a> to exit preview mode.</span>
+          <Text>
+            This page is a preview.{' '}
+            <Link
+              color="white"
+              fontWeight="bold"
+              textDecoration="none"
+              _hover={{ color: 'white', borderBottom: '2px solid white' }}
+              href="/api/exit-preview"
+            >
+              Click here
+            </Link>{' '}
+            to exit preview mode.
+          </Text>
         </Alert>
       )}
-
-      {theme === 'cape' && (<Cape />)}
 
       <Navigation dashboard={dashboard} />
       {children}
       <Footer />
     </>
   );
-};
-
-Layout.defaultProps = {
-  preview: false,
-};
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-  preview: PropTypes.bool,
 };
 
 export default Layout;

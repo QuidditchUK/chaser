@@ -1,351 +1,281 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
-import Router from 'next/router';
-import dynamic from 'next/dynamic';
-
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import {
+  Box,
+  Flex,
+  Text,
+  IconButton,
+  Stack,
+  Collapse,
+  Icon,
+  Link,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  useColorModeValue,
+  useDisclosure,
+} from '@chakra-ui/react';
+import Router, { useRouter } from 'next/router';
 import cookies from 'js-cookie';
-import { space, variant } from 'styled-system';
-import { transparentize, tint, rgba } from 'polished';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
-import { Flex } from 'components/layout';
-import { MAIN_NAVIGATION, DASHBOARD_NAVIGATION } from 'constants/navigation';
-import { removeCookie } from 'modules/cookies';
-import ActiveLink, { ParentWrapper, ExactActiveLink } from 'components/active-link';
-import { Logo, LogoLink } from 'components/logo';
 
-const HamburgerIcon = dynamic(() => import('public/images/hamburger.svg'));
-const Headroom = dynamic(() => import('react-headroom'));
-const Button = dynamic(() => import('components/button'));
+import { removeCookie } from 'modules/cookies';
+import { rem } from 'styles/theme';
+import Headroom from 'react-headroom';
+
+import NextLink from 'next/link';
+
+import Button from 'components/button';
+
+import {
+  HamburgerIcon,
+  CloseIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+} from '@chakra-ui/icons';
+
+import {
+  MAIN_NAVIGATION,
+  DASHBOARD_NAVIGATION,
+  ACCOUNT_NAVIGATION,
+} from 'constants/navigation';
+import { Logo } from 'components/logo';
 
 const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';
 
-const Wrapper = styled(Headroom)`
-  position: relative;
-  z-index: ${({ open }) => (open ? 7 : 5)};
-`;
-
-const variants = (theme) => ({
-  primary: {
-    bg: theme.colors.primary,
-  },
-
-  white: {
-    bg: theme.colors.white,
-  },
-});
-
-const Header = styled.header`
-  ${space};
-  align-items: center;
-  background: ${({ theme }) => theme.colors.white};
-  box-shadow: ${({ theme }) => theme.shadows.box};
-  color: ${({ theme }) => theme.colors.secondary};
-  display: flex;
-  flex-direction: row;
-  height: 60px;
-  justify-content: space-between;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    height: 50px;
-  }
-
-  ${({ theme }) => variant({ variants: variants(theme) })};
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  align-items: center;
-`;
-
-const List = styled.ul`
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  list-style-type: none;
-  padding-left: 0;
-
-  a {
-    text-decoration: none;
-  }
-
-  span {
-    &.active {
-      color: ${({ theme }) => theme.colors.secondary};
-
-      @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-        font-weight: 700;
-      }
-    }
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.secondary};
-    }
-  }
-
-  li {
-    cursor: pointer;
-  }
-
-  ul {
-    display: flex;
-    flex-direction: column;
-    max-height:0;
-    overflow: hidden;
-    justify-content: flex-start;
-    transition: max-height 0.3s;
-    width: 0;
-    justify-content: flex-start;
-    position: absolute;
-    top: 35px;
-
-    @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-      width: auto;
-    }
-  }
-
-  li:hover > ul, 
-  li:focus > ul,
-  li ul:focus {
-    border-top: 25px solid ${rgba(0, 0, 0, 0)};
-    display: flex;
-    overflow: hidden;
-    flex-direction: column;
-    justify-content: flex-start;
-    position: absolute;
-    width: auto;
-    top: 35px;
-    z-index: 15;
-    max-height: 400px;
-
-    li {
-      background: ${({ theme }) => theme.colors.white};
-      box-shadow: 0 10px 0.625rem rgba(0,0,0,0.3);
-      width: 100%;
-
-      a {
-        color: ${({ theme, dashboard }) => (dashboard ? theme.colors.white : theme.colors.greyDark)};
-        display: block;
-        width: 100%;
-
-        &:hover {
-          color: ${({ theme }) => theme.colors.white};
-        }
-      }
-
-      span {
-        color: inherit;
-        display: block;
-        padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[6]};
-        width: 100%;
-        font-weight: normal;
-
-        &:hover {
-          color: ${({ theme }) => theme.colors.white};
-        }
-
-        &.active {
-          background: ${({ theme }) => theme.colors.secondary};
-          color: ${({ theme }) => theme.colors.white};
-        }
-      }
-
-      &:hover {
-        background: ${({ theme }) => theme.colors.secondary};
-        color: ${({ theme }) => theme.colors.white};
-      }
-    }
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    top: 0;
-    justify-content: flex-start;
-    overflow-y:auto;
-    left: 0;
-    margin: 0;
-    padding: 60px ${({ theme }) => theme.space[4]} 120px;
-    position: absolute;
-    transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-    transition: transform 0.3s;
-    width: 100%;
-    z-index: 4;
-
-    span:hover {
-      color: ${({ theme }) => theme.colors.primary};
-    }
-    
-    li > ul,
-    ul,
-    li:hover > ul, 
-    li:focus > ul,
-    li ul:focus {
-      background: unset;
-      border-top: 0;
-      display: block;
-      margin: initial;
-      max-height: 0;
-      overflow: hidden;
-      padding: initial;
-      position: initial;
-      transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-      transition: max-height 0.3s;
-
-      li {
-        box-shadow: none;
-        display: flex;
-        margin: ${({ theme }) => theme.space[3]} auto;
-        width: 100%;
-
-        a {
-          width: 100%;
-
-          &:hover {
-            color: ${({ theme }) => theme.colors.secondary};
-          }
-        }
-
-        span {
-          background: ${({ theme }) => tint(0.7, theme.colors.primary)};
-          display: block;
-          padding: ${({ theme }) => theme.space[2]} 0;
-
-          &.active {
-            background: ${({ theme }) => theme.colors.primary};
-            color: ${({ theme }) => theme.colors.white};
-
-            &:hover {
-              color: ${({ theme }) => theme.colors.primary};
-            }
-          }
-
-          &:hover {
-            color: ${({ theme }) => theme.colors.primary};
-          }
-        }
-      }
-
-      &.dropdown, .dropdown:hover {
-        height: auto;
-        max-height: 250px;
-      }
-    }
-  }
-`;
-
-const Item = styled.li`
-  ${space};
-
- &:first-of-type {
-   padding-left: 0;
- }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.xl}) {
-    button {
-      font-size: ${({ theme }) => theme.fontSizes.bodyCard};
-    }
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    padding-left: 0;
-    width: 100%;
-    margin-bottom: ${({ theme }) => theme.space[4]};
-
-    button {
-      font-size: ${({ theme }) => theme.fontSizes.body};
-      width: 100%;
-    }
-  }
-`;
-
-const NavItem = styled.span`
-  color: ${({ theme, dashboard }) => (dashboard ? theme.colors.white : theme.colors.greyDark)};
-  font-weight: bold;
-  
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.xl}) {
-    font-size: ${({ theme }) => theme.fontSizes.bodyCard};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    background: ${({ theme }) => theme.colors.white};
-    border: ${({ isButton }) => (isButton ? '0' : '1px')} solid ${({ theme }) => theme.colors.white};
-    border-radius: ${({ theme }) => theme.radii[0]};
-    color: ${({ theme }) => theme.colors.darkBlue};
-    display: block;
-    font-size: ${({ theme }) => theme.fontSizes.body};
-    font-weight: normal;
-    padding: ${({ theme, isButton }) => (isButton ? 0 : theme.space[2])} ${({ theme, isButton }) => (isButton ? 0 : theme.space[4])};
-    text-align: center;
-
-    &:hover {
-      background: ${({ theme }) => tint(0.9, theme.colors.primary)};
-    }
-  }
-`;
-
-const Hamburger = styled(HamburgerIcon)`
-  display: none;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    color: ${({ white, theme }) => (white ? theme.colors.white : theme.colors.primary)};
-    cursor: pointer;
-    display: block;
-    z-index: 7;
-    position: absolute;
-    top: 10px;
-    right: 1rem;
-  }
-`;
-
-const Overlay = styled.div`
-  width: 100%;
-  height: 100vh;
-  background: ${({ theme }) => transparentize(0.1, theme.colors.primary)};
-  transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-  transition: transform 0.3s;
-  z-index: 2;
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-
-const LogoWrapper = styled(Flex)`
-  width: initial;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.l}) {
-    background: ${({ theme, open }) => (open ? theme.colors.primary : 'inherit')};
-    display: flex;
-    width: 100%;
-    padding: 0 ${({ theme, open }) => (open ? theme.space.gutter._ : 0)};
-    height: 50px;
-    align-items: center;
-    z-index: 5;
-  }
-`;
-
-function Navigation({ dashboard }) {
-  const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
-  const [open, setOpen] = useState(false);
-  const [navigationToggle, setNavigationToggle] = useState(1000);
+export default function Navigation({ dashboard = false }) {
+  const { isOpen, onToggle: closeTopNav, onClose } = useDisclosure();
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
 
-  const scrollRef = useRef();
+  return (
+    <Box as={Headroom}>
+      <Flex
+        bg={dashboard ? 'qukBlue' : 'white'}
+        color="greyDark"
+        minH="60px"
+        py={2}
+        px={4}
+        align="center"
+        justifyContent="space-between"
+        width="100%"
+        boxShadow="md"
+      >
+        <Flex
+          flex={{ base: 1, xl: 'auto' }}
+          ml={{ base: -2 }}
+          display={{ base: 'flex', xl: 'none' }}
+        >
+          <IconButton
+            onClick={closeTopNav}
+            icon={
+              isOpen ? (
+                <CloseIcon
+                  w={6}
+                  h={6}
+                  color={dashboard ? 'white' : 'qukBlue'}
+                />
+              ) : (
+                <HamburgerIcon
+                  w={8}
+                  h={8}
+                  color={dashboard ? 'white' : 'qukBlue'}
+                />
+              )
+            }
+            variant={'unstyled'}
+            border={0}
+            p={0}
+            size="lg"
+            aria-label={'Toggle Navigation'}
+          />
+        </Flex>
 
-  useEffect(() => {
-    if (open) {
-      disableBodyScroll(scrollRef.current);
-    } else {
-      enableBodyScroll(scrollRef.current);
-    }
-  }, [open]);
+        <Flex
+          justify={{ base: 'center', xl: 'space-between' }}
+          alignItems="center"
+          direction="row"
+          width="100%"
+        >
+          <NextLink href="/" passHref>
+            <Link height={{ base: '35px', xl: '45px' }} onClick={onClose}>
+              <Logo
+                src={logo}
+                alt="Quidditch UK"
+                filter={dashboard ? 'brightness(0) invert(1)' : 'inherit'}
+              />
+              <Logo
+                src={logoText}
+                alt="Quidditch UK"
+                filter={dashboard ? 'brightness(0) invert(1)' : 'inherit'}
+              />
+            </Link>
+          </NextLink>
+
+          <Flex
+            display={{ base: 'none', xl: 'flex' }}
+            alignItems={{ xl: 'center' }}
+          >
+            <DesktopNav navigation={navigation} dashboard={dashboard} />
+
+            <DesktopCTAs dashboard={dashboard} />
+          </Flex>
+        </Flex>
+      </Flex>
+
+      <Collapse in={isOpen} animateOpacity>
+        <MobileNav
+          navigation={navigation}
+          dashboard={dashboard}
+          closeTopNav={closeTopNav}
+        />
+      </Collapse>
+    </Box>
+  );
+}
+
+const DesktopNav = ({ navigation, dashboard }) => {
+  const { asPath } = useRouter();
+
+  return (
+    <Stack direction={'row'} spacing={3} mr={4} alignItems="center">
+      {navigation.map((navItem) => {
+        const regex = navItem?.path
+          ? RegExp(navItem?.path.replace(/\//g, '\\/'), 'g')
+          : RegExp(navItem?.href.replace(/\//g, '\\/'), 'g');
+        const foundPath = navItem?.paths?.find((item) => item === asPath);
+
+        const isActive = regex.test(asPath) || foundPath;
+
+        return (
+          <Box key={navItem.label}>
+            <Popover trigger={'hover'} placement={'bottom-start'}>
+              {({ isOpen }) => (
+                <>
+                  <PopoverTrigger>
+                    <Box>
+                      {navItem.href ? (
+                        <NextLink href={navItem.href} passHref>
+                          <Link
+                            as="a"
+                            px={2}
+                            py={0}
+                            fontSize={'md'}
+                            fontWeight="bold"
+                            color={
+                              isActive
+                                ? 'monarchRed'
+                                : dashboard
+                                ? 'white'
+                                : 'greyDark'
+                            }
+                            _hover={{
+                              textDecoration: 'none',
+                              color: 'monarchRed',
+                            }}
+                          >
+                            {navItem.label}
+                          </Link>
+                        </NextLink>
+                      ) : (
+                        <Text
+                          px={2}
+                          py={0}
+                          fontSize={'md'}
+                          fontWeight="bold"
+                          cursor="pointer"
+                          color={
+                            isOpen || isActive
+                              ? 'monarchRed'
+                              : dashboard
+                              ? 'white'
+                              : 'greyDark'
+                          }
+                          _hover={{
+                            textDecoration: 'none',
+                            color: 'monarchRed',
+                          }}
+                        >
+                          {navItem.label}
+                        </Text>
+                      )}
+                    </Box>
+                  </PopoverTrigger>
+
+                  {navItem.children && (
+                    <PopoverContent
+                      border={0}
+                      boxShadow={'xl'}
+                      bg={dashboard ? 'qukBlue' : 'white'}
+                      p={4}
+                      ml={-4}
+                      rounded={'xl'}
+                      maxW={rem(300)}
+                      color={dashboard ? 'white' : 'greyDark'}
+                    >
+                      <Stack>
+                        {navItem.children.map((child) => (
+                          <DesktopSubNav key={child.label} {...child} />
+                        ))}
+                      </Stack>
+                    </PopoverContent>
+                  )}
+                </>
+              )}
+            </Popover>
+          </Box>
+        );
+      })}
+    </Stack>
+  );
+};
+
+const DesktopSubNav = ({ label, href }) => {
+  const { asPath } = useRouter();
+  const regexHref = RegExp(href.replace(/\//g, '\\/'), 'g');
+
+  const isActive = regexHref.test(asPath);
+
+  return (
+    <NextLink href={href} passHref>
+      <Link
+        as={'a'}
+        role={'group'}
+        display={'block'}
+        py={2}
+        px={4}
+        rounded={'md'}
+        bg={isActive ? 'gray.200' : 'inherit'}
+        _hover={{ bg: 'gray.200' }}
+      >
+        <Stack direction={'row'} align={'center'}>
+          <Box>
+            <Text
+              transition={'all .3s ease'}
+              color={isActive ? 'qukBlue' : 'inherit'}
+              _groupHover={{ color: 'qukBlue' }}
+              fontWeight={500}
+              my={0}
+            >
+              {label}
+            </Text>
+          </Box>
+          <Flex
+            transition={'all .3s ease'}
+            transform={isActive ? 'translateX(0)' : 'translateX(-10px)'}
+            opacity={isActive ? 1 : 0}
+            _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
+            justify={'flex-end'}
+            align={'center'}
+            flex={1}
+          >
+            <Icon color={'qukBlue'} w={5} h={5} as={ChevronRightIcon} />
+          </Flex>
+        </Stack>
+      </Link>
+    </NextLink>
+  );
+};
+
+const DesktopCTAs = ({ dashboard }) => {
+  const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
 
   const signOut = () => {
     removeCookie('AUTHENTICATION_TOKEN');
@@ -353,117 +283,292 @@ function Navigation({ dashboard }) {
   };
 
   return (
-    <Wrapper open={open}>
-      <Overlay open={open} />
-      <Header variant={dashboard ? 'primary' : 'white'} px={{ _: (open ? 0 : 'gutter._') }}>
-        <LogoWrapper open={open}>
-          <Link href="/" passHref>
-            <LogoLink onClick={() => setOpen(false)}>
-              <>
-                <Logo src={logo} alt="Quidditch UK" white={open || dashboard} />
-                <Logo src={logoText} alt="Quidditch UK" white={open || dashboard} />
-              </>
-            </LogoLink>
-          </Link>
-        </LogoWrapper>
+    <Stack direction="row" spacing={3} alignItems="center">
+      <NextLink href="/find-quidditch" passHref>
+        <Button
+          as="a"
+          variant={dashboard ? 'secondary' : 'primary'}
+          textDecoration="none"
+          _hover={{ textDecoration: 'none' }}
+        >
+          Find Quidditch
+        </Button>
+      </NextLink>
 
-        <Nav>
-          <List open={open} ref={scrollRef}>
-            {navigation.map((item, i) => (
-              <Item key={item.label} pl={{ sm: 4, xl: 6 }}>
-                {item.list
-                  ? (
-                    <ParentWrapper path={item.path} paths={item.paths}>
-                      <NavItem onClick={() => setNavigationToggle(navigationToggle === i ? 1000 : i)} dashboard={dashboard}>{item.label}</NavItem>
-                    </ParentWrapper>
-                  )
-                  : (
-                    <ActiveLink href={item.href} as={item.as}>
-                      <NavItem onClick={() => setOpen(false)} dashboard={dashboard}>{item.label}</NavItem>
-                    </ActiveLink>
-                  )}
+      {!loggedIn && (
+        <NextLink href="/login" passHref>
+          <Button
+            variant="light"
+            as="a"
+            textDecoration="none"
+            _hover={{ textDecoration: 'none' }}
+          >
+            Sign In
+          </Button>
+        </NextLink>
+      )}
 
-                {item.list && (
-                  <List className={`${navigationToggle === i ? 'dropdown' : ''}`}>
-                    {item.list.map((subItem) => (
-                      <Item key={subItem.as}>
-                        <ActiveLink href={subItem.href} as={subItem.as}>
-                          <NavItem onClick={() => setOpen(false)}>{subItem.label}</NavItem>
-                        </ActiveLink>
-                      </Item>
-                    ))}
-                  </List>
-                )}
-              </Item>
-            ))}
-
-            <Item pl={8}><Link href="/find-quidditch" passHref><a><Button type="button" variant={dashboard ? 'secondary' : { _: 'secondary', l: 'primary' }} onClick={() => setOpen(false)}>Find Quidditch</Button></a></Link></Item>
-
-            {!loggedIn && (
-              <Item pl={4}>
-                <Link href="/login" passHref>
-                  <a>
-                    <Button type="button" variant="light" onClick={() => setOpen(false)} mb={{ _: 4, l: 0 }}>
-                      Sign in
-                    </Button>
-                  </a>
-                </Link>
-              </Item>
-            )}
-
-            {loggedIn && (
-              <Item pl={4}>
-                <ParentWrapper path="/dashboard">
-                  <NavItem onClick={() => setNavigationToggle(navigationToggle === 20 ? 1000 : 20)} isButton><Button type="button" variant="light" py={{ _: 3, l: 2 }}>My Account</Button></NavItem>
-                </ParentWrapper>
-
-                <List className={`${navigationToggle === 20 ? 'dropdown' : ''}`}>
-                  <Item>
-                    <ExactActiveLink href="/dashboard" as="/dashboard">
-                      <NavItem onClick={() => setOpen(false)}>Dashboard</NavItem>
-                    </ExactActiveLink>
-                  </Item>
-                  <Item>
-                    <ActiveLink href="/dashboard/account/info" as="/dashboard/account/info">
-                      <NavItem onClick={() => setOpen(false)}>My info</NavItem>
-                    </ActiveLink>
-                  </Item>
-                  <Item>
-                    <Link href="/" as="/">
-                      <a>
-                        <NavItem
-                          onClick={() => {
-                            setOpen(false);
-                            signOut();
-                          }}
-                        >
-                          Sign out
-                        </NavItem>
-                      </a>
+      {loggedIn && (
+        <Popover trigger={'hover'} placement={'bottom-end'}>
+          {({ isOpen }) => (
+            <>
+              <PopoverTrigger>
+                <Box>
+                  <NextLink href="/dashboard" passHref>
+                    <Link
+                      as="a"
+                      px={4}
+                      py={2}
+                      // mb={0}
+                      lineHeight="1.2"
+                      fontSize={'md'}
+                      fontWeight="normal"
+                      bg={isOpen ? 'gray.200' : 'white'}
+                      color={'qukBlue'}
+                      border="1px solid"
+                      borderColor="qukBlue"
+                      borderRadius="md"
+                      _hover={{
+                        bg: 'gray.200',
+                        textDecoration: 'none',
+                        color: 'qukBlue',
+                      }}
+                    >
+                      My Account
                     </Link>
-                  </Item>
-                </List>
-              </Item>
-            )}
-          </List>
+                  </NextLink>
+                </Box>
+              </PopoverTrigger>
 
-          <Hamburger
-            white={(open || dashboard) ? 'true' : undefined}
-            aria-hidden="true"
-            onClick={() => setOpen(!open)}
-          />
-        </Nav>
-      </Header>
-    </Wrapper>
+              <PopoverContent
+                border={0}
+                boxShadow={'xl'}
+                bg={dashboard ? 'qukBlue' : 'white'}
+                p={4}
+                pt={2}
+                rounded={'xl'}
+                maxW={rem(300)}
+                mt={2}
+                ml={8}
+                color={dashboard ? 'white' : 'greyDark'}
+              >
+                <Stack>
+                  {ACCOUNT_NAVIGATION.slice(1).map((child) => (
+                    <DesktopSubNav key={child.label} {...child} />
+                  ))}
+
+                  <Box onClick={() => signOut()}>
+                    <Link
+                      role={'group'}
+                      display={'block'}
+                      py={2}
+                      px={4}
+                      rounded={'md'}
+                      bg={'inherit'}
+                      _hover={{ bg: 'red.200' }}
+                    >
+                      <Stack direction={'row'} align={'center'}>
+                        <Box>
+                          <Text
+                            transition={'all .3s ease'}
+                            _groupHover={{ color: 'monarchRed' }}
+                            fontWeight={500}
+                            my={0}
+                          >
+                            Sign out
+                          </Text>
+                        </Box>
+
+                        <Flex
+                          transition={'all .3s ease'}
+                          transform={'translateX(-10px)'}
+                          opacity={0}
+                          _groupHover={{
+                            opacity: '100%',
+                            transform: 'translateX(0)',
+                          }}
+                          justify={'flex-end'}
+                          align={'center'}
+                          flex={1}
+                        >
+                          <Icon
+                            color={'monarchRed'}
+                            w={5}
+                            h={5}
+                            as={ChevronRightIcon}
+                          />
+                        </Flex>
+                      </Stack>
+                    </Link>
+                  </Box>
+                </Stack>
+              </PopoverContent>
+            </>
+          )}
+        </Popover>
+      )}
+    </Stack>
   );
-}
-
-Navigation.defaultProps = {
-  dashboard: false,
 };
 
-Navigation.propTypes = {
-  dashboard: PropTypes.bool,
+const MobileNav = ({ navigation, dashboard, closeTopNav }) => {
+  return (
+    <Stack
+      position="absolute"
+      bg="white"
+      p={4}
+      display={{ xl: 'none' }}
+      width="100%"
+      overflowY="scroll"
+      height="100vh"
+      fontSize="md"
+    >
+      {navigation.map((navItem) => (
+        <MobileNavItem
+          key={navItem.label}
+          closeTopNav={closeTopNav}
+          {...navItem}
+        />
+      ))}
+
+      <MobileCTAs dashboard={dashboard} closeTopNav={closeTopNav} />
+    </Stack>
+  );
 };
 
-export default Navigation;
+const MobileNavItem = ({ label, children, closeTopNav, href }) => {
+  const { isOpen, onToggle } = useDisclosure();
+
+  return (
+    <Stack
+      spacing={2}
+      onClick={children && onToggle}
+      borderBottom="1px solid gray.700"
+    >
+      <Flex
+        borderBottom="1px solid"
+        borderColor="gray.200"
+        py={1}
+        as={Link}
+        href={href && !children ? href : null}
+        onClick={!children ? closeTopNav : () => {}}
+        justify={'space-between'}
+        align={'center'}
+        _hover={{
+          textDecoration: 'none',
+        }}
+      >
+        <Text
+          my={1}
+          fontWeight={600}
+          color={useColorModeValue('gray.600', 'gray.200')}
+        >
+          {label}
+        </Text>
+        {children && (
+          <Icon
+            as={ChevronDownIcon}
+            transition={'all .25s ease-in-out'}
+            transform={isOpen ? 'rotate(180deg)' : ''}
+            w={6}
+            h={6}
+          />
+        )}
+      </Flex>
+
+      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
+        <Stack mt={2} pl={4} align={'start'}>
+          {children &&
+            children.map((child) => (
+              <NextLink key={child.label} href={child.href} passHref>
+                <Link py={2} href={child.href} onClick={closeTopNav}>
+                  {child.label}
+                </Link>
+              </NextLink>
+            ))}
+        </Stack>
+      </Collapse>
+    </Stack>
+  );
+};
+
+const MobileCTAs = ({ closeTopNav }) => {
+  const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
+
+  return (
+    <>
+      <MobileNavItem
+        label="Find Quidditch"
+        href="/find-quidditch"
+        closeTopNav={closeTopNav}
+      />
+      {!loggedIn && (
+        <MobileNavItem
+          label="Sign In"
+          href="/login"
+          closeTopNav={closeTopNav}
+        />
+      )}
+
+      {loggedIn && <MobileLoggedIn closeTopNav={closeTopNav} />}
+    </>
+  );
+};
+
+const MobileLoggedIn = ({ closeTopNav }) => {
+  const { isOpen, onToggle } = useDisclosure();
+
+  const signOut = () => {
+    removeCookie('AUTHENTICATION_TOKEN');
+    closeTopNav();
+    Router.push('/');
+  };
+
+  return (
+    <Stack spacing={4} onClick={onToggle} borderBottom="1px solid gray.700">
+      <Flex
+        borderBottom="1px solid"
+        borderColor="gray.200"
+        py={1}
+        cursor="pointer"
+        justify={'space-between'}
+        align={'center'}
+        _hover={{
+          textDecoration: 'none',
+        }}
+      >
+        <Text
+          my={1}
+          fontWeight={600}
+          color={useColorModeValue('gray.600', 'gray.200')}
+        >
+          My Account
+        </Text>
+
+        <Icon
+          as={ChevronDownIcon}
+          transition={'all .25s ease-in-out'}
+          transform={isOpen ? 'rotate(180deg)' : ''}
+          w={6}
+          h={6}
+        />
+      </Flex>
+
+      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
+        <Stack mt={2} pl={4} align={'start'}>
+          {ACCOUNT_NAVIGATION.map((child) => (
+            <NextLink key={child.label} href={child.href} passHref>
+              <Link py={2} href={child.href} onClick={closeTopNav}>
+                {child.label}
+              </Link>
+            </NextLink>
+          ))}
+
+          <Link py={2} onClick={signOut} color="monarchRed" fontWeight="bold">
+            Sign out
+          </Link>
+        </Stack>
+      </Collapse>
+    </Stack>
+  );
+};

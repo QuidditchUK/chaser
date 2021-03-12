@@ -1,3 +1,4 @@
-export const BLOG_MIN_HEIGHTS = [0, 0, 2]; // _: 250px, m: 400px
-export const SLICE_MIN_HEIGHTS = [1, 1, 2]; // _: 300px, m: 400px
-export const HERO_MIN_HEIGHTS = [0, 0, 3]; // _: 250px, m: 540px
+export const FIND_QUIDDITCH_MIN_HEIGHTS = { base: '200px', md: '300px' };
+export const BLOG_MIN_HEIGHTS = { base: '250px', md: '400px' };
+export const SLICE_MIN_HEIGHTS = { base: '300px', md: '400px' };
+export const HERO_MIN_HEIGHTS = { base: '250px', md: '540px' };

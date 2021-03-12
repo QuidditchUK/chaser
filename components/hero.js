@@ -1,38 +1,44 @@
-import React from 'react';
 import get from 'just-safe-get';
-import styled from 'styled-components';
-import { Box, Flex } from 'components/layout';
-import Heading from 'components/heading';
+import Image from 'components/image';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 
-export const HeadingHero = styled(Heading)`
-  text-shadow: ${({ theme }) => theme.shadows.heading};
-`;
-
 const Hero = (rawData) => {
-  const data = {
-    title: get(rawData, 'primary.slug'),
-    image: get(rawData, 'primary.image.url'),
-  };
+  const title = get(rawData, 'primary.slug');
+  const image = get(rawData, 'primary.image');
 
   return (
     <Box
       as="section"
       position="relative"
-      backgroundImage={`url(${data.image})`}
-      backgroundColor="primary"
+      backgroundColor="qukBlue"
       backgroundSize="cover"
-      backgroundPosition="center"
-      px={{ _: 'gutter._', s: 'gutter.s', m: 'gutter.m' }}
+      overflow="hidden"
+      px={{ base: 4, sm: 8, md: 9 }}
       minHeight={HERO_MIN_HEIGHTS}
     >
+      <Image
+        src={image.url}
+        alt={image.alt}
+        layout="fill"
+        objectPosition="center center"
+        objectFit="cover"
+        borderRadius={0}
+        priority={true}
+      />
       <Flex
         position="relative"
         minHeight={HERO_MIN_HEIGHTS}
         alignItems="center"
         justifyContent="center"
       >
-        <HeadingHero fontSize={[4, 4, 7]} color="white">{data.title}</HeadingHero>
+        <Heading
+          fontSize={{ base: '4xl', md: '7xl' }}
+          color="white"
+          textShadow="lg"
+        >
+          {title}
+        </Heading>
       </Flex>
     </Box>
   );

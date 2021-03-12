@@ -1,18 +1,20 @@
-import styled from 'styled-components';
-import { space, color, typography } from 'styled-system';
+import { Box } from '@chakra-ui/react';
 
-export default styled('div')`
-  ${space}
-  ${color}
-  ${typography}
-  line-height: ${({ theme }) => theme.lineHeights.displayMobile};
+export default function Content(props) {
+  return (
+    <Box
+      lineHeight="24px"
+      sx={{
+        a: {
+          textDecoration: 'none',
+          wordBreak: 'break-all',
 
-  a {
-    text-decoration: none;
-    word-break: break-all;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
+          '&:hover': {
+            textDecoration: 'underline',
+          },
+        },
+      }}
+      {...props}
+    />
+  );
+}

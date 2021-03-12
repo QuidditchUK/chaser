@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import { useState, useEffect } from 'react';
 import * as Yup from 'yup';
-import { Box, Grid } from 'components/layout';
+import { Flex, Grid, Text } from '@chakra-ui/react';
+import { CheckIcon } from '@chakra-ui/icons';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,7 +11,6 @@ import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';
 import { InlineError } from 'components/errors';
-import Content from 'components/content';
 import { api } from 'modules/api';
 import Required from 'components/required';
 
@@ -25,7 +26,12 @@ const PasswordFormSchema = Yup.object().shape({
     .required('Required'),
 });
 
-const handlePasswordSubmit = async ({ confirm, ...values }, resetForm, setServerError, setServerSuccess) => {
+const handlePasswordSubmit = async (
+  { confirm, ...values },
+  resetForm,
+  setServerError,
+  setServerSuccess
+) => {
   try {
     setServerError(null);
     setServerSuccess(null);
@@ -40,13 +46,7 @@ const handlePasswordSubmit = async ({ confirm, ...values }, resetForm, setServer
 };
 
 const InfoForm = () => {
-  const {
-    register,
-    handleSubmit,
-    errors,
-    reset,
-    formState,
-  } = useForm({
+  const { register, handleSubmit, errors, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(PasswordFormSchema),
     defaultValues: {
@@ -69,12 +69,16 @@ const InfoForm = () => {
       return () => clearTimeout(timer);
     }
 
-    return () => { };
+    return () => {};
   }, [serverSuccess]);
 
   return (
     <>
-      <form onSubmit={handleSubmit((values) => handlePasswordSubmit(values, reset, setServerError, setServerSuccess))}>
+      <form
+        onSubmit={handleSubmit((values) =>
+          handlePasswordSubmit(values, reset, setServerError, setServerSuccess)
+        )}
+      >
         <Grid gridTemplateColumns="1fr">
           <Label htmlFor="old_password">
             Current Password <Required />
@@ -89,7 +93,11 @@ const InfoForm = () => {
             error={errors.old_password}
           />
 
-          {errors.old_password && (<InlineError marginBottom={3}>{errors.old_password.message}</InlineError>)}
+          {errors.old_password && (
+            <InlineError marginBottom={3}>
+              {errors.old_password.message}
+            </InlineError>
+          )}
 
           <Label htmlFor="password">
             New Password <Required />
@@ -103,7 +111,11 @@ const InfoForm = () => {
             type="password"
             error={errors.password}
           />
-          {errors.password && (<InlineError marginBottom={3}>{errors.password.message}</InlineError>)}
+          {errors.password && (
+            <InlineError marginBottom={3}>
+              {errors.password.message}
+            </InlineError>
+          )}
 
           <Label htmlFor="confirm">
             Confirm New Password <Required />
@@ -118,9 +130,13 @@ const InfoForm = () => {
             error={errors.confirm}
           />
 
-          {errors.confirm && (<InlineError marginBottom={3}>{errors.confirm.message}</InlineError>)}
+          {errors.confirm && (
+            <InlineError marginBottom={3}>{errors.confirm.message}</InlineError>
+          )}
         </Grid>
-        <Button type="submit" variant="green" disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Change password'}</Button>
+        <Button type="submit" variant="green" disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting' : 'Change password'}
+        </Button>
       </form>
 
       {serverError && (
@@ -130,9 +146,20 @@ const InfoForm = () => {
       )}
 
       {serverSuccess && (
-        <Box bg="primary" px="4" py="2" mt="6" borderColor="primary" borderWidth="1px" borderStyle="solid" color="white" borderRadius={0}>
-          <Content>Password updated</Content>
-        </Box>
+        <Flex
+          alignItems="center"
+          bg="keeperGreen"
+          px={4}
+          py={1}
+          mt={6}
+          borderColor="keeperGreen"
+          borderWidth="1px"
+          borderStyle="solid"
+          color="white"
+          borderRadius="md"
+        >
+          <CheckIcon mr={3} /> <Text fontWeight="bold">Password updated</Text>
+        </Flex>
       )}
     </>
   );

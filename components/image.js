@@ -1,87 +1,54 @@
-/* eslint-disable jsx-a11y/alt-text */
-import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { space, layout, border } from 'styled-system';
-import { useInView } from 'react-intersection-observer';
+import { useEffect, useState } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import NextImage from 'next/image';
+import { chakra } from '@chakra-ui/react';
 
-const calcAspectRatio = (height, width) => (height / width) * 100 || null;
+const Image = chakra(NextImage, {
+  baseStyle: {
+    maxH: 120,
+    maxW: 120,
+    objectFit: 'cover',
+    objectPosition: 'center center',
+    borderRadius: '8px',
+  },
+  shouldForwardProp: (prop) =>
+    [
+      'width',
+      'height',
+      'src',
+      'alt',
+      'objectFit',
+      'objectPosition',
+      'onLoad',
+      'layout',
+      'priority',
+    ].includes(prop),
+});
 
-export const Container = styled.div`
-  position: relative;
-  width: 100%;
-  ${space}
-  ${layout}
-  padding-bottom: ${({ aspectRatio }) => aspectRatio}%;
-`;
+const animationVariants = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
+};
 
-const ImageWrapper = styled.div`
-  width: 100%;
-`;
+const FadeInImage = (props) => {
+  const [loaded, setLoaded] = useState(false);
+  const animationControls = useAnimation();
 
-const Image = styled.img`
-  vertical-align: bottom;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-
-  opacity: 1;
-  transition: 0.3s opacity;
-
-  &[data-src] {
-    opacity: 0;
-  }
-
-  ${border};
-`;
-
-const ResponsiveImage = ({
-  src,
-  alt,
-  width,
-  height,
-  borderRadius = '8px',
-}) => {
-  const imageProps = {
-    alt, width, height, borderRadius,
-  };
-
-  const [ref, inView] = useInView({
-    rootMargin: '200px 0px',
-    threshold: 0,
-    triggerOnce: true,
-  });
-
-  const imageRef = useRef();
-
-  const handleOnLoad = () => {
-    imageRef.current.removeAttribute('data-src');
-  };
-
+  useEffect(() => {
+    if (loaded) {
+      animationControls.start('visible');
+    }
+  }, [loaded, animationControls]);
   return (
-    <Container aspectRatio={calcAspectRatio(height, width)}>
-      <ImageWrapper ref={ref}>
-        {inView ? (<Image src={src} ref={imageRef} data-src={src} {...imageProps} onLoad={handleOnLoad} />) : null}
-      </ImageWrapper>
-    </Container>
+    <motion.div
+      initial={'hidden'}
+      animate={animationControls}
+      variants={animationVariants}
+      transition={{ ease: 'easeOut', duration: 1 }}
+    >
+      <Image {...props} onLoad={() => setLoaded(true)} />
+    </motion.div>
   );
 };
 
-ResponsiveImage.defaultProps = {
-  alt: '',
-  borderRadius: '8px',
-};
-
-ResponsiveImage.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  borderRadius: PropTypes.string,
-};
-
-export default ResponsiveImage;
+export default FadeInImage;

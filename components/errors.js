@@ -1,22 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { layout, space } from 'styled-system';
+import { Box } from '@chakra-ui/react';
 
-const Error = styled.div`
-  display: block;
-  ${layout};
-  ${space};
+const Error = (props) => (
+  <Box display="block" color="monarchRed" fontSize="sm" {...props} />
+);
 
-  color: ${({ theme }) => theme.colors.secondary};
-
-  span {
-    font-size: ${({ theme }) => theme.fontSizes.bodyCard};
-  }
-`;
-
-export const InlineError = ({ children, ...errorProps }) => (<Error {...errorProps}><span>{children}</span></Error>);
-
-InlineError.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+export const InlineError = ({ children, ...errorProps }) => (
+  <Error {...errorProps}>
+    <span>{children}</span>
+  </Error>
+);

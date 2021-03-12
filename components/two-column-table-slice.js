@@ -1,48 +1,70 @@
-import React from 'react';
-import Heading from 'components/heading';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import PrismicWrapper from 'components/prismic-wrapper';
 import {
+  Heading,
   Table,
-  TableRow,
-  TableHead,
-  TableDataBorder,
-} from 'components/table';
+  Td,
+  Tr,
+  Th as ChakraTh,
+  Tbody,
+  Thead,
+} from '@chakra-ui/react';
+
+const Th = (props) => (
+  <ChakraTh
+    textAlign="left"
+    textTransform="normal"
+    fontFamily="body"
+    fontWeight="normal"
+    fontSize="sm"
+    {...props}
+  />
+);
 
 const TwoColumnTable = (rawData) => {
-  const data = {
-    title: get(rawData, 'primary.title'),
-    columnOneTitle: get(rawData, 'primary.column_one_title'),
-    columnTwoTitle: get(rawData, 'primary.column_two_title'),
-    variant: get(rawData, 'primary.variant'),
-    items: get(rawData, 'items'),
-  };
+  const title = get(rawData, 'primary.title');
+  const columnOneTitle = get(rawData, 'primary.column_one_title');
+  const columnTwoTitle = get(rawData, 'primary.column_two_title');
+  const variant = get(rawData, 'primary.variant');
+  const items = get(rawData, 'items');
 
   return (
-    <PrismicWrapper variant={data.variant} small>
-      {RichText.asText(data.title) && (
-        <Heading as="h2" fontSize={[3, 3, 4]} mt={2}>
-          {RichText.asText(data.title)}
+    <PrismicWrapper variant={variant} small>
+      {RichText.asText(title) && (
+        <Heading as="h2" fontSize="3xl" mt={2}>
+          {RichText.asText(title)}
         </Heading>
       )}
 
-      <Table fontSize={2}>
-        <thead>
-          <TableRow>
-            <TableHead>{RichText.asText(data.columnOneTitle)}</TableHead>
-            <TableHead>{RichText.asText(data.columnTwoTitle)}</TableHead>
-          </TableRow>
-        </thead>
+      <Table colorScheme="white">
+        <Thead>
+          <Tr>
+            <Th
+              color={
+                variant === 'light' || variant === 'white' ? 'inherit' : 'white'
+              }
+            >
+              {RichText.asText(columnOneTitle)}
+            </Th>
+            <Th
+              color={
+                variant === 'light' || variant === 'white' ? 'inherit' : 'white'
+              }
+            >
+              {RichText.asText(columnTwoTitle)}
+            </Th>
+          </Tr>
+        </Thead>
 
-        <tbody>
-          {data.items.map((item, i) => (
-            <TableRow key={`${data.columnOneTitle}_${data.columnTwoTitle}_${i}`}>
-              <TableDataBorder>{RichText.asText(item.column_one)}</TableDataBorder>
-              <TableDataBorder>{RichText.asText(item.column_two)}</TableDataBorder>
-            </TableRow>
+        <Tbody>
+          {items.map((item, i) => (
+            <Tr key={`${columnOneTitle}_${columnTwoTitle}_${i}`}>
+              <Td>{RichText.asText(item.column_one)}</Td>
+              <Td>{RichText.asText(item.column_two)}</Td>
+            </Tr>
           ))}
-        </tbody>
+        </Tbody>
       </Table>
     </PrismicWrapper>
   );

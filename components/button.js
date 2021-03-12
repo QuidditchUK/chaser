@@ -1,77 +1,90 @@
-import styled from 'styled-components';
-import { shade, tint } from 'polished';
-import { variant, space, layout } from 'styled-system';
+import { forwardRef } from 'react';
+import { useStyleConfig } from '@chakra-ui/react';
+import { Button as ChakraButton } from '@chakra-ui/react';
 
-const variants = (theme) => ({
-  primary: {
-    bg: theme.colors.primary,
-    border: `1px solid ${theme.colors.primary}`,
-    color: theme.colors.white,
+export const ButtonStyles = {
+  baseStyle: {
+    borderRadius: 'base',
+    cursor: 'pointer',
+    display: 'inline-block',
+    fontFamily: 'body',
+    fontWeight: 'normal',
+    size: 'sm',
+    py: 2,
+    px: 4,
   },
-  secondary: {
-    bg: theme.colors.secondary,
-    border: `1px solid ${theme.colors.secondary}`,
-    color: theme.colors.white,
+  variants: {
+    primary: {
+      bg: 'qukBlue',
+      border: '1px solid',
+      borderColor: 'qukBlue',
+      color: 'white',
+
+      _hover: {
+        bg: '#092642',
+        borderColor: '#092642',
+      },
+    },
+    secondary: {
+      bg: 'monarchRed',
+      border: '1px solid',
+      borderColor: 'monarchRed',
+      color: 'white',
+
+      _hover: {
+        bg: '#7f131d',
+        borderColor: '#7f131d',
+      },
+    },
+    light: {
+      bg: 'white',
+      border: '1px solid',
+      borderColor: 'qukBlue',
+      color: 'qukBlue',
+
+      _hover: {
+        bg: 'gray.200',
+      },
+    },
+    white: {
+      bg: 'white',
+      border: '1px solid white',
+      color: 'qukBlue',
+
+      _hover: {
+        bg: 'gray.200',
+      },
+    },
+    green: {
+      bg: 'keeperGreen',
+      border: '1px solid',
+      borderColor: 'keeperGreen',
+      color: 'white',
+
+      _hover: {
+        bg: '#247214',
+        borderColor: '#247214',
+      },
+    },
+    transparent: {
+      bg: 'transparent',
+      border: '1px solid',
+      borderColor: 'white',
+      color: 'white',
+
+      _hover: {
+        bg: 'rgba(255,255,255,0.1)',
+      },
+    },
   },
-  light: {
-    bg: theme.colors.white,
-    border: `1px solid ${theme.colors.primary}`,
-    color: theme.colors.primary,
+  defaultProps: {
+    variant: 'primary',
   },
-  dark: {
-    bg: theme.colors.darkBlue,
-    border: `1px solid ${theme.colors.darkBlue}`,
-    color: theme.colors.white,
-  },
-  white: {
-    bg: theme.colors.white,
-    border: `1px solid ${theme.colors.white}`,
-    color: theme.colors.primary,
-  },
-  green: {
-    bg: theme.colors.keeperGreen,
-    border: `1px solid ${theme.colors.keeperGreen}`,
-    color: theme.colors.white,
-  },
+};
+
+const Button = forwardRef(({ variant, ...rest }, ref) => {
+  const styles = useStyleConfig('Button', { variant });
+  return <ChakraButton sx={styles} ref={ref} {...rest} />;
 });
 
-const hoverStates = (theme) => ({
-  primary: {
-    bg: shade(0.3, theme.colors.primary),
-    border: `1px solid ${shade(0.2, theme.colors.primary)}`,
-  },
-  secondary: {
-    bg: shade(0.3, theme.colors.secondary),
-    border: `1px solid ${shade(0.3, theme.colors.secondary)}`,
-  },
-  light: {
-    bg: tint(0.9, theme.colors.primary),
-  },
-  dark: {
-    bg: tint(0.9, theme.colors.darkBlue),
-    border: `1px solid ${tint(0.9, theme.colors.darkBlue)}`,
-  },
-  white: {
-    bg: tint(0.9, theme.colors.primary),
-  },
-  green: {
-    bg: shade(0.3, theme.colors.keeperGreen),
-    border: `1px solid ${tint(0.9, theme.colors.keeperGreen)}`,
-  },
-});
-
-export default styled.button`
-  border-radius: ${({ theme }) => theme.radii[0]};
-  cursor: pointer;
-  display: inline-block;
-  font-family: ${({ theme }) => theme.fonts.body};
-  font-size: ${({ theme }) => theme.fontSizes.body};
-  padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
-  ${({ theme }) => variant({ variants: variants(theme) })};
-  ${space};
-  ${layout};
-
-  &:hover {
-    ${({ theme }) => variant({ variants: hoverStates(theme) })};
-  }
-`;
+export default Button;

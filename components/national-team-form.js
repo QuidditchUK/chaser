@@ -1,47 +1,46 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as Yup from 'yup';
 import get from 'just-safe-get';
-import styled from 'styled-components';
-import { space } from 'styled-system';
-import { Grid, Box } from 'components/layout';
+import { Grid, Flex, Select, Heading, Text } from '@chakra-ui/react';
+import { CheckIcon } from '@chakra-ui/react';
 import Input from 'components/input';
 import Label from 'components/label';
 import Button from 'components/button';
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
 import Container from 'components/container';
-import Heading from 'components/heading';
-import Content from 'components/content';
 import Required from 'components/required';
 import { InlineError } from 'components/errors';
 import { api } from 'modules/api';
 import { rem } from 'styles/theme';
 
-const NATIONAL_TEAMS = [
-  'UK',
-  'Scotland',
-  'Wales',
-];
-
-const Select = styled.select`
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: ${({ theme }) => theme.fontSizes.body};
-  padding: 0;
-  ${space};
-`;
+const NATIONAL_TEAMS = ['UK', 'Scotland', 'Wales'];
 
 const NationalTeamFormSchema = Yup.object().shape({
   name: Yup.string().required('Please enter your name'),
-  email: Yup.string().email('Invalid email address').required('Please enter a valid email address'),
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Please enter a valid email address'),
   club: Yup.string().required('Please enter the club you currently play for'),
-  team: Yup.string().nullable().required('Please select what National Team you would like to be considered for'),
+  team: Yup.string()
+    .nullable()
+    .required(
+      'Please select what National Team you would like to be considered for'
+    ),
   position: Yup.string().required('Please list the positions you play'),
-  tournament: Yup.string().required('Please enter the next tournament you will be at'),
+  tournament: Yup.string().required(
+    'Please enter the next tournament you will be at'
+  ),
 });
 
-const handleFormSubmit = async (values, resetForm, setServerError, setServerSuccess) => {
+const handleFormSubmit = async (
+  values,
+  resetForm,
+  setServerError,
+  setServerSuccess
+) => {
   try {
     setServerError(null);
     setServerSuccess(null);
@@ -59,13 +58,7 @@ const NationalTeamForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const {
-    register,
-    handleSubmit,
-    errors,
-    reset,
-    formState,
-  } = useForm({
+  const { register, handleSubmit, errors, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(NationalTeamFormSchema),
     defaultValues: {
@@ -80,18 +73,20 @@ const NationalTeamForm = (rawData) => {
 
   const { isSubmitting } = formState;
 
-  const data = {
-    variant: get(rawData, 'primary.variant'),
-  };
+  const variant = get(rawData, 'primary.variant');
 
   return (
-    <PrismicWrapper variant={data.variant}>
-      <Heading as="h1" isBody textAlign="center">Register your interest for a National Team</Heading>
+    <PrismicWrapper variant={variant}>
+      <Heading as="h1" fontFamily="body" textAlign="center">
+        Register your interest for a National Team
+      </Heading>
       <Container maxWidth={rem(500)} paddingBottom={4}>
-        <form onSubmit={handleSubmit((values) => handleFormSubmit(values, reset, setServerError, setServerSuccess))}>
-          <Grid
-            gridTemplateColumns="1fr"
-          >
+        <form
+          onSubmit={handleSubmit((values) =>
+            handleFormSubmit(values, reset, setServerError, setServerSuccess)
+          )}
+        >
+          <Grid gridTemplateColumns="1fr">
             <Label htmlFor="name">
               Your name <Required />
             </Label>
@@ -105,7 +100,9 @@ const NationalTeamForm = (rawData) => {
               error={errors.name}
             />
 
-            {errors.name && (<InlineError marginBottom={3}>{errors.name.message}</InlineError>)}
+            {errors.name && (
+              <InlineError marginBottom={3}>{errors.name.message}</InlineError>
+            )}
 
             <Label htmlFor="email">
               Your email <Required />
@@ -119,7 +116,9 @@ const NationalTeamForm = (rawData) => {
               error={errors.email}
             />
 
-            {errors.email && (<InlineError marginBottom={3}>{errors.email.message}</InlineError>)}
+            {errors.email && (
+              <InlineError marginBottom={3}>{errors.email.message}</InlineError>
+            )}
 
             <Label htmlFor="club">
               Club <Required />
@@ -133,7 +132,9 @@ const NationalTeamForm = (rawData) => {
               error={errors.club}
             />
 
-            {errors.club && (<InlineError marginBottom={3}>{errors.club.message}</InlineError>)}
+            {errors.club && (
+              <InlineError marginBottom={3}>{errors.club.message}</InlineError>
+            )}
 
             <Label htmlFor="team" mb="2">
               Team to be considered for <Required />
@@ -144,12 +145,22 @@ const NationalTeamForm = (rawData) => {
               name="team"
               ref={register}
               marginBottom={3}
+              bg="white"
+              color="qukBlue"
             >
-              <option disabled selected value>Select a national team</option>
-              {NATIONAL_TEAMS.map((team) => (<option key={team} value={team}>{team}</option>))}
+              <option disabled selected value>
+                Select a national team
+              </option>
+              {NATIONAL_TEAMS.map((team) => (
+                <option key={team} value={team}>
+                  {team}
+                </option>
+              ))}
             </Select>
 
-            {errors.team && (<InlineError marginBottom={3}>{errors.team.message}</InlineError>)}
+            {errors.team && (
+              <InlineError marginBottom={3}>{errors.team.message}</InlineError>
+            )}
 
             <Label htmlFor="position">
               Position <Required />
@@ -163,7 +174,11 @@ const NationalTeamForm = (rawData) => {
               error={errors.position}
             />
 
-            {errors.position && (<InlineError marginBottom={3}>{errors.position.message}</InlineError>)}
+            {errors.position && (
+              <InlineError marginBottom={3}>
+                {errors.position.message}
+              </InlineError>
+            )}
 
             <Label htmlFor="tournament">
               Tournament you will next play at <Required />
@@ -177,11 +192,20 @@ const NationalTeamForm = (rawData) => {
               error={errors.tournament}
             />
 
-            {errors.tournament && (<InlineError marginBottom={3}>{errors.tournament.message}</InlineError>)}
-
+            {errors.tournament && (
+              <InlineError marginBottom={3}>
+                {errors.tournament.message}
+              </InlineError>
+            )}
           </Grid>
 
-          <Button type="submit" variant={buttonVariants[data.variant]} disabled={isSubmitting}>{isSubmitting ? 'Submitting' : 'Apply'}</Button>
+          <Button
+            type="submit"
+            variant={buttonVariants[variant]}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Submitting' : 'Apply'}
+          </Button>
         </form>
 
         {serverError && (
@@ -191,9 +215,20 @@ const NationalTeamForm = (rawData) => {
         )}
 
         {serverSuccess && (
-          <Box bg="keeperGreen" px="4" py="2" mt="6" borderColor="keeperGreen" borderWidth="1px" borderStyle="solid" color="white" borderRadius={0}>
-            <Content>Application sent</Content>
-          </Box>
+          <Flex
+            alignItems="center"
+            bg="keeperGreen"
+            px={4}
+            py={1}
+            mt={6}
+            borderColor="keeperGreen"
+            borderWidth="1px"
+            borderStyle="solid"
+            color="white"
+            borderRadius="md"
+          >
+            <CheckIcon mr={3} /> <Text fontWeight="bold">Application sent</Text>
+          </Flex>
         )}
       </Container>
     </PrismicWrapper>

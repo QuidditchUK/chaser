@@ -1,8 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import { Grid, Flex } from 'components/layout';
+import { Grid, Flex } from '@chakra-ui/react';
 import Card from 'components/card';
 import Image from 'components/image';
 import { StyledLink } from 'components/latest-news';
@@ -18,8 +16,12 @@ export const ClubNews = ({ posts, bgColor, color }) => {
 
   return (
     <Grid
-      gridTemplateColumns={{ _: '1fr', l: 'repeat(auto-fit, minmax(150px, 1fr))' }}
-      gridGap={{ _: 'gutter._', m: 'gutter.m' }}
+      gridTemplateColumns={{
+        base: '1fr',
+        lg: 'repeat(auto-fit, minmax(150px, 1fr))',
+      }}
+      gridGap={{ base: 4, md: 9 }}
+      pb={2}
     >
       {posts.map(({ uid, data }) => (
         <Flex flexDirection="column" key={uid}>
@@ -27,10 +29,10 @@ export const ClubNews = ({ posts, bgColor, color }) => {
             <StyledLink>
               <Card
                 color={color}
-                backgroundColor={bgColor}
+                bg={bgColor}
                 name={data.title}
                 category={data.category}
-                image={(
+                image={
                   <Image
                     src={data.image.url}
                     alt={data.image.alt}
@@ -38,21 +40,16 @@ export const ClubNews = ({ posts, bgColor, color }) => {
                     height={900}
                     borderRadius="0px"
                   />
-                  )}
+                }
               />
             </StyledLink>
           </Link>
         </Flex>
       ))}
-      {!!spacers.length && spacers.map((space, i) => (<div key={`spacer-${i}`} />))}
+      {!!spacers.length &&
+        spacers.map((space, i) => <div key={`spacer-${i}`} />)}
     </Grid>
   );
-};
-
-ClubNews.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  bgColor: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
 };
 
 export default ClubNews;

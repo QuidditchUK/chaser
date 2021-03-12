@@ -1,16 +1,14 @@
-import React from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import PropTypes from 'prop-types';
 
 const SITE_URL = 'https://quidditchuk.org'; // TODO: Use env variable
 
 const Meta = ({
-  subTitle,
-  description,
-  image,
-  title,
-  type,
+  subTitle = 'Find Your Passion',
+  description = 'The official source for Quidditch UK news, highlights, results and more',
+  image = `${SITE_URL}/open-graph.png`,
+  title = 'QuidditchUK',
+  type = 'website',
 }) => {
   const { asPath } = useRouter();
   const url = `${SITE_URL}${asPath}`;
@@ -18,7 +16,7 @@ const Meta = ({
 
   return (
     <Head>
-      <title>{title}</title>
+      <title>{formattedTitle}</title>
       <link rel="canonical" href={url} />
       <meta name="description" content={description} />
       <meta property="og:description" content={description} />
@@ -28,22 +26,6 @@ const Meta = ({
       <meta property="og:url" content={url} />
     </Head>
   );
-};
-
-Meta.defaultProps = {
-  description: 'The official source for Quidditch UK news, highlights, results and more',
-  image: `${SITE_URL}/open-graph.png`,
-  subTitle: 'Find Your Passion',
-  title: 'QuidditchUK',
-  type: 'website',
-};
-
-Meta.propTypes = {
-  title: PropTypes.string,
-  subTitle: PropTypes.string,
-  description: PropTypes.string,
-  image: PropTypes.string,
-  type: PropTypes.string,
 };
 
 export default Meta;
