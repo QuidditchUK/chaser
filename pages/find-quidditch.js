@@ -18,9 +18,11 @@ import {
   SliderThumb,
   SliderTrack,
   SliderFilledTrack,
+  useDisclosure,
+  Collapse,
 } from '@chakra-ui/react';
 
-import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
+import { FIND_QUIDDITCH_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';
 import {
   getAllClubs,
@@ -101,7 +103,8 @@ const FindQuidditch = ({
     distance = 100,
   } = router.query;
 
-  const [showFilters, setShowFilters] = useState(false);
+  // const [showFilters, setShowFilters] = useState(false);
+  const { isOpen, onToggle } = useDisclosure();
 
   const [clubs, setClubs] = useState(initialClubs);
 
@@ -196,7 +199,7 @@ const FindQuidditch = ({
           as="section"
           position="relative"
           backgroundColor="qukBlue"
-          minHeight={BLOG_MIN_HEIGHTS}
+          minHeight={FIND_QUIDDITCH_MIN_HEIGHTS}
         >
           <Image
             src="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959"
@@ -208,7 +211,7 @@ const FindQuidditch = ({
           />
           <Flex
             position="absolute"
-            minHeight={BLOG_MIN_HEIGHTS}
+            minHeight={FIND_QUIDDITCH_MIN_HEIGHTS}
             bg="qukBlue"
             opacity={0.8}
             width="100%"
@@ -216,7 +219,7 @@ const FindQuidditch = ({
 
           <Flex
             position="relative"
-            minHeight={BLOG_MIN_HEIGHTS}
+            minHeight={FIND_QUIDDITCH_MIN_HEIGHTS}
             alignItems="center"
           >
             <Container px={{ base: 4, sm: 8, md: 9 }}>
@@ -234,6 +237,7 @@ const FindQuidditch = ({
                     ref={register}
                     size="8"
                     marginLeft={[2, 4]}
+                    width={{ base: '200px', md: '300px' }}
                   />
                   {errors.postcode && (
                     <IconWrapper>
@@ -248,16 +252,12 @@ const FindQuidditch = ({
 
         <Box bg="white" py={5}>
           <Container px={{ base: 4, sm: 8, md: 9 }}>
-            <Button
-              variant="light"
-              type="button"
-              onClick={() => setShowFilters(!showFilters)}
-            >
-              {showFilters ? 'Hide' : 'Show'} filters
+            <Button variant="light" type="button" onClick={onToggle}>
+              {isOpen ? 'Hide' : 'Show'} filters
             </Button>
           </Container>
         </Box>
-        {showFilters && (
+        <Collapse in={isOpen} animateOpacity>
           <Box bg="white" py={5}>
             <Container px={{ base: 4, sm: 8, md: 9 }}>
               <Grid
@@ -393,7 +393,7 @@ const FindQuidditch = ({
                   >
                     Distance ({watchDistance}km)
                   </Heading>
-                  <Box px="5">
+                  <Box>
                     <Controller
                       control={control}
                       name="distance"
@@ -417,7 +417,7 @@ const FindQuidditch = ({
               </Grid>
             </Container>
           </Box>
-        )}
+        </Collapse>
       </form>
 
       <Box bg="greyLight" py={{ base: 6, lg: 10 }}>
@@ -476,6 +476,37 @@ const FindQuidditch = ({
                 ))}
               </Grid>
             </>
+          )}
+
+          {watchShowClubs && clubs.length === 0 && (
+            <Flex
+              alignItems="center"
+              justifyContent="center"
+              flexDirection="column"
+            >
+              <Heading
+                as="h2"
+                fontSize="3xl"
+                mb={0}
+                fontFamily="body"
+                textAlign="center"
+                color="primary"
+              >
+                No clubs matched your search
+              </Heading>
+              <p>
+                We can still help! Adjust your filters, and if you&#39;re still
+                out of luck click &#34;Contact us&#34; to help us to bring
+                Quidditch to your area.
+              </p>
+              <Link href="/about/contact-us" passHref>
+                <a>
+                  <Button variant="secondary" type="button">
+                    Contact us
+                  </Button>
+                </a>
+              </Link>
+            </Flex>
           )}
         </Container>
       </Box>
