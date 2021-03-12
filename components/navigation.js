@@ -248,7 +248,7 @@ const DesktopSubNav = ({ label, href }) => {
         <Stack direction={'row'} align={'center'}>
           <Box>
             <Text
-              transition={'all .3s ease'}
+              transition={'all .1s ease'}
               color={isActive ? 'qukBlue' : 'inherit'}
               _groupHover={{ color: 'qukBlue' }}
               fontWeight={500}
@@ -258,7 +258,7 @@ const DesktopSubNav = ({ label, href }) => {
             </Text>
           </Box>
           <Flex
-            transition={'all .3s ease'}
+            transition={'all .1s ease'}
             transform={isActive ? 'translateX(0)' : 'translateX(-10px)'}
             opacity={isActive ? 1 : 0}
             _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
@@ -370,7 +370,7 @@ const DesktopCTAs = ({ dashboard }) => {
                       <Stack direction={'row'} align={'center'}>
                         <Box>
                           <Text
-                            transition={'all .3s ease'}
+                            transition={'all .15s ease'}
                             _groupHover={{ color: 'monarchRed' }}
                             fontWeight={500}
                             my={0}
@@ -380,7 +380,7 @@ const DesktopCTAs = ({ dashboard }) => {
                         </Box>
 
                         <Flex
-                          transition={'all .3s ease'}
+                          transition={'all .15s ease'}
                           transform={'translateX(-10px)'}
                           opacity={0}
                           _groupHover={{
@@ -468,7 +468,7 @@ const MobileNavItem = ({ label, children, closeTopNav, href }) => {
         {children && (
           <Icon
             as={ChevronDownIcon}
-            transition={'all .25s ease-in-out'}
+            transition={'all .125s ease-in-out'}
             transform={isOpen ? 'rotate(180deg)' : ''}
             w={6}
             h={6}
@@ -547,7 +547,7 @@ const MobileLoggedIn = ({ closeTopNav }) => {
 
         <Icon
           as={ChevronDownIcon}
-          transition={'all .25s ease-in-out'}
+          transition={'all .125s ease-in-out'}
           transform={isOpen ? 'rotate(180deg)' : ''}
           w={6}
           h={6}
