@@ -9,7 +9,15 @@ import Router from 'next/router';
 import * as Yup from 'yup';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import { Box, Grid, Flex, Heading, Select, Checkbox } from '@chakra-ui/react';
+import {
+  Box,
+  Grid,
+  Flex,
+  Heading,
+  Select,
+  Checkbox,
+  Link as ChakraLink,
+} from '@chakra-ui/react';
 import Meta from 'components/meta';
 import Container from 'components/container';
 import Content from 'components/content';
@@ -49,26 +57,29 @@ const handleClubSubmit = async ({ club_uuid }, setServerError) => {
 
 const ManageClub = ({ user, clubs = [] }) => {
   const [selectedClub, setSelectedClub] = useState(
-    user?.club_uuid ? clubs.find(({ uuid }) => uuid === user.club_uuid) : ''
+    clubs.find(({ uuid }) => uuid === user.club_uuid)
   );
   const [serverError, setServerError] = useState(null);
 
   const { register, errors, handleSubmit, watch, formState } = useForm({
     resolver: yupResolver(SelectClubSchema),
     defaultValues: {
-      club_uuid: null,
+      club_uuid: user.club_uuid,
       confirm: false,
     },
   });
 
   const { isSubmitting } = formState;
-  const currentSelectedClub = watch('club_uuid');
+  const currentSelectedClubUuid = watch('club_uuid', user.club_uuid);
 
   useEffect(() => {
-    if (currentSelectedClub !== selectedClub) {
-      setSelectedClub(currentSelectedClub);
+    console.log('in useEffect');
+    if (selectedClub.uuid !== currentSelectedClubUuid) {
+      setSelectedClub(
+        clubs.find(({ uuid }) => uuid === currentSelectedClubUuid)
+      );
     }
-  }, [currentSelectedClub, selectedClub, setSelectedClub]);
+  }, [selectedClub, setSelectedClub, currentSelectedClubUuid, clubs]);
 
   return (
     <>
@@ -90,9 +101,9 @@ const ManageClub = ({ user, clubs = [] }) => {
               bg="white"
               py={4}
               px={{ base: 4, sm: 8, md: 9 }}
-              borderRadius={1}
+              borderRadius="md"
             >
-              <Heading as="h2" fontFamily="body" color="qukBlue">
+              <Heading as="h2" fontFamily="body" color="qukBlue" fontSize="3xl">
                 Select your club
               </Heading>
 
@@ -107,6 +118,11 @@ const ManageClub = ({ user, clubs = [] }) => {
                       If you need to change your club, you must submit a
                       transfer request to QuidditchUK to request any changes.
                     </p>
+                    <Link href="/about/contact-us" passHref>
+                      <ChakraLink>
+                        <Button variant="secondary">Contact Us</Button>
+                      </ChakraLink>
+                    </Link>
                   </>
                 ) : (
                   <>
@@ -160,7 +176,7 @@ const ManageClub = ({ user, clubs = [] }) => {
                       </InlineError>
                     )}
                     <Label mt="3">
-                      <Checkbox name="confirm" ref={register}>
+                      <Checkbox name="confirm" ref={register} spacing={3}>
                         By checking this box I acknowledge that I have read the
                         above disclaimer and I intend for{' '}
                         <strong>{selectedClub.name}</strong> to be my

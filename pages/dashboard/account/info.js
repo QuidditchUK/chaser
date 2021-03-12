@@ -30,7 +30,7 @@ const Info = ({ user }) => (
 
         <InfoForm user={user} />
 
-        <Heading as="h3" fontFamily="body" color="qukBlue">
+        <Heading as="h3" fontFamily="body" color="qukBlue" fontSize="xl">
           Change your password
         </Heading>
 

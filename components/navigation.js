@@ -67,9 +67,17 @@ export default function Navigation({ dashboard = false }) {
             onClick={closeTopNav}
             icon={
               isOpen ? (
-                <CloseIcon w={6} h={6} color="qukBlue" />
+                <CloseIcon
+                  w={6}
+                  h={6}
+                  color={dashboard ? 'white' : 'qukBlue'}
+                />
               ) : (
-                <HamburgerIcon w={8} h={8} color="qukBlue" />
+                <HamburgerIcon
+                  w={8}
+                  h={8}
+                  color={dashboard ? 'white' : 'qukBlue'}
+                />
               )
             }
             variant={'unstyled'}
@@ -306,27 +314,29 @@ const DesktopCTAs = ({ dashboard }) => {
             <>
               <PopoverTrigger>
                 <Box>
-                  <Link
-                    as="a"
-                    px={4}
-                    py={2}
-                    mb={0}
-                    lineHeight="1.2"
-                    fontSize={'md'}
-                    fontWeight="normal"
-                    bg={isOpen ? 'gray.200' : 'white'}
-                    color={'qukBlue'}
-                    border="1px solid"
-                    borderColor="qukBlue"
-                    borderRadius="md"
-                    _hover={{
-                      bg: 'gray.200',
-                      textDecoration: 'none',
-                      color: 'qukBlue',
-                    }}
-                  >
-                    My Account
-                  </Link>
+                  <NextLink href="/dashboard" passHref>
+                    <Link
+                      as="a"
+                      px={4}
+                      py={2}
+                      // mb={0}
+                      lineHeight="1.2"
+                      fontSize={'md'}
+                      fontWeight="normal"
+                      bg={isOpen ? 'gray.200' : 'white'}
+                      color={'qukBlue'}
+                      border="1px solid"
+                      borderColor="qukBlue"
+                      borderRadius="md"
+                      _hover={{
+                        bg: 'gray.200',
+                        textDecoration: 'none',
+                        color: 'qukBlue',
+                      }}
+                    >
+                      My Account
+                    </Link>
+                  </NextLink>
                 </Box>
               </PopoverTrigger>
 
@@ -335,14 +345,15 @@ const DesktopCTAs = ({ dashboard }) => {
                 boxShadow={'xl'}
                 bg={dashboard ? 'qukBlue' : 'white'}
                 p={4}
+                pt={2}
                 rounded={'xl'}
                 maxW={rem(300)}
-                mt={-1}
-                ml={2}
+                mt={2}
+                ml={8}
                 color={dashboard ? 'white' : 'greyDark'}
               >
                 <Stack>
-                  {ACCOUNT_NAVIGATION.map((child) => (
+                  {ACCOUNT_NAVIGATION.slice(1).map((child) => (
                     <DesktopSubNav key={child.label} {...child} />
                   ))}
 
@@ -439,7 +450,7 @@ const MobileNavItem = ({ label, children, closeTopNav, href }) => {
         borderColor="gray.200"
         py={1}
         as={Link}
-        href={href ?? '#'}
+        href={href && !children ? href : null}
         onClick={!children ? closeTopNav : () => {}}
         justify={'space-between'}
         align={'center'}
@@ -519,7 +530,7 @@ const MobileLoggedIn = ({ closeTopNav }) => {
         borderBottom="1px solid"
         borderColor="gray.200"
         py={1}
-        as={Link}
+        cursor="pointer"
         justify={'space-between'}
         align={'center'}
         _hover={{

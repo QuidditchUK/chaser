@@ -1,7 +1,7 @@
 import { useState, forwardRef } from 'react';
 import dynamic from 'next/dynamic';
 import { StyledLink } from 'components/latest-news';
-import useSWR from 'swr';
+import { useQuery } from 'react-query';
 import Link from 'next/link';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
@@ -13,7 +13,9 @@ import {
   Text,
   OrderedList,
   Heading,
+  Link as ChakraLink,
 } from '@chakra-ui/react';
+import { CheckCircleIcon } from '@chakra-ui/icons';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
@@ -23,31 +25,16 @@ const Image = dynamic(() => import('components/image'));
 const ProductCard = dynamic(() => import('components/product-card'));
 const ClubCard = dynamic(() => import('components/club-card'));
 
-const Checkmark = (props) => (
-  <Box
-    ml={3}
-    h="25px"
-    w="25px"
-    borderRadius="full"
-    bg="keeperGreen"
-    _after={{
-      content: '',
-      display: 'block',
-      position: 'relative',
-      left: '10px',
-      top: '7px',
-      width: '5px',
-      height: '10px',
-      borderStyle: 'solid',
-      borderWidth: '0 3px 3px 0',
-      transform: 'rotate(45deg)',
-    }}
-    {...props}
-  />
-);
-
 const StyledAnchor = forwardRef(function StyledAnchor(props, ref) {
-  return <Box textDecoration="none" ref={ref} {...props} />;
+  return (
+    <ChakraLink
+      textDecoration="none"
+      cursor="pointer"
+      _hover={{ textDecoration: 'none' }}
+      ref={ref}
+      {...props}
+    />
+  );
 });
 
 const Span = (props) => (
@@ -61,10 +48,13 @@ const Span = (props) => (
 
 const Dashboard = ({ user }) => {
   const [setupProfile] = useState(user.is_student !== null);
-  const { data: memberships } = useSWR('/products/me', api);
-  const { data: rawClub } = useSWR(
-    () => (user.club_uuid ? `/clubs/${user.club_uuid}` : null),
-    api
+  const { data: memberships } = useQuery(['/products/me'], () =>
+    api.get('/products/me')
+  );
+  const { data: rawClub } = useQuery(
+    ['/clubs/', user.club_uuid],
+    () => api.get(`/clubs/${user.club_uuid}`),
+    { enabled: Boolean(user?.club_uuid) }
   );
 
   const [membership] = memberships?.data || [];
@@ -82,10 +72,17 @@ const Dashboard = ({ user }) => {
         px={{ base: 4, sm: 8, md: 9 }}
       >
         <Container>
-          <Heading as="h1" fontFamily="body" color="qukBlue" mt={0}>
+          <Heading
+            as="h1"
+            fontFamily="body"
+            color="qukBlue"
+            mt={0}
+            fontSize="3xl"
+          >
             Hello, {user.first_name} 👋
           </Heading>
-          <Box bg="qukBlue" borderRadius={1}>
+
+          <Box bg="qukBlue" borderRadius="md">
             <Grid
               gridTemplateColumns={{
                 base: '1fr',
@@ -94,7 +91,7 @@ const Dashboard = ({ user }) => {
               }}
               gridGap={{ base: 4, md: 9 }}
               color="white"
-              borderRadius={1}
+              borderRadius="md"
               overflow="hidden"
             >
               <Flex
@@ -103,20 +100,24 @@ const Dashboard = ({ user }) => {
                 px={{ base: 6, md: 8 }}
                 py={4}
               >
-                <Heading as="h2" fontFamily="body" mt={0}>
+                <Heading as="h2" fontFamily="body" mt={0} fontSize="2xl">
                   Get ready for brooms up
                 </Heading>
-                <Content fontSize="1">
+                <Content fontSize="md">
                   As the new season approaches, complete the following list to
                   be ready when the season kicks off:
                 </Content>
 
-                <OrderedList p={0} pl={4}>
+                <OrderedList p={0}>
                   <ListItem
                     mb={2}
                     color={setupProfile ? 'keeperGreen' : 'white'}
                   >
-                    <Flex alignItems="center">
+                    <Flex
+                      alignItems="center"
+                      ml={4}
+                      justifyContent="flex-start"
+                    >
                       <Link href="/dashboard/account/info" passHref>
                         <StyledAnchor>
                           <Span
@@ -128,12 +129,14 @@ const Dashboard = ({ user }) => {
                         </StyledAnchor>
                       </Link>
 
-                      {setupProfile && <Checkmark />}
+                      {setupProfile && (
+                        <CheckCircleIcon ml={2} color="keeperGreen" />
+                      )}
                     </Flex>
                   </ListItem>
 
                   <ListItem mb={2} color={membership ? 'keeperGreen' : 'white'}>
-                    <Flex alignItems="center">
+                    <Flex alignItems="center" ml={4}>
                       <Link href="/dashboard/membership/manage" passHref>
                         <StyledAnchor>
                           <Span
@@ -145,12 +148,14 @@ const Dashboard = ({ user }) => {
                         </StyledAnchor>
                       </Link>
 
-                      {membership && <Checkmark />}
+                      {membership && (
+                        <CheckCircleIcon ml={2} color="keeperGreen" />
+                      )}
                     </Flex>
                   </ListItem>
 
                   <ListItem mb={2} color={club ? 'keeperGreen' : 'white'}>
-                    <Flex alignItems="center">
+                    <Flex alignItems="center" ml={4}>
                       <Link href="/dashboard/membership/club" passHref>
                         <StyledAnchor>
                           <Span
@@ -162,7 +167,7 @@ const Dashboard = ({ user }) => {
                         </StyledAnchor>
                       </Link>
 
-                      {!!club && <Checkmark />}
+                      {!!club && <CheckCircleIcon ml={2} color="keeperGreen" />}
                     </Flex>
                   </ListItem>
                 </OrderedList>
@@ -170,16 +175,21 @@ const Dashboard = ({ user }) => {
 
               <Box
                 position="relative"
-                backgroundImage={
-                  'url("https://images.prismic.io/chaser/b97e3eab-dcb7-4474-85e0-914afe58ae74_IMG_0529.JPG?auto=compress,format")'
-                }
-                backgroundColor="qukBlue"
-                backgroundSize="cover"
-                backgroundPosition="center"
+                minHeight="300px"
                 height="100%"
                 width="100%"
-                minHeight="300px"
-              />
+              >
+                <Image
+                  layout="fill"
+                  alt="London Unbreakables line up at the keeper line before the start of a Quidditch match"
+                  src="https://images.prismic.io/chaser/b97e3eab-dcb7-4474-85e0-914afe58ae74_IMG_0529.JPG?auto=compress,format"
+                  borderRadius="0"
+                  clipPath={{
+                    base: 'none',
+                    lg: 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)',
+                  }}
+                />
+              </Box>
             </Grid>
           </Box>
 
@@ -189,7 +199,12 @@ const Dashboard = ({ user }) => {
           >
             {membership && (
               <Flex flexDirection="column">
-                <Heading as="h2" fontFamily="body" color="qukBlue">
+                <Heading
+                  as="h2"
+                  fontFamily="body"
+                  color="qukBlue"
+                  fontSize="2xl"
+                >
                   My membership
                 </Heading>
 
@@ -206,7 +221,12 @@ const Dashboard = ({ user }) => {
 
             {club && (
               <Flex flexDirection="column">
-                <Heading as="h2" fontFamily="body" color="qukBlue">
+                <Heading
+                  as="h2"
+                  fontFamily="body"
+                  color="qukBlue"
+                  fontSize="2xl"
+                >
                   My club
                 </Heading>
 

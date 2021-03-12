@@ -42,8 +42,8 @@ const ProductCard = ({
 }) => (
   <StyledCard
     {...cardProps}
-    gridTemplateColumns={{ base: '1fr', md: '3fr 6fr 3fr' }}
-    gridGap={{ base: 4, md: 9 }}
+    gridTemplateColumns={{ base: '1fr', lg: '3fr 6fr 3fr' }}
+    gridGap={{ base: 2, lg: 9 }}
   >
     <Box
       as="section"
@@ -57,7 +57,7 @@ const ProductCard = ({
     />
 
     <Content>
-      <Heading as="h2" fontSize="3xl" fontFamily="body">
+      <Heading as="h2" fontSize="xl" fontFamily="body" mt={2}>
         {name}
       </Heading>
       <Text>{description}</Text>
@@ -73,6 +73,10 @@ const ProductCard = ({
           ? 'alert'
           : 'qukBlue'
       }
+      clipPath={{
+        base: 'none',
+        lg: 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)',
+      }}
       color="white"
     >
       {!!price && (
@@ -82,7 +86,7 @@ const ProductCard = ({
       )}
       {!!expires && (
         <>
-          <Content fontSize="1" py={0}>
+          <Content fontSize="md" py={0}>
             <strong>
               {parse(expires, 'dd-MM-yyyy', new Date()) > new Date()
                 ? 'Valid until'

@@ -113,7 +113,7 @@ const Page = () => {
           py={{ base: 4, lg: 10 }}
           px={{ base: 4, sm: 8, md: 9 }}
         >
-          <Box borderRadius={1} bg="white" position="relative" px={4} py={4}>
+          <Box borderRadius="md" bg="white" position="relative" px={4} py={4}>
             <Flex justifyContent="center" alignItems="center">
               <Logo src={logo} alt="Quidditch UK" />
             </Flex>

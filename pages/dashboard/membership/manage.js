@@ -6,6 +6,7 @@ import { parse } from 'date-fns';
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Image from 'components/image';
 
 import { parseCookies, setCookies } from 'modules/cookies';
 import { api } from 'modules/api';
@@ -16,6 +17,7 @@ import {
   Heading,
   UnorderedList,
   Link,
+  Checkbox,
 } from '@chakra-ui/react';
 import { InlineError } from 'components/errors';
 
@@ -94,12 +96,12 @@ const ManageMembership = ({ products = [] }) => {
             <Grid
               gridTemplateColumns={{ base: '1fr', lg: '2fr 1fr' }}
               gridGap={{ base: 4, md: 9 }}
-              borderRadius={1}
+              borderRadius="md"
               bg="white"
               overflow="hidden"
             >
               <Box py={4} px={{ base: 4, sm: 8, md: 9 }}>
-                <Heading px={4} as="h2" mb={0} fontFamily="body">
+                <Heading px={4} as="h2" mb={0} fontFamily="body" fontSize="3xl">
                   Membership Benefits
                 </Heading>
                 <Benefits>
@@ -161,20 +163,23 @@ const ManageMembership = ({ products = [] }) => {
                   <form onSubmit={handleSubmit(membershipFormSubmit)}>
                     <Box my="3">
                       <Label>
-                        <input
+                        <Checkbox
                           type="checkbox"
                           name="checkboxOne"
                           ref={register}
-                        />{' '}
-                        I acknowledge that I have read, understood, and agree to
-                        the{' '}
-                        <a
-                          href="https://prismic-io.s3.amazonaws.com/chaser/7a339771-8248-4244-b141-cd2eb39a0028_QuidditchUK+Individual+Membership+Policy+2020_2021.pdf"
-                          target="_blank"
-                          rel="noopener noreferrer"
                         >
-                          Individual Membership Policy
-                        </a>
+                          {' '}
+                          I acknowledge that I have read, understood, and agree
+                          to the{' '}
+                          <Link
+                            color="monarchRed"
+                            href="https://prismic-io.s3.amazonaws.com/chaser/7a339771-8248-4244-b141-cd2eb39a0028_QuidditchUK+Individual+Membership+Policy+2020_2021.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Individual Membership Policy
+                          </Link>
+                        </Checkbox>
                       </Label>
 
                       {errors.checkboxOne && (
@@ -186,20 +191,19 @@ const ManageMembership = ({ products = [] }) => {
 
                     <Box my="3">
                       <Label>
-                        <input
-                          type="checkbox"
-                          name="checkboxTwo"
-                          ref={register}
-                        />{' '}
-                        I acknowledge that I have read, understood, and agree to
-                        the{' '}
-                        <a
-                          href="https://prismic-io.s3.amazonaws.com/chaser/680b0ecd-ed85-487d-a727-3f5731f78bca_Media+Usage+Policy.pdf"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          QuidditchUK Media Usage Policy
-                        </a>
+                        <Checkbox name="checkboxTwo" ref={register}>
+                          {' '}
+                          I acknowledge that I have read, understood, and agree
+                          to the{' '}
+                          <Link
+                            color="monarchRed"
+                            href="https://prismic-io.s3.amazonaws.com/chaser/680b0ecd-ed85-487d-a727-3f5731f78bca_Media+Usage+Policy.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            QuidditchUK Media Usage Policy
+                          </Link>
+                        </Checkbox>
                       </Label>
 
                       {errors.checkboxTwo && (
@@ -211,19 +215,20 @@ const ManageMembership = ({ products = [] }) => {
 
                     <Box my="3">
                       <Label>
-                        <input
-                          type="checkbox"
-                          name="checkboxThree"
-                          ref={register}
-                        />{' '}
-                        I agree to abide by the{' '}
-                        <NextLink href="/about/documents-and-policies" passHref>
-                          <Link color="monarchRed">
-                            membership and gameplay policies
-                          </Link>
-                        </NextLink>{' '}
-                        set out by QuidditchUK, and will uphold their values as
-                        a member of the quidditch community.
+                        <Checkbox name="checkboxThree" ref={register}>
+                          {' '}
+                          I agree to abide by the{' '}
+                          <NextLink
+                            href="/about/documents-and-policies"
+                            passHref
+                          >
+                            <Link color="monarchRed">
+                              membership and gameplay policies
+                            </Link>
+                          </NextLink>{' '}
+                          set out by QuidditchUK, and will uphold their values
+                          as a member of the quidditch community.
+                        </Checkbox>
                       </Label>
 
                       {errors.checkboxThree && (
@@ -242,16 +247,21 @@ const ManageMembership = ({ products = [] }) => {
 
               <Box
                 position="relative"
-                backgroundImage={
-                  'url("https://images.prismic.io/chaser/e8e1b385-cd00-469d-aa67-f66dca0d5491_trev_member_editQUK.jpg?auto=compress,format")'
-                }
-                backgroundColor="qukBlue"
-                backgroundSize="cover"
-                backgroundPosition="center"
+                minHeight="300px"
                 height="100%"
                 width="100%"
-                minHeight="300px"
-              />
+              >
+                <Image
+                  layout="fill"
+                  alt="Two players laugh together at looking at the camera"
+                  src="https://images.prismic.io/chaser/e8e1b385-cd00-469d-aa67-f66dca0d5491_trev_member_editQUK.jpg?auto=compress,format"
+                  borderRadius="0"
+                  clipPath={{
+                    base: 'none',
+                    lg: 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)',
+                  }}
+                />
+              </Box>
             </Grid>
           )}
           {!!currentProducts.length && (
