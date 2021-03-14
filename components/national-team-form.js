@@ -148,7 +148,7 @@ const NationalTeamForm = (rawData) => {
               bg="white"
               color="qukBlue"
             >
-              <option disabled selected value>
+              <option disabled value>
                 Select a national team
               </option>
               {NATIONAL_TEAMS.map((team) => (

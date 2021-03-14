@@ -160,7 +160,7 @@ const ManageClub = ({ user, clubs = [] }) => {
                       bg="white"
                       color="qukBlue"
                     >
-                      <option disabled selected value>
+                      <option disabled value>
                         Select a club
                       </option>
                       {clubs.map((club) => (
