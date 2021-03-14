@@ -54,6 +54,7 @@ const HeroWithLocation = ({
                   gridRow={isFirst ? '1 / span 2' : null}
                 >
                   <Image
+                    priority={isFirst}
                     src={image.url}
                     width={width}
                     height={height}
@@ -66,7 +67,7 @@ const HeroWithLocation = ({
         )}
 
         {isDesktop && images.length <= 1 && (
-          <Carousel images={images} width="600" height="175" />
+          <Carousel images={images} width="600" height="175" priority={true} />
         )}
         {!isDesktop && <Carousel images={images} width="600" height="375" />}
 

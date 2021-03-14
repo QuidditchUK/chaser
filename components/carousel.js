@@ -60,6 +60,7 @@ const Carousel = ({ images, height, width }) => {
               width={width}
               height={height}
               alt={image.alt}
+              priority={i === 0}
             />
           ))}
       </Flickity>
