@@ -162,7 +162,7 @@ export const Footer = () => {
                 </Item>
                 <Item>
                   <ExternalLink
-                    href="https://www.utilityapparel.com/"
+                    href="https://www.utilityapparel.com/quidditch-uk/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
