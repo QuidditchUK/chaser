@@ -347,13 +347,21 @@ export const getStaticProps = async ({
   const { ref } = previewData;
   const page =
     (await getPrismicDocByUid('clubs', id, ref ? { ref } : null)) || null;
-  const posts = await getBlogTags(page?.tags, {
-    orderings: '[my.post.date desc]',
-    pageSize: 3,
-  });
+
+  if (page?.tags) {
+    const posts = await getBlogTags(page?.tags, {
+      orderings: '[my.post.date desc]',
+      pageSize: 3,
+    });
+
+    return {
+      props: { page, preview, posts },
+      revalidate: 1,
+    };
+  }
 
   return {
-    props: { page, preview, posts },
+    props: { page, preview },
     revalidate: 1,
   };
 };
