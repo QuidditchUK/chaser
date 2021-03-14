@@ -45,7 +45,12 @@ const News = ({ posts: initialPosts = [] }) => {
         description="All community news from QuidditchUK"
       />
       <NewsHeader />
-      <LatestNews category="Community" posts={posts} horizontalScroll={false} />
+      <LatestNews
+        category="Community"
+        posts={posts}
+        horizontalScroll={false}
+        showAllNewsButton={false}
+      />
       {isFetching && (
         <Flex
           alignItems="center"

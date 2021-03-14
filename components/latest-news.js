@@ -7,7 +7,9 @@ import {
   Heading,
   Link as ChakraLink,
   usePrefersReducedMotion,
+  Button,
 } from '@chakra-ui/react';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
 import Card from 'components/card';
 import Image from 'components/image';
 import Container from 'components/container';
@@ -40,20 +42,49 @@ export const StyledLink = forwardRef(function StyledLink(props, ref) {
   );
 });
 
-const News = ({ posts = [], category, horizontalScroll = true, tag }) => {
+const News = ({
+  posts = [],
+  category,
+  horizontalScroll = true,
+  showAllNewsButton = true,
+  tag,
+}) => {
   return (
     <Box bg="greyLight" py={{ base: 6, lg: 10 }} px={{ base: 0, md: 9 }}>
       <Container>
-        <Heading
-          as="h2"
-          fontSize="3xl"
-          mt={0}
-          px={{ base: 8, md: 0 }}
-          color="qukBlue"
-          fontFamily="body"
+        <Flex
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          mr={{ base: 6, md: 0 }}
+          mt="-1.5rem"
         >
-          {category || tag || 'Latest'} News
-        </Heading>
+          <Heading
+            as="h2"
+            fontSize="3xl"
+            px={{ base: 8, md: 0 }}
+            color="qukBlue"
+            fontFamily="body"
+          >
+            {category || tag || 'Latest'} News
+          </Heading>
+
+          {showAllNewsButton && (
+            <Link href="/news" passHref>
+              <ChakraLink mr={{ base: 0, md: 0 }}>
+                <Button
+                  variant="transparent"
+                  borderColor="qukBlue"
+                  color="qukBlue"
+                  _hover={{ bg: 'gray.300' }}
+                  rightIcon={<ArrowForwardIcon />}
+                >
+                  All News
+                </Button>
+              </ChakraLink>
+            </Link>
+          )}
+        </Flex>
 
         <HorizontalScrollWrapper
           itemsCount={posts?.length}

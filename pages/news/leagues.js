@@ -45,7 +45,12 @@ const News = ({ posts: initialPosts = [] }) => {
         description="All the latest results and news across QuidditchUK's leagues"
       />
       <NewsHeader />
-      <LatestNews category="Leagues" posts={posts} horizontalScroll={false} />
+      <LatestNews
+        category="Leagues"
+        posts={posts}
+        horizontalScroll={false}
+        showAllNewsButton={false}
+      />
       {isFetching && (
         <Flex
           alignItems="center"

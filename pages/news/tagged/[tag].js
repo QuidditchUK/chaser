@@ -58,6 +58,7 @@ const News = ({ posts: initialPosts = [], tag = '' }) => {
         tag={unDasherizeTag(tag)}
         posts={posts}
         horizontalScroll={false}
+        showAllNewsButton={false}
       />
       {isFetching && (
         <Flex

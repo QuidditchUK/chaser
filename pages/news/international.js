@@ -49,6 +49,7 @@ const News = ({ posts: initialPosts = [] }) => {
         category="International"
         posts={posts}
         horizontalScroll={false}
+        showAllNewsButton={false}
       />
       {isFetching && (
         <Flex
