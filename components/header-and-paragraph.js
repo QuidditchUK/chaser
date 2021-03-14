@@ -16,7 +16,7 @@ const HeaderAndParagraph = (rawData) => {
   const cta_url = get(rawData, 'primary.cta_url');
 
   return (
-    <PrismicWrapper variant={variant} small>
+    <PrismicWrapper variant="white" small>
       {RichText.asText(title) && (
         <Heading
           as="h2"
