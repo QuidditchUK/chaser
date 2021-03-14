@@ -1,6 +1,6 @@
 import { RichText, Link } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import PrismicWrapper from 'components/prismic-wrapper';
+import PrismicWrapper, { cardVariants } from 'components/prismic-wrapper';
 
 import { Flex, Heading, Box } from '@chakra-ui/react';
 import Card from 'components/card';
@@ -64,6 +64,7 @@ const CardsSlice = (rawData) => {
                   <Card
                     name={title}
                     content={content}
+                    variant={cardVariants[variant]}
                     image={
                       image.url ? (
                         <Image

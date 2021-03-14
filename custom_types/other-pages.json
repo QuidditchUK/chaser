@@ -144,7 +144,7 @@
                 "config": {
                   "options": [
                     "light",
-                    "qukBlue",
+                    "primary",
                     "secondary",
                     "white",
                     "dark"
@@ -202,7 +202,7 @@
                 "config": {
                   "options": [
                     "light",
-                    "qukBlue",
+                    "primary",
                     "secondary",
                     "white",
                     "dark"
@@ -263,7 +263,7 @@
                 "config": {
                   "options": [
                     "light",
-                    "qukBlue",
+                    "primary",
                     "secondary",
                     "white",
                     "dark"
@@ -317,7 +317,7 @@
                 "config": {
                   "options": [
                     "light",
-                    "qukBlue",
+                    "primary",
                     "secondary",
                     "dark",
                     "white"
@@ -396,7 +396,7 @@
                 "config": {
                   "options": [
                     "light",
-                    "qukBlue",
+                    "primary",
                     "secondary",
                     "dark",
                     "white"
@@ -469,7 +469,7 @@
                 "config": {
                   "options": [
                     "light",
-                    "qukBlue",
+                    "primary",
                     "secondary",
                     "white",
                     "dark"
@@ -532,7 +532,7 @@
                 "config": {
                   "options": [
                     "light",
-                    "qukBlue",
+                    "primary",
                     "secondary",
                     "white",
                     "dark"
@@ -700,7 +700,7 @@
                 "config": {
                   "options": [
                     "light",
-                    "qukBlue",
+                    "primary",
                     "secondary",
                     "white",
                     "dark"

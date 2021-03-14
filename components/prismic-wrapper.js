@@ -55,6 +55,14 @@ export const buttonVariants = {
   dark: 'secondary',
 };
 
+export const cardVariants = {
+  light: 'white',
+  primary: 'white',
+  secondary: 'white',
+  white: 'primary',
+  dark: 'white',
+};
+
 export default function PrismicWrapper({
   variant = 'light',
   small = false,
