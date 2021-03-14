@@ -1,5 +1,3 @@
-const withSourceMaps = require('@zeit/next-source-maps')();
-const path = require('path');
 const withOffline = require('next-offline');
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -13,6 +11,7 @@ const {
   SENTRY_PROJECT,
   SENTRY_AUTH_TOKEN,
   NODE_ENV,
+  VERCEL_GITHUB_COMMIT_SHA,
   API_URL,
   COOKIE_DOMAIN,
   COOKIE_SECURE,
@@ -20,8 +19,11 @@ const {
   GA_TOKEN,
 } = process.env;
 
+const COMMIT_SHA = VERCEL_GITHUB_COMMIT_SHA;
+
 module.exports = withBundleAnalyzer(
   withOffline({
+    productionBrowserSourceMaps: true,
     target: 'serverless',
     transformManifest: (manifest) => ['/'].concat(manifest), // add the homepage to the cache
     generateInDevMode: false,
@@ -102,6 +104,16 @@ module.exports = withBundleAnalyzer(
       // building the browser's bundle
       if (!options.isServer) {
         config.resolve.alias['@sentry/node'] = '@sentry/browser';
+
+        // Define an environment variable so source code can check whether or not
+        // it's running on the server so we can correctly initialize Sentry
+        config.plugins.push(
+          new options.webpack.DefinePlugin({
+            'process.env.NEXT_IS_SERVER': JSON.stringify(
+              options.isServer.toString()
+            ),
+          })
+        );
       }
 
       // When all the Sentry configuration env variables are available/configured
@@ -114,14 +126,16 @@ module.exports = withBundleAnalyzer(
         SENTRY_ORG &&
         SENTRY_PROJECT &&
         SENTRY_AUTH_TOKEN &&
+        COMMIT_SHA &&
         NODE_ENV === 'production'
       ) {
         config.plugins.push(
           new SentryWebpackPlugin({
             include: '.next',
             ignore: ['node_modules'],
-            urlPrefix: '~/_next',
-            release: options.buildId,
+            stripPrefix: ['webpack://_N_E/'],
+            urlPrefix: `~${basePath}/_next`,
+            release: COMMIT_SHA,
           })
         );
       }
@@ -130,10 +144,6 @@ module.exports = withBundleAnalyzer(
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       });
-
-      // Here is the magic
-      // We push our config into the resolve.modules array
-      config.resolve.modules.push(path.resolve('./'));
 
       return config;
     },
@@ -145,6 +155,7 @@ module.exports = withBundleAnalyzer(
     },
     env: {
       gaToken: GA_TOKEN,
+      NEXT_PUBLIC_COMMIT_SHA: COMMIT_SHA,
     },
   })
 );

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Router from 'next/router';
-import * as Sentry from '@sentry/node';
+import { init } from 'modules/sentry';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
 import { Chakra } from 'styles/chakra';
@@ -11,13 +11,10 @@ import { pageview } from 'modules/analytics';
 
 const Layout = dynamic(() => import('containers/layout'));
 
-Sentry.init({
-  enabled: process.env.NODE_ENV === 'production',
-  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-});
-
 const Scripts = dynamic(() => import('../document/scripts'), { ssr: false });
 const queryClient = new QueryClient();
+
+init();
 
 function App({ Component, pageProps, err }) {
   useEffect(() => {

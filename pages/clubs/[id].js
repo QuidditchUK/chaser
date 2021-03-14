@@ -60,13 +60,16 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
   const { data: page } = useQuery(
     ['clubs', router.query.id],
     () => getPrismicDocByUid('clubs', router.query.id),
-    { initialData: initialPage }
+    { initialData: initialPage, enabled: Boolean(!router.isFallback) }
   );
   const { data: posts } = useQuery(
     ['posts', router.query.id],
     () =>
-      getBlogTags(page.tags, { orderings: '[my.post.date desc]', pageSize: 3 }),
-    { initialData: initialPosts }
+      getBlogTags(page?.tags, {
+        orderings: '[my.post.date desc]',
+        pageSize: 3,
+      }),
+    { initialData: initialPosts, enabled: Boolean(page) }
   );
 
   if (router.isFallback) {
@@ -120,55 +123,57 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
             </Heading>
 
             <Table mx={0} variant="unstyled">
-              {club.trainings && (
-                <Tr>
-                  <Td fontWeight="bold">Trainings</Td>
-                  <Td>{club.trainings}</Td>
-                </Tr>
-              )}
+              <Tbody>
+                {club.trainings && (
+                  <Tr>
+                    <Td fontWeight="bold">Trainings</Td>
+                    <Td>{club.trainings}</Td>
+                  </Tr>
+                )}
 
-              <Tr>
-                <Td fontWeight="bold">League</Td>
-                <Td>{club.league}</Td>
-              </Tr>
-
-              <Tr>
-                <Td fontWeight="bold">{club.leader_position}</Td>
-                <Td>{club.leader}</Td>
-              </Tr>
-
-              {club?.official_website?.url && (
                 <Tr>
-                  <Td fontWeight="bold">Official Website</Td>
-                  <Td>
-                    <ChakraLink
-                      href={club?.official_website?.url}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      color={club.featured_color}
-                      wordBreak="break-all"
-                    >
-                      {club?.official_website?.url}
-                    </ChakraLink>
-                  </Td>
+                  <Td fontWeight="bold">League</Td>
+                  <Td>{club.league}</Td>
                 </Tr>
-              )}
-              {club?.email && (
+
                 <Tr>
-                  <Td fontWeight="bold">Email</Td>
-                  <Td>
-                    <ChakraLink
-                      href={`mailto:${club?.email}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      color={club.featured_color}
-                      wordBreak="break-all"
-                    >
-                      {club?.email}
-                    </ChakraLink>
-                  </Td>
+                  <Td fontWeight="bold">{club.leader_position}</Td>
+                  <Td>{club.leader}</Td>
                 </Tr>
-              )}
+
+                {club?.official_website?.url && (
+                  <Tr>
+                    <Td fontWeight="bold">Official Website</Td>
+                    <Td>
+                      <ChakraLink
+                        href={club?.official_website?.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        color={club.featured_color}
+                        wordBreak="break-all"
+                      >
+                        {club?.official_website?.url}
+                      </ChakraLink>
+                    </Td>
+                  </Tr>
+                )}
+                {club?.email && (
+                  <Tr>
+                    <Td fontWeight="bold">Email</Td>
+                    <Td>
+                      <ChakraLink
+                        href={`mailto:${club?.email}`}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        color={club.featured_color}
+                        wordBreak="break-all"
+                      >
+                        {club?.email}
+                      </ChakraLink>
+                    </Td>
+                  </Tr>
+                )}
+              </Tbody>
             </Table>
 
             <Flex justifyContent={{ base: 'center', md: 'flex-start' }} mt={5}>
@@ -193,7 +198,6 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   pl={{ base: 5, md: 3 }}
-                  featuredColor={club.featured_color}
                 >
                   <Icon
                     as={TwitterIcon}
@@ -343,7 +347,7 @@ export const getStaticProps = async ({
   const { ref } = previewData;
   const page =
     (await getPrismicDocByUid('clubs', id, ref ? { ref } : null)) || null;
-  const posts = await getBlogTags(page.tags, {
+  const posts = await getBlogTags(page?.tags, {
     orderings: '[my.post.date desc]',
     pageSize: 3,
   });
