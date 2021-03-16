@@ -28,8 +28,17 @@ export const ClubNews = ({ posts, bgColor, color }) => {
           <Link href="/news/[id]" as={`/news/${uid}`} passHref>
             <StyledLink>
               <Card
-                color={color}
-                bg={bgColor}
+                sx={{
+                  bg: bgColor,
+                  color,
+                  borderRadius: 'lg',
+                  overflow: 'hidden',
+                  transition: 'box-shadow 0.125s',
+                  boxShadow: 'none',
+                  _hover: {
+                    boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+                  },
+                }}
                 name={data.title}
                 category={data.category}
                 image={
