@@ -2,7 +2,7 @@ import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 
 import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import { Grid, Flex, Heading, Text } from '@chakra-ui/react';
+import { Grid, Flex, Heading, Box } from '@chakra-ui/react';
 import Image from 'components/image';
 
 import Content from 'components/content';
@@ -53,9 +53,9 @@ const Item = ({ item, isImageLeft }) => (
         width={item.image?.dimensions?.width}
       />
       {RichText.asText(item.support) && (
-        <Text textAlign="center" pt={2} fontStyle="italic">
+        <Box textAlign="center" pt={2} fontStyle="italic">
           {RichText.render(item.support, linkResolver)}
-        </Text>
+        </Box>
       )}
     </Flex>
   </Grid>

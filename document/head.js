@@ -24,8 +24,8 @@ const DocumentHead = () => (
     <link rel="manifest" href="/manifest.json" />
 
     {/* Fonts */}
-    <link rel="preload" href="https://use.typekit.net/rub1byg.css" as="style" />
-    <link rel="stylesheet" href="https://use.typekit.net/rub1byg.css" />
+    <link rel="preload" href="https://use.typekit.net/tla4oaq.css" as="style" />
+    <link rel="stylesheet" href="https://use.typekit.net/tla4oaq.css" />
 
     {/* Static CSS */}
     <style dangerouslySetInnerHTML={{ __html: reset }} />
