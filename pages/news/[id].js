@@ -21,7 +21,7 @@ const Post = ({ page: initialPage, preview }) => {
     { initialData: initialPage, enabled: !preview }
   );
 
-  if (router.isFallback) {
+  if (router.isFallback && !queryData) {
     return <PageLoading />;
   }
 

@@ -31,7 +31,7 @@ const animationVariants = {
 };
 
 const FadeInImage = (props) => {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(props.priority || false);
   const animationControls = useAnimation();
 
   useEffect(() => {
