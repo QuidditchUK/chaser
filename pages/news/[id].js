@@ -12,7 +12,7 @@ const BlogSupport = dynamic(() => import('components/blog-support'));
 const BlogHero = dynamic(() => import('components/blog-hero'));
 const SchemaArticle = dynamic(() => import('components/schema-article'));
 
-const Post = ({ page: initialPage }) => {
+const Post = ({ page: initialPage, preview }) => {
   const router = useRouter();
   const { data: page } = useQuery(
     ['post', router.query.id],
@@ -24,7 +24,7 @@ const Post = ({ page: initialPage }) => {
     return <PageLoading />;
   }
 
-  if (!page) {
+  if (!page && !preview) {
     return <Page404 />;
   }
 
