@@ -14,19 +14,22 @@ const SchemaArticle = dynamic(() => import('components/schema-article'));
 
 const Post = ({ page: initialPage, preview }) => {
   const router = useRouter();
-  const { data: page } = useQuery(
+
+  const { data: queryData } = useQuery(
     ['post', router.query.id],
     () => getPrismicDocByUid('post', router.query.id),
-    { initialData: initialPage }
+    { initialData: initialPage, enabled: !preview }
   );
 
   if (router.isFallback) {
     return <PageLoading />;
   }
 
-  if (!page && !preview) {
+  if (!queryData && !preview) {
     return <Page404 />;
   }
+
+  const page = preview ? initialPage : queryData;
 
   return (
     <>
