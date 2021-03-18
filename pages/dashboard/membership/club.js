@@ -73,7 +73,6 @@ const ManageClub = ({ user, clubs = [] }) => {
   const currentSelectedClubUuid = watch('club_uuid', user.club_uuid);
 
   useEffect(() => {
-    console.log('in useEffect');
     if (selectedClub.uuid !== currentSelectedClubUuid) {
       setSelectedClub(
         clubs.find(({ uuid }) => uuid === currentSelectedClubUuid)
