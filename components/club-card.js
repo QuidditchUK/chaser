@@ -77,6 +77,7 @@ const ClubCard = ({
                   >
                     <Tooltip
                       placement="bottom"
+                      hasArrow
                       label={`${result.tournament_name} - ${
                         result.position
                       }${formatOrdinals(result.position)}`}
