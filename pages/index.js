@@ -1,12 +1,16 @@
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { getPrismicDocByUid, formatMetadata, getDocs } from 'modules/prismic';
 import renderPrismicSections from 'constants/prismic';
 import { useQuery } from 'react-query';
 
 const Meta = dynamic(() => import('components/meta'));
+const Page404 = dynamic(() => import('pages/404'));
+const PageLoading = dynamic(() => import('components/page-loading'));
 
-const Home = ({ page: initialPage, posts: initialPosts }) => {
-  const { data: page } = useQuery(
+const Home = ({ page: initialPage, posts: initialPosts, preview }) => {
+  const router = useRouter();
+  const { data: queryData } = useQuery(
     ['pages', 'home'],
     () => getPrismicDocByUid('pages', 'home'),
     { initialData: initialPage }
@@ -20,6 +24,16 @@ const Home = ({ page: initialPage, posts: initialPosts }) => {
       }),
     { initialData: initialPosts }
   );
+
+  const page = preview ? initialPage : queryData;
+
+  if (router.isFallback && !queryData) {
+    return <PageLoading />;
+  }
+
+  if (!queryData && !preview) {
+    return <Page404 />;
+  }
 
   return (
     <>

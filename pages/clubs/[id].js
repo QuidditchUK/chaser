@@ -55,9 +55,9 @@ const Th = (props) => (
   />
 );
 
-const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
+const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
   const router = useRouter();
-  const { data: page } = useQuery(
+  const { data: queryData } = useQuery(
     ['clubs', router.query.id],
     () => getPrismicDocByUid('clubs', router.query.id),
     { initialData: initialPage, enabled: Boolean(!router.isFallback) }
@@ -72,11 +72,13 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
     { initialData: initialPosts, enabled: Boolean(page) }
   );
 
-  if (router.isFallback) {
+  const page = preview ? initialPage : queryData;
+
+  if (router.isFallback && !queryData) {
     return <PageLoading />;
   }
 
-  if (!page) {
+  if (!queryData && !preview) {
     return <Page404 />;
   }
 
