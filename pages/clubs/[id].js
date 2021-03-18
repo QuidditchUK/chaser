@@ -69,7 +69,7 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
         orderings: '[my.post.date desc]',
         pageSize: 3,
       }),
-    { initialData: initialPosts, enabled: Boolean(page) }
+    { initialData: initialPosts, enabled: Boolean(queryData) }
   );
 
   const page = preview ? initialPage : queryData;
