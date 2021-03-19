@@ -5,6 +5,7 @@ import {
   Text,
   Heading,
   usePrefersReducedMotion,
+  IconButton,
   Tooltip,
 } from '@chakra-ui/react';
 import Type, { TYPES } from 'components/club-type';
@@ -74,6 +75,10 @@ const ClubCard = ({
                   <Box
                     key={`${name}_${result.team_name}_${result.tournament_name}_${result.season}`}
                     ml={3}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
                   >
                     <Tooltip
                       placement="bottom"
@@ -85,13 +90,20 @@ const ClubCard = ({
                         result.position
                       }${formatOrdinals(result.position)}`}
                     >
-                      <ChakraImage
-                        src={result.medal_icon.url}
-                        alt={`Medal: ${result.tournament_name} - ${
-                          result.position
-                        }${formatOrdinals(result.position)}`}
-                        height="30px"
-                        width="30px"
+                      <IconButton
+                        variant="unstyled"
+                        border={0}
+                        p={0}
+                        icon={
+                          <ChakraImage
+                            src={result.medal_icon.url}
+                            alt={`Medal: ${result.tournament_name} - ${
+                              result.position
+                            }${formatOrdinals(result.position)}`}
+                            height="30px"
+                            width="30px"
+                          />
+                        }
                       />
                     </Tooltip>
                   </Box>

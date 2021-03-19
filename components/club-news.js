@@ -35,6 +35,7 @@ export const ClubNews = ({ posts, bgColor, color }) => {
                   overflow: 'hidden',
                   transition: 'box-shadow 0.125s',
                   boxShadow: 'none',
+                  height: '100%',
                   _hover: {
                     boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
                   },
