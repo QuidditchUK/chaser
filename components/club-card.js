@@ -5,6 +5,7 @@ import {
   Text,
   Heading,
   usePrefersReducedMotion,
+  IconButton,
   Tooltip,
 } from '@chakra-ui/react';
 import Type, { TYPES } from 'components/club-type';
@@ -50,7 +51,14 @@ const Medals = ({ tournament_results }) => {
   return (
     <>
       {medals.map((medal) => (
-        <Box key={`${medal.tournament_name}_${medal.position}`} ml={3}>
+        <Box
+          key={`${medal.tournament_name}_${medal.position}`}
+          ml={3}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+        >
           <Tooltip
             placement="bottom"
             hasArrow
@@ -59,11 +67,18 @@ const Medals = ({ tournament_results }) => {
             color="qukBlue"
             label={medal.name}
           >
-            <ChakraImage
-              src={medal.medal_icon.url}
-              alt={medal.name}
-              height="30px"
-              width="30px"
+            <IconButton
+              variant="unstyled"
+              border={0}
+              p={0}
+              icon={
+                <ChakraImage
+                  src={medal.medal_icon.url}
+                  alt={medal.name}
+                  height="30px"
+                  width="30px"
+                />
+              }
             />
           </Tooltip>
         </Box>
@@ -140,7 +155,7 @@ const ClubCard = ({
           </Flex>
 
           <Flex flexDirection="row" justifyContent="flex-end">
-            <Medals tournament_results={tournament_results} name={name} />
+            <Medals tournament_results={tournament_results} />
           </Flex>
         </Flex>
 
