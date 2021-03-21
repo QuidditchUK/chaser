@@ -16,8 +16,8 @@ export const ACTIVE_STATUS = 'active';
 
 const MEDAL_WORDING = {
   1: 'Champions',
-  2: 'Silver Medalist',
-  3: 'Bronze Medalist',
+  2: 'Silver Medalists',
+  3: 'Bronze Medalists',
 };
 
 const Medals = ({ tournament_results }) => {
