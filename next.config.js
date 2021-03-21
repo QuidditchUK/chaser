@@ -85,7 +85,7 @@ module.exports = withBundleAnalyzer(
       ];
     },
     images: {
-      domains: ['images.prismic.io'],
+      domains: ['images.prismic.io', 'chaser.cdn.prismic.io'],
     },
     webpack: (config, options) => {
       // In `pages/_app.js`, Sentry is imported from @sentry/node. While

@@ -485,6 +485,7 @@ const FindQuidditch = ({
                           venue={club.data.venue}
                           icon={club.data.icon.url}
                           status={club.data.active}
+                          tournament_results={club.data.tournament_results}
                           image={
                             club.data.images ? (
                               <Image
