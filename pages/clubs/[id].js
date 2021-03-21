@@ -22,6 +22,7 @@ import {
   Tbody,
   Thead,
   Link as ChakraLink,
+  Image as ChakraImage,
   Text,
 } from '@chakra-ui/react';
 
@@ -306,6 +307,7 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
                   <Table variant="striped">
                     <Thead>
                       <Tr>
+                        <Th></Th>
                         <Th>Position</Th>
                         <Th>Season</Th>
                         <Th>Tournament</Th>
@@ -313,11 +315,29 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
                       </Tr>
                     </Thead>
 
-                    <Tbody>
+                    <Tbody bg="gray.400">
                       {club?.tournament_results?.map((result) => (
                         <Tr
                           key={`${club.club_name}_${result.team_name}_${result.tournament_name}_${result.season}`}
                         >
+                          <Td>
+                            {result?.medal_icon?.url && (
+                              <ChakraImage
+                                src={result.medal_icon.url}
+                                alt={`Medal: ${result.position}${formatOrdinals(
+                                  result.position
+                                )} ${result.team_name} ${
+                                  result.tournament_name
+                                } ${result.season}`}
+                                height="30px"
+                                width="30px"
+                                sx={{
+                                  filter:
+                                    'drop-shadow(0px 0px 2px rgba(0, 0, 0, .3))',
+                                }}
+                              />
+                            )}
+                          </Td>
                           <Td>
                             {result.position}
                             {formatOrdinals(result.position)}
