@@ -8,6 +8,7 @@ import {
   IconButton,
   Tooltip,
 } from '@chakra-ui/react';
+import Image from 'components/image';
 import Type, { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 
@@ -72,11 +73,17 @@ const Medals = ({ tournament_results }) => {
               border={0}
               p={0}
               icon={
-                <ChakraImage
+                <Image
                   src={medal.medal_icon.url}
                   alt={medal.name}
                   height="30px"
                   width="30px"
+                  sx={{
+                    svg: {
+                      height: '30px',
+                      width: '30px',
+                    },
+                  }}
                 />
               }
             />
