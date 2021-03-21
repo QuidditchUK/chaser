@@ -318,7 +318,7 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
                       </Tr>
                     </Thead>
 
-                    <Tbody bg="gray.400">
+                    <Tbody bg="gray.50">
                       {club?.tournament_results?.map((result) => (
                         <Tr
                           key={`${club.club_name}_${result.team_name}_${result.tournament_name}_${result.season}`}
