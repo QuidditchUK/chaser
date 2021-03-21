@@ -43,7 +43,9 @@ const Meta = dynamic(() => import('components/meta'));
 const Icon = (props) => (
   <Box color="greyDark" height="30px" width="30px" {...props} />
 );
-const Td = (props) => <ChakraTd p={1} {...props} />;
+const Td = (props) => (
+  <ChakraTd p={1} fontSize={{ base: 'sm', md: 'md' }} {...props} />
+);
 const Th = (props) => (
   <ChakraTh
     textAlign="left"
@@ -51,7 +53,7 @@ const Th = (props) => (
     textTransform="normal"
     fontFamily="body"
     fontWeight="normal"
-    fontSize="sm"
+    fontSize={{ base: 'xs', md: 'sm' }}
     {...props}
   />
 );
@@ -307,7 +309,6 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
                   <Table variant="striped">
                     <Thead>
                       <Tr>
-                        <Th></Th>
                         <Th>Position</Th>
                         <Th>Season</Th>
                         <Th>Tournament</Th>
@@ -321,26 +322,31 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
                           key={`${club.club_name}_${result.team_name}_${result.tournament_name}_${result.season}`}
                         >
                           <Td>
-                            {result?.medal_icon?.url && (
-                              <ChakraImage
-                                src={result.medal_icon.url}
-                                alt={`Medal: ${result.position}${formatOrdinals(
-                                  result.position
-                                )} ${result.team_name} ${
-                                  result.tournament_name
-                                } ${result.season}`}
-                                height="30px"
-                                width="30px"
-                                sx={{
-                                  filter:
-                                    'drop-shadow(0px 0px 2px rgba(0, 0, 0, .3))',
-                                }}
-                              />
-                            )}
-                          </Td>
-                          <Td>
-                            {result.position}
-                            {formatOrdinals(result.position)}
+                            <Flex
+                              direction={{ base: 'column', md: 'row' }}
+                              alignItems="center"
+                            >
+                              {result?.medal_icon?.url && (
+                                <ChakraImage
+                                  src={result.medal_icon.url}
+                                  alt={`Medal: ${
+                                    result.position
+                                  }${formatOrdinals(result.position)} ${
+                                    result.team_name
+                                  } ${result.tournament_name} ${result.season}`}
+                                  height="30px"
+                                  width="30px"
+                                  sx={{
+                                    filter:
+                                      'drop-shadow(0px 0px 2px rgba(0, 0, 0, .3))',
+                                  }}
+                                />
+                              )}
+                              <Box>
+                                {result.position}
+                                {formatOrdinals(result.position)}
+                              </Box>
+                            </Flex>
                           </Td>
                           <Td>{result.season}</Td>
                           <Td>{result.tournament_name}</Td>
