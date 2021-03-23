@@ -28,8 +28,8 @@ const Page = ({ page: initialPage, preview }) => {
 
   return (
     <>
-      <Meta {...formatMetadata(page.data)} />
-      <>{renderPrismicSections(page.data.body)}</>
+      <Meta {...formatMetadata(page?.data)} />
+      <>{renderPrismicSections(page?.data?.body)}</>
     </>
   );
 };
