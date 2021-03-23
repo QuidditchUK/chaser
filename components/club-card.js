@@ -42,6 +42,10 @@ const Medals = ({ tournament_results }) => {
       );
       return acc.concat(bestResult);
     }, [])
+    .sort((a, b) => {
+      if (a.position !== b.position) return a.position - b.position;
+      return a.tournament_name > b.tournament_name ? 1 : -1;
+    })
     .map((result) => {
       return {
         name: `${result.tournament_name} ${MEDAL_WORDING[result.position]}`,
