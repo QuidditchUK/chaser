@@ -6,7 +6,6 @@ import {
   Box,
   Heading,
   Link as ChakraLink,
-  usePrefersReducedMotion,
   Button,
 } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
@@ -16,9 +15,6 @@ import Container from 'components/container';
 import HorizontalScrollWrapper from 'components/horizontal-scroll-wrapper';
 
 export const StyledLink = forwardRef(function StyledLink(props, ref) {
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const scale = prefersReducedMotion ? '1.0' : '1.1';
-
   return (
     <ChakraLink
       ref={ref}
@@ -29,7 +25,7 @@ export const StyledLink = forwardRef(function StyledLink(props, ref) {
       _hover={{
         textDecoration: 'none',
         img: {
-          scale,
+          scale: '1.1',
         },
       }}
       sx={{
