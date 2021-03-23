@@ -46,12 +46,14 @@ const Item = ({ item, isImageLeft }) => (
       justifyContent="center"
       order={{ base: 1, md: `${isImageLeft ? 1 : 2}` }}
     >
-      <Image
-        alt={item?.image?.alt}
-        src={item?.image?.url}
-        height={item.image?.dimensions?.height}
-        width={item.image?.dimensions?.width}
-      />
+      {item?.image?.url && (
+        <Image
+          alt={item?.image?.alt}
+          src={item?.image?.url}
+          height={item.image?.dimensions?.height}
+          width={item.image?.dimensions?.width}
+        />
+      )}
       {RichText.asText(item.support) && (
         <Box textAlign="center" pt={2} fontStyle="italic">
           {RichText.render(item.support, linkResolver)}

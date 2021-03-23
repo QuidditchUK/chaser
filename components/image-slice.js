@@ -18,12 +18,14 @@ const Item = ({ item }) => {
   return (
     <>
       <Box onClick={onOpen} cursor="pointer">
-        <Image
-          alt={item.image?.alt}
-          src={item.image?.url}
-          height={height}
-          width={width}
-        />
+        {item?.image?.url && (
+          <Image
+            alt={item.image?.alt}
+            src={item.image?.url}
+            height={height}
+            width={width}
+          />
+        )}
         {item.support && (
           <Text textAlign="center" pt={2} fontStyle="italic">
             {item.support}
