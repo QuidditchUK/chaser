@@ -97,11 +97,15 @@ export default function Navigation({ dashboard = false }) {
           <NextLink href="/" passHref>
             <Link height={{ base: '35px', xl: '45px' }} onClick={onClose}>
               <Logo
+                height={{ base: '35px', xl: '45px' }}
+                width={{ base: '35px', xl: '45px' }}
                 src={logo}
                 alt="Quidditch UK"
                 filter={dashboard ? 'brightness(0) invert(1)' : 'inherit'}
               />
               <Logo
+                height={{ base: '35px', xl: '45px' }}
+                width={{ base: '175px', xl: '225px' }}
                 src={logoText}
                 alt="Quidditch UK"
                 filter={dashboard ? 'brightness(0) invert(1)' : 'inherit'}

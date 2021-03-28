@@ -263,11 +263,15 @@ export const Footer = () => {
                 <ChakraLink height={{ base: '35px', xl: '45px' }}>
                   <>
                     <Logo
+                      height={{ base: '35px', xl: '45px' }}
+                      width={{ base: '35px', xl: '45px' }}
                       src={logo}
                       alt="Quidditch UK"
                       filter="brightness(0) invert(1)"
                     />
                     <Logo
+                      height={{ base: '35px', xl: '45px' }}
+                      width={{ base: '175px', xl: '225px' }}
                       src={logoText}
                       alt="Quidditch UK"
                       filter="brightness(0) invert(1)"
