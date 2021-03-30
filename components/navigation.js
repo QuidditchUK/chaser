@@ -24,8 +24,14 @@ const DesktopCTAs = dynamic(() =>
   import('components/navigation/desktop').then(({ DesktopCTAs }) => DesktopCTAs)
 );
 const MobileNav = dynamic(() => import('components/navigation/mobile'));
+const Button = dynamic(() => import('components/button'));
 
-export default function Navigation({ dashboard = false }) {
+export default function Navigation({
+  dashboard = false,
+  openCapeMode,
+  capeModeIsOpen,
+  closeCapeMode,
+}) {
   const { isOpen, onToggle: closeTopNav, onClose } = useDisclosure();
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
 
@@ -103,6 +109,9 @@ export default function Navigation({ dashboard = false }) {
           >
             <DesktopNav navigation={navigation} dashboard={dashboard} />
             <DesktopCTAs dashboard={dashboard} />
+            <Button onClick={capeModeIsOpen ? closeCapeMode : openCapeMode}>
+              CAPE MODE
+            </Button>
           </Flex>
         </Flex>
       </Flex>
