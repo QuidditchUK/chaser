@@ -182,7 +182,7 @@ export const DesktopCTAs = ({
   return (
     <Stack direction="row" spacing={3} alignItems="center">
       <Button onClick={capeModeIsOpen ? closeCapeMode : openCapeMode}>
-        Cape Mode
+        {capeModeIsOpen ? 'Normal' : 'Cape'} Mode
       </Button>
       {/* <NextLink href="/find-quidditch" passHref>
         <Button
