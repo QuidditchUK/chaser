@@ -1,5 +1,4 @@
 import get from 'just-safe-get';
-import PrismicWrapper from 'components/prismic-wrapper';
 import {
   Box,
   Grid,
@@ -9,7 +8,10 @@ import {
   ModalOverlay,
   ModalContent,
 } from '@chakra-ui/react';
-import Image from 'components/carousel-image';
+import dynamic from 'next/dynamic';
+
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Image = dynamic(() => import('components/carousel-image'));
 
 const Item = ({ item }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();

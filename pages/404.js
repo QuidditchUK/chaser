@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import Container from 'components/container';
+import dynamic from 'next/dynamic';
 import { Flex, Box, Heading } from '@chakra-ui/react';
 
-import Content from 'components/content';
-import Image from 'components/image';
-import Meta from 'components/meta';
+const Image = dynamic(() => import('components/image'));
+const Container = dynamic(() => import('components/container'));
+const Content = dynamic(() => import('components/content'));
+const Meta = dynamic(() => import('components/meta'));
 
 export default function Custom404() {
   return (

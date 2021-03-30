@@ -1,24 +1,26 @@
 import styled from '@emotion/styled';
-import { space } from 'styled-system';
 import { format } from 'date-fns';
+import dynamic from 'next/dynamic';
 import { parseTimestamptz } from 'modules/dates';
 import { Box, Flex, Grid, Heading } from '@chakra-ui/react';
-import Type, { TYPES } from 'components/club-type';
+import { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 
-const StyledCard = styled(Grid)`
-  border-radius: ${({ theme }) => theme.radii[1]};
-  overflow: hidden;
-  transition: box-shadow 0.125s;
-  background: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.black};
+const Type = dynamic(() => import('components/club-type'));
 
-  ${space};
-
-  &:hover {
-    box-shadow: ${({ theme }) => theme.shadows.box};
-  }
-`;
+const StyledCard = (props) => (
+  <Grid
+    borderRadius="md"
+    overflow="hidden"
+    transition="box-shadow 0.125s"
+    bg="white"
+    color="black"
+    _hover={{
+      boxShadow: 'md',
+    }}
+    {...props}
+  />
+);
 
 const IconContainer = styled.div`
   padding: ${({ theme }) => theme.space[4]};

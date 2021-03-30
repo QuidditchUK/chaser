@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { StyledLink } from 'components/latest-news';
-
+import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { parse } from 'date-fns';
 import Router from 'next/router';
-import * as Yup from 'yup';
+import { object, string, bool } from 'yup';
+
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 import {
@@ -18,21 +18,30 @@ import {
   Checkbox,
   Link as ChakraLink,
 } from '@chakra-ui/react';
-import Meta from 'components/meta';
-import Container from 'components/container';
-import Content from 'components/content';
-import Label from 'components/label';
-import Button from 'components/button';
-import Required from 'components/required';
-import { InlineError } from 'components/errors';
-import ClubCard, { ACTIVE_STATUS } from 'components/club-card';
-import Image from 'components/image';
+
+const Meta = dynamic(() => import('components/meta'));
+const Container = dynamic(() => import('components/container'));
+const Content = dynamic(() => import('components/content'));
+const Label = dynamic(() => import('components/label'));
+const Button = dynamic(() => import('components/button'));
+const Required = dynamic(() => import('components/required'));
+const Image = dynamic(() => import('components/image'));
+const ClubCard = dynamic(() => import('components/club-card'));
+
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
+const StyledLink = dynamic(() =>
+  import('components/latest-news').then(({ StyledLink }) => StyledLink)
+);
+
+import { ACTIVE_STATUS } from 'components/club-card';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
 
-const SelectClubSchema = Yup.object().shape({
-  club_uuid: Yup.string().nullable().required('Required'),
-  confirm: Yup.bool().oneOf(
+const SelectClubSchema = object().shape({
+  club_uuid: string().nullable().required('Required'),
+  confirm: bool().oneOf(
     [true],
     'Please confirm that you have read the disclaimer'
   ),

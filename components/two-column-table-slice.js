@@ -1,6 +1,7 @@
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import PrismicWrapper from 'components/prismic-wrapper';
+import dynamic from 'next/dynamic';
+
 import {
   Heading,
   Table,
@@ -10,6 +11,8 @@ import {
   Tbody,
   Thead,
 } from '@chakra-ui/react';
+
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
 
 const Th = (props) => (
   <ChakraTh

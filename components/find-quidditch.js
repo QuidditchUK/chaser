@@ -1,11 +1,13 @@
 import get from 'just-safe-get';
 import { useRouter } from 'next/router';
-import Image from 'components/image';
+import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { Box, Flex, Heading } from '@chakra-ui/react';
-import Button from 'components/button';
-import Input from 'components/input';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
+
+const Image = dynamic(() => import('components/image'));
+const Button = dynamic(() => import('components/button'));
+const Input = dynamic(() => import('components/input'));
 
 const handleFindQuidditch = async ({ postcode }, router) => {
   await router.push(

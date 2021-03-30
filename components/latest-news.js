@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 import {
   Flex,
@@ -9,10 +10,13 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
-import Card from 'components/card';
-import Image from 'components/image';
-import Container from 'components/container';
-import HorizontalScrollWrapper from 'components/horizontal-scroll-wrapper';
+
+const Image = dynamic(() => import('components/image'));
+const Card = dynamic(() => import('components/card'));
+const Container = dynamic(() => import('components/container'));
+const HorizontalScrollWrapper = dynamic(() =>
+  import('components/horizontal-scroll-wrapper')
+);
 
 export const StyledLink = forwardRef(function StyledLink(props, ref) {
   return (

@@ -8,10 +8,11 @@ import {
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
-import Type, { TYPES } from 'components/club-type';
+import { TYPES } from 'components/club-type';
 import { useBreakpoint } from 'hooks/media';
 import base, { rem } from 'styles/theme';
 
+const Type = dynamic(() => import('components/club-type'));
 const Image = dynamic(() => import('components/image'));
 const Carousel = dynamic(() => import('components/carousel'));
 const PinIcon = dynamic(() => import('public/images/location-pin.svg'));

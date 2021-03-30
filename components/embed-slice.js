@@ -1,9 +1,11 @@
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import PrismicWrapper from 'components/prismic-wrapper';
+import dynamic from 'next/dynamic';
 import { Box, Grid, Heading } from '@chakra-ui/react';
 
-import Content from 'components/content';
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Content = dynamic(() => import('components/content'));
+
 import { linkResolver } from 'modules/prismic';
 
 export const Embed = ({ embed }) => {

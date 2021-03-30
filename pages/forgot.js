@@ -1,17 +1,19 @@
 import { useState } from 'react';
-import * as Yup from 'yup';
+import { object, string } from 'yup';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
 import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
-import { Logo } from 'components/logo';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import Input from 'components/input';
 
+const Logo = dynamic(() => import('components/logo').then(({ Logo }) => Logo));
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
+const Input = dynamic(() => import('components/input'));
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 const Label = dynamic(() => import('components/label'));
@@ -20,8 +22,8 @@ const Content = dynamic(() => import('components/content'));
 
 const logo = '/images/logo.png';
 
-const ForgotFormSchema = Yup.object().shape({
-  email: Yup.string()
+const ForgotFormSchema = object().shape({
+  email: string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
 });

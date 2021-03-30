@@ -8,9 +8,12 @@ import {
   IconButton,
   Tooltip,
 } from '@chakra-ui/react';
-import Image from 'components/image';
-import Type, { TYPES } from 'components/club-type';
+import { TYPES } from 'components/club-type';
+
 import { rem } from 'styles/theme';
+import dynamic from 'next/dynamic';
+const Image = dynamic(() => import('components/image'));
+const Type = dynamic(() => import('components/club-type'));
 
 export const ACTIVE_STATUS = 'active';
 

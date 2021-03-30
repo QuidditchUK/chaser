@@ -1,21 +1,23 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import * as Yup from 'yup';
+import { object, string, bool, ref } from 'yup';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import { Box, Grid, Flex, Heading, Text, Link, Switch } from '@chakra-ui/react';
-import { Logo } from 'components/logo';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { setCookies } from 'modules/cookies';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
-import Input from 'components/input';
 
+const Logo = dynamic(() => import('components/logo').then(({ Logo }) => Logo));
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
+const Input = dynamic(() => import('components/input'));
 const Label = dynamic(() => import('components/label'));
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
@@ -23,25 +25,23 @@ const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
 const Required = dynamic(() => import('components/required'));
 
-const JoinFormSchema = Yup.object().shape({
-  email: Yup.string()
+const JoinFormSchema = object().shape({
+  email: string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  first_name: Yup.string().required('Please enter the first name you go by'),
-  last_name: Yup.string().required('Please enter the last name you go by'),
-  password: Yup.string()
+  first_name: string().required('Please enter the first name you go by'),
+  last_name: string().required('Please enter the last name you go by'),
+  password: string()
     .min(8, 'Must be at least 8 characters long')
     .required('Required'),
-  confirm: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+  confirm: string()
+    .oneOf([ref('password'), null], 'Passwords must match')
     .required('Required'),
-  is_student: Yup.bool().required(),
-  university: Yup.string().when('is_student', {
+  is_student: bool().required(),
+  university: string().when('is_student', {
     is: true,
-    then: Yup.string().required(
-      'Please enter the university you currently attend'
-    ),
-    otherwise: Yup.string(),
+    then: string().required('Please enter the university you currently attend'),
+    otherwise: string(),
   }),
 });
 

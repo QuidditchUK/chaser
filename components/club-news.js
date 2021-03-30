@@ -1,9 +1,13 @@
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 import { Grid, Flex } from '@chakra-ui/react';
-import Card from 'components/card';
-import Image from 'components/image';
-import { StyledLink } from 'components/latest-news';
+
+const Image = dynamic(() => import('components/image'));
+const Card = dynamic(() => import('components/card'));
+const StyledLink = dynamic(() =>
+  import('components/latest-news').then(({ StyledLink }) => StyledLink)
+);
 
 const MIN_LENGTH = 3;
 

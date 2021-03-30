@@ -1,10 +1,11 @@
 import dynamic from 'next/dynamic';
 import { Box, Flex, Heading } from '@chakra-ui/react';
-import { Logo } from 'components/logo';
+
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 
+const Logo = dynamic(() => import('components/logo').then(({ Logo }) => Logo));
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 

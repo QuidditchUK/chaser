@@ -15,7 +15,6 @@
     "@stripe/stripe-js": "^1.8.0",
     "@svgr/webpack": "^5.4.0",
     "axios": "^0.21.1",
-    "body-scroll-lock": "^3.0.3",
     "cookie": "^0.4.1",
     "date-fns": "2.16.1",
     "flickity": "^2.2.1",
@@ -36,7 +35,6 @@
     "react-intersection-observer": "^8.26.2",
     "react-is": "^17.0.0",
     "react-query": "^3.12.1",
-    "styled-system": "5.1.5",
     "throttle-debounce": "^3.0.0",
     "webpack": "5.12.2",
     "yup": "^0.32.0"
@@ -46,6 +44,7 @@
     "build": "next build",
     "start": "next start",
     "analyze": "cross-env ANALYZE=true yarn build",
+    "analyze:sme": "source-map-explorer '.next/static/chunks/*.js'",
     "svg:format": "find public/images -name '*.svg' -type f -exec svgo --config svgo.json '{}' \\;"
   },
   "browserslist": {
@@ -74,7 +73,8 @@
     "eslint-plugin-react-hooks": "4.2.0",
     "husky": "4.3.8",
     "lint-staged": "10.5.3",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "source-map-explorer": "^2.5.2"
   },
   "ava": {
     "babel": true

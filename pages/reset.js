@@ -1,34 +1,36 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import * as Yup from 'yup';
+import { object, string, ref } from 'yup';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Router, { useRouter } from 'next/router';
 import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
-import { Logo } from 'components/logo';
-import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { setCookies, parseCookies } from 'modules/cookies';
-import Input from 'components/input';
 
 const Meta = dynamic(() => import('components/meta'));
+const Input = dynamic(() => import('components/input'));
 const Container = dynamic(() => import('components/container'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
 const Required = dynamic(() => import('components/required'));
+const Logo = dynamic(() => import('components/logo').then(({ Logo }) => Logo));
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
 
 const logo = '/images/logo.png';
 
-const ResetFormSchema = Yup.object().shape({
-  password: Yup.string()
+const ResetFormSchema = object().shape({
+  password: string()
     .min(8, 'Must be at least 8 characters long')
     .required('Required'),
-  confirm: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+  confirm: string()
+    .oneOf([ref('password'), null], 'Passwords must match')
     .required('Required'),
 });
 

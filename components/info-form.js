@@ -1,32 +1,34 @@
 import { useState, useEffect } from 'react';
-import * as Yup from 'yup';
+import { object, string, bool } from 'yup';
+import dynamic from 'next/dynamic';
 import { Flex, Grid, Switch, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import Input from 'components/input';
-import Label from 'components/label';
-import Button from 'components/button';
-import { InlineError } from 'components/errors';
-import Content from 'components/content';
-import { api } from 'modules/api';
-import Required from 'components/required';
+const Input = dynamic(() => import('components/input'));
+const Label = dynamic(() => import('components/label'));
+const Button = dynamic(() => import('components/button'));
+const Content = dynamic(() => import('components/content'));
+const Required = dynamic(() => import('components/required'));
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
 
-const InfoFormSchema = Yup.object().shape({
-  email: Yup.string()
+import { api } from 'modules/api';
+
+const InfoFormSchema = object().shape({
+  email: string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  first_name: Yup.string().required('Please enter the first name you go by'),
-  last_name: Yup.string().required('Please enter the last name you go by'),
-  is_student: Yup.bool().required(),
-  university: Yup.string().when('is_student', {
+  first_name: string().required('Please enter the first name you go by'),
+  last_name: string().required('Please enter the last name you go by'),
+  is_student: bool().required(),
+  university: string().when('is_student', {
     is: true,
-    then: Yup.string().required(
-      'Please enter the university you currently attend'
-    ),
-    otherwise: Yup.string(),
+    then: string().required('Please enter the university you currently attend'),
+    otherwise: string(),
   }),
 });
 

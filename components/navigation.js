@@ -14,11 +14,11 @@ import NextLink from 'next/link';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 
 import { MAIN_NAVIGATION, DASHBOARD_NAVIGATION } from 'constants/navigation';
-import { Logo } from 'components/logo';
 
 const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';
 
+const Logo = dynamic(() => import('components/logo').then(({ Logo }) => Logo));
 const DesktopNav = dynamic(() => import('components/navigation/desktop'));
 const DesktopCTAs = dynamic(() =>
   import('components/navigation/desktop').then(({ DesktopCTAs }) => DesktopCTAs)
@@ -102,7 +102,6 @@ export default function Navigation({ dashboard = false }) {
             alignItems={{ xl: 'center' }}
           >
             <DesktopNav navigation={navigation} dashboard={dashboard} />
-
             <DesktopCTAs dashboard={dashboard} />
           </Flex>
         </Flex>

@@ -1,36 +1,43 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import dynamic from 'next/dynamic';
 
-import * as Yup from 'yup';
+import { object, string } from 'yup';
 import get from 'just-safe-get';
 import { Grid, Flex, Select, Heading, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/react';
-import Input from 'components/input';
-import Label from 'components/label';
-import Button from 'components/button';
-import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import Container from 'components/container';
-import Required from 'components/required';
-import { InlineError } from 'components/errors';
+
+import { buttonVariants } from 'components/prismic-wrapper';
+
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Input = dynamic(() => import('components/input'));
+const Label = dynamic(() => import('components/label'));
+const Button = dynamic(() => import('components/button'));
+const Container = dynamic(() => import('components/container'));
+const Required = dynamic(() => import('components/required'));
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
+
 import { api } from 'modules/api';
 import { rem } from 'styles/theme';
 
 const NATIONAL_TEAMS = ['UK', 'Scotland', 'Wales'];
 
-const NationalTeamFormSchema = Yup.object().shape({
-  name: Yup.string().required('Please enter your name'),
-  email: Yup.string()
+const NationalTeamFormSchema = object().shape({
+  name: string().required('Please enter your name'),
+  email: string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  club: Yup.string().required('Please enter the club you currently play for'),
-  team: Yup.string()
+  club: string().required('Please enter the club you currently play for'),
+  team: string()
     .nullable()
     .required(
       'Please select what National Team you would like to be considered for'
     ),
-  position: Yup.string().required('Please list the positions you play'),
-  tournament: Yup.string().required(
+  position: string().required('Please list the positions you play'),
+  tournament: string().required(
     'Please enter the next tournament you will be at'
   ),
 });

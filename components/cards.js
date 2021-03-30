@@ -1,12 +1,19 @@
 import { RichText, Link } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import PrismicWrapper, { cardVariants } from 'components/prismic-wrapper';
+import { cardVariants } from 'components/prismic-wrapper';
+import dynamic from 'next/dynamic';
 
 import { Flex, Heading, Box } from '@chakra-ui/react';
-import Card from 'components/card';
-import Image from 'components/image';
-import HorizontalScrollWrapper from 'components/horizontal-scroll-wrapper';
-import { StyledLink } from 'components/latest-news';
+
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Card = dynamic(() => import('components/card'));
+const Image = dynamic(() => import('components/image'));
+const HorizontalScrollWrapper = dynamic(() =>
+  import('components/horizontal-scroll-wrapper')
+);
+const StyledLink = dynamic(() =>
+  import('components/latest-news').then(({ StyledLink }) => StyledLink)
+);
 
 import { linkResolver } from 'modules/prismic';
 

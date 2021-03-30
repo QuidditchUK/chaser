@@ -1,30 +1,35 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import dynamic from 'next/dynamic';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { object, string } from 'yup';
 import get from 'just-safe-get';
 
 import { Grid, Flex, Heading, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
-import Input from 'components/input';
-import Label from 'components/label';
-import Textarea from 'components/textarea';
-import Button from 'components/button';
-import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import Container from 'components/container';
-import Required from 'components/required';
-import { InlineError } from 'components/errors';
+import { buttonVariants } from 'components/prismic-wrapper';
+
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Input = dynamic(() => import('components/input'));
+const Label = dynamic(() => import('components/label'));
+const Textarea = dynamic(() => import('components/textarea'));
+const Button = dynamic(() => import('components/button'));
+const Container = dynamic(() => import('components/container'));
+const Required = dynamic(() => import('components/required'));
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
 
 import { api } from 'modules/api';
 import { rem } from 'styles/theme';
 
-const VolunteerFormSchema = Yup.object().shape({
-  name: Yup.string().required('Please enter your name'),
-  email: Yup.string()
+const VolunteerFormSchema = object().shape({
+  name: string().required('Please enter your name'),
+  email: string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  role: Yup.string().required('Please enter the role you are applying for'),
-  message: Yup.string().required('Required'),
+  role: string().required('Please enter the role you are applying for'),
+  message: string().required('Required'),
 });
 
 const handleVolunteerSubmit = async (

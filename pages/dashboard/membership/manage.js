@@ -3,10 +3,9 @@ import Router from 'next/router';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
 import { parse } from 'date-fns';
-import * as Yup from 'yup';
+import { object, boolean } from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Image from 'components/image';
 
 import { parseCookies, setCookies } from 'modules/cookies';
 import { api } from 'modules/api';
@@ -19,8 +18,11 @@ import {
   Link,
   Checkbox,
 } from '@chakra-ui/react';
-import { InlineError } from 'components/errors';
 
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
+const Image = dynamic(() => import('components/image'));
 const Meta = dynamic(() => import('components/meta'));
 const Content = dynamic(() => import('components/content'));
 const Button = dynamic(() => import('components/button'));
@@ -31,14 +33,14 @@ const ProductCard = dynamic(() => import('components/product-card'));
 const Benefits = (props) => <Content fontSize="md" p={4} {...props} />;
 const List = (props) => <UnorderedList p={0} pl={4} {...props} />;
 
-const MembershipFormSchema = Yup.object({
-  checkboxOne: Yup.boolean()
+const MembershipFormSchema = object({
+  checkboxOne: boolean()
     .oneOf([true], 'You must agree to the Individual Membership Policy')
     .required(),
-  checkboxTwo: Yup.boolean()
+  checkboxTwo: boolean()
     .oneOf([true], 'You must agree to the  QuidditchUK Media Usage Policy')
     .required(),
-  checkboxThree: Yup.boolean()
+  checkboxThree: boolean()
     .oneOf(
       [true],
       'You must agree to the QuidditchUK membership and gameplay policies'

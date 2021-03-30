@@ -1,13 +1,16 @@
+import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 
-import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
+import { buttonVariants } from 'components/prismic-wrapper';
 import { Grid, Flex, Heading, Box } from '@chakra-ui/react';
-import Image from 'components/image';
 
-import Content from 'components/content';
-import ExternalLink from 'components/external-link';
-import Button from 'components/button';
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Image = dynamic(() => import('components/image'));
+const ExternalLink = dynamic(() => import('components/external-link'));
+const Button = dynamic(() => import('components/button'));
+const Content = dynamic(() => import('components/content'));
+
 import { linkResolver } from 'modules/prismic';
 
 const Item = ({ item, isImageLeft }) => (

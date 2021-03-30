@@ -4,8 +4,10 @@ import dynamic from 'next/dynamic';
 import { useInfiniteQuery } from 'react-query';
 import { Flex } from '@chakra-ui/react';
 import { getBlogCategory, PAGE_SIZE, Client } from 'modules/prismic';
-import { LoadMore } from 'pages/news';
 
+const LoadMore = dynamic(() =>
+  import('pages/news').then(({ LoadMore }) => LoadMore)
+);
 const LatestNews = dynamic(() => import('components/latest-news'));
 const NewsHeader = dynamic(() => import('components/news-header'));
 const Meta = dynamic(() => import('components/meta'));

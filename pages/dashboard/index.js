@@ -1,6 +1,5 @@
 import { useState, forwardRef } from 'react';
 import dynamic from 'next/dynamic';
-import { StyledLink } from 'components/latest-news';
 import { useQuery } from 'react-query';
 import Link from 'next/link';
 import { api } from 'modules/api';
@@ -17,6 +16,9 @@ import {
 } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
 
+const StyledLink = dynamic(() =>
+  import('components/latest-news').then(({ StyledLink }) => StyledLink)
+);
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 
