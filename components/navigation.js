@@ -123,6 +123,9 @@ export default function Navigation({
           navigation={navigation}
           dashboard={dashboard}
           closeTopNav={closeTopNav}
+          capeModeIsOpen={capeModeIsOpen}
+          closeCapeMode={closeCapeMode}
+          openCapeMode={openCapeMode}
         />
       </Collapse>
     </Box>

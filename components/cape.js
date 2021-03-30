@@ -1,9 +1,11 @@
 import { Grid } from '@chakra-ui/react';
+import Fonts from 'styles/fonts';
 
 const music = '/media/hedwig.mp3';
 
 export const Cape = () => (
   <>
+    <Fonts />
     <audio autoPlay loop>
       <source src={music} />
     </audio>

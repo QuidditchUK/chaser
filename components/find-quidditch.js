@@ -58,6 +58,7 @@ const FindQuidditch = (rawData) => {
           mt={0}
           textShadow="lg"
           pb="7"
+          id="find_quidditch_label"
         >
           {title}
         </Heading>

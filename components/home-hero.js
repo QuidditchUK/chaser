@@ -65,6 +65,7 @@ const HomeHero = (rawData) => {
           mb={8}
           color="white"
           textShadow="lg"
+          id="home_hero_label" // FOR CAPE MODE
         >
           {title}
         </Heading>

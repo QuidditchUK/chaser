@@ -16,7 +16,14 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { removeCookie } from 'modules/cookies';
 import { ACCOUNT_NAVIGATION } from 'constants/navigation';
 
-const MobileNav = ({ navigation, dashboard, closeTopNav }) => {
+const MobileNav = ({
+  navigation,
+  dashboard,
+  closeTopNav,
+  capeModeIsOpen,
+  closeCapeMode,
+  openCapeMode,
+}) => {
   return (
     <Stack
       position="absolute"
@@ -28,6 +35,35 @@ const MobileNav = ({ navigation, dashboard, closeTopNav }) => {
       height="100vh"
       fontSize="md"
     >
+      <Flex
+        borderBottom="1px solid"
+        borderColor="gray.200"
+        py={1}
+        as={Link}
+        onClick={() => {
+          if (capeModeIsOpen) {
+            closeCapeMode();
+          } else {
+            openCapeMode();
+          }
+
+          closeTopNav();
+        }}
+        justify={'space-between'}
+        align={'center'}
+        _hover={{
+          textDecoration: 'none',
+        }}
+      >
+        <Text
+          my={1}
+          fontWeight={600}
+          color={useColorModeValue('gray.600', 'gray.200')}
+        >
+          {capeModeIsOpen ? 'Normal Mode' : 'Cape Mode'}
+        </Text>
+      </Flex>
+
       {navigation.map((navItem) => (
         <MobileNavItem
           key={navItem.label}

@@ -184,6 +184,7 @@ export const DesktopCTAs = ({
       <Button onClick={capeModeIsOpen ? closeCapeMode : openCapeMode}>
         {capeModeIsOpen ? 'Normal' : 'Cape'} Mode
       </Button>
+      {/* SWITCH BACK 02/04/2021 */}
       {/* <NextLink href="/find-quidditch" passHref>
         <Button
           as="a"
