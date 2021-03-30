@@ -166,7 +166,12 @@ const DesktopSubNav = ({ label, href }) => {
   );
 };
 
-export const DesktopCTAs = ({ dashboard }) => {
+export const DesktopCTAs = ({
+  dashboard,
+  capeModeIsOpen,
+  closeCapeMode,
+  openCapeMode,
+}) => {
   const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
 
   const signOut = () => {
@@ -176,7 +181,10 @@ export const DesktopCTAs = ({ dashboard }) => {
 
   return (
     <Stack direction="row" spacing={3} alignItems="center">
-      <NextLink href="/find-quidditch" passHref>
+      <Button onClick={capeModeIsOpen ? closeCapeMode : openCapeMode}>
+        Cape Mode
+      </Button>
+      {/* <NextLink href="/find-quidditch" passHref>
         <Button
           as="a"
           variant={dashboard ? 'secondary' : 'primary'}
@@ -185,7 +193,7 @@ export const DesktopCTAs = ({ dashboard }) => {
         >
           Find Quidditch
         </Button>
-      </NextLink>
+      </NextLink> */}
 
       {!loggedIn && (
         <NextLink href="/login" passHref>
