@@ -178,7 +178,7 @@ const ManageClub = ({ user, clubs = [] }) => {
                       <Checkbox name="confirm" ref={register} spacing={3}>
                         By checking this box I acknowledge that I have read the
                         above disclaimer and I intend for{' '}
-                        <strong>{selectedClub.name}</strong> to be my
+                        <strong>{selectedClub?.name}</strong> to be my
                         QuidditchUK club for the 2021/2022 Season.
                       </Checkbox>
                     </Label>
@@ -202,12 +202,8 @@ const ManageClub = ({ user, clubs = [] }) => {
               {serverError && <InlineError my={3}>{serverError}</InlineError>}
             </Box>
             {selectedClub && (
-              <Flex flexDirection="column" key={selectedClub.uuid}>
-                <Link
-                  href="/clubs/[club]"
-                  as={`/clubs/${selectedClub.slug}`}
-                  passHref
-                >
+              <Flex flexDirection="column" key={selectedClub?.uuid}>
+                <Link href={`/clubs/${selectedClub?.slug}`} passHref>
                   <StyledLink>
                     <ClubCard
                       backgroundColor={selectedClub.featured_color}
