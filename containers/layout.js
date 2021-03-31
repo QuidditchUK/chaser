@@ -1,12 +1,15 @@
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { Link, Text } from '@chakra-ui/react';
+import { Link, Text, useDisclosure } from '@chakra-ui/react';
 
 const Navigation = dynamic(() => import('components/navigation'));
 const Footer = dynamic(() => import('components/footer'));
 const Alert = dynamic(() => import('components/alert'));
+const Cape = dynamic(() => import('components/cape'));
 
 const Layout = ({ children, preview = false }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const { asPath } = useRouter();
   const dashboard = RegExp(/\/dashboard/, 'g').test(asPath);
 
@@ -30,7 +33,14 @@ const Layout = ({ children, preview = false }) => {
         </Alert>
       )}
 
-      <Navigation dashboard={dashboard} />
+      <Navigation
+        dashboard={dashboard}
+        capeModeIsOpen={isOpen}
+        openCapeMode={onOpen}
+        closeCapeMode={onClose}
+      />
+      {isOpen && <Cape />}
+
       {children}
       <Footer />
     </>

@@ -6,7 +6,7 @@ export const ButtonStyles = {
   baseStyle: {
     borderRadius: 'base',
     cursor: 'pointer',
-    display: 'inline-block',
+    display: 'inline-flex',
     fontFamily: 'body',
     fontWeight: 'normal',
     size: 'sm',
