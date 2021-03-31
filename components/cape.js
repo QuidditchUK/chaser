@@ -1,4 +1,4 @@
-import { Grid } from '@chakra-ui/react';
+import { Grid, Image } from '@chakra-ui/react';
 import Fonts from 'styles/fonts';
 
 const music = '/media/hedwig.mp3';
@@ -18,21 +18,21 @@ export const Cape = () => (
       top="0"
       left="0"
       pt="60px"
-      gridTemplateColumns="200px 1fr 200px"
-      gridTemplateRows="200px 11fr 200px"
+      gridTemplateColumns={{ base: '100px 1fr 100px', md: '200px 1fr 200px' }}
+      gridTemplateRows={{ base: '100px 1fr 100px', md: '200px 1fr 200px' }}
       pointerEvents="none"
     >
-      <img
+      <Image
         src="/media/quidditch.gif"
-        height={200}
-        width={200}
+        height={{ base: 100, md: 200 }}
+        width={{ base: 100, md: 200 }}
         alt="Harry on his broom"
       />
       <div />
-      <img
+      <Image
         src="/media/weasley.gif"
-        height={200}
-        width={200}
+        height={{ base: 100, md: 200 }}
+        width={{ base: 100, md: 200 }}
         alt="Badge for weasley is our king"
       />
 
@@ -40,17 +40,17 @@ export const Cape = () => (
       <div />
       <div />
 
-      <img
+      <Image
         src="/media/jay.gif"
-        height={200}
-        width={200}
+        height={{ base: 100, md: 200 }}
+        width={{ base: 100, md: 200 }}
         alt="A swan, swanning about"
       />
       <div />
-      <img
+      <Image
         src="/media/glasses.gif"
-        height={150}
-        width={150}
+        height={{ base: 75, md: 150 }}
+        width={{ base: 75, md: 150 }}
         alt="A scar and glasses"
       />
     </Grid>
