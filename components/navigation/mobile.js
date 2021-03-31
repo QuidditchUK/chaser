@@ -5,7 +5,6 @@ import {
   Collapse,
   Icon,
   Link,
-  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import Router from 'next/router';
@@ -55,11 +54,7 @@ const MobileNav = ({
           textDecoration: 'none',
         }}
       >
-        <Text
-          my={1}
-          fontWeight={600}
-          color={useColorModeValue('gray.600', 'gray.200')}
-        >
+        <Text my={1} fontWeight={600} color={'gray.600'}>
           {capeModeIsOpen ? 'Normal Mode' : 'Cape Mode'}
         </Text>
       </Flex>
@@ -86,36 +81,54 @@ const MobileNavItem = ({ label, children, closeTopNav, href }) => {
       onClick={children && onToggle}
       borderBottom="1px solid gray.700"
     >
-      <Flex
-        borderBottom="1px solid"
-        borderColor="gray.200"
-        py={1}
-        as={Link}
-        href={href && !children ? href : null}
-        onClick={!children ? closeTopNav : () => {}}
-        justify={'space-between'}
-        align={'center'}
-        _hover={{
-          textDecoration: 'none',
-        }}
-      >
-        <Text
-          my={1}
-          fontWeight={600}
-          color={useColorModeValue('gray.600', 'gray.200')}
+      {children ? (
+        <Flex
+          borderBottom="1px solid"
+          borderColor="gray.200"
+          py={1}
+          as={Link}
+          href={null}
+          onClick={() => {}}
+          justify={'space-between'}
+          align={'center'}
+          _hover={{
+            textDecoration: 'none',
+          }}
         >
-          {label}
-        </Text>
-        {children && (
-          <Icon
-            as={ChevronDownIcon}
-            transition={'all .125s ease-in-out'}
-            transform={isOpen ? 'rotate(180deg)' : ''}
-            w={6}
-            h={6}
-          />
-        )}
-      </Flex>
+          <Text my={1} fontWeight={600} color={'gray.600'}>
+            {label}
+          </Text>
+
+          {children && (
+            <Icon
+              as={ChevronDownIcon}
+              transition={'all .125s ease-in-out'}
+              transform={isOpen ? 'rotate(180deg)' : ''}
+              w={6}
+              h={6}
+            />
+          )}
+        </Flex>
+      ) : (
+        <NextLink href={href} passHref>
+          <Flex
+            borderBottom="1px solid"
+            borderColor="gray.200"
+            py={1}
+            as={Link}
+            onClick={closeTopNav}
+            justify={'space-between'}
+            align={'center'}
+            _hover={{
+              textDecoration: 'none',
+            }}
+          >
+            <Text my={1} fontWeight={600} color={'gray.600'}>
+              {label}
+            </Text>
+          </Flex>
+        </NextLink>
+      )}
 
       <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
         <Stack mt={2} pl={4} align={'start'}>
@@ -178,11 +191,7 @@ const MobileLoggedIn = ({ closeTopNav }) => {
           textDecoration: 'none',
         }}
       >
-        <Text
-          my={1}
-          fontWeight={600}
-          color={useColorModeValue('gray.600', 'gray.200')}
-        >
+        <Text my={1} fontWeight={600} color={'gray.600'}>
           My Account
         </Text>
 
