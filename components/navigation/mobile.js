@@ -48,12 +48,25 @@ const MobileNav = ({
 
           closeTopNav();
         }}
-        justify={'space-between'}
         align={'center'}
         _hover={{
           textDecoration: 'none',
         }}
       >
+        <Text
+          as="span"
+          color="white"
+          textTransform="uppercase"
+          borderRadius="full"
+          bg="qukBlue"
+          py={2}
+          px={3}
+          mr={2}
+          fontSize="xs"
+        >
+          New
+        </Text>
+
         <Text my={1} fontWeight={600} color={'gray.600'}>
           {capeModeIsOpen ? 'Normal Mode' : 'Cape Mode'}
         </Text>

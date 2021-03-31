@@ -181,7 +181,23 @@ export const DesktopCTAs = ({
 
   return (
     <Stack direction="row" spacing={3} alignItems="center">
-      <Button onClick={capeModeIsOpen ? closeCapeMode : openCapeMode}>
+      <Button
+        onClick={capeModeIsOpen ? closeCapeMode : openCapeMode}
+        variant={dashboard ? 'secondary' : 'primary'}
+      >
+        <Text
+          as="span"
+          color="qukBlue"
+          textTransform="uppercase"
+          borderRadius="full"
+          bg="white"
+          py={1}
+          px={2}
+          mr={2}
+          fontSize="0.5rem"
+        >
+          New
+        </Text>
         {capeModeIsOpen ? 'Normal' : 'Cape'} Mode
       </Button>
       {/* SWITCH BACK 02/04/2021 */}
