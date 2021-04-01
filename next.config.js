@@ -23,6 +23,9 @@ const COMMIT_SHA = VERCEL_GITHUB_COMMIT_SHA;
 
 module.exports = withBundleAnalyzer(
   withOffline({
+    future: {
+      webpack5: true,
+    },
     productionBrowserSourceMaps: true,
     target: 'serverless',
     transformManifest: (manifest) => ['/'].concat(manifest), // add the homepage to the cache
