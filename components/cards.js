@@ -77,6 +77,7 @@ const CardsSlice = (rawData) => {
                         <Image
                           src={image.url}
                           alt={image.alt}
+                          layout="responsive"
                           width={640}
                           height={360}
                           borderRadius="0px"
@@ -94,6 +95,7 @@ const CardsSlice = (rawData) => {
                       <Image
                         src={image.url}
                         alt={image.alt}
+                        layout="responsive"
                         width={640}
                         height={360}
                         borderRadius="0px"

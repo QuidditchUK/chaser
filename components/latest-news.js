@@ -101,6 +101,7 @@ const News = ({
                       <Image
                         src={data.image.url}
                         alt={data.image.alt}
+                        layout="responsive"
                         width={640}
                         height={360}
                         borderRadius="0px"

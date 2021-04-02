@@ -53,6 +53,7 @@ const Item = ({ item, isImageLeft }) => (
         <Image
           alt={item?.image?.alt}
           src={item?.image?.url}
+          layout="responsive"
           height={item.image?.dimensions?.height}
           width={item.image?.dimensions?.width}
         />
