@@ -70,7 +70,7 @@ const handleJoinSubmit = async ({ confirm, ...formData }, setServerError) => {
 const Page = () => {
   const [serverError, setServerError] = useState(null);
 
-  const { register, handleSubmit, errors, watch, formState } = useForm({
+  const { register, handleSubmit, watch, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(JoinFormSchema),
     defaultValues: {
@@ -83,6 +83,8 @@ const Page = () => {
       confirm: '',
     },
   });
+
+  const { errors } = formState;
 
   const { isSubmitting } = formState;
 
@@ -134,9 +136,8 @@ const Page = () => {
                 <Label htmlFor="name">Email Address</Label>
 
                 <Input
-                  name="email"
+                  {...register('email')}
                   placeholder="Your email address"
-                  ref={register}
                   my={3}
                   error={errors.email}
                   borderColor={errors.email ? 'alert' : 'greyLight'}
@@ -153,9 +154,8 @@ const Page = () => {
                 </Label>
 
                 <Input
-                  name="first_name"
+                  {...register('first_name')}
                   placeholder="First name"
-                  ref={register}
                   my={3}
                   type="first_name"
                   error={errors.first_name}
@@ -173,9 +173,8 @@ const Page = () => {
                 </Label>
 
                 <Input
-                  name="last_name"
+                  {...register('last_name')}
                   placeholder="Last name"
-                  ref={register}
                   my={3}
                   type="last_name"
                   error={errors.last_name}
@@ -190,8 +189,7 @@ const Page = () => {
                 <Label htmlFor="is_student">
                   Are you a student? <Required />
                   <Switch
-                    name="is_student"
-                    ref={register}
+                    {...register('is_student')}
                     colorScheme="green"
                     ml={3}
                     my={3}
@@ -206,9 +204,8 @@ const Page = () => {
                     </Label>
 
                     <Input
-                      name="university"
+                      {...register('university')}
                       placeholder="Name of your university"
-                      ref={register}
                       my={3}
                       type="university"
                       error={errors.university}
@@ -237,9 +234,8 @@ const Page = () => {
                 </Label>
 
                 <Input
-                  name="password"
+                  {...register('password')}
                   placeholder="Password"
-                  ref={register}
                   my={3}
                   type="password"
                   error={errors.password}
@@ -256,10 +252,9 @@ const Page = () => {
                 </Label>
 
                 <Input
-                  name="confirm"
+                  {...register('confirm')}
                   placeholder="Confirm your password"
                   my={3}
-                  ref={register}
                   type="password"
                   error={errors.confirm}
                   borderColor={errors.confirm ? 'alert' : 'greyLight'}

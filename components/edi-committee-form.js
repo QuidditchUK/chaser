@@ -58,7 +58,7 @@ const EDICommitteeForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, errors, reset, formState } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(EDICommitteeSchema),
     defaultValues: {
@@ -69,6 +69,8 @@ const EDICommitteeForm = (rawData) => {
       message: '',
     },
   });
+
+  const { errors } = formState;
 
   const { isSubmitting } = formState;
 
@@ -105,9 +107,8 @@ const EDICommitteeForm = (rawData) => {
 
             <Input
               id="name"
-              name="name"
+              {...register('name')}
               placeholder="Your name"
-              ref={register}
               my={3}
               error={errors.name}
             />
@@ -121,9 +122,8 @@ const EDICommitteeForm = (rawData) => {
             </Label>
 
             <Input
-              name="email"
+              {...register('email')}
               placeholder="Your email address"
-              ref={register}
               my={3}
               error={errors.email}
             />
@@ -135,9 +135,8 @@ const EDICommitteeForm = (rawData) => {
             <Label htmlFor="club">Club</Label>
 
             <Input
-              name="club"
+              {...register('club')}
               placeholder="The club you currently play for"
-              ref={register}
               my={3}
             />
 
@@ -145,8 +144,7 @@ const EDICommitteeForm = (rawData) => {
               Do you wish to be considered for the EDI Committee Chair?{' '}
               <Required />
               <Switch
-                name="chair"
-                ref={register}
+                {...register('chair')}
                 colorScheme="green"
                 ml={3}
                 my={3}
@@ -160,10 +158,9 @@ const EDICommitteeForm = (rawData) => {
             </Label>
 
             <Textarea
-              name="message"
+              {...register('message')}
               placeholder="Your message"
               my={3}
-              ref={register}
               error={errors.message}
             />
 
