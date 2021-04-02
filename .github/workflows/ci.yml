@@ -39,7 +39,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const resultOne = ${{ steps.lighthouse_audit.outputs.manifest }}[0].summary
+            const result = ${{ steps.lighthouse_audit.outputs.manifest }}[0].summary
             const resultTwo = ${{ steps.lighthouse_audit.outputs.manifest }}[1].summary
             const resultThree = ${{ steps.lighthouse_audit.outputs.manifest }}[2].summary
             const links = ${{ steps.lighthouse_audit.outputs.links }}
