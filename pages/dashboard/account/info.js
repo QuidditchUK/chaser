@@ -5,14 +5,12 @@ import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 
-const Logo = dynamic(() => import('components/logo').then(({ Logo }) => Logo));
+const Logo = dynamic(() => import('components/logo'));
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 
 const InfoForm = dynamic(() => import('components/info-form'));
 const PasswordForm = dynamic(() => import('components/password-form'));
-
-const logo = '/images/logo.png';
 
 const Info = ({ user }) => (
   <>
@@ -23,7 +21,7 @@ const Info = ({ user }) => (
     <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>
       <Container maxWidth={rem(500)}>
         <Flex justifyContent="center" alignItems="center">
-          <Logo src={logo} alt="Quidditch UK" />
+          <Logo />
         </Flex>
         <Heading as="h1" fontFamily="body" textAlign="center">
           Update your Info

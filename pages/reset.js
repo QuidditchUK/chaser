@@ -11,19 +11,18 @@ import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { setCookies, parseCookies } from 'modules/cookies';
 
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+
 const Meta = dynamic(() => import('components/meta'));
-const Input = dynamic(() => import('components/input'));
 const Container = dynamic(() => import('components/container'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
 const Required = dynamic(() => import('components/required'));
-const Logo = dynamic(() => import('components/logo').then(({ Logo }) => Logo));
+const Logo = dynamic(() => import('components/logo'));
 const InlineError = dynamic(() =>
   import('components/errors').then(({ InlineError }) => InlineError)
 );
-
-const logo = '/images/logo.png';
 
 const ResetFormSchema = object().shape({
   password: string()
@@ -80,7 +79,7 @@ const Reset = () => {
       >
         <Container maxWidth={rem(500)}>
           <Flex justifyContent="center" alignItems="center">
-            <Logo src={logo} alt="Quidditch UK" />
+            <Logo />
           </Flex>
           <Heading as="h1" fontFamily="body" textAlign="center">
             Reset Password
