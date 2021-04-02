@@ -88,9 +88,8 @@ const InfoForm = ({ user }) => {
           <Label htmlFor="name">Email Address</Label>
 
           <Input
-            name="email"
+            {...register('email')}
             placeholder="Your email address"
-            ref={register}
             my={3}
             error={errors.email}
           />
@@ -104,9 +103,8 @@ const InfoForm = ({ user }) => {
           </Label>
 
           <Input
-            name="first_name"
+            {...register('first_name')}
             placeholder="First name"
-            ref={register}
             my={3}
             type="first_name"
             error={errors.first_name}
@@ -123,9 +121,8 @@ const InfoForm = ({ user }) => {
           </Label>
 
           <Input
-            name="last_name"
+            {...register('last_name')}
             placeholder="Last name"
-            ref={register}
             my={3}
             type="last_name"
             error={errors.last_name}
@@ -139,8 +136,7 @@ const InfoForm = ({ user }) => {
           <Label htmlFor="is_student">
             Are you a student? <Required />
             <Switch
-              name="is_student"
-              ref={register}
+              {...register('is_student')}
               colorScheme="green"
               ml={3}
               my={3}
@@ -155,9 +151,8 @@ const InfoForm = ({ user }) => {
               </Label>
 
               <Input
-                name="university"
+                {...register('university')}
                 placeholder="Name of your university"
-                ref={register}
                 my={3}
                 type="university"
                 error={errors.university}

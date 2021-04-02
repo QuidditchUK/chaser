@@ -162,9 +162,8 @@ const ManageClub = ({ user, clubs = [] }) => {
 
                     <Select
                       id="club_uuid"
-                      name="club_uuid"
+                      {...register('club_uuid')}
                       as="select"
-                      ref={register}
                       bg="white"
                       color="qukBlue"
                     >
@@ -184,7 +183,7 @@ const ManageClub = ({ user, clubs = [] }) => {
                       </InlineError>
                     )}
                     <Label mt="3">
-                      <Checkbox name="confirm" ref={register} spacing={3}>
+                      <Checkbox {...register('confirm')} spacing={3}>
                         By checking this box I acknowledge that I have read the
                         above disclaimer and I intend for{' '}
                         <strong>{selectedClub?.name}</strong> to be my

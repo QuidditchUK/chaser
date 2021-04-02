@@ -100,9 +100,8 @@ const NationalTeamForm = (rawData) => {
 
             <Input
               id="name"
-              name="name"
+              {...register('name')}
               placeholder="Your name"
-              ref={register}
               my={3}
               error={errors.name}
             />
@@ -116,9 +115,8 @@ const NationalTeamForm = (rawData) => {
             </Label>
 
             <Input
-              name="email"
+              {...register('email')}
               placeholder="Your email address"
-              ref={register}
               my={3}
               error={errors.email}
             />
@@ -132,9 +130,8 @@ const NationalTeamForm = (rawData) => {
             </Label>
 
             <Input
-              name="club"
+              {...register('club')}
               placeholder="The club you currently play for"
-              ref={register}
               my={3}
               error={errors.club}
             />
@@ -149,8 +146,7 @@ const NationalTeamForm = (rawData) => {
 
             <Select
               id="team"
-              name="team"
-              ref={register}
+              {...register('team')}
               marginBottom={3}
               bg="white"
               color="qukBlue"
@@ -174,9 +170,8 @@ const NationalTeamForm = (rawData) => {
             </Label>
 
             <Input
-              name="position"
+              {...register('position')}
               placeholder="List the positions you play"
-              ref={register}
               my={3}
               error={errors.position}
             />
@@ -192,9 +187,8 @@ const NationalTeamForm = (rawData) => {
             </Label>
 
             <Input
-              name="tournament"
+              {...register('tournament')}
               placeholder="Tournament"
-              ref={register}
               my={3}
               error={errors.tournament}
             />

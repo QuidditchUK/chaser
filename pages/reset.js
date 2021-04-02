@@ -93,9 +93,8 @@ const Reset = () => {
               </Label>
 
               <Input
-                name="password"
+                {...register('password')}
                 placeholder="Password"
-                ref={register}
                 my={3}
                 type="password"
                 error={errors.password}
@@ -111,9 +110,8 @@ const Reset = () => {
               </Label>
 
               <Input
-                name="confirm"
+                {...register('confirm')}
                 placeholder="Confirm your new password"
-                ref={register}
                 my={3}
                 type="password"
                 error={errors.confirm}

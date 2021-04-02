@@ -82,9 +82,8 @@ const Forgot = () => {
                   <Label htmlFor="name">Email Address</Label>
 
                   <Input
-                    name="email"
+                    {...register('email')}
                     placeholder="Your email address"
-                    ref={register}
                     my={3}
                     error={errors.email}
                   />

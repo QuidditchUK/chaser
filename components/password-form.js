@@ -90,9 +90,8 @@ const InfoForm = () => {
           </Label>
 
           <Input
-            name="old_password"
+            {...register('old_password')}
             placeholder="Your current password"
-            ref={register}
             my={3}
             type="password"
             error={errors.old_password}
@@ -109,9 +108,8 @@ const InfoForm = () => {
           </Label>
 
           <Input
-            name="password"
+            {...register('password')}
             placeholder="Password"
-            ref={register}
             my={3}
             type="password"
             error={errors.password}
@@ -127,10 +125,9 @@ const InfoForm = () => {
           </Label>
 
           <Input
-            name="confirm"
+            {...register('confirm')}
             placeholder="Confirm your new password"
             my={3}
-            ref={register}
             type="password"
             error={errors.confirm}
           />

@@ -280,8 +280,7 @@ export const Footer = () => {
                 <Flex alignItems="center">
                   <Input
                     placeholder="Enter your postcode"
-                    ref={register}
-                    name="postcode"
+                    {...register('postcode')}
                     aria-label="Find Quidditch"
                     m={0}
                   />

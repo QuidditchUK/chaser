@@ -95,9 +95,8 @@ const VolunteerForm = (rawData) => {
 
             <Input
               id="name"
-              name="name"
+              {...register('name')}
               placeholder="Your name"
-              ref={register}
               my={3}
               error={errors.name}
             />
@@ -111,9 +110,8 @@ const VolunteerForm = (rawData) => {
             </Label>
 
             <Input
-              name="email"
+              {...register('email')}
               placeholder="Your email address"
-              ref={register}
               my={3}
               error={errors.email}
             />
@@ -127,9 +125,8 @@ const VolunteerForm = (rawData) => {
             </Label>
 
             <Input
-              name="role"
+              {...register('role')}
               placeholder="The role you're applying for"
-              ref={register}
               my={3}
               error={errors.role}
             />
@@ -143,10 +140,9 @@ const VolunteerForm = (rawData) => {
             </Label>
 
             <Textarea
-              name="message"
+              {...register('message')}
               placeholder="Your message"
               my={3}
-              ref={register}
               error={errors.message}
             />
 

@@ -88,9 +88,8 @@ const Page = () => {
               <Label htmlFor="name">Email Address</Label>
 
               <Input
-                name="email"
+                {...register('email')}
                 placeholder="Your email address"
-                ref={register}
                 my={3}
                 error={errors.email}
               />
@@ -104,9 +103,8 @@ const Page = () => {
               <Label htmlFor="password">Password</Label>
 
               <Input
-                name="password"
+                {...register('password')}
                 placeholder="Password"
-                ref={register}
                 my={3}
                 type="password"
                 error={errors.password}

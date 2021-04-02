@@ -143,9 +143,8 @@ const YouthCoachForm = () => {
 
               <Input
                 id="name"
-                name="name"
+                {...register('name')}
                 placeholder="Your name"
-                ref={register}
                 my={3}
                 error={errors.name}
               />
@@ -161,9 +160,8 @@ const YouthCoachForm = () => {
               </Label>
 
               <Input
-                name="email"
+                {...register('email')}
                 placeholder="Your email address"
-                ref={register}
                 my={3}
                 error={errors.email}
               />
@@ -180,9 +178,8 @@ const YouthCoachForm = () => {
               </Label>
 
               <Input
-                name="phone"
+                {...register('phone')}
                 placeholder="Your phone number"
-                ref={register}
                 my={3}
                 error={errors.phone}
               />
@@ -198,9 +195,8 @@ const YouthCoachForm = () => {
               </Label>
 
               <Input
-                name="address"
+                {...register('address')}
                 placeholder="Your residential address"
-                ref={register}
                 my={3}
                 error={errors.address}
               />
@@ -214,18 +210,16 @@ const YouthCoachForm = () => {
               <Label htmlFor="club">Your current or closest club</Label>
 
               <Input
-                name="club"
+                {...register('club')}
                 placeholder="Your current or closest club"
-                ref={register}
                 my={3}
               />
 
               <Label htmlFor="years">Number of years playing</Label>
 
               <Input
-                name="years"
+                {...register('years')}
                 placeholder="Number of years playing"
-                ref={register}
                 type="number"
                 my={3}
               />
@@ -239,8 +233,7 @@ const YouthCoachForm = () => {
               <Label htmlFor="dbs">
                 Do you have a valid DBS clearance?
                 <Switch
-                  name="dbs"
-                  ref={register}
+                  {...register('dbs')}
                   colorScheme="green"
                   ml={3}
                   my={3}
@@ -251,8 +244,7 @@ const YouthCoachForm = () => {
               <Label htmlFor="rightToWork">
                 Do you have a right to work in the UK? <Required />
                 <Switch
-                  name="rightToWork"
-                  ref={register}
+                  {...register('rightToWork')}
                   colorScheme="green"
                   ml={3}
                   my={3}
@@ -266,9 +258,8 @@ const YouthCoachForm = () => {
               </Label>
 
               <Input
-                name="region"
+                {...register('region')}
                 placeholder="Regions e.g. Midlands, South London"
-                ref={register}
                 my={3}
                 error={errors.region}
               />
@@ -284,9 +275,8 @@ const YouthCoachForm = () => {
               </Label>
 
               <Input
-                name="availability"
+                {...register('availability')}
                 placeholder="e.g. Monday - Wednesday"
-                ref={register}
                 my={3}
                 error={errors.availability}
               />
@@ -300,10 +290,9 @@ const YouthCoachForm = () => {
               <Label htmlFor="message">Anything else to add?</Label>
 
               <Textarea
-                name="message"
+                {...register('message')}
                 placeholder="Your message"
                 my={3}
-                ref={register}
                 error={errors.message}
               />
             </Grid>

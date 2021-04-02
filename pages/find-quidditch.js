@@ -269,9 +269,8 @@ const FindQuidditch = ({
                   opacity={showLocation ? 0 : 1}
                 >
                   <Input
-                    name="postcode"
+                    {...register('postcode')}
                     placeholder="Postcode"
-                    ref={register}
                     size="8"
                     width={{ base: '200px', md: '300px' }}
                     onBlur={postcodeData ? () => setShowLocation(true) : null}
@@ -325,8 +324,7 @@ const FindQuidditch = ({
                           py={2}
                         >
                           <Checkbox
-                            ref={register}
-                            name="showClubs"
+                            {...register('showClubs')}
                             size="md"
                             w="100%"
                             colorScheme="white"
@@ -344,8 +342,7 @@ const FindQuidditch = ({
                           py={2}
                         >
                           <Checkbox
-                            ref={register}
-                            name="showEvents"
+                            {...register('showEvents')}
                             size="md"
                             w="100%"
                             isDisabled
@@ -375,8 +372,7 @@ const FindQuidditch = ({
                           p={2}
                         >
                           <Checkbox
-                            ref={register}
-                            name="showCommunity"
+                            {...register('showCommunity')}
                             size="md"
                             w="100%"
                             colorScheme="white"
@@ -393,8 +389,7 @@ const FindQuidditch = ({
                           p={2}
                         >
                           <Checkbox
-                            ref={register}
-                            name="showUniversity"
+                            {...register('showUniversity')}
                             size="md"
                             w="100%"
                             colorScheme="white"
@@ -419,7 +414,7 @@ const FindQuidditch = ({
                         <Controller
                           control={control}
                           name="distance"
-                          render={({ onChange }) => (
+                          render={({ field: { onChange } }) => (
                             <Slider
                               defaultValue={100}
                               onChangeEnd={onChange}

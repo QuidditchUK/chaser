@@ -165,11 +165,7 @@ const ManageMembership = ({ products = [] }) => {
                   <form onSubmit={handleSubmit(membershipFormSubmit)}>
                     <Box my="3">
                       <Label>
-                        <Checkbox
-                          type="checkbox"
-                          name="checkboxOne"
-                          ref={register}
-                        >
+                        <Checkbox type="checkbox" {...register('checkboxOne')}>
                           {' '}
                           I acknowledge that I have read, understood, and agree
                           to the{' '}
@@ -193,7 +189,7 @@ const ManageMembership = ({ products = [] }) => {
 
                     <Box my="3">
                       <Label>
-                        <Checkbox name="checkboxTwo" ref={register}>
+                        <Checkbox {...register('checkboxTwo')}>
                           {' '}
                           I acknowledge that I have read, understood, and agree
                           to the{' '}
@@ -217,7 +213,7 @@ const ManageMembership = ({ products = [] }) => {
 
                     <Box my="3">
                       <Label>
-                        <Checkbox name="checkboxThree" ref={register}>
+                        <Checkbox {...register('checkboxThree')}>
                           {' '}
                           I agree to abide by the{' '}
                           <NextLink
