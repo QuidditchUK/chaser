@@ -3,7 +3,7 @@ import get from 'just-safe-get';
 import { cardVariants } from 'components/prismic-wrapper';
 import dynamic from 'next/dynamic';
 
-import { Flex, Heading, Box, useBreakpointValue } from '@chakra-ui/react';
+import { Flex, Heading, Box } from '@chakra-ui/react';
 
 const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
 const Card = dynamic(() => import('components/card'));
@@ -23,9 +23,6 @@ const CardsSlice = (rawData) => {
   const variant = get(rawData, 'primary.variant');
   const items = get(rawData, 'items') || [];
   const horizontalScroll = get(rawData, 'primary.horizontalScroll');
-
-  const imageWidth = useBreakpointValue({ base: 320, md: 640 }) || 320;
-  const imageHeight = useBreakpointValue({ base: 180, md: 360 }) || 180;
 
   return (
     <PrismicWrapper
@@ -80,8 +77,8 @@ const CardsSlice = (rawData) => {
                         <Image
                           src={image.url}
                           alt={image.alt}
-                          width={imageWidth}
-                          height={imageHeight}
+                          width={640}
+                          height={360}
                           borderRadius="0px"
                         />
                       ) : null
@@ -97,8 +94,8 @@ const CardsSlice = (rawData) => {
                       <Image
                         src={image.url}
                         alt={image.alt}
-                        width={imageWidth}
-                        height={imageHeight}
+                        width={640}
+                        height={360}
                         borderRadius="0px"
                       />
                     ) : null

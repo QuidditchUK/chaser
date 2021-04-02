@@ -8,7 +8,6 @@ import {
   Heading,
   Link as ChakraLink,
   Button,
-  useBreakpointValue,
 } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 
@@ -50,8 +49,6 @@ const News = ({
   showAllNewsButton = true,
   tag,
 }) => {
-  const imageWidth = useBreakpointValue({ base: 320, md: 640 }) || 320;
-  const imageHeight = useBreakpointValue({ base: 180, md: 360 }) || 180;
   return (
     <Box bg="greyLight" py={{ base: 6, lg: 10 }} px={{ base: 0, md: 9 }}>
       <Container>
@@ -104,8 +101,8 @@ const News = ({
                       <Image
                         src={data.image.url}
                         alt={data.image.alt}
-                        width={imageWidth}
-                        height={imageHeight}
+                        width={640}
+                        height={360}
                         borderRadius="0px"
                       />
                     }
