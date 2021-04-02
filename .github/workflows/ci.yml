@@ -45,8 +45,8 @@ jobs:
             const links = ${{ steps.lighthouse_audit.outputs.links }}
             const formatResult = (res) => Math.round((res * 100))
             Object.keys(result).forEach(key => result[key] = formatResult(result[key]))
-            Object.keys(resultTwo).forEach(key => result[key] = formatResult(result[key]))
-            Object.keys(resultThree).forEach(key => result[key] = formatResult(result[key]))
+            Object.keys(resultTwo).forEach(key => resultTwo[key] = formatResult(resultTwo[key]))
+            Object.keys(resultThree).forEach(key => resultThree[key] = formatResult(resultThree[key]))
             const score = res => res >= 90 ? '🟢' : res >= 50 ? '🟠' : '🔴'
             const comment = [
                 `⚡️ Lighthouse Reports for the changes in this PR:`,
