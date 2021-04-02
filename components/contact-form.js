@@ -9,20 +9,20 @@ import get from 'just-safe-get';
 import { Grid, Flex, Heading, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 import { buttonVariants } from 'components/prismic-wrapper';
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import Textarea from 'components/textarea'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+
+import { api } from 'modules/api';
+import { rem } from 'styles/theme';
 
 const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
-const Input = dynamic(() => import('components/input'));
 const Label = dynamic(() => import('components/label'));
-const Textarea = dynamic(() => import('components/textarea'));
 const Button = dynamic(() => import('components/button'));
 const Container = dynamic(() => import('components/container'));
 const Required = dynamic(() => import('components/required'));
 const InlineError = dynamic(() =>
   import('components/errors').then(({ InlineError }) => InlineError)
 );
-
-import { api } from 'modules/api';
-import { rem } from 'styles/theme';
 
 const ContactFormSchema = object().shape({
   name: string().required('Please enter your name'),

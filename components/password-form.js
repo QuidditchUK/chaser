@@ -8,7 +8,8 @@ import { CheckIcon } from '@chakra-ui/icons';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-const Input = dynamic(() => import('components/input'));
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+
 const Label = dynamic(() => import('components/label'));
 
 const Button = dynamic(() => import('components/button'));

@@ -9,19 +9,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { setCookies, parseCookies } from 'modules/cookies';
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 const Label = dynamic(() => import('components/label'));
-const Input = dynamic(() => import('components/input'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
-const Logo = dynamic(() => import('components/logo').then(({ Logo }) => Logo));
+const Logo = dynamic(() => import('components/logo'));
 const InlineError = dynamic(() =>
   import('components/errors').then(({ InlineError }) => InlineError)
 );
 
-const logo = '/images/logo.png';
+// const logo = '/images/logo.png';
 
 const LoginFormSchema = object().shape({
   email: string()
@@ -75,7 +75,7 @@ const Page = () => {
       >
         <Container maxWidth={rem(500)}>
           <Flex justifyContent="center" alignItems="center">
-            <Logo src={logo} alt="Quidditch UK" />
+            <Logo />
           </Flex>
           <Heading as="h1" fontFamily="body" textAlign="center">
             Sign in to QuidditchUK
