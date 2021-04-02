@@ -1,16 +1,12 @@
-/* eslint-disable no-param-reassign */
-import getConfig from 'next/config';
 import cookies from 'js-cookie';
 import axios from 'axios';
-
-const { publicRuntimeConfig } = getConfig();
 
 export const api = axios.create();
 
 api.interceptors.request.use((config) => {
   const token = cookies.get('AUTHENTICATION_TOKEN');
 
-  config.baseURL = publicRuntimeConfig.apiUrl;
+  config.baseURL = process.env.NEXT_PUBLIC_API_URL;
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -18,5 +14,3 @@ api.interceptors.request.use((config) => {
 
   return config;
 });
-
-export const createQueryString = (query) => Object.keys(query).map((key) => (Array.isArray(query[key]) ? query[key].map((value) => `${key}=${value}`).join('&') : `${key}=${query[key]}`)).join('&');
