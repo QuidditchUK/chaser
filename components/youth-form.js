@@ -67,7 +67,7 @@ const YouthCoachForm = () => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, errors, reset, formState } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(YouthCoachFormSchema),
     defaultValues: {
@@ -84,6 +84,8 @@ const YouthCoachForm = () => {
       message: '',
     },
   });
+
+  const { errors } = formState;
 
   const { isSubmitting } = formState;
 

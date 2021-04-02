@@ -48,7 +48,7 @@ const handleInfoSubmit = async (values, setServerError, setServerSuccess) => {
 };
 
 const InfoForm = ({ user }) => {
-  const { register, handleSubmit, errors, watch, formState } = useForm({
+  const { register, handleSubmit, watch, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(InfoFormSchema),
     defaultValues: {
@@ -59,6 +59,8 @@ const InfoForm = ({ user }) => {
       university: user.university,
     },
   });
+
+  const { errors } = formState;
 
   const { isSubmitting } = formState;
 

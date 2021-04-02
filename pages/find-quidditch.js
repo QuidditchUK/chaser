@@ -111,7 +111,14 @@ const FindQuidditch = ({
   const [clubs, setClubs] = useState(initialClubs);
   const [distanceIndicator, setDistanceIndicator] = useState(100);
 
-  const { register, handleSubmit, errors, watch, control } = useForm({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+
+    formState: { errors },
+  } = useForm({
     mode: 'onBlur',
     defaultValues: {
       showClubs: showClubs ?? true,

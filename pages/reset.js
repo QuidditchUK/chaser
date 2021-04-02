@@ -39,7 +39,7 @@ const Reset = () => {
   const { query } = useRouter();
   const { token, uuid } = query;
 
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(ResetFormSchema),
     defaultValues: {
@@ -47,6 +47,8 @@ const Reset = () => {
       confirm: '',
     },
   });
+
+  const { errors } = formState;
 
   const { isSubmitting } = formState;
 

@@ -72,7 +72,12 @@ const ManageMembership = ({ products = [] }) => {
     [products]
   );
 
-  const { register, handleSubmit, errors } = useForm({
+  const {
+    register,
+    handleSubmit,
+
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(MembershipFormSchema),
     mode: 'onBlur',
     defaultValues: {

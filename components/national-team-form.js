@@ -65,7 +65,7 @@ const NationalTeamForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, errors, reset, formState } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(NationalTeamFormSchema),
     defaultValues: {
@@ -77,6 +77,8 @@ const NationalTeamForm = (rawData) => {
       tournament: '',
     },
   });
+
+  const { errors } = formState;
 
   const { isSubmitting } = formState;
 

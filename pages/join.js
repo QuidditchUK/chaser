@@ -70,7 +70,7 @@ const logo = '/images/logo.png';
 const Page = () => {
   const [serverError, setServerError] = useState(null);
 
-  const { register, handleSubmit, errors, watch, formState } = useForm({
+  const { register, handleSubmit, watch, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(JoinFormSchema),
     defaultValues: {
@@ -83,6 +83,8 @@ const Page = () => {
       confirm: '',
     },
   });
+
+  const { errors } = formState;
 
   const { isSubmitting } = formState;
 

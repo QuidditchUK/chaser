@@ -51,7 +51,7 @@ const handlePasswordSubmit = async (
 };
 
 const InfoForm = () => {
-  const { register, handleSubmit, errors, reset, formState } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(PasswordFormSchema),
     defaultValues: {
@@ -60,6 +60,8 @@ const InfoForm = () => {
       confirm: '',
     },
   });
+
+  const { errors } = formState;
 
   const { isSubmitting } = formState;
 

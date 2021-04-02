@@ -42,13 +42,15 @@ const Forgot = () => {
   const [serverError, setServerError] = useState(null);
   const [sent, setSent] = useState(false);
 
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(ForgotFormSchema),
     defaultValues: {
       email: '',
     },
   });
+
+  const { errors } = formState;
 
   const { isSubmitting } = formState;
 

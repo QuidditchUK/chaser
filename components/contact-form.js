@@ -55,7 +55,7 @@ const ContactForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, errors, reset, formState } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(ContactFormSchema),
     defaultValues: {
@@ -65,6 +65,8 @@ const ContactForm = (rawData) => {
       message: '',
     },
   });
+
+  const { errors } = formState;
 
   const { isSubmitting } = formState;
 

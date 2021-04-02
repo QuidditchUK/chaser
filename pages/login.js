@@ -49,7 +49,7 @@ const handleLoginSubmit = async (values, setServerError) => {
 const Page = () => {
   const [serverError, setServerError] = useState(null);
 
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(LoginFormSchema),
     defaultValues: {
@@ -57,6 +57,8 @@ const Page = () => {
       password: '',
     },
   });
+
+  const { errors } = formState;
 
   const { isSubmitting } = formState;
 
