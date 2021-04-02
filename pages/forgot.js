@@ -9,18 +9,17 @@ import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 
-const Logo = dynamic(() => import('components/logo').then(({ Logo }) => Logo));
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+
+const Logo = dynamic(() => import('components/logo'));
 const InlineError = dynamic(() =>
   import('components/errors').then(({ InlineError }) => InlineError)
 );
-const Input = dynamic(() => import('components/input'));
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
-
-const logo = '/images/logo.png';
 
 const ForgotFormSchema = object().shape({
   email: string()
@@ -65,7 +64,7 @@ const Forgot = () => {
       >
         <Container maxWidth={rem(500)}>
           <Flex justifyContent="center" alignItems="center">
-            <Logo src={logo} alt="Quidditch UK" />
+            <Logo />
           </Flex>
           <Heading as="h1" fontFamily="body" textAlign="center">
             Forgot Password
