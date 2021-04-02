@@ -30,6 +30,8 @@ jobs:
         with:
           urls: |
             ${{ steps.vercel_preview_url.outputs.vercel_preview_url }}
+            ${{ steps.vercel_preview_url.outputs.vercel_preview_url }}/find-qudditch
+            ${{ steps.vercel_preview_url.outputs.vercel_preview_url }}/news/welcome-to-the-new-quidditchuk-website
           uploadArtifacts: true
           temporaryPublicStorage: true
       - name: Format lighthouse score
