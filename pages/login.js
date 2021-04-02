@@ -49,7 +49,7 @@ const handleLoginSubmit = async (values, setServerError) => {
 const Page = () => {
   const [serverError, setServerError] = useState(null);
 
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, errors, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(LoginFormSchema),
     defaultValues: {
@@ -57,8 +57,6 @@ const Page = () => {
       password: '',
     },
   });
-
-  const { errors } = formState;
 
   const { isSubmitting } = formState;
 
@@ -90,8 +88,9 @@ const Page = () => {
               <Label htmlFor="name">Email Address</Label>
 
               <Input
-                {...register('email')}
+                name="email"
                 placeholder="Your email address"
+                ref={register}
                 my={3}
                 error={errors.email}
               />
@@ -105,8 +104,9 @@ const Page = () => {
               <Label htmlFor="password">Password</Label>
 
               <Input
-                {...register('password')}
+                name="password"
                 placeholder="Password"
+                ref={register}
                 my={3}
                 type="password"
                 error={errors.password}

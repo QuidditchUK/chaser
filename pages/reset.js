@@ -38,7 +38,7 @@ const Reset = () => {
   const { query } = useRouter();
   const { token, uuid } = query;
 
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, errors, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(ResetFormSchema),
     defaultValues: {
@@ -46,8 +46,6 @@ const Reset = () => {
       confirm: '',
     },
   });
-
-  const { errors } = formState;
 
   const { isSubmitting } = formState;
 
@@ -94,8 +92,9 @@ const Reset = () => {
               </Label>
 
               <Input
-                {...register('password')}
+                name="password"
                 placeholder="Password"
+                ref={register}
                 my={3}
                 type="password"
                 error={errors.password}
@@ -111,8 +110,9 @@ const Reset = () => {
               </Label>
 
               <Input
-                {...register('confirm')}
+                name="confirm"
                 placeholder="Confirm your new password"
+                ref={register}
                 my={3}
                 type="password"
                 error={errors.confirm}

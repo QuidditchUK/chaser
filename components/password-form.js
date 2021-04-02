@@ -52,7 +52,7 @@ const handlePasswordSubmit = async (
 };
 
 const InfoForm = () => {
-  const { register, handleSubmit, reset, formState } = useForm({
+  const { register, handleSubmit, errors, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(PasswordFormSchema),
     defaultValues: {
@@ -61,8 +61,6 @@ const InfoForm = () => {
       confirm: '',
     },
   });
-
-  const { errors } = formState;
 
   const { isSubmitting } = formState;
 
@@ -93,8 +91,9 @@ const InfoForm = () => {
           </Label>
 
           <Input
-            {...register('old_password')}
+            name="old_password"
             placeholder="Your current password"
+            ref={register}
             my={3}
             type="password"
             error={errors.old_password}
@@ -111,8 +110,9 @@ const InfoForm = () => {
           </Label>
 
           <Input
-            {...register('password')}
+            name="password"
             placeholder="Password"
+            ref={register}
             my={3}
             type="password"
             error={errors.password}
@@ -128,9 +128,10 @@ const InfoForm = () => {
           </Label>
 
           <Input
-            {...register('confirm')}
+            name="confirm"
             placeholder="Confirm your new password"
             my={3}
+            ref={register}
             type="password"
             error={errors.confirm}
           />

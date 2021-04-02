@@ -65,7 +65,7 @@ const NationalTeamForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, reset, formState } = useForm({
+  const { register, handleSubmit, errors, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(NationalTeamFormSchema),
     defaultValues: {
@@ -77,8 +77,6 @@ const NationalTeamForm = (rawData) => {
       tournament: '',
     },
   });
-
-  const { errors } = formState;
 
   const { isSubmitting } = formState;
 
@@ -102,8 +100,9 @@ const NationalTeamForm = (rawData) => {
 
             <Input
               id="name"
-              {...register('name')}
+              name="name"
               placeholder="Your name"
+              ref={register}
               my={3}
               error={errors.name}
             />
@@ -117,8 +116,9 @@ const NationalTeamForm = (rawData) => {
             </Label>
 
             <Input
-              {...register('email')}
+              name="email"
               placeholder="Your email address"
+              ref={register}
               my={3}
               error={errors.email}
             />
@@ -132,8 +132,9 @@ const NationalTeamForm = (rawData) => {
             </Label>
 
             <Input
-              {...register('club')}
+              name="club"
               placeholder="The club you currently play for"
+              ref={register}
               my={3}
               error={errors.club}
             />
@@ -148,7 +149,8 @@ const NationalTeamForm = (rawData) => {
 
             <Select
               id="team"
-              {...register('team')}
+              name="team"
+              ref={register}
               marginBottom={3}
               bg="white"
               color="qukBlue"
@@ -172,8 +174,9 @@ const NationalTeamForm = (rawData) => {
             </Label>
 
             <Input
-              {...register('position')}
+              name="position"
               placeholder="List the positions you play"
+              ref={register}
               my={3}
               error={errors.position}
             />
@@ -189,8 +192,9 @@ const NationalTeamForm = (rawData) => {
             </Label>
 
             <Input
-              {...register('tournament')}
+              name="tournament"
               placeholder="Tournament"
+              ref={register}
               my={3}
               error={errors.tournament}
             />

@@ -69,8 +69,9 @@ const FindQuidditch = (rawData) => {
         >
           <Flex flexDirection="row">
             <Input
+              ref={register}
               placeholder="Enter your postcode"
-              {...register('postcode')}
+              name="postcode"
             />
             <Button type="submit" variant={variant} ml={2}>
               Find Quidditch
