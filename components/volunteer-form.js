@@ -55,7 +55,7 @@ const VolunteerForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, reset, formState } = useForm({
+  const { register, handleSubmit, errors, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(VolunteerFormSchema),
     defaultValues: {
@@ -65,8 +65,6 @@ const VolunteerForm = (rawData) => {
       message: '',
     },
   });
-
-  const { errors } = formState;
 
   const { isSubmitting } = formState;
 
@@ -97,8 +95,9 @@ const VolunteerForm = (rawData) => {
 
             <Input
               id="name"
-              {...register('name')}
+              name="name"
               placeholder="Your name"
+              ref={register}
               my={3}
               error={errors.name}
             />
@@ -112,8 +111,9 @@ const VolunteerForm = (rawData) => {
             </Label>
 
             <Input
-              {...register('email')}
+              name="email"
               placeholder="Your email address"
+              ref={register}
               my={3}
               error={errors.email}
             />
@@ -127,8 +127,9 @@ const VolunteerForm = (rawData) => {
             </Label>
 
             <Input
-              {...register('role')}
+              name="role"
               placeholder="The role you're applying for"
+              ref={register}
               my={3}
               error={errors.role}
             />
@@ -142,9 +143,10 @@ const VolunteerForm = (rawData) => {
             </Label>
 
             <Textarea
-              {...register('message')}
+              name="message"
               placeholder="Your message"
               my={3}
+              ref={register}
               error={errors.message}
             />
 

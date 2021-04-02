@@ -55,7 +55,7 @@ const ContactForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, reset, formState } = useForm({
+  const { register, handleSubmit, errors, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(ContactFormSchema),
     defaultValues: {
@@ -65,8 +65,6 @@ const ContactForm = (rawData) => {
       message: '',
     },
   });
-
-  const { errors } = formState;
 
   const { isSubmitting } = formState;
 
@@ -90,8 +88,9 @@ const ContactForm = (rawData) => {
 
             <Input
               id="name"
-              {...register('name')}
+              name="name"
               placeholder="Your name"
+              ref={register}
               my={3}
               error={errors.name}
             />
@@ -105,8 +104,9 @@ const ContactForm = (rawData) => {
             </Label>
 
             <Input
-              {...register('email')}
+              name="email"
               placeholder="Your email address"
+              ref={register}
               my={3}
               error={errors.email}
             />
@@ -117,16 +117,17 @@ const ContactForm = (rawData) => {
 
             <Label htmlFor="subject">Subject</Label>
 
-            <Input {...register('subject')} placeholder="Subject" my={3} />
+            <Input name="subject" placeholder="Subject" ref={register} my={3} />
 
             <Label htmlFor="message">
               Your message <Required />
             </Label>
 
             <Textarea
-              {...register('message')}
+              name="message"
               placeholder="Your message"
               my={3}
+              ref={register}
               error={errors.message}
             />
 

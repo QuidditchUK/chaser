@@ -76,7 +76,7 @@ const HomeHero = (rawData) => {
           )}
         >
           <Flex flexDirection="row">
-            <Input {...register('postcode')} placeholder="Postcode" />
+            <Input ref={register} name="postcode" placeholder="Postcode" />
             <Button type="submit" variant="primary" ml={2}>
               {cta_text}
             </Button>

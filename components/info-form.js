@@ -49,7 +49,7 @@ const handleInfoSubmit = async (values, setServerError, setServerSuccess) => {
 };
 
 const InfoForm = ({ user }) => {
-  const { register, handleSubmit, watch, formState } = useForm({
+  const { register, handleSubmit, errors, watch, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(InfoFormSchema),
     defaultValues: {
@@ -60,8 +60,6 @@ const InfoForm = ({ user }) => {
       university: user.university,
     },
   });
-
-  const { errors } = formState;
 
   const { isSubmitting } = formState;
 
@@ -91,8 +89,9 @@ const InfoForm = ({ user }) => {
           <Label htmlFor="name">Email Address</Label>
 
           <Input
-            {...register('email')}
+            name="email"
             placeholder="Your email address"
+            ref={register}
             my={3}
             error={errors.email}
           />
@@ -106,8 +105,9 @@ const InfoForm = ({ user }) => {
           </Label>
 
           <Input
-            {...register('first_name')}
+            name="first_name"
             placeholder="First name"
+            ref={register}
             my={3}
             type="first_name"
             error={errors.first_name}
@@ -124,8 +124,9 @@ const InfoForm = ({ user }) => {
           </Label>
 
           <Input
-            {...register('last_name')}
+            name="last_name"
             placeholder="Last name"
+            ref={register}
             my={3}
             type="last_name"
             error={errors.last_name}
@@ -139,7 +140,8 @@ const InfoForm = ({ user }) => {
           <Label htmlFor="is_student">
             Are you a student? <Required />
             <Switch
-              {...register('is_student')}
+              name="is_student"
+              ref={register}
               colorScheme="green"
               ml={3}
               my={3}
@@ -154,8 +156,9 @@ const InfoForm = ({ user }) => {
               </Label>
 
               <Input
-                {...register('university')}
+                name="university"
                 placeholder="Name of your university"
+                ref={register}
                 my={3}
                 type="university"
                 error={errors.university}
