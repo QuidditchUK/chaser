@@ -10,11 +10,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - name: yarn install, build
+      - name: npm install, build
         run: |
-          yarn install
-          yarn run build
+          npm install
+          npm run build
       - name: run Lighthouse CI
         run: |
-          yarn global add @lhci/cli@0.7.x
-          lhci autorun 
+          npm install -g @lhci/cli@0.7.x
+          lhci autorun
