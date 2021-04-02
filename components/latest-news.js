@@ -64,7 +64,7 @@ const News = ({
         >
           <Heading
             as="h2"
-            fontSize="3xl"
+            fontSize="2xl"
             px={{ base: 8, md: 0 }}
             color="qukBlue"
             fontFamily="body"
