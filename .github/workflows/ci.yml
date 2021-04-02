@@ -49,16 +49,14 @@ jobs:
             Object.keys(resultThree).forEach(key => resultThree[key] = formatResult(resultThree[key]))
             const score = res => res >= 90 ? '🟢' : res >= 50 ? '🟠' : '🔴'
             const comment = [
-                `⚡️ Lighthouse Reports for the changes in this PR:`,
-                '| Category | Homepage Score / Find Quidditch Score / News Article Score |',
+                `⚡️[Lighthouse Report](${Object.values(links)[0]}) for the changes in this PR:`,
+                '| Category | Run 1 / Run 2 / Run 3 |',
                 '| --- | --- |',
                 `| ${score(result.performance)} Performance | ${result.performance} / ${resultTwo.performance} / ${resultThree.performance} |`,
                 `| ${score(result.accessibility)} Accessibility | ${result.accessibility} / ${resultTwo.accessibility} / ${resultThree.accessibility} |`,
                 `| ${score(result['best-practices'])} Best practices | ${result['best-practices']} / ${resultTwo['best-practices']} / ${resultThree['best-practices']} |`,
                 `| ${score(result.seo)} SEO | ${result.seo} / ${resultTwo.seo} / ${resultThree.seo} |`,
                 `| ${score(result.pwa)} PWA | ${result.pwa} / ${resultTwo.pwa} / ${resultThree.pwa} |`,
-                ' ',
-                `[Homepage Report](${Object.values(links)[0]}) | [Find Quidditch Report](${Object.values(links)[1]}) | [News Article Report](${Object.values(links)[2]})`,
                 ' ',
                 `*Lighthouse ran on [${Object.keys(links)[0]}](${Object.keys(links)[0]})*`
             ].join('\n')
