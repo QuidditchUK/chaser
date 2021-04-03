@@ -1,5 +1,4 @@
-import styled from '@emotion/styled';
-import { format } from 'date-fns';
+import format from 'date-fns/format';
 import dynamic from 'next/dynamic';
 import { parseTimestamptz } from 'modules/dates';
 import { Box, Flex, Grid, Heading } from '@chakra-ui/react';
@@ -7,6 +6,7 @@ import { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 
 const Type = dynamic(() => import('components/club-type'));
+const Image = dynamic(() => import('components/image'));
 
 const StyledCard = (props) => (
   <Grid
@@ -22,28 +22,26 @@ const StyledCard = (props) => (
   />
 );
 
-const IconContainer = styled.div`
-  padding: ${({ theme }) => theme.space[4]};
-`;
+const IconContainer = (props) => <Box p={4} {...props} />;
 
-const Icon = styled.img`
-  border-radius: 50%;
-  height: 75px;
-  width: 75px;
-`;
+const Icon = (props) => (
+  <Image borderRadius="full" height={75} width={75} {...props} />
+);
 
-const Content = styled.div`
-  padding: ${({ theme }) => theme.space[5]} ${({ theme }) => theme.space[4]};
-
-  a {
-    text-decoration: none;
-    color: ${({ theme }) => theme.colors.black};
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
+const Content = (props) => (
+  <Box
+    py={5}
+    px={4}
+    sx={{
+      a: {
+        textDecoration: 'none',
+        color: 'black',
+        _hover: { textDecoration: 'underline' },
+      },
+    }}
+    {...props}
+  />
+);
 
 const EventCard = ({
   image,

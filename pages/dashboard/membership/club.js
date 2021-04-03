@@ -3,7 +3,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { parse } from 'date-fns';
+import parse from 'date-fns/parse';
 import Router from 'next/router';
 import { object, string, bool } from 'yup';
 

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import Router from 'next/router';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
-import { parse } from 'date-fns';
+import parse from 'date-fns/parse';
 import { object, boolean } from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
