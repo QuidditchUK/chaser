@@ -491,8 +491,9 @@ const FindQuidditch = ({
                               <Image
                                 src={club.data.images?.[0].image.url}
                                 alt={club.club_name}
-                                width={1600}
-                                height={900}
+                                layout="responsive"
+                                width={640}
+                                height={360}
                                 borderRadius="0px"
                               />
                             ) : null

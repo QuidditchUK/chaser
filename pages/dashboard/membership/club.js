@@ -227,8 +227,9 @@ const ManageClub = ({ user, clubs = [] }) => {
                           <Image
                             src={selectedClub?.images[0]}
                             alt={selectedClub?.name}
-                            width={1600}
-                            height={900}
+                            layout="responsive"
+                            width={640}
+                            height={360}
                             borderRadius="0px"
                           />
                         ) : null

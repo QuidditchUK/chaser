@@ -247,8 +247,9 @@ const Dashboard = ({ user }) => {
                           <Image
                             src={club.images[0]}
                             alt={club.name}
-                            width={1600}
-                            height={900}
+                            layout="responsive"
+                            width={640}
+                            height={360}
                             borderRadius="0px"
                           />
                         ) : null
