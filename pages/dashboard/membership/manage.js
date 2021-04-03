@@ -72,12 +72,7 @@ const ManageMembership = ({ products = [] }) => {
     [products]
   );
 
-  const {
-    register,
-    handleSubmit,
-
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(MembershipFormSchema),
     mode: 'onBlur',
     defaultValues: {
@@ -170,7 +165,11 @@ const ManageMembership = ({ products = [] }) => {
                   <form onSubmit={handleSubmit(membershipFormSubmit)}>
                     <Box my="3">
                       <Label>
-                        <Checkbox type="checkbox" {...register('checkboxOne')}>
+                        <Checkbox
+                          type="checkbox"
+                          name="checkboxOne"
+                          ref={register}
+                        >
                           {' '}
                           I acknowledge that I have read, understood, and agree
                           to the{' '}
@@ -194,7 +193,7 @@ const ManageMembership = ({ products = [] }) => {
 
                     <Box my="3">
                       <Label>
-                        <Checkbox {...register('checkboxTwo')}>
+                        <Checkbox name="checkboxTwo" ref={register}>
                           {' '}
                           I acknowledge that I have read, understood, and agree
                           to the{' '}
@@ -218,7 +217,7 @@ const ManageMembership = ({ products = [] }) => {
 
                     <Box my="3">
                       <Label>
-                        <Checkbox {...register('checkboxThree')}>
+                        <Checkbox name="checkboxThree" ref={register}>
                           {' '}
                           I agree to abide by the{' '}
                           <NextLink

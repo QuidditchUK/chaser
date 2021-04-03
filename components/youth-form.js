@@ -67,7 +67,7 @@ const YouthCoachForm = () => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, reset, formState } = useForm({
+  const { register, handleSubmit, errors, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(YouthCoachFormSchema),
     defaultValues: {
@@ -84,8 +84,6 @@ const YouthCoachForm = () => {
       message: '',
     },
   });
-
-  const { errors } = formState;
 
   const { isSubmitting } = formState;
 
@@ -145,8 +143,9 @@ const YouthCoachForm = () => {
 
               <Input
                 id="name"
-                {...register('name')}
+                name="name"
                 placeholder="Your name"
+                ref={register}
                 my={3}
                 error={errors.name}
               />
@@ -162,8 +161,9 @@ const YouthCoachForm = () => {
               </Label>
 
               <Input
-                {...register('email')}
+                name="email"
                 placeholder="Your email address"
+                ref={register}
                 my={3}
                 error={errors.email}
               />
@@ -180,8 +180,9 @@ const YouthCoachForm = () => {
               </Label>
 
               <Input
-                {...register('phone')}
+                name="phone"
                 placeholder="Your phone number"
+                ref={register}
                 my={3}
                 error={errors.phone}
               />
@@ -197,8 +198,9 @@ const YouthCoachForm = () => {
               </Label>
 
               <Input
-                {...register('address')}
+                name="address"
                 placeholder="Your residential address"
+                ref={register}
                 my={3}
                 error={errors.address}
               />
@@ -212,16 +214,18 @@ const YouthCoachForm = () => {
               <Label htmlFor="club">Your current or closest club</Label>
 
               <Input
-                {...register('club')}
+                name="club"
                 placeholder="Your current or closest club"
+                ref={register}
                 my={3}
               />
 
               <Label htmlFor="years">Number of years playing</Label>
 
               <Input
-                {...register('years')}
+                name="years"
                 placeholder="Number of years playing"
+                ref={register}
                 type="number"
                 my={3}
               />
@@ -235,7 +239,8 @@ const YouthCoachForm = () => {
               <Label htmlFor="dbs">
                 Do you have a valid DBS clearance?
                 <Switch
-                  {...register('dbs')}
+                  name="dbs"
+                  ref={register}
                   colorScheme="green"
                   ml={3}
                   my={3}
@@ -246,7 +251,8 @@ const YouthCoachForm = () => {
               <Label htmlFor="rightToWork">
                 Do you have a right to work in the UK? <Required />
                 <Switch
-                  {...register('rightToWork')}
+                  name="rightToWork"
+                  ref={register}
                   colorScheme="green"
                   ml={3}
                   my={3}
@@ -260,8 +266,9 @@ const YouthCoachForm = () => {
               </Label>
 
               <Input
-                {...register('region')}
+                name="region"
                 placeholder="Regions e.g. Midlands, South London"
+                ref={register}
                 my={3}
                 error={errors.region}
               />
@@ -277,8 +284,9 @@ const YouthCoachForm = () => {
               </Label>
 
               <Input
-                {...register('availability')}
+                name="availability"
                 placeholder="e.g. Monday - Wednesday"
+                ref={register}
                 my={3}
                 error={errors.availability}
               />
@@ -292,9 +300,10 @@ const YouthCoachForm = () => {
               <Label htmlFor="message">Anything else to add?</Label>
 
               <Textarea
-                {...register('message')}
+                name="message"
                 placeholder="Your message"
                 my={3}
+                ref={register}
                 error={errors.message}
               />
             </Grid>

@@ -111,14 +111,7 @@ const FindQuidditch = ({
   const [clubs, setClubs] = useState(initialClubs);
   const [distanceIndicator, setDistanceIndicator] = useState(100);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    control,
-
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, errors, watch, control } = useForm({
     mode: 'onBlur',
     defaultValues: {
       showClubs: showClubs ?? true,
@@ -276,8 +269,9 @@ const FindQuidditch = ({
                   opacity={showLocation ? 0 : 1}
                 >
                   <Input
-                    {...register('postcode')}
+                    name="postcode"
                     placeholder="Postcode"
+                    ref={register}
                     size="8"
                     width={{ base: '200px', md: '300px' }}
                     onBlur={postcodeData ? () => setShowLocation(true) : null}
@@ -331,7 +325,8 @@ const FindQuidditch = ({
                           py={2}
                         >
                           <Checkbox
-                            {...register('showClubs')}
+                            ref={register}
+                            name="showClubs"
                             size="md"
                             w="100%"
                             colorScheme="white"
@@ -349,7 +344,8 @@ const FindQuidditch = ({
                           py={2}
                         >
                           <Checkbox
-                            {...register('showEvents')}
+                            ref={register}
+                            name="showEvents"
                             size="md"
                             w="100%"
                             isDisabled
@@ -379,7 +375,8 @@ const FindQuidditch = ({
                           p={2}
                         >
                           <Checkbox
-                            {...register('showCommunity')}
+                            ref={register}
+                            name="showCommunity"
                             size="md"
                             w="100%"
                             colorScheme="white"
@@ -396,7 +393,8 @@ const FindQuidditch = ({
                           p={2}
                         >
                           <Checkbox
-                            {...register('showUniversity')}
+                            ref={register}
+                            name="showUniversity"
                             size="md"
                             w="100%"
                             colorScheme="white"
@@ -421,7 +419,7 @@ const FindQuidditch = ({
                         <Controller
                           control={control}
                           name="distance"
-                          render={({ field: { onChange } }) => (
+                          render={({ onChange }) => (
                             <Slider
                               defaultValue={100}
                               onChangeEnd={onChange}
