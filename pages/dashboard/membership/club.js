@@ -66,7 +66,7 @@ const handleClubSubmit = async ({ club_uuid }, setServerError) => {
 
 const ManageClub = ({ user, clubs = [] }) => {
   const [selectedClub, setSelectedClub] = useState(
-    clubs.find(({ uuid }) => uuid === user.club_uuid)
+    clubs.find(({ uuid }) => uuid === user?.club_uuid)
   );
   const [serverError, setServerError] = useState(null);
 
@@ -84,7 +84,7 @@ const ManageClub = ({ user, clubs = [] }) => {
   const currentSelectedClubUuid = watch('club_uuid', user.club_uuid);
 
   useEffect(() => {
-    if (selectedClub.uuid !== currentSelectedClubUuid) {
+    if (selectedClub?.uuid !== currentSelectedClubUuid) {
       setSelectedClub(
         clubs.find(({ uuid }) => uuid === currentSelectedClubUuid)
       );
@@ -216,18 +216,18 @@ const ManageClub = ({ user, clubs = [] }) => {
                 <Link href={`/clubs/${selectedClub?.slug}`} passHref>
                   <StyledLink>
                     <ClubCard
-                      backgroundColor={selectedClub.featured_color}
-                      color={selectedClub.text_color}
-                      name={selectedClub.name}
-                      league={selectedClub.league}
-                      venue={selectedClub.venue}
-                      icon={selectedClub.icon}
-                      status={selectedClub.status}
+                      backgroundColor={selectedClub?.featured_color}
+                      color={selectedClub?.text_color}
+                      name={selectedClub?.name}
+                      league={selectedClub?.league}
+                      venue={selectedClub?.venue}
+                      icon={selectedClub?.icon}
+                      status={selectedClub?.status}
                       image={
-                        selectedClub.images ? (
+                        selectedClub?.images ? (
                           <Image
-                            src={selectedClub.images[0]}
-                            alt={selectedClub.name}
+                            src={selectedClub?.images[0]}
+                            alt={selectedClub?.name}
                             width={1600}
                             height={900}
                             borderRadius="0px"
