@@ -1,7 +1,8 @@
 import { useStyleConfig } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
 import { Box } from '@chakra-ui/react';
-import Container from 'components/container';
 import { rem } from 'styles/theme';
+const Container = dynamic(() => import('components/container'));
 
 export const PrismicStyles = {
   variants: {
@@ -53,6 +54,14 @@ export const buttonVariants = {
   secondary: 'white',
   white: 'primary',
   dark: 'secondary',
+};
+
+export const cardVariants = {
+  light: 'white',
+  primary: 'white',
+  secondary: 'white',
+  white: 'primary',
+  dark: 'white',
 };
 
 export default function PrismicWrapper({

@@ -1,5 +1,6 @@
 import { Flex } from '@chakra-ui/react';
-import Container from 'components/container';
+import dynamic from 'next/dynamic';
+const Container = dynamic(() => import('components/container'));
 
 export default function Alert({ children }) {
   return (

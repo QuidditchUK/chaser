@@ -1,10 +1,14 @@
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 import { Flex, Heading } from '@chakra-ui/react';
-import Content from 'components/content';
-import Button from 'components/button';
-import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import ExternalLink from 'components/external-link';
+import dynamic from 'next/dynamic';
+
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Button = dynamic(() => import('components/button'));
+const Content = dynamic(() => import('components/content'));
+const ExternalLink = dynamic(() => import('components/external-link'));
+
+import { buttonVariants } from 'components/prismic-wrapper';
 import { linkResolver } from 'modules/prismic';
 
 const HeaderAndParagraph = (rawData) => {

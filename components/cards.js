@@ -1,12 +1,19 @@
 import { RichText, Link } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import PrismicWrapper from 'components/prismic-wrapper';
+import { cardVariants } from 'components/prismic-wrapper';
+import dynamic from 'next/dynamic';
 
 import { Flex, Heading, Box } from '@chakra-ui/react';
-import Card from 'components/card';
-import Image from 'components/image';
-import HorizontalScrollWrapper from 'components/horizontal-scroll-wrapper';
-import { StyledLink } from 'components/latest-news';
+
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Card = dynamic(() => import('components/card'));
+const Image = dynamic(() => import('components/image'));
+const HorizontalScrollWrapper = dynamic(() =>
+  import('components/horizontal-scroll-wrapper')
+);
+const StyledLink = dynamic(() =>
+  import('components/latest-news').then(({ StyledLink }) => StyledLink)
+);
 
 import { linkResolver } from 'modules/prismic';
 
@@ -64,13 +71,15 @@ const CardsSlice = (rawData) => {
                   <Card
                     name={title}
                     content={content}
+                    variant={cardVariants[variant]}
                     image={
                       image.url ? (
                         <Image
                           src={image.url}
                           alt={image.alt}
-                          width={1600}
-                          height={900}
+                          layout="responsive"
+                          width={640}
+                          height={360}
                           borderRadius="0px"
                         />
                       ) : null
@@ -86,8 +95,9 @@ const CardsSlice = (rawData) => {
                       <Image
                         src={image.url}
                         alt={image.alt}
-                        width={1600}
-                        height={900}
+                        layout="responsive"
+                        width={640}
+                        height={360}
                         borderRadius="0px"
                       />
                     ) : null

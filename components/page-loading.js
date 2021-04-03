@@ -1,5 +1,7 @@
-import Container from 'components/container';
 import { Flex, Heading } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
+
+const Container = dynamic(() => import('components/container'));
 
 export default function PageLoading() {
   return (

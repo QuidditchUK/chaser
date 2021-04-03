@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import * as Yup from 'yup';
+import { object, string, bool } from 'yup';
+import dynamic from 'next/dynamic';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,24 +8,31 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import get from 'just-safe-get';
 import { Grid, Flex, Heading, Switch, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
-import Input from 'components/input';
-import Label from 'components/label';
-import Textarea from 'components/textarea';
-import Button from 'components/button';
-import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import Container from 'components/container';
-import Content from 'components/content';
-import Required from 'components/required';
-import { InlineError } from 'components/errors';
+
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import Textarea from 'components/textarea'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+
+import { buttonVariants } from 'components/prismic-wrapper';
+
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Label = dynamic(() => import('components/label'));
+const Button = dynamic(() => import('components/button'));
+const Container = dynamic(() => import('components/container'));
+const Content = dynamic(() => import('components/content'));
+const Required = dynamic(() => import('components/required'));
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
+
 import { api } from 'modules/api';
 import { rem } from 'styles/theme';
 
-const EDICommitteeSchema = Yup.object().shape({
-  name: Yup.string().required('Please enter your name'),
-  email: Yup.string()
+const EDICommitteeSchema = object().shape({
+  name: string().required('Please enter your name'),
+  email: string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  chair: Yup.bool().required(),
+  chair: bool().required(),
 });
 
 const handleCommitteeSubmit = async (

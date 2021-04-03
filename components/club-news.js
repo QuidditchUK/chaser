@@ -1,9 +1,13 @@
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 import { Grid, Flex } from '@chakra-ui/react';
-import Card from 'components/card';
-import Image from 'components/image';
-import { StyledLink } from 'components/latest-news';
+
+const Image = dynamic(() => import('components/image'));
+const Card = dynamic(() => import('components/card'));
+const StyledLink = dynamic(() =>
+  import('components/latest-news').then(({ StyledLink }) => StyledLink)
+);
 
 const MIN_LENGTH = 3;
 
@@ -28,16 +32,27 @@ export const ClubNews = ({ posts, bgColor, color }) => {
           <Link href="/news/[id]" as={`/news/${uid}`} passHref>
             <StyledLink>
               <Card
-                color={color}
-                bg={bgColor}
+                sx={{
+                  bg: bgColor,
+                  color,
+                  borderRadius: 'lg',
+                  overflow: 'hidden',
+                  transition: 'box-shadow 0.125s',
+                  boxShadow: 'none',
+                  height: '100%',
+                  _hover: {
+                    boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+                  },
+                }}
                 name={data.title}
                 category={data.category}
                 image={
                   <Image
                     src={data.image.url}
                     alt={data.image.alt}
-                    width={1600}
-                    height={900}
+                    layout="responsive"
+                    width={640}
+                    height={360}
                     borderRadius="0px"
                   />
                 }

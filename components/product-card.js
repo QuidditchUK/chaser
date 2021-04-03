@@ -1,4 +1,5 @@
-import { parse, format } from 'date-fns';
+import parse from 'date-fns/parse';
+import format from 'date-fns/format';
 import { Box, Flex, Grid, Heading, Text } from '@chakra-ui/react';
 import { formatMinorUnitsToCurrency } from 'modules/numbers';
 

@@ -1,7 +1,8 @@
 import { useRef } from 'react';
 import Flickity from 'react-flickity-component';
 import { Box } from '@chakra-ui/react';
-import Image from 'components/carousel-image';
+import dynamic from 'next/dynamic';
+const Image = dynamic(() => import('components/carousel-image'));
 
 const CarouselContainer = (props) => (
   <Box

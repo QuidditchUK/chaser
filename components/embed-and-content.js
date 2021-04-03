@@ -1,14 +1,18 @@
 import { RichText } from 'prismic-reactjs';
+import dynamic from 'next/dynamic';
 import get from 'just-safe-get';
-
-import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
 import { Grid, Flex, Heading, Text } from '@chakra-ui/react';
-import Content from 'components/content';
-import { Embed } from 'components/embed-slice';
 
-import ExternalLink from 'components/external-link';
-import Button from 'components/button';
 import { linkResolver } from 'modules/prismic';
+import { buttonVariants } from 'components/prismic-wrapper';
+
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Button = dynamic(() => import('components/button'));
+const Content = dynamic(() => import('components/content'));
+const ExternalLink = dynamic(() => import('components/external-link'));
+const Embed = dynamic(() =>
+  import('components/embed-slice').then(({ Embed }) => Embed)
+);
 
 const Item = ({ item, isEmbedLeft }) => (
   <Grid

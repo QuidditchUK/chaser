@@ -12,9 +12,9 @@ import {
   UnorderedList,
   ListItem,
 } from '@chakra-ui/react';
-import { Logo } from 'components/logo';
-import Input from 'components/input';
 
+const Logo = dynamic(() => import('components/logo'));
+const Input = dynamic(() => import('components/input'));
 const Container = dynamic(() => import('components/container'));
 const Button = dynamic(() => import('components/button'));
 const FacebookIcon = dynamic(() => import('public/images/facebook.svg'));
@@ -22,9 +22,6 @@ const TwitterIcon = dynamic(() => import('public/images/twitter.svg'));
 const InstagramIcon = dynamic(() => import('public/images/instagram.svg'));
 const YoutubeIcon = dynamic(() => import('public/images/youtube.svg'));
 const VercelLogo = dynamic(() => import('public/images/powered-by-vercel.svg'));
-
-const logo = '/images/logo.png';
-const logoText = '/images/logo-text.png';
 
 const year = new Date().getFullYear();
 
@@ -261,18 +258,7 @@ export const Footer = () => {
             <Flex flexDirection="column" order={{ base: 2, md: 1 }}>
               <Link href="/" passHref>
                 <ChakraLink height={{ base: '35px', xl: '45px' }}>
-                  <>
-                    <Logo
-                      src={logo}
-                      alt="Quidditch UK"
-                      filter="brightness(0) invert(1)"
-                    />
-                    <Logo
-                      src={logoText}
-                      alt="Quidditch UK"
-                      filter="brightness(0) invert(1)"
-                    />
-                  </>
+                  <Logo filter />
                 </ChakraLink>
               </Link>
 

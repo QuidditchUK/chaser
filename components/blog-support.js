@@ -1,18 +1,19 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-
+import dynamic from 'next/dynamic';
 import get from 'just-safe-get';
-import { format } from 'date-fns';
+import format from 'date-fns/format';
+import { Box, Flex, Text, Link as ChakraLink } from '@chakra-ui/react';
 
-import PrismicWrapper from 'components/prismic-wrapper';
-import Container from 'components/container';
+const Image = dynamic(() => import('components/image'));
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Container = dynamic(() => import('components/container'));
+const FacebookIcon = dynamic(() => import('public/images/facebook.svg'));
+const TwitterIcon = dynamic(() => import('public/images/twitter.svg'));
+const WhatsappIcon = dynamic(() => import('public/images/whatsapp.svg'));
 
-import { Box, Flex, Text, Link as ChakraLink, Image } from '@chakra-ui/react';
 import renderAuthor from 'constants/authors';
 import { rem } from 'styles/theme';
-import FacebookIcon from 'public/images/facebook.svg';
-import TwitterIcon from 'public/images/twitter.svg';
-import WhatsappIcon from 'public/images/whatsapp.svg';
 
 const dasherizeTag = (tag) => tag.replace(/\s+/g, '--').replace(/\//g, '__');
 
@@ -64,13 +65,18 @@ const BlogSupport = (rawData) => {
             <Image
               src={renderAuthor(author)}
               alt={author}
-              mr={5}
               borderRadius="full"
               height="80px"
               width="80px"
             />
 
-            <Text size="sm" fontWeight="bold" color="qukBlue" lineHeight="body">
+            <Text
+              size="sm"
+              fontWeight="bold"
+              color="qukBlue"
+              lineHeight="body"
+              ml={5}
+            >
               By {author}
               <br />
               {format(new Date(date), 'MMMM d, yyyy')}

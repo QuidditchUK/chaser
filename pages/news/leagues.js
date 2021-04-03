@@ -4,8 +4,10 @@ import dynamic from 'next/dynamic';
 import { useInfiniteQuery } from 'react-query';
 import { Flex } from '@chakra-ui/react';
 import { getBlogCategory, PAGE_SIZE, Client } from 'modules/prismic';
-import { LoadMore } from 'pages/news';
 
+const LoadMore = dynamic(() =>
+  import('pages/news').then(({ LoadMore }) => LoadMore)
+);
 const LatestNews = dynamic(() => import('components/latest-news'));
 const NewsHeader = dynamic(() => import('components/news-header'));
 const Meta = dynamic(() => import('components/meta'));
@@ -45,7 +47,12 @@ const News = ({ posts: initialPosts = [] }) => {
         description="All the latest results and news across QuidditchUK's leagues"
       />
       <NewsHeader />
-      <LatestNews category="Leagues" posts={posts} horizontalScroll={false} />
+      <LatestNews
+        category="Leagues"
+        posts={posts}
+        horizontalScroll={false}
+        showAllNewsButton={false}
+      />
       {isFetching && (
         <Flex
           alignItems="center"

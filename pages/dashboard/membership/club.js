@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { StyledLink } from 'components/latest-news';
-
+import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { parse } from 'date-fns';
+import parse from 'date-fns/parse';
 import Router from 'next/router';
-import * as Yup from 'yup';
+import { object, string, bool } from 'yup';
+
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 import {
@@ -18,21 +18,30 @@ import {
   Checkbox,
   Link as ChakraLink,
 } from '@chakra-ui/react';
-import Meta from 'components/meta';
-import Container from 'components/container';
-import Content from 'components/content';
-import Label from 'components/label';
-import Button from 'components/button';
-import Required from 'components/required';
-import { InlineError } from 'components/errors';
-import ClubCard, { ACTIVE_STATUS } from 'components/club-card';
-import Image from 'components/image';
+
+const Meta = dynamic(() => import('components/meta'));
+const Container = dynamic(() => import('components/container'));
+const Content = dynamic(() => import('components/content'));
+const Label = dynamic(() => import('components/label'));
+const Button = dynamic(() => import('components/button'));
+const Required = dynamic(() => import('components/required'));
+const Image = dynamic(() => import('components/image'));
+const ClubCard = dynamic(() => import('components/club-card'));
+
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
+const StyledLink = dynamic(() =>
+  import('components/latest-news').then(({ StyledLink }) => StyledLink)
+);
+
+import { ACTIVE_STATUS } from 'components/club-card';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
 
-const SelectClubSchema = Yup.object().shape({
-  club_uuid: Yup.string().nullable().required('Required'),
-  confirm: Yup.bool().oneOf(
+const SelectClubSchema = object().shape({
+  club_uuid: string().nullable().required('Required'),
+  confirm: bool().oneOf(
     [true],
     'Please confirm that you have read the disclaimer'
   ),
@@ -57,7 +66,7 @@ const handleClubSubmit = async ({ club_uuid }, setServerError) => {
 
 const ManageClub = ({ user, clubs = [] }) => {
   const [selectedClub, setSelectedClub] = useState(
-    clubs.find(({ uuid }) => uuid === user.club_uuid)
+    clubs.find(({ uuid }) => uuid === user?.club_uuid)
   );
   const [serverError, setServerError] = useState(null);
 
@@ -73,8 +82,7 @@ const ManageClub = ({ user, clubs = [] }) => {
   const currentSelectedClubUuid = watch('club_uuid', user.club_uuid);
 
   useEffect(() => {
-    console.log('in useEffect');
-    if (selectedClub.uuid !== currentSelectedClubUuid) {
+    if (selectedClub?.uuid !== currentSelectedClubUuid) {
       setSelectedClub(
         clubs.find(({ uuid }) => uuid === currentSelectedClubUuid)
       );
@@ -160,7 +168,7 @@ const ManageClub = ({ user, clubs = [] }) => {
                       bg="white"
                       color="qukBlue"
                     >
-                      <option disabled selected value>
+                      <option disabled value>
                         Select a club
                       </option>
                       {clubs.map((club) => (
@@ -179,7 +187,7 @@ const ManageClub = ({ user, clubs = [] }) => {
                       <Checkbox name="confirm" ref={register} spacing={3}>
                         By checking this box I acknowledge that I have read the
                         above disclaimer and I intend for{' '}
-                        <strong>{selectedClub.name}</strong> to be my
+                        <strong>{selectedClub?.name}</strong> to be my
                         QuidditchUK club for the 2021/2022 Season.
                       </Checkbox>
                     </Label>
@@ -203,28 +211,25 @@ const ManageClub = ({ user, clubs = [] }) => {
               {serverError && <InlineError my={3}>{serverError}</InlineError>}
             </Box>
             {selectedClub && (
-              <Flex flexDirection="column" key={selectedClub.uuid}>
-                <Link
-                  href="/clubs/[club]"
-                  as={`/clubs/${selectedClub.slug}`}
-                  passHref
-                >
+              <Flex flexDirection="column" key={selectedClub?.uuid}>
+                <Link href={`/clubs/${selectedClub?.slug}`} passHref>
                   <StyledLink>
                     <ClubCard
-                      backgroundColor={selectedClub.featured_color}
-                      color={selectedClub.text_color}
-                      name={selectedClub.name}
-                      league={selectedClub.league}
-                      venue={selectedClub.venue}
-                      icon={selectedClub.icon}
-                      status={selectedClub.status}
+                      backgroundColor={selectedClub?.featured_color}
+                      color={selectedClub?.text_color}
+                      name={selectedClub?.name}
+                      league={selectedClub?.league}
+                      venue={selectedClub?.venue}
+                      icon={selectedClub?.icon}
+                      status={selectedClub?.status}
                       image={
-                        selectedClub.images ? (
+                        selectedClub?.images ? (
                           <Image
-                            src={selectedClub.images[0]}
-                            alt={selectedClub.name}
-                            width={1600}
-                            height={900}
+                            src={selectedClub?.images[0]}
+                            alt={selectedClub?.name}
+                            layout="responsive"
+                            width={640}
+                            height={360}
                             borderRadius="0px"
                           />
                         ) : null

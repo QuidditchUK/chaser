@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
-import Meta from 'components/meta';
+import dynamic from 'next/dynamic';
 import { parseCookies } from 'modules/cookies';
 import { Box, Grid, Flex, Heading } from '@chakra-ui/react';
 
-import Container from 'components/container';
-import ProductCard from 'components/product-card';
-import Content from 'components/content';
-import Button from 'components/button';
+const Meta = dynamic(() => import('components/meta'));
+const Container = dynamic(() => import('components/container'));
+const ProductCard = dynamic(() => import('components/product-card'));
+const Content = dynamic(() => import('components/content'));
+const Button = dynamic(() => import('components/button'));
 import { api } from 'modules/api';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';

@@ -1,7 +1,9 @@
 import get from 'just-safe-get';
-import Image from 'components/image';
+import dynamic from 'next/dynamic';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
+
+const Image = dynamic(() => import('components/image'));
 
 const Hero = (rawData) => {
   const title = get(rawData, 'primary.slug');

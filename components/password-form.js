@@ -1,28 +1,34 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import * as Yup from 'yup';
+import dynamic from 'next/dynamic';
+import { object, string, ref } from 'yup';
 import { Flex, Grid, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import Input from 'components/input';
-import Label from 'components/label';
-import Button from 'components/button';
-import { InlineError } from 'components/errors';
-import { api } from 'modules/api';
-import Required from 'components/required';
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
-const PasswordFormSchema = Yup.object().shape({
-  old_password: Yup.string()
+const Label = dynamic(() => import('components/label'));
+
+const Button = dynamic(() => import('components/button'));
+const Required = dynamic(() => import('components/required'));
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
+
+import { api } from 'modules/api';
+
+const PasswordFormSchema = object().shape({
+  old_password: string()
     .min(8, 'Must be at least 8 characters long')
     .required('Required'),
-  password: Yup.string()
+  password: string()
     .min(8, 'Must be at least 8 characters long')
     .required('Required'),
-  confirm: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+  confirm: string()
+    .oneOf([ref('password'), null], 'Passwords must match')
     .required('Required'),
 });
 

@@ -2,10 +2,12 @@ import { useRouter } from 'next/router';
 import get from 'just-safe-get';
 import { useForm } from 'react-hook-form';
 
-import Input from 'components/input';
-import Button from 'components/button';
 import { Flex, Box, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
+import dynamic from 'next/dynamic';
+
+const Input = dynamic(() => import('components/input'));
+const Button = dynamic(() => import('components/button'));
 
 const handleFindQuidditch = async ({ postcode }, router) => {
   await router.push(
@@ -42,12 +44,12 @@ const HomeHero = (rawData) => {
           src={video}
           poster={poster}
           preload="metadata"
+          zIndex="0"
           autoPlay
           loop
           muted
         />
       </Box>
-
       <Flex
         position="relative"
         minHeight={HERO_MIN_HEIGHTS}
@@ -63,6 +65,7 @@ const HomeHero = (rawData) => {
           mb={8}
           color="white"
           textShadow="lg"
+          id="home_hero_label" // FOR CAPE MODE
         >
           {title}
         </Heading>

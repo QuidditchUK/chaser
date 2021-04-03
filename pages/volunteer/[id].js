@@ -9,22 +9,23 @@ const Page404 = dynamic(() => import('pages/404'));
 const PageLoading = dynamic(() => import('components/page-loading'));
 const Meta = dynamic(() => import('components/meta'));
 
-const Page = ({ page: initialPage }) => {
+const Page = ({ page: initialPage, preview }) => {
   const router = useRouter();
-  const { data: page } = useQuery(
+  const { data: queryData } = useQuery(
     ['volunteer', router.query.id],
     () => getPrismicDocByUid('volunteer', router.query.id),
     { initialData: initialPage }
   );
 
-  if (router.isFallback) {
+  const page = preview ? initialPage : queryData;
+
+  if (router.isFallback && !queryData) {
     return <PageLoading />;
   }
 
-  if (!page) {
+  if (!queryData && !preview) {
     return <Page404 />;
   }
-
   return (
     <>
       <Meta {...formatMetadata(page.data)} />

@@ -58,7 +58,11 @@ const News = ({ posts: initialPosts = [] }) => {
     <>
       <Meta subTitle="News" />
       <NewsHeader />
-      <LatestNews posts={posts} horizontalScroll={false} />
+      <LatestNews
+        posts={posts}
+        horizontalScroll={false}
+        showAllNewsButton={false}
+      />
       {isFetching && (
         <Flex
           alignItems="center"

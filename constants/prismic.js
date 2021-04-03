@@ -1,43 +1,24 @@
 import dynamic from 'next/dynamic';
 
-const HomeHero = dynamic(() => import('components/home-hero'));
-const Hero = dynamic(() => import('components/hero'));
-const LatestNews = dynamic(() => import('components/latest-news'));
-const HeaderAndParagraph = dynamic(() =>
-  import('components/header-and-paragraph')
-);
-const ImageSlice = dynamic(() => import('components/image-slice'));
-const ImageAndContent = dynamic(() => import('components/image-and-content'));
-const Cards = dynamic(() => import('components/cards'));
-const FindQuidditch = dynamic(() => import('components/find-quidditch'));
-const EmbedSlice = dynamic(() => import('components/embed-slice'));
-const EmbedAndContent = dynamic(() => import('components/embed-and-content'));
-const ContactForm = dynamic(() => import('components/contact-form'));
-const VolunteerForm = dynamic(() => import('components/volunteer-form'));
-const NationalTeamForm = dynamic(() => import('components/national-team-form'));
-const TwoColumnTable = dynamic(() =>
-  import('components/two-column-table-slice')
-);
-const HorizontalCard = dynamic(() => import('components/horizontal-card'));
-const EDICommitteeForm = dynamic(() => import('components/edi-committee-form'));
-
 const types = {
-  video_hero_with_cta: HomeHero,
-  latest_news: LatestNews,
-  hero: Hero,
-  header_and_paragraph: HeaderAndParagraph,
-  images: ImageSlice,
-  image_and_content: ImageAndContent,
-  cards: Cards,
-  find_quidditch: FindQuidditch,
-  embed: EmbedSlice,
-  embed_and_content: EmbedAndContent,
-  contact_form: ContactForm,
-  two_column_table: TwoColumnTable,
-  volunteer_form: VolunteerForm,
-  national_team_form: NationalTeamForm,
-  horizontal_card: HorizontalCard,
-  edi_committee_form: EDICommitteeForm,
+  video_hero_with_cta: dynamic(() => import('components/home-hero')),
+  latest_news: dynamic(() => import('components/latest-news')),
+  hero: dynamic(() => import('components/hero')),
+  header_and_paragraph: dynamic(() =>
+    import('components/header-and-paragraph')
+  ),
+  images: dynamic(() => import('components/image-slice')),
+  image_and_content: dynamic(() => import('components/image-and-content')),
+  cards: dynamic(() => import('components/cards')),
+  find_quidditch: dynamic(() => import('components/find-quidditch')),
+  embed: dynamic(() => import('components/embed-slice')),
+  embed_and_content: dynamic(() => import('components/embed-and-content')),
+  contact_form: dynamic(() => import('components/contact-form')),
+  two_column_table: dynamic(() => import('components/two-column-table-slice')),
+  volunteer_form: dynamic(() => import('components/volunteer-form')),
+  national_team_form: dynamic(() => import('components/national-team-form')),
+  horizontal_card: dynamic(() => import('components/horizontal-card')),
+  edi_committee_form: dynamic(() => import('components/edi-committee-form')),
 };
 
 export default function Slice(sections, posts) {

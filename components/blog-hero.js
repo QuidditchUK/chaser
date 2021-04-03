@@ -1,13 +1,14 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import Image from 'components/image';
 import get from 'just-safe-get';
 
-import CATEGORIES from 'constants/categories';
-
-import Container from 'components/container';
 import { rem } from 'styles/theme';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { Box, Flex, Heading, Link as ChakraLink } from '@chakra-ui/react';
+import CATEGORIES from 'constants/categories';
+
+const Image = dynamic(() => import('components/image'));
+const Container = dynamic(() => import('components/container'));
 
 const Tag = (props) => (
   <Box

@@ -1,13 +1,16 @@
+import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 
-import PrismicWrapper, { buttonVariants } from 'components/prismic-wrapper';
-import { Grid, Flex, Heading, Text } from '@chakra-ui/react';
-import Image from 'components/image';
+import { buttonVariants } from 'components/prismic-wrapper';
+import { Grid, Flex, Heading, Box } from '@chakra-ui/react';
 
-import Content from 'components/content';
-import ExternalLink from 'components/external-link';
-import Button from 'components/button';
+const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Image = dynamic(() => import('components/image'));
+const ExternalLink = dynamic(() => import('components/external-link'));
+const Button = dynamic(() => import('components/button'));
+const Content = dynamic(() => import('components/content'));
+
 import { linkResolver } from 'modules/prismic';
 
 const Item = ({ item, isImageLeft }) => (
@@ -46,16 +49,19 @@ const Item = ({ item, isImageLeft }) => (
       justifyContent="center"
       order={{ base: 1, md: `${isImageLeft ? 1 : 2}` }}
     >
-      <Image
-        alt={item?.image?.alt}
-        src={item?.image?.url}
-        height={item.image?.dimensions?.height}
-        width={item.image?.dimensions?.width}
-      />
+      {item?.image?.url && (
+        <Image
+          alt={item?.image?.alt}
+          src={item?.image?.url}
+          layout="responsive"
+          height={item.image?.dimensions?.height}
+          width={item.image?.dimensions?.width}
+        />
+      )}
       {RichText.asText(item.support) && (
-        <Text textAlign="center" pt={2} fontStyle="italic">
+        <Box textAlign="center" pt={2} fontStyle="italic">
           {RichText.render(item.support, linkResolver)}
-        </Text>
+        </Box>
       )}
     </Flex>
   </Grid>

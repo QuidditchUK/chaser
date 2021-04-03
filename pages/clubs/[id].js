@@ -22,6 +22,7 @@ import {
   Tbody,
   Thead,
   Link as ChakraLink,
+  Image as ChakraImage,
   Text,
 } from '@chakra-ui/react';
 
@@ -42,7 +43,9 @@ const Meta = dynamic(() => import('components/meta'));
 const Icon = (props) => (
   <Box color="greyDark" height="30px" width="30px" {...props} />
 );
-const Td = (props) => <ChakraTd p={1} {...props} />;
+const Td = (props) => (
+  <ChakraTd p={1} fontSize={{ base: 'sm', md: 'md' }} {...props} />
+);
 const Th = (props) => (
   <ChakraTh
     textAlign="left"
@@ -50,14 +53,14 @@ const Th = (props) => (
     textTransform="normal"
     fontFamily="body"
     fontWeight="normal"
-    fontSize="sm"
+    fontSize={{ base: 'xs', md: 'sm' }}
     {...props}
   />
 );
 
-const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
+const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
   const router = useRouter();
-  const { data: page } = useQuery(
+  const { data: queryData } = useQuery(
     ['clubs', router.query.id],
     () => getPrismicDocByUid('clubs', router.query.id),
     { initialData: initialPage, enabled: Boolean(!router.isFallback) }
@@ -69,14 +72,16 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
         orderings: '[my.post.date desc]',
         pageSize: 3,
       }),
-    { initialData: initialPosts, enabled: Boolean(page) }
+    { initialData: initialPosts, enabled: Boolean(queryData) }
   );
 
-  if (router.isFallback) {
+  const page = preview ? initialPage : queryData;
+
+  if (router.isFallback && !queryData) {
     return <PageLoading />;
   }
 
-  if (!page) {
+  if (!queryData && !preview) {
     return <Page404 />;
   }
 
@@ -313,14 +318,37 @@ const ClubPage = ({ page: initialPage, posts: initialPosts }) => {
                       </Tr>
                     </Thead>
 
-                    <Tbody>
+                    <Tbody bg="gray.50">
                       {club?.tournament_results?.map((result) => (
                         <Tr
                           key={`${club.club_name}_${result.team_name}_${result.tournament_name}_${result.season}`}
                         >
                           <Td>
-                            {result.position}
-                            {formatOrdinals(result.position)}
+                            <Flex
+                              direction={{ base: 'column', md: 'row' }}
+                              alignItems="center"
+                            >
+                              {result?.medal_icon?.url && (
+                                <ChakraImage
+                                  src={result.medal_icon.url}
+                                  alt={`Medal: ${
+                                    result.position
+                                  }${formatOrdinals(result.position)} ${
+                                    result.team_name
+                                  } ${result.tournament_name} ${result.season}`}
+                                  height="30px"
+                                  width="30px"
+                                  sx={{
+                                    filter:
+                                      'drop-shadow(0px 0px 2px rgba(0, 0, 0, .3))',
+                                  }}
+                                />
+                              )}
+                              <Box>
+                                {result.position}
+                                {formatOrdinals(result.position)}
+                              </Box>
+                            </Flex>
                           </Td>
                           <Td>{result.season}</Td>
                           <Td>{result.tournament_name}</Td>
@@ -347,19 +375,27 @@ export const getStaticProps = async ({
   const { ref } = previewData;
   const page =
     (await getPrismicDocByUid('clubs', id, ref ? { ref } : null)) || null;
-  const posts = await getBlogTags(page?.tags, {
-    orderings: '[my.post.date desc]',
-    pageSize: 3,
-  });
+
+  if (page?.tags) {
+    const posts = await getBlogTags(page?.tags, {
+      orderings: '[my.post.date desc]',
+      pageSize: 3,
+    });
+
+    return {
+      props: { page, preview, posts },
+      revalidate: 1,
+    };
+  }
 
   return {
-    props: { page, preview, posts },
+    props: { page, preview },
     revalidate: 1,
   };
 };
 
 export const getStaticPaths = async () => {
-  const allPages = await getDocs('clubs');
+  const allPages = await getDocs('clubs', { pageSize: 100 });
 
   return {
     paths: allPages?.map(({ uid }) => `/clubs/${uid}`),

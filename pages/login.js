@@ -1,31 +1,33 @@
 import { useState } from 'react';
-import * as Yup from 'yup';
+import { object, string } from 'yup';
 import Router from 'next/router';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
 import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Logo } from 'components/logo';
-import { InlineError } from 'components/errors';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { setCookies, parseCookies } from 'modules/cookies';
-import Input from 'components/input';
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
+const Logo = dynamic(() => import('components/logo'));
+const InlineError = dynamic(() =>
+  import('components/errors').then(({ InlineError }) => InlineError)
+);
 
-const logo = '/images/logo.png';
+// const logo = '/images/logo.png';
 
-const LoginFormSchema = Yup.object().shape({
-  email: Yup.string()
+const LoginFormSchema = object().shape({
+  email: string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  password: Yup.string()
+  password: string()
     .min(8, 'Must be at least 8 characters long')
     .required('Required'),
 });
@@ -71,7 +73,7 @@ const Page = () => {
       >
         <Container maxWidth={rem(500)}>
           <Flex justifyContent="center" alignItems="center">
-            <Logo src={logo} alt="Quidditch UK" />
+            <Logo />
           </Flex>
           <Heading as="h1" fontFamily="body" textAlign="center">
             Sign in to QuidditchUK

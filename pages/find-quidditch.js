@@ -485,13 +485,15 @@ const FindQuidditch = ({
                           venue={club.data.venue}
                           icon={club.data.icon.url}
                           status={club.data.active}
+                          tournament_results={club.data.tournament_results}
                           image={
                             club.data.images ? (
                               <Image
                                 src={club.data.images?.[0].image.url}
                                 alt={club.club_name}
-                                width={1600}
-                                height={900}
+                                layout="responsive"
+                                width={640}
+                                height={360}
                                 borderRadius="0px"
                               />
                             ) : null
