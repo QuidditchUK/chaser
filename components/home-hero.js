@@ -8,7 +8,6 @@ import dynamic from 'next/dynamic';
 
 const Input = dynamic(() => import('components/input'));
 const Button = dynamic(() => import('components/button'));
-const Image = dynamic(() => import('components/image'));
 
 const handleFindQuidditch = async ({ postcode }, router) => {
   await router.push(
@@ -30,7 +29,7 @@ const HomeHero = (rawData) => {
   const title = get(rawData, 'primary.slug');
   const cta_text = get(rawData, 'primary.cta_text');
   const video = get(rawData, 'primary.video_url.url');
-  const poster = get(rawData, 'primary.poster');
+  const poster = get(rawData, 'primary.poster.url');
 
   return (
     <Box
@@ -41,17 +40,6 @@ const HomeHero = (rawData) => {
       position="relative"
     >
       <Box minHeight={HERO_MIN_HEIGHTS} position="absolute">
-        <Box w="100%" h="100%" position="absolute" zIndex="-2">
-          <Image
-            src={poster.url}
-            alt={poster.alt}
-            layout="fill"
-            objectPosition="center center"
-            objectFit="cover"
-            borderRadius={0}
-            priority={true}
-          />
-        </Box>
         <Video
           src={video}
           poster={poster}
@@ -62,7 +50,6 @@ const HomeHero = (rawData) => {
           muted
         />
       </Box>
-
       <Flex
         position="relative"
         minHeight={HERO_MIN_HEIGHTS}
