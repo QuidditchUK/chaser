@@ -307,7 +307,7 @@ const FindQuidditch = ({
                     }}
                   >
                     <Box p="4" gridArea="types">
-                      <Heading as="h3" fontSize="2" fontFamily="body" mt="0">
+                      <Heading as="h3" fontSize="xl" fontFamily="body" mt="0">
                         Types (
                         {
                           [watchShowClubs, watchShowEvents].filter((v) => v)
@@ -357,7 +357,7 @@ const FindQuidditch = ({
                     </Box>
 
                     <Box p="4" gridArea="leagues">
-                      <Heading as="h3" fontSize="2" fontFamily="body" mt="0">
+                      <Heading as="h3" fontSize="xl" fontFamily="body" mt="0">
                         Leagues (
                         {
                           [watchShowCommunity, watchShowUniversity].filter(
@@ -408,7 +408,7 @@ const FindQuidditch = ({
                     <Box borderRadius="md" p={4} gridArea="distance">
                       <Heading
                         as="h3"
-                        fontSize="2"
+                        fontSize="xl"
                         fontFamily="body"
                         px="0"
                         mt="0"

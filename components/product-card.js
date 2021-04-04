@@ -81,7 +81,7 @@ const ProductCard = ({
       color="white"
     >
       {!!price && (
-        <Content fontSize="4">
+        <Content fontSize="xl">
           <strong>{formatMinorUnitsToCurrency(price?.unit_amount)}</strong>
         </Content>
       )}
@@ -94,7 +94,7 @@ const ProductCard = ({
                 : 'Expired'}
             </strong>
           </Content>
-          <Content fontSize="3" py={0}>
+          <Content fontSize="lg" py={0}>
             <strong>
               {format(parse(expires, 'dd-MM-yyyy', new Date()), 'd LLL yyyy')}
             </strong>
