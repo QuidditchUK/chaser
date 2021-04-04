@@ -66,7 +66,7 @@ const HorizontalCard = ({
               {name}
             </Heading>
           )}
-          {content && <>{RichText.render(content, linkResolver)}</>}
+          {content && <RichText render={content} linkResolver={linkResolver} />}
         </Content>
       </Flex>
     </Grid>

@@ -30,7 +30,7 @@ const Item = ({ item, isImageLeft }) => (
       )}
 
       {item.content && (
-        <Content>{RichText.render(item.content, linkResolver)}</Content>
+        <RichText render={item.content} linkResolver={linkResolver} />
       )}
 
       {item.cta_text && (
@@ -60,7 +60,9 @@ const Item = ({ item, isImageLeft }) => (
       )}
       {RichText.asText(item.support) && (
         <Box textAlign="center" pt={2} fontStyle="italic">
-          {RichText.render(item.support, linkResolver)}
+          <Content>
+            <RichText render={item.support} linkResolver={linkResolver} />
+          </Content>
         </Box>
       )}
     </Flex>

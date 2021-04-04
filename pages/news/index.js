@@ -1,4 +1,4 @@
-import Prismic from 'prismic-javascript';
+import Prismic from '@prismicio/client';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { Flex, Button } from '@chakra-ui/react';

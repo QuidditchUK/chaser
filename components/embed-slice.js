@@ -71,7 +71,7 @@ const EmbedSlice = (rawData) => {
 
       {content && (
         <Content textAlign="center" pb={3}>
-          {RichText.render(content, linkResolver)}
+          <RichText render={content} linkResolver={linkResolver} />
         </Content>
       )}
 

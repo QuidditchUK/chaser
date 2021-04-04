@@ -275,7 +275,10 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
               </Heading>
               {RichText.asText(club.description) && (
                 <Content>
-                  {RichText.render(club.description, linkResolver)}
+                  <RichText
+                    render={club.description}
+                    linkResolver={linkResolver}
+                  />
                 </Content>
               )}
 

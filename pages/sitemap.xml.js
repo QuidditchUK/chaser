@@ -1,4 +1,4 @@
-import Prismic from 'prismic-javascript';
+import Prismic from '@prismicio/client';
 import { Client, linkResolver } from 'modules/prismic';
 import { api } from 'modules/api';
 

@@ -46,7 +46,7 @@ const CardsSlice = (rawData) => {
           pb={3}
           px={horizontalScroll ? { base: 4, sm: 8, md: 9 } : { base: 0, md: 9 }}
         >
-          {RichText.render(content, linkResolver)}
+          <RichText render={content} linkResolver={linkResolver} />
         </Box>
       )}
 

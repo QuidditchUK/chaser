@@ -75,7 +75,7 @@ const Card = ({ image, name, category, content, variant, ...cardProps }) => {
             {name}
           </Heading>
         )}
-        {content && <>{RichText.render(content, linkResolver)}</>}
+        {content && <RichText render={content} linkResolver={linkResolver} />}
       </ContentBox>
     </Box>
   );

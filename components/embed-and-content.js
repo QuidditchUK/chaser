@@ -31,7 +31,9 @@ const Item = ({ item, isEmbedLeft }) => (
       )}
 
       {item.content && (
-        <Content>{RichText.render(item.content, linkResolver)}</Content>
+        <Content>
+          <RichText render={item.content} linkResolver={linkResolver} />
+        </Content>
       )}
 
       {item.cta_text && (
@@ -53,7 +55,7 @@ const Item = ({ item, isEmbedLeft }) => (
       <Embed embed={item.embed} />
       {RichText.asText(item.support) && (
         <Text textAlign="center" pt={2} fontStyle="italic">
-          {RichText.render(item.support)}
+          <RichText render={item.support} />
         </Text>
       )}
     </Flex>

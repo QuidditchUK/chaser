@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Prismic from 'prismic-javascript';
+import Prismic from '@prismicio/client';
 import dynamic from 'next/dynamic';
 import { useInfiniteQuery } from 'react-query';
 import { Flex } from '@chakra-ui/react';
