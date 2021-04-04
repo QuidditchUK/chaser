@@ -13,11 +13,13 @@ import { setCookies } from 'modules/cookies';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
 
-const Logo = dynamic(() => import('components/logo').then(({ Logo }) => Logo));
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+
+const Logo = dynamic(() => import('components/logo'));
 const InlineError = dynamic(() =>
   import('components/errors').then(({ InlineError }) => InlineError)
 );
-const Input = dynamic(() => import('components/input'));
+
 const Label = dynamic(() => import('components/label'));
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
@@ -64,8 +66,6 @@ const handleJoinSubmit = async ({ confirm, ...formData }, setServerError) => {
     setServerError(err?.response?.data?.error);
   }
 };
-
-const logo = '/images/logo.png';
 
 const Page = () => {
   const [serverError, setServerError] = useState(null);
@@ -115,7 +115,7 @@ const Page = () => {
         >
           <Box borderRadius="md" bg="white" position="relative" px={4} py={4}>
             <Flex justifyContent="center" alignItems="center">
-              <Logo src={logo} alt="Quidditch UK" />
+              <Logo />
             </Flex>
             <Heading as="h1" fontFamily="body" textAlign="center">
               Join QuidditchUK

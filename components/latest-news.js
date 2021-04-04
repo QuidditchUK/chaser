@@ -61,7 +61,7 @@ const News = ({
         >
           <Heading
             as="h2"
-            fontSize="3xl"
+            fontSize="2xl"
             px={{ base: 8, md: 0 }}
             color="qukBlue"
             fontFamily="body"
@@ -101,8 +101,9 @@ const News = ({
                       <Image
                         src={data.image.url}
                         alt={data.image.alt}
-                        width={1600}
-                        height={900}
+                        layout="responsive"
+                        width={640}
+                        height={360}
                         borderRadius="0px"
                       />
                     }

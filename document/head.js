@@ -1,6 +1,4 @@
 import Head from 'next/head';
-
-import fonts from 'styles/fonts';
 import reset from 'styles/reset';
 
 const DocumentHead = () => (
@@ -29,7 +27,6 @@ const DocumentHead = () => (
 
     {/* Static CSS */}
     <style dangerouslySetInnerHTML={{ __html: reset }} />
-    <style dangerouslySetInnerHTML={{ __html: fonts }} />
 
     {/* Global Site Tag (gtag.js) - Google Analytics */}
     <script

@@ -77,8 +77,9 @@ const CardsSlice = (rawData) => {
                         <Image
                           src={image.url}
                           alt={image.alt}
-                          width={1600}
-                          height={900}
+                          layout="responsive"
+                          width={640}
+                          height={360}
                           borderRadius="0px"
                         />
                       ) : null
@@ -94,8 +95,9 @@ const CardsSlice = (rawData) => {
                       <Image
                         src={image.url}
                         alt={image.alt}
-                        width={1600}
-                        height={900}
+                        layout="responsive"
+                        width={640}
+                        height={360}
                         borderRadius="0px"
                       />
                     ) : null

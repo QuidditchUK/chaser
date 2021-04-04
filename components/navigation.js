@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import Headroom from 'react-headroom';
+import { useRouter } from 'next/router';
 
 import NextLink from 'next/link';
 
@@ -22,7 +23,10 @@ const DesktopCTAs = dynamic(() =>
 );
 const MobileNav = dynamic(() => import('components/navigation/mobile'));
 
-export default function Navigation({ dashboard = false }) {
+export default function Navigation() {
+  const { asPath } = useRouter();
+  const dashboard = RegExp(/\/dashboard/, 'g').test(asPath);
+
   const { isOpen, onToggle: closeTopNav, onClose } = useDisclosure();
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
 

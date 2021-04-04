@@ -9,9 +9,9 @@ import { Grid, Flex, Select, Heading, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/react';
 
 import { buttonVariants } from 'components/prismic-wrapper';
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
 const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
-const Input = dynamic(() => import('components/input'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Container = dynamic(() => import('components/container'));

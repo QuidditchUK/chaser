@@ -44,12 +44,12 @@ const HomeHero = (rawData) => {
           src={video}
           poster={poster}
           preload="metadata"
+          zIndex="0"
           autoPlay
           loop
           muted
         />
       </Box>
-
       <Flex
         position="relative"
         minHeight={HERO_MIN_HEIGHTS}

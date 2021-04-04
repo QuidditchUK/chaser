@@ -1,9 +1,15 @@
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { format } from 'date-fns';
+import format from 'date-fns/format';
 import parse from 'html-react-parser';
-import styled from '@emotion/styled';
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  Image as ChakraImage,
+  Link as ChakraLink,
+  Text,
+} from '@chakra-ui/react';
 import { TYPES } from 'components/club-type';
 import { parseTimestamptz } from 'modules/dates';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
@@ -19,32 +25,13 @@ const Button = dynamic(() => import('components/button'));
 const ExternalLink = dynamic(() => import('components/external-link'));
 const PinIcon = dynamic(() => import('public/images/location-pin.svg'));
 
-const Icon = styled.img`
-  height: 100px;
-  width: 100px;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    height: 200px;
-    width: 200px;
-  }
-`;
-
-const LocationIcon = styled(PinIcon)`
-  height: 15px;
-  width: 15px;
-`;
-
-const LocationLink = styled.a`
-  padding: ${({ theme }) => theme.space[1]};
-  text-decoration: none;
-  color: ${({ theme }) => theme.colors.qukBlue};
-  border-bottom: 2px dotted ${({ theme }) => theme.colors.qukBlue};
-`;
-
-const Time = styled.span`
-  color: ${({ theme }) => theme.colors.monarchRed};
-  font-weight: bold;
-`;
+const Icon = (props) => (
+  <ChakraImage
+    height={{ base: '100px', md: '200px' }}
+    width={{ base: '100px', md: '200px' }}
+    {...props}
+  />
+);
 
 const EventPage = ({ event }) => {
   const router = useRouter();
@@ -124,25 +111,31 @@ const EventPage = ({ event }) => {
             </Heading>
 
             {event.start_time && (
-              <Time>
+              <Text as="span" fontWeight="bold" color="monarchRed">
                 {format(
                   parseTimestamptz(event.start_time),
                   'EEE, d LLL h:mm a'
                 )}{' '}
                 –{' '}
                 {format(parseTimestamptz(event.end_time), 'EEE, d LLL h:mm a')}
-              </Time>
+              </Text>
             )}
             <Flex alignItems="center">
-              <LocationIcon />{' '}
-              <LocationLink
+              <ChakraImage as={PinIcon} height="15px" width="15px" />{' '}
+              <ChakraLink
+                p={1}
+                textDecoration="none"
+                _hover={{ textDecoration: 'none' }}
+                color="qukBlue"
+                borderBottom="2px dotted"
+                borderColor="qukBlue"
                 href={`https://www.google.com/maps/search/?api=1&query=${location?.coordinates[1]},${location?.coordinates[0]}`}
                 rel="noopener noreferrer"
                 target="_blank"
                 linkColor="qukBlue"
               >
                 {event.venue}
-              </LocationLink>
+              </ChakraLink>
             </Flex>
           </Flex>
         </Container>

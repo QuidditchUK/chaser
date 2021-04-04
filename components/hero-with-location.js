@@ -46,7 +46,7 @@ const HeroWithLocation = ({
             {images.map(({ image }, i) => {
               const isFirst = i === 0;
               const width = isFirst ? 1000 : 500;
-              const height = isFirst ? 721 : 350;
+              const height = isFirst ? 730 : 350;
 
               return (
                 <Box
@@ -57,6 +57,7 @@ const HeroWithLocation = ({
                   <Image
                     priority={isFirst}
                     src={image.url}
+                    fill="responsive"
                     width={width}
                     height={height}
                     alt={image.alt}

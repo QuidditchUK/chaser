@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import get from 'just-safe-get';
-import { format } from 'date-fns';
+import format from 'date-fns/format';
 import { Box, Flex, Text, Link as ChakraLink } from '@chakra-ui/react';
 
 const Image = dynamic(() => import('components/image'));

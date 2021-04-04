@@ -395,7 +395,7 @@ export const getStaticProps = async ({
 };
 
 export const getStaticPaths = async () => {
-  const allPages = await getDocs('clubs');
+  const allPages = await getDocs('clubs', { pageSize: 100 });
 
   return {
     paths: allPages?.map(({ uid }) => `/clubs/${uid}`),
