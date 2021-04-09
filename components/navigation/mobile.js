@@ -116,6 +116,8 @@ const MobileNavItem = ({ label, children, closeTopNav, href }) => {
 
 const MobileCTAs = ({ closeTopNav }) => {
   const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
+  console.log('MOBILE-LOGGED-IN');
+  console.log(loggedIn);
 
   return (
     <>
@@ -124,6 +126,7 @@ const MobileCTAs = ({ closeTopNav }) => {
         href="/find-quidditch"
         closeTopNav={closeTopNav}
       />
+
       {!loggedIn && (
         <MobileNavItem
           label="Sign In"
