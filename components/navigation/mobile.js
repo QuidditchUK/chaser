@@ -124,6 +124,7 @@ const MobileCTAs = ({ closeTopNav }) => {
         href="/find-quidditch"
         closeTopNav={closeTopNav}
       />
+
       {!loggedIn && (
         <MobileNavItem
           label="Sign In"
@@ -152,7 +153,9 @@ const MobileLoggedIn = ({ closeTopNav }) => {
         borderBottom="1px solid"
         borderColor="gray.200"
         py={1}
-        cursor="pointer"
+        as={Link}
+        href={null}
+        onClick={() => {}}
         justify={'space-between'}
         align={'center'}
         _hover={{
