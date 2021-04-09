@@ -9,19 +9,17 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from '@chakra-ui/react';
+import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import dynamic from 'next/dynamic';
 import Router, { useRouter } from 'next/router';
+import NextLink from 'next/link';
 import cookies from 'js-cookie';
 
 import { removeCookie } from 'modules/cookies';
 import { rem } from 'styles/theme';
 
-import NextLink from 'next/link';
-
 const Button = dynamic(() => import('components/button'));
 import { ACCOUNT_NAVIGATION } from 'constants/navigation';
-
-import { ChevronRightIcon } from '@chakra-ui/icons';
 
 const DesktopNav = ({ navigation, dashboard }) => {
   const { asPath } = useRouter();
@@ -38,15 +36,18 @@ const DesktopNav = ({ navigation, dashboard }) => {
 
         return (
           <Box key={navItem.label}>
-            <Popover trigger={'hover'} placement={'bottom-start'}>
-              {({ isOpen }) => (
+            <Popover placement={'bottom-start'} isLazy>
+              {({ isOpen, onClose }) => (
                 <>
                   <PopoverTrigger>
-                    <Box>
-                      {navItem.href ? (
-                        <NextLink href={navItem.href} passHref>
-                          <Link
-                            as="a"
+                    {navItem.href ? (
+                      <NextLink href={navItem.href} passHref>
+                        <Link>
+                          <Box
+                            as="button"
+                            bg="inherit"
+                            border="0"
+                            cursor="pointer"
                             px={2}
                             py={0}
                             fontSize={'md'}
@@ -62,37 +63,59 @@ const DesktopNav = ({ navigation, dashboard }) => {
                               textDecoration: 'none',
                               color: 'monarchRed',
                             }}
+                            _focus={{
+                              textDecoration: 'none',
+                              color: 'monarchRed',
+                            }}
                           >
                             {navItem.label}
-                          </Link>
-                        </NextLink>
-                      ) : (
-                        <Text
-                          px={2}
-                          py={0}
-                          fontSize={'md'}
-                          fontWeight="bold"
-                          cursor="pointer"
-                          color={
-                            isOpen || isActive
-                              ? 'monarchRed'
-                              : dashboard
-                              ? 'white'
-                              : 'greyDark'
-                          }
-                          _hover={{
-                            textDecoration: 'none',
-                            color: 'monarchRed',
-                          }}
-                        >
-                          {navItem.label}
-                        </Text>
-                      )}
-                    </Box>
+                          </Box>
+                        </Link>
+                      </NextLink>
+                    ) : (
+                      <Text
+                        as="button"
+                        bg="inherit"
+                        border="0"
+                        px={2}
+                        py={0}
+                        my={0}
+                        fontSize={'md'}
+                        fontWeight="bold"
+                        cursor="pointer"
+                        color={
+                          isOpen || isActive
+                            ? 'monarchRed'
+                            : dashboard
+                            ? 'white'
+                            : 'greyDark'
+                        }
+                        _hover={{
+                          textDecoration: 'none',
+                          color: 'monarchRed',
+                        }}
+                        _focus={{
+                          textDecoration: 'none',
+                          color: 'monarchRed',
+                        }}
+                      >
+                        {navItem.label}
+
+                        <Icon
+                          ml={1}
+                          as={ChevronDownIcon}
+                          transition={'all .125s ease-in-out'}
+                          transform={isOpen ? 'rotate(180deg)' : ''}
+                          w={5}
+                          h={5}
+                        />
+                      </Text>
+                    )}
                   </PopoverTrigger>
 
                   {navItem.children && (
                     <PopoverContent
+                      _focus={{ boxShadow: 'xl' }}
                       border={0}
                       boxShadow={'xl'}
                       bg={dashboard ? 'qukBlue' : 'white'}
@@ -104,7 +127,11 @@ const DesktopNav = ({ navigation, dashboard }) => {
                     >
                       <Stack>
                         {navItem.children.map((child) => (
-                          <DesktopSubNav key={child.label} {...child} />
+                          <DesktopSubNav
+                            key={child.label}
+                            onClose={onClose}
+                            {...child}
+                          />
                         ))}
                       </Stack>
                     </PopoverContent>
@@ -119,7 +146,7 @@ const DesktopNav = ({ navigation, dashboard }) => {
   );
 };
 
-const DesktopSubNav = ({ label, href }) => {
+const DesktopSubNav = ({ label, href, onClose }) => {
   const { asPath } = useRouter();
   const regexHref = RegExp(href.replace(/\//g, '\\/'), 'g');
 
@@ -127,40 +154,49 @@ const DesktopSubNav = ({ label, href }) => {
 
   return (
     <NextLink href={href} passHref>
-      <Link
-        as={'a'}
-        role={'group'}
-        display={'block'}
-        py={2}
-        px={4}
-        rounded={'md'}
-        bg={isActive ? 'gray.200' : 'inherit'}
-        _hover={{ bg: 'gray.200' }}
-      >
-        <Stack direction={'row'} align={'center'}>
-          <Box>
-            <Text
+      <Link textDecoration="none" _hover={{ textDecoration: 'none' }}>
+        <Box
+          role={'group'}
+          display={'block'}
+          as="button"
+          width="100%"
+          cursor="pointer"
+          border="0"
+          py={2}
+          px={4}
+          rounded="md"
+          onClick={onClose}
+          bg={isActive ? 'gray.200' : 'inherit'}
+          _hover={{ bg: 'gray.200' }}
+          _focus={{ bg: 'gray.200' }}
+        >
+          <Stack direction={'row'} align={'center'}>
+            <Box>
+              <Text
+                transition={'all .1s ease'}
+                color={isActive ? 'qukBlue' : 'inherit'}
+                _groupHover={{ color: 'qukBlue' }}
+                _groupFocus={{ color: 'qukBlue' }}
+                fontWeight={500}
+                my={0}
+              >
+                {label}
+              </Text>
+            </Box>
+            <Flex
               transition={'all .1s ease'}
-              color={isActive ? 'qukBlue' : 'inherit'}
-              _groupHover={{ color: 'qukBlue' }}
-              fontWeight={500}
-              my={0}
+              transform={isActive ? 'translateX(0)' : 'translateX(-10px)'}
+              opacity={isActive ? 1 : 0}
+              _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
+              _groupFocus={{ opacity: '100%', transform: 'translateX(0)' }}
+              justify={'flex-end'}
+              align={'center'}
+              flex={1}
             >
-              {label}
-            </Text>
-          </Box>
-          <Flex
-            transition={'all .1s ease'}
-            transform={isActive ? 'translateX(0)' : 'translateX(-10px)'}
-            opacity={isActive ? 1 : 0}
-            _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
-            justify={'flex-end'}
-            align={'center'}
-            flex={1}
-          >
-            <Icon color={'qukBlue'} w={5} h={5} as={ChevronRightIcon} />
-          </Flex>
-        </Stack>
+              <Icon color={'qukBlue'} w={5} h={5} as={ChevronRightIcon} />
+            </Flex>
+          </Stack>
+        </Box>
       </Link>
     </NextLink>
   );
@@ -177,59 +213,58 @@ export const DesktopCTAs = ({ dashboard }) => {
   return (
     <Stack direction="row" spacing={3} alignItems="center">
       <NextLink href="/find-quidditch" passHref>
-        <Button
-          as="a"
-          variant={dashboard ? 'secondary' : 'primary'}
-          textDecoration="none"
-          _hover={{ textDecoration: 'none' }}
-        >
-          Find Quidditch
-        </Button>
+        <Link>
+          <Button
+            variant={dashboard ? 'secondary' : 'primary'}
+            textDecoration="none"
+            _hover={{ textDecoration: 'none' }}
+          >
+            Find Quidditch
+          </Button>
+        </Link>
       </NextLink>
 
       {!loggedIn && (
         <NextLink href="/login" passHref>
-          <Button
-            variant="light"
-            as="a"
-            textDecoration="none"
-            _hover={{ textDecoration: 'none' }}
-          >
-            Sign In
-          </Button>
+          <Link>
+            <Button
+              variant="light"
+              textDecoration="none"
+              _hover={{ textDecoration: 'none' }}
+            >
+              Sign In
+            </Button>
+          </Link>
         </NextLink>
       )}
 
       {loggedIn && (
-        <Popover trigger={'hover'} placement={'bottom-end'}>
+        <Popover placement={'bottom-end'}>
           {({ isOpen }) => (
             <>
               <PopoverTrigger>
-                <Box>
-                  <NextLink href="/dashboard" passHref>
-                    <Link
-                      as="a"
-                      px={4}
-                      py={2}
-                      // mb={0}
-                      lineHeight="1.2"
-                      fontSize={'md'}
-                      fontWeight="normal"
-                      bg={isOpen ? 'gray.200' : 'white'}
-                      color={'qukBlue'}
-                      border="1px solid"
-                      borderColor="qukBlue"
-                      borderRadius="md"
-                      _hover={{
-                        bg: 'gray.200',
-                        textDecoration: 'none',
-                        color: 'qukBlue',
-                      }}
-                    >
-                      My Account
-                    </Link>
-                  </NextLink>
-                </Box>
+                <NextLink href="/dashboard" passHref>
+                  <Link
+                    as="a"
+                    px={4}
+                    py={2}
+                    lineHeight="1.2"
+                    fontSize={'md'}
+                    fontWeight="normal"
+                    bg={isOpen ? 'gray.200' : 'white'}
+                    color={'qukBlue'}
+                    border="1px solid"
+                    borderColor="qukBlue"
+                    borderRadius="md"
+                    _hover={{
+                      bg: 'gray.200',
+                      textDecoration: 'none',
+                      color: 'qukBlue',
+                    }}
+                  >
+                    My Account
+                  </Link>
+                </NextLink>
               </PopoverTrigger>
 
               <PopoverContent
