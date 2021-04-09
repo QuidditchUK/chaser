@@ -11,11 +11,13 @@ import {
   Td,
   Tr,
   Grid,
+  useDisclosure,
+  Collapse,
 } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import getSheet from 'modules/sheets';
-import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
+import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import PrismicWrapper from 'components/prismic-wrapper';
 
 const Image = dynamic(() => import('components/image'));
@@ -24,6 +26,7 @@ const PageLoading = dynamic(() => import('components/page-loading'));
 const Meta = dynamic(() => import('components/meta'));
 const Card = dynamic(() => import('components/card'));
 const Content = dynamic(() => import('components/content'));
+const Button = dynamic(() => import('components/button'));
 const Embed = dynamic(() =>
   import('components/embed-slice').then(({ Embed }) => Embed)
 );
@@ -118,6 +121,7 @@ const VideoCard = ({ video }) => {
 
 const Page = ({ data }) => {
   const router = useRouter();
+  const { isOpen, onToggle } = useDisclosure();
 
   if (router.isFallback && !data) {
     return <PageLoading />;
@@ -136,8 +140,7 @@ const Page = ({ data }) => {
         backgroundColor="qukBlue"
         backgroundSize="cover"
         overflow="hidden"
-        px={{ base: 4, sm: 8, md: 9 }}
-        minHeight={HERO_MIN_HEIGHTS}
+        minHeight={BLOG_MIN_HEIGHTS}
       >
         <Image
           src="https://images.prismic.io/chaser/15de9370-f5bd-4a7c-8b4d-9610e0b22e3b_video-uncropped.jpg?auto=compress,format"
@@ -148,20 +151,74 @@ const Page = ({ data }) => {
           priority={true}
         />
         <Flex
+          position="absolute"
+          minHeight={BLOG_MIN_HEIGHTS}
+          bg="qukBlue"
+          opacity={0.8}
+          width="100%"
+          height="100%"
+        />
+
+        <Flex
           position="relative"
-          minHeight={HERO_MIN_HEIGHTS}
+          minHeight={BLOG_MIN_HEIGHTS}
+          direction="column"
           alignItems="center"
           justifyContent="center"
+          bgGradient={
+            isOpen ? 'linear(to-t, qukBlue, rgba(0, 0, 0, 0))' : 'none'
+          }
         >
           <Heading
             fontSize={{ base: '4xl', md: '7xl' }}
             color="white"
             textShadow="lg"
+            my={2}
           >
             Video Library
           </Heading>
+
+          <Collapse in={!isOpen} animateOpacity>
+            <Button
+              variant="transparent"
+              type="button"
+              onClick={onToggle}
+              mt={{ base: 1, sm: 'inherit' }}
+            >
+              Show filters
+            </Button>
+          </Collapse>
         </Flex>
       </Box>
+
+      <PrismicWrapper variant="light" small>
+        <Content>
+          <Text>
+            The Video Library is a Community Project to collate all film of
+            Quidditch in the UK. This library is driven by{' '}
+            <a
+              href="https://docs.google.com/spreadsheets/d/1SBfVt4GBCoyFGpjb-Y7dt4uDsbhZFPbkY-rBVNgZsgo/edit?fbclid=IwAR3Khtk0kQTbhWu1j10NtfdOj5NNDMw677g8zyf6Gu2fPCw9qn3Cv5yeJQ0#gid=0"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              this Google Spreadsheet
+            </a>{' '}
+            put together by Rudi and any videos added there will appear here. As
+            this library is maintained externally it is presented in
+            &quot;As-is&quot; state and may contain errors or missing videos.
+            Please help maintain this resource by submitting video to the
+            spreadsheet{' '}
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSenOYNudVD9tNbYZFMWZAjqZbwwXM3gjNodtiwoJC_4PLghTA/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              here
+            </a>
+            .
+          </Text>
+        </Content>
+      </PrismicWrapper>
 
       <PrismicWrapper>
         {data?.map((row) => (
@@ -181,25 +238,6 @@ const Page = ({ data }) => {
             </Grid>
           </Fragment>
         ))}
-      </PrismicWrapper>
-
-      <PrismicWrapper variant="light" small>
-        <Content>
-          <Text>
-            The Video Library is a Community Project to collate all film of
-            Quidditch in the UK. This library is driven by{' '}
-            <a
-              href="https://docs.google.com/spreadsheets/d/1SBfVt4GBCoyFGpjb-Y7dt4uDsbhZFPbkY-rBVNgZsgo/edit?fbclid=IwAR3Khtk0kQTbhWu1j10NtfdOj5NNDMw677g8zyf6Gu2fPCw9qn3Cv5yeJQ0#gid=0"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              this Google Spreadsheet
-            </a>{' '}
-            put together by Rudi and any videos added there will appear here. As
-            this library is maintained externally it is presented in
-            &quot;As-is&quot; state and may contain errors.
-          </Text>
-        </Content>
       </PrismicWrapper>
     </>
   );
