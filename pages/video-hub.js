@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import {
   Heading,
@@ -29,6 +30,12 @@ const HorizontalScrollWrapper = dynamic(() =>
 const Embed = dynamic(() =>
   import('components/embed-slice').then(({ Embed }) => Embed)
 );
+
+const persicopeRegex = new RegExp('periscope', 'gi');
+
+const isPericope = (video) => {
+  return persicopeRegex.test(video.Link);
+};
 
 const VideoCard = ({ video }) => {
   const [ref, inView] = useInView({ threshold: 0 });
@@ -60,7 +67,7 @@ const VideoCard = ({ video }) => {
     const fetchFacebookOembed = async () => {
       try {
         const oembedDetails = await axios.get(
-          `https://graph.facebook.com/v10.0/oembed_video?url=${video.Link}&access_token=507365847099430|7bXZvqdmONWP92Z_0xsuHa5VE90&omitscript=true`
+          `https://graph.facebook.com/v10.0/oembed_video?url=${video.Link}&access_token=507365847099430|7bXZvqdmONWP92Z_0xsuHa5VE90`
         );
         setOembed(oembedDetails);
       } catch (err) {
@@ -78,35 +85,6 @@ const VideoCard = ({ video }) => {
       fetchFacebookOembed();
     }
   }, [isYoutube, isFacebook, video.Link, oembed, inView]);
-
-  if (!isYoutube && !isFacebook) {
-    return (
-      <Flex flexDirection="column" ref={ref}>
-        <Card
-          name={`${video['Team 1']} vs ${video['Team 2']}`}
-          videoContent={
-            <>
-              <Text fontWeight="bold" textAlign="center">
-                {video.Score}
-              </Text>
-              <Table variant="unstyled">
-                <Tbody>
-                  <Tr>
-                    <Td fontWeight="bold">Tournament</Td>
-                    <Td>{video.Tournament}</Td>
-                  </Tr>
-                  <Tr>
-                    <Td fontWeight="bold">Credit</Td>
-                    <Td>{video.Credit}</Td>
-                  </Tr>
-                </Tbody>
-              </Table>
-            </>
-          }
-        />
-      </Flex>
-    );
-  }
 
   return (
     <Flex flexDirection="column" ref={ref}>
@@ -156,6 +134,29 @@ const Page = ({ data }) => {
 
   return (
     <>
+      <Head>
+        {/* FB SDK */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.fbAsyncInit = function() {
+                FB.init({
+                  appId: '507365847099430',
+                  autoLogAppEvents: true,
+                  xfbml: true,
+                  version: 'v10.0'
+                });
+              };
+            `,
+          }}
+        />
+        <script
+          async
+          defer
+          crossOrigin="anonymous"
+          src="https://connect.facebook.net/en_US/sdk.js"
+        />
+      </Head>
       <Meta subTitle="Video Hub" />
       <Box
         as="section"
@@ -196,9 +197,11 @@ const Page = ({ data }) => {
             <Heading>{row.Date}</Heading>
 
             <HorizontalScrollWrapper>
-              {row?.videos.map((video, i) => (
-                <VideoCard video={video} key={`video-${row.Date}-${i}`} />
-              ))}
+              {row?.videos
+                .filter((vid) => !isPericope(vid))
+                .map((video, i) => (
+                  <VideoCard video={video} key={`video-${row.Date}-${i}`} />
+                ))}
             </HorizontalScrollWrapper>
           </Fragment>
         ))}
