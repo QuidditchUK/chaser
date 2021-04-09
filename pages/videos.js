@@ -19,11 +19,11 @@ import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 import PrismicWrapper from 'components/prismic-wrapper';
 
 const Image = dynamic(() => import('components/image'));
-
 const Page404 = dynamic(() => import('pages/404'));
 const PageLoading = dynamic(() => import('components/page-loading'));
 const Meta = dynamic(() => import('components/meta'));
 const Card = dynamic(() => import('components/card'));
+const Content = dynamic(() => import('components/content'));
 const Embed = dynamic(() =>
   import('components/embed-slice').then(({ Embed }) => Embed)
 );
@@ -181,6 +181,25 @@ const Page = ({ data }) => {
             </Grid>
           </Fragment>
         ))}
+      </PrismicWrapper>
+
+      <PrismicWrapper variant="light" small>
+        <Content>
+          <Text>
+            The Video Library is a Community Project to collate all film of
+            Quidditch in the UK. This library is driven by{' '}
+            <a
+              href="https://docs.google.com/spreadsheets/d/1SBfVt4GBCoyFGpjb-Y7dt4uDsbhZFPbkY-rBVNgZsgo/edit?fbclid=IwAR3Khtk0kQTbhWu1j10NtfdOj5NNDMw677g8zyf6Gu2fPCw9qn3Cv5yeJQ0#gid=0"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              this Google Spreadsheet
+            </a>{' '}
+            put together by Rudi and any videos added there will appear here. As
+            this library is maintained externally it is presented in
+            &quot;As-is&quot; state and may contain errors.
+          </Text>
+        </Content>
       </PrismicWrapper>
     </>
   );
