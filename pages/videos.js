@@ -1,6 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import {
   Heading,
@@ -62,17 +61,11 @@ const VideoCard = ({ video }) => {
       }
     };
 
-    const fetchFacebookOembed = async () => {
-      try {
-        const oembedDetails = await axios.get(
-          `https://graph.facebook.com/v10.0/oembed_video?url=${video.Link}&access_token=507365847099430|7bXZvqdmONWP92Z_0xsuHa5VE90`
-        );
-        setOembed(oembedDetails);
-      } catch (err) {
-        if (err?.response?.status !== 400) {
-          console.log(err);
-        }
-      }
+    const fetchFacebookOembed = () => {
+      const oembedDetails = {
+        data: { provider_name: 'Facebook', href: video.Link },
+      };
+      setOembed(oembedDetails);
     };
 
     if (isYoutube && !oembed && inView) {
@@ -136,29 +129,6 @@ const Page = ({ data }) => {
 
   return (
     <>
-      <Head>
-        {/* FB SDK */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.fbAsyncInit = function() {
-                FB.init({
-                  appId: '507365847099430',
-                  autoLogAppEvents: true,
-                  xfbml: true,
-                  version: 'v10.0'
-                });
-              };
-            `,
-          }}
-        />
-        <script
-          async
-          defer
-          crossOrigin="anonymous"
-          src="https://connect.facebook.net/en_US/sdk.js"
-        />
-      </Head>
       <Meta subTitle="Video Library" />
       <Box
         as="section"
