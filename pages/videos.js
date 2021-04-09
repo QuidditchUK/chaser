@@ -11,6 +11,7 @@ import {
   Tbody,
   Td,
   Tr,
+  Grid,
 } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
@@ -24,9 +25,6 @@ const Page404 = dynamic(() => import('pages/404'));
 const PageLoading = dynamic(() => import('components/page-loading'));
 const Meta = dynamic(() => import('components/meta'));
 const Card = dynamic(() => import('components/card'));
-const HorizontalScrollWrapper = dynamic(() =>
-  import('components/horizontal-scroll-wrapper')
-);
 const Embed = dynamic(() =>
   import('components/embed-slice').then(({ Embed }) => Embed)
 );
@@ -101,16 +99,20 @@ const VideoCard = ({ video }) => {
             <Table variant="unstyled" mx={0}>
               <Tbody>
                 <Tr>
-                  <Td fontWeight="bold" p={0}>
+                  <Td fontWeight="bold" py={0} px={2}>
                     Tournament
                   </Td>
-                  <Td p={0}>{video.Tournament}</Td>
+                  <Td py={0} px={2}>
+                    {video.Tournament}
+                  </Td>
                 </Tr>
                 <Tr>
-                  <Td fontWeight="bold" p={0}>
+                  <Td fontWeight="bold" py={0} px={2}>
                     Credit
                   </Td>
-                  <Td p={0}>{video.Credit}</Td>
+                  <Td py={0} px={2}>
+                    {video.Credit}
+                  </Td>
                 </Tr>
               </Tbody>
             </Table>
@@ -157,7 +159,7 @@ const Page = ({ data }) => {
           src="https://connect.facebook.net/en_US/sdk.js"
         />
       </Head>
-      <Meta subTitle="Video Hub" />
+      <Meta subTitle="Video Library" />
       <Box
         as="section"
         position="relative"
@@ -186,7 +188,7 @@ const Page = ({ data }) => {
             color="white"
             textShadow="lg"
           >
-            Video Hub
+            Video Library
           </Heading>
         </Flex>
       </Box>
@@ -196,13 +198,17 @@ const Page = ({ data }) => {
           <Fragment key={row.Date}>
             <Heading>{row.Date}</Heading>
 
-            <HorizontalScrollWrapper>
+            <Grid
+              gridTemplateColumns="repeat(auto-fit, minmax(250px, 1fr))"
+              gridGap={{ base: 4, md: 9 }}
+              px={{ base: 4, sm: 8, md: 0 }}
+            >
               {row?.videos
                 .filter((vid) => !isPericope(vid))
                 .map((video, i) => (
                   <VideoCard video={video} key={`video-${row.Date}-${i}`} />
                 ))}
-            </HorizontalScrollWrapper>
+            </Grid>
           </Fragment>
         ))}
       </PrismicWrapper>

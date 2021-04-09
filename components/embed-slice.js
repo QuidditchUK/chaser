@@ -16,6 +16,11 @@ export const Embed = ({ embed }) => {
     [url] = embed.html.split('src="')[1].split('"');
   }
 
+  if (embed.provider_name === 'Facebook') {
+    const [dataHref] = embed.html.split('data-href="')[1].split('"');
+    url = `https://www.facebook.com/plugins/video.php?height=314&show_text=false&width=560&href=${dataHref}`;
+  }
+
   return (
     <>
       {url ? (
