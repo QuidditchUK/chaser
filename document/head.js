@@ -46,6 +46,28 @@ const DocumentHead = () => (
             `,
       }}
     />
+
+    {/* FB SDK */}
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+              window.fbAsyncInit = function() {
+                FB.init({
+                  appId: '507365847099430',
+                  autoLogAppEvents: true,
+                  xfbml: true,
+                  version: 'v10.0'
+                });
+              };
+            `,
+      }}
+    />
+    <script
+      async
+      defer
+      crossOrigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js"
+    />
   </Head>
 );
 

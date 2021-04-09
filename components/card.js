@@ -47,7 +47,15 @@ const ContentBox = (props) => (
   />
 );
 
-const Card = ({ image, name, category, content, variant, ...cardProps }) => {
+const Card = ({
+  image,
+  name,
+  category,
+  content,
+  videoContent,
+  variant,
+  ...cardProps
+}) => {
   const styles = useStyleConfig('Card', { variant });
   return (
     <Box sx={styles} {...cardProps}>
@@ -76,6 +84,7 @@ const Card = ({ image, name, category, content, variant, ...cardProps }) => {
           </Heading>
         )}
         {content && <RichText render={content} linkResolver={linkResolver} />}
+        {videoContent && <>{videoContent}</>}
       </ContentBox>
     </Box>
   );
