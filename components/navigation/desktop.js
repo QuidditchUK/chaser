@@ -106,8 +106,8 @@ const DesktopNav = ({ navigation, dashboard }) => {
                           as={ChevronDownIcon}
                           transition={'all .125s ease-in-out'}
                           transform={isOpen ? 'rotate(180deg)' : ''}
-                          w={5}
-                          h={5}
+                          w="17px"
+                          h="17px"
                         />
                       </Text>
                     )}
@@ -128,6 +128,7 @@ const DesktopNav = ({ navigation, dashboard }) => {
                       <Stack>
                         {navItem.children.map((child) => (
                           <DesktopSubNav
+                            dashboard={dashboard}
                             key={child.label}
                             onClose={onClose}
                             {...child}
@@ -146,11 +147,13 @@ const DesktopNav = ({ navigation, dashboard }) => {
   );
 };
 
-const DesktopSubNav = ({ label, href, onClose }) => {
+const DesktopSubNav = ({ label, href, onClose, dashboard }) => {
   const { asPath } = useRouter();
   const regexHref = RegExp(href.replace(/\//g, '\\/'), 'g');
 
   const isActive = regexHref.test(asPath);
+
+  const dashboardColor = dashboard ? 'white' : 'greyDark';
 
   return (
     <NextLink href={href} passHref>
@@ -174,7 +177,7 @@ const DesktopSubNav = ({ label, href, onClose }) => {
             <Box>
               <Text
                 transition={'all .1s ease'}
-                color={isActive ? 'qukBlue' : 'inherit'}
+                color={isActive ? 'qukBlue' : dashboardColor}
                 _groupHover={{ color: 'qukBlue' }}
                 _groupFocus={{ color: 'qukBlue' }}
                 fontWeight={500}
@@ -239,32 +242,44 @@ export const DesktopCTAs = ({ dashboard }) => {
       )}
 
       {loggedIn && (
-        <Popover placement={'bottom-end'}>
+        <Popover placement={'bottom-end'} isLazy>
           {({ isOpen }) => (
             <>
               <PopoverTrigger>
-                <NextLink href="/dashboard" passHref>
-                  <Link
-                    as="a"
-                    px={4}
-                    py={2}
-                    lineHeight="1.2"
-                    fontSize={'md'}
-                    fontWeight="normal"
-                    bg={isOpen ? 'gray.200' : 'white'}
-                    color={'qukBlue'}
-                    border="1px solid"
-                    borderColor="qukBlue"
-                    borderRadius="md"
-                    _hover={{
-                      bg: 'gray.200',
-                      textDecoration: 'none',
-                      color: 'qukBlue',
-                    }}
-                  >
-                    My Account
-                  </Link>
-                </NextLink>
+                <Box
+                  as="button"
+                  px={4}
+                  py={2}
+                  cursor="pointer"
+                  lineHeight="1.2"
+                  fontSize={'md'}
+                  fontWeight="normal"
+                  bg={isOpen ? 'gray.200' : 'white'}
+                  color={'qukBlue'}
+                  border="1px solid"
+                  borderColor="qukBlue"
+                  borderRadius="md"
+                  _hover={{
+                    bg: 'gray.200',
+                    textDecoration: 'none',
+                    color: 'qukBlue',
+                  }}
+                  _focus={{
+                    bg: 'gray.200',
+                    textDecoration: 'none',
+                    color: 'qukBlue',
+                  }}
+                >
+                  My Account
+                  <Icon
+                    ml={1}
+                    as={ChevronDownIcon}
+                    transition={'all .125s ease-in-out'}
+                    transform={isOpen ? 'rotate(180deg)' : ''}
+                    w="17px"
+                    h="17px"
+                  />
+                </Box>
               </PopoverTrigger>
 
               <PopoverContent
@@ -275,58 +290,72 @@ export const DesktopCTAs = ({ dashboard }) => {
                 pt={2}
                 rounded={'xl'}
                 maxW={rem(300)}
-                mt={2}
+                mt={-1}
                 ml={8}
                 color={dashboard ? 'white' : 'greyDark'}
               >
                 <Stack>
-                  {ACCOUNT_NAVIGATION.slice(1).map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
+                  {ACCOUNT_NAVIGATION.map((child) => (
+                    <DesktopSubNav
+                      key={child.label}
+                      {...child}
+                      dashboard={dashboard}
+                    />
                   ))}
 
-                  <Box onClick={() => signOut()}>
-                    <Link
-                      role={'group'}
-                      display={'block'}
-                      py={2}
-                      px={4}
-                      rounded={'md'}
-                      bg={'inherit'}
-                      _hover={{ bg: 'red.200' }}
-                    >
-                      <Stack direction={'row'} align={'center'}>
-                        <Box>
-                          <Text
-                            transition={'all .15s ease'}
-                            _groupHover={{ color: 'monarchRed' }}
-                            fontWeight={500}
-                            my={0}
-                          >
-                            Sign out
-                          </Text>
-                        </Box>
-
-                        <Flex
+                  <Box
+                    role={'group'}
+                    display={'block'}
+                    as="button"
+                    width="100%"
+                    cursor="pointer"
+                    border="0"
+                    py={2}
+                    px={4}
+                    rounded="md"
+                    onClick={() => signOut()}
+                    bg={'inherit'}
+                    _hover={{ bg: 'red.200' }}
+                    _focus={{ bg: 'red.200' }}
+                  >
+                    <Stack direction={'row'} align={'center'}>
+                      <Box>
+                        <Text
                           transition={'all .15s ease'}
-                          transform={'translateX(-10px)'}
-                          opacity={0}
-                          _groupHover={{
-                            opacity: '100%',
-                            transform: 'translateX(0)',
-                          }}
-                          justify={'flex-end'}
-                          align={'center'}
-                          flex={1}
+                          _groupHover={{ color: 'monarchRed' }}
+                          _groupFocus={{ color: 'monarchRed' }}
+                          color={dashboard ? 'white' : 'greyDark'}
+                          fontWeight={500}
+                          my={0}
                         >
-                          <Icon
-                            color={'monarchRed'}
-                            w={5}
-                            h={5}
-                            as={ChevronRightIcon}
-                          />
-                        </Flex>
-                      </Stack>
-                    </Link>
+                          Sign out
+                        </Text>
+                      </Box>
+
+                      <Flex
+                        transition={'all .15s ease'}
+                        transform={'translateX(-10px)'}
+                        opacity={0}
+                        _groupHover={{
+                          opacity: '100%',
+                          transform: 'translateX(0)',
+                        }}
+                        _groupFocus={{
+                          opacity: '100%',
+                          transform: 'translateX(0)',
+                        }}
+                        justify={'flex-end'}
+                        align={'center'}
+                        flex={1}
+                      >
+                        <Icon
+                          color={'monarchRed'}
+                          w={5}
+                          h={5}
+                          as={ChevronRightIcon}
+                        />
+                      </Flex>
+                    </Stack>
                   </Box>
                 </Stack>
               </PopoverContent>
