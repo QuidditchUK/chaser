@@ -325,6 +325,34 @@ const Page = ({ data: initialData }) => {
                   <VideoCard video={video} key={`video-${video.Link}-${i}`} />
                 ))}
             </Grid>
+
+            {row?.videos?.length === 0 && (
+              <>
+                <Heading
+                  as="h2"
+                  fontSize="3xl"
+                  mb={0}
+                  fontFamily="body"
+                  textAlign="center"
+                  color="primary"
+                >
+                  No videos matched your search
+                </Heading>
+                <Content>
+                  <Text textAlign="center">
+                    Adjust your search filters and double-check your terms, or
+                    you can always check the raw spreadsheet{' '}
+                    <a
+                      href="https://docs.google.com/spreadsheets/d/1SBfVt4GBCoyFGpjb-Y7dt4uDsbhZFPbkY-rBVNgZsgo/edit?fbclid=IwAR3Khtk0kQTbhWu1j10NtfdOj5NNDMw677g8zyf6Gu2fPCw9qn3Cv5yeJQ0#gid=0"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      here
+                    </a>
+                  </Text>
+                </Content>
+              </>
+            )}
           </Fragment>
         ))}
       </PrismicWrapper>

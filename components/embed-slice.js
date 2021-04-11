@@ -17,7 +17,10 @@ export const Embed = ({ embed }) => {
   }
 
   if (embed.provider_name === 'Facebook') {
-    url = `https://www.facebook.com/plugins/video.php?height=314&show_text=false&width=560&href=${embed.href}`;
+    const timestamp = embed.href.split('t=')[1];
+    url = `https://www.facebook.com/plugins/video.php?height=314&show_text=false&width=560&href=${
+      embed.href
+    }${timestamp ? `&t=${timestamp}` : ''}`;
   }
 
   return (
