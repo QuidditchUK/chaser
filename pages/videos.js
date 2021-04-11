@@ -171,8 +171,6 @@ const Page = ({ data: initialData }) => {
           },
         });
 
-        console.log(data);
-
         setData([{ videos: data }]);
       } catch (err) {
         console.log(err);
