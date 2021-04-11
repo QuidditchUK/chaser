@@ -14,6 +14,7 @@ import {
   useDisclosure,
   Collapse,
   Select,
+  Stack,
 } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
@@ -54,18 +55,29 @@ const isPericope = (video) => {
 
 const VideoCard = ({ video }) => {
   const [ref, inView] = useInView({ threshold: 0 });
+  const [videoLink, setVideoLink] = useState(video.Link);
   const youRegex = new RegExp('youtu', 'gi');
   const faceRegex = new RegExp('facebook.com', 'gi');
   const fbRegex = new RegExp('fb.watch', 'gi');
+  const linkRegex = new RegExp('http', 'gi');
 
-  const isFacebook = faceRegex.test(video.Link) || fbRegex.test(video.Link);
+  const videos = [
+    video.Link,
+    video['Notes 1'],
+    video['Notes 2'],
+    video['Notes 3'],
+    video['Notes 4'],
+  ].filter((value) => linkRegex.test(value));
 
-  const isYoutube = youRegex.test(video.Link);
+  const isFacebook = faceRegex.test(videoLink) || fbRegex.test(videoLink);
+
+  const isYoutube = youRegex.test(videoLink);
   const [oembed, setOembed] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchYoutubeOembed = async () => {
-      const [url] = video.Link.split('/').slice(-1);
+      const [url] = videoLink.split('/').slice(-1);
 
       try {
         const oemebedDetails = await axios.get(
@@ -81,24 +93,26 @@ const VideoCard = ({ video }) => {
 
     const fetchFacebookOembed = () => {
       const oembedDetails = {
-        data: { provider_name: 'Facebook', href: video.Link },
+        data: { provider_name: 'Facebook', href: videoLink },
       };
       setOembed(oembedDetails);
     };
 
-    if (isYoutube && !oembed && inView) {
+    if (isYoutube && inView && (!oembed || loading)) {
       fetchYoutubeOembed();
+      setLoading(false);
     }
 
-    if (isFacebook && !oembed && inView) {
+    if (isFacebook && inView && (!oembed || loading)) {
       fetchFacebookOembed();
+      setLoading(false);
     }
-  }, [isYoutube, isFacebook, video.Link, oembed, inView]);
+  }, [isYoutube, isFacebook, videoLink, oembed, inView, setLoading, loading]);
 
   return (
     <Flex flexDirection="column" ref={ref}>
       <Card
-        image={oembed?.data ? <Embed embed={oembed?.data} /> : null}
+        image={oembed?.data && !loading ? <Embed embed={oembed?.data} /> : null}
         videoContent={
           <>
             <Heading as="h2" fontFamily="body" textAlign="center" fontSize="xl">
@@ -127,6 +141,21 @@ const VideoCard = ({ video }) => {
                 </Tr>
               </Tbody>
             </Table>
+            {videos.length !== 1 && (
+              <Stack direction="row" spacing={2} pt={2}>
+                {videos.map((videoLink, i) => (
+                  <Button
+                    onClick={() => {
+                      setLoading(true);
+                      setVideoLink(videoLink);
+                    }}
+                    key={`video-link-${videoLink}`}
+                  >
+                    Link {i + 1}
+                  </Button>
+                ))}
+              </Stack>
+            )}
           </>
         }
       />
