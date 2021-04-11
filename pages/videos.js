@@ -32,7 +32,7 @@ const Embed = dynamic(() =>
   import('components/embed-slice').then(({ Embed }) => Embed)
 );
 
-const SHEET_ID = '1GPC0LlFuQCVieR0aNdQSl6LuWroU9cZ5sFE3oMlW2Zw';
+const SHEET_ID = '1SBfVt4GBCoyFGpjb-Y7dt4uDsbhZFPbkY-rBVNgZsgo';
 
 const DEFAULT_VIDEO_ORDER = (sheet) =>
   sheet.reduce((arr, row) => {
@@ -137,10 +137,8 @@ const VideoCard = ({ video }) => {
 const Page = ({ data: initialData }) => {
   const { isOpen, onToggle } = useDisclosure();
   const [data, setData] = useState(initialData);
-  // const [loading, setLoading] = useState(false);
 
   const { handleSubmit, register, watch } = useForm({
-    // mode: 'onBlur',
     defaultValues: {
       searchField: null,
       searchTerm: '',
