@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { Fragment, useEffect, useState, useCallback } from 'react';
+import { debounce } from 'throttle-debounce';
 import dynamic from 'next/dynamic';
 import {
   Heading,
@@ -13,16 +13,17 @@ import {
   Grid,
   useDisclosure,
   Collapse,
+  Select,
 } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import getSheet from 'modules/sheets';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import PrismicWrapper from 'components/prismic-wrapper';
+import { useForm } from 'react-hook-form';
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
 const Image = dynamic(() => import('components/image'));
-const Page404 = dynamic(() => import('pages/404'));
-const PageLoading = dynamic(() => import('components/page-loading'));
 const Meta = dynamic(() => import('components/meta'));
 const Card = dynamic(() => import('components/card'));
 const Content = dynamic(() => import('components/content'));
@@ -30,6 +31,20 @@ const Button = dynamic(() => import('components/button'));
 const Embed = dynamic(() =>
   import('components/embed-slice').then(({ Embed }) => Embed)
 );
+
+const SHEET_ID = '1GPC0LlFuQCVieR0aNdQSl6LuWroU9cZ5sFE3oMlW2Zw';
+
+const DEFAULT_VIDEO_ORDER = (sheet) =>
+  sheet.reduce((arr, row) => {
+    if (!row.Credit) {
+      arr.push({ ...row, videos: [] });
+    } else {
+      arr[arr.length - 1].videos.push({
+        ...row,
+      });
+    }
+    return arr;
+  }, []);
 
 const persicopeRegex = new RegExp('periscope', 'gi');
 
@@ -119,17 +134,56 @@ const VideoCard = ({ video }) => {
   );
 };
 
-const Page = ({ data }) => {
-  const router = useRouter();
+const Page = ({ data: initialData }) => {
   const { isOpen, onToggle } = useDisclosure();
+  const [data, setData] = useState(initialData);
+  // const [loading, setLoading] = useState(false);
 
-  if (router.isFallback && !data) {
-    return <PageLoading />;
-  }
+  const { handleSubmit, register, watch } = useForm({
+    // mode: 'onBlur',
+    defaultValues: {
+      searchField: null,
+      searchTerm: '',
+    },
+  });
 
-  if (!data) {
-    return <Page404 />;
-  }
+  const watchSearchField = watch('searchField', null);
+  const watchSearchTerm = watch('searchTerm', '');
+
+  const debounceRefreshQuery = useCallback(
+    debounce(1000, async ({ field, term }) => {
+      if (!field || !term) {
+        const sheet = await getSheet(SHEET_ID, 2);
+        setData(DEFAULT_VIDEO_ORDER(sheet));
+        return;
+      }
+
+      const filter = {
+        ...(field === 'Team 1' && { 'Team 2': term }),
+        [field]: term,
+      };
+      try {
+        const data = await getSheet(SHEET_ID, 2, {
+          filter,
+          filterOptions: {
+            operator: 'or',
+            matching: 'loose',
+          },
+        });
+
+        console.log(data);
+
+        setData([{ videos: data }]);
+      } catch (err) {
+        console.log(err);
+      }
+    }),
+    []
+  );
+
+  useEffect(() => {
+    debounceRefreshQuery({ field: watchSearchField, term: watchSearchTerm });
+  }, [debounceRefreshQuery, watchSearchField, watchSearchTerm]);
 
   return (
     <>
@@ -138,62 +192,94 @@ const Page = ({ data }) => {
         image="https://images.prismic.io/chaser/15de9370-f5bd-4a7c-8b4d-9610e0b22e3b_video-uncropped.jpg?auto=compress,format"
         description="Browse the QuidditchUK Community Video Library for footage of Quidditch being played in the UK"
       />
-      <Box
-        as="section"
-        position="relative"
-        backgroundColor="qukBlue"
-        backgroundSize="cover"
-        overflow="hidden"
-        minHeight={BLOG_MIN_HEIGHTS}
-      >
-        <Image
-          src="https://images.prismic.io/chaser/15de9370-f5bd-4a7c-8b4d-9610e0b22e3b_video-uncropped.jpg?auto=compress,format"
-          layout="fill"
-          objectPosition="center center"
-          objectFit="cover"
-          borderRadius={0}
-          priority={true}
-        />
-        <Flex
-          position="absolute"
-          minHeight={BLOG_MIN_HEIGHTS}
-          bg="qukBlue"
-          opacity={0.8}
-          width="100%"
-          height="100%"
-        />
-
-        <Flex
+      <form onSubmit={handleSubmit(() => {})}>
+        <Box
+          as="section"
           position="relative"
+          backgroundColor="qukBlue"
+          backgroundSize="cover"
+          overflow="hidden"
           minHeight={BLOG_MIN_HEIGHTS}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          bgGradient={
-            isOpen ? 'linear(to-t, qukBlue, rgba(0, 0, 0, 0))' : 'none'
-          }
         >
-          <Heading
-            fontSize={{ base: '4xl', md: '7xl' }}
-            color="white"
-            textShadow="lg"
-            my={2}
-          >
-            Video Library
-          </Heading>
+          <Image
+            src="https://images.prismic.io/chaser/15de9370-f5bd-4a7c-8b4d-9610e0b22e3b_video-uncropped.jpg?auto=compress,format"
+            layout="fill"
+            objectPosition="center center"
+            objectFit="cover"
+            borderRadius={0}
+            priority={true}
+          />
+          <Flex
+            position="absolute"
+            minHeight={BLOG_MIN_HEIGHTS}
+            bg="qukBlue"
+            opacity={0.8}
+            width="100%"
+            height="100%"
+          />
 
-          <Collapse in={!isOpen} animateOpacity>
-            <Button
-              variant="transparent"
-              type="button"
-              onClick={onToggle}
-              mt={{ base: 1, sm: 'inherit' }}
+          <Flex
+            position="relative"
+            minHeight={BLOG_MIN_HEIGHTS}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            bgGradient={
+              isOpen ? 'linear(to-t, qukBlue, rgba(0, 0, 0, 0))' : 'none'
+            }
+          >
+            <Heading
+              fontSize={{ base: '4xl', md: '7xl' }}
+              color="white"
+              textShadow="lg"
+              my={2}
             >
-              Show filters
-            </Button>
-          </Collapse>
-        </Flex>
-      </Box>
+              Video Library
+            </Heading>
+
+            <Collapse in={!isOpen} animateOpacity>
+              <Button
+                variant="transparent"
+                type="button"
+                onClick={onToggle}
+                mt={{ base: 1, sm: 'inherit' }}
+              >
+                Show filters
+              </Button>
+            </Collapse>
+
+            <Collapse in={isOpen} animateOpacity>
+              <Grid
+                gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
+                gridGap={2}
+              >
+                <Select
+                  id="searchField"
+                  name="searchField"
+                  ref={register}
+                  marginBottom={3}
+                  bg="white"
+                  borderColor="white"
+                  color="qukBlue"
+                >
+                  <option disabled value>
+                    Select a field to filter by
+                  </option>
+                  <option value="Team 1">Team</option>
+                  <option value="Tournament">Tournament</option>
+                </Select>
+
+                <Input
+                  id="searchTerm"
+                  name="searchTerm"
+                  placeholder="e.g. Unbreakables"
+                  ref={register}
+                />
+              </Grid>
+            </Collapse>
+          </Flex>
+        </Box>
+      </form>
 
       <PrismicWrapper variant="light" small>
         <Content>
@@ -225,9 +311,9 @@ const Page = ({ data }) => {
       </PrismicWrapper>
 
       <PrismicWrapper>
-        {data?.map((row) => (
-          <Fragment key={row.Date}>
-            <Heading>{row.Date}</Heading>
+        {data?.map((row, i) => (
+          <Fragment key={row?.Date || `video-row-${i}`}>
+            <Heading>{row?.Date}</Heading>
 
             <Grid
               gridTemplateColumns="repeat(auto-fit, minmax(250px, 1fr))"
@@ -237,7 +323,7 @@ const Page = ({ data }) => {
               {row?.videos
                 .filter((vid) => !isPericope(vid))
                 .map((video, i) => (
-                  <VideoCard video={video} key={`video-${row.Date}-${i}`} />
+                  <VideoCard video={video} key={`video-${video.Link}-${i}`} />
                 ))}
             </Grid>
           </Fragment>
@@ -248,21 +334,9 @@ const Page = ({ data }) => {
 };
 
 export const getStaticProps = async () => {
-  const sheet = await getSheet(
-    '1GPC0LlFuQCVieR0aNdQSl6LuWroU9cZ5sFE3oMlW2Zw',
-    2
-  );
+  const sheet = await getSheet(SHEET_ID, 2);
 
-  const data = sheet.reduce((arr, row) => {
-    if (!row.Credit) {
-      arr.push({ ...row, videos: [] });
-    } else {
-      arr[arr.length - 1].videos.push({
-        ...row,
-      });
-    }
-    return arr;
-  }, []);
+  const data = DEFAULT_VIDEO_ORDER(sheet);
 
   return {
     props: { data },
