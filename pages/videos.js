@@ -259,6 +259,7 @@ const Page = ({ data: initialData }) => {
                   bg="white"
                   borderColor="white"
                   color="qukBlue"
+                  placeholder="Filter by"
                 >
                   <option disabled value>
                     Select a field to filter by
