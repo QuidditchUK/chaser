@@ -63,6 +63,7 @@ const VideoCard = ({ video }) => {
 
   const videos = [
     video.Link,
+    video.Notes,
     video['Notes 1'],
     video['Notes 2'],
     video['Notes 3'],
