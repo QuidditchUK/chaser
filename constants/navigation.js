@@ -49,6 +49,10 @@ export const MAIN_NAVIGATION = [
         label: 'Official Events',
         href: '/play/official-events',
       },
+      {
+        label: 'Videos',
+        href: '/videos',
+      },
     ],
   },
   {
