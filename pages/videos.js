@@ -249,7 +249,7 @@ const Page = ({ data: initialData }) => {
                 <Input
                   id="searchTerm"
                   name="searchTerm"
-                  placeholder="Search"
+                  placeholder="Search by Team or Tournament"
                   ref={register}
                 />
               </Flex>
