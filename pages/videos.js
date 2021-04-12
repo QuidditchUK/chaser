@@ -231,7 +231,6 @@ const Page = ({ data: initialData }) => {
             direction="column"
             alignItems="center"
             justifyContent="center"
-            bgGradient={'linear(to-t, qukBlue, rgba(0, 0, 0, 0))'}
           >
             <Heading
               fontSize={{ base: '4xl', md: '7xl' }}
