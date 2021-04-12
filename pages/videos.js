@@ -1,5 +1,4 @@
-import { Fragment, useEffect, useState, useCallback } from 'react';
-import { debounce } from 'throttle-debounce';
+import { Fragment, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
   Heading,
@@ -11,9 +10,6 @@ import {
   Td,
   Tr,
   Grid,
-  useDisclosure,
-  Collapse,
-  Select,
   Stack,
 } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
@@ -74,7 +70,7 @@ const VideoCard = ({ video }) => {
 
   const isYoutube = youRegex.test(videoLink);
   const [oembed, setOembed] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchYoutubeOembed = async () => {
@@ -164,52 +160,41 @@ const VideoCard = ({ video }) => {
   );
 };
 
+const handleSearchSubmit = async ({ values, setData }) => {
+  if (!values.searchTerm) {
+    const sheet = await getSheet(SHEET_ID, 2);
+    setData(DEFAULT_VIDEO_ORDER(sheet));
+    return;
+  }
+
+  const filter = {
+    'Team 1': values.searchTerm,
+    'Team 2': values.searchTerm,
+    Tournament: values.searchTerm,
+  };
+  try {
+    const data = await getSheet(SHEET_ID, 2, {
+      filter,
+      filterOptions: {
+        operator: 'or',
+        matching: 'loose',
+      },
+    });
+
+    setData([{ videos: data }]);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const Page = ({ data: initialData }) => {
-  const { isOpen, onToggle } = useDisclosure();
   const [data, setData] = useState(initialData);
 
-  const { handleSubmit, register, watch } = useForm({
+  const { handleSubmit, register } = useForm({
     defaultValues: {
-      searchField: null,
       searchTerm: '',
     },
   });
-
-  const watchSearchField = watch('searchField', null);
-  const watchSearchTerm = watch('searchTerm', '');
-
-  const debounceRefreshQuery = useCallback(
-    debounce(1000, async ({ field, term }) => {
-      if (!field || !term) {
-        const sheet = await getSheet(SHEET_ID, 2);
-        setData(DEFAULT_VIDEO_ORDER(sheet));
-        return;
-      }
-
-      const filter = {
-        ...(field === 'Team 1' && { 'Team 2': term }),
-        [field]: term,
-      };
-      try {
-        const data = await getSheet(SHEET_ID, 2, {
-          filter,
-          filterOptions: {
-            operator: 'or',
-            matching: 'loose',
-          },
-        });
-
-        setData([{ videos: data }]);
-      } catch (err) {
-        console.log(err);
-      }
-    }),
-    []
-  );
-
-  useEffect(() => {
-    debounceRefreshQuery({ field: watchSearchField, term: watchSearchTerm });
-  }, [debounceRefreshQuery, watchSearchField, watchSearchTerm]);
 
   return (
     <>
@@ -218,7 +203,11 @@ const Page = ({ data: initialData }) => {
         image="https://images.prismic.io/chaser/15de9370-f5bd-4a7c-8b4d-9610e0b22e3b_video-uncropped.jpg?auto=compress,format"
         description="Browse the QuidditchUK Community Video Library for footage of Quidditch being played in the UK"
       />
-      <form onSubmit={handleSubmit(() => {})}>
+      <form
+        onSubmit={handleSubmit((values) =>
+          handleSearchSubmit({ values, setData })
+        )}
+      >
         <Box
           as="section"
           position="relative"
@@ -235,14 +224,6 @@ const Page = ({ data: initialData }) => {
             borderRadius={0}
             priority={true}
           />
-          <Flex
-            position="absolute"
-            minHeight={BLOG_MIN_HEIGHTS}
-            bg="qukBlue"
-            opacity={0.8}
-            width="100%"
-            height="100%"
-          />
 
           <Flex
             position="relative"
@@ -250,9 +231,7 @@ const Page = ({ data: initialData }) => {
             direction="column"
             alignItems="center"
             justifyContent="center"
-            bgGradient={
-              isOpen ? 'linear(to-t, qukBlue, rgba(0, 0, 0, 0))' : 'none'
-            }
+            bgGradient={'linear(to-t, qukBlue, rgba(0, 0, 0, 0))'}
           >
             <Heading
               fontSize={{ base: '4xl', md: '7xl' }}
@@ -263,47 +242,23 @@ const Page = ({ data: initialData }) => {
               Video Library
             </Heading>
 
-            <Collapse in={!isOpen} animateOpacity>
-              <Button
-                variant="transparent"
-                type="button"
-                onClick={onToggle}
-                mt={{ base: 1, sm: 'inherit' }}
-              >
-                Show filters
-              </Button>
-            </Collapse>
-
-            <Collapse in={isOpen} animateOpacity>
-              <Grid
-                gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
-                gridGap={2}
-              >
-                <Select
-                  id="searchField"
-                  name="searchField"
-                  ref={register}
-                  marginBottom={3}
-                  bg="white"
-                  borderColor="white"
-                  color="qukBlue"
-                  placeholder="Filter by"
-                >
-                  <option disabled value>
-                    Select a field to filter by
-                  </option>
-                  <option value="Team 1">Team</option>
-                  <option value="Tournament">Tournament</option>
-                </Select>
-
+            <Grid
+              gridTemplateColumns={{ base: '1fr', md: '2fr 1fr' }}
+              gridGap={2}
+            >
+              <Flex flexDirection="column">
                 <Input
                   id="searchTerm"
                   name="searchTerm"
-                  placeholder="e.g. Unbreakables"
+                  placeholder="Search"
                   ref={register}
                 />
-              </Grid>
-            </Collapse>
+              </Flex>
+
+              <Button variant="secondary" type="submit">
+                Search Videos
+              </Button>
+            </Grid>
           </Flex>
         </Box>
       </form>
