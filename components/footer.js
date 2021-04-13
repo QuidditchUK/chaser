@@ -121,6 +121,11 @@ export const Footer = () => {
                   </ExternalLink>
                 </Item>
                 <Item>
+                  <ActiveLink href="/videos">
+                    <span>Videos</span>
+                  </ActiveLink>
+                </Item>
+                <Item>
                   <ActiveLink href="/about/fees">
                     <span>Season Fees</span>
                   </ActiveLink>
