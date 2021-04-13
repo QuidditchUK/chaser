@@ -95,15 +95,22 @@ const VideoCard = ({ video }) => {
       setOembed(oembedDetails);
     };
 
-    if (isYoutube && inView && (!oembed || loading)) {
-      fetchYoutubeOembed();
-      setLoading(false);
+    if (inView) {
+      const timeout = setTimeout(() => {
+        if (isYoutube && (!oembed || loading)) {
+          fetchYoutubeOembed();
+          setLoading(false);
+        }
+
+        if (isFacebook && (!oembed || loading)) {
+          fetchFacebookOembed();
+          setLoading(false);
+        }
+      }, 500);
+      return () => clearTimeout(timeout);
     }
 
-    if (isFacebook && inView && (!oembed || loading)) {
-      fetchFacebookOembed();
-      setLoading(false);
-    }
+    return undefined;
   }, [isYoutube, isFacebook, videoLink, oembed, inView, setLoading, loading]);
 
   return (
