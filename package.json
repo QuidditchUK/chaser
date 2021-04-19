@@ -32,7 +32,7 @@
     "react-flickity-component": "^3.5.0",
     "react-headroom": "^3.0.0",
     "react-hook-form": "^6.10.0",
-    "react-intersection-observer": "^8.26.2",
+    "react-intersection-observer": "^8.31.0",
     "react-is": "^17.0.0",
     "react-query": "^3.12.1",
     "throttle-debounce": "^3.0.0",
