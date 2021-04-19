@@ -31,7 +31,7 @@
     "react-dom": "^17.0.1",
     "react-flickity-component": "^3.5.0",
     "react-headroom": "^3.0.0",
-    "react-hook-form": "^6.10.0",
+    "react-hook-form": "^6.14.1",
     "react-intersection-observer": "^8.26.2",
     "react-is": "^17.0.0",
     "react-query": "^3.12.1",

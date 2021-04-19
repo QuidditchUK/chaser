@@ -6229,10 +6229,10 @@ react-headroom@^3.0.0:
     raf "^3.3.0"
     shallowequal "^1.1.0"
 
-react-hook-form@^6.10.0:
-  version "6.14.1"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-6.14.1.tgz#c15f03fe8a7df76232bd4ac07b87317acab0cbd8"
-  integrity sha512-Bf2fWcL2F34hUUqrx1rpgZ8ZErQ4/DvrPs6Je+lUYL59km8PXIQqyCTz/NbggC1RQUj7rChSmTx6eFap+mCttw==
+react-hook-form@^6.14.1:
+  version "6.15.6"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-6.15.6.tgz#5d4985ffd3758dee97912e370595e49a6fcd24ab"
+  integrity sha512-WIrOAoWw+ftMC13tJd5VL/vyNV6EkPKOUY/TwUHBinym/45k3gmC67an2rETvdDXxwXfCIaD+kPyMwjXBnCjBw==
 
 react-intersection-observer@^8.26.2:
   version "8.31.0"
