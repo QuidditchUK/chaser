@@ -6220,10 +6220,10 @@ react-focus-lock@2.5.0:
     use-callback-ref "^1.2.1"
     use-sidecar "^1.0.1"
 
-react-headroom@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/react-headroom/-/react-headroom-3.1.0.tgz#7b176a5439cf937cc20293a49582b11f363a0498"
-  integrity sha512-zgisgzALxNOGqv+xoPSc4mU2mY/C6LK4NfoD2ZQK4qnL/j9Lm+EJ9z3d1PRh2pEcdll1T++q/FAHzrlu7p1E0Q==
+react-headroom@^3.1.0:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-headroom/-/react-headroom-3.1.1.tgz#573a7bd87ce0eda70bcf0588e86e0d461280fe95"
+  integrity sha512-mmZA8o1pItF1py4XlYPQD4QpyrTzIuafYjrB/RrJKGPiWEz8IyUcfxoZiiw6qz3oOylLs5SWesCJINA4uThQYw==
   dependencies:
     prop-types "^15.5.8"
     raf "^3.3.0"
