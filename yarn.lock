@@ -4542,11 +4542,12 @@ html-dom-parser@1.0.0:
     domhandler "4.0.0"
     htmlparser2 "6.0.0"
 
-html-react-parser@^1.0.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/html-react-parser/-/html-react-parser-1.1.1.tgz#081d309a02aac9ae2683a5d96eb48846940d830b"
-  integrity sha512-z2O8aeh36Bnn17AtRReEZckpzVUaqRMsY8TMIxCyjQhCblQuN8l2D4mWY7V2bdLL7B2/FS4YD/dpndxuHtvYIQ==
+html-react-parser@^1.1.1:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/html-react-parser/-/html-react-parser-1.2.6.tgz#610b9bbcdcf51cdfabf644a83ac3815b1d485436"
+  integrity sha512-C1bm5OwmXxv1KJg5EqDMUCDO3lVsMNCfc1H/aEk8iJb4qek7ZzdYy9dUR0ciuPoRZBsGJpyHa/UzZ0Lw3DHnMQ==
   dependencies:
+    domhandler "4.0.0"
     html-dom-parser "1.0.0"
     react-property "1.0.1"
     style-to-js "1.1.0"
