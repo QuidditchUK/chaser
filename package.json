@@ -37,7 +37,7 @@
     "react-query": "^3.12.1",
     "throttle-debounce": "^3.0.0",
     "webpack": "5.30.0",
-    "yup": "^0.32.0"
+    "yup": "^0.32.8"
   },
   "scripts": {
     "dev": "next dev",
