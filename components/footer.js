@@ -191,11 +191,11 @@ export const Footer = () => {
                 </Item>
                 <Item>
                   <ExternalLink
-                    href="https://quidditchpremierleague.com"
+                    href="https://quidditchscheduler.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span>Quidditch Premier League</span>
+                    <span>Quidditch Scheduler</span>
                   </ExternalLink>
                 </Item>
               </UnorderedList>
@@ -260,7 +260,11 @@ export const Footer = () => {
             gridTemplateColumns={{ base: '1fr', md: '4fr 2fr' }}
             gridGap={{ base: 4, md: 9 }}
           >
-            <Flex flexDirection="column" order={{ base: 2, md: 1 }}>
+            <Flex
+              flexDirection="column"
+              order={{ base: 2, md: 1 }}
+              alignItems={{ base: 'center', md: 'flex-start' }}
+            >
               <Link href="/" passHref>
                 <ChakraLink height={{ base: '35px', xl: '45px' }}>
                   <Logo filter />
