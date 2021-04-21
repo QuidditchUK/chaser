@@ -53,6 +53,10 @@ export const MAIN_NAVIGATION = [
         label: 'Videos',
         href: '/videos',
       },
+      {
+        label: 'Coaching Resources',
+        href: '/play/coaching-resources',
+      },
     ],
   },
   {

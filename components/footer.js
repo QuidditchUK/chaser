@@ -126,6 +126,11 @@ export const Footer = () => {
                   </ActiveLink>
                 </Item>
                 <Item>
+                  <ActiveLink href="/play/coaching-resources">
+                    <span>Coaching Resources</span>
+                  </ActiveLink>
+                </Item>
+                <Item>
                   <ActiveLink href="/about/fees">
                     <span>Season Fees</span>
                   </ActiveLink>

@@ -53,6 +53,11 @@ module.exports = withBundleAnalyzer(
           source: '/merch',
           destination: 'https://www.utilityapparel.com/quidditch-uk/',
         },
+        {
+          source: '/play/coaching-resources',
+          destination:
+            'https://docs.google.com/spreadsheets/d/1n_j-gDhC4mE2j4nTkBAhY-8MlvqAX0bLnWm0on54GJA/',
+        },
       ];
     },
     async redirects() {
