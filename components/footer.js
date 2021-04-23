@@ -12,9 +12,9 @@ import {
   UnorderedList,
   ListItem,
 } from '@chakra-ui/react';
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
 const Logo = dynamic(() => import('components/logo'));
-const Input = dynamic(() => import('components/input'));
 const Container = dynamic(() => import('components/container'));
 const Button = dynamic(() => import('components/button'));
 const FacebookIcon = dynamic(() => import('public/images/facebook.svg'));

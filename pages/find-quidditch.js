@@ -177,22 +177,6 @@ const FindQuidditch = ({
     setPostcodeData,
   ]);
 
-  // useEffect(() => {
-  //   router.push({
-  //     pathname: router.pathname,
-  //     query: {
-  //       postcode: watchPostcode,
-  //       distance: watchDistance,
-  //       ...(watchShowCommunity && { showCommunity: watchShowCommunity}),
-  //       ...(watchShowUniversity && { hideUniversity: watchShowCommunity }),
-  //       ...(watchShowClubs && { showClubs: watchShowClubs }),
-  //       ...(watchShowEvents && { showEvents: watchShowEvents }),
-  //     },
-  //   },
-  //   { shallow: true, scroll: false }
-  // );
-  // }, [watchPostcode, watchDistance, watchShowCommunity, watchShowUniversity, watchShowClubs, watchShowEvents, router]);
-
   return (
     <>
       <Meta

@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 import { Flex, Box, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 import dynamic from 'next/dynamic';
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
-const Input = dynamic(() => import('components/input'));
 const Button = dynamic(() => import('components/button'));
 
 const handleFindQuidditch = async ({ postcode }, router) => {
