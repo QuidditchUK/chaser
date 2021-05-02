@@ -23,7 +23,7 @@ const InlineError = dynamic(() =>
 import { api } from 'modules/api';
 import { rem } from 'styles/theme';
 
-const NATIONAL_TEAMS = ['UK', 'Scotland', 'Wales'];
+const NATIONAL_TEAMS = ['England', 'Scotland', 'Wales'];
 
 const NationalTeamFormSchema = object().shape({
   name: string().required('Please enter your name'),
