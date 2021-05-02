@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { object, string } from 'yup';
 import get from 'just-safe-get';
 import { Grid, Flex, Select, Heading, Text } from '@chakra-ui/react';
-import { CheckIcon } from '@chakra-ui/react';
+import { CheckIcon } from '@chakra-ui/icons';
 
 import { buttonVariants } from 'components/prismic-wrapper';
 import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
@@ -42,14 +42,19 @@ const NationalTeamFormSchema = object().shape({
   ),
 });
 
-const handleFormSubmit = async (values, setServerError, setServerSuccess) => {
+const handleFormSubmit = async (
+  values,
+  resetForm,
+  setServerError,
+  setServerSuccess
+) => {
   try {
     setServerError(null);
     setServerSuccess(null);
 
     await api.post('/contact/national', values);
-
     setServerSuccess(true);
+    resetForm({});
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
   }
@@ -59,7 +64,7 @@ const NationalTeamForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, errors, reset, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(NationalTeamFormSchema),
     defaultValues: {
@@ -84,7 +89,7 @@ const NationalTeamForm = (rawData) => {
       <Container maxWidth={rem(500)} paddingBottom={4}>
         <form
           onSubmit={handleSubmit((values) =>
-            handleFormSubmit(values, setServerError, setServerSuccess)
+            handleFormSubmit(values, reset, setServerError, setServerSuccess)
           )}
         >
           <Grid gridTemplateColumns="1fr">
