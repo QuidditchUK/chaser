@@ -42,12 +42,7 @@ const NationalTeamFormSchema = object().shape({
   ),
 });
 
-const handleFormSubmit = async (
-  values,
-  resetForm,
-  setServerError,
-  setServerSuccess
-) => {
+const handleFormSubmit = async (values, setServerError, setServerSuccess) => {
   try {
     setServerError(null);
     setServerSuccess(null);
@@ -55,14 +50,6 @@ const handleFormSubmit = async (
     await api.post('/contact/national', values);
 
     setServerSuccess(true);
-    resetForm({
-      name: '',
-      email: '',
-      club: '',
-      team: null,
-      position: '',
-      tournament: '',
-    });
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
   }
@@ -72,7 +59,7 @@ const NationalTeamForm = (rawData) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, errors, reset, formState } = useForm({
+  const { register, handleSubmit, errors, formState } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(NationalTeamFormSchema),
     defaultValues: {
@@ -97,7 +84,7 @@ const NationalTeamForm = (rawData) => {
       <Container maxWidth={rem(500)} paddingBottom={4}>
         <form
           onSubmit={handleSubmit((values) =>
-            handleFormSubmit(values, reset, setServerError, setServerSuccess)
+            handleFormSubmit(values, setServerError, setServerSuccess)
           )}
         >
           <Grid gridTemplateColumns="1fr">
