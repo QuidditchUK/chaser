@@ -55,7 +55,14 @@ const handleFormSubmit = async (
     await api.post('/contact/national', values);
 
     setServerSuccess(true);
-    resetForm({});
+    resetForm({
+      name: '',
+      email: '',
+      club: '',
+      team: null,
+      position: '',
+      tournament: '',
+    });
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
   }
