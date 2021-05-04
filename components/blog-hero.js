@@ -77,11 +77,11 @@ const BlogHero = (rawData) => {
               {title}
             </Heading>
 
-            <Link href={`/news/${category.toLowerCase()}`} passHref>
+            <Link href={`/news/${category?.toLowerCase()}`} passHref>
               <ChakraLink
                 textDecoration="none"
                 _hover={{ textDecoration: 'none' }}
-                href={`/news/${category.toLowerCase()}`}
+                href={`/news/${category?.toLowerCase()}`}
               >
                 <Tag
                   fontSize="sm"
