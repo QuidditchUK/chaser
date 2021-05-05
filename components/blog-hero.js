@@ -72,7 +72,7 @@ const BlogHero = (rawData) => {
               color="white"
               textAlign="center"
               pb={2}
-              textShadow="lg"
+              textShadow="0 0 10px rgb(0,0,0)"
             >
               {title}
             </Heading>
