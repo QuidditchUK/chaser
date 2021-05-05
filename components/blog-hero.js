@@ -68,7 +68,7 @@ const BlogHero = (rawData) => {
             px={{ base: 4, sm: 8, md: 9 }}
           >
             <Heading
-              fontSize={{ base: 'xl', md: '3xl' }}
+              fontSize={{ base: '2xl', md: '4xl' }}
               color="white"
               textAlign="center"
               pb={2}
