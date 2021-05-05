@@ -94,6 +94,7 @@ export const MAIN_NAVIGATION = [
     label: 'National Teams',
     path: '/programmes/national-teams',
     paths: [
+      '/programmes/england',
       '/programmes/team-england',
       '/programmes/team-wales',
       '/programmes/team-scotland',
@@ -101,8 +102,8 @@ export const MAIN_NAVIGATION = [
     ],
     children: [
       {
-        label: 'Team UK',
-        href: '/programmes/team-england',
+        label: 'Team England',
+        href: '/programmes/england',
       },
       {
         label: 'Team Scotland',
