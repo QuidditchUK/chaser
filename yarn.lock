@@ -5023,10 +5023,10 @@ jsonfile@^4.0.0:
     array-includes "^3.1.2"
     object.assign "^4.1.2"
 
-just-safe-get@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-2.0.0.tgz#a028262a8f1896fac4de90227b2d192dfdc3f907"
-  integrity sha512-OBUeNXA7efFIGh0hSLW4nxrOtFWfmjoc3T8B5oixm3b+D7SZN10VKwORUEk4oDeBaR/sqkDMxXb0gE0DRYreEA==
+just-safe-get@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-2.1.2.tgz#82c2df6bbb929bf4de8d46c06ef79e1a4dd98918"
+  integrity sha512-DPWEh00QFgJNyfULPwgc9rTvdiPYVyt69hcgjWbN3lzKMmISW43Hwc+nlRAIo+su6PLVqUOMEUJNYR1xFog7xQ==
 
 language-subtag-registry@~0.3.2:
   version "0.3.21"
