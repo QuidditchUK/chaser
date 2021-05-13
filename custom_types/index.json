@@ -34,5 +34,17 @@
     "name": "Volunteer",
     "repeatable": true,
     "value": "other-pages.json"
+  },
+  {
+    "id": "clubs",
+    "name": "Clubs",
+    "repeatable": true,
+    "value": "clubs.json"
+  },
+  {
+    "id": "navigation",
+    "name": "Navigation",
+    "repeatable": false,
+    "value": "navigation.json"
   }
 ]
