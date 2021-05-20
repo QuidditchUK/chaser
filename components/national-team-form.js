@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { object, string } from 'yup';
 import get from 'just-safe-get';
 import { Grid, Flex, Select, Heading, Text } from '@chakra-ui/react';
-import { CheckIcon } from '@chakra-ui/react';
+import { CheckIcon } from '@chakra-ui/icons';
 
 import { buttonVariants } from 'components/prismic-wrapper';
 import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
@@ -23,7 +23,7 @@ const InlineError = dynamic(() =>
 import { api } from 'modules/api';
 import { rem } from 'styles/theme';
 
-const NATIONAL_TEAMS = ['UK', 'Scotland', 'Wales'];
+const NATIONAL_TEAMS = ['England', 'Scotland', 'Wales'];
 
 const NationalTeamFormSchema = object().shape({
   name: string().required('Please enter your name'),
@@ -53,7 +53,6 @@ const handleFormSubmit = async (
     setServerSuccess(null);
 
     await api.post('/contact/national', values);
-
     setServerSuccess(true);
     resetForm({});
   } catch (err) {

@@ -68,20 +68,20 @@ const BlogHero = (rawData) => {
             px={{ base: 4, sm: 8, md: 9 }}
           >
             <Heading
-              fontSize={{ base: 'xl', md: '3xl' }}
+              fontSize={{ base: '2xl', md: '4xl' }}
               color="white"
               textAlign="center"
               pb={2}
-              textShadow="lg"
+              textShadow="0 0 10px rgb(0,0,0)"
             >
               {title}
             </Heading>
 
-            <Link href={`/news/${category.toLowerCase()}`} passHref>
+            <Link href={`/news/${category?.toLowerCase()}`} passHref>
               <ChakraLink
                 textDecoration="none"
                 _hover={{ textDecoration: 'none' }}
-                href={`/news/${category.toLowerCase()}`}
+                href={`/news/${category?.toLowerCase()}`}
               >
                 <Tag
                   fontSize="sm"

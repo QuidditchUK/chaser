@@ -161,6 +161,8 @@ export const linkResolver = ({ type, uid }) => {
       return `/programmes/${uid}`;
     case 'clubs':
       return `/clubs/${uid}`;
+    case 'youth':
+      return `/youth/${uid}`;
     default:
       return `/${uid}`;
   }
