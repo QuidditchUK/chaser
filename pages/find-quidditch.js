@@ -28,8 +28,8 @@ import { postcodeRegex } from 'modules/validations';
 import {
   getAllClubs,
   getClubs,
-  // getEvents,
-  // getAllEvents,
+  getEvents,
+  getAllEvents,
 } from 'modules/prismic';
 
 const Notification = dynamic(() => import('components/notification'));
@@ -38,7 +38,7 @@ const CloseIcon = dynamic(() => import('public/images/close.svg'));
 const Container = dynamic(() => import('components/container'));
 
 const ClubCard = dynamic(() => import('components/club-card'));
-// const EventCard = dynamic(() => import('components/event-card'));
+const EventCard = dynamic(() => import('components/event-card'));
 const Image = dynamic(() => import('components/image'));
 const Meta = dynamic(() => import('components/meta'));
 const Button = dynamic(() => import('components/button'));
@@ -92,7 +92,7 @@ const validPostcode = (value) => value && value.match(postcodeRegex);
 
 const FindQuidditch = ({
   clubs: initialClubs = [],
-  // events: initialEvents = [],
+  events: initialEvents = [],
 }) => {
   const router = useRouter();
   const {
@@ -109,6 +109,7 @@ const FindQuidditch = ({
   const [showLocation, setShowLocation] = useState(false);
 
   const [clubs, setClubs] = useState(initialClubs);
+  const [events, setEvents] = useState(initialEvents);
   const [distanceIndicator, setDistanceIndicator] = useState(100);
 
   const { register, handleSubmit, errors, watch, control } = useForm({
@@ -132,17 +133,31 @@ const FindQuidditch = ({
 
   useEffect(() => {
     const refreshQuery = async () => {
-      if (!watchShowClubs) {
+      if (!watchShowClubs && !watchShowEvents) {
         return;
       }
 
       if (!validPostcode(watchPostcode)) {
-        const clubs = await getAllClubs({
-          showCommunity: watchShowCommunity,
-          showUniversity: watchShowUniversity,
-        });
-        setPostcodeData(null);
-        setClubs(clubs);
+        if (watchShowClubs) {
+          const clubs = await getAllClubs({
+            showCommunity: watchShowCommunity,
+            showUniversity: watchShowUniversity,
+          });
+
+          setPostcodeData(null);
+          setClubs(clubs);
+        }
+
+        if (watchShowEvents) {
+          const events = await getAllEvents({
+            showCommunity: watchShowCommunity,
+            showUniversity: watchShowUniversity,
+          });
+
+          setPostcodeData(null);
+          setEvents(events);
+        }
+
         return;
       }
 
@@ -153,14 +168,29 @@ const FindQuidditch = ({
 
         setPostcodeData(data?.result);
 
-        const clubs = await getClubs({
-          longitude: data.result.longitude,
-          latitude: data.result.latitude,
-          distance: watchDistance,
-          showCommunity: watchShowCommunity,
-          showUniversity: watchShowUniversity,
-        });
-        setClubs(clubs);
+        if (watchShowClubs) {
+          const clubs = await getClubs({
+            longitude: data.result.longitude,
+            latitude: data.result.latitude,
+            distance: watchDistance,
+            showCommunity: watchShowCommunity,
+            showUniversity: watchShowUniversity,
+          });
+          setClubs(clubs);
+        }
+
+        if (watchShowEvents) {
+          console.log('in watch show events after fetching postcode');
+
+          const events = await getEvents({
+            longitude: data.result.longitude,
+            latitude: data.result.latitude,
+            distance: watchDistance,
+            showCommunity: watchShowCommunity,
+            showUniversity: watchShowUniversity,
+          });
+          setEvents(events);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -173,7 +203,9 @@ const FindQuidditch = ({
     watchShowCommunity,
     watchShowUniversity,
     setClubs,
+    setEvents,
     watchShowClubs,
+    watchShowEvents,
     setPostcodeData,
   ]);
 
@@ -313,7 +345,7 @@ const FindQuidditch = ({
                             name="showClubs"
                             size="md"
                             w="100%"
-                            colorScheme="white"
+                            colorScheme="whiteAlpha"
                           >
                             Clubs
                           </Checkbox>
@@ -332,7 +364,7 @@ const FindQuidditch = ({
                             name="showEvents"
                             size="md"
                             w="100%"
-                            isDisabled
+                            colorScheme="whiteAlpha"
                           >
                             Events
                           </Checkbox>
@@ -534,6 +566,75 @@ const FindQuidditch = ({
               </NextLink>
             </Content>
           </Notification>
+
+          {watchShowEvents && !!events.length && (
+            <>
+              <Heading
+                as="h2"
+                fontSize="3xl"
+                fontFamily="body"
+                color="qukBlue"
+                mt={3}
+              >
+                Events
+              </Heading>
+
+              <Grid
+                gridTemplateColumns="1fr"
+                gridGap={{ base: 4, md: 9 }}
+                pb={3}
+              >
+                {events.map((event) => (
+                  <Flex flexDirection="column" key={event.uid}>
+                    <NextLink href={`/events/${event.uid}`} passHref>
+                      <StyledLink>
+                        <EventCard
+                          name={event.data.event_name}
+                          icon={event.data.icon?.url}
+                          leagues={event.data.leagues}
+                          venue={event.data.venue}
+                          startDate={event.data.event_start_date}
+                          endDate={event.data.event_end_date}
+                          image={event.data.images?.[0].image}
+                        />
+                      </StyledLink>
+                    </NextLink>
+                  </Flex>
+                ))}
+              </Grid>
+            </>
+          )}
+
+          {watchShowEvents && events.length === 0 && (
+            <Flex
+              alignItems="center"
+              justifyContent="center"
+              flexDirection="column"
+            >
+              <Heading
+                as="h2"
+                fontSize="3xl"
+                mb={0}
+                fontFamily="body"
+                textAlign="center"
+                color="primary"
+              >
+                No events matched your search
+              </Heading>
+              <p>
+                We can still help! Adjust your filters, and if you&#39;re still
+                out of luck click &#34;Contact us&#34; to help us to bring
+                Quidditch to your area.
+              </p>
+              <Link href="/about/contact-us" passHref>
+                <a>
+                  <Button variant="secondary" type="button">
+                    Contact us
+                  </Button>
+                </a>
+              </Link>
+            </Flex>
+          )}
         </Container>
       </Box>
     </>
@@ -543,11 +644,13 @@ const FindQuidditch = ({
 export const getServerSideProps = async ({ query }) => {
   if (!validPostcode(query.postcode)) {
     const clubs = await getAllClubs({
-      showCommunity: query.hideshowCommunity ?? false,
-      hideUniversity: query.hideUniversity ?? false,
+      showCommunity: true,
+      showUniversity: true,
     });
-    // const events = await getAllEvents();
-    const events = [];
+    const events = await getAllEvents({
+      showCommunity: true,
+      showUniversity: true,
+    });
 
     return {
       props: {
@@ -561,18 +664,21 @@ export const getServerSideProps = async ({ query }) => {
     `https://api.postcodes.io/postcodes/${query.postcode}`
   );
 
-  let clubs = [];
-  let events = [];
+  const clubs = await getClubs({
+    longitude: data.result.longitude,
+    latitude: data.result.latitude,
+    distance: query.distance ?? 100,
+    showCommunity: query.showCommunity,
+    showUniversity: query.showUniversity,
+  });
 
-  if (!query.showClubs) {
-    clubs = await getClubs({
-      longitude: data.result.longitude,
-      latitude: data.result.latitude,
-      distance: query.distance ?? 100,
-      showCommunity: query.showCommunity,
-      hideUniversity: query.hideUniversity,
-    });
-  }
+  const events = await getClubs({
+    longitude: data.result.longitude,
+    latitude: data.result.latitude,
+    distance: query.distance ?? 100,
+    showCommunity: query.showCommunity,
+    showUniversity: query.showUniversity,
+  });
 
   return {
     props: { clubs, events },
