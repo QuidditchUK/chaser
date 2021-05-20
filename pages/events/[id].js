@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import format from 'date-fns/format';
-import parse from 'html-react-parser';
+import { RichText } from 'prismic-reactjs';
+import { useQuery } from 'react-query';
+import get from 'just-safe-get';
+import { linkResolver, getDocs, getPrismicDocByUid } from 'modules/prismic';
 import {
   Box,
   Flex,
@@ -11,18 +14,16 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { TYPES } from 'components/club-type';
-import { parseTimestamptz } from 'modules/dates';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { rem } from 'styles/theme';
-import { api } from 'modules/api';
 
 const Page404 = dynamic(() => import('pages/404'));
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 const PageLoading = dynamic(() => import('components/page-loading'));
 const Content = dynamic(() => import('components/content'));
-const Button = dynamic(() => import('components/button'));
-const ExternalLink = dynamic(() => import('components/external-link'));
+// const Button = dynamic(() => import('components/button'));
+// const ExternalLink = dynamic(() => import('components/external-link'));
 const PinIcon = dynamic(() => import('public/images/location-pin.svg'));
 
 const Icon = (props) => (
@@ -33,34 +34,41 @@ const Icon = (props) => (
   />
 );
 
-const EventPage = ({ event }) => {
+const EventPage = ({ page: initialPage, preview }) => {
   const router = useRouter();
+  const { data: queryData } = useQuery(
+    ['clubs', router.query.id],
+    () => getPrismicDocByUid('events', router.query.id),
+    { initialData: initialPage, enabled: Boolean(!router.isFallback) }
+  );
 
-  if (router.isFallback) {
+  const page = preview ? initialPage : queryData;
+
+  if (router.isFallback && !queryData) {
     return <PageLoading />;
   }
 
-  if (!event) {
+  if (!queryData && !preview) {
     return <Page404 />;
   }
 
-  const location = JSON.parse(event.coordinates);
+  const event = get(page, 'data');
 
   return (
     <>
       <Meta
-        description={`${event.name} on ${format(
-          parseTimestamptz(event.start_time),
-          'EEE, d LLL'
+        description={`${event.event_name} on ${format(
+          new Date(event.event_start_date),
+          'MMMM d, yyyy'
         )}`}
-        subTitle={event.name}
-        image={event.images[0]}
+        subTitle={event.event_name}
+        image={event.images?.[0].image.url}
       />
 
       <Box
         as="section"
         position="relative"
-        backgroundImage={`url(${event.images[0]})`}
+        backgroundImage={`url(${event.images?.[0].image.url})`}
         backgroundColor="qukBlue"
         backgroundSize="cover"
         backgroundPosition="center"
@@ -69,7 +77,7 @@ const EventPage = ({ event }) => {
         <Flex
           position="absolute"
           minHeight={BLOG_MIN_HEIGHTS}
-          bg={TYPES[event.league[0]]}
+          bg={TYPES[event.leagues[0].league]}
           opacity={0.2}
           width="100%"
         />
@@ -85,7 +93,7 @@ const EventPage = ({ event }) => {
             textAlign="center"
             px={{ base: 4, sm: 8, md: 9 }}
           >
-            <Icon src={event.icon} alt={`${event.name} logo`} />
+            <Icon src={event.icon.url} alt={`${event.event_name} logo`} />
           </Container>
         </Flex>
       </Box>
@@ -107,17 +115,18 @@ const EventPage = ({ event }) => {
               marginTop="0"
               marginBottom="2"
             >
-              {event.name}
+              {event.event_name}
             </Heading>
 
-            {event.start_time && (
+            {event.event_start_date && (
               <Text as="span" fontWeight="bold" color="monarchRed">
-                {format(
-                  parseTimestamptz(event.start_time),
-                  'EEE, d LLL h:mm a'
-                )}{' '}
-                –{' '}
-                {format(parseTimestamptz(event.end_time), 'EEE, d LLL h:mm a')}
+                {format(new Date(event.event_start_date), 'MMMM d, yyyy')}{' '}
+                {event.event_start_date !== event.event_end_date && (
+                  <>
+                    {' '}
+                    - {format(new Date(event.event_end_date), 'MMMM d, yyyy')}
+                  </>
+                )}
               </Text>
             )}
             <Flex alignItems="center">
@@ -129,7 +138,7 @@ const EventPage = ({ event }) => {
                 color="qukBlue"
                 borderBottom="2px dotted"
                 borderColor="qukBlue"
-                href={`https://www.google.com/maps/search/?api=1&query=${location?.coordinates[1]},${location?.coordinates[0]}`}
+                href={`https://www.google.com/maps/search/?api=1&query=${event.coordinates.latitude},${event.coordinates.longitude}`}
                 rel="noopener noreferrer"
                 target="_blank"
                 linkColor="qukBlue"
@@ -146,7 +155,14 @@ const EventPage = ({ event }) => {
         py={{ base: 4, sm: 8, md: 9 }}
       >
         <Container px={{ base: 4, sm: 8, md: 9 }}>
-          <Content>{parse(event.description)}</Content>
+          {RichText.asText(event.description) && (
+            <Content>
+              <RichText
+                render={event.description}
+                linkResolver={linkResolver}
+              />
+            </Content>
+          )}
 
           <Flex
             flexDirection="column"
@@ -154,14 +170,14 @@ const EventPage = ({ event }) => {
             alignItems="center"
             padding="3"
           >
-            {event.registerLink &&
+            {/* {event.registerLink &&
               new Date() < parseTimestamptz(event.registerTime) && (
                 <ExternalLink href={event.registerLink}>
                   <Button type="button" variant="qukBlue" width="1">
                     Register
                   </Button>
                 </ExternalLink>
-              )}
+              )} */}
           </Flex>
         </Container>
       </Box>
@@ -169,14 +185,27 @@ const EventPage = ({ event }) => {
   );
 };
 
-// eslint-disable-next-line no-unused-vars
-export const getServerSideProps = async ({ params: { event } }) => {
-  const { data } = await api.get(`/events/${event}`);
+export const getStaticProps = async ({
+  params: { id },
+  preview = null,
+  previewData = {},
+}) => {
+  const { ref } = previewData;
+  const page =
+    (await getPrismicDocByUid('events', id, ref ? { ref } : null)) || null;
 
   return {
-    props: {
-      event: data,
-    },
+    props: { page, preview },
+    revalidate: 1,
+  };
+};
+
+export const getStaticPaths = async () => {
+  const allPages = await getDocs('events', { pageSize: 100 });
+
+  return {
+    paths: allPages?.map(({ uid }) => `/events/${uid}`),
+    fallback: true,
   };
 };
 

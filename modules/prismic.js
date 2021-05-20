@@ -117,9 +117,6 @@ export const getEvents = async ({
     showUniversity ? 'University' : null,
   ].filter((league) => league);
 
-  console.log('longitude');
-  console.log(longitude);
-
   const { results } = await Client().query(
     [
       Prismic.Predicates.geopoint.near(
