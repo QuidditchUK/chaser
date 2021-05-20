@@ -25,7 +25,13 @@ const DesktopNav = ({ navigation, dashboard }) => {
   const { asPath } = useRouter();
 
   return (
-    <Stack direction={'row'} spacing={3} mr={4} alignItems="center">
+    <Stack
+      direction={'row'}
+      spacing={3}
+      mr={4}
+      alignItems="center"
+      height="40px"
+    >
       {navigation.map((navItem) => {
         const regex = navItem?.path
           ? RegExp(navItem?.path.replace(/\//g, '\\/'), 'g')
