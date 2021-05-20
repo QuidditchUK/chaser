@@ -345,7 +345,7 @@ const FindQuidditch = ({
                             name="showClubs"
                             size="md"
                             w="100%"
-                            colorScheme="whiteAlpha"
+                            colorScheme="white"
                           >
                             Clubs
                           </Checkbox>
@@ -364,7 +364,7 @@ const FindQuidditch = ({
                             name="showEvents"
                             size="md"
                             w="100%"
-                            colorScheme="whiteAlpha"
+                            colorScheme="white"
                           >
                             Events
                           </Checkbox>
