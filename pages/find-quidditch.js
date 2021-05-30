@@ -605,7 +605,8 @@ const FindQuidditch = ({
             </>
           )}
 
-          {watchShowEvents && events.length === 0 && (
+          {/* TODO: Uncomment on Wednesday when events are live */}
+          {/* {watchShowEvents && events.length === 0 && (
             <Flex
               alignItems="center"
               justifyContent="center"
@@ -634,7 +635,7 @@ const FindQuidditch = ({
                 </a>
               </Link>
             </Flex>
-          )}
+          )} */}
         </Container>
       </Box>
     </>
