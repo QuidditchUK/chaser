@@ -132,15 +132,6 @@ const HeroWithLocation = ({
               {title}
             </Heading>
 
-            {startDate && (
-              <Text as="span" fontWeight="bold" color="monarchRed">
-                {format(new Date(startDate), 'MMMM d, yyyy')}{' '}
-                {startDate !== endDate && (
-                  <> - {format(new Date(endDate), 'MMMM d, yyyy')}</>
-                )}
-              </Text>
-            )}
-
             <Flex alignItems="center">
               <ChakraImage as={PinIcon} height="15px" width="15px" />{' '}
               <ChakraLink
@@ -156,6 +147,15 @@ const HeroWithLocation = ({
                 {venue}
               </ChakraLink>
             </Flex>
+
+            {startDate && (
+              <Text as="span" fontWeight="bold" color="white" pt={2}>
+                {format(new Date(startDate), 'MMMM d, yyyy')}{' '}
+                {startDate !== endDate && endDate !== null && (
+                  <> - {format(new Date(endDate), 'MMMM d, yyyy')}</>
+                )}
+              </Text>
+            )}
           </Flex>
         </Flex>
       </Box>
