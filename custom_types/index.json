@@ -46,5 +46,11 @@
     "name": "Navigation",
     "repeatable": false,
     "value": "navigation.json"
+  },
+  {
+    "id": "events",
+    "name": "Events",
+    "repeatable": true,
+    "value": "events.json"
   }
 ]

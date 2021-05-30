@@ -1,6 +1,5 @@
 import Prismic from '@prismicio/client';
 import { Client, linkResolver } from 'modules/prismic';
-import { api } from 'modules/api';
 
 const getPages = async (page, documents = []) => {
   const res = await Client().query(
@@ -12,6 +11,8 @@ const getPages = async (page, documents = []) => {
       'play',
       'programmes',
       'clubs',
+      'youth',
+      'events',
     ]),
     { page, pageSize: 100, fetch: [] }
   );
@@ -22,21 +23,8 @@ const getPages = async (page, documents = []) => {
   return documents.concat(res.results);
 };
 
-const createSitemap = ({
-  documents,
-  events,
-}) => `<?xml version="1.0" encoding="UTF-8"?>
+const createSitemap = ({ documents }) => `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    ${events
-      .map(
-        (event) => `
-      <url>
-        <loc>https://quidditchuk.org/events/${event.slug}</loc>
-        <lastmod>${event.updated}</lastmod>
-      </url>
-    `
-      )
-      .join('')}
     ${documents
       .map(
         (document) => `
@@ -56,10 +44,9 @@ const Sitemap = () => {};
 
 export const getServerSideProps = async ({ res }) => {
   const documents = await getPages(1, []);
-  const { data: events } = await api.get('/events/search');
 
   res.setHeader('Content-Type', 'text/xml');
-  res.write(createSitemap({ documents, events }));
+  res.write(createSitemap({ documents }));
   res.end();
 
   return {

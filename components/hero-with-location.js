@@ -3,9 +3,11 @@ import {
   Flex,
   Grid,
   Heading,
+  Text,
   Image as ChakraImage,
   Link as ChakraLink,
 } from '@chakra-ui/react';
+import format from 'date-fns/format';
 import dynamic from 'next/dynamic';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { TYPES } from 'components/club-type';
@@ -19,13 +21,15 @@ const PinIcon = dynamic(() => import('public/images/location-pin.svg'));
 
 const HeroWithLocation = ({
   images,
-  league,
+  leagues,
   featuredColor,
   textColor,
   icon,
-  club_name,
+  title,
   coordinates,
   venue,
+  startDate,
+  endDate,
 }) => {
   const isDesktop = useBreakpoint(base.breakpoints.lg);
   return (
@@ -79,13 +83,17 @@ const HeroWithLocation = ({
           top="0"
           padding={{ base: 4, sm: 8, md: 9 }}
         >
-          <Type
-            fontWeight="bold"
-            fontSize={[rem(10), rem(16)]}
-            bg={TYPES[league]}
-          >
-            {league}
-          </Type>
+          {leagues.map((league) => (
+            <Type
+              key={league}
+              fontWeight="bold"
+              fontSize={[rem(10), rem(16)]}
+              bg={TYPES[league]}
+              ml="1"
+            >
+              {league}
+            </Type>
+          ))}
         </Box>
       </Box>
       <Box
@@ -111,7 +119,7 @@ const HeroWithLocation = ({
               bg="white"
               boxShadow="md"
               src={icon?.url}
-              alt={`${club_name} logo`}
+              alt={`${title} logo`}
             />
           </Box>
           <Flex flexDirection="column">
@@ -121,7 +129,7 @@ const HeroWithLocation = ({
               my="0"
               fontSize={{ base: '2xl', md: '4xl' }}
             >
-              {club_name}
+              {title}
             </Heading>
 
             <Flex alignItems="center">
@@ -139,6 +147,15 @@ const HeroWithLocation = ({
                 {venue}
               </ChakraLink>
             </Flex>
+
+            {startDate && (
+              <Text as="span" fontWeight="bold" color="white" pt={2}>
+                {format(new Date(startDate), 'MMMM d, yyyy')}{' '}
+                {startDate !== endDate && endDate !== null && (
+                  <> - {format(new Date(endDate), 'MMMM d, yyyy')}</>
+                )}
+              </Text>
+            )}
           </Flex>
         </Flex>
       </Box>

@@ -125,8 +125,9 @@ export const getEvents = async ({
         longitude,
         distance
       ),
-      Prismic.Predicates.any('my.events.league', leagues),
-      Prismic.Predicates.dateAfter('my.events.startDate', new Date()),
+      Prismic.Predicates.any('my.events.leagues.league', leagues),
+      // TODO: Uncomment on Wednesday when events are live
+      // Prismic.Predicates.dateAfter('my.events.event_start_date', new Date()),
     ],
     { pageSize: 100 }
   );
@@ -138,7 +139,8 @@ export const getAllEvents = async () => {
   const { results } = await Client().query(
     [
       Prismic.Predicates.at('document.type', 'events'),
-      Prismic.Predicates.dateAfter('my.events.startDate', new Date()),
+      // TODO: Uncomment on Wednesday when events are live
+      // Prismic.Predicates.dateAfter('my.events.event_start_date', new Date()),
     ],
     { pageSize: 100 }
   );
@@ -161,6 +163,8 @@ export const linkResolver = ({ type, uid }) => {
       return `/programmes/${uid}`;
     case 'clubs':
       return `/clubs/${uid}`;
+    case 'events':
+      return `/events/${uid}`;
     case 'youth':
       return `/youth/${uid}`;
     default:

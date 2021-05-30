@@ -1,7 +1,6 @@
 import format from 'date-fns/format';
 import dynamic from 'next/dynamic';
-import { parseTimestamptz } from 'modules/dates';
-import { Box, Flex, Grid, Heading } from '@chakra-ui/react';
+import { Box, Flex, Grid, Heading, Text } from '@chakra-ui/react';
 import { TYPES } from 'components/club-type';
 import { rem } from 'styles/theme';
 
@@ -25,7 +24,7 @@ const StyledCard = (props) => (
 const IconContainer = (props) => <Box p={4} {...props} />;
 
 const Icon = (props) => (
-  <Image borderRadius="full" height={75} width={75} {...props} />
+  <Image borderRadius="full" height={100} width={100} {...props} />
 );
 
 const Content = (props) => (
@@ -46,31 +45,49 @@ const Content = (props) => (
 const EventCard = ({
   image,
   name,
-  league,
+  leagues,
   icon,
   venue,
-  startTime,
+  startDate,
+  endDate,
   ...cardProps
 }) => (
   <StyledCard
     {...cardProps}
     gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
     gridGap={4}
+    alignItems="center"
   >
     <Box
       as="section"
       position="relative"
-      backgroundImage={`url(${image})`}
-      backgroundColor="qukBlue"
-      backgroundSize="cover"
-      backgroundPosition="center"
+      minHeight="200px"
+      height="100%"
+      width="100%"
     >
+      <Image
+        layout="fill"
+        height={image.height}
+        width={image.width}
+        alt={image.alt}
+        src={image.url}
+        borderRadius="0"
+        clipPath={{
+          base: 'none',
+          md: 'polygon(0 0, 100% 0, 90% 100%, 0 100%)',
+        }}
+      />
+
       <Flex
         position="absolute"
-        bg={TYPES[league[0]]}
+        bg={TYPES[leagues[0]?.league]}
         opacity={0.2}
         width="100%"
         height="100%"
+        clipPath={{
+          base: 'none',
+          md: 'polygon(0 0, 100% 0, 90% 100%, 0 100%)',
+        }}
       />
 
       <Flex
@@ -86,28 +103,28 @@ const EventCard = ({
     </Box>
 
     <Content>
-      {league.map((leag) => (
+      {leagues.map(({ league }) => (
         <Type
-          key={leag}
+          key={league}
           fontWeight="bold"
           fontSize={rem(10)}
-          bg={TYPES[leag]}
+          bg={TYPES[league]}
           marginRight="1"
         >
-          {leag}
+          {league}
         </Type>
       ))}
 
-      <Heading as="h2" fontSize={3} fontFamily="body">
+      <Heading as="h2" fontSize="xl" fontFamily="body">
         {name}
       </Heading>
-      <p>
-        <strong>
-          {format(parseTimestamptz(startTime), 'EEE, d LLL H:mm a')}
-        </strong>
-        <br />
-        {venue}
-      </p>
+      <Text fontWeight="bold">
+        {format(new Date(startDate), 'MMMM d, yyyy')}{' '}
+        {startDate !== endDate && endDate !== null && (
+          <> - {format(new Date(endDate), 'MMMM d, yyyy')}</>
+        )}
+      </Text>
+      <Text>{venue}</Text>
     </Content>
   </StyledCard>
 );
