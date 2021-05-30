@@ -90,6 +90,7 @@ const CardsSlice = (rawData) => {
                 <Card
                   name={title}
                   content={content}
+                  variant={cardVariants[variant]}
                   image={
                     image.url ? (
                       <Image

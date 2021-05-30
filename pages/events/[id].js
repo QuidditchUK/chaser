@@ -7,6 +7,7 @@ import { RichText } from 'prismic-reactjs';
 import { useQuery } from 'react-query';
 import get from 'just-safe-get';
 import { linkResolver, getDocs, getPrismicDocByUid } from 'modules/prismic';
+import renderPrismicSections from 'constants/prismic';
 import {
   Box,
   Grid,
@@ -204,7 +205,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                       </Td>
                     </Tr>
                     <Tr mb={4}>
-                      <Td colspan="2">
+                      <Td colSpan="2" textAlign="center">
                         {event.club_registration_link?.url &&
                           isFuture(
                             new Date(event.club_registration_deadline)
@@ -234,7 +235,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                       </Td>
                     </Tr>
                     <Tr>
-                      <Td colspan="2">
+                      <Td colSpan="2" textAlign="center">
                         {event.player_registration_link?.url &&
                           isFuture(
                             new Date(event.player_registration_deadline)
@@ -283,6 +284,13 @@ const EventPage = ({ page: initialPage, preview }) => {
                   />
                 </Content>
               )}
+
+              <Box
+                mr={{ base: '-1rem', sm: '-2rem', md: '-2.25rem' }}
+                ml={{ base: '-1rem', sm: '-2rem', md: '-2.25rem' }}
+              >
+                {renderPrismicSections(event?.body)}
+              </Box>
             </Box>
           </Box>
         </Grid>
