@@ -213,7 +213,7 @@ const Dashboard = ({ user }) => {
                 <ProductCard
                   key={membership?.id}
                   id={membership?.id}
-                  image={membership?.images ? membership.images[0] : null}
+                  image={membership?.images ? membership?.images?.[0] : null}
                   description={membership?.description}
                   name={membership?.name}
                   expires={membership?.metadata?.expires}
@@ -245,8 +245,8 @@ const Dashboard = ({ user }) => {
                       image={
                         club.images ? (
                           <Image
-                            src={club.images[0]}
-                            alt={club.name}
+                            src={club?.images?.[0]}
+                            alt={club?.name}
                             layout="responsive"
                             width={640}
                             height={360}

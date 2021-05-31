@@ -505,8 +505,8 @@ const FindQuidditch = ({
                           image={
                             club.data.images ? (
                               <Image
-                                src={club.data.images?.[0].image.url}
-                                alt={club.club_name}
+                                src={club?.data?.images?.[0]?.image?.url}
+                                alt={club?.data?.club_name}
                                 layout="responsive"
                                 width={640}
                                 height={360}

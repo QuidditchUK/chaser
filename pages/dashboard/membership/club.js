@@ -225,7 +225,7 @@ const ManageClub = ({ user, clubs = [] }) => {
                       image={
                         selectedClub?.images ? (
                           <Image
-                            src={selectedClub?.images[0]}
+                            src={selectedClub?.images?.[0]}
                             alt={selectedClub?.name}
                             layout="responsive"
                             width={640}
