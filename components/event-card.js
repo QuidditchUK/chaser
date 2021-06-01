@@ -80,7 +80,7 @@ const EventCard = ({
 
       <Flex
         position="absolute"
-        bg={TYPES[leagues[0]?.league]}
+        bg={TYPES[leagues?.[0]?.league]}
         opacity={0.2}
         width="100%"
         height="100%"

@@ -67,7 +67,7 @@ const EventPage = ({ page: initialPage, preview }) => {
         images={event.images}
         title={event.event_name}
         venue={event.venue}
-        featuredColor={TYPES[event.leagues[0]?.league]}
+        featuredColor={TYPES[event.leagues?.[0]?.league]}
         textColor="white"
         icon={event.icon}
         leagues={event.leagues.map(({ league }) => league)}
@@ -91,7 +91,7 @@ const EventPage = ({ page: initialPage, preview }) => {
               as="h3"
               fontSize="xl"
               fontFamily="body"
-              color={TYPES[event.leagues[0]?.league]}
+              color={TYPES[event.leagues?.[0]?.league]}
             >
               Event Details
             </Heading>
@@ -140,7 +140,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                         href={event?.social_facebook?.url}
                         rel="noopener noreferrer"
                         target="_blank"
-                        color={TYPES[event.leagues[0]?.league]}
+                        color={TYPES[event.leagues?.[0]?.league]}
                         wordBreak="break-all"
                       >
                         Link
@@ -160,7 +160,7 @@ const EventPage = ({ page: initialPage, preview }) => {
               as="h3"
               fontSize="xl"
               fontFamily="body"
-              color={TYPES[event.leagues[0]?.league]}
+              color={TYPES[event.leagues?.[0]?.league]}
             >
               Fees
             </Heading>
@@ -187,7 +187,7 @@ const EventPage = ({ page: initialPage, preview }) => {
               as="h3"
               fontSize="xl"
               fontFamily="body"
-              color={TYPES[event.leagues[0]?.league]}
+              color={TYPES[event.leagues?.[0]?.league]}
             >
               Registration
             </Heading>
@@ -272,7 +272,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                 as="h3"
                 fontSize="xl"
                 fontFamily="body"
-                color={TYPES[event.leagues[0]?.league]}
+                color={TYPES[event.leagues?.[0]?.league]}
               >
                 About {event.event_name}
               </Heading>
