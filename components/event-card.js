@@ -119,7 +119,9 @@ const EventCard = ({
         {name}
       </Heading>
       <Text fontWeight="bold">
-        {format(new Date(startDate), 'MMMM d, yyyy')}{' '}
+        {startDate !== null && (
+          <>{format(new Date(startDate), 'MMMM d, yyyy')} </>
+        )}
         {startDate !== endDate && endDate !== null && (
           <> - {format(new Date(endDate), 'MMMM d, yyyy')}</>
         )}
