@@ -103,7 +103,7 @@ const EventCard = ({
     </Box>
 
     <Content>
-      {leagues.map(({ league }) => (
+      {leagues?.map(({ league }) => (
         <Type
           key={league}
           fontWeight="bold"
