@@ -150,7 +150,9 @@ const HeroWithLocation = ({
 
             {startDate && (
               <Text as="span" fontWeight="bold" color="white" pt={2}>
-                {format(new Date(startDate), 'MMMM d, yyyy')}{' '}
+                {startDate !== null && (
+                  <>{format(new Date(startDate), 'MMMM d, yyyy')} </>
+                )}
                 {startDate !== endDate && endDate !== null && (
                   <> - {format(new Date(endDate), 'MMMM d, yyyy')}</>
                 )}
