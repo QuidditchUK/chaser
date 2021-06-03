@@ -673,7 +673,7 @@ export const getServerSideProps = async ({ query }) => {
     showUniversity: query.showUniversity,
   });
 
-  const events = await getClubs({
+  const events = await getEvents({
     longitude: data.result.longitude,
     latitude: data.result.latitude,
     distance: query.distance ?? 100,
