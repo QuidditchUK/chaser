@@ -143,7 +143,6 @@ const ClubCard = ({
           id="icon"
           h="75px"
           w="75px"
-          borderRadius="full"
           src={icon}
           alt={`${name} logo`}
         />

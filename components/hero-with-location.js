@@ -108,19 +108,11 @@ const HeroWithLocation = ({
         <Flex
           justifyContent="flex-start"
           alignItems="center"
-          top={{ base: 0, md: '-60px' }}
           position="relative"
+          top={{ base: 0, md: '-65px' }}
         >
-          <Box p={4}>
-            <ChakraImage
-              borderRadius="full"
-              height={{ base: '100px', md: '200px' }}
-              width={{ base: '100px', md: '200px' }}
-              bg="white"
-              boxShadow="md"
-              src={icon?.url}
-              alt={`${title} logo`}
-            />
+          <Box maxWidth={{ base: '130px', md: '260px' }} p={4}>
+            <ChakraImage src={icon?.url} alt={`${title} logo`} width="100%" />
           </Box>
           <Flex flexDirection="column">
             <Heading
