@@ -673,16 +673,17 @@ export const getServerSideProps = async ({ query }) => {
     showUniversity: query.showUniversity,
   });
 
-  const events = await getClubs({
-    longitude: data.result.longitude,
-    latitude: data.result.latitude,
-    distance: query.distance ?? 100,
-    showCommunity: query.showCommunity,
-    showUniversity: query.showUniversity,
-  });
+  // TODO: Comment out once first event is published
+  // const events = await getEvents({
+  //   longitude: data.result.longitude,
+  //   latitude: data.result.latitude,
+  //   distance: query.distance ?? 100,
+  //   showCommunity: query.showCommunity,
+  //   showUniversity: query.showUniversity,
+  // });
 
   return {
-    props: { clubs, events },
+    props: { clubs, events: [] },
   };
 };
 

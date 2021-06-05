@@ -174,14 +174,13 @@ const handleSearchSubmit = async ({ values, setData }) => {
     return;
   }
 
-  const filter = {
-    'Team 1': values.searchTerm,
-    'Team 2': values.searchTerm,
-    Tournament: values.searchTerm,
-  };
   try {
     const data = await getSheet(SHEET_ID, 2, {
-      filter,
+      filter: {
+        'Team 1': values.searchTerm,
+        'Team 2': values.searchTerm,
+        Tournament: values.searchTerm,
+      },
       filterOptions: {
         operator: 'or',
         matching: 'loose',
