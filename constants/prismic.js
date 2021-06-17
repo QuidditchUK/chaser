@@ -16,7 +16,9 @@ const types = {
   contact_form: dynamic(() => import('components/contact-form')),
   two_column_table: dynamic(() => import('components/two-column-table-slice')),
   volunteer_form: dynamic(() => import('components/volunteer-form')),
-  national_team_form: dynamic(() => import('components/national-team-form')),
+  national_team_form: dynamic(() =>
+    import('components/national-team-interest')
+  ),
   horizontal_card: dynamic(() => import('components/horizontal-card')),
   edi_committee_form: dynamic(() => import('components/edi-committee-form')),
 };
