@@ -132,7 +132,7 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
                   <i>
                     {/* National Eligibility Criteria URL below points to the CMS, will need to be updated if the file is moved/changed. */}
                     You can check eligibility criteria{' '}
-                    <Link href="https://chaser.cdn.prismic.io/chaser/13bf388d-a194-4b10-bda7-9f503dfd6f55_National+Team+Operational+Policy+-+2020.pdf">
+                    <Link href="https://quidditchuk.org/about/documents-and-policies">
                       here
                     </Link>
                     .
