@@ -270,6 +270,7 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
                   ref={register}
                   my={3}
                   error={errors.playstyle}
+                  type="number"
                 />
 
                 {errors.years && (
