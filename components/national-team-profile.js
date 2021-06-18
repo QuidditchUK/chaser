@@ -97,7 +97,7 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
       <p>
         Welcome to <b>your</b> National Team Profile. Use the form below to get
         on the radar of the best Managers and Coaches in the UK, and register
-        your interest in playing for one of QuidditchUKs National Teams.
+        your interest in playing for one of the QuidditchUK National Teams.
         <br />
         <i>
           You can check out our National Team policies{' '}
