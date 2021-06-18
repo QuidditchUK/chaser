@@ -95,14 +95,15 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
         National Team Profile
       </Heading>
       <p>
-        Welcome to <b>your</b> National Team Profile. Use the form below to get
-        on the radar of the best Managers and Coaches in the UK, and register
-        your interest in playing for one of the QuidditchUK National Teams.
+        Welcome to <strong>your</strong> National Team Profile. Use the form
+        below to get on the radar of the best Managers and Coaches in the UK,
+        and register your interest in playing for one of the QuidditchUK
+        National Teams.
         <br />
-        <i>
+        <em>
           You can check out our National Team policies{' '}
           <Link href="/about/documents-and-policies">here</Link>.
-        </i>
+        </em>
       </p>
       <Container maxWidth={rem(500)} paddingBottom={4}>
         <form
@@ -129,14 +130,14 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
                   List the national teams that you are elligible for, and want
                   to be considered for, in order of preference. <Required />
                   <br />
-                  <i>
+                  <em>
                     {/* National Eligibility Criteria URL below points to the CMS, will need to be updated if the file is moved/changed. */}
                     You can check eligibility criteria{' '}
                     <Link href="https://quidditchuk.org/about/documents-and-policies">
                       here
                     </Link>
                     .
-                  </i>
+                  </em>
                 </Label>
 
                 <Select
@@ -282,10 +283,10 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
                 <Label htmlFor="experience">
                   Summarise your quidditch experience. <Required />
                   <br />
-                  <i>
+                  <em>
                     Focus on high-level tournaments and matches that you have
                     been a part of, and your current best finishes.
-                  </i>
+                  </em>
                 </Label>
 
                 <Textarea

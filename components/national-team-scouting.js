@@ -156,9 +156,9 @@ const NationalTeamScoutingForm = () => {
                   <Label htmlFor="number">
                     Playing number for the event? <Required />
                     <br />
-                    <i>
+                    <em>
                       This will help us identify you when watching your matches.
-                    </i>
+                    </em>
                   </Label>
                   <Input
                     name="number"
@@ -175,7 +175,7 @@ const NationalTeamScoutingForm = () => {
                   <Label htmlFor="team">
                     Team for the event?
                     <br />
-                    <i>If different to your regular season team.</i>
+                    <em>If different to your regular season team.</em>
                   </Label>
                   <Input
                     name="team"
