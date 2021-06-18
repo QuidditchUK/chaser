@@ -64,7 +64,7 @@ const handleFormSubmit = async (values, setServerError, setServerSuccess) => {
 };
 
 // TODO: Test this to recieving a data structure provided by the API.
-const NationalTeamProfileForm = ({ profile }) => {
+const NationalTeamProfileForm = ({ profile = {} }) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
