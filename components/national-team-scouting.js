@@ -22,9 +22,6 @@ const InlineError = dynamic(() =>
 import { api } from 'modules/api';
 import { rem } from 'styles/theme';
 
-// TODO: Can we have an API endpoint for valid events?
-const EVENTS = ['Jurassic Cup', 'Community League Fixture 1'];
-
 const NationalTeamScoutingFormSchema = object().shape({
   event: string()
     .nullable()
@@ -56,7 +53,7 @@ const handleFormSubmit = async (
   }
 };
 
-const NationalTeamScoutingForm = () => {
+const NationalTeamScoutingForm = ({ events = [] }) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
@@ -76,7 +73,7 @@ const NationalTeamScoutingForm = () => {
   const watchProfile = watch('profile_ready');
   const variant = 'primary';
 
-  if (EVENTS.length !== 0) {
+  if (events.length !== 0) {
     return (
       <PrismicWrapper variant={variant}>
         <Heading as="h1" fontFamily="body" textAlign="center">
@@ -142,7 +139,7 @@ const NationalTeamScoutingForm = () => {
                     <option disabled value>
                       Choose event
                     </option>
-                    {EVENTS.map((event) => (
+                    {events.map((event) => (
                       <option key={event} value={event}>
                         {event}
                       </option>
