@@ -295,7 +295,7 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
                   error={errors.experience}
                 />
 
-                {errors.years && (
+                {errors.experience && (
                   <InlineError marginBottom={3}>
                     {errors.experience.message}
                   </InlineError>
