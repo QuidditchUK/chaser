@@ -76,7 +76,7 @@ const NationalTeamScoutingForm = () => {
   const watchProfile = watch('profile_ready');
   const variant = 'primary';
 
-  if (EVENTS !== 0) {
+  if (EVENTS.length !== 0) {
     return (
       <PrismicWrapper variant={variant}>
         <Heading as="h1" fontFamily="body" textAlign="center">
