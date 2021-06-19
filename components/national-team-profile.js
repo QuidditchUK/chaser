@@ -244,6 +244,10 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
 
                 <Label htmlFor="playstyle">
                   Provide a brief description of your playstyle. <Required />
+                  <em>
+                    We are not looking for anything specific here, just tell us
+                    about you and what makes you stand out on pitch.
+                  </em>
                 </Label>
 
                 <Textarea
