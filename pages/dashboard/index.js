@@ -61,7 +61,6 @@ const Dashboard = ({ user }) => {
 
   const [membership] = memberships?.data || [];
   const club = rawClub?.data || null;
-  const nationalTeam = user.national_team_interest == true;
 
   return (
     <>
@@ -176,17 +175,25 @@ const Dashboard = ({ user }) => {
 
                   <ListItem
                     mb={2}
-                    color={nationalTeam ? 'keeperGreen' : 'seekerYellow'}
+                    color={
+                      user?.national_team_interest
+                        ? 'keeperGreen'
+                        : 'seekerYellow'
+                    }
                   >
                     <Flex alignItems="center" ml={4}>
                       <Link href="/dashboard/national-team" passHref>
                         <StyledAnchor>
                           <Span
                             color={
-                              nationalTeam ? 'keeperGreen' : 'seekerYellow'
+                              user?.national_team_interest
+                                ? 'keeperGreen'
+                                : 'seekerYellow'
                             }
                             borderColor={
-                              nationalTeam ? 'keeperGreen' : 'seekerYellow'
+                              user?.national_team_interest
+                                ? 'keeperGreen'
+                                : 'seekerYellow'
                             }
                           >
                             Complete your National Team Profile
@@ -194,7 +201,7 @@ const Dashboard = ({ user }) => {
                         </StyledAnchor>
                       </Link>
 
-                      {!!nationalTeam && (
+                      {!!user?.national_team_interest && (
                         <CheckCircleIcon ml={2} color="keeperGreen" />
                       )}
                     </Flex>
