@@ -2,8 +2,9 @@ import dynamic from 'next/dynamic';
 import { Box, Flex } from '@chakra-ui/react';
 
 import { rem } from 'styles/theme';
-// import { api } from 'modules/api';
-// import { parseCookies } from 'modules/cookies';
+import { getScoutingApplicationEvents } from 'modules/prismic';
+import { api } from 'modules/api';
+import { parseCookies } from 'modules/cookies';
 
 const Logo = dynamic(() => import('components/logo'));
 const Meta = dynamic(() => import('components/meta'));
@@ -16,7 +17,7 @@ const NationalTeamScouting = dynamic(() =>
   import('components/national-team-scouting')
 );
 
-const Info = () => (
+const Info = ({ user, events }) => (
   <>
     <Meta
       description="Sign in to QuidditchUK to manage your QuidditchUK National Team Profile"
@@ -28,37 +29,38 @@ const Info = () => (
           <Logo />
         </Flex>
 
-        {/* TODO: Need to handle passing data to this form, from the new API endpoint. */}
-        <NationalTeamProfile />
+        <NationalTeamProfile user={user} />
 
-        <NationalTeamScouting />
+        <NationalTeamScouting events={events} />
       </Container>
     </Box>
   </>
 );
 
-// TODO: Implement the authorization on this page (inc. 'Meta' code above). I have this disabled so I can access it locally.
-// export const getServerSideProps = async ({ req, res }) => {
-//   const { AUTHENTICATION_TOKEN } = parseCookies(req);
+export const getServerSideProps = async ({ req, res }) => {
+  const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
-//   if (!AUTHENTICATION_TOKEN) {
-//     res.setHeader('location', '/login');
-//     res.statusCode = 302;
-//     res.end();
-//     return { props: {} };
-//   }
+  if (!AUTHENTICATION_TOKEN) {
+    res.setHeader('location', '/login');
+    res.statusCode = 302;
+    res.end();
+    return { props: {} };
+  }
 
-//   const { data: user } = await api.get('/users/national-team', {
-//     headers: {
-//       Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
-//     },
-//   });
+  const { data: user } = await api.get('/users/me', {
+    headers: {
+      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
+    },
+  });
 
-//   return {
-//     props: {
-//       user,
-//     },
-//   };
-// };
+  const events = await getScoutingApplicationEvents();
+
+  return {
+    props: {
+      user,
+      events,
+    },
+  };
+};
 
 export default Info;
