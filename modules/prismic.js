@@ -147,6 +147,25 @@ export const getAllEvents = async () => {
   return results;
 };
 
+export const getScoutingApplicationEvents = async () => {
+  var twoWeeks = new Date();
+  twoWeeks.setDate(twoWeeks.getDate() + 14);
+  var fourWeeks = new Date();
+  fourWeeks.setDate(fourWeeks.getDate() + 28);
+  const { results } = await Client().query(
+    [
+      Prismic.Predicates.at('document.type', 'events'),
+      Prismic.Predicates.dateBetween(
+        'my.events.event_start_date',
+        twoWeeks,
+        fourWeeks
+      ),
+    ],
+    { pageSize: 100 }
+  );
+  return results;
+};
+
 export const PAGE_SIZE = 6;
 
 export const linkResolver = ({ type, uid }) => {
