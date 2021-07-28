@@ -204,7 +204,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                         )}
                       </Td>
                     </Tr>
-                    <Tr mb={4}>
+                    <Tr>
                       <Td colSpan="2" textAlign="center">
                         {event.club_registration_link?.url &&
                           isFuture(
@@ -213,7 +213,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                             <ExternalLink
                               href={event.club_registration_link?.url}
                             >
-                              <Button type="button" variant="primary">
+                              <Button type="button" variant="primary" mb={4}>
                                 Club Registration
                               </Button>
                             </ExternalLink>
