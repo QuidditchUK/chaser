@@ -223,25 +223,25 @@ const EventPage = ({ page: initialPage, preview }) => {
                   </>
                 )}
 
-                {event.player_registration_deadline && (
+                {event.individual_registration_deadline && (
                   <>
                     <Tr>
                       <Td fontWeight="bold">Individual Deadline</Td>
                       <Td>
                         {format(
-                          new Date(event.player_registration_deadline),
+                          new Date(event.individual_registration_deadline),
                           'MMMM d, yyyy'
                         )}
                       </Td>
                     </Tr>
                     <Tr>
                       <Td colSpan="2" textAlign="center">
-                        {event.player_registration_link?.url &&
+                        {event.individual_registration_link?.url &&
                           isFuture(
-                            new Date(event.player_registration_deadline)
+                            new Date(event.individual_registration_deadline)
                           ) && (
                             <ExternalLink
-                              href={event.player_registration_link?.url}
+                              href={event.individual_registration_link?.url}
                             >
                               <Button type="button" variant="primary">
                                 Individual Registration
