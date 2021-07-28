@@ -226,7 +226,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                 {event.player_registration_deadline && (
                   <>
                     <Tr>
-                      <Td fontWeight="bold">Player Deadline</Td>
+                      <Td fontWeight="bold">Individual Deadline</Td>
                       <Td>
                         {format(
                           new Date(event.player_registration_deadline),
@@ -244,7 +244,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                               href={event.player_registration_link?.url}
                             >
                               <Button type="button" variant="primary">
-                                Player Registration
+                                Individual Registration
                               </Button>
                             </ExternalLink>
                           )}
