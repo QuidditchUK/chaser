@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import Router from 'next/router';
-import { init } from 'modules/sentry';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
 import { Chakra } from 'styles/chakra';
@@ -13,8 +12,6 @@ const Layout = dynamic(() => import('containers/layout'));
 
 const Scripts = dynamic(() => import('../document/scripts'), { ssr: false });
 const queryClient = new QueryClient();
-
-init();
 
 function App({ Component, pageProps, err }) {
   useEffect(() => {
