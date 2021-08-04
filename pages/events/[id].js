@@ -286,8 +286,8 @@ const EventPage = ({ page: initialPage, preview }) => {
               )}
 
               <Box
-                mr={{ base: '-1rem', sm: '-2rem', md: '-2.25rem' }}
-                ml={{ base: '-1rem', sm: '-2rem', md: '-2.25rem' }}
+                mr={{ base: '-2rem', sm: '-2rem', md: '-2.25rem' }}
+                ml={{ base: '-2rem', sm: '-2rem', md: '-2.25rem' }}
               >
                 {renderPrismicSections(event?.body)}
               </Box>
