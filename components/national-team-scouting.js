@@ -45,7 +45,7 @@ const handleFormSubmit = async (
     setServerSuccess(null);
 
     // TODO: Create and test new api endpoint for this form.
-    await api.post('/contact/scouting', values);
+    await api.post('/users/scouting', values);
     setServerSuccess(true);
     resetForm({});
   } catch (err) {

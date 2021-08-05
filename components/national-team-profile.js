@@ -56,7 +56,7 @@ const handleFormSubmit = async (values, setServerError, setServerSuccess) => {
     setServerSuccess(null);
 
     // TODO: Update and test api endpoint for this form.
-    await api.post('/contact/national', values);
+    await api.post('/users/national', values);
     setServerSuccess(true);
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
@@ -131,7 +131,7 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
                   to be considered for, in order of preference. <Required />
                   <br />
                   <em>
-                    {/* National Eligibility Criteria URL below points to the CMS, will need to be updated if the file is moved/changed. */}
+                    {/* National Eligibility Criteria URL should point to the pdf file in the CMS when possible. */}
                     You can check eligibility criteria{' '}
                     <Link href="https://quidditchuk.org/about/documents-and-policies">
                       here
@@ -274,7 +274,7 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
                   placeholder="Years active"
                   ref={register}
                   my={3}
-                  error={errors.playstyle}
+                  error={errors.years}
                   type="number"
                 />
 
