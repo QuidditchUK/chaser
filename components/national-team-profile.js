@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import dynamic from 'next/dynamic';
@@ -35,19 +35,46 @@ const NATIONAL_TEAMS = ['England', 'Scotland', 'Wales'];
 const POSITIONS = ['Keeper/Chaser', 'Beater', 'Seeker'];
 
 const NationalTeamFormSchema = object().shape({
-  first_team: string()
-    .nullable()
-    .required('Please select your first choice National Team.'),
+  first_team: string().when('national_team_interest', {
+    is: true,
+    then: string().required('Please select your first choice National Team.'),
+    otherwise: string().nullable(),
+  }),
   second_team: string().nullable(),
   third_team: string().nullable(),
-  position: string().required('Please select your primary position.'),
-  playstyle: string().required(
-    'Please enter a short description of your playstyle.'
-  ),
-  years: number().required(
-    'Please estimate how many years of active quidditch experience you have.'
-  ),
-  experience: string().required('Please summarise your quidditch experience.'),
+  position: string().when('national_team_interest', {
+    is: true,
+    then: string().required('Please select your primary position.'),
+    otherwise: string().nullable(),
+  }),
+  playstyle: string().when('national_team_interest', {
+    is: true,
+    then: string().required(
+      'Please enter a short description of your playstyle.'
+    ),
+    otherwise: string().nullable(),
+  }),
+  years: number().when('national_team_interest', {
+    is: true,
+    then: number()
+      .transform((currentValue, originalValue) => {
+        return originalValue === '' ? null : currentValue;
+      })
+      .nullable()
+      .required(
+        'Please estimate how many years of active quidditch experience you have.'
+      ),
+    otherwise: number()
+      .transform((currentValue, originalValue) => {
+        return originalValue === '' ? null : currentValue;
+      })
+      .nullable(),
+  }),
+  experience: string().when('national_team_interest', {
+    is: true,
+    then: string().required('Please summarise your quidditch experience.'),
+    otherwise: string().nullable(),
+  }),
 });
 
 const handleFormSubmit = async (values, setServerError, setServerSuccess) => {
@@ -55,18 +82,27 @@ const handleFormSubmit = async (values, setServerError, setServerSuccess) => {
     setServerError(null);
     setServerSuccess(null);
 
-    // TODO: Update and test api endpoint for this form.
-    await api.post('/users/national', values);
+    await api.put('/users/national', values);
     setServerSuccess(true);
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
   }
 };
 
-// TODO: Test this to recieving a data structure provided by the API.
 const NationalTeamProfileForm = ({ profile = {} }) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
+
+  useEffect(() => {
+    if (serverSuccess) {
+      const timer = setTimeout(() => {
+        setServerSuccess(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+
+    return () => {};
+  }, [serverSuccess]);
 
   const { register, handleSubmit, errors, watch, formState } = useForm({
     mode: 'onBlur',
@@ -88,7 +124,6 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
   const watchInterest = watch('national_team_interest');
   const variant = 'light';
 
-  // TODO: Not sure exactly how the forms work regarding linking back to the user. But that needs to be handled here.
   return (
     <PrismicWrapper variant={variant}>
       <Heading as="h1" fontFamily="body" textAlign="center">
@@ -244,6 +279,7 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
 
                 <Label htmlFor="playstyle">
                   Provide a brief description of your playstyle. <Required />
+                  <br />
                   <em>
                     We are not looking for anything specific here, just tell us
                     about you and what makes you stand out on pitch.

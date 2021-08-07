@@ -182,7 +182,7 @@ const Dashboard = ({ user }) => {
                     }
                   >
                     <Flex alignItems="center" ml={4}>
-                      <Link href="/dashboard/national-team" passHref>
+                      <Link href="/dashboard/account/national-team" passHref>
                         <StyledAnchor>
                           <Span
                             color={

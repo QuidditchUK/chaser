@@ -29,7 +29,7 @@ const Info = ({ user, events }) => (
           <Logo />
         </Flex>
 
-        <NationalTeamProfile user={user} />
+        <NationalTeamProfile profile={user} />
 
         <NationalTeamScouting events={events} />
       </Container>

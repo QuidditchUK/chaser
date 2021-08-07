@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import dynamic from 'next/dynamic';
@@ -29,6 +29,9 @@ const NationalTeamScoutingFormSchema = object().shape({
       'Please select the event you would like to apply to be scouted at.'
     ),
   number: number()
+    .transform((currentValue, originalValue) => {
+      return originalValue === '' ? null : currentValue;
+    })
     .nullable()
     .required('Please enter the number you will be playing in at the event.'),
   team: string().nullable(),
@@ -44,8 +47,7 @@ const handleFormSubmit = async (
     setServerError(null);
     setServerSuccess(null);
 
-    // TODO: Create and test new api endpoint for this form.
-    await api.post('/users/scouting', values);
+    await api.put('/users/scouting', values);
     setServerSuccess(true);
     resetForm({});
   } catch (err) {
@@ -56,6 +58,17 @@ const handleFormSubmit = async (
 const NationalTeamScoutingForm = ({ events = [] }) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
+
+  useEffect(() => {
+    if (serverSuccess) {
+      const timer = setTimeout(() => {
+        setServerSuccess(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+
+    return () => {};
+  }, [serverSuccess]);
 
   const { register, handleSubmit, errors, reset, watch, formState } = useForm({
     mode: 'onBlur',
@@ -139,9 +152,9 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
                     <option disabled value>
                       Choose event
                     </option>
-                    {events.map((event) => (
-                      <option key={event} value={event}>
-                        {event}
+                    {events.map(({ data }) => (
+                      <option key={data?.event_name} value={data?.event_name}>
+                        {data?.event_name}
                       </option>
                     ))}
                   </Select>
@@ -158,7 +171,9 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
                     </em>
                   </Label>
                   <Input
+                    type="number"
                     name="number"
+                    defaultValues="0"
                     placeholder="#"
                     ref={register}
                     my={3}
