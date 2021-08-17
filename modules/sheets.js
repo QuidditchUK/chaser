@@ -3,8 +3,9 @@ import axios from 'axios';
 // export default async function getSheet(sheetId, sheetName, options = {}) {
 export default async function getSheet(sheetId, sheetName) {
   const { data } = await axios(
-    `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=AIzaSyBBXBSVcXfPZjPXF5JCpY6nghR3ORoigDo`
+    `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`
   );
+
   // seperate key row from content rows
   const [keys, ...rows] = data.values;
 
