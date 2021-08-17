@@ -204,7 +204,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                         )}
                       </Td>
                     </Tr>
-                    <Tr mb={4}>
+                    <Tr>
                       <Td colSpan="2" textAlign="center">
                         {event.club_registration_link?.url &&
                           isFuture(
@@ -213,7 +213,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                             <ExternalLink
                               href={event.club_registration_link?.url}
                             >
-                              <Button type="button" variant="primary">
+                              <Button type="button" variant="primary" mb={4}>
                                 Club Registration
                               </Button>
                             </ExternalLink>
@@ -223,28 +223,28 @@ const EventPage = ({ page: initialPage, preview }) => {
                   </>
                 )}
 
-                {event.player_registration_deadline && (
+                {event.individual_registration_deadline && (
                   <>
                     <Tr>
-                      <Td fontWeight="bold">Player Deadline</Td>
+                      <Td fontWeight="bold">Individual Deadline</Td>
                       <Td>
                         {format(
-                          new Date(event.player_registration_deadline),
+                          new Date(event.individual_registration_deadline),
                           'MMMM d, yyyy'
                         )}
                       </Td>
                     </Tr>
                     <Tr>
                       <Td colSpan="2" textAlign="center">
-                        {event.player_registration_link?.url &&
+                        {event.individual_registration_link?.url &&
                           isFuture(
-                            new Date(event.player_registration_deadline)
+                            new Date(event.individual_registration_deadline)
                           ) && (
                             <ExternalLink
-                              href={event.player_registration_link?.url}
+                              href={event.individual_registration_link?.url}
                             >
                               <Button type="button" variant="primary">
-                                Player Registration
+                                Individual Registration
                               </Button>
                             </ExternalLink>
                           )}
@@ -286,8 +286,8 @@ const EventPage = ({ page: initialPage, preview }) => {
               )}
 
               <Box
-                mr={{ base: '-1rem', sm: '-2rem', md: '-2.25rem' }}
-                ml={{ base: '-1rem', sm: '-2rem', md: '-2.25rem' }}
+                mr={{ base: '-2rem', sm: '-2rem', md: '-2.25rem' }}
+                ml={{ base: '-2rem', sm: '-2rem', md: '-2.25rem' }}
               >
                 {renderPrismicSections(event?.body)}
               </Box>

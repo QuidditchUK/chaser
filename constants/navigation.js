@@ -113,6 +113,10 @@ export const MAIN_NAVIGATION = [
         label: 'Team Wales / Cymru',
         href: '/programmes/team-wales',
       },
+      {
+        label: 'Scouting',
+        href: '/programmes/scouting',
+      },
     ],
   },
   {

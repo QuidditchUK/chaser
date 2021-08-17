@@ -108,17 +108,17 @@
         "label": "Club Registration Deadline"
       }
     },
-    "player_registration_link": {
+    "individual_registration_link": {
       "type": "Link",
       "config": {
         "allowTargetBlank": true,
-        "label": "Player Registration Link"
+        "label": "Individual Registration Link"
       }
     },
-    "player_registration_deadline": {
+    "individual_registration_deadline": {
       "type": "Timestamp",
       "config": {
-        "label": "Player Registration Deadline"
+        "label": "Individual Registration Deadline"
       }
     },
     "quk_membership_required": {

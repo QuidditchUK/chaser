@@ -9,6 +9,8 @@ export const ButtonStyles = {
     fontFamily: 'body',
     fontWeight: 'normal',
     size: 'sm',
+    alignItems: 'center',
+    justifyContent: 'center',
     py: 2,
     px: 4,
   },
@@ -83,7 +85,7 @@ export const ButtonStyles = {
 
 const Button = forwardRef(({ variant, ...rest }, ref) => {
   const styles = useStyleConfig('Button', { variant });
-  return <ChakraButton sx={styles} ref={ref} {...rest} />;
+  return <ChakraButton __css={styles} ref={ref} {...rest} />;
 });
 
 export default Button;

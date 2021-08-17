@@ -32,8 +32,6 @@ import {
   getAllEvents,
 } from 'modules/prismic';
 
-const Notification = dynamic(() => import('components/notification'));
-const Content = dynamic(() => import('components/content'));
 const CloseIcon = dynamic(() => import('public/images/close.svg'));
 const Container = dynamic(() => import('components/container'));
 
@@ -554,7 +552,7 @@ const FindQuidditch = ({
             </Flex>
           )}
 
-          <Notification mt={4}>
+          {/* <Notification mt={4}>
             <Heading as="h2" fontSize="xl" fontFamily="body">
               Events during COVID-19
             </Heading>
@@ -565,7 +563,7 @@ const FindQuidditch = ({
                 <Link color="monarchRed">COVID page</Link>
               </NextLink>
             </Content>
-          </Notification>
+          </Notification> */}
 
           {watchShowEvents && !!events.length && (
             <>
@@ -605,8 +603,7 @@ const FindQuidditch = ({
             </>
           )}
 
-          {/* TODO: Uncomment on Wednesday when events are live */}
-          {/* {watchShowEvents && events.length === 0 && (
+          {watchShowEvents && events.length === 0 && (
             <Flex
               alignItems="center"
               justifyContent="center"
@@ -635,7 +632,7 @@ const FindQuidditch = ({
                 </a>
               </Link>
             </Flex>
-          )} */}
+          )}
         </Container>
       </Box>
     </>
@@ -673,17 +670,16 @@ export const getServerSideProps = async ({ query }) => {
     showUniversity: query.showUniversity,
   });
 
-  // TODO: Comment out once first event is published
-  // const events = await getEvents({
-  //   longitude: data.result.longitude,
-  //   latitude: data.result.latitude,
-  //   distance: query.distance ?? 100,
-  //   showCommunity: query.showCommunity,
-  //   showUniversity: query.showUniversity,
-  // });
+  const events = await getEvents({
+    longitude: data.result.longitude,
+    latitude: data.result.latitude,
+    distance: query.distance ?? 100,
+    showCommunity: query.showCommunity,
+    showUniversity: query.showUniversity,
+  });
 
   return {
-    props: { clubs, events: [] },
+    props: { clubs, events },
   };
 };
 

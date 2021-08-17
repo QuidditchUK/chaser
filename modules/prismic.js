@@ -127,8 +127,7 @@ export const getEvents = async ({
         distance
       ),
       Prismic.Predicates.any('my.events.leagues.league', leagues),
-      // TODO: Uncomment on Wednesday when events are live
-      // Prismic.Predicates.dateAfter('my.events.event_start_date', new Date()),
+      Prismic.Predicates.dateAfter('my.events.event_start_date', new Date()),
     ],
     { pageSize: 100 }
   );
@@ -140,8 +139,7 @@ export const getAllEvents = async () => {
   const { results } = await Client().query(
     [
       Prismic.Predicates.at('document.type', 'events'),
-      // TODO: Uncomment on Wednesday when events are live
-      // Prismic.Predicates.dateAfter('my.events.event_start_date', new Date()),
+      Prismic.Predicates.dateAfter('my.events.event_start_date', new Date()),
     ],
     { pageSize: 100 }
   );
