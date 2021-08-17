@@ -168,4 +168,8 @@ export const ACCOUNT_NAVIGATION = [
     label: 'My info',
     href: '/dashboard/account/info',
   },
+  {
+    label: 'My National Team profile',
+    href: '/dashboard/account/national-team',
+  },
 ];

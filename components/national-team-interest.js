@@ -10,9 +10,12 @@ const NationalTeamInterest = (rawData) => {
   return (
     <PrismicWrapper variant={variant}>
       <Heading as="h1" fontFamily="body" textAlign="center">
-        Excited for the National Teams? Check out the details of our new{' '}
-        <Link href="/programmes/scouting">Scouting Program</Link>, and get
-        yourself ready to apply when the season starts.
+        Register your interest today through your{' '}
+        <Link href="/login">QuidditchUK account</Link>, by completing your{' '}
+        <Link href="/dashboard/account/national-team">
+          National Team Profile
+        </Link>
+        !
       </Heading>
     </PrismicWrapper>
   );

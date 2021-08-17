@@ -172,6 +172,40 @@ const Dashboard = ({ user }) => {
                       {!!club && <CheckCircleIcon ml={2} color="keeperGreen" />}
                     </Flex>
                   </ListItem>
+
+                  <ListItem
+                    mb={2}
+                    color={
+                      user?.national_team_interest
+                        ? 'keeperGreen'
+                        : 'seekerYellow'
+                    }
+                  >
+                    <Flex alignItems="center" ml={4}>
+                      <Link href="/dashboard/account/national-team" passHref>
+                        <StyledAnchor>
+                          <Span
+                            color={
+                              user?.national_team_interest
+                                ? 'keeperGreen'
+                                : 'seekerYellow'
+                            }
+                            borderColor={
+                              user?.national_team_interest
+                                ? 'keeperGreen'
+                                : 'seekerYellow'
+                            }
+                          >
+                            Complete your National Team Profile
+                          </Span>
+                        </StyledAnchor>
+                      </Link>
+
+                      {!!user?.national_team_interest && (
+                        <CheckCircleIcon ml={2} color="keeperGreen" />
+                      )}
+                    </Flex>
+                  </ListItem>
                 </OrderedList>
               </Flex>
 

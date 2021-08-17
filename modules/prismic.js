@@ -1,4 +1,5 @@
 import Prismic from '@prismicio/client';
+import add from 'date-fns/add';
 import config from '../config';
 
 const { prismic } = config;
@@ -139,6 +140,23 @@ export const getAllEvents = async () => {
     [
       Prismic.Predicates.at('document.type', 'events'),
       Prismic.Predicates.dateAfter('my.events.event_start_date', new Date()),
+    ],
+    { pageSize: 100 }
+  );
+  return results;
+};
+
+export const getScoutingApplicationEvents = async () => {
+  const twoWeeks = add(new Date(), { days: 12 });
+  const fourWeeks = add(new Date(), { days: 28 });
+  const { results } = await Client().query(
+    [
+      Prismic.Predicates.at('document.type', 'events'),
+      Prismic.Predicates.dateBetween(
+        'my.events.event_start_date',
+        twoWeeks,
+        fourWeeks
+      ),
     ],
     { pageSize: 100 }
   );
