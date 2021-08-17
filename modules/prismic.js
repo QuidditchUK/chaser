@@ -147,7 +147,7 @@ export const getAllEvents = async () => {
 };
 
 export const getScoutingApplicationEvents = async () => {
-  const twoWeeks = add(new Date(), { days: 14 });
+  const twoWeeks = add(new Date(), { days: 12 });
   const fourWeeks = add(new Date(), { days: 28 });
   const { results } = await Client().query(
     [
