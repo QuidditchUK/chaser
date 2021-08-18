@@ -83,7 +83,7 @@ export const ButtonStyles = {
   },
 };
 
-const Button = forwardRef(({ variant, ...rest }, ref) => {
+const Button = forwardRef(({ variant = 'primary', ...rest }, ref) => {
   const styles = useStyleConfig('Button', { variant });
   return <ChakraButton __css={styles} ref={ref} {...rest} />;
 });
