@@ -41,7 +41,9 @@
     "analyze": "cross-env ANALYZE=true yarn build",
     "analyze:sme": "source-map-explorer '.next/static/chunks/*.js'",
     "svg:format": "find public/images -name '*.svg' -type f -exec svgo --config svgo.json '{}' \\;",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint pages components styles modules document",
+    "lint:fix": "eslint pages components styles modules document --fix"
   },
   "browserslist": {
     "production": [
