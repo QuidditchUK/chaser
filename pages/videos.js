@@ -169,13 +169,13 @@ const VideoCard = ({ video }) => {
 
 const handleSearchSubmit = async ({ values, setData }) => {
   if (!values.searchTerm) {
-    const sheet = await getSheet(SHEET_ID, 2);
+    const sheet = await getSheet(SHEET_ID, 'Footage');
     setData(DEFAULT_VIDEO_ORDER(sheet));
     return;
   }
 
   try {
-    const data = await getSheet(SHEET_ID, 2, {
+    const data = await getSheet(SHEET_ID, 'Footage', {
       filter: {
         'Team 1': values.searchTerm,
         'Team 2': values.searchTerm,
@@ -349,7 +349,7 @@ const Page = ({ data: initialData }) => {
 };
 
 export const getStaticProps = async () => {
-  const sheet = await getSheet(SHEET_ID, 2);
+  const sheet = await getSheet(SHEET_ID, 'Footage');
 
   const data = DEFAULT_VIDEO_ORDER(sheet);
 
