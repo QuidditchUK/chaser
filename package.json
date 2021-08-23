@@ -13,7 +13,7 @@
     "@svgr/webpack": "^5.4.0",
     "axios": "^0.21.1",
     "cookie": "^0.4.1",
-    "date-fns": "2.22.1",
+    "date-fns": "2.23.0",
     "flickity": "^2.2.1",
     "framer-motion": "^4.1.2",
     "js-cookie": "^2.2.1",
