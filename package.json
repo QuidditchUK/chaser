@@ -66,7 +66,7 @@
     "eslint-plugin-react-hooks": "4.2.0",
     "g-sheets-api": "2.1.0",
     "husky": "^7.0.0",
-    "lint-staged": "10.5.4",
+    "lint-staged": "11.1.2",
     "prettier": "^2.2.1"
   },
   "ava": {
