@@ -41,7 +41,9 @@
     "analyze": "cross-env ANALYZE=true yarn build",
     "analyze:sme": "source-map-explorer '.next/static/chunks/*.js'",
     "svg:format": "find public/images -name '*.svg' -type f -exec svgo --config svgo.json '{}' \\;",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint pages components styles modules document",
+    "lint:fix": "eslint pages components styles modules document --fix"
   },
   "browserslist": {
     "production": [
@@ -63,7 +65,7 @@
     "cross-env": "^7.0.2",
     "eslint": "7.32.0",
     "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-import": "2.24.1",
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-react": "7.23.1",
     "eslint-plugin-react-hooks": "4.2.0",
