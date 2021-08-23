@@ -3373,7 +3373,7 @@ cross-env@^7.0.2:
   dependencies:
     cross-spawn "^7.0.1"
 
-cross-fetch@^3.0.6:
+cross-fetch@^3.0.6, cross-fetch@^3.1.4:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.4.tgz#9723f3a3a247bf8b89039f3a380a9244e8fa2f39"
   integrity sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ==
@@ -4319,12 +4319,12 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
-g-sheets-api@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/g-sheets-api/-/g-sheets-api-1.4.1.tgz#9469be94f1a90cfb7058cce9220778b6a1362350"
-  integrity sha512-kilr8ZGwqpX+JpxChWX2qIPic/MlG71sYOGd3jVdCCOOkbT8RPU1bZaISuLLf1rvx1CCyks2UNv+xEnsHIETMQ==
+g-sheets-api@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/g-sheets-api/-/g-sheets-api-2.1.0.tgz#282b82abe3cbd4eb2fef1ef07178dbf36ffd6d47"
+  integrity sha512-LEvmafmcrAZv1lc/p6nzuMAhbAQfM7806HHZcKMZEiggMeuuAzABSyBuAzkcm8QJ6wvdkPJQJe0zVapxHcX3KA==
   dependencies:
-    node-fetch "^2.6.1"
+    cross-fetch "^3.1.4"
 
 gauge@~2.7.3:
   version "2.7.4"
@@ -5514,7 +5514,7 @@ nextjs-redirect@^5.0.0:
   resolved "https://registry.yarnpkg.com/nextjs-redirect/-/nextjs-redirect-5.0.0.tgz#30a05fb189a5d1fcd5d15e46fbeee7e611579fc6"
   integrity sha512-/AImO+Qe/BJBkqYv894wH1Gw0TWHhBQ8cXVcSc6QeGsyGDD8zWLaqzHwyRmDPXmI+Q75LoeBtUMtbx8M3rNe1A==
 
-node-fetch@2.6.1, node-fetch@^2.6.0, node-fetch@^2.6.1:
+node-fetch@2.6.1, node-fetch@^2.6.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==

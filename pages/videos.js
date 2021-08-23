@@ -17,8 +17,8 @@ import axios from 'axios';
 import getSheet from 'modules/sheets';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import PrismicWrapper from 'components/prismic-wrapper';
-// import { useForm } from 'react-hook-form';
-// import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import { useForm } from 'react-hook-form';
+import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
 const Image = dynamic(() => import('components/image'));
 const Meta = dynamic(() => import('components/meta'));
@@ -167,41 +167,40 @@ const VideoCard = ({ video }) => {
   );
 };
 
-// const handleSearchSubmit = async ({ values, setData }) => {
-//   if (!values.searchTerm) {
-//     const sheet = await getSheet(SHEET_ID, 'Footage');
-//     setData(DEFAULT_VIDEO_ORDER(sheet));
-//     return;
-//   }
+const handleSearchSubmit = async ({ values, setData }) => {
+  if (!values.searchTerm) {
+    const sheet = await getSheet(SHEET_ID, 'Footage');
+    setData(DEFAULT_VIDEO_ORDER(sheet));
+    return;
+  }
 
-//   try {
-//     const data = await getSheet(SHEET_ID, 'Footage', {
-//       filter: {
-//         'Team 1': values.searchTerm,
-//         'Team 2': values.searchTerm,
-//         Tournament: values.searchTerm,
-//       },
-//       filterOptions: {
-//         operator: 'or',
-//         matching: 'loose',
-//       },
-//     });
+  try {
+    const data = await getSheet(SHEET_ID, 'Footage', {
+      filter: {
+        'Team 1': values.searchTerm,
+        'Team 2': values.searchTerm,
+        Tournament: values.searchTerm,
+      },
+      filterOptions: {
+        operator: 'or',
+        matching: 'loose',
+      },
+    });
 
-//     setData([{ videos: data }]);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+    setData([{ videos: data }]);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const Page = ({ data: initialData }) => {
-  const [data] = useState(initialData);
-  // const [data, setData] = useState(initialData);
+  const [data, setData] = useState(initialData);
 
-  // const { handleSubmit, register } = useForm({
-  //   defaultValues: {
-  //     searchTerm: '',
-  //   },
-  // });
+  const { handleSubmit, register } = useForm({
+    defaultValues: {
+      searchTerm: '',
+    },
+  });
 
   return (
     <>
@@ -210,45 +209,45 @@ const Page = ({ data: initialData }) => {
         image="https://images.prismic.io/chaser/43a62356-5609-45c4-a9dc-737db619449d_Volunteers%21.jpg?auto=compress,format"
         description="Browse the QuidditchUK Community Video Library for footage of Quidditch being played in the UK"
       />
-      {/* <form
+      <form
         onSubmit={handleSubmit((values) =>
           handleSearchSubmit({ values, setData })
         )}
-      > */}
-      <Box
-        as="section"
-        position="relative"
-        backgroundColor="qukBlue"
-        backgroundSize="cover"
-        overflow="hidden"
-        minHeight={BLOG_MIN_HEIGHTS}
       >
-        <Image
-          src="https://images.prismic.io/chaser/15de9370-f5bd-4a7c-8b4d-9610e0b22e3b_video-uncropped.jpg?auto=compress,format"
-          layout="fill"
-          objectPosition="center center"
-          objectFit="cover"
-          borderRadius={0}
-          priority={true}
-        />
-
-        <Flex
+        <Box
+          as="section"
           position="relative"
+          backgroundColor="qukBlue"
+          backgroundSize="cover"
+          overflow="hidden"
           minHeight={BLOG_MIN_HEIGHTS}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
         >
-          <Heading
-            fontSize={{ base: '4xl', md: '7xl' }}
-            color="white"
-            textShadow="lg"
-            my={2}
-          >
-            Video Library
-          </Heading>
+          <Image
+            src="https://images.prismic.io/chaser/15de9370-f5bd-4a7c-8b4d-9610e0b22e3b_video-uncropped.jpg?auto=compress,format"
+            layout="fill"
+            objectPosition="center center"
+            objectFit="cover"
+            borderRadius={0}
+            priority={true}
+          />
 
-          {/* <Grid
+          <Flex
+            position="relative"
+            minHeight={BLOG_MIN_HEIGHTS}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Heading
+              fontSize={{ base: '4xl', md: '7xl' }}
+              color="white"
+              textShadow="lg"
+              my={2}
+            >
+              Video Library
+            </Heading>
+
+            <Grid
               gridTemplateColumns={{ base: '1fr', md: '2fr 1fr' }}
               gridGap={2}
             >
@@ -264,10 +263,10 @@ const Page = ({ data: initialData }) => {
               <Button variant="secondary" type="submit">
                 Search Videos
               </Button>
-            </Grid> */}
-        </Flex>
-      </Box>
-      {/* </form> */}
+            </Grid>
+          </Flex>
+        </Box>
+      </form>
 
       <PrismicWrapper variant="light" small>
         <Content>
@@ -332,7 +331,7 @@ const Page = ({ data: initialData }) => {
                     Adjust your search filters and double-check your terms, or
                     you can always check the raw spreadsheet{' '}
                     <a
-                      href="https://docs.google.com/spreadsheets/d/1SBfVt4GBCoyFGpjb-Y7dt4uDsbhZFPbkY-rBVNgZsgo/edit?fbclid=IwAR3Khtk0kQTbhWu1j10NtfdOj5NNDMw677g8zyf6Gu2fPCw9qn3Cv5yeJQ0#gid=0"
+                      href="https://docs.google.com/spreadsheets/d/1SBfVt4GBCoyFGpjb-Y7dt4uDsbhZFPbkY-rBVNgZsgo/edit?usp=sharing"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
