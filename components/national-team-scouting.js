@@ -138,7 +138,7 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
                       re-applying.
                     </li>
                   </ul>
-                  <Label htmlFor="team" mb="2">
+                  <Label htmlFor="event" mb="2">
                     Event to be scouted at? <Required />
                   </Label>
                   <Select
@@ -187,7 +187,10 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
                   <Label htmlFor="team">
                     Team for the event?
                     <br />
-                    <em>If different to your regular season team.</em>
+                    <em>
+                      If different to your regular season club, or if your club
+                      is sending multiple teams.
+                    </em>
                   </Label>
                   <Input
                     name="team"
