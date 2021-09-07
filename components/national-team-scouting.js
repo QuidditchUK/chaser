@@ -35,6 +35,7 @@ const NationalTeamScoutingFormSchema = object().shape({
     .nullable()
     .required('Please enter the number you will be playing in at the event.'),
   team: string().nullable(),
+  pronouns: string().nullable(),
 });
 
 const handleFormSubmit = async (
@@ -78,6 +79,7 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
       event: null,
       number: null,
       team: '',
+      pronouns: '',
     },
   });
 
@@ -202,6 +204,27 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
                   {errors.team && (
                     <InlineError marginBottom={3}>
                       {errors.team.message}
+                    </InlineError>
+                  )}
+                  <Label htmlFor="pronouns">
+                    What are your pronouns?
+                    <br />
+                    <em>
+                      Please share if you are comfortable, it will help us
+                      address you correctly in emails and reports related to
+                      this application.
+                    </em>
+                  </Label>
+                  <Input
+                    name="pronouns"
+                    placeholder="Your pronouns"
+                    ref={register}
+                    my={3}
+                    error={errors.pronouns}
+                  />
+                  {errors.pronouns && (
+                    <InlineError marginBottom={3}>
+                      {errors.pronouns.message}
                     </InlineError>
                   )}
                   <Button
