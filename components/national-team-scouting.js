@@ -35,6 +35,7 @@ const NationalTeamScoutingFormSchema = object().shape({
     .nullable()
     .required('Please enter the number you will be playing in at the event.'),
   team: string().nullable(),
+  pronouns: string().nullable(),
 });
 
 const handleFormSubmit = async (
@@ -78,6 +79,7 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
       event: null,
       number: null,
       team: '',
+      pronouns: '',
     },
   });
 
@@ -138,7 +140,7 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
                       re-applying.
                     </li>
                   </ul>
-                  <Label htmlFor="team" mb="2">
+                  <Label htmlFor="event" mb="2">
                     Event to be scouted at? <Required />
                   </Label>
                   <Select
@@ -187,7 +189,10 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
                   <Label htmlFor="team">
                     Team for the event?
                     <br />
-                    <em>If different to your regular season team.</em>
+                    <em>
+                      If different to your regular season club, or if your club
+                      is sending multiple teams.
+                    </em>
                   </Label>
                   <Input
                     name="team"
@@ -199,6 +204,27 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
                   {errors.team && (
                     <InlineError marginBottom={3}>
                       {errors.team.message}
+                    </InlineError>
+                  )}
+                  <Label htmlFor="pronouns">
+                    What are your pronouns?
+                    <br />
+                    <em>
+                      Please share if you are comfortable, it will help us
+                      address you correctly in emails and reports related to
+                      this application.
+                    </em>
+                  </Label>
+                  <Input
+                    name="pronouns"
+                    placeholder="Your pronouns"
+                    ref={register}
+                    my={3}
+                    error={errors.pronouns}
+                  />
+                  {errors.pronouns && (
+                    <InlineError marginBottom={3}>
+                      {errors.pronouns.message}
                     </InlineError>
                   )}
                   <Button
