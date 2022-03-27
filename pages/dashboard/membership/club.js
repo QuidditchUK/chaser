@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,15 +8,7 @@ import { object, string, bool } from 'yup';
 
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import {
-  Box,
-  Grid,
-  Flex,
-  Heading,
-  Select,
-  Checkbox,
-  Link as ChakraLink,
-} from '@chakra-ui/react';
+import { Box, Grid, Flex, Heading, Select, Checkbox } from '@chakra-ui/react';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
@@ -25,14 +16,10 @@ const Content = dynamic(() => import('components/content'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Required = dynamic(() => import('components/required'));
-const Image = dynamic(() => import('components/image'));
 const ClubCard = dynamic(() => import('components/club-card'));
 
 const InlineError = dynamic(() =>
   import('components/errors').then(({ InlineError }) => InlineError)
-);
-const StyledLink = dynamic(() =>
-  import('components/latest-news').then(({ StyledLink }) => StyledLink)
 );
 
 import { ACTIVE_STATUS } from 'components/club-card';
@@ -126,11 +113,9 @@ const ManageClub = ({ user, clubs = [] }) => {
                       If you need to change your club, you must submit a
                       transfer request to QuidditchUK to request any changes.
                     </p>
-                    <Link href="/about/contact-us" passHref>
-                      <ChakraLink>
-                        <Button variant="secondary">Contact Us</Button>
-                      </ChakraLink>
-                    </Link>
+                    <Button variant="secondary" href="/about/contact-us">
+                      Contact Us
+                    </Button>
                   </>
                 ) : (
                   <>
@@ -212,31 +197,20 @@ const ManageClub = ({ user, clubs = [] }) => {
             </Box>
             {selectedClub && (
               <Flex flexDirection="column" key={selectedClub?.uuid}>
-                <Link href={`/clubs/${selectedClub?.slug}`} passHref>
-                  <StyledLink>
-                    <ClubCard
-                      backgroundColor={selectedClub?.featured_color}
-                      color={selectedClub?.text_color}
-                      name={selectedClub?.name}
-                      league={selectedClub?.league}
-                      venue={selectedClub?.venue}
-                      icon={selectedClub?.icon}
-                      status={selectedClub?.status}
-                      image={
-                        selectedClub?.images ? (
-                          <Image
-                            src={selectedClub?.images?.[0]}
-                            alt={selectedClub?.name}
-                            layout="responsive"
-                            width={640}
-                            height={360}
-                            borderRadius="0px"
-                          />
-                        ) : null
-                      }
-                    />
-                  </StyledLink>
-                </Link>
+                <ClubCard
+                  backgroundColor={selectedClub?.featured_color}
+                  color={selectedClub?.text_color}
+                  title={selectedClub?.name}
+                  href={`/clubs/${selectedClub?.slug}`}
+                  league={selectedClub?.league}
+                  venue={selectedClub?.venue}
+                  icon={selectedClub?.icon}
+                  status={selectedClub?.status}
+                  image={{
+                    src: selectedClub?.images?.[0],
+                    alt: selectedClub?.name,
+                  }}
+                />
               </Flex>
             )}
           </Grid>

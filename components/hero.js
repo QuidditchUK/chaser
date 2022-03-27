@@ -1,9 +1,7 @@
 import get from 'just-safe-get';
-import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
-
-const Image = dynamic(() => import('components/image'));
 
 const Hero = (rawData) => {
   const title = get(rawData, 'primary.slug');
@@ -25,7 +23,6 @@ const Hero = (rawData) => {
         layout="fill"
         objectPosition="center center"
         objectFit="cover"
-        borderRadius={0}
         priority={true}
       />
       <Flex

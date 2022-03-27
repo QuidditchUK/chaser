@@ -1,8 +1,6 @@
 import { Flex, useBreakpointValue } from '@chakra-ui/react';
-import dynamic from 'next/dynamic';
-const Image = dynamic(() => import('components/image'));
-const logo = '/images/logo.png';
-const logoText = '/images/logo-text.png';
+
+import Image from 'components/image';
 
 export default function Logo({ filter = false }) {
   const logoHeight = useBreakpointValue({ base: 35, xl: 45 }) || 35;
@@ -15,18 +13,18 @@ export default function Logo({ filter = false }) {
         layout="fixed"
         height={logoHeight}
         width={logoHeight}
-        src={logo}
+        src="/images/logo.png"
         alt="Quidditch UK"
-        filter={filter ? 'brightness(0) invert(1)' : 'inherit'}
+        filter={filter ?? undefined}
       />
       <Image
         priority={true}
         layout="fixed"
         height={logoHeight}
         width={logoTextWidth}
-        src={logoText}
+        src="/images/logo-text.png"
         alt="Quidditch UK"
-        filter={filter ? 'brightness(0) invert(1)' : 'inherit'}
+        filter={filter ?? undefined}
       />
     </Flex>
   );

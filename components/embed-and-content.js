@@ -1,7 +1,7 @@
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import get from 'just-safe-get';
-import { Grid, Flex, Heading, Text } from '@chakra-ui/react';
+import { Grid, Flex, Heading, Text, Box } from '@chakra-ui/react';
 
 import { linkResolver } from 'modules/prismic';
 import { buttonVariants } from 'components/prismic-wrapper';
@@ -9,7 +9,7 @@ import { buttonVariants } from 'components/prismic-wrapper';
 const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
-const ExternalLink = dynamic(() => import('components/external-link'));
+
 const Embed = dynamic(() =>
   import('components/embed-slice').then(({ Embed }) => Embed)
 );
@@ -37,13 +37,16 @@ const Item = ({ item, isEmbedLeft }) => (
       )}
 
       {item.cta_text && (
-        <Flex justifyContent="center">
-          <ExternalLink href={item.cta_url}>
-            <Button type="button" variant={buttonVariants[item.variant]} ml={2}>
-              {item.cta_text}
-            </Button>
-          </ExternalLink>
-        </Flex>
+        <Box>
+          <Button
+            type="button"
+            variant={buttonVariants[item.variant]}
+            ml={2}
+            href={item.cta_url}
+          >
+            {item.cta_text}
+          </Button>
+        </Box>
       )}
     </Flex>
 

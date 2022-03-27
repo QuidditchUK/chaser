@@ -3,6 +3,7 @@ import { createBreakpoints } from '@chakra-ui/theme-tools';
 import { ButtonStyles } from 'components/button';
 import { PrismicStyles } from 'components/prismic-wrapper';
 import { CardStyles } from 'components/card';
+import { HorizontalCardStyles } from 'components/horizontal-card';
 
 const emBase = 16;
 export const rem = (value) => `${value / emBase}rem`;
@@ -12,6 +13,7 @@ export default extendTheme({
     Button: ButtonStyles,
     Prismic: PrismicStyles,
     Card: CardStyles,
+    HorizontalCard: HorizontalCardStyles,
   },
 
   colors: {

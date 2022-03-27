@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic';
 const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
-const ExternalLink = dynamic(() => import('components/external-link'));
 
 import { buttonVariants } from 'components/prismic-wrapper';
 import { linkResolver } from 'modules/prismic';
@@ -40,11 +39,14 @@ const HeaderAndParagraph = (rawData) => {
 
       {cta_text && cta_url && (
         <Flex justifyContent="center">
-          <ExternalLink href={cta_url}>
-            <Button type="button" variant={buttonVariants[variant]} ml={2}>
-              {cta_text}
-            </Button>
-          </ExternalLink>
+          <Button
+            type="button"
+            variant={buttonVariants[variant]}
+            ml={2}
+            href={cta_url}
+          >
+            {cta_text}
+          </Button>
         </Flex>
       )}
     </PrismicWrapper>

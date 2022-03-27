@@ -221,30 +221,17 @@ export const DesktopCTAs = ({ dashboard }) => {
 
   return (
     <Stack direction="row" spacing={3} alignItems="center">
-      <NextLink href="/find-quidditch" passHref>
-        <Link>
-          <Button
-            variant={dashboard ? 'secondary' : 'primary'}
-            textDecoration="none"
-            _hover={{ textDecoration: 'none' }}
-          >
-            Find Quidditch
-          </Button>
-        </Link>
-      </NextLink>
+      <Button
+        variant={dashboard ? 'secondary' : 'primary'}
+        href="/find-quidditch"
+      >
+        Find Quidditch
+      </Button>
 
       {!loggedIn && (
-        <NextLink href="/login" passHref>
-          <Link>
-            <Button
-              variant="light"
-              textDecoration="none"
-              _hover={{ textDecoration: 'none' }}
-            >
-              Sign In
-            </Button>
-          </Link>
-        </NextLink>
+        <Button href="/login" variant="light">
+          Sign In
+        </Button>
       )}
 
       {loggedIn && (

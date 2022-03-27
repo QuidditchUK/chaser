@@ -1,13 +1,8 @@
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
 import { Grid, Flex } from '@chakra-ui/react';
 
-const Image = dynamic(() => import('components/image'));
 const Card = dynamic(() => import('components/card'));
-const StyledLink = dynamic(() =>
-  import('components/latest-news').then(({ StyledLink }) => StyledLink)
-);
 
 const MIN_LENGTH = 3;
 
@@ -29,36 +24,19 @@ export const ClubNews = ({ posts, bgColor, color }) => {
     >
       {posts.map(({ uid, data }) => (
         <Flex flexDirection="column" key={uid}>
-          <Link href="/news/[id]" as={`/news/${uid}`} passHref>
-            <StyledLink>
-              <Card
-                sx={{
-                  bg: bgColor,
-                  color,
-                  borderRadius: 'lg',
-                  overflow: 'hidden',
-                  transition: 'box-shadow 0.125s',
-                  boxShadow: 'none',
-                  height: '100%',
-                  _hover: {
-                    boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
-                  },
-                }}
-                name={data.title}
-                category={data.category}
-                image={
-                  <Image
-                    src={data.image.url}
-                    alt={data.image.alt}
-                    layout="responsive"
-                    width={640}
-                    height={360}
-                    borderRadius="0px"
-                  />
-                }
-              />
-            </StyledLink>
-          </Link>
+          <Card
+            href={`/news/${uid}`}
+            title={data.title}
+            category={data.category}
+            image={{
+              src: data.image.url,
+              alt: data.image.alt,
+              width: 640,
+              height: 360,
+            }}
+            bg={bgColor}
+            color={color}
+          />
         </Flex>
       ))}
       {!!spacers.length &&

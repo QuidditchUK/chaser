@@ -1,6 +1,5 @@
-import dynamic from 'next/dynamic';
 import { Box } from '@chakra-ui/react';
-const Image = dynamic(() => import('components/image'));
+import Image from 'next/image';
 
 const calcAspectRatio = (height, width) => (height / width) * 100 || null;
 
@@ -16,7 +15,6 @@ const ResponsiveImage = ({ src, alt, width, height, priority }) => {
           layout="fill"
           objectPosition="center center"
           objectFit="cover"
-          borderRadius={0}
           priority={priority}
         />
       </Box>
