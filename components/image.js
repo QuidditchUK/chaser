@@ -1,13 +1,20 @@
 import NextImage from 'next/image';
 import { Box } from '@chakra-ui/react';
 
-const ImageWithDefaults = ({ alt, src, filter, ...props }) => {
+const ImageWithDefaults = ({
+  alt,
+  src,
+  filter,
+  borderRadius,
+  clipPath,
+  ...props
+}) => {
   return (
     <Box
       sx={{
         '& img': {
-          borderRadius: props?.borderRadius ?? 'lg',
-          clipPath: props?.clipPath ?? 'initial',
+          borderRadius: borderRadius ?? 'lg',
+          clipPath: clipPath ?? 'initial',
           filter: filter ? 'brightness(0) invert(1)' : 'inherit',
         },
       }}
