@@ -142,9 +142,11 @@ const Card = ({
               },
             },
           }}
-          borderBottomWidth="12px"
-          borderBottomStyle="solid"
-          borderBottomColor={CATEGORIES[category]}
+          {...(category && {
+            borderBottomWidth: '12px',
+            borderBottomStyle: 'solid',
+            borderBottomColor: CATEGORIES[category],
+          })}
         >
           {category && (
             <Text
