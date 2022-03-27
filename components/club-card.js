@@ -4,15 +4,16 @@ import {
   Flex,
   Text,
   Heading,
-  usePrefersReducedMotion,
   IconButton,
   Tooltip,
+  useStyleConfig,
 } from '@chakra-ui/react';
 import { TYPES } from 'components/club-type';
+import { LinkWrapper, PlainWrapper } from 'components/card';
+import Image from 'next/image';
 
 import { rem } from 'styles/theme';
 import dynamic from 'next/dynamic';
-const Image = dynamic(() => import('components/image'));
 const Type = dynamic(() => import('components/club-type'));
 
 export const ACTIVE_STATUS = 'active';
@@ -103,81 +104,72 @@ const Medals = ({ tournament_results }) => {
 
 const ClubCard = ({
   image,
-  name,
+  title,
   league,
   icon,
   venue,
   status,
   tournament_results = [],
+  href,
   ...cardProps
 }) => {
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const scale = prefersReducedMotion ? '1.0' : '1.1';
+  const Wrapper = href ? LinkWrapper : PlainWrapper;
+  const styles = useStyleConfig('Card');
 
   return (
-    <Box
-      as="article"
-      display="flex"
-      flexDirection="column"
-      flexGrow="1"
-      overflow="hidden"
-      position="relative"
-      borderRadius="lg"
-      transition="box-shadow 0.125s"
-      _hover={{
-        boxShadow: 'md',
-        'img:not(#icon)': {
-          scale,
-        },
-      }}
-      sx={{
-        img: {
-          transition: 'scale 1s',
-        },
-      }}
-      {...cardProps}
-    >
-      {image ? <Box position="relative">{image}</Box> : null}
-      <Box p={4} position="absolute" right="0">
-        <ChakraImage
-          id="icon"
-          h="75px"
-          w="75px"
-          src={icon}
-          alt={`${name} logo`}
-        />
-      </Box>
+    <Wrapper href={href} aria-label={title} display="initial" {...cardProps}>
+      <Box as="article" __css={styles} position="relative" {...cardProps}>
+        {image?.src && (
+          <Image
+            src={image?.src}
+            alt={image?.alt}
+            layout="responsive"
+            objectFit="cover"
+            width={640}
+            height={360}
+          />
+        )}
+        <Box p={4} position="absolute" right="0">
+          <ChakraImage
+            id="icon"
+            h="75px"
+            w="75px"
+            src={icon}
+            alt={`${title} logo`}
+          />
+        </Box>
 
-      <Box py={5} px={4}>
-        <Flex alignItems="center" justifyContent="space-between">
-          <Flex direction="row">
-            <Type fontWeight="bold" fontSize={rem(10)} bg={TYPES[league]}>
-              {league}
-            </Type>
-
-            {!status && (
-              <Type
-                fontWeight="bold"
-                fontSize={rem(10)}
-                bg="greyDark"
-                marginLeft="1"
-              >
-                Hiatus
+        <Box py={5} px={4}>
+          <Flex alignItems="center" justifyContent="space-between">
+            <Flex direction="row">
+              <Type fontWeight="bold" fontSize={rem(10)} bg={TYPES[league]}>
+                {league}
               </Type>
-            )}
+
+              {!status && (
+                <Type
+                  fontWeight="bold"
+                  fontSize={rem(10)}
+                  bg="greyDark"
+                  marginLeft="1"
+                >
+                  Hiatus
+                </Type>
+              )}
+            </Flex>
+
+            <Flex flexDirection="row" justifyContent="flex-end">
+              <Medals tournament_results={tournament_results} />
+            </Flex>
           </Flex>
 
-          <Flex flexDirection="row" justifyContent="flex-end">
-            <Medals tournament_results={tournament_results} />
-          </Flex>
-        </Flex>
-
-        <Heading as="h2" fontSize="xl" fontFamily="body">
-          {name}
-        </Heading>
-        <Text>{venue}</Text>
+          <Heading as="h2" fontSize="xl" fontFamily="body">
+            {title}
+          </Heading>
+          <Text>{venue}</Text>
+        </Box>
       </Box>
-    </Box>
+    </Wrapper>
   );
 };
 

@@ -12,6 +12,7 @@ import {
   Grid,
   Stack,
 } from '@chakra-ui/react';
+import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import getSheet from 'modules/sheets';
@@ -20,7 +21,6 @@ import PrismicWrapper from 'components/prismic-wrapper';
 import { useForm } from 'react-hook-form';
 import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
-const Image = dynamic(() => import('components/image'));
 const Meta = dynamic(() => import('components/meta'));
 const Card = dynamic(() => import('components/card'));
 const Content = dynamic(() => import('components/content'));
@@ -227,7 +227,6 @@ const Page = ({ data: initialData }) => {
             layout="fill"
             objectPosition="center center"
             objectFit="cover"
-            borderRadius={0}
             priority={true}
           />
 

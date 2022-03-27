@@ -25,14 +25,10 @@ const Content = dynamic(() => import('components/content'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Required = dynamic(() => import('components/required'));
-const Image = dynamic(() => import('components/image'));
 const ClubCard = dynamic(() => import('components/club-card'));
 
 const InlineError = dynamic(() =>
   import('components/errors').then(({ InlineError }) => InlineError)
-);
-const StyledLink = dynamic(() =>
-  import('components/latest-news').then(({ StyledLink }) => StyledLink)
 );
 
 import { ACTIVE_STATUS } from 'components/club-card';
@@ -212,31 +208,20 @@ const ManageClub = ({ user, clubs = [] }) => {
             </Box>
             {selectedClub && (
               <Flex flexDirection="column" key={selectedClub?.uuid}>
-                <Link href={`/clubs/${selectedClub?.slug}`} passHref>
-                  <StyledLink>
-                    <ClubCard
-                      backgroundColor={selectedClub?.featured_color}
-                      color={selectedClub?.text_color}
-                      name={selectedClub?.name}
-                      league={selectedClub?.league}
-                      venue={selectedClub?.venue}
-                      icon={selectedClub?.icon}
-                      status={selectedClub?.status}
-                      image={
-                        selectedClub?.images ? (
-                          <Image
-                            src={selectedClub?.images?.[0]}
-                            alt={selectedClub?.name}
-                            layout="responsive"
-                            width={640}
-                            height={360}
-                            borderRadius="0px"
-                          />
-                        ) : null
-                      }
-                    />
-                  </StyledLink>
-                </Link>
+                <ClubCard
+                  backgroundColor={selectedClub?.featured_color}
+                  color={selectedClub?.text_color}
+                  title={selectedClub?.name}
+                  href={`/clubs/${selectedClub?.slug}`}
+                  league={selectedClub?.league}
+                  venue={selectedClub?.venue}
+                  icon={selectedClub?.icon}
+                  status={selectedClub?.status}
+                  image={{
+                    src: selectedClub?.images?.[0],
+                    alt: selectedClub?.name,
+                  }}
+                />
               </Flex>
             )}
           </Grid>

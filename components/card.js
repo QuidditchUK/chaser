@@ -1,8 +1,18 @@
 import { RichText } from 'prismic-reactjs';
 import CATEGORIES from 'constants/categories';
-import { Heading, Text, Box, useStyleConfig } from '@chakra-ui/react';
 import { rem } from 'styles/theme';
+import {
+  useStyleConfig,
+  Box,
+  Heading,
+  Link as ChakraLink,
+  GridItem,
+  Text,
+} from '@chakra-ui/react';
 import { linkResolver } from 'modules/prismic';
+import Image from 'next/image';
+
+import Link from 'next/link';
 
 export const CardStyles = {
   baseStyle: {
@@ -11,12 +21,6 @@ export const CardStyles = {
     flexDirection: 'column',
     flexGrow: '1',
     overflow: 'hidden',
-    position: 'relative',
-    transition: 'box-shadow 0.125s',
-    boxShadow: 'none',
-    _hover: {
-      boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
-    },
   },
   variants: {
     white: {
@@ -33,13 +37,21 @@ export const CardStyles = {
   },
 };
 
-const ContentBox = (props) => (
+export const cardVariants = {
+  white: 'primary',
+  primary: 'white',
+};
+
+export const ContentBox = (props) => (
   <Box
+    textDecoration="none"
+    _hover={{ textDecoration: 'none' }}
+    lineHeight="24px"
     sx={{
       a: {
         textDecoration: 'none',
         '&:hover': {
-          textDecoration: 'underline',
+          textDecoration: 'none',
         },
       },
     }}
@@ -47,46 +59,115 @@ const ContentBox = (props) => (
   />
 );
 
+export const LinkWrapper = ({ href, ...props }) => (
+  <Link href={href} passHref>
+    <GridItem
+      as={ChakraLink}
+      cursor="pointer"
+      boxShadow="md"
+      transition="all 0.2s ease"
+      fontWeight="normal !important"
+      _hover={{
+        transform: 'scale(1.03)',
+        boxShadow: 'lg',
+        textDecoration: 'none !important',
+      }}
+      _focus={{
+        transform: 'scale(1.03)',
+        boxShadow: 'lg',
+        textDecoration: 'none',
+        ringWidth: '2px',
+        ringColor: 'monarchRed',
+      }}
+      _active={{ transform: 'scale(1)' }}
+      borderRadius="2xl"
+      flexGrow={1}
+      display="flex"
+      {...props}
+    />
+  </Link>
+);
+
+export const PlainWrapper = (props) => (
+  <GridItem display="flex" flexGrow={1} {...props} />
+);
+
 const Card = ({
   image,
-  name,
+  title,
   category,
-  content,
   videoContent,
+  content,
   variant,
+  href,
+  target,
+  ariaLabel,
   ...cardProps
 }) => {
   const styles = useStyleConfig('Card', { variant });
+
+  const Wrapper = href ? LinkWrapper : PlainWrapper;
+
   return (
-    <Box sx={styles} {...cardProps}>
-      {image ? <Box position="relative">{image}</Box> : null}
+    <Wrapper href={href} target={target} aria-label={ariaLabel} {...cardProps}>
+      <Box __css={styles} as="article" {...cardProps}>
+        <Box
+          position="relative"
+          height={{ base: '100%', md: 'auto' }}
+          width={{ base: '100%', md: 'auto' }}
+          overflow="hidden"
+        >
+          {image?.src && (
+            <Image
+              src={image?.src}
+              alt={image?.alt}
+              layout="responsive"
+              objectFit="cover"
+              width={640}
+              height={360}
+            />
+          )}
+        </Box>
+        <ContentBox
+          py={5}
+          px={4}
+          sx={{
+            '& a': {
+              fontWeight: 'bold',
+              color: 'qukBlue',
+              textDecoration: 'none',
+              _hover: {
+                textDecoration: 'underline',
+              },
+            },
+          }}
+        >
+          {category && (
+            <Text
+              as="span"
+              fontWeight="bold"
+              color="white"
+              textTransform="uppercase"
+              borderRadius="lg"
+              py={1}
+              px={2}
+              fontSize={rem(10)}
+              bg={CATEGORIES[category]}
+            >
+              {category}
+            </Text>
+          )}
 
-      <ContentBox py={5} px={4}>
-        {category && (
-          <Text
-            as="span"
-            fontWeight="bold"
-            color="white"
-            textTransform="uppercase"
-            borderRadius="lg"
-            py={1}
-            px={2}
-            fontSize={rem(10)}
-            bg={CATEGORIES[category]}
-          >
-            {category}
-          </Text>
-        )}
-
-        {name && (
-          <Heading as="h2" fontSize="xl" fontFamily="body">
-            {name}
-          </Heading>
-        )}
-        {content && <RichText render={content} linkResolver={linkResolver} />}
-        {videoContent && <>{videoContent}</>}
-      </ContentBox>
-    </Box>
+          {title && (
+            <Heading as="h2" fontSize="xl" fontFamily="body">
+              {title}
+            </Heading>
+          )}
+          {content && <RichText render={content} linkResolver={linkResolver} />}
+          {videoContent && <>{videoContent}</>}
+        </ContentBox>
+      </Box>
+    </Wrapper>
   );
 };
 

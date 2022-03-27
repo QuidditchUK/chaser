@@ -7,12 +7,8 @@ import { Flex, Heading, Box } from '@chakra-ui/react';
 
 const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
 const Card = dynamic(() => import('components/card'));
-const Image = dynamic(() => import('components/image'));
 const HorizontalScrollWrapper = dynamic(() =>
   import('components/horizontal-scroll-wrapper')
-);
-const StyledLink = dynamic(() =>
-  import('components/latest-news').then(({ StyledLink }) => StyledLink)
 );
 
 import { linkResolver } from 'modules/prismic';
@@ -55,56 +51,36 @@ const CardsSlice = (rawData) => {
         itemsCount={items?.length}
       >
         {items.map((item, i) => {
-          const title = get(item, 'title');
-          const content = get(item, 'content');
-          const image = get(item, 'image');
-          const link = get(item, 'link');
+          const { title, content, image, link } = item;
+
+          const linkProps = Link.url(link, linkResolver)
+            ? {
+                href: Link.url(link, linkResolver),
+                target: link.target,
+                ariaLabel: title,
+                ...(link.target === '_blank' && {
+                  rel: 'noopener noreferrer',
+                }),
+              }
+            : null;
 
           return (
-            <Flex flexDirection="column" key={`cards-${i}`}>
-              {Link.url(link, linkResolver) ? (
-                <StyledLink
-                  href={Link.url(link, linkResolver)}
-                  target={link.target}
-                  aria-label={title}
-                >
-                  <Card
-                    name={title}
-                    content={content}
-                    variant={cardVariants[variant]}
-                    image={
-                      image.url ? (
-                        <Image
-                          src={image.url}
-                          alt={image.alt}
-                          layout="responsive"
-                          width={640}
-                          height={360}
-                          borderRadius="0px"
-                        />
-                      ) : null
-                    }
-                  />
-                </StyledLink>
-              ) : (
-                <Card
-                  name={title}
-                  content={content}
-                  variant={cardVariants[variant]}
-                  image={
-                    image.url ? (
-                      <Image
-                        src={image.url}
-                        alt={image.alt}
-                        layout="responsive"
-                        width={640}
-                        height={360}
-                        borderRadius="0px"
-                      />
-                    ) : null
-                  }
-                />
-              )}
+            <Flex
+              flexDirection="column"
+              key={`cards-${i}-${item?.title}-${item?.content}`}
+            >
+              <Card
+                {...linkProps}
+                title={title}
+                content={content}
+                variant={cardVariants[variant]}
+                image={{
+                  src: image.url,
+                  alt: image.alt,
+                  height: image.height,
+                  width: image.width,
+                }}
+              />
             </Flex>
           );
         })}

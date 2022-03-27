@@ -16,9 +16,6 @@ import {
 } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
 
-const StyledLink = dynamic(() =>
-  import('components/latest-news').then(({ StyledLink }) => StyledLink)
-);
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
 
@@ -265,32 +262,20 @@ const Dashboard = ({ user }) => {
                 >
                   My club
                 </Heading>
-
-                <Link href="/clubs/[club]" as={`/clubs/${club.slug}`} passHref>
-                  <StyledLink>
-                    <ClubCard
-                      backgroundColor={club.featured_color}
-                      color={club.text_color}
-                      name={club.name}
-                      league={club.league}
-                      venue={club.venue}
-                      status={club.status}
-                      icon={club.icon}
-                      image={
-                        club.images ? (
-                          <Image
-                            src={club?.images?.[0]}
-                            alt={club?.name}
-                            layout="responsive"
-                            width={640}
-                            height={360}
-                            borderRadius="0px"
-                          />
-                        ) : null
-                      }
-                    />
-                  </StyledLink>
-                </Link>
+                <ClubCard
+                  backgroundColor={club.featured_color}
+                  color={club.text_color}
+                  title={club.name}
+                  league={club.league}
+                  venue={club.venue}
+                  status={club.status}
+                  icon={club.icon}
+                  href={`/clubs/${club.slug}`}
+                  image={{
+                    src: club?.images?.[0],
+                    alt: club?.name,
+                  }}
+                />
               </Flex>
             )}
           </Grid>

@@ -1,7 +1,7 @@
 import { Flex, useBreakpointValue } from '@chakra-ui/react';
-import dynamic from 'next/dynamic';
-const Image = dynamic(() => import('components/image'));
-const logo = '/images/logo.png';
+import Image from 'next/image';
+
+// const logo = '/images/logo.png';
 const logoText = '/images/logo-text.png';
 
 export default function Logo({ filter = false }) {
@@ -15,7 +15,7 @@ export default function Logo({ filter = false }) {
         layout="fixed"
         height={logoHeight}
         width={logoHeight}
-        src={logo}
+        src="/images/logo.png"
         alt="Quidditch UK"
         filter={filter ? 'brightness(0) invert(1)' : 'inherit'}
       />

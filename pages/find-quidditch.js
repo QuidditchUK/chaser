@@ -1,7 +1,7 @@
 import { useState, useEffect, forwardRef } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import NextLink from 'next/link';
+import Image from 'next/image';
 import axios from 'axios';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -37,7 +37,7 @@ const Container = dynamic(() => import('components/container'));
 
 const ClubCard = dynamic(() => import('components/club-card'));
 const EventCard = dynamic(() => import('components/event-card'));
-const Image = dynamic(() => import('components/image'));
+
 const Meta = dynamic(() => import('components/meta'));
 const Button = dynamic(() => import('components/button'));
 
@@ -67,20 +67,6 @@ const Input = forwardRef(function Input(props, ref) {
         color: 'white',
         opacity: 0.8,
       }}
-      {...props}
-    />
-  );
-});
-
-const StyledLink = forwardRef(function StyledLink(props, ref) {
-  return (
-    <Link
-      ref={ref}
-      textDecoration="none"
-      display="flex"
-      flexDirection="column"
-      flexGrow="1"
-      _hover={{ textDecoration: 'none' }}
       {...props}
     />
   );
@@ -178,8 +164,6 @@ const FindQuidditch = ({
         }
 
         if (watchShowEvents) {
-          console.log('in watch show events after fetching postcode');
-
           const events = await getEvents({
             longitude: data.result.longitude,
             latitude: data.result.latitude,
@@ -227,7 +211,6 @@ const FindQuidditch = ({
             src="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959"
             layout="fill"
             objectFit="cover"
-            borderRadius="0"
             objectPosition="center center"
             priority={true}
           />
@@ -489,32 +472,21 @@ const FindQuidditch = ({
               >
                 {clubs.map((club) => (
                   <Flex flexDirection="column" key={club.uid}>
-                    <NextLink href={`/clubs/${club.uid}`} passHref>
-                      <StyledLink>
-                        <ClubCard
-                          backgroundColor={club?.data?.featured_color}
-                          color={club.data.text_color}
-                          name={club.data.club_name}
-                          league={club.data.league}
-                          venue={club.data.venue}
-                          icon={club.data.icon.url}
-                          status={club.data.active}
-                          tournament_results={club.data.tournament_results}
-                          image={
-                            club.data.images ? (
-                              <Image
-                                src={club?.data?.images?.[0]?.image?.url}
-                                alt={club?.data?.club_name}
-                                layout="responsive"
-                                width={640}
-                                height={360}
-                                borderRadius="0px"
-                              />
-                            ) : null
-                          }
-                        />
-                      </StyledLink>
-                    </NextLink>
+                    <ClubCard
+                      backgroundColor={club?.data?.featured_color}
+                      color={club.data.text_color}
+                      title={club.data.club_name}
+                      href={`/clubs/${club.uid}`}
+                      league={club.data.league}
+                      venue={club.data.venue}
+                      icon={club.data.icon.url}
+                      status={club.data.active}
+                      tournament_results={club.data.tournament_results}
+                      image={{
+                        src: club?.data?.images?.[0]?.image?.url,
+                        alt: club?.data?.club_name,
+                      }}
+                    />
                   </Flex>
                 ))}
               </Grid>
@@ -552,19 +524,6 @@ const FindQuidditch = ({
             </Flex>
           )}
 
-          {/* <Notification mt={4}>
-            <Heading as="h2" fontSize="xl" fontFamily="body">
-              Events during COVID-19
-            </Heading>
-            <Content>
-              All QuidditchUK Events are currently postponed due to the
-              Coronavirus Pandemic. For the latest COVID guidance head to our{' '}
-              <NextLink href="/[id]" as="/covid" passHref>
-                <Link color="monarchRed">COVID page</Link>
-              </NextLink>
-            </Content>
-          </Notification> */}
-
           {watchShowEvents && !!events.length && (
             <>
               <Heading
@@ -584,19 +543,16 @@ const FindQuidditch = ({
               >
                 {events.map((event) => (
                   <Flex flexDirection="column" key={event.uid}>
-                    <NextLink href={`/events/${event.uid}`} passHref>
-                      <StyledLink>
-                        <EventCard
-                          name={event.data.event_name}
-                          icon={event.data.icon?.url}
-                          leagues={event.data.leagues}
-                          venue={event.data.venue}
-                          startDate={event.data.event_start_date}
-                          endDate={event.data.event_end_date}
-                          image={event.data.images?.[0].image}
-                        />
-                      </StyledLink>
-                    </NextLink>
+                    <EventCard
+                      title={event.data.event_name}
+                      href={`/events/${event.uid}`}
+                      icon={event.data.icon?.url}
+                      leagues={event.data.leagues}
+                      venue={event.data.venue}
+                      startDate={event.data.event_start_date}
+                      endDate={event.data.event_end_date}
+                      image={event.data.images?.[0].image}
+                    />
                   </Flex>
                 ))}
               </Grid>

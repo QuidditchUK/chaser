@@ -1,12 +1,12 @@
 import get from 'just-safe-get';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
-const Image = dynamic(() => import('components/image'));
 const Button = dynamic(() => import('components/button'));
 
 const handleFindQuidditch = async ({ postcode }, router) => {
@@ -40,7 +40,6 @@ const FindQuidditch = (rawData) => {
         layout="fill"
         objectPosition="center center"
         objectFit="cover"
-        borderRadius="0"
       />
       <Flex
         position="relative"
