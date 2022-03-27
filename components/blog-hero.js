@@ -8,7 +8,6 @@ import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { Box, Flex, Heading, Link as ChakraLink } from '@chakra-ui/react';
 import CATEGORIES from 'constants/categories';
 
-// const Image = dynamic(() => import('components/image'));
 const Container = dynamic(() => import('components/container'));
 
 const Tag = (props) => (
