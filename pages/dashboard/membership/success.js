@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { parseCookies } from 'modules/cookies';
 import { Box, Grid, Flex, Heading } from '@chakra-ui/react';
@@ -60,13 +59,9 @@ const SuccessMembership = ({ product }) => {
             flexDirection="column"
             pt="5"
           >
-            <Link href="/dashboard" passHref>
-              <a>
-                <Button type="button" variant="secondary">
-                  Back to Dashboard
-                </Button>
-              </a>
-            </Link>
+            <Button type="button" variant="secondary" href="/dashboard">
+              Back to Dashboard
+            </Button>
           </Flex>
         </Container>
       </Box>

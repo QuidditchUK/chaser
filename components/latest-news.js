@@ -1,16 +1,10 @@
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
 // import CATEGORIES from 'constants/categories';
-import {
-  Flex,
-  Box,
-  Heading,
-  Link as ChakraLink,
-  Button,
-} from '@chakra-ui/react';
+import { Flex, Box, Heading } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 
+const Button = dynamic(() => import('components/button'));
 const Card = dynamic(() => import('components/card'));
 const Container = dynamic(() => import('components/container'));
 const HorizontalScrollWrapper = dynamic(() =>
@@ -45,19 +39,16 @@ const News = ({
           </Heading>
 
           {showAllNewsButton && (
-            <Link href="/news" passHref>
-              <ChakraLink mr={{ base: 0, md: 0 }}>
-                <Button
-                  variant="transparent"
-                  borderColor="qukBlue"
-                  color="qukBlue"
-                  _hover={{ bg: 'gray.300' }}
-                  rightIcon={<ArrowForwardIcon />}
-                >
-                  All News
-                </Button>
-              </ChakraLink>
-            </Link>
+            <Button
+              href="/news"
+              variant="transparent"
+              borderColor="qukBlue"
+              color="qukBlue"
+              _hover={{ bg: 'gray.300' }}
+              rightIcon={<ArrowForwardIcon />}
+            >
+              All News
+            </Button>
           )}
         </Flex>
 
@@ -78,9 +69,6 @@ const News = ({
                   height: data?.image?.height,
                   width: data?.image?.width,
                 }}
-                // borderBottomWidth="8px"
-                // borderBottomStyle="solid"
-                // borderBottomColor={CATEGORIES[data?.category]}
               />
             </Flex>
           ))}
