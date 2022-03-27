@@ -7,7 +7,6 @@ import { Grid, Flex, Heading, Box } from '@chakra-ui/react';
 
 const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
 const Image = dynamic(() => import('components/image'));
-const ExternalLink = dynamic(() => import('components/external-link'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
 
@@ -35,11 +34,13 @@ const Item = ({ item, isImageLeft }) => (
 
       {item.cta_text && (
         <Box>
-          <ExternalLink href={item.cta_url}>
-            <Button type="button" variant={buttonVariants[item.variant]}>
-              {item.cta_text}
-            </Button>
-          </ExternalLink>
+          <Button
+            type="button"
+            variant={buttonVariants[item.variant]}
+            href={item.cta_url}
+          >
+            {item.cta_text}
+          </Button>
         </Box>
       )}
     </Flex>

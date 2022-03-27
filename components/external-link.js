@@ -1,15 +1,21 @@
 import Link from 'next/link';
+import { Link as ChakraLink } from '@chakra-ui/react';
 
-const ExternalLink = ({ href, children }) => {
+const ExternalLink = ({ href, children, ...props }) => {
   const regex = new RegExp('(http)|(mailto)', 'g');
 
   return regex.test(href) ? (
-    <a href={href} target="_blank" rel="noopener noreferrer">
+    <ChakraLink
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      {...props}
+    >
       {children}
-    </a>
+    </ChakraLink>
   ) : (
     <Link href={href} passHref>
-      <a>{children}</a>
+      <ChakraLink {...props}>{children}</ChakraLink>
     </Link>
   );
 };

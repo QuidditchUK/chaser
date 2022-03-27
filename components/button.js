@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
-import { Button as ChakraButton, useStyleConfig } from '@chakra-ui/react';
+import { Button as ChakraButton, useStyleConfig, Box } from '@chakra-ui/react';
+import ExternalLink from 'components/external-link';
 
 export const ButtonStyles = {
   baseStyle: {
@@ -8,6 +9,7 @@ export const ButtonStyles = {
     display: 'inline-flex',
     fontFamily: 'body',
     fontWeight: 'normal',
+    textDecoration: 'none',
     size: 'sm',
     alignItems: 'center',
     justifyContent: 'center',
@@ -83,9 +85,20 @@ export const ButtonStyles = {
   },
 };
 
-const Button = forwardRef(({ variant = 'primary', ...rest }, ref) => {
+const Button = forwardRef(({ variant = 'primary', href, ...rest }, ref) => {
   const styles = useStyleConfig('Button', { variant });
-  return <ChakraButton __css={styles} ref={ref} {...rest} />;
+  const Wrapper = href ? ExternalLink : Box;
+
+  return (
+    <Wrapper
+      href={href}
+      _hover={{
+        textDeoration: 'none',
+      }}
+    >
+      <ChakraButton __css={styles} ref={ref} {...rest} />
+    </Wrapper>
+  );
 });
 
 export default Button;

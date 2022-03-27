@@ -26,7 +26,6 @@ const Meta = dynamic(() => import('components/meta'));
 const PageLoading = dynamic(() => import('components/page-loading'));
 const Content = dynamic(() => import('components/content'));
 const Button = dynamic(() => import('components/button'));
-const ExternalLink = dynamic(() => import('components/external-link'));
 
 const Td = (props) => (
   <ChakraTd p={1} fontSize={{ base: 'sm', md: 'md' }} {...props} />
@@ -210,13 +209,14 @@ const EventPage = ({ page: initialPage, preview }) => {
                           isFuture(
                             new Date(event.club_registration_deadline)
                           ) && (
-                            <ExternalLink
+                            <Button
+                              type="button"
+                              variant="primary"
+                              mb={4}
                               href={event.club_registration_link?.url}
                             >
-                              <Button type="button" variant="primary" mb={4}>
-                                Club Registration
-                              </Button>
-                            </ExternalLink>
+                              Club Registration
+                            </Button>
                           )}
                       </Td>
                     </Tr>
@@ -240,13 +240,13 @@ const EventPage = ({ page: initialPage, preview }) => {
                           isFuture(
                             new Date(event.individual_registration_deadline)
                           ) && (
-                            <ExternalLink
+                            <Button
+                              type="button"
+                              variant="primary"
                               href={event.individual_registration_link?.url}
                             >
-                              <Button type="button" variant="primary">
-                                Individual Registration
-                              </Button>
-                            </ExternalLink>
+                              Individual Registration
+                            </Button>
                           )}
                       </Td>
                     </Tr>

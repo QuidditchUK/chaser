@@ -12,7 +12,6 @@ import {
   Heading,
   Input as ChakraInput,
   Text,
-  Link,
   Checkbox,
   Stack,
   Slider,
@@ -514,13 +513,13 @@ const FindQuidditch = ({
                 out of luck click &#34;Contact us&#34; to help us to bring
                 Quidditch to your area.
               </p>
-              <Link href="/about/contact-us" passHref>
-                <a>
-                  <Button variant="secondary" type="button">
-                    Contact us
-                  </Button>
-                </a>
-              </Link>
+              <Button
+                variant="secondary"
+                type="button"
+                href="/about/contact-us"
+              >
+                Contact us
+              </Button>
             </Flex>
           )}
 
@@ -580,13 +579,13 @@ const FindQuidditch = ({
                 out of luck click &#34;Contact us&#34; to help us to bring
                 Quidditch to your area.
               </p>
-              <Link href="/about/contact-us" passHref>
-                <a>
-                  <Button variant="secondary" type="button">
-                    Contact us
-                  </Button>
-                </a>
-              </Link>
+              <Button
+                variant="secondary"
+                type="button"
+                href="/about/contact-us"
+              >
+                Contact us
+              </Button>
             </Flex>
           )}
         </Container>

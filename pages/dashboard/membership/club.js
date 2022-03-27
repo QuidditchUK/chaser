@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,15 +8,7 @@ import { object, string, bool } from 'yup';
 
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import {
-  Box,
-  Grid,
-  Flex,
-  Heading,
-  Select,
-  Checkbox,
-  Link as ChakraLink,
-} from '@chakra-ui/react';
+import { Box, Grid, Flex, Heading, Select, Checkbox } from '@chakra-ui/react';
 
 const Meta = dynamic(() => import('components/meta'));
 const Container = dynamic(() => import('components/container'));
@@ -122,11 +113,9 @@ const ManageClub = ({ user, clubs = [] }) => {
                       If you need to change your club, you must submit a
                       transfer request to QuidditchUK to request any changes.
                     </p>
-                    <Link href="/about/contact-us" passHref>
-                      <ChakraLink>
-                        <Button variant="secondary">Contact Us</Button>
-                      </ChakraLink>
-                    </Link>
+                    <Button variant="secondary" href="/about/contact-us">
+                      Contact Us
+                    </Button>
                   </>
                 ) : (
                   <>
