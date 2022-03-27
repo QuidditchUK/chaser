@@ -131,6 +131,7 @@ const Card = ({
         <ContentBox
           py={5}
           px={4}
+          flexGrow="1"
           sx={{
             '& a': {
               fontWeight: 'bold',
@@ -141,6 +142,9 @@ const Card = ({
               },
             },
           }}
+          borderBottomWidth="12px"
+          borderBottomStyle="solid"
+          borderBottomColor={CATEGORIES[category]}
         >
           {category && (
             <Text

@@ -34,13 +34,13 @@ const Item = ({ item, isImageLeft }) => (
       )}
 
       {item.cta_text && (
-        <Flex justifyContent="center">
+        <Box>
           <ExternalLink href={item.cta_url}>
-            <Button type="button" variant={buttonVariants[item.variant]} ml={2}>
+            <Button type="button" variant={buttonVariants[item.variant]}>
               {item.cta_text}
             </Button>
           </ExternalLink>
-        </Flex>
+        </Box>
       )}
     </Flex>
 

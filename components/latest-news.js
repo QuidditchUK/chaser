@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
+// import CATEGORIES from 'constants/categories';
 import {
   Flex,
   Box,
@@ -77,6 +78,9 @@ const News = ({
                   height: data?.image?.height,
                   width: data?.image?.width,
                 }}
+                // borderBottomWidth="8px"
+                // borderBottomStyle="solid"
+                // borderBottomColor={CATEGORIES[data?.category]}
               />
             </Flex>
           ))}
