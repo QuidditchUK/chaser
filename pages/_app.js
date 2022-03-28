@@ -14,7 +14,7 @@ const AppErrorBoundary = dynamic(() =>
 const Layout = dynamic(() => import('containers/layout'));
 const queryClient = new QueryClient();
 
-function App({ Component, pageProps, err }) {
+function App({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function App({ Component, pageProps, err }) {
       <DocumentHead />
       <QueryClientProvider client={queryClient}>
         <Layout {...pageProps}>
-          <Component {...pageProps} err={err} />
+          <Component {...pageProps} />
         </Layout>
       </QueryClientProvider>
     </AppErrorBoundary>

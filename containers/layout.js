@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
 import { Flex, Link, Box, Text } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import theme from 'styles/theme';
 
-import { ChakraProvider } from '@chakra-ui/react';
 const Navigation = dynamic(() => import('components/navigation'));
 const Footer = dynamic(() => import('components/footer'));
 const PageErrorBoundary = dynamic(() =>

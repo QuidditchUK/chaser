@@ -26,9 +26,7 @@ export const event = ({ action, category, label, value }) => {
   }
 };
 
-{
-  /* Global Site Tag (gtag.js) - Google Analytics */
-}
+// Global Site Tag (gtag.js) - Google Analytics
 const GTag = () => (
   <>
     <Script
