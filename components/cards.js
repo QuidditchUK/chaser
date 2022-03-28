@@ -1,11 +1,11 @@
 import { RichText, Link } from 'prismic-reactjs';
 import get from 'just-safe-get';
-import { cardVariants } from 'components/prismic-wrapper';
+import { cardVariants } from 'components/slice';
 import dynamic from 'next/dynamic';
 
 import { Flex, Heading, Box } from '@chakra-ui/react';
 
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 const Card = dynamic(() => import('components/card'));
 const HorizontalScrollWrapper = dynamic(() =>
   import('components/horizontal-scroll-wrapper')
@@ -21,7 +21,7 @@ const CardsSlice = (rawData) => {
   const horizontalScroll = get(rawData, 'primary.horizontalScroll');
 
   return (
-    <PrismicWrapper
+    <Slice
       variant={variant}
       px={horizontalScroll ? { base: 0, md: 9 } : { base: 4, sm: 8, md: 9 }}
     >
@@ -85,7 +85,7 @@ const CardsSlice = (rawData) => {
           );
         })}
       </HorizontalScrollWrapper>
-    </PrismicWrapper>
+    </Slice>
   );
 };
 

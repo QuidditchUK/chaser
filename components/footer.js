@@ -78,7 +78,7 @@ export const Footer = () => {
   });
 
   return (
-    <footer>
+    <Box as="footer" flexShrink="0">
       <Box
         bg="qukBlue"
         color="white"
@@ -359,7 +359,7 @@ export const Footer = () => {
           </Grid>
         </Container>
       </Box>
-    </footer>
+    </Box>
   );
 };
 export default Footer;

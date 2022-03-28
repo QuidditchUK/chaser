@@ -8,11 +8,11 @@ import { object, string, number, bool } from 'yup';
 import { Grid, Flex, Heading, Switch, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
-import { buttonVariants } from 'components/prismic-wrapper';
+import { buttonVariants } from 'components/slice';
 import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 import Textarea from 'components/textarea'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Container = dynamic(() => import('components/container'));
@@ -89,7 +89,7 @@ const YouthCoachForm = () => {
 
   return (
     <>
-      <PrismicWrapper variant="qukBlue">
+      <Slice variant="qukBlue">
         <Heading as="h1" fontFamily="body" textAlign="center">
           Youth Coaching
         </Heading>
@@ -120,8 +120,8 @@ const YouthCoachForm = () => {
           apply, as well as a valid DBS check. Those without a valid DBS check
           may still apply and Enrich Education will guide you in obtaining this.
         </Text>
-      </PrismicWrapper>
-      <PrismicWrapper variant="light">
+      </Slice>
+      <Slice variant="light">
         <Heading as="h1" fontFamily="body" textAlign="center">
           Apply to be a Youth Coach
         </Heading>
@@ -348,7 +348,7 @@ const YouthCoachForm = () => {
             </Flex>
           )}
         </Container>
-      </PrismicWrapper>
+      </Slice>
     </>
   );
 };

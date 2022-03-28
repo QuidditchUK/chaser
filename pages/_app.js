@@ -1,42 +1,43 @@
 import { useEffect } from 'react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
-import { Chakra } from 'styles/chakra';
 import dynamic from 'next/dynamic';
 import DocumentHead from 'document/head';
 
-import { pageview } from 'modules/analytics';
+import GTag, { pageview } from 'modules/analytics';
+
+const AppErrorBoundary = dynamic(() =>
+  import('components/errorBoundaries/app')
+);
 
 const Layout = dynamic(() => import('containers/layout'));
-
-const Scripts = dynamic(() => import('../document/scripts'), { ssr: false });
 const queryClient = new QueryClient();
 
 function App({ Component, pageProps, err }) {
+  const router = useRouter();
+
   useEffect(() => {
-    const handleRouteChange = (url) => {
+    const handleRouteChange = async (url) => {
       pageview(url);
     };
+    router.events.on('routeChangeComplete', handleRouteChange);
 
-    Router.events.on('routeChangeComplete', handleRouteChange);
     return () => {
-      Router.events.off('routeChangeComplete', handleRouteChange);
+      router.events.off('routeChangeComplete', handleRouteChange);
     };
-  }, []);
+  }, [router.events]);
 
   return (
-    <>
+    <AppErrorBoundary>
+      <GTag />
+      <DocumentHead />
       <QueryClientProvider client={queryClient}>
-        <Chakra>
-          <DocumentHead />
-          <Layout {...pageProps}>
-            <Component {...pageProps} err={err} />
-          </Layout>
-        </Chakra>
+        <Layout {...pageProps}>
+          <Component {...pageProps} err={err} />
+        </Layout>
       </QueryClientProvider>
-      <Scripts />
-    </>
+    </AppErrorBoundary>
   );
 }
 

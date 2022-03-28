@@ -2,10 +2,10 @@ import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import get from 'just-safe-get';
 
-import { buttonVariants } from 'components/prismic-wrapper';
+import { buttonVariants } from 'components/slice';
 import { Grid, Flex, Heading, Box } from '@chakra-ui/react';
 
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 const Image = dynamic(() => import('components/image'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
@@ -90,9 +90,9 @@ const ImageAndContent = (rawData) => {
         const isImageLeft = item.layout === 'image-left';
 
         return (
-          <PrismicWrapper variant={item.variant} key={`image-and-content-${i}`}>
+          <Slice variant={item.variant} key={`image-and-content-${i}`}>
             <Item item={item} isImageLeft={isImageLeft} />
-          </PrismicWrapper>
+          </Slice>
         );
       })}
     </>

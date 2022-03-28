@@ -4,9 +4,9 @@ import get from 'just-safe-get';
 import { Grid, Flex, Heading, Text, Box } from '@chakra-ui/react';
 
 import { linkResolver } from 'modules/prismic';
-import { buttonVariants } from 'components/prismic-wrapper';
+import { buttonVariants } from 'components/slice';
 
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
 
@@ -85,9 +85,9 @@ const EmbedAndContent = (rawData) => {
         const isEmbedLeft = item.layout === 'embed-left';
 
         return (
-          <PrismicWrapper variant={item.variant} key={`embed-and-content-${i}`}>
+          <Slice variant={item.variant} key={`embed-and-content-${i}`}>
             <Item item={item} isEmbedLeft={isEmbedLeft} />
-          </PrismicWrapper>
+          </Slice>
         );
       })}
     </>

@@ -31,7 +31,7 @@ export default function Navigation() {
   const navigation = dashboard ? DASHBOARD_NAVIGATION : MAIN_NAVIGATION;
 
   return (
-    <Box as={Headroom}>
+    <Box as={Headroom} flexShrink="0">
       <Flex
         bg={dashboard ? 'qukBlue' : 'white'}
         color="greyDark"

@@ -17,7 +17,7 @@ import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import getSheet from 'modules/sheets';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
-import PrismicWrapper from 'components/prismic-wrapper';
+import Slice from 'components/slice';
 import { useForm } from 'react-hook-form';
 import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
@@ -267,7 +267,7 @@ const Page = ({ data: initialData }) => {
         </Box>
       </form>
 
-      <PrismicWrapper variant="light" small>
+      <Slice variant="light" size="sm">
         <Content>
           <Text>
             The Video Library is a Community Project to collate all film of
@@ -294,9 +294,9 @@ const Page = ({ data: initialData }) => {
             .
           </Text>
         </Content>
-      </PrismicWrapper>
+      </Slice>
 
-      <PrismicWrapper>
+      <Slice>
         {data?.map((row, i) => (
           <Fragment key={row?.Date || `video-row-${i}`}>
             <Heading>{row?.Date}</Heading>
@@ -342,7 +342,7 @@ const Page = ({ data: initialData }) => {
             )}
           </Fragment>
         ))}
-      </PrismicWrapper>
+      </Slice>
     </>
   );
 };

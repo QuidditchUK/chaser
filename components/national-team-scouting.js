@@ -7,10 +7,10 @@ import { object, string, number } from 'yup';
 import { Grid, Flex, Select, Heading, Text, Switch } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
-import { buttonVariants } from 'components/prismic-wrapper';
+import { buttonVariants } from 'components/slice';
 import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Container = dynamic(() => import('components/container'));
@@ -90,7 +90,7 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
 
   if (events.length !== 0) {
     return (
-      <PrismicWrapper variant={variant}>
+      <Slice variant={variant}>
         <Heading as="h1" fontFamily="body" textAlign="center">
           Apply to be scouted
         </Heading>
@@ -263,18 +263,18 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
             </Flex>
           )}
         </Container>
-      </PrismicWrapper>
+      </Slice>
     );
   } else {
     return (
-      <PrismicWrapper variant={variant}>
+      <Slice variant={variant}>
         <Heading as="h1" fontFamily="body" textAlign="center">
           Apply to be scouted
         </Heading>
         There are currently no events available to apply to be scouted at.
         Scouting applications will open approximately 4 weeks before an event
         starts.
-      </PrismicWrapper>
+      </Slice>
     );
   }
 };

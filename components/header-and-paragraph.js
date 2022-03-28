@@ -3,11 +3,11 @@ import get from 'just-safe-get';
 import { Flex, Heading } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 const Button = dynamic(() => import('components/button'));
 const Content = dynamic(() => import('components/content'));
 
-import { buttonVariants } from 'components/prismic-wrapper';
+import { buttonVariants } from 'components/slice';
 import { linkResolver } from 'modules/prismic';
 
 const HeaderAndParagraph = (rawData) => {
@@ -19,7 +19,7 @@ const HeaderAndParagraph = (rawData) => {
   const cta_url = get(rawData, 'primary.cta_url');
 
   return (
-    <PrismicWrapper variant={variant} small>
+    <Slice variant={variant} size="sm">
       {RichText.asText(title) && (
         <Heading
           as="h2"
@@ -49,7 +49,7 @@ const HeaderAndParagraph = (rawData) => {
           </Button>
         </Flex>
       )}
-    </PrismicWrapper>
+    </Slice>
   );
 };
 
