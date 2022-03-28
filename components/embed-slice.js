@@ -3,7 +3,7 @@ import get from 'just-safe-get';
 import dynamic from 'next/dynamic';
 import { Box, Grid, Heading } from '@chakra-ui/react';
 
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 const Content = dynamic(() => import('components/content'));
 
 import { linkResolver } from 'modules/prismic';
@@ -69,7 +69,7 @@ const EmbedSlice = (rawData) => {
   const multipleEmbeds = items.length > 1;
 
   return (
-    <PrismicWrapper variant={variant} small={!multipleEmbeds}>
+    <Slice variant={variant} size={multipleEmbeds ? 'md' : 'sm'}>
       {RichText.asText(title) && (
         <Heading as="h2" fontSize="xl" mt={2} textAlign="center">
           {RichText.asText(title)}
@@ -98,7 +98,7 @@ const EmbedSlice = (rawData) => {
           );
         })}
       </Grid>
-    </PrismicWrapper>
+    </Slice>
   );
 };
 

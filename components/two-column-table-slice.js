@@ -12,7 +12,7 @@ import {
   Thead,
 } from '@chakra-ui/react';
 
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 
 const Th = (props) => (
   <ChakraTh
@@ -33,7 +33,7 @@ const TwoColumnTable = (rawData) => {
   const items = get(rawData, 'items');
 
   return (
-    <PrismicWrapper variant={variant} small>
+    <Slice variant={variant} size="sm">
       {RichText.asText(title) && (
         <Heading as="h2" fontSize="3xl" mt={2}>
           {RichText.asText(title)}
@@ -69,7 +69,7 @@ const TwoColumnTable = (rawData) => {
           ))}
         </Tbody>
       </Table>
-    </PrismicWrapper>
+    </Slice>
   );
 };
 

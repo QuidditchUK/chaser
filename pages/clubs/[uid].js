@@ -61,12 +61,12 @@ const Th = (props) => (
 const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
   const router = useRouter();
   const { data: queryData } = useQuery(
-    ['clubs', router.query.id],
-    () => getPrismicDocByUid('clubs', router.query.id),
+    ['clubs', router.query.uid],
+    () => getPrismicDocByUid('clubs', router.query.uid),
     { initialData: initialPage, enabled: Boolean(!router.isFallback) }
   );
   const { data: posts } = useQuery(
-    ['posts', router.query.id],
+    ['posts', router.query.uid],
     () =>
       getBlogTags(page?.tags, {
         orderings: '[my.post.date desc]',
@@ -371,13 +371,13 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
 };
 
 export const getStaticProps = async ({
-  params: { id },
+  params: { uid },
   preview = null,
   previewData = {},
 }) => {
   const { ref } = previewData;
   const page =
-    (await getPrismicDocByUid('clubs', id, ref ? { ref } : null)) || null;
+    (await getPrismicDocByUid('clubs', uid, ref ? { ref } : null)) || null;
 
   if (page?.tags) {
     const posts = await getBlogTags(page?.tags, {

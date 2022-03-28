@@ -10,8 +10,8 @@ const Image = dynamic(() => import('components/image'));
 
 const IconContainer = (props) => <Box p={4} {...props} />;
 
-const Icon = (props) => (
-  <Image borderRadius="full" height={100} width={100} {...props} />
+const Icon = ({ alt, ...props }) => (
+  <Image borderRadius="full" height={100} width={100} alt={alt} {...props} />
 );
 
 const Content = (props) => (
@@ -22,7 +22,7 @@ const Content = (props) => (
       a: {
         textDecoration: 'none',
         color: 'black',
-        _hover: { textDecoration: 'underline' },
+        _hover: { textDecoration: 'none' },
       },
     }}
     {...props}

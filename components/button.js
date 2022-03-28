@@ -26,6 +26,7 @@ export const ButtonStyles = {
       _hover: {
         bg: '#092642',
         borderColor: '#092642',
+        textDecoration: 'none',
       },
     },
     secondary: {
@@ -37,6 +38,7 @@ export const ButtonStyles = {
       _hover: {
         bg: '#7f131d',
         borderColor: '#7f131d',
+        textDecoration: 'none',
       },
     },
     light: {
@@ -47,6 +49,7 @@ export const ButtonStyles = {
 
       _hover: {
         bg: 'gray.200',
+        textDecoration: 'none',
       },
     },
     white: {
@@ -56,6 +59,7 @@ export const ButtonStyles = {
 
       _hover: {
         bg: 'gray.200',
+        textDecoration: 'none',
       },
     },
     green: {
@@ -67,6 +71,7 @@ export const ButtonStyles = {
       _hover: {
         bg: '#247214',
         borderColor: '#247214',
+        textDecoration: 'none',
       },
     },
     transparent: {
@@ -77,6 +82,7 @@ export const ButtonStyles = {
 
       _hover: {
         bg: 'rgba(255,255,255,0.1)',
+        textDecoration: 'none',
       },
     },
   },
@@ -85,13 +91,17 @@ export const ButtonStyles = {
   },
 };
 
-const Button = forwardRef(({ variant = 'primary', href, ...rest }, ref) => {
+const Button = forwardRef(function Button(
+  { variant = 'primary', href, ...rest },
+  ref
+) {
   const styles = useStyleConfig('Button', { variant });
   const Wrapper = href ? ExternalLink : Box;
 
   return (
     <Wrapper
       href={href}
+      textDecoration="none"
       _hover={{
         textDeoration: 'none',
       }}

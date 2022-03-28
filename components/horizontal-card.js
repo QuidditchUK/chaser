@@ -8,7 +8,7 @@ import { linkResolver } from 'modules/prismic';
 
 import { ContentBox, LinkWrapper, PlainWrapper } from 'components/card';
 
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 const Image = dynamic(() => import('components/image'));
 const Content = dynamic(() => import('components/content'));
 
@@ -107,7 +107,7 @@ const HorizontalCard = ({
               color: 'qukBlue',
               textDecoration: 'none',
               _hover: {
-                textDecoration: 'underline',
+                textDecoration: 'none',
               },
             },
           }}
@@ -131,7 +131,7 @@ const HorizontalCardsSlice = (rawData) => {
   const items = get(rawData, 'items');
 
   return (
-    <PrismicWrapper variant={variant} px={{ base: 4, sm: 8, md: 9 }}>
+    <Slice variant={variant} px={{ base: 4, sm: 8, md: 9 }}>
       {RichText.asText(title) && (
         <Heading
           as="h2"
@@ -187,7 +187,7 @@ const HorizontalCardsSlice = (rawData) => {
           </Flex>
         );
       })}
-    </PrismicWrapper>
+    </Slice>
   );
 };
 

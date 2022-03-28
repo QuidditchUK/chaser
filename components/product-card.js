@@ -25,7 +25,7 @@ const Content = (props) => (
         textDecoration: 'none',
         color: 'black',
         '&:hover': {
-          textDecoration: 'underline',
+          textDecoration: 'none',
         },
       },
     }}

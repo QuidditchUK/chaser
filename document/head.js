@@ -27,25 +27,6 @@ const DocumentHead = () => (
 
     {/* Static CSS */}
     <style dangerouslySetInnerHTML={{ __html: reset }} />
-
-    {/* Global Site Tag (gtag.js) - Google Analytics */}
-    <script
-      async
-      defer
-      src={`https://www.googletagmanager.com/gtag/js?id=${process.env.gaToken}`}
-    />
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${process.env.gaToken}', {
-                page_path: window.location.pathname,
-              });
-            `,
-      }}
-    />
   </Head>
 );
 

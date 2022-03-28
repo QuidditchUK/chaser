@@ -12,9 +12,9 @@ import { CheckIcon } from '@chakra-ui/icons';
 import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 import Textarea from 'components/textarea'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
-import { buttonVariants } from 'components/prismic-wrapper';
+import { buttonVariants } from 'components/slice';
 
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 const Label = dynamic(() => import('components/label'));
 const Button = dynamic(() => import('components/button'));
 const Container = dynamic(() => import('components/container'));
@@ -75,7 +75,7 @@ const EDICommitteeForm = (rawData) => {
   const variant = get(rawData, 'primary.variant');
 
   return (
-    <PrismicWrapper variant={variant}>
+    <Slice variant={variant}>
       <Heading as="h1" fontFamily="body" textAlign="center">
         EDI Committee Expression of Interest
       </Heading>
@@ -202,7 +202,7 @@ const EDICommitteeForm = (rawData) => {
           </Flex>
         )}
       </Container>
-    </PrismicWrapper>
+    </Slice>
   );
 };
 

@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 const Image = dynamic(() => import('components/carousel-image'));
 
 const Item = ({ item }) => {
@@ -62,7 +62,7 @@ const ImageSlice = (rawData) => {
   const multipleImages = items.length > 1;
 
   return (
-    <PrismicWrapper variant={variant} small>
+    <Slice variant={variant} size="sm">
       <Grid
         gridTemplateColumns={{
           base: '1fr',
@@ -79,7 +79,7 @@ const ImageSlice = (rawData) => {
           return <Item key={`image-slice-${i}`} item={item} />;
         })}
       </Grid>
-    </PrismicWrapper>
+    </Slice>
   );
 };
 

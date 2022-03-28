@@ -187,3 +187,17 @@ export const linkResolver = ({ type, uid }) => {
       return `/${uid}`;
   }
 };
+
+export async function getStaticPrismicProps({ type, uid, previewData }) {
+  const { ref } = previewData;
+  const [page, posts] = await Promise.all([
+    getPrismicDocByUid(type, uid, { ref }),
+    getDocs('post', {
+      orderings: '[my.post.date desc]',
+      pageSize: PAGE_SIZE,
+      page: 1,
+    }),
+  ]);
+
+  return { page, posts };
+}

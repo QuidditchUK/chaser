@@ -1,7 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 import { createBreakpoints } from '@chakra-ui/theme-tools';
 import { ButtonStyles } from 'components/button';
-import { PrismicStyles } from 'components/prismic-wrapper';
+import { SliceStyles } from 'components/slice';
 import { CardStyles } from 'components/card';
 import { HorizontalCardStyles } from 'components/horizontal-card';
 
@@ -11,7 +11,7 @@ export const rem = (value) => `${value / emBase}rem`;
 export default extendTheme({
   components: {
     Button: ButtonStyles,
-    Prismic: PrismicStyles,
+    Slice: SliceStyles,
     Card: CardStyles,
     HorizontalCard: HorizontalCardStyles,
   },
@@ -58,6 +58,8 @@ export default extendTheme({
   styles: {
     global: {
       'html, body': {
+        height: '100%',
+        width: '100%',
         lineHeight: 1.15,
       },
     },

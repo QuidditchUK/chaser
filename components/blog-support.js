@@ -6,7 +6,7 @@ import format from 'date-fns/format';
 import { Box, Flex, Text, Link as ChakraLink } from '@chakra-ui/react';
 
 const Image = dynamic(() => import('components/image'));
-const PrismicWrapper = dynamic(() => import('components/prismic-wrapper'));
+const Slice = dynamic(() => import('components/slice'));
 const Container = dynamic(() => import('components/container'));
 const FacebookIcon = dynamic(() => import('public/images/facebook.svg'));
 const TwitterIcon = dynamic(() => import('public/images/twitter.svg'));
@@ -59,7 +59,7 @@ const BlogSupport = (rawData) => {
         </Box>
       )}
 
-      <PrismicWrapper small>
+      <Slice size="sm">
         <Flex alignItems="center" justifyContent="space-between">
           <Flex alignItems="center">
             <Image
@@ -121,7 +121,7 @@ const BlogSupport = (rawData) => {
             </Flex>
           </Flex>
         </Flex>
-      </PrismicWrapper>
+      </Slice>
     </>
   );
 };

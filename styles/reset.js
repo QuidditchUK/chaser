@@ -354,4 +354,12 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+/**
+ * Style __next div to have correct height
+ */
+
+#__next {
+  height: 100%;
+}
 `;
