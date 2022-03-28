@@ -18,6 +18,9 @@ const SentryWebpackPluginOptions = {
 };
 
 const moduleExports = {
+  experimental: {
+    emotion: true,
+  },
   async rewrites() {
     return [
       {

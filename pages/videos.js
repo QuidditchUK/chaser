@@ -224,6 +224,7 @@ const Page = ({ data: initialData }) => {
         >
           <Image
             src="https://images.prismic.io/chaser/15de9370-f5bd-4a7c-8b4d-9610e0b22e3b_video-uncropped.jpg?auto=compress,format"
+            alt="Commentary and video crew huddle around cameras and microphones during a match"
             layout="fill"
             objectPosition="center center"
             objectFit="cover"

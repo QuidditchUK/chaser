@@ -54,15 +54,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.13.8",
-    "@babel/eslint-parser": "^7.13.8",
-    "@emotion/babel-plugin": "^11.2.0",
     "eslint": "7.32.0",
+    "eslint-config-next": "^12.1.1",
     "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-import": "2.24.1",
-    "eslint-plugin-jsx-a11y": "6.4.1",
-    "eslint-plugin-react": "7.24.0",
-    "eslint-plugin-react-hooks": "4.2.0",
     "g-sheets-api": "2.1.0",
     "husky": "^7.0.0",
     "lint-staged": "11.1.2",

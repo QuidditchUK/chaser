@@ -91,7 +91,10 @@ export const ButtonStyles = {
   },
 };
 
-const Button = forwardRef(({ variant = 'primary', href, ...rest }, ref) => {
+const Button = forwardRef(function Button(
+  { variant = 'primary', href, ...rest },
+  ref
+) {
   const styles = useStyleConfig('Button', { variant });
   const Wrapper = href ? ExternalLink : Box;
 

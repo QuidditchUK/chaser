@@ -208,6 +208,7 @@ const FindQuidditch = ({
         >
           <Image
             src="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959"
+            alt="Player shoots the ball while being tackled"
             layout="fill"
             objectFit="cover"
             objectPosition="center center"
