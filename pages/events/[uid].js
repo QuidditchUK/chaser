@@ -7,7 +7,7 @@ import { RichText } from 'prismic-reactjs';
 import { useQuery } from 'react-query';
 import get from 'just-safe-get';
 import { linkResolver, getDocs, getPrismicDocByUid } from 'modules/prismic';
-import renderPrismicSections from 'constants/prismic';
+
 import {
   Box,
   Grid,
@@ -19,6 +19,7 @@ import {
   Link as ChakraLink,
 } from '@chakra-ui/react';
 import { TYPES } from 'components/club-type';
+import PrismicSlice from 'components/prismic';
 
 const HeroWithLocation = dynamic(() => import('components/hero-with-location'));
 const Page404 = dynamic(() => import('pages/404'));
@@ -34,8 +35,8 @@ const Td = (props) => (
 const EventPage = ({ page: initialPage, preview }) => {
   const router = useRouter();
   const { data: queryData } = useQuery(
-    ['clubs', router.query.id],
-    () => getPrismicDocByUid('events', router.query.id),
+    ['clubs', router.query.uid],
+    () => getPrismicDocByUid('events', router.query.uid),
     { initialData: initialPage, enabled: Boolean(!router.isFallback) }
   );
 
@@ -289,7 +290,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                 mr={{ base: '-2rem', sm: '-2rem', md: '-2.25rem' }}
                 ml={{ base: '-2rem', sm: '-2rem', md: '-2.25rem' }}
               >
-                {renderPrismicSections(event?.body)}
+                <PrismicSlice sections={event?.body} />
               </Box>
             </Box>
           </Box>
@@ -300,13 +301,13 @@ const EventPage = ({ page: initialPage, preview }) => {
 };
 
 export const getStaticProps = async ({
-  params: { id },
+  params: { uid },
   preview = null,
   previewData = {},
 }) => {
   const { ref } = previewData;
   const page =
-    (await getPrismicDocByUid('events', id, ref ? { ref } : null)) || null;
+    (await getPrismicDocByUid('events', uid, ref ? { ref } : null)) || null;
 
   return {
     props: { page, preview },

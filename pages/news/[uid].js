@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 
 import { getDocs, getPrismicDocByUid, formatMetadata } from 'modules/prismic';
-import renderPrismicSections from 'constants/prismic';
+import PrismicSlice from 'components/prismic';
 
 const Page404 = dynamic(() => import('pages/404'));
 const PageLoading = dynamic(() => import('components/page-loading'));
@@ -16,8 +16,8 @@ const Post = ({ page: initialPage, preview }) => {
   const router = useRouter();
 
   const { data: queryData } = useQuery(
-    ['post', router.query.id],
-    () => getPrismicDocByUid('post', router.query.id),
+    ['post', router.query.uid],
+    () => getPrismicDocByUid('post', router.query.uid),
     { initialData: initialPage, enabled: !preview }
   );
 
@@ -37,7 +37,7 @@ const Post = ({ page: initialPage, preview }) => {
       <SchemaArticle page={page} />
       <article>
         <BlogHero {...page.data} />
-        {renderPrismicSections(page.data.body)}
+        <PrismicSlice sections={page.data.body} />
         <BlogSupport {...page.data} tags={page.tags} />
       </article>
     </>
@@ -45,13 +45,13 @@ const Post = ({ page: initialPage, preview }) => {
 };
 
 export const getStaticProps = async ({
-  params: { id },
+  params: { uid },
   preview = null,
   previewData = {},
 }) => {
   const { ref } = previewData;
   const page =
-    (await getPrismicDocByUid('post', id, ref ? { ref } : null)) || null;
+    (await getPrismicDocByUid('post', uid, ref ? { ref } : null)) || null;
 
   return {
     props: { page, preview },

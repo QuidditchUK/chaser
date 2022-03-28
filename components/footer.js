@@ -173,7 +173,7 @@ export const Footer = () => {
                 </Item>
                 <Item>
                   <ExternalLink
-                    href="https://quidditcheurope.wixsite.com/quidditcheurope"
+                    href="https://www.quidditcheurope.org/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
