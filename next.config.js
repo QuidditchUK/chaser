@@ -19,17 +19,6 @@ const SentryWebpackPluginOptions = {
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
 
-const {
-  VERCEL_GITHUB_COMMIT_SHA,
-  API_URL,
-  COOKIE_DOMAIN,
-  COOKIE_SECURE,
-  STRIPE_TOKEN,
-  GA_TOKEN,
-} = process.env;
-
-const COMMIT_SHA = VERCEL_GITHUB_COMMIT_SHA;
-
 module.exports = withSentryConfig(
   withOffline({
     target: 'serverless',
@@ -100,23 +89,13 @@ module.exports = withSentryConfig(
     images: {
       domains: ['images.prismic.io', 'chaser.cdn.prismic.io'],
     },
-    webpack: (config, options) => {
+    webpack: (config) => {
       config.module.rules.push({
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       });
 
       return config;
-    },
-    publicRuntimeConfig: {
-      apiUrl: API_URL,
-      cookiesDomain: COOKIE_DOMAIN,
-      cookiesSecure: COOKIE_SECURE,
-      stripeToken: STRIPE_TOKEN,
-    },
-    env: {
-      gaToken: GA_TOKEN,
-      NEXT_PUBLIC_COMMIT_SHA: COMMIT_SHA,
     },
   }),
   SentryWebpackPluginOptions

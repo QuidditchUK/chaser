@@ -6,7 +6,7 @@ export const pageview = (url) => {
     typeof window !== 'undefined' &&
     typeof window?.gtag !== 'undefined'
   ) {
-    window.gtag('config', process.env.gaToken, {
+    window.gtag('config', process.env.GA_TOKEN, {
       page_path: url,
     });
   }
@@ -31,14 +31,14 @@ const GTag = () => (
   <>
     <Script
       strategy="lazyOnload"
-      src={`https://www.googletagmanager.com/gtag/js?id=${process.env.gaToken}`}
+      src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TOKEN}`}
     />
     <Script id="google-gtag" strategy="lazyOnload">
       {`
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', '${process.env.gaToken}', {
+        gtag('config', '${process.env.GA_TOKEN}', {
           page_path: window.location.pathname,
         });
       `}
