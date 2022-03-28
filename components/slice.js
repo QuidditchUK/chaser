@@ -3,19 +3,6 @@ import { Box } from '@chakra-ui/react';
 
 export const SliceStyles = {
   parts: ['slice', 'container'],
-  baseStyle: {
-    slice: {
-      a: {
-        fontWeight: 'bold',
-        textDecoration: 'none',
-        color: 'qukBlue',
-        _hover: {
-          textDecoration: 'underline',
-          color: 'qukBlue',
-        },
-      },
-    },
-  },
   sizes: {
     sm: {
       container: {
@@ -44,7 +31,7 @@ export const SliceStyles = {
         color: 'monarchRed',
 
         _hover: {
-          textDecoration: 'underline',
+          textDecoration: 'none',
           color: 'monarchRed',
         },
       },
@@ -58,7 +45,7 @@ export const SliceStyles = {
         color: 'monarchRed',
 
         _hover: {
-          textDecoration: 'underline',
+          textDecoration: 'none',
           color: 'monarchRed',
         },
       },
@@ -72,7 +59,7 @@ export const SliceStyles = {
         color: 'darkBlue',
 
         _hover: {
-          textDecoration: 'underline',
+          textDecoration: 'none',
           color: 'darkBlue',
         },
       },
@@ -86,7 +73,7 @@ export const SliceStyles = {
         color: 'monarchRed',
 
         _hover: {
-          textDecoration: 'underline',
+          textDecoration: 'none',
           color: 'monarchRed',
         },
       },
@@ -100,7 +87,7 @@ export const SliceStyles = {
         color: 'monarchRed',
 
         _hover: {
-          textDecoration: 'underline',
+          textDecoration: 'none',
           color: 'monarchRed',
         },
       },

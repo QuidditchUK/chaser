@@ -22,7 +22,7 @@ const Content = (props) => (
       a: {
         textDecoration: 'none',
         color: 'black',
-        _hover: { textDecoration: 'underline' },
+        _hover: { textDecoration: 'none' },
       },
     }}
     {...props}

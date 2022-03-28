@@ -107,7 +107,7 @@ const HorizontalCard = ({
               color: 'qukBlue',
               textDecoration: 'none',
               _hover: {
-                textDecoration: 'underline',
+                textDecoration: 'none',
               },
             },
           }}

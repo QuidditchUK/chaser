@@ -7,10 +7,9 @@ export default function Content(props) {
       sx={{
         a: {
           textDecoration: 'none',
-          wordBreak: 'break-all',
 
           '&:hover': {
-            textDecoration: 'underline',
+            textDecoration: 'none',
           },
         },
       }}
