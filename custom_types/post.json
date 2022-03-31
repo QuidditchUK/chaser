@@ -91,7 +91,7 @@
               "content": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item, o-list-item",
+                  "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item,o-list-item",
                   "allowTargetBlank": true,
                   "label": "Content"
                 }
@@ -217,7 +217,7 @@
               "content": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, preformatted, strong, em, hyperlink, list-item, o-list-item",
+                  "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item",
                   "allowTargetBlank": true,
                   "label": "content"
                 }
@@ -225,7 +225,7 @@
               "support": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, strong, em, hyperlink",
+                  "multi": "paragraph,strong,em,hyperlink",
                   "allowTargetBlank": true,
                   "label": "Image support",
                   "placeholder": "Support Text that will appear under the image"
@@ -264,7 +264,7 @@
               "content": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
+                  "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
                   "allowTargetBlank": true,
                   "label": "content"
                 }
@@ -311,7 +311,7 @@
               "content": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
+                  "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
                   "allowTargetBlank": true,
                   "label": "Content"
                 }
@@ -321,7 +321,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Link (Whole Card)",
-                  "placeholder": "If using do not put links in Content"
+                  "placeholder": "If using do not put links in Content",
+                  "select": null
                 }
               }
             }
@@ -343,7 +344,7 @@
               "content": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
+                  "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
                   "allowTargetBlank": true,
                   "label": "content"
                 }
@@ -381,7 +382,7 @@
               "content": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
+                  "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
                   "allowTargetBlank": true,
                   "label": "Content"
                 }
@@ -402,7 +403,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Link (Whole Card)",
-                  "placeholder": "If using do not put links in Content"
+                  "placeholder": "If using do not put links in Content",
+                  "select": null
                 }
               }
             }
@@ -456,7 +458,7 @@
               "content": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, preformatted, strong, em, hyperlink, list-item, o-list-item",
+                  "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item",
                   "allowTargetBlank": true,
                   "label": "content"
                 }
@@ -464,7 +466,7 @@
               "support": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, strong, em, hyperlink",
+                  "multi": "paragraph,strong,em,hyperlink",
                   "allowTargetBlank": true,
                   "label": "Embed support",
                   "placeholder": "Support Text that will appear under the embedded video"
@@ -529,7 +531,7 @@
               "content": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, preformatted, strong, em, hyperlink, list-item, o-list-item",
+                  "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item",
                   "allowTargetBlank": true,
                   "label": "Content"
                 }
@@ -630,7 +632,7 @@
               "column_one_title": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, preformatted, heading3, heading4, heading5, heading6, strong, em, hyperlink, o-list-item",
+                  "multi": "paragraph,preformatted,heading3,heading4,heading5,heading6,strong,em,hyperlink,o-list-item",
                   "allowTargetBlank": true,
                   "label": "Column One Title"
                 }
@@ -638,7 +640,7 @@
               "column_two_title": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, preformatted, heading3, heading4, heading5, heading6, strong, em, hyperlink, o-list-item",
+                  "multi": "paragraph,preformatted,heading3,heading4,heading5,heading6,strong,em,hyperlink,o-list-item",
                   "allowTargetBlank": true,
                   "label": "Column Two Title"
                 }
@@ -662,7 +664,7 @@
               "column_one": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, preformatted, strong, em, hyperlink, image, list-item, o-list-item, o-list-item",
+                  "multi": "paragraph,preformatted,strong,em,hyperlink,image,list-item,o-list-item,o-list-item",
                   "allowTargetBlank": true,
                   "label": "Column One"
                 }
@@ -670,12 +672,30 @@
               "column_two": {
                 "type": "StructuredText",
                 "config": {
-                  "multi": "paragraph, preformatted, strong, em, hyperlink, list-item, o-list-item, o-list-item",
+                  "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item,o-list-item",
                   "allowTargetBlank": true,
                   "label": "Column Two"
                 }
               }
             }
+          },
+          "scheduler_feed": {
+            "type": "Slice",
+            "fieldset": "Scheduler Feed",
+            "description": "Pull a feed of games from Quidditch Scheduler",
+            "icon": "line_weight",
+            "display": "list",
+            "non-repeat": {
+              "scheduler_url": {
+                "type": "Link",
+                "config": {
+                  "label": "Scheduler URL",
+                  "placeholder": "https://api.quidditchscheduler.com/game/tournament/5",
+                  "select": null
+                }
+              }
+            },
+            "repeat": {}
           }
         }
       }
