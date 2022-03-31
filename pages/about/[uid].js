@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { getStaticPrismicProps, getDocs } from 'modules/prismic';
 import dynamic from 'next/dynamic';
 
-const PrismicPage = dynamic(() => import('components/prismic-page'));
+const PrismicPage = dynamic(() => import('components/shared/prismic-page'));
 
 const Page = (props) => {
   const router = useRouter();

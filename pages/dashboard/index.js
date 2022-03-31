@@ -16,13 +16,13 @@ import {
 } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
 
-const Meta = dynamic(() => import('components/meta'));
-const Container = dynamic(() => import('components/container'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const Container = dynamic(() => import('components/layout/container'));
 
-const Content = dynamic(() => import('components/content'));
-const Image = dynamic(() => import('components/image'));
-const ProductCard = dynamic(() => import('components/product-card'));
-const ClubCard = dynamic(() => import('components/club-card'));
+const Content = dynamic(() => import('components/shared/content'));
+const Image = dynamic(() => import('components/shared/image'));
+const ProductCard = dynamic(() => import('components/dashboard/product-card'));
+const ClubCard = dynamic(() => import('components/clubsEvents/club-card'));
 
 const StyledAnchor = forwardRef(function StyledAnchor(props, ref) {
   return (

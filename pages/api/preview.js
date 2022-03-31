@@ -1,4 +1,3 @@
-import PreviewAlert from 'components/preview-alert';
 import { Client, linkResolver } from 'modules/prismic';
 
 // eslint-disable-next-line consistent-return

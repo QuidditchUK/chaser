@@ -6,11 +6,11 @@ import { getDocs, getPrismicDocByUid, formatMetadata } from 'modules/prismic';
 import PrismicSlice from 'components/prismic';
 
 const Page404 = dynamic(() => import('pages/404'));
-const PageLoading = dynamic(() => import('components/page-loading'));
-const Meta = dynamic(() => import('components/meta'));
-const BlogSupport = dynamic(() => import('components/blog-support'));
-const BlogHero = dynamic(() => import('components/blog-hero'));
-const SchemaArticle = dynamic(() => import('components/schema-article'));
+const PageLoading = dynamic(() => import('components/shared/page-loading'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const NewsSupport = dynamic(() => import('components/news/news-support'));
+const NewsHero = dynamic(() => import('components/news/news-hero'));
+const SchemaArticle = dynamic(() => import('components/news/schema-article'));
 
 const Post = ({ page: initialPage, preview }) => {
   const router = useRouter();
@@ -36,9 +36,9 @@ const Post = ({ page: initialPage, preview }) => {
       <Meta {...formatMetadata(page.data)} />
       <SchemaArticle page={page} />
       <article>
-        <BlogHero {...page.data} />
+        <NewsHero {...page.data} />
         <PrismicSlice sections={page.data.body} />
-        <BlogSupport {...page.data} tags={page.tags} />
+        <NewsSupport {...page.data} tags={page.tags} />
       </article>
     </>
   );

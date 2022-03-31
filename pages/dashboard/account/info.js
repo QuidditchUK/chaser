@@ -5,12 +5,14 @@ import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 
-const Logo = dynamic(() => import('components/logo'));
-const Meta = dynamic(() => import('components/meta'));
-const Container = dynamic(() => import('components/container'));
+const Logo = dynamic(() => import('components/shared/logo'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const Container = dynamic(() => import('components/layout/container'));
 
-const InfoForm = dynamic(() => import('components/info-form'));
-const PasswordForm = dynamic(() => import('components/password-form'));
+const InfoForm = dynamic(() => import('components/dashboard/info-form'));
+const PasswordForm = dynamic(() =>
+  import('components/dashboard/password-form')
+);
 
 const Info = ({ user }) => (
   <>

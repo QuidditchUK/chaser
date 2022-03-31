@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Flex, Heading, Text, Link as ChakraLink } from '@chakra-ui/react';
 
-const Container = dynamic(() => import('components/container'));
+const Container = dynamic(() => import('components/layout/container'));
 
 const PageErrorBoundary = ({ children }) => (
   <ErrorBoundary

@@ -32,13 +32,13 @@ import {
 } from 'modules/prismic';
 
 const CloseIcon = dynamic(() => import('public/images/close.svg'));
-const Container = dynamic(() => import('components/container'));
+const Container = dynamic(() => import('components/layout/container'));
 
-const ClubCard = dynamic(() => import('components/club-card'));
-const EventCard = dynamic(() => import('components/event-card'));
+const ClubCard = dynamic(() => import('components/clubsEvents/club-card'));
+const EventCard = dynamic(() => import('components/clubsEvents/event-card'));
 
-const Meta = dynamic(() => import('components/meta'));
-const Button = dynamic(() => import('components/button'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const Button = dynamic(() => import('components/shared/button'));
 
 const IconWrapper = (props) => (
   <Box display="inline-block" w="30px" {...props} />

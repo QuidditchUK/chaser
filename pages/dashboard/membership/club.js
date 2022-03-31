@@ -10,21 +10,22 @@ import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 import { Box, Grid, Flex, Heading, Select, Checkbox } from '@chakra-ui/react';
 
-const Meta = dynamic(() => import('components/meta'));
-const Container = dynamic(() => import('components/container'));
-const Content = dynamic(() => import('components/content'));
-const Label = dynamic(() => import('components/label'));
-const Button = dynamic(() => import('components/button'));
-const Required = dynamic(() => import('components/required'));
-const ClubCard = dynamic(() => import('components/club-card'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const Container = dynamic(() => import('components/layout/container'));
+const Content = dynamic(() => import('components/shared/content'));
+const Label = dynamic(() => import('components/formControls/label'));
+const Button = dynamic(() => import('components/shared/button'));
+const Required = dynamic(() => import('components/formControls/required'));
+const ClubCard = dynamic(() => import('components/clubsEvents/club-card'));
 
 const InlineError = dynamic(() =>
-  import('components/errors').then(({ InlineError }) => InlineError)
+  import('components/shared/errors').then(({ InlineError }) => InlineError)
 );
 
-import { ACTIVE_STATUS } from 'components/club-card';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
+
+const ACTIVE_STATUS = 'active';
 
 const SelectClubSchema = object().shape({
   club_uuid: string().nullable().required('Required'),

@@ -18,15 +18,17 @@ import {
   Tbody,
   Link as ChakraLink,
 } from '@chakra-ui/react';
-import { TYPES } from 'components/club-type';
+import { TYPES } from 'components/clubsEvents/league-type';
 import PrismicSlice from 'components/prismic';
 
-const HeroWithLocation = dynamic(() => import('components/hero-with-location'));
+const HeroWithLocation = dynamic(() =>
+  import('components/clubsEvents/hero-with-location')
+);
 const Page404 = dynamic(() => import('pages/404'));
-const Meta = dynamic(() => import('components/meta'));
-const PageLoading = dynamic(() => import('components/page-loading'));
-const Content = dynamic(() => import('components/content'));
-const Button = dynamic(() => import('components/button'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const PageLoading = dynamic(() => import('components/shared/page-loading'));
+const Content = dynamic(() => import('components/shared/content'));
+const Button = dynamic(() => import('components/shared/button'));
 
 const Td = (props) => (
   <ChakraTd p={1} fontSize={{ base: 'sm', md: 'md' }} {...props} />

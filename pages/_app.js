@@ -11,7 +11,7 @@ const AppErrorBoundary = dynamic(() =>
   import('components/errorBoundaries/app')
 );
 
-const Layout = dynamic(() => import('containers/layout'));
+const Layout = dynamic(() => import('components/layout'));
 const queryClient = new QueryClient();
 
 function App({ Component, pageProps }) {

@@ -20,15 +20,15 @@ import {
 } from '@chakra-ui/react';
 
 const InlineError = dynamic(() =>
-  import('components/errors').then(({ InlineError }) => InlineError)
+  import('components/shared/errors').then(({ InlineError }) => InlineError)
 );
-const Image = dynamic(() => import('components/image'));
-const Meta = dynamic(() => import('components/meta'));
-const Content = dynamic(() => import('components/content'));
-const Button = dynamic(() => import('components/button'));
-const Label = dynamic(() => import('components/label'));
-const Container = dynamic(() => import('components/container'));
-const ProductCard = dynamic(() => import('components/product-card'));
+const Image = dynamic(() => import('components/shared/image'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const Content = dynamic(() => import('components/shared/content'));
+const Button = dynamic(() => import('components/shared/button'));
+const Label = dynamic(() => import('components/formControls/label'));
+const Container = dynamic(() => import('components/layout/container'));
+const ProductCard = dynamic(() => import('components/dashboard/product-card'));
 
 const Benefits = (props) => <Content fontSize="md" p={4} {...props} />;
 const List = (props) => <UnorderedList p={0} pl={4} {...props} />;

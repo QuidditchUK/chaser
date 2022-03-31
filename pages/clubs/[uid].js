@@ -26,10 +26,12 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-const HeroWithLocation = dynamic(() => import('components/hero-with-location'));
-const Content = dynamic(() => import('components/content'));
-const SchemaClub = dynamic(() => import('components/schema-club'));
-const ClubNews = dynamic(() => import('components/club-news'));
+const HeroWithLocation = dynamic(() =>
+  import('components/clubsEvents/hero-with-location')
+);
+const Content = dynamic(() => import('components/shared/content'));
+const SchemaClub = dynamic(() => import('components/clubsEvents/schema-club'));
+const ClubNews = dynamic(() => import('components/clubsEvents/club-news'));
 
 const FacebookIcon = dynamic(() => import('public/images/facebook.svg'));
 const TwitterIcon = dynamic(() => import('public/images/twitter.svg'));
@@ -37,8 +39,8 @@ const InstagramIcon = dynamic(() => import('public/images/instagram.svg'));
 const YoutubeIcon = dynamic(() => import('public/images/youtube.svg'));
 
 const Page404 = dynamic(() => import('pages/404'));
-const PageLoading = dynamic(() => import('components/page-loading'));
-const Meta = dynamic(() => import('components/meta'));
+const PageLoading = dynamic(() => import('components/shared/page-loading'));
+const Meta = dynamic(() => import('components/shared/meta'));
 
 const Icon = (props) => (
   <Box color="greyDark" height="30px" width="30px" {...props} />
