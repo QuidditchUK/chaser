@@ -1,8 +1,8 @@
 import Prismic from '@prismicio/client';
 import add from 'date-fns/add';
-import config from '../config';
 
-const { prismic } = config;
+const REF_API_URL = 'https://chaser.cdn.prismic.io/api/v2';
+const API_TOKEN = process.env.PRISMIC_API_TOKEN;
 
 const createClientOptions = (req = null, prismicAccessToken = null) => {
   const reqOption = req ? { req } : {};
@@ -17,7 +17,7 @@ const createClientOptions = (req = null, prismicAccessToken = null) => {
 };
 
 export const Client = (req = null) =>
-  Prismic.client(prismic.url, createClientOptions(req, prismic.token));
+  Prismic.client(REF_API_URL, createClientOptions(req, API_TOKEN));
 
 export const formatMetadata = ({
   meta_description,

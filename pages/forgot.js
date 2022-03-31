@@ -9,17 +9,17 @@ import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 
-import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
-const Logo = dynamic(() => import('components/logo'));
+const Logo = dynamic(() => import('components/shared/logo'));
 const InlineError = dynamic(() =>
-  import('components/errors').then(({ InlineError }) => InlineError)
+  import('components/shared/errors').then(({ InlineError }) => InlineError)
 );
-const Meta = dynamic(() => import('components/meta'));
-const Container = dynamic(() => import('components/container'));
-const Label = dynamic(() => import('components/label'));
-const Button = dynamic(() => import('components/button'));
-const Content = dynamic(() => import('components/content'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const Container = dynamic(() => import('components/layout/container'));
+const Label = dynamic(() => import('components/formControls/label'));
+const Button = dynamic(() => import('components/shared/button'));
+const Content = dynamic(() => import('components/shared/content'));
 
 const ForgotFormSchema = object().shape({
   email: string()

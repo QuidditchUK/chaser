@@ -6,9 +6,9 @@ import { useInView } from 'react-intersection-observer';
 import { getDocs, PAGE_SIZE, Client } from 'modules/prismic';
 import { useInfiniteQuery } from 'react-query';
 
-const LatestNews = dynamic(() => import('components/latest-news'));
-const NewsHeader = dynamic(() => import('components/news-header'));
-const Meta = dynamic(() => import('components/meta'));
+const LatestNews = dynamic(() => import('components/prismic/latest-news'));
+const NewsHeader = dynamic(() => import('components/news/news-header'));
+const Meta = dynamic(() => import('components/shared/meta'));
 
 const getPagedDocs = ({ pageParam = 0 }) =>
   Client().query(Prismic.Predicates.at('document.type', 'post'), {

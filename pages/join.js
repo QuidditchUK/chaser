@@ -13,19 +13,19 @@ import { setCookies } from 'modules/cookies';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
 
-import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
-const Logo = dynamic(() => import('components/logo'));
+const Logo = dynamic(() => import('components/shared/logo'));
 const InlineError = dynamic(() =>
-  import('components/errors').then(({ InlineError }) => InlineError)
+  import('components/shared/errors').then(({ InlineError }) => InlineError)
 );
 
-const Label = dynamic(() => import('components/label'));
-const Meta = dynamic(() => import('components/meta'));
-const Container = dynamic(() => import('components/container'));
-const Button = dynamic(() => import('components/button'));
-const Content = dynamic(() => import('components/content'));
-const Required = dynamic(() => import('components/required'));
+const Label = dynamic(() => import('components/formControls/label'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const Container = dynamic(() => import('components/layout/container'));
+const Button = dynamic(() => import('components/shared/button'));
+const Content = dynamic(() => import('components/shared/content'));
+const Required = dynamic(() => import('components/formControls/required'));
 
 const JoinFormSchema = object().shape({
   email: string()

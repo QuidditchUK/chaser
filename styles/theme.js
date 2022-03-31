@@ -1,9 +1,9 @@
 import { extendTheme } from '@chakra-ui/react';
 import { createBreakpoints } from '@chakra-ui/theme-tools';
-import { ButtonStyles } from 'components/button';
-import { SliceStyles } from 'components/slice';
-import { CardStyles } from 'components/card';
-import { HorizontalCardStyles } from 'components/horizontal-card';
+import { ButtonStyles } from 'components/shared/button';
+import { SliceStyles } from 'components/shared/slice';
+import { CardStyles } from 'components/shared/card';
+import { HorizontalCardStyles } from 'components/shared/horizontal-card';
 
 const emBase = 16;
 export const rem = (value) => `${value / emBase}rem`;

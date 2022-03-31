@@ -8,9 +8,9 @@ import { getBlogCategory, PAGE_SIZE, Client } from 'modules/prismic';
 const LoadMore = dynamic(() =>
   import('pages/news').then(({ LoadMore }) => LoadMore)
 );
-const LatestNews = dynamic(() => import('components/latest-news'));
-const NewsHeader = dynamic(() => import('components/news-header'));
-const Meta = dynamic(() => import('components/meta'));
+const LatestNews = dynamic(() => import('components/prismic/latest-news'));
+const NewsHeader = dynamic(() => import('components/news/news-header'));
+const Meta = dynamic(() => import('components/shared/meta'));
 
 const getPagedDocs = ({ pageParam = 0 }) =>
   Client().query(Prismic.Predicates.at('my.post.category', 'Leagues'), {

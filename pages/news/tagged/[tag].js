@@ -8,9 +8,9 @@ import { getBlogTags, PAGE_SIZE, Client } from 'modules/prismic';
 const LoadMore = dynamic(() =>
   import('pages/news').then(({ LoadMore }) => LoadMore)
 );
-const LatestNews = dynamic(() => import('components/latest-news'));
-const NewsHeader = dynamic(() => import('components/news-header'));
-const Meta = dynamic(() => import('components/meta'));
+const LatestNews = dynamic(() => import('components/prismic/latest-news'));
+const NewsHeader = dynamic(() => import('components/news/news-header'));
+const Meta = dynamic(() => import('components/shared/meta'));
 
 const unDasherizeTag = (tag) => tag.replace(/--/g, ' ').replace(/__/g, '/');
 

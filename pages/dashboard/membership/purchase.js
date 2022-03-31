@@ -4,9 +4,9 @@ import { parseCookies } from 'modules/cookies';
 import { api } from 'modules/api';
 import { stripePromise } from 'modules/stripe';
 
-const Meta = dynamic(() => import('components/meta'));
-const Container = dynamic(() => import('components/container'));
-const ProductCard = dynamic(() => import('components/product-card'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const Container = dynamic(() => import('components/layout/container'));
+const ProductCard = dynamic(() => import('components/dashboard/product-card'));
 
 const handleClick = async (id) => {
   const { data } = await api.get(`/products/session?price_id=${id}`);

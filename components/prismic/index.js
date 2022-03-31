@@ -1,27 +1,41 @@
 import dynamic from 'next/dynamic';
 
-const HomeHero = dynamic(() => import('components/home-hero'));
-const LatestNews = dynamic(() => import('components/latest-news'));
-const Hero = dynamic(() => import('components/hero'));
+const HomeHero = dynamic(() => import('components/prismic/home-hero'));
+const LatestNews = dynamic(() => import('components/prismic/latest-news'));
+const Hero = dynamic(() => import('components/prismic/hero'));
 const HeaderAndParagraph = dynamic(() =>
-  import('components/header-and-paragraph')
+  import('components/prismic/header-and-paragraph')
 );
-const Images = dynamic(() => import('components/image-slice'));
-const ImageAndContent = dynamic(() => import('components/image-and-content'));
-const Cards = dynamic(() => import('components/cards'));
-const FindQuidditch = dynamic(() => import('components/find-quidditch'));
-const Embed = dynamic(() => import('components/embed-slice'));
-const EmbedAndContent = dynamic(() => import('components/embed-and-content'));
-const ContactForm = dynamic(() => import('components/contact-form'));
+const Images = dynamic(() => import('components/prismic/images'));
+const ImageAndContent = dynamic(() =>
+  import('components/prismic/image-and-content')
+);
+const Cards = dynamic(() => import('components/prismic/cards'));
+const FindQuidditch = dynamic(() =>
+  import('components/prismic/find-quidditch')
+);
+const Embed = dynamic(() => import('components/prismic/embeds'));
+const EmbedAndContent = dynamic(() =>
+  import('components/prismic/embed-and-content')
+);
+const ContactForm = dynamic(() =>
+  import('components/prismic/forms/contact-form')
+);
 const TwoColumnTable = dynamic(() =>
-  import('components/two-column-table-slice')
+  import('components/prismic/two-column-table-slice')
 );
-const VolunteerForm = dynamic(() => import('components/volunteer-form'));
+const VolunteerForm = dynamic(() =>
+  import('components/prismic/forms/volunteer-form')
+);
 const NationalTeamForm = dynamic(() =>
-  import('components/national-team-interest')
+  import('components/prismic/national-team-interest')
 );
-const HorizontalCard = dynamic(() => import('components/horizontal-card'));
-const EdiCommitteeForm = dynamic(() => import('components/edi-committee-form'));
+const HorizontalCard = dynamic(() =>
+  import('components/prismic/horizontal-cards')
+);
+const EdiCommitteeForm = dynamic(() =>
+  import('components/prismic/forms/edi-committee-form')
+);
 
 const slices = {
   video_hero_with_cta: HomeHero,

@@ -3,11 +3,11 @@ import dynamic from 'next/dynamic';
 import { parseCookies } from 'modules/cookies';
 import { Box, Grid, Flex, Heading } from '@chakra-ui/react';
 
-const Meta = dynamic(() => import('components/meta'));
-const Container = dynamic(() => import('components/container'));
-const ProductCard = dynamic(() => import('components/product-card'));
-const Content = dynamic(() => import('components/content'));
-const Button = dynamic(() => import('components/button'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const Container = dynamic(() => import('components/layout/container'));
+const ProductCard = dynamic(() => import('components/dashboard/product-card'));
+const Content = dynamic(() => import('components/shared/content'));
+const Button = dynamic(() => import('components/shared/button'));
 import { api } from 'modules/api';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';

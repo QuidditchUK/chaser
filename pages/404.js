@@ -2,10 +2,10 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { Flex, Box, Heading } from '@chakra-ui/react';
 
-const Image = dynamic(() => import('components/image'));
-const Container = dynamic(() => import('components/container'));
-const Content = dynamic(() => import('components/content'));
-const Meta = dynamic(() => import('components/meta'));
+const Image = dynamic(() => import('components/shared/image'));
+const Container = dynamic(() => import('components/layout/container'));
+const Content = dynamic(() => import('components/shared/content'));
+const Meta = dynamic(() => import('components/shared/meta'));
 
 export default function Custom404() {
   return (

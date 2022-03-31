@@ -1,33 +1,18 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import dynamic from 'next/dynamic';
-import {
-  Heading,
-  Flex,
-  Text,
-  Box,
-  Table,
-  Tbody,
-  Td,
-  Tr,
-  Grid,
-  Stack,
-} from '@chakra-ui/react';
+import { Heading, Flex, Text, Box, Grid } from '@chakra-ui/react';
 import Image from 'next/image';
-import { useInView } from 'react-intersection-observer';
-import axios from 'axios';
+import { useForm } from 'react-hook-form';
+
 import getSheet from 'modules/sheets';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
-import Slice from 'components/slice';
-import { useForm } from 'react-hook-form';
-import Input from 'components/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
-const Meta = dynamic(() => import('components/meta'));
-const Card = dynamic(() => import('components/card'));
-const Content = dynamic(() => import('components/content'));
-const Button = dynamic(() => import('components/button'));
-const Embed = dynamic(() =>
-  import('components/embed-slice').then(({ Embed }) => Embed)
-);
+const Slice = dynamic(() => import('components/shared/slice'));
+const Meta = dynamic(() => import('components/shared/meta'));
+const Content = dynamic(() => import('components/shared/content'));
+const Button = dynamic(() => import('components/shared/button'));
+const VideoCard = dynamic(() => import('components/shared/video-card'));
 
 const SHEET_ID = '1SBfVt4GBCoyFGpjb-Y7dt4uDsbhZFPbkY-rBVNgZsgo';
 
@@ -47,124 +32,6 @@ const persicopeRegex = new RegExp('periscope', 'gi');
 
 const isPericope = (video) => {
   return persicopeRegex.test(video.Link);
-};
-
-const VideoCard = ({ video }) => {
-  const [ref, inView] = useInView({ threshold: 0 });
-  const [videoLink, setVideoLink] = useState(video.Link);
-  const youRegex = new RegExp('youtu', 'gi');
-  const faceRegex = new RegExp('facebook.com', 'gi');
-  const fbRegex = new RegExp('fb.watch', 'gi');
-  const linkRegex = new RegExp('http', 'gi');
-
-  const videos = [
-    video.Link,
-    video.Notes,
-    video['Notes 1'],
-    video['Notes 2'],
-    video['Notes 3'],
-    video['Notes 4'],
-  ].filter((value) => linkRegex.test(value));
-
-  const isFacebook = faceRegex.test(videoLink) || fbRegex.test(videoLink);
-
-  const isYoutube = youRegex.test(videoLink);
-  const [oembed, setOembed] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchYoutubeOembed = async () => {
-      const [url] = videoLink.split('/').slice(-1);
-
-      try {
-        const oemebedDetails = await axios.get(
-          `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${url}&format=json`
-        );
-        setOembed(oemebedDetails);
-      } catch (err) {
-        if (err?.response?.status !== 400) {
-          console.log(err);
-        }
-      }
-    };
-
-    const fetchFacebookOembed = () => {
-      const oembedDetails = {
-        data: { provider_name: 'Facebook', href: videoLink },
-      };
-      setOembed(oembedDetails);
-    };
-
-    if (inView) {
-      const timeout = setTimeout(() => {
-        if (isYoutube && (!oembed || loading)) {
-          fetchYoutubeOembed();
-          setLoading(false);
-        }
-
-        if (isFacebook && (!oembed || loading)) {
-          fetchFacebookOembed();
-          setLoading(false);
-        }
-      }, 500);
-      return () => clearTimeout(timeout);
-    }
-
-    return undefined;
-  }, [isYoutube, isFacebook, videoLink, oembed, inView, setLoading, loading]);
-
-  return (
-    <Flex flexDirection="column" ref={ref}>
-      <Card
-        image={oembed?.data && !loading ? <Embed embed={oembed?.data} /> : null}
-        videoContent={
-          <>
-            <Heading as="h2" fontFamily="body" textAlign="center" fontSize="xl">
-              {video['Team 1']} vs {video['Team 2']}
-            </Heading>
-            <Text fontWeight="bold" textAlign="center">
-              {video.Score}
-            </Text>
-            <Table variant="unstyled" mx={0}>
-              <Tbody>
-                <Tr>
-                  <Td fontWeight="bold" py={0} px={2}>
-                    Tournament
-                  </Td>
-                  <Td py={0} px={2}>
-                    {video.Tournament}
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td fontWeight="bold" py={0} px={2}>
-                    Credit
-                  </Td>
-                  <Td py={0} px={2}>
-                    {video.Credit}
-                  </Td>
-                </Tr>
-              </Tbody>
-            </Table>
-            {videos.length !== 1 && (
-              <Stack direction="row" spacing={2} pt={2}>
-                {videos.map((videoLink, i) => (
-                  <Button
-                    onClick={() => {
-                      setLoading(true);
-                      setVideoLink(videoLink);
-                    }}
-                    key={`video-link-${videoLink}`}
-                  >
-                    Link {i + 1}
-                  </Button>
-                ))}
-              </Stack>
-            )}
-          </>
-        }
-      />
-    </Flex>
-  );
 };
 
 const handleSearchSubmit = async ({ values, setData }) => {
