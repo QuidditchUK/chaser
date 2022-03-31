@@ -36,6 +36,9 @@ const HorizontalCard = dynamic(() =>
 const EdiCommitteeForm = dynamic(() =>
   import('components/prismic/forms/edi-committee-form')
 );
+const SchedulerFeed = dynamic(() =>
+  import('components/prismic/scheduler-feed')
+);
 
 const slices = {
   video_hero_with_cta: HomeHero,
@@ -54,6 +57,7 @@ const slices = {
   national_team_form: NationalTeamForm,
   horizontal_card: HorizontalCard,
   edi_committee_form: EdiCommitteeForm,
+  scheduler_feed: SchedulerFeed,
 };
 
 function PrismicSlice({ sections, posts }) {

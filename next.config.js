@@ -64,7 +64,11 @@ const moduleExports = {
     ];
   },
   images: {
-    domains: ['images.prismic.io', 'chaser.cdn.prismic.io'],
+    domains: [
+      'images.prismic.io',
+      'chaser.cdn.prismic.io',
+      'qs-prod-team-logo.s3.eu-west-2.amazonaws.com',
+    ],
   },
   webpack: (config) => {
     config.module.rules.push({
