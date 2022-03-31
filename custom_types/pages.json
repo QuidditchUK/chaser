@@ -518,6 +518,18 @@
                   "label": "variant"
                 }
               },
+              "size": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "sm",
+                    "md",
+                    "full"
+                  ],
+                  "default_value": "sm",
+                  "label": "size"
+                }
+              },
               "content": {
                 "type": "StructuredText",
                 "config": {

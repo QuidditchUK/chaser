@@ -1,5 +1,4 @@
 import { RichText } from 'prismic-reactjs';
-import get from 'just-safe-get';
 import dynamic from 'next/dynamic';
 import { Box, Grid, Heading } from '@chakra-ui/react';
 
@@ -60,16 +59,11 @@ export const Item = ({ embed, support }) => (
   </Box>
 );
 
-const EmbedSlice = (rawData) => {
-  const title = get(rawData, 'primary.title');
-  const content = get(rawData, 'primary.content');
-  const items = get(rawData, 'items');
-  const variant = get(rawData, 'primary.variant');
-
-  const multipleEmbeds = items.length > 1;
+const EmbedSlice = ({ primary, items }) => {
+  const { title, content, variant, size = 'sm' } = primary;
 
   return (
-    <Slice variant={variant} size={multipleEmbeds ? 'md' : 'sm'}>
+    <Slice variant={variant} size={size}>
       {RichText.asText(title) && (
         <Heading as="h2" fontSize="xl" mt={2} textAlign="center">
           {RichText.asText(title)}
@@ -85,16 +79,17 @@ const EmbedSlice = (rawData) => {
       <Grid
         gridTemplateColumns={{
           base: '1fr',
-          md: `${multipleEmbeds ? '1fr 1fr' : '1fr'}`,
+          md: `${size === 'md' ? '1fr 1fr' : '1fr'}`,
         }}
         gridGap={{ base: 4, md: 9 }}
       >
-        {items.map((itemData, i) => {
-          const embed = get(itemData, 'embed');
-          const support = get(itemData, 'support');
-
+        {items.map((item, i) => {
           return (
-            <Item key={`embed-slice-${i}`} embed={embed} support={support} />
+            <Item
+              key={`embed-slice-${i}`}
+              embed={item?.embed}
+              support={item?.support}
+            />
           );
         })}
       </Grid>
