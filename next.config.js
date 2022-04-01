@@ -68,6 +68,7 @@ const moduleExports = {
       'images.prismic.io',
       'chaser.cdn.prismic.io',
       'qs-prod-team-logo.s3.eu-west-2.amazonaws.com',
+      'qs-staging-team-logo.s3.eu-west-2.amazonaws.com',
     ],
   },
   webpack: (config) => {

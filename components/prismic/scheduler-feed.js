@@ -14,13 +14,15 @@ const Slice = dynamic(() => import('components/shared/slice'));
 const SchedulerFeed = ({ primary }) => {
   const { scheduler_url } = primary;
 
-  // const { data } = useQuery(scheduler_url, () => axios.get(scheduler_url), {
-  //   refetchInterval: 300000 // 5 minute refetch
-  // });
+  const { data } = useQuery(
+    scheduler_url,
+    () => axios.get(scheduler_url?.url),
+    {
+      refetchInterval: 300000, // 5 minute refetch
+    }
+  );
 
-  const data = schedulerMock;
-
-  const grouped = groupBy(data, (game) => game?.timeslot?.time);
+  const grouped = groupBy(data?.data, (game) => game?.timeslot?.time);
 
   return (
     <Slice variant="light" size="sm">
@@ -58,13 +60,15 @@ const SchedulerFeed = ({ primary }) => {
                     alignItems="center"
                   >
                     <Box h="50px" w="50px">
-                      <Image
-                        src={game?.teamA?.logoUrl}
-                        alt={game?.teamA?.name}
-                        height="50px"
-                        width="50px"
-                        layout="responsive"
-                      />
+                      {game?.teamA?.logoUrl && (
+                        <Image
+                          src={game?.teamA?.logoUrl}
+                          alt={game?.teamA?.name}
+                          height="50px"
+                          width="50px"
+                          layout="responsive"
+                        />
+                      )}
                     </Box>
                     <Text fontWeight="bold" fontSize={{ base: 'sm', md: 'md' }}>
                       {game?.teamA?.name}
@@ -115,13 +119,15 @@ const SchedulerFeed = ({ primary }) => {
                       flexDirection="column"
                       justifySelf="flex-end"
                     >
-                      <Image
-                        src={game?.teamB?.logoUrl}
-                        alt={game?.teamB?.name}
-                        height="50px"
-                        width="50px"
-                        layout="responsive"
-                      />
+                      {game?.teamB?.logoUrl && (
+                        <Image
+                          src={game?.teamB?.logoUrl}
+                          alt={game?.teamB?.name}
+                          height="50px"
+                          width="50px"
+                          layout="responsive"
+                        />
+                      )}
                     </Flex>
                   </Grid>
                 </Grid>
