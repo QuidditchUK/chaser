@@ -1,7 +1,7 @@
 export const MAIN_NAVIGATION = [
   {
-    label: 'COVID',
-    href: '/covid',
+    label: 'BQC 2022 Live',
+    href: '/live',
   },
   {
     label: 'About',
@@ -26,6 +26,10 @@ export const MAIN_NAVIGATION = [
       {
         label: 'Minutes',
         href: '/about/minutes',
+      },
+      {
+        label: 'COVID',
+        href: '/covid',
       },
     ],
   },
