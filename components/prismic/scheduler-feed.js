@@ -60,10 +60,11 @@ const SchedulerFeed = ({ primary }) => {
   );
 
   const grouped = groupBy(data?.data, (game) => game?.timeslot?.time);
+  const groupedOrder = orderBy(Object.keys(grouped), (group) => group);
 
   return (
     <Slice variant="light" size="sm">
-      {Object.keys(grouped).map((k) => {
+      {groupedOrder.map((k) => {
         const items = grouped[k];
 
         const orderedByPitch = orderBy(items, ({ pitch }) => pitch);
