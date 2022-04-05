@@ -59,7 +59,7 @@ const SchedulerFeed = ({ primary }) => {
     }
   );
 
-  const grouped = groupBy(data, (game) => game?.timeslot?.time);
+  const grouped = groupBy(data?.data, (game) => game?.timeslot?.time);
 
   return (
     <Slice variant="light" size="sm">
