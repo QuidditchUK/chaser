@@ -51,9 +51,13 @@ const LinkWrapper = ({ href, ...props }) => (
 const SchedulerFeed = ({ primary }) => {
   const { scheduler_url } = primary;
 
-  const { data } = useQuery(scheduler_url, () => axios.get(scheduler_url), {
-    refetchInterval: 300000, // 5 minute refetch
-  });
+  const { data } = useQuery(
+    scheduler_url?.url,
+    () => axios.get(scheduler_url?.url),
+    {
+      refetchInterval: 300000, // 5 minute refetch
+    }
+  );
 
   const grouped = groupBy(data, (game) => game?.timeslot?.time);
 
