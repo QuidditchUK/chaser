@@ -115,9 +115,10 @@ const SchedulerFeed = ({ primary }) => {
                     </Text>
                   </Flex>
 
-                  <Grid gridTemplateColumns="1fr auto 1fr" gridGap={4}>
+                  <Grid gridTemplateColumns="1fr 1fr 1fr" gridGap={4}>
                     <Grid
-                      gridTemplateColumns={{ base: 'auto', md: '50px auto' }}
+                      gridTemplateColumns={{ base: '1fr', md: '50px auto' }}
+                      gridTemplateRows={{ base: '50px auto', md: 'auto' }}
                       gridGap={2}
                       alignItems="center"
                     >
@@ -162,6 +163,7 @@ const SchedulerFeed = ({ primary }) => {
 
                     <Grid
                       gridTemplateColumns={{ base: '1fr', md: 'auto 50px' }}
+                      gridTemplateRows={{ base: '50px auto', md: 'auto' }}
                       gridGap={2}
                       gridTemplateAreas={{
                         base: "'logo' 'name'",
