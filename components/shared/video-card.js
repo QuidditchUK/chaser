@@ -37,7 +37,7 @@ export const ContentBox = (props) => (
   />
 );
 
-const Card = ({ image, content }) => (
+const Card = ({ embed, content }) => (
   <Box
     as="article"
     borderRadius="lg"
@@ -45,6 +45,7 @@ const Card = ({ image, content }) => (
     flexDirection="column"
     flexGrow="1"
     overflow="hidden"
+    bg="white"
   >
     <Box
       position="relative"
@@ -52,16 +53,7 @@ const Card = ({ image, content }) => (
       width={{ base: '100%', md: 'auto' }}
       overflow="hidden"
     >
-      {image?.src && (
-        <Image
-          src={image?.src}
-          alt={image?.alt}
-          layout="responsive"
-          objectFit="cover"
-          width={640}
-          height={360}
-        />
-      )}
+      {embed}
     </Box>
     <ContentBox
       py={5}
@@ -150,7 +142,7 @@ const VideoCard = ({ video }) => {
   return (
     <Flex flexDirection="column" ref={ref}>
       <Card
-        image={oembed?.data && !loading ? <Embed embed={oembed?.data} /> : null}
+        embed={oembed?.data && !loading ? <Embed embed={oembed?.data} /> : null}
         content={
           <>
             <Heading as="h2" fontFamily="body" textAlign="center" fontSize="xl">
