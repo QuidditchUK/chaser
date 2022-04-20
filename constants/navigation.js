@@ -1,9 +1,5 @@
 export const MAIN_NAVIGATION = [
   {
-    label: 'BQC 2022 Live',
-    href: '/live',
-  },
-  {
     label: 'About',
     path: '/about',
     children: [
