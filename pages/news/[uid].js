@@ -31,9 +31,15 @@ const Post = ({ page: initialPage, preview }) => {
 
   const page = preview ? initialPage : queryData;
 
+  const metaData = {
+    description: page?.data?.meta_description,
+    subTitle: page?.data?.meta_title || page?.data?.title,
+    image: page?.data?.meta_image.url || page?.data?.image?.url,
+  };
+
   return (
     <>
-      <Meta {...formatMetadata(page.data)} />
+      <Meta {...metaData} />
       <SchemaArticle page={page} />
       <article>
         <NewsHero {...page.data} />
