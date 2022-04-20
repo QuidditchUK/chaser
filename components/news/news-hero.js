@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import get from 'just-safe-get';
 import Image from 'next/image';
 
 import { rem } from 'styles/theme';
@@ -26,11 +25,7 @@ const Tag = (props) => (
   />
 );
 
-const NewsHero = (rawData) => {
-  const title = get(rawData, 'title');
-  const image = get(rawData, 'image');
-  const category = get(rawData, 'category');
-
+const NewsHero = ({ title, image, category }) => {
   return (
     <>
       <Box

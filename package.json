@@ -17,7 +17,6 @@
     "flickity": "^2.2.1",
     "framer-motion": "^4.1.2",
     "js-cookie": "^3.0.0",
-    "just-safe-get": "2.1.2",
     "lodash": "^4.17.21",
     "luxon": "^2.3.1",
     "next": "^12.1.1",

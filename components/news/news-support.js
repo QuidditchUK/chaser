@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import get from 'just-safe-get';
 import format from 'date-fns/format';
 import { Box, Flex, Text, Link as ChakraLink } from '@chakra-ui/react';
 
@@ -25,16 +24,11 @@ const Icon = (props) => (
   <Box color="greyDark" _hover={{ color: 'qukBlue' }} {...props} />
 );
 
-const NewsSupport = (rawData) => {
+const NewsSupport = ({ author, date, title, tags }) => {
   const SITE_URL = 'https://quidditchuk.org';
 
   const router = useRouter();
   const url = `${SITE_URL}${router.asPath}`;
-
-  const author = get(rawData, 'author');
-  const date = get(rawData, 'date');
-  const title = get(rawData, 'title');
-  const tags = get(rawData, 'tags');
 
   return (
     <>

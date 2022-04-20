@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
-import get from 'just-safe-get';
 
 import { buttonVariants } from 'components/shared/slice';
 import { Grid, Flex, Heading, Box } from '@chakra-ui/react';
@@ -70,31 +69,17 @@ const Item = ({ item, isImageLeft }) => (
   </Grid>
 );
 
-const ImageAndContent = (rawData) => {
-  const items = get(rawData, 'items');
-
+const ImageAndContent = ({ items }) => {
   return (
     <>
-      {items.map((itemData, i) => {
-        const item = {
-          title: get(itemData, 'title'),
-          content: get(itemData, 'content'),
-          image: get(itemData, 'image'),
-          variant: get(itemData, 'variant'),
-          layout: get(itemData, 'layout_content'),
-          support: get(itemData, 'support'),
-          cta_text: get(itemData, 'cta_text'),
-          cta_url: get(itemData, 'cta_url'),
-        };
-
-        const isImageLeft = item.layout === 'image-left';
-
-        return (
-          <Slice variant={item.variant} key={`image-and-content-${i}`}>
-            <Item item={item} isImageLeft={isImageLeft} />
-          </Slice>
-        );
-      })}
+      {items.map((item, i) => (
+        <Slice variant={item.variant} key={`image-and-content-${i}`}>
+          <Item
+            item={item}
+            isImageLeft={item.layout_content === 'image-left'}
+          />
+        </Slice>
+      ))}
     </>
   );
 };

@@ -1,4 +1,3 @@
-import get from 'just-safe-get';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -16,11 +15,9 @@ const handleFindQuidditch = async ({ postcode }, router) => {
   window.scrollTo(0, 0);
 };
 
-const FindQuidditch = (rawData) => {
+const FindQuidditch = ({ primary }) => {
   const router = useRouter();
-  const title = get(rawData, 'primary.title');
-  const image = get(rawData, 'primary.image');
-  const variant = get(rawData, 'primary.variant');
+  const { title, image, variant } = primary;
 
   const { register, handleSubmit } = useForm({
     defaultValues: { postcode: '' },

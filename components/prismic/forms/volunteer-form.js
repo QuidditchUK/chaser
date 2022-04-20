@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
-import get from 'just-safe-get';
 
 import { Grid, Flex, Heading, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
@@ -51,7 +50,7 @@ const handleVolunteerSubmit = async (
   }
 };
 
-const VolunteerForm = (rawData) => {
+const VolunteerForm = ({ primary }) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
@@ -67,13 +66,10 @@ const VolunteerForm = (rawData) => {
   });
 
   const { isSubmitting } = formState;
-
-  const data = {
-    variant: get(rawData, 'primary.variant'),
-  };
+  const { variant } = primary;
 
   return (
-    <Slice variant={data.variant}>
+    <Slice variant={variant}>
       <Heading as="h1" fontFamily="body" textAlign="center">
         Apply to Volunteer
       </Heading>
@@ -159,7 +155,7 @@ const VolunteerForm = (rawData) => {
 
           <Button
             type="submit"
-            variant={buttonVariants[data.variant]}
+            variant={buttonVariants[variant]}
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Submitting' : 'Apply'}

@@ -5,7 +5,6 @@ import isFuture from 'date-fns/isFuture';
 import differenceInDays from 'date-fns/differenceInDays';
 import { RichText } from 'prismic-reactjs';
 import { useQuery } from 'react-query';
-import get from 'just-safe-get';
 import { linkResolver, getDocs, getPrismicDocByUid } from 'modules/prismic';
 
 import {
@@ -52,7 +51,7 @@ const EventPage = ({ page: initialPage, preview }) => {
     return <Page404 />;
   }
 
-  const event = get(page, 'data');
+  const { data: event } = page;
 
   return (
     <>

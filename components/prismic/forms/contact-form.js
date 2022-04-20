@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import get from 'just-safe-get';
 import { Grid, Flex, Heading, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 import { buttonVariants } from 'components/shared/slice';
@@ -51,7 +50,7 @@ const handleContactSubmit = async (
   }
 };
 
-const ContactForm = (rawData) => {
+const ContactForm = ({ primary }) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
@@ -67,8 +66,7 @@ const ContactForm = (rawData) => {
   });
 
   const { isSubmitting } = formState;
-
-  const variant = get(rawData, 'primary.variant');
+  const { variant } = primary;
 
   return (
     <Slice variant={variant}>

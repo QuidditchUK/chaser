@@ -1,11 +1,9 @@
-import get from 'just-safe-get';
 import Image from 'next/image';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 
-const Hero = (rawData) => {
-  const title = get(rawData, 'primary.slug');
-  const image = get(rawData, 'primary.image');
+const Hero = ({ primary }) => {
+  const { slug, image } = primary;
 
   return (
     <Box
@@ -18,8 +16,8 @@ const Hero = (rawData) => {
       minHeight={HERO_MIN_HEIGHTS}
     >
       <Image
-        src={image.url}
-        alt={image.alt}
+        src={image?.url}
+        alt={image?.alt}
         layout="fill"
         objectPosition="center center"
         objectFit="cover"
@@ -36,7 +34,7 @@ const Hero = (rawData) => {
           color="white"
           textShadow="lg"
         >
-          {title}
+          {slug}
         </Heading>
       </Flex>
     </Box>

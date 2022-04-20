@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import get from 'just-safe-get';
 import { Grid, Flex, Heading, Switch, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
@@ -54,7 +53,7 @@ const handleCommitteeSubmit = async (
   }
 };
 
-const EDICommitteeForm = (rawData) => {
+const EDICommitteeForm = ({ primary }) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
@@ -71,8 +70,7 @@ const EDICommitteeForm = (rawData) => {
   });
 
   const { isSubmitting } = formState;
-
-  const variant = get(rawData, 'primary.variant');
+  const { variant } = primary;
 
   return (
     <Slice variant={variant}>

@@ -1,5 +1,4 @@
 import { RichText, Link } from 'prismic-reactjs';
-import get from 'just-safe-get';
 import { cardVariants } from 'components/shared/slice';
 import dynamic from 'next/dynamic';
 
@@ -13,12 +12,8 @@ const HorizontalScrollWrapper = dynamic(() =>
 
 import { linkResolver } from 'modules/prismic';
 
-const CardsSlice = (rawData) => {
-  const title = get(rawData, 'primary.title');
-  const content = get(rawData, 'primary.content');
-  const variant = get(rawData, 'primary.variant');
-  const items = get(rawData, 'items') || [];
-  const horizontalScroll = get(rawData, 'primary.horizontalScroll');
+const CardsSlice = ({ primary = {}, items = [] }) => {
+  const { title, content, variant, horizontalScroll } = primary;
 
   return (
     <Slice

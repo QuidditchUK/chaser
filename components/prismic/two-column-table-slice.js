@@ -1,5 +1,4 @@
 import { RichText } from 'prismic-reactjs';
-import get from 'just-safe-get';
 import dynamic from 'next/dynamic';
 
 import {
@@ -25,12 +24,8 @@ const Th = (props) => (
   />
 );
 
-const TwoColumnTable = (rawData) => {
-  const title = get(rawData, 'primary.title');
-  const columnOneTitle = get(rawData, 'primary.column_one_title');
-  const columnTwoTitle = get(rawData, 'primary.column_two_title');
-  const variant = get(rawData, 'primary.variant');
-  const items = get(rawData, 'items');
+const TwoColumnTable = ({ primary, items }) => {
+  const { title, column_one_title, column_two_title, variant } = primary;
 
   return (
     <Slice variant={variant} size="sm">
@@ -48,14 +43,14 @@ const TwoColumnTable = (rawData) => {
                 variant === 'light' || variant === 'white' ? 'inherit' : 'white'
               }
             >
-              {RichText.asText(columnOneTitle)}
+              {RichText.asText(column_one_title)}
             </Th>
             <Th
               color={
                 variant === 'light' || variant === 'white' ? 'inherit' : 'white'
               }
             >
-              {RichText.asText(columnTwoTitle)}
+              {RichText.asText(column_two_title)}
             </Th>
           </Tr>
         </Thead>

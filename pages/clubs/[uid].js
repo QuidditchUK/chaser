@@ -2,7 +2,7 @@ import { RichText } from 'prismic-reactjs';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { useQuery } from 'react-query';
-import get from 'just-safe-get';
+
 import {
   linkResolver,
   getDocs,
@@ -87,7 +87,7 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
     return <Page404 />;
   }
 
-  const club = get(page, 'data');
+  const { data: club } = page;
 
   return (
     <>

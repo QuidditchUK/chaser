@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import get from 'just-safe-get';
 import { useForm } from 'react-hook-form';
 
 import { Flex, Box, Heading } from '@chakra-ui/react';
@@ -20,16 +19,13 @@ const Video = (props) => (
   <Box as="video" w="121%" minH="100%" objectFit="cover" {...props} />
 );
 
-const HomeHero = (rawData) => {
+const HomeHero = ({ primary }) => {
   const router = useRouter();
   const { register, handleSubmit } = useForm({
     defaultValues: { postcode: '' },
   });
 
-  const title = get(rawData, 'primary.slug');
-  const cta_text = get(rawData, 'primary.cta_text');
-  const video = get(rawData, 'primary.video_url.url');
-  const poster = get(rawData, 'primary.poster.url');
+  const { slug, cta_text, video_url, poster } = primary;
 
   return (
     <Box
@@ -41,8 +37,8 @@ const HomeHero = (rawData) => {
     >
       <Box minHeight={HERO_MIN_HEIGHTS} position="absolute">
         <Video
-          src={video}
-          poster={poster}
+          src={video_url?.url}
+          poster={poster?.url}
           preload="metadata"
           zIndex="0"
           autoPlay
@@ -67,7 +63,7 @@ const HomeHero = (rawData) => {
           textShadow="lg"
           id="home_hero_label" // FOR CAPE MODE
         >
-          {title}
+          {slug}
         </Heading>
 
         <form

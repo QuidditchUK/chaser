@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import { RichText, Link } from 'prismic-reactjs';
-import get from 'just-safe-get';
 import { cardVariants } from 'components/shared/slice';
 
 import { Heading, Flex } from '@chakra-ui/react';
@@ -12,11 +11,8 @@ const HorizontalCard = dynamic(() =>
 const Slice = dynamic(() => import('components/shared/slice'));
 const Content = dynamic(() => import('components/shared/content'));
 
-const HorizontalCardsSlice = (rawData) => {
-  const title = get(rawData, 'primary.title');
-  const content = get(rawData, 'primary.content');
-  const variant = get(rawData, 'primary.variant');
-  const items = get(rawData, 'items');
+const HorizontalCardsSlice = ({ primary, items }) => {
+  const { title, content, variant } = primary;
 
   return (
     <Slice variant={variant} px={{ base: 4, sm: 8, md: 9 }}>
