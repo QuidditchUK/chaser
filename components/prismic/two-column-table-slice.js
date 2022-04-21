@@ -57,7 +57,7 @@ const TwoColumnTable = ({ primary, items }) => {
 
         <Tbody>
           {items.map((item, i) => (
-            <Tr key={`${columnOneTitle}_${columnTwoTitle}_${i}`}>
+            <Tr key={`${column_one_title}_${column_two_title}_${i}`}>
               <Td>{RichText.asText(item.column_one)}</Td>
               <Td>{RichText.asText(item.column_two)}</Td>
             </Tr>
