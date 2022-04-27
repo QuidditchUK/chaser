@@ -32,7 +32,7 @@ const Hero = ({ primary }) => {
         <Heading
           fontSize={{ base: '4xl', md: '7xl' }}
           color="white"
-          textShadow="lg"
+          textShadow="0 0 10px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.4)"
         >
           {slug}
         </Heading>

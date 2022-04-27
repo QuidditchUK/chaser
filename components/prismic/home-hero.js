@@ -60,7 +60,7 @@ const HomeHero = ({ primary }) => {
           mt={0}
           mb={8}
           color="white"
-          textShadow="lg"
+          textShadow="0 0 10px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.4)"
           id="home_hero_label" // FOR CAPE MODE
         >
           {slug}

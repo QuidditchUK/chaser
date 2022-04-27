@@ -25,6 +25,7 @@ const CardsSlice = ({ primary = {}, items = [] }) => {
           as="h2"
           mt={2}
           textAlign="center"
+          fontSize={{ base: '2xl', md: '3xl' }}
           px={horizontalScroll ? { base: 4, sm: 8, md: 9 } : { base: 0, md: 9 }}
         >
           {RichText.asText(title)}

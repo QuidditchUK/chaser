@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import format from 'date-fns/format';
 import dynamic from 'next/dynamic';
-import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
+import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 import { TYPES } from 'components/clubsEvents/league-type';
 import { useBreakpoint } from 'hooks/media';
 import base, { rem } from 'styles/theme';
@@ -17,13 +17,11 @@ import base, { rem } from 'styles/theme';
 const Type = dynamic(() => import('components/clubsEvents/league-type'));
 const Image = dynamic(() => import('components/shared/image'));
 const Carousel = dynamic(() => import('components/shared/carousel'));
-const PinIcon = dynamic(() => import('public/images/location-pin.svg'));
 
 const HeroWithLocation = ({
   images,
   leagues,
   featuredColor,
-  textColor,
   icon,
   title,
   coordinates,
@@ -37,8 +35,8 @@ const HeroWithLocation = ({
       <Box
         as="section"
         position="relative"
-        bg="greyLight"
-        minHeight={BLOG_MIN_HEIGHTS}
+        bg="gray.800"
+        minHeight={HERO_MIN_HEIGHTS}
       >
         {isDesktop && images.length > 1 && (
           <Grid
@@ -72,10 +70,21 @@ const HeroWithLocation = ({
           </Grid>
         )}
 
-        {isDesktop && images.length <= 1 && (
-          <Carousel images={images} width="600" height="175" priority={true} />
+        {images.length <= 1 && (
+          <Image
+            src={images[0].image?.url}
+            alt={images[0].image?.alt}
+            layout="fill"
+            objectPosition="center center"
+            objectFit="cover"
+            priority={true}
+            borderRadius="0"
+          />
         )}
-        {!isDesktop && <Carousel images={images} width="600" height="375" />}
+
+        {!isDesktop && images.length > 1 && (
+          <Carousel images={images} width="600" height="375" />
+        )}
 
         <Box
           position="absolute"
@@ -95,43 +104,39 @@ const HeroWithLocation = ({
             </Type>
           ))}
         </Box>
-      </Box>
-      <Box
-        as="section"
-        position="relative"
-        bg={featuredColor}
-        color={textColor}
-        px={{ base: 4, sm: 8, md: 9 }}
-        py="0"
-        height="130px"
-      >
-        <Flex
-          justifyContent="flex-start"
+
+        <Grid
+          position="absolute"
+          bottom="0"
+          width="100%"
+          as="section"
+          bgGradient={`linear(to-t, ${featuredColor}, rgba(0, 0, 0, 0))`}
+          color="white"
+          px={{ base: 4, sm: 8, md: 9 }}
+          py={4}
+          gridGap={{ base: 4, md: 8 }}
+          gridTemplateColumns={{ base: '100px auto', md: '150px auto' }}
           alignItems="center"
-          position="relative"
-          top={{ base: 0, md: '-65px' }}
         >
-          <Box maxWidth={{ base: '130px', md: '260px' }} p={4}>
-            <ChakraImage src={icon?.url} alt={`${title} logo`} width="100%" />
-          </Box>
+          <ChakraImage src={icon?.url} alt={`${title} logo`} width="100%" />
+
           <Flex flexDirection="column">
             <Heading
               as="h2"
               py="0"
-              my="0"
-              fontSize={{ base: '2xl', md: '4xl' }}
+              mt="0"
+              mb="1"
+              fontSize={{ base: '3xl', md: '5xl' }}
+              textShadow="0 0 10px rgb(0,0,0)"
             >
               {title}
             </Heading>
 
             <Flex alignItems="center">
-              <ChakraImage as={PinIcon} height="15px" width="15px" />{' '}
               <ChakraLink
-                p={1}
-                textDecoration="none"
-                _hover={{ textDecoration: 'none' }}
-                color={textColor}
-                borderBottom={`2px dotted ${textColor}`}
+                textDecoration="underline"
+                textShadow="0 0 10px rgb(0,0,0)"
+                color="white"
                 href={`https://www.google.com/maps/search/?api=1&query=${coordinates?.latitude},${coordinates?.longitude}`}
                 rel="noopener noreferrer"
                 target="_blank"
@@ -141,17 +146,23 @@ const HeroWithLocation = ({
             </Flex>
 
             {startDate && (
-              <Text as="span" fontWeight="bold" color="white" pt={2}>
+              <Text
+                as="span"
+                fontWeight="bold"
+                color="white"
+                pt={2}
+                textShadow="0 0 10px rgb(0,0,0)"
+              >
                 {!!startDate && (
                   <>{format(new Date(startDate), 'MMMM d, yyyy')} </>
                 )}
                 {startDate !== endDate && !!endDate && (
-                  <> - {format(new Date(endDate), 'MMMM d, yyyy')}</>
+                  <> — {format(new Date(endDate), 'MMMM d, yyyy')}</>
                 )}
               </Text>
             )}
           </Flex>
-        </Flex>
+        </Grid>
       </Box>
     </>
   );

@@ -103,7 +103,6 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
         title={club.club_name}
         venue={club.venue}
         featuredColor={club.featured_color}
-        textColor={club.text_color}
         icon={club.icon}
         leagues={[club.league]}
         coordinates={club.coordinates}
