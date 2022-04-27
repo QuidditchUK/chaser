@@ -126,7 +126,7 @@ const HeroWithLocation = ({
               py="0"
               mt="0"
               mb="1"
-              fontSize={{ base: '3xl', md: '5xl' }}
+              fontSize={{ base: '2xl', md: '5xl' }}
               textShadow="0 0 10px rgb(0,0,0)"
             >
               {title}
