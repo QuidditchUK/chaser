@@ -40,29 +40,33 @@ const HeroWithLocation = ({
       >
         {isDesktop && images.length > 1 && (
           <Grid
-            templateColumns="2fr 1fr 1fr"
+            gridTemplateColumns="2fr 1fr 1fr"
             templateRows="1fr 1fr"
             gap={4}
             p={4}
+            width="100%"
+            height={HERO_MIN_HEIGHTS}
           >
             {images.map(({ image }, i) => {
               const isFirst = i === 0;
-              const width = isFirst ? 1000 : 500;
-              const height = isFirst ? 730 : 350;
 
               return (
                 <Box
                   key={`hero-image-${image.url}-${i}`}
                   gridColumn={isFirst ? 1 : null}
                   gridRow={isFirst ? '1 / span 2' : null}
+                  width="100%"
+                  height="100%"
+                  position="relative"
                 >
                   <Image
                     priority={isFirst}
                     src={image.url}
-                    fill="responsive"
-                    width={width}
-                    height={height}
+                    layout="fill"
+                    width="100%"
+                    height="100%"
                     alt={image.alt}
+                    objectFit="cover"
                   />
                 </Box>
               );
