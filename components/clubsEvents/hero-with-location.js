@@ -115,7 +115,7 @@ const HeroWithLocation = ({
           px={{ base: 4, sm: 8, md: 9 }}
           py={4}
           gridGap={{ base: 4, md: 8 }}
-          gridTemplateColumns={{ base: '100px auto', md: '150px auto' }}
+          gridTemplateColumns={{ base: '80px auto', md: '150px auto' }}
           alignItems="center"
         >
           <ChakraImage src={icon?.url} alt={`${title} logo`} width="100%" />
