@@ -8,6 +8,9 @@ import { linkResolver, getDocs, getPrismicDocByUid } from 'modules/prismic';
 import { Box, Grid, Heading } from '@chakra-ui/react';
 import { TYPES } from 'components/clubsEvents/league-type';
 import PrismicSlice from 'components/prismic';
+import DescriptionList, {
+  Description,
+} from 'components/shared/description-list';
 
 const HeroWithLocation = dynamic(() =>
   import('components/clubsEvents/hero-with-location')
@@ -19,53 +22,6 @@ const Page404 = dynamic(() => import('pages/404'));
 const Meta = dynamic(() => import('components/shared/meta'));
 const PageLoading = dynamic(() => import('components/shared/page-loading'));
 const Content = dynamic(() => import('components/shared/content'));
-
-const dividedCellStyles = {
-  borderTop: '1px solid',
-  borderColor: 'greyLight',
-  paddingBottom: 2,
-  paddingTop: 2,
-  _last: {
-    paddingBottom: 0,
-  },
-};
-
-const DT = (props) => {
-  return (
-    <Box
-      as="dt"
-      fontSize="sm"
-      fontWeight="normal"
-      color="black"
-      margin="0"
-      paddingRight={1}
-      {...dividedCellStyles}
-      {...props}
-    />
-  );
-};
-const DD = (props) => {
-  return (
-    <Box
-      as="dd"
-      fontSize="sm"
-      fontWeight="bold"
-      color="qukBlue"
-      textAlign="right"
-      margin="0"
-      paddingLeft={1}
-      {...dividedCellStyles}
-      {...props}
-    />
-  );
-};
-
-export const Description = ({ term, description }) => (
-  <>
-    <DT>{term}</DT>
-    <DD>{description}</DD>
-  </>
-);
 
 const EventPage = ({ page: initialPage, preview }) => {
   const router = useRouter();
@@ -147,7 +103,7 @@ const EventPage = ({ page: initialPage, preview }) => {
             >
               Registration details
             </Heading>
-            <Box as="dl" m="0" display="grid" gridTemplateColumns="auto auto">
+            <DescriptionList>
               <Description
                 term="QUK Membership Required"
                 description={event.quk_membership_required ? 'Yes' : 'No'}
@@ -171,7 +127,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                 )}
               />
               <Description term="Team Fee" description={`£${event.team_fee}`} />
-            </Box>
+            </DescriptionList>
           </Box>
         </Grid>
       </Slice>

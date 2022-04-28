@@ -25,10 +25,14 @@ import {
   Image as ChakraImage,
   Text,
 } from '@chakra-ui/react';
+import DescriptionList, {
+  Description,
+} from 'components/shared/description-list';
 
 const HeroWithLocation = dynamic(() =>
   import('components/clubsEvents/hero-with-location')
 );
+const Slice = dynamic(() => import('components/shared/slice'));
 const Content = dynamic(() => import('components/shared/content'));
 const SchemaClub = dynamic(() => import('components/clubsEvents/schema-club'));
 const ClubNews = dynamic(() => import('components/clubsEvents/club-news'));
@@ -107,82 +111,102 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
         leagues={[club.league]}
         coordinates={club.coordinates}
       />
+      {!club.active && (
+        <Box width="100%" bg="monarchRed">
+          <Text color="white" textAlign="center">
+            This club is currently inactive, if you are interested in restarting
+            it contact our{' '}
+            <ChakraLink
+              href={`mailto:clubs@quidditchuk.org?subject=${club.name}`}
+              textDecoration="underline"
+            >
+              Clubs Director
+            </ChakraLink>
+          </Text>
+        </Box>
+      )}
 
-      <Box bg="greyLight" py={0} px={0}>
+      <Slice>
         <Grid
-          templateColumns={{ base: '1fr', lg: '3fr 10fr' }}
-          gap={{ base: 4, lg: 9 }}
-          mt={0}
+          gridTemplateColumns={{ base: '1fr', md: '2fr 1fr' }}
+          gridGap={{ base: 4, md: 9 }}
+          mb={{ base: 4, md: 9 }}
         >
-          <Box
-            bg="white"
-            py={{ base: 6, md: 10 }}
-            px={{ base: 4, sm: 8, md: 9 }}
-          >
+          <Box borderRadius="lg" bg="white" p={4}>
             <Heading
               as="h3"
               fontSize="xl"
+              color={club?.featured_color}
+              mt={0}
               fontFamily="body"
-              color={club.featured_color}
+              mb={4}
             >
-              Club Details
+              About {club?.club_name}
+            </Heading>
+            {RichText.asText(club.description) && (
+              <Content color="qukBlue">
+                <RichText
+                  render={club.description}
+                  linkResolver={linkResolver}
+                />
+              </Content>
+            )}
+          </Box>
+
+          <Box borderRadius="lg" bg="white" p={4}>
+            <Heading
+              as="h3"
+              fontSize="xl"
+              color={club?.featured_color}
+              fontFamily="body"
+              mt={0}
+              mb={4}
+            >
+              Club details
             </Heading>
 
-            <Table mx={0} variant="unstyled">
-              <Tbody>
-                {club.trainings && (
-                  <Tr>
-                    <Td fontWeight="bold">Trainings</Td>
-                    <Td>{club.trainings}</Td>
-                  </Tr>
-                )}
+            <DescriptionList>
+              <Description
+                term={club.leader_position}
+                description={club.leader}
+              />
+              {club?.official_website?.url && (
+                <Description
+                  term="Official website"
+                  description={
+                    <ChakraLink
+                      href={club?.official_website?.url}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      color={club.featured_color}
+                      wordBreak="break-all"
+                    >
+                      {club?.official_website?.url}
+                    </ChakraLink>
+                  }
+                />
+              )}
+              {club?.email && (
+                <Description
+                  term="Club email"
+                  description={
+                    <ChakraLink
+                      href={`mailto:${club?.email}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      color={club.featured_color}
+                    >
+                      {club?.email}
+                    </ChakraLink>
+                  }
+                />
+              )}
+              {club?.trainings && (
+                <Description term="Trainings" description={club?.trainings} />
+              )}
+            </DescriptionList>
 
-                <Tr>
-                  <Td fontWeight="bold">League</Td>
-                  <Td>{club.league}</Td>
-                </Tr>
-
-                <Tr>
-                  <Td fontWeight="bold">{club.leader_position}</Td>
-                  <Td>{club.leader}</Td>
-                </Tr>
-
-                {club?.official_website?.url && (
-                  <Tr>
-                    <Td fontWeight="bold">Official Website</Td>
-                    <Td>
-                      <ChakraLink
-                        href={club?.official_website?.url}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        color={club.featured_color}
-                        wordBreak="break-all"
-                      >
-                        {club?.official_website?.url}
-                      </ChakraLink>
-                    </Td>
-                  </Tr>
-                )}
-                {club?.email && (
-                  <Tr>
-                    <Td fontWeight="bold">Email</Td>
-                    <Td>
-                      <ChakraLink
-                        href={`mailto:${club?.email}`}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        color={club.featured_color}
-                        wordBreak="break-all"
-                      >
-                        {club?.email}
-                      </ChakraLink>
-                    </Td>
-                  </Tr>
-                )}
-              </Tbody>
-            </Table>
-
-            <Flex justifyContent={{ base: 'center', md: 'flex-start' }} mt={5}>
+            <Flex justifyContent="center" mt={5}>
               {club?.social_facebook?.url && (
                 <ChakraLink
                   aria-label={`Like ${club.club_name} on Facebook`}
@@ -242,131 +266,96 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
                 </ChakraLink>
               )}
             </Flex>
-
-            {!club.active && (
-              <Text color="greyDark" fontSize="xs">
-                This club is currently inactive, if you are interested in
-                restarting it contact our{' '}
-                <a href={`mailto:teams@quidditchuk.org?subject=${club.name}`}>
-                  Teams Director
-                </a>
-              </Text>
-            )}
-          </Box>
-
-          <Box
-            py={{ base: 3, md: 9 }}
-            pr={{ base: 4, sm: 8, md: 9 }}
-            pl={{ base: 4, sm: 8, md: 0 }}
-          >
-            <Box
-              bg="white"
-              pt={2}
-              pb={4}
-              px={{ base: 4, sm: 8, md: 9 }}
-              borderRadius="md"
-            >
-              <Heading
-                as="h3"
-                fontSize="xl"
-                fontFamily="body"
-                color={club.featured_color}
-              >
-                About {club.club_name}
-              </Heading>
-              {RichText.asText(club.description) && (
-                <Content>
-                  <RichText
-                    render={club.description}
-                    linkResolver={linkResolver}
-                  />
-                </Content>
-              )}
-
-              {!!posts.length && (
-                <>
-                  <Heading
-                    as="h3"
-                    fontSize="xl"
-                    fontFamily="body"
-                    color={club.featured_color}
-                  >
-                    Latest News
-                  </Heading>
-                  <ClubNews
-                    posts={posts}
-                    bgColor={club.featured_color}
-                    color={club.text_color}
-                  />
-                </>
-              )}
-
-              {club.tournament_results.length !== 0 ? (
-                <>
-                  <Heading
-                    as="h3"
-                    fontSize="xl"
-                    fontFamily="body"
-                    color={club.featured_color}
-                  >
-                    Club Achievements
-                  </Heading>
-
-                  <Table variant="striped">
-                    <Thead>
-                      <Tr>
-                        <Th>Position</Th>
-                        <Th>Season</Th>
-                        <Th>Tournament</Th>
-                        <Th>Team</Th>
-                      </Tr>
-                    </Thead>
-
-                    <Tbody bg="gray.50">
-                      {club?.tournament_results?.map((result) => (
-                        <Tr
-                          key={`${club.club_name}_${result.team_name}_${result.tournament_name}_${result.season}`}
-                        >
-                          <Td>
-                            <Flex
-                              direction={{ base: 'column', md: 'row' }}
-                              alignItems="center"
-                            >
-                              {result?.medal_icon?.url && (
-                                <ChakraImage
-                                  src={result.medal_icon.url}
-                                  alt={`Medal: ${
-                                    result.position
-                                  }${formatOrdinals(result.position)} ${
-                                    result.team_name
-                                  } ${result.tournament_name} ${result.season}`}
-                                  height="30px"
-                                  width="30px"
-                                  sx={{
-                                    filter:
-                                      'drop-shadow(0px 0px 2px rgba(0, 0, 0, .3))',
-                                  }}
-                                />
-                              )}
-                              <Box>
-                                {result.position}
-                                {formatOrdinals(result.position)}
-                              </Box>
-                            </Flex>
-                          </Td>
-                          <Td>{result.season}</Td>
-                          <Td>{result.tournament_name}</Td>
-                          <Td>{result.team_name}</Td>
-                        </Tr>
-                      ))}
-                    </Tbody>
-                  </Table>
-                </>
-              ) : null}
-            </Box>
           </Box>
         </Grid>
-      </Box>
+
+        {!!posts.length || club.tournament_results?.length !== 0 ? (
+          <Box bg="white" width="100%" borderRadius="lg" p={4}>
+            {!!posts.length && (
+              <Box mb={4}>
+                <Heading
+                  as="h3"
+                  fontSize="xl"
+                  fontFamily="body"
+                  color={club.featured_color}
+                  mt={0}
+                >
+                  Latest News
+                </Heading>
+                <ClubNews
+                  posts={posts}
+                  bgColor={club.featured_color}
+                  color={club.text_color}
+                />
+              </Box>
+            )}
+
+            {club.tournament_results.length !== 0 ? (
+              <>
+                <Heading
+                  as="h3"
+                  fontSize="xl"
+                  fontFamily="body"
+                  color={club.featured_color}
+                  mt={0}
+                >
+                  Club Achievements
+                </Heading>
+
+                <Table variant="striped">
+                  <Thead>
+                    <Tr>
+                      <Th>Position</Th>
+                      <Th>Season</Th>
+                      <Th>Tournament</Th>
+                      <Th>Team</Th>
+                    </Tr>
+                  </Thead>
+
+                  <Tbody bg="gray.50">
+                    {club?.tournament_results?.map((result) => (
+                      <Tr
+                        key={`${club.club_name}_${result.team_name}_${result.tournament_name}_${result.season}`}
+                      >
+                        <Td>
+                          <Flex
+                            direction={{ base: 'column', md: 'row' }}
+                            alignItems="center"
+                          >
+                            {result?.medal_icon?.url && (
+                              <ChakraImage
+                                src={result.medal_icon.url}
+                                alt={`Medal: ${result.position}${formatOrdinals(
+                                  result.position
+                                )} ${result.team_name} ${
+                                  result.tournament_name
+                                } ${result.season}`}
+                                height="30px"
+                                width="30px"
+                                sx={{
+                                  filter:
+                                    'drop-shadow(0px 0px 2px rgba(0, 0, 0, .3))',
+                                }}
+                              />
+                            )}
+                            <Box>
+                              {result.position}
+                              {formatOrdinals(result.position)}
+                            </Box>
+                          </Flex>
+                        </Td>
+                        <Td>{result.season}</Td>
+                        <Td>{result.tournament_name}</Td>
+                        <Td>{result.team_name}</Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </>
+            ) : null}
+          </Box>
+        ) : null}
+      </Slice>
     </>
   );
 };
