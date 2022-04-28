@@ -132,8 +132,8 @@ const ClubCard = ({
         <Box p={4} position="absolute" right="0">
           <ChakraImage
             id="icon"
-            h="75px"
-            w="75px"
+            h="50px"
+            w="50px"
             src={icon}
             alt={`${title} logo`}
           />
