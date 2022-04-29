@@ -1,8 +1,10 @@
 import { parseCookies } from 'modules/cookies';
 import { getUserScopes, hasScope } from 'modules/scopes';
 
-const isAuthorized = (token, pageScopes) => {
-  if (!token) {
+const isAuthorized = (req, res, pageScopes) => {
+  const { AUTHENTICATION_TOKEN } = parseCookies(req);
+
+  if (!AUTHENTICATION_TOKEN) {
     res.setHeader('location', '/login');
     res.statusCode = 302;
     res.end();
@@ -10,7 +12,7 @@ const isAuthorized = (token, pageScopes) => {
   }
 
   if (pageScopes) {
-    const userScopes = getUserScopes(token);
+    const userScopes = getUserScopes(AUTHENTICATION_TOKEN);
 
     if (!hasScope(pageScopes, userScopes)) {
       res.setHeader('location', '/');

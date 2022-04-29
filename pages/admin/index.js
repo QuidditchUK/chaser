@@ -43,11 +43,11 @@ const Dashboard = ({ scopes }) => {
 };
 
 export const getServerSideProps = async ({ req, res }) => {
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
-
-  if (!isAuthorized(AUTHENTICATION_TOKEN, DASHBOARD_SCOPES)) {
+  if (!isAuthorized(req, res, DASHBOARD_SCOPES)) {
     return { props: {} };
   }
+
+  const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
   const scopes = getUserScopes(AUTHENTICATION_TOKEN);
 

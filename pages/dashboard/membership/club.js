@@ -223,10 +223,11 @@ const ManageClub = ({ user, clubs = [] }) => {
 };
 
 export const getServerSideProps = async ({ req, res }) => {
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
-  if (!isAuthorized(AUTHENTICATION_TOKEN)) {
+  if (!isAuthorized(req, res)) {
     return { props: {} };
   }
+
+  const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
   const { data: clubs } = await api.get('/clubs/search');
   const { data: user } = await api.get('/users/me', {

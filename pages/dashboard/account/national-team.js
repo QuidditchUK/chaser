@@ -39,10 +39,11 @@ const Info = ({ user, events }) => (
 );
 
 export const getServerSideProps = async ({ req, res }) => {
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
-  if (!isAuthorized(AUTHENTICATION_TOKEN)) {
+  if (!isAuthorized(req, res)) {
     return { props: {} };
   }
+
+  const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
   const { data: user } = await api.get('/users/me', {
     headers: {

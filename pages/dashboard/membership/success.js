@@ -71,10 +71,11 @@ const SuccessMembership = ({ product }) => {
 };
 
 export const getServerSideProps = async ({ req, res }) => {
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
-  if (!isAuthorized(AUTHENTICATION_TOKEN)) {
+  if (!isAuthorized(req, res)) {
     return { props: {} };
   }
+
+  const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
   const { data } = await api.get('/products/me', {
     headers: {

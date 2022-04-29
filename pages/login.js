@@ -178,11 +178,10 @@ const Page = () => {
   );
 };
 
-export const getServerSideProps = async (ctx) => {
-  const { AUTHENTICATION_TOKEN } = parseCookies(ctx.req);
+export const getServerSideProps = async ({ req, res }) => {
+  const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
   if (AUTHENTICATION_TOKEN) {
-    const { res } = ctx;
     res.setHeader('location', '/dashboard');
     res.statusCode = 302;
   }

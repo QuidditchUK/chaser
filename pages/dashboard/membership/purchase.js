@@ -51,11 +51,11 @@ const PurchaseMembership = ({ products }) => (
 );
 
 export const getServerSideProps = async ({ req, res }) => {
-  const { AUTHENTICATION_TOKEN, MEMBERSHIP_AGREED } = parseCookies(req);
-
-  if (!isAuthorized(AUTHENTICATION_TOKEN)) {
+  if (!isAuthorized(req, res)) {
     return { props: {} };
   }
+
+  const { AUTHENTICATION_TOKEN, MEMBERSHIP_AGREED } = parseCookies(req);
 
   if (!MEMBERSHIP_AGREED) {
     res.setHeader('location', '/dashboard/membership/manage');
