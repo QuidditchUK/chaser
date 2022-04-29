@@ -2,6 +2,7 @@ import { RichText } from 'prismic-reactjs';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { useQuery } from 'react-query';
+import GoogleMapReact from 'google-map-react';
 
 import {
   linkResolver,
@@ -205,6 +206,27 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
                 <Description term="Trainings" description={club?.trainings} />
               )}
             </DescriptionList>
+
+            <Box width="100%" h="250px" mt={4}>
+              <GoogleMapReact
+                bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_MAPS_API_KEY }}
+                defaultCenter={{
+                  lat: club?.coordinates?.latitude,
+                  lng: club?.coordinates?.longitude,
+                }}
+                defaultZoom={14}
+              >
+                <ChakraImage
+                  src={club?.icon?.url}
+                  alt={`${club?.club_name} logo`}
+                  height="30px"
+                  width="30px"
+                  lat={club?.coordinates?.latitude}
+                  lng={club?.coordinates?.longitude}
+                  transform="translate(-50%, -50%)"
+                />
+              </GoogleMapReact>
+            </Box>
 
             <Flex justifyContent="center" mt={5}>
               {club?.social_facebook?.url && (

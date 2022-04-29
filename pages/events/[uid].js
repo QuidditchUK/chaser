@@ -5,7 +5,8 @@ import { RichText } from 'prismic-reactjs';
 import { useQuery } from 'react-query';
 import { linkResolver, getDocs, getPrismicDocByUid } from 'modules/prismic';
 
-import { Box, Grid, Heading } from '@chakra-ui/react';
+import { Box, Grid, Heading, Image as ChakraImage } from '@chakra-ui/react';
+import GoogleMapReact from 'google-map-react';
 import { TYPES } from 'components/clubsEvents/league-type';
 import PrismicSlice from 'components/prismic';
 import DescriptionList, {
@@ -128,6 +129,27 @@ const EventPage = ({ page: initialPage, preview }) => {
               />
               <Description term="Team Fee" description={`£${event.team_fee}`} />
             </DescriptionList>
+
+            <Box width="100%" h="250px" mt={4}>
+              <GoogleMapReact
+                bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_MAPS_API_KEY }}
+                defaultCenter={{
+                  lat: event?.coordinates?.latitude,
+                  lng: event?.coordinates?.longitude,
+                }}
+                defaultZoom={14}
+              >
+                <ChakraImage
+                  src={event?.icon?.url}
+                  alt={`${event?.event_name} logo`}
+                  height="30px"
+                  width="30px"
+                  lat={event?.coordinates?.latitude}
+                  lng={event?.coordinates?.longitude}
+                  transform="translate(-50%, -50%)"
+                />
+              </GoogleMapReact>
+            </Box>
           </Box>
         </Grid>
       </Slice>
