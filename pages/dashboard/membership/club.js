@@ -26,8 +26,6 @@ const InlineError = dynamic(() =>
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
 
-const ACTIVE_STATUS = 'active';
-
 const SelectClubSchema = object().shape({
   club_uuid: string().nullable().required('Required'),
   confirm: bool().oneOf(
@@ -257,7 +255,7 @@ export const getServerSideProps = async ({ req, res }) => {
 
   return {
     props: {
-      clubs: clubs.filter(({ status }) => status === ACTIVE_STATUS),
+      clubs,
       user,
     },
   };
