@@ -15,7 +15,7 @@
     "cookie": "^0.4.1",
     "date-fns": "^2.28.0",
     "flickity": "^2.2.1",
-    "framer-motion": "^4.1.2",
+    "framer-motion": "^6.0.0",
     "google-map-react": "^2.1.10",
     "js-cookie": "^3.0.0",
     "jwt-decode": "^3.1.2",
