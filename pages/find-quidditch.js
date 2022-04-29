@@ -466,7 +466,7 @@ const FindQuidditch = ({
               </Heading>
 
               <Grid
-                gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
+                gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }}
                 gridGap={{ base: 4, md: 9 }}
                 pb={3}
               >

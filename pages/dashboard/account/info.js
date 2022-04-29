@@ -4,6 +4,7 @@ import { Box, Flex, Heading } from '@chakra-ui/react';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
+import isAuthorized from 'modules/auth';
 
 const Logo = dynamic(() => import('components/shared/logo'));
 const Meta = dynamic(() => import('components/shared/meta'));
@@ -43,11 +44,7 @@ const Info = ({ user }) => (
 
 export const getServerSideProps = async ({ req, res }) => {
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
-
-  if (!AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/login');
-    res.statusCode = 302;
-    res.end();
+  if (!isAuthorized(AUTHENTICATION_TOKEN)) {
     return { props: {} };
   }
 

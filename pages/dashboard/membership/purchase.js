@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 import { Box, Grid, Heading } from '@chakra-ui/react';
 import { parseCookies } from 'modules/cookies';
 import { api } from 'modules/api';
+import isAuthorized from 'modules/auth';
 import { stripePromise } from 'modules/stripe';
 
 const Meta = dynamic(() => import('components/shared/meta'));
@@ -52,10 +53,7 @@ const PurchaseMembership = ({ products }) => (
 export const getServerSideProps = async ({ req, res }) => {
   const { AUTHENTICATION_TOKEN, MEMBERSHIP_AGREED } = parseCookies(req);
 
-  if (!AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/login');
-    res.statusCode = 302;
-    res.end();
+  if (!isAuthorized(AUTHENTICATION_TOKEN)) {
     return { props: {} };
   }
 

@@ -15,6 +15,7 @@ import {
   Link as ChakraLink,
 } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
+import isAuthorized from 'modules/auth';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -287,11 +288,7 @@ const Dashboard = ({ user }) => {
 
 export const getServerSideProps = async ({ req, res }) => {
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
-
-  if (!AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/login');
-    res.statusCode = 302;
-    res.end();
+  if (!isAuthorized(AUTHENTICATION_TOKEN)) {
     return { props: {} };
   }
 

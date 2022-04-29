@@ -8,6 +8,7 @@ import { object, string, bool } from 'yup';
 
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
+import isAuthorized from 'modules/auth';
 import { Box, Grid, Flex, Heading, Select, Checkbox } from '@chakra-ui/react';
 
 const Meta = dynamic(() => import('components/shared/meta'));
@@ -223,11 +224,7 @@ const ManageClub = ({ user, clubs = [] }) => {
 
 export const getServerSideProps = async ({ req, res }) => {
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
-
-  if (!AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/login');
-    res.statusCode = 302;
-    res.end();
+  if (!isAuthorized(AUTHENTICATION_TOKEN)) {
     return { props: {} };
   }
 

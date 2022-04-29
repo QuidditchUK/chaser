@@ -2,15 +2,16 @@ import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { parseCookies } from 'modules/cookies';
 import { Box, Grid, Flex, Heading } from '@chakra-ui/react';
+import isAuthorized from 'modules/auth';
+import { api } from 'modules/api';
+import { event } from 'modules/analytics';
+import { CATEGORIES } from 'constants/analytics';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
 const ProductCard = dynamic(() => import('components/dashboard/product-card'));
 const Content = dynamic(() => import('components/shared/content'));
 const Button = dynamic(() => import('components/shared/button'));
-import { api } from 'modules/api';
-import { event } from 'modules/analytics';
-import { CATEGORIES } from 'constants/analytics';
 
 const SuccessMembership = ({ product }) => {
   useEffect(() => {
@@ -71,11 +72,7 @@ const SuccessMembership = ({ product }) => {
 
 export const getServerSideProps = async ({ req, res }) => {
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
-
-  if (!AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/login');
-    res.statusCode = 302;
-    res.end();
+  if (!isAuthorized(AUTHENTICATION_TOKEN)) {
     return { props: {} };
   }
 

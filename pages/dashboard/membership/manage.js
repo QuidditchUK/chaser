@@ -9,6 +9,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { parseCookies, setCookies } from 'modules/cookies';
 import { api } from 'modules/api';
+import isAuthorized from 'modules/auth';
+
 import {
   Box,
   Flex,
@@ -240,7 +242,7 @@ const ManageMembership = ({ products = [] }) => {
                       )}
                     </Box>
 
-                    <Button type="submit" variant="qukBlue">
+                    <Button type="submit" variant="primary">
                       Purchase Membership
                     </Button>
                   </form>
@@ -319,11 +321,7 @@ const ManageMembership = ({ products = [] }) => {
 
 export const getServerSideProps = async ({ req, res }) => {
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
-
-  if (!AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/login');
-    res.statusCode = 302;
-    res.end();
+  if (!isAuthorized(AUTHENTICATION_TOKEN)) {
     return { props: {} };
   }
 

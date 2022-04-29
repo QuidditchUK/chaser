@@ -5,6 +5,7 @@ import { rem } from 'styles/theme';
 import { getScoutingApplicationEvents } from 'modules/prismic';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
+import isAuthorized from 'modules/auth';
 
 const Logo = dynamic(() => import('components/shared/logo'));
 const Meta = dynamic(() => import('components/shared/meta'));
@@ -39,11 +40,7 @@ const Info = ({ user, events }) => (
 
 export const getServerSideProps = async ({ req, res }) => {
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
-
-  if (!AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/login');
-    res.statusCode = 302;
-    res.end();
+  if (!isAuthorized(AUTHENTICATION_TOKEN)) {
     return { props: {} };
   }
 
