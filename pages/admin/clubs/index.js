@@ -8,11 +8,11 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableContainer,
+  Text,
 } from '@chakra-ui/react';
 import { SmallAddIcon } from '@chakra-ui/icons';
 
@@ -53,6 +53,14 @@ const Dashboard = ({ scopes, clubs }) => {
           Create new
         </Button>
       </Flex>
+
+      <Text>
+        These are our internal record of clubs that allow players to select
+        which club they are registered to play with. They are not to confused
+        with club profiles, which are powered by our CMS Prismic and have to be
+        set up separately. Members will only be able to select from active clubs
+        when choosing their clubs.
+      </Text>
 
       <Box bg="white" borderRadius="lg">
         <TableContainer>
