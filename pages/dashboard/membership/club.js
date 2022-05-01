@@ -17,7 +17,6 @@ const Content = dynamic(() => import('components/shared/content'));
 const Label = dynamic(() => import('components/formControls/label'));
 const Button = dynamic(() => import('components/shared/button'));
 const Required = dynamic(() => import('components/formControls/required'));
-const ClubCard = dynamic(() => import('components/clubsEvents/club-card'));
 
 const InlineError = dynamic(() =>
   import('components/shared/errors').then(({ InlineError }) => InlineError)
@@ -25,6 +24,7 @@ const InlineError = dynamic(() =>
 
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
+import PrismicClubCard from 'components/prismic/club-card';
 
 const SelectClubSchema = object().shape({
   club_uuid: string().nullable().required('Required'),
@@ -216,20 +216,7 @@ const ManageClub = ({ user, clubs = [] }) => {
             </Box>
             {selectedClub && (
               <Flex flexDirection="column" key={selectedClub?.uuid}>
-                <ClubCard
-                  backgroundColor={selectedClub?.featured_color}
-                  color={selectedClub?.text_color}
-                  title={selectedClub?.name}
-                  href={`/clubs/${selectedClub?.slug}`}
-                  league={selectedClub?.league}
-                  venue={selectedClub?.venue}
-                  icon={selectedClub?.icon}
-                  status={selectedClub?.status}
-                  image={{
-                    src: selectedClub?.images?.[0],
-                    alt: selectedClub?.name,
-                  }}
-                />
+                <PrismicClubCard uid={selectedClub?.slug} />
               </Flex>
             )}
           </Grid>

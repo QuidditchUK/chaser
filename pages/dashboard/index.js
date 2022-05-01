@@ -23,7 +23,7 @@ const Container = dynamic(() => import('components/layout/container'));
 const Content = dynamic(() => import('components/shared/content'));
 const Image = dynamic(() => import('components/shared/image'));
 const ProductCard = dynamic(() => import('components/dashboard/product-card'));
-const ClubCard = dynamic(() => import('components/clubsEvents/club-card'));
+const PrismicClubCard = dynamic(() => import('components/prismic/club-card'));
 
 const StyledAnchor = forwardRef(function StyledAnchor(props, ref) {
   return (
@@ -263,20 +263,8 @@ const Dashboard = ({ user }) => {
                 >
                   My club
                 </Heading>
-                <ClubCard
-                  backgroundColor={club.featured_color}
-                  color={club.text_color}
-                  title={club.name}
-                  league={club.league}
-                  venue={club.venue}
-                  status={club.status}
-                  icon={club.icon}
-                  href={`/clubs/${club.slug}`}
-                  image={{
-                    src: club?.images?.[0],
-                    alt: club?.name,
-                  }}
-                />
+
+                <PrismicClubCard uid={club?.slug} />
               </Flex>
             )}
           </Grid>

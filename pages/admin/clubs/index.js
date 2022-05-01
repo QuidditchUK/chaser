@@ -69,7 +69,6 @@ const Dashboard = ({ scopes, clubs }) => {
               <Tr>
                 <Th>Name</Th>
                 <Th>League</Th>
-                <Th>Status</Th>
                 <Th>Email</Th>
                 <Th>Members</Th>
                 <Th></Th>
@@ -80,8 +79,11 @@ const Dashboard = ({ scopes, clubs }) => {
                 <Tr key={club?.uuid}>
                   <Td>{club?.name}</Td>
                   <Td>{club?.league}</Td>
-                  <Td>{club?.status}</Td>
-                  <Td>{club?.email}</Td>
+                  <Td>
+                    {club?.email && (
+                      <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
+                    )}
+                  </Td>
                   <Td>{club?._count?.users}</Td>
                   {hasScope([CLUBS_WRITE], scopes) && (
                     <Td>
@@ -106,7 +108,6 @@ const Dashboard = ({ scopes, clubs }) => {
               <Tr>
                 <Th>Name</Th>
                 <Th>League</Th>
-                <Th>Status</Th>
                 <Th>Email</Th>
                 <Th>Members</Th>
                 <Th></Th>
@@ -117,8 +118,11 @@ const Dashboard = ({ scopes, clubs }) => {
                 <Tr key={club?.uuid}>
                   <Td>{club?.name}</Td>
                   <Td>{club?.league}</Td>
-                  <Td>{club?.status}</Td>
-                  <Td>{club?.email}</Td>
+                  <Td>
+                    {club?.email && (
+                      <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
+                    )}
+                  </Td>
                   <Td>{club?._count?.users}</Td>
                   {hasScope([CLUBS_WRITE], scopes) && (
                     <Td>
