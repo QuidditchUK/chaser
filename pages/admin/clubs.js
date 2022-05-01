@@ -22,6 +22,14 @@ import Slice from 'components/shared/slice';
 import Button from 'components/shared/button';
 import isAuthorized from 'modules/auth';
 const Dashboard = ({ scopes, clubs }) => {
+  const [activeClubs, inactiveClubs] = clubs.reduce(
+    (result, club) => {
+      result[club?.active ? 0 : 1].push(club);
+      return result;
+    },
+    [[], []]
+  );
+
   return (
     <Slice>
       <Flex
@@ -52,19 +60,58 @@ const Dashboard = ({ scopes, clubs }) => {
             <Thead>
               <Tr>
                 <Th>Name</Th>
-                <Th>Location</Th>
                 <Th>League</Th>
                 <Th>Status</Th>
+                <Th>Email</Th>
+                <Th>Members</Th>
                 <Th></Th>
               </Tr>
             </Thead>
             <Tbody>
-              {clubs.map((club) => (
+              {activeClubs.map((club) => (
                 <Tr key={club?.uuid}>
-                  <Td>{club.name}</Td>
-                  <Td>{club.venue}</Td>
-                  <Td>{club.league}</Td>
-                  <Td>{club.status}</Td>
+                  <Td>{club?.name}</Td>
+                  <Td>{club?.league}</Td>
+                  <Td>{club?.status}</Td>
+                  <Td>{club?.email}</Td>
+                  <Td>{club?._count?.users}</Td>
+                  {hasScope([CLUBS_WRITE], scopes) && (
+                    <Td>
+                      <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
+                    </Td>
+                  )}
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Box>
+
+      <Heading as="h4" fontFamily="body" color="qukBlue">
+        Inactive Clubs
+      </Heading>
+
+      <Box bg="white" borderRadius="lg">
+        <TableContainer>
+          <Table variant="striped">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>League</Th>
+                <Th>Status</Th>
+                <Th>Email</Th>
+                <Th>Members</Th>
+                <Th></Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {inactiveClubs.map((club) => (
+                <Tr key={club?.uuid}>
+                  <Td>{club?.name}</Td>
+                  <Td>{club?.league}</Td>
+                  <Td>{club?.status}</Td>
+                  <Td>{club?.email}</Td>
+                  <Td>{club?._count?.users}</Td>
                   {hasScope([CLUBS_WRITE], scopes) && (
                     <Td>
                       <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
