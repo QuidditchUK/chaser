@@ -20,14 +20,12 @@ import Textarea from 'components/formControls/textarea'; // DO NOT DYNAMIC IMPOR
 
 const Label = dynamic(() => import('components/formControls/label'));
 const Button = dynamic(() => import('components/shared/button'));
-const Container = dynamic(() => import('components/layout/container'));
 const Required = dynamic(() => import('components/formControls/required'));
 const InlineError = dynamic(() =>
   import('components/shared/errors').then(({ InlineError }) => InlineError)
 );
 
 import { api } from 'modules/api';
-import { rem } from 'styles/theme';
 
 const NATIONAL_TEAMS = ['England', 'Scotland', 'Wales'];
 const POSITIONS = ['Keeper/Chaser', 'Beater', 'Seeker'];

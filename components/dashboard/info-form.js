@@ -91,7 +91,7 @@ const InfoForm = ({ user }) => {
         )}
       >
         <Grid gridTemplateColumns="1fr">
-          <Label htmlFor="name">
+          <Label htmlFor="email">
             Email Address <Required />
           </Label>
 
