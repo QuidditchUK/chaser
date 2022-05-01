@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import { Flex, Box, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
@@ -21,7 +21,7 @@ const Video = (props) => (
 
 const HomeHero = ({ primary }) => {
   const router = useRouter();
-  const { register, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: { postcode: '' },
   });
 
@@ -72,7 +72,13 @@ const HomeHero = ({ primary }) => {
           )}
         >
           <Flex flexDirection="row">
-            <Input ref={register} name="postcode" placeholder="Postcode" />
+            <Controller
+              control={control}
+              name="postcode"
+              render={({ field }) => (
+                <Input {...field} id="postcode" placeholder="Postcode" />
+              )}
+            />
             <Button type="submit" variant="primary" ml={2}>
               {cta_text}
             </Button>

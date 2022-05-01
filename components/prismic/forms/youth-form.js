@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { object, string, number, bool } from 'yup';
@@ -67,7 +67,12 @@ const YouthCoachForm = () => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, errors, reset, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(YouthCoachFormSchema),
     defaultValues: {
@@ -84,8 +89,6 @@ const YouthCoachForm = () => {
       message: '',
     },
   });
-
-  const { isSubmitting } = formState;
 
   return (
     <>
@@ -141,13 +144,18 @@ const YouthCoachForm = () => {
                 Your name <Required />
               </Label>
 
-              <Input
-                id="name"
+              <Controller
+                control={control}
                 name="name"
-                placeholder="Your name"
-                ref={register}
-                my={3}
-                error={errors.name}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="name"
+                    placeholder="Your name"
+                    my={3}
+                    error={errors.name}
+                  />
+                )}
               />
 
               {errors.name && (
@@ -160,12 +168,18 @@ const YouthCoachForm = () => {
                 Your email <Required />
               </Label>
 
-              <Input
+              <Controller
+                control={control}
                 name="email"
-                placeholder="Your email address"
-                ref={register}
-                my={3}
-                error={errors.email}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="email"
+                    placeholder="Your email address"
+                    my={3}
+                    error={errors.email}
+                  />
+                )}
               />
 
               {errors.email && (
@@ -179,12 +193,18 @@ const YouthCoachForm = () => {
                 <Required />
               </Label>
 
-              <Input
+              <Controller
+                control={control}
                 name="phone"
-                placeholder="Your phone number"
-                ref={register}
-                my={3}
-                error={errors.phone}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="phone"
+                    placeholder="Your phone number"
+                    my={3}
+                    error={errors.phone}
+                  />
+                )}
               />
 
               {errors.phone && (
@@ -197,12 +217,18 @@ const YouthCoachForm = () => {
                 Your address <Required />
               </Label>
 
-              <Input
+              <Controller
+                control={control}
                 name="address"
-                placeholder="Your residential address"
-                ref={register}
-                my={3}
-                error={errors.address}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="address"
+                    placeholder="Your residential address"
+                    my={3}
+                    error={errors.address}
+                  />
+                )}
               />
 
               {errors.address && (
@@ -213,21 +239,34 @@ const YouthCoachForm = () => {
 
               <Label htmlFor="club">Your current or closest club</Label>
 
-              <Input
+              <Controller
+                control={control}
                 name="club"
-                placeholder="Your current or closest club"
-                ref={register}
-                my={3}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="club"
+                    placeholder="Your current or closest club"
+                    my={3}
+                  />
+                )}
               />
 
               <Label htmlFor="years">Number of years playing</Label>
 
-              <Input
+              <Controller
+                control={control}
                 name="years"
-                placeholder="Number of years playing"
-                ref={register}
-                type="number"
-                my={3}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="years"
+                    type="number"
+                    placeholder="Number of years playing"
+                    my={3}
+                    error={errors.years}
+                  />
+                )}
               />
 
               {errors.years && (
@@ -238,25 +277,39 @@ const YouthCoachForm = () => {
 
               <Label htmlFor="dbs">
                 Do you have a valid DBS clearance?
-                <Switch
+                <Controller
+                  control={control}
                   name="dbs"
-                  ref={register}
-                  colorScheme="green"
-                  ml={3}
-                  my={3}
-                  size="lg"
+                  render={({ field }) => (
+                    <Switch
+                      {...field}
+                      isChecked={field.value}
+                      id="dbs"
+                      colorScheme="green"
+                      ml={3}
+                      my={3}
+                      size="lg"
+                    />
+                  )}
                 />
               </Label>
 
               <Label htmlFor="rightToWork">
                 Do you have a right to work in the UK? <Required />
-                <Switch
+                <Controller
+                  control={control}
                   name="rightToWork"
-                  ref={register}
-                  colorScheme="green"
-                  ml={3}
-                  my={3}
-                  size="lg"
+                  render={({ field }) => (
+                    <Switch
+                      {...field}
+                      isChecked={field.value}
+                      id="rightToWork"
+                      colorScheme="green"
+                      ml={3}
+                      my={3}
+                      size="lg"
+                    />
+                  )}
                 />
               </Label>
 
@@ -265,12 +318,18 @@ const YouthCoachForm = () => {
                 <Required />
               </Label>
 
-              <Input
+              <Controller
+                control={control}
                 name="region"
-                placeholder="Regions e.g. Midlands, South London"
-                ref={register}
-                my={3}
-                error={errors.region}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="region"
+                    placeholder="Regions e.g. Midlands, South London"
+                    my={3}
+                    error={errors.region}
+                  />
+                )}
               />
 
               {errors.region && (
@@ -283,12 +342,18 @@ const YouthCoachForm = () => {
                 What days are you generally available for work? <Required />
               </Label>
 
-              <Input
+              <Controller
+                control={control}
                 name="availability"
-                placeholder="e.g. Monday - Wednesday"
-                ref={register}
-                my={3}
-                error={errors.availability}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="availability"
+                    placeholder="e.g. Monday - Wednesday"
+                    my={3}
+                    error={errors.availability}
+                  />
+                )}
               />
 
               {errors.availability && (
@@ -299,12 +364,18 @@ const YouthCoachForm = () => {
 
               <Label htmlFor="message">Anything else to add?</Label>
 
-              <Textarea
+              <Controller
+                control={control}
                 name="message"
-                placeholder="Your message"
-                my={3}
-                ref={register}
-                error={errors.message}
+                render={({ field }) => (
+                  <Textarea
+                    {...field}
+                    id="message"
+                    placeholder="Your message"
+                    my={3}
+                    error={errors.message}
+                  />
+                )}
               />
             </Grid>
 

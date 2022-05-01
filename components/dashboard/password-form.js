@@ -5,7 +5,7 @@ import { object, string, ref } from 'yup';
 import { Flex, Grid, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
@@ -52,7 +52,12 @@ const handlePasswordSubmit = async (
 };
 
 const InfoForm = () => {
-  const { register, handleSubmit, errors, reset, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting, errors },
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(PasswordFormSchema),
     defaultValues: {
@@ -61,8 +66,6 @@ const InfoForm = () => {
       confirm: '',
     },
   });
-
-  const { isSubmitting } = formState;
 
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
@@ -90,13 +93,19 @@ const InfoForm = () => {
             Current Password <Required />
           </Label>
 
-          <Input
+          <Controller
+            control={control}
             name="old_password"
-            placeholder="Your current password"
-            ref={register}
-            my={3}
-            type="password"
-            error={errors.old_password}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="old_password"
+                placeholder="Your current password"
+                my={3}
+                type="password"
+                error={errors.old_password}
+              />
+            )}
           />
 
           {errors.old_password && (
@@ -109,14 +118,21 @@ const InfoForm = () => {
             New Password <Required />
           </Label>
 
-          <Input
+          <Controller
+            control={control}
             name="password"
-            placeholder="Password"
-            ref={register}
-            my={3}
-            type="password"
-            error={errors.password}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="password"
+                placeholder="Password"
+                my={3}
+                type="password"
+                error={errors.password}
+              />
+            )}
           />
+
           {errors.password && (
             <InlineError marginBottom={3}>
               {errors.password.message}
@@ -127,13 +143,19 @@ const InfoForm = () => {
             Confirm New Password <Required />
           </Label>
 
-          <Input
+          <Controller
+            control={control}
             name="confirm"
-            placeholder="Confirm your new password"
-            my={3}
-            ref={register}
-            type="password"
-            error={errors.confirm}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="confirm"
+                placeholder="Confirm your new password"
+                my={3}
+                type="password"
+                error={errors.confirm}
+              />
+            )}
           />
 
           {errors.confirm && (

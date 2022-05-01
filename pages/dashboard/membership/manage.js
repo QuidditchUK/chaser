@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
 import parse from 'date-fns/parse';
 import { object, boolean } from 'yup';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { parseCookies, setCookies } from 'modules/cookies';
@@ -74,7 +74,11 @@ const ManageMembership = ({ products = [] }) => {
     [products]
   );
 
-  const { register, handleSubmit, errors } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(MembershipFormSchema),
     mode: 'onBlur',
     defaultValues: {
@@ -167,23 +171,30 @@ const ManageMembership = ({ products = [] }) => {
                   <form onSubmit={handleSubmit(membershipFormSubmit)}>
                     <Box my="3">
                       <Label>
-                        <Checkbox
-                          type="checkbox"
+                        <Controller
+                          control={control}
                           name="checkboxOne"
-                          ref={register}
-                        >
-                          {' '}
-                          I acknowledge that I have read, understood, and agree
-                          to the{' '}
-                          <Link
-                            color="monarchRed"
-                            href="https://prismic-io.s3.amazonaws.com/chaser/7a339771-8248-4244-b141-cd2eb39a0028_QuidditchUK+Individual+Membership+Policy+2020_2021.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Individual Membership Policy
-                          </Link>
-                        </Checkbox>
+                          render={({ field }) => (
+                            <Checkbox
+                              {...field}
+                              isChecked={field.value}
+                              type="checkbox"
+                              id="checkboxOne"
+                            >
+                              {' '}
+                              I acknowledge that I have read, understood, and
+                              agree to the{' '}
+                              <Link
+                                color="monarchRed"
+                                href="https://prismic-io.s3.amazonaws.com/chaser/7a339771-8248-4244-b141-cd2eb39a0028_QuidditchUK+Individual+Membership+Policy+2020_2021.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                Individual Membership Policy
+                              </Link>
+                            </Checkbox>
+                          )}
+                        />
                       </Label>
 
                       {errors.checkboxOne && (
@@ -195,19 +206,30 @@ const ManageMembership = ({ products = [] }) => {
 
                     <Box my="3">
                       <Label>
-                        <Checkbox name="checkboxTwo" ref={register}>
-                          {' '}
-                          I acknowledge that I have read, understood, and agree
-                          to the{' '}
-                          <Link
-                            color="monarchRed"
-                            href="https://prismic-io.s3.amazonaws.com/chaser/680b0ecd-ed85-487d-a727-3f5731f78bca_Media+Usage+Policy.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            QuidditchUK Media Usage Policy
-                          </Link>
-                        </Checkbox>
+                        <Controller
+                          control={control}
+                          name="checkboxTwo"
+                          render={({ field }) => (
+                            <Checkbox
+                              {...field}
+                              isChecked={field.value}
+                              type="checkbox"
+                              id="checkboxTwo"
+                            >
+                              {' '}
+                              I acknowledge that I have read, understood, and
+                              agree to the{' '}
+                              <Link
+                                color="monarchRed"
+                                href="https://prismic-io.s3.amazonaws.com/chaser/680b0ecd-ed85-487d-a727-3f5731f78bca_Media+Usage+Policy.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                QuidditchUK Media Usage Policy
+                              </Link>
+                            </Checkbox>
+                          )}
+                        />
                       </Label>
 
                       {errors.checkboxTwo && (
@@ -219,20 +241,31 @@ const ManageMembership = ({ products = [] }) => {
 
                     <Box my="3">
                       <Label>
-                        <Checkbox name="checkboxThree" ref={register}>
-                          {' '}
-                          I agree to abide by the{' '}
-                          <NextLink
-                            href="/about/documents-and-policies"
-                            passHref
-                          >
-                            <Link color="monarchRed">
-                              membership and gameplay policies
-                            </Link>
-                          </NextLink>{' '}
-                          set out by QuidditchUK, and will uphold their values
-                          as a member of the quidditch community.
-                        </Checkbox>
+                        <Controller
+                          control={control}
+                          name="checkboxThree"
+                          render={({ field }) => (
+                            <Checkbox
+                              {...field}
+                              isChecked={field.value}
+                              type="checkbox"
+                              id="checkboxThree"
+                            >
+                              {' '}
+                              I agree to abide by the{' '}
+                              <NextLink
+                                href="/about/documents-and-policies"
+                                passHref
+                              >
+                                <Link color="monarchRed">
+                                  membership and gameplay policies
+                                </Link>
+                              </NextLink>{' '}
+                              set out by QuidditchUK, and will uphold their
+                              values as a member of the quidditch community.
+                            </Checkbox>
+                          )}
+                        />
                       </Label>
 
                       {errors.checkboxThree && (

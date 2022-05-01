@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { object, string, ref } from 'yup';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Router, { useRouter } from 'next/router';
 import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
@@ -26,9 +26,11 @@ const InlineError = dynamic(() =>
 
 const ResetFormSchema = object().shape({
   password: string()
+    .nullable()
     .min(8, 'Must be at least 8 characters long')
     .required('Required'),
   confirm: string()
+    .nullable()
     .oneOf([ref('password'), null], 'Passwords must match')
     .required('Required'),
 });
@@ -38,7 +40,11 @@ const Reset = () => {
   const { query } = useRouter();
   const { token, uuid } = query;
 
-  const { register, handleSubmit, errors, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(ResetFormSchema),
     defaultValues: {
@@ -46,8 +52,6 @@ const Reset = () => {
       confirm: '',
     },
   });
-
-  const { isSubmitting } = formState;
 
   const handleResetSubmit = async ({ confirm, ...formData }) => {
     try {
@@ -91,14 +95,21 @@ const Reset = () => {
                 New Password <Required />
               </Label>
 
-              <Input
+              <Controller
+                control={control}
                 name="password"
-                placeholder="Password"
-                ref={register}
-                my={3}
-                type="password"
-                error={errors.password}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="password"
+                    placeholder="Password"
+                    my={3}
+                    type="password"
+                    error={errors.password}
+                  />
+                )}
               />
+
               {errors.password && (
                 <InlineError marginBottom={3}>
                   {errors.password.message}
@@ -109,13 +120,19 @@ const Reset = () => {
                 Confirm New Password <Required />
               </Label>
 
-              <Input
+              <Controller
+                control={control}
                 name="confirm"
-                placeholder="Confirm your new password"
-                ref={register}
-                my={3}
-                type="password"
-                error={errors.confirm}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="confirm"
+                    placeholder="Confirm your new password"
+                    my={3}
+                    type="password"
+                    error={errors.confirm}
+                  />
+                )}
               />
 
               {errors.confirm && (

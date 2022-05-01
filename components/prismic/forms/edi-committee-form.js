@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { object, string, bool } from 'yup';
 import dynamic from 'next/dynamic';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Grid, Flex, Heading, Switch, Text } from '@chakra-ui/react';
@@ -57,7 +57,12 @@ const EDICommitteeForm = ({ primary }) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, errors, reset, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting, errors },
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(EDICommitteeSchema),
     defaultValues: {
@@ -69,7 +74,6 @@ const EDICommitteeForm = ({ primary }) => {
     },
   });
 
-  const { isSubmitting } = formState;
   const { variant } = primary;
 
   return (
@@ -101,13 +105,18 @@ const EDICommitteeForm = ({ primary }) => {
               Your name <Required />
             </Label>
 
-            <Input
-              id="name"
+            <Controller
+              control={control}
               name="name"
-              placeholder="Your name"
-              ref={register}
-              my={3}
-              error={errors.name}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="name"
+                  placeholder="Your name"
+                  my={3}
+                  error={errors.name}
+                />
+              )}
             />
 
             {errors.name && (
@@ -118,12 +127,18 @@ const EDICommitteeForm = ({ primary }) => {
               Your email <Required />
             </Label>
 
-            <Input
+            <Controller
+              control={control}
               name="email"
-              placeholder="Your email address"
-              ref={register}
-              my={3}
-              error={errors.email}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="email"
+                  placeholder="Your email address"
+                  my={3}
+                  error={errors.email}
+                />
+              )}
             />
 
             {errors.email && (
@@ -132,23 +147,35 @@ const EDICommitteeForm = ({ primary }) => {
 
             <Label htmlFor="club">Club</Label>
 
-            <Input
+            <Controller
+              control={control}
               name="club"
-              placeholder="The club you currently play for"
-              ref={register}
-              my={3}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  mt={3}
+                  id="club"
+                  placeholder="The club you currently play for"
+                />
+              )}
             />
 
             <Label htmlFor="chair">
               Do you wish to be considered for the EDI Committee Chair?{' '}
-              <Required />
-              <Switch
+              <Controller
+                control={control}
                 name="chair"
-                ref={register}
-                colorScheme="green"
-                ml={3}
-                my={3}
-                size="lg"
+                render={({ field }) => (
+                  <Switch
+                    {...field}
+                    isChecked={field.value}
+                    id="chair"
+                    colorScheme="green"
+                    ml={3}
+                    my={3}
+                    size="lg"
+                  />
+                )}
               />
             </Label>
 
@@ -157,14 +184,19 @@ const EDICommitteeForm = ({ primary }) => {
               committee, or announcement?
             </Label>
 
-            <Textarea
+            <Controller
+              control={control}
               name="message"
-              placeholder="Your message"
-              my={3}
-              ref={register}
-              error={errors.message}
+              render={({ field }) => (
+                <Textarea
+                  {...field}
+                  id="message"
+                  placeholder="Your message"
+                  my={3}
+                  error={errors.message}
+                />
+              )}
             />
-
             {errors.message && (
               <InlineError marginBottom={3}>
                 {errors.message.message}

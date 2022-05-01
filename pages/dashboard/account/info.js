@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import { Box, Flex, Heading, Grid } from '@chakra-ui/react';
 
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
@@ -22,7 +22,7 @@ const Info = ({ user }) => (
       subTitle="Sign In"
     />
     <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>
-      <Container maxWidth={rem(500)}>
+      <Container>
         <Flex justifyContent="center" alignItems="center">
           <Logo />
         </Flex>
@@ -30,13 +30,34 @@ const Info = ({ user }) => (
           Update your Info
         </Heading>
 
-        <InfoForm user={user} />
+        <Grid gridGap={4} gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}>
+          <Box bg="gray.100" borderRadius="lg" p={4}>
+            <Heading
+              as="h3"
+              fontFamily="body"
+              color="qukBlue"
+              fontSize="xl"
+              mt={0}
+            >
+              Change your details
+            </Heading>
+            <InfoForm user={user} />
+          </Box>
 
-        <Heading as="h3" fontFamily="body" color="qukBlue" fontSize="xl">
-          Change your password
-        </Heading>
+          <Box bg="gray.100" borderRadius="lg" p={4}>
+            <Heading
+              as="h3"
+              fontFamily="body"
+              color="qukBlue"
+              fontSize="xl"
+              mt={0}
+            >
+              Change your password
+            </Heading>
 
-        <PasswordForm />
+            <PasswordForm />
+          </Box>
+        </Grid>
       </Container>
     </Box>
   </>

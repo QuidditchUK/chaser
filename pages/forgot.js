@@ -3,7 +3,7 @@ import { object, string } from 'yup';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
 import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
@@ -41,15 +41,17 @@ const Forgot = () => {
   const [serverError, setServerError] = useState(null);
   const [sent, setSent] = useState(false);
 
-  const { register, handleSubmit, errors, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(ForgotFormSchema),
     defaultValues: {
       email: '',
     },
   });
-
-  const { isSubmitting } = formState;
 
   return (
     <>
@@ -80,12 +82,18 @@ const Forgot = () => {
                 <Grid gridTemplateColumns="1fr">
                   <Label htmlFor="name">Email Address</Label>
 
-                  <Input
+                  <Controller
+                    control={control}
                     name="email"
-                    placeholder="Your email address"
-                    ref={register}
-                    my={3}
-                    error={errors.email}
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        id="email"
+                        placeholder="Your email address"
+                        my={3}
+                        error={errors.email}
+                      />
+                    )}
                   />
 
                   {errors.email && (

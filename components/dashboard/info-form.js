@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { Flex, Grid, Switch, Text } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
@@ -28,8 +28,10 @@ const InfoFormSchema = object().shape({
   is_student: bool().required(),
   university: string().when('is_student', {
     is: true,
-    then: string().required('Please enter the university you currently attend'),
-    otherwise: string(),
+    then: string()
+      .nullable()
+      .required('Please enter the university you currently attend'),
+    otherwise: string().nullable(),
   }),
 });
 
@@ -49,19 +51,22 @@ const handleInfoSubmit = async (values, setServerError, setServerSuccess) => {
 };
 
 const InfoForm = ({ user }) => {
-  const { register, handleSubmit, errors, watch, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { isSubmitting, errors },
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(InfoFormSchema),
     defaultValues: {
       email: user.email,
       first_name: user.first_name,
       last_name: user.last_name,
-      is_student: user.is_student,
+      is_student: user.is_student || false,
       university: user.university,
     },
   });
-
-  const { isSubmitting } = formState;
 
   const watchIsStudent = watch('is_student');
   const [serverError, setServerError] = useState(null);
@@ -86,14 +91,22 @@ const InfoForm = ({ user }) => {
         )}
       >
         <Grid gridTemplateColumns="1fr">
-          <Label htmlFor="name">Email Address</Label>
+          <Label htmlFor="name">
+            Email Address <Required />
+          </Label>
 
-          <Input
+          <Controller
+            control={control}
             name="email"
-            placeholder="Your email address"
-            ref={register}
-            my={3}
-            error={errors.email}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="email"
+                placeholder="Your email address"
+                my={3}
+                error={errors.email}
+              />
+            )}
           />
 
           {errors.email && (
@@ -103,14 +116,19 @@ const InfoForm = ({ user }) => {
           <Label htmlFor="first_name">
             Preferred first name <Required />
           </Label>
-
-          <Input
+          <Controller
+            control={control}
             name="first_name"
-            placeholder="First name"
-            ref={register}
-            my={3}
-            type="first_name"
-            error={errors.first_name}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="first_name"
+                placeholder="First name"
+                my={3}
+                type="first_name"
+                error={errors.first_name}
+              />
+            )}
           />
 
           {errors.first_name && (
@@ -123,14 +141,21 @@ const InfoForm = ({ user }) => {
             Preferred last name <Required />
           </Label>
 
-          <Input
+          <Controller
+            control={control}
             name="last_name"
-            placeholder="Last name"
-            ref={register}
-            my={3}
-            type="last_name"
-            error={errors.last_name}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="last_name"
+                placeholder="Last name"
+                my={3}
+                type="last_name"
+                error={errors.last_name}
+              />
+            )}
           />
+
           {errors.last_name && (
             <InlineError marginBottom={3}>
               {errors.last_name.message}
@@ -139,29 +164,42 @@ const InfoForm = ({ user }) => {
 
           <Label htmlFor="is_student">
             Are you a student? <Required />
-            <Switch
+            <Controller
+              control={control}
               name="is_student"
-              ref={register}
-              colorScheme="green"
-              ml={3}
-              my={3}
-              size="lg"
+              render={({ field }) => (
+                <Switch
+                  {...field}
+                  isChecked={field.value}
+                  id="is_student"
+                  colorScheme="green"
+                  ml={3}
+                  my={3}
+                  size="lg"
+                />
+              )}
             />
           </Label>
 
           {watchIsStudent && (
             <>
-              <Label htmlFor="last_name">
+              <Label htmlFor="university">
                 What university do you attend? <Required />
               </Label>
 
-              <Input
+              <Controller
+                control={control}
                 name="university"
-                placeholder="Name of your university"
-                ref={register}
-                my={3}
-                type="university"
-                error={errors.university}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="university"
+                    placeholder="Name of your university"
+                    my={3}
+                    type="university"
+                    error={errors.university}
+                  />
+                )}
               />
               {errors.university && (
                 <InlineError marginBottom={3}>

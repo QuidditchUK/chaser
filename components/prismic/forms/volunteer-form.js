@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
@@ -54,7 +54,12 @@ const VolunteerForm = ({ primary }) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, errors, reset, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(VolunteerFormSchema),
     defaultValues: {
@@ -65,7 +70,6 @@ const VolunteerForm = ({ primary }) => {
     },
   });
 
-  const { isSubmitting } = formState;
   const { variant } = primary;
 
   return (
@@ -89,13 +93,18 @@ const VolunteerForm = ({ primary }) => {
               Your name <Required />
             </Label>
 
-            <Input
-              id="name"
+            <Controller
+              control={control}
               name="name"
-              placeholder="Your name"
-              ref={register}
-              my={3}
-              error={errors.name}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="name"
+                  placeholder="Your name"
+                  my={3}
+                  error={errors.name}
+                />
+              )}
             />
 
             {errors.name && (
@@ -106,12 +115,18 @@ const VolunteerForm = ({ primary }) => {
               Your email <Required />
             </Label>
 
-            <Input
+            <Controller
+              control={control}
               name="email"
-              placeholder="Your email address"
-              ref={register}
-              my={3}
-              error={errors.email}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="email"
+                  placeholder="Your email address"
+                  my={3}
+                  error={errors.email}
+                />
+              )}
             />
 
             {errors.email && (
@@ -122,12 +137,18 @@ const VolunteerForm = ({ primary }) => {
               Role <Required />
             </Label>
 
-            <Input
+            <Controller
+              control={control}
               name="role"
-              placeholder="The role you're applying for"
-              ref={register}
-              my={3}
-              error={errors.role}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="role"
+                  placeholder="The role you're applying for"
+                  my={3}
+                  error={errors.role}
+                />
+              )}
             />
 
             {errors.role && (
@@ -138,12 +159,18 @@ const VolunteerForm = ({ primary }) => {
               A bit about you <Required />
             </Label>
 
-            <Textarea
+            <Controller
+              control={control}
               name="message"
-              placeholder="Your message"
-              my={3}
-              ref={register}
-              error={errors.message}
+              render={({ field }) => (
+                <Textarea
+                  {...field}
+                  id="message"
+                  placeholder="Your message"
+                  my={3}
+                  error={errors.message}
+                />
+              )}
             />
 
             {errors.message && (

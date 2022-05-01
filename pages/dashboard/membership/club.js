@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import parse from 'date-fns/parse';
 import Router from 'next/router';
@@ -57,7 +57,12 @@ const ManageClub = ({ user, clubs = [] }) => {
   );
   const [serverError, setServerError] = useState(null);
 
-  const { register, errors, handleSubmit, watch, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm({
     resolver: yupResolver(SelectClubSchema),
     defaultValues: {
       club_uuid: user.club_uuid,
@@ -65,7 +70,6 @@ const ManageClub = ({ user, clubs = [] }) => {
     },
   });
 
-  const { isSubmitting } = formState;
   const currentSelectedClubUuid = watch('club_uuid', user.club_uuid);
 
   useEffect(() => {
@@ -145,23 +149,27 @@ const ManageClub = ({ user, clubs = [] }) => {
                       Select your club <Required />
                     </Label>
 
-                    <Select
-                      id="club_uuid"
+                    <Controller
+                      control={control}
                       name="club_uuid"
-                      as="select"
-                      ref={register}
-                      bg="white"
-                      color="qukBlue"
-                    >
-                      <option disabled value>
-                        Select a club
-                      </option>
-                      {clubs.map((club) => (
-                        <option key={club.uuid} value={club.uuid}>
-                          {club.name}
-                        </option>
-                      ))}
-                    </Select>
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          id="club_uuid"
+                          as="select"
+                          placeholder="Select a club"
+                          bg="white"
+                          color="qukBlue"
+                          mb={3}
+                        >
+                          {clubs.map((club) => (
+                            <option key={club.uuid} value={club.uuid}>
+                              {club.name}
+                            </option>
+                          ))}
+                        </Select>
+                      )}
+                    />
 
                     {errors.club_uuid && (
                       <InlineError mb={3}>
@@ -169,12 +177,23 @@ const ManageClub = ({ user, clubs = [] }) => {
                       </InlineError>
                     )}
                     <Label mt="3">
-                      <Checkbox name="confirm" ref={register} spacing={3}>
-                        By checking this box I acknowledge that I have read the
-                        above disclaimer and I intend for{' '}
-                        <strong>{selectedClub?.name}</strong> to be my
-                        QuidditchUK club for the 2021/2022 Season.
-                      </Checkbox>
+                      <Controller
+                        control={control}
+                        name="confirm"
+                        render={({ field }) => (
+                          <Checkbox
+                            {...field}
+                            id="confirm"
+                            spacing={3}
+                            isChecked={field.value}
+                          >
+                            By checking this box I acknowledge that I have read
+                            the above disclaimer and I intend for{' '}
+                            <strong>{selectedClub?.name}</strong> to be my
+                            QuidditchUK club for the 2022/2023 Season.
+                          </Checkbox>
+                        )}
+                      />
                     </Label>
 
                     {errors.confirm && (

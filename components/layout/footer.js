@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -73,7 +73,7 @@ const handleFindQuidditch = async ({ postcode }, router) => {
 
 export const Footer = () => {
   const router = useRouter();
-  const { register, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: { postcode: '' },
   });
 
@@ -305,12 +305,18 @@ export const Footer = () => {
                 )}
               >
                 <Flex alignItems="center">
-                  <Input
-                    placeholder="Enter your postcode"
-                    ref={register}
+                  <Controller
+                    control={control}
                     name="postcode"
-                    aria-label="Find Quidditch"
-                    m={0}
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        placeholder="Enter your postcode"
+                        id="postcode"
+                        aria-label="Find Quidditch"
+                        m={0}
+                      />
+                    )}
                   />
                   <Button type="submit" variant="secondary" ml={2} py={0}>
                     Find

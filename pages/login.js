@@ -4,7 +4,7 @@ import Router from 'next/router';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
 import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
@@ -20,8 +20,6 @@ const Logo = dynamic(() => import('components/shared/logo'));
 const InlineError = dynamic(() =>
   import('components/shared/errors').then(({ InlineError }) => InlineError)
 );
-
-// const logo = '/images/logo.png';
 
 const LoginFormSchema = object().shape({
   email: string()
@@ -49,7 +47,11 @@ const handleLoginSubmit = async (values, setServerError) => {
 const Page = () => {
   const [serverError, setServerError] = useState(null);
 
-  const { register, handleSubmit, errors, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(LoginFormSchema),
     defaultValues: {
@@ -57,8 +59,6 @@ const Page = () => {
       password: '',
     },
   });
-
-  const { isSubmitting } = formState;
 
   return (
     <>
@@ -87,12 +87,18 @@ const Page = () => {
             <Grid gridTemplateColumns="1fr">
               <Label htmlFor="name">Email Address</Label>
 
-              <Input
+              <Controller
                 name="email"
-                placeholder="Your email address"
-                ref={register}
-                my={3}
-                error={errors.email}
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="email"
+                    placeholder="Your email address"
+                    my={3}
+                    error={errors?.email}
+                  />
+                )}
               />
 
               {errors.email && (
@@ -103,14 +109,21 @@ const Page = () => {
 
               <Label htmlFor="password">Password</Label>
 
-              <Input
+              <Controller
                 name="password"
-                placeholder="Password"
-                ref={register}
-                my={3}
-                type="password"
-                error={errors.password}
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    name="password"
+                    placeholder="Password"
+                    my={3}
+                    type="password"
+                    error={errors.password}
+                  />
+                )}
               />
+
               {errors.password && (
                 <InlineError marginBottom={3}>
                   {errors.password.message}

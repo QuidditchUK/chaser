@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { object, string } from 'yup';
 import dynamic from 'next/dynamic';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Grid, Flex, Heading, Text } from '@chakra-ui/react';
@@ -54,7 +54,12 @@ const ContactForm = ({ primary }) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
-  const { register, handleSubmit, errors, reset, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(ContactFormSchema),
     defaultValues: {
@@ -65,7 +70,6 @@ const ContactForm = ({ primary }) => {
     },
   });
 
-  const { isSubmitting } = formState;
   const { variant } = primary;
 
   return (
@@ -84,13 +88,18 @@ const ContactForm = ({ primary }) => {
               Your name <Required />
             </Label>
 
-            <Input
-              id="name"
+            <Controller
+              control={control}
               name="name"
-              placeholder="Your name"
-              ref={register}
-              my={3}
-              error={errors.name}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="name"
+                  placeholder="Your name"
+                  my={3}
+                  error={errors.name}
+                />
+              )}
             />
 
             {errors.name && (
@@ -101,12 +110,18 @@ const ContactForm = ({ primary }) => {
               Your email <Required />
             </Label>
 
-            <Input
+            <Controller
+              control={control}
               name="email"
-              placeholder="Your email address"
-              ref={register}
-              my={3}
-              error={errors.email}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="email"
+                  placeholder="Your email address"
+                  my={3}
+                  error={errors.email}
+                />
+              )}
             />
 
             {errors.email && (
@@ -115,18 +130,30 @@ const ContactForm = ({ primary }) => {
 
             <Label htmlFor="subject">Subject</Label>
 
-            <Input name="subject" placeholder="Subject" ref={register} my={3} />
+            <Controller
+              control={control}
+              name="subject"
+              render={({ field }) => (
+                <Input {...field} id="subject" placeholder="Subject" my={3} />
+              )}
+            />
 
             <Label htmlFor="message">
               Your message <Required />
             </Label>
 
-            <Textarea
+            <Controller
+              control={control}
               name="message"
-              placeholder="Your message"
-              my={3}
-              ref={register}
-              error={errors.message}
+              render={({ field }) => (
+                <Textarea
+                  {...field}
+                  id="message"
+                  placeholder="Your message"
+                  my={3}
+                  error={errors.message}
+                />
+              )}
             />
 
             {errors.message && (

@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Grid } from '@chakra-ui/react';
 
-import { rem } from 'styles/theme';
 import { getScoutingApplicationEvents } from 'modules/prismic';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
@@ -25,14 +24,24 @@ const Info = ({ user, events }) => (
       subTitle="National Team Profile"
     />
     <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>
-      <Container maxWidth={rem(500)}>
+      <Container>
         <Flex justifyContent="center" alignItems="center">
           <Logo />
         </Flex>
 
-        <NationalTeamProfile profile={user} />
+        <Grid
+          gridGap={4}
+          gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
+          mt={3}
+        >
+          <Box bg="gray.100" borderRadius="lg" p={4}>
+            <NationalTeamProfile profile={user} />
+          </Box>
 
-        <NationalTeamScouting events={events} />
+          <Box bg="qukBlue" borderRadius="lg" p={4}>
+            <NationalTeamScouting events={events} />
+          </Box>
+        </Grid>
       </Container>
     </Box>
   </>

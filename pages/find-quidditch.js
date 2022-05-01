@@ -30,6 +30,7 @@ import {
   getEvents,
   getAllEvents,
 } from 'modules/prismic';
+import { forEach } from 'lodash';
 
 const CloseIcon = dynamic(() => import('public/images/close.svg'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -95,7 +96,12 @@ const FindQuidditch = ({
   const [events, setEvents] = useState(initialEvents);
   const [distanceIndicator, setDistanceIndicator] = useState(100);
 
-  const { register, handleSubmit, errors, watch, control } = useForm({
+  const {
+    handleSubmit,
+    formState: { errors },
+    watch,
+    control,
+  } = useForm({
     mode: 'onBlur',
     defaultValues: {
       showClubs: showClubs ?? true,
@@ -265,14 +271,23 @@ const FindQuidditch = ({
                   display={showLocation ? 'none' : 'inline-block'}
                   opacity={showLocation ? 0 : 1}
                 >
-                  <Input
+                  <Controller
+                    control={control}
                     name="postcode"
-                    placeholder="Postcode"
-                    ref={register}
-                    size="8"
-                    width={{ base: '200px', md: '300px' }}
-                    onBlur={postcodeData ? () => setShowLocation(true) : null}
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        id="postcode"
+                        placeholder="Postcode"
+                        size="8"
+                        width={{ base: '200px', md: '300px' }}
+                        onBlur={
+                          postcodeData ? () => setShowLocation(true) : null
+                        }
+                      />
+                    )}
                   />
+
                   {errors.postcode && (
                     <IconWrapper>
                       <Icon as={CloseIcon} />
@@ -321,15 +336,22 @@ const FindQuidditch = ({
                           px={2}
                           py={2}
                         >
-                          <Checkbox
-                            ref={register}
+                          <Controller
+                            control={control}
                             name="showClubs"
-                            size="md"
-                            w="100%"
-                            colorScheme="white"
-                          >
-                            Clubs
-                          </Checkbox>
+                            render={({ field }) => (
+                              <Checkbox
+                                {...field}
+                                isChecked={field.value}
+                                id="showClubs"
+                                size="md"
+                                w="100%"
+                                colorScheme="white"
+                              >
+                                Clubs
+                              </Checkbox>
+                            )}
+                          />
                         </Box>
 
                         <Box
@@ -340,15 +362,22 @@ const FindQuidditch = ({
                           px={2}
                           py={2}
                         >
-                          <Checkbox
-                            ref={register}
+                          <Controller
+                            control={control}
                             name="showEvents"
-                            size="md"
-                            w="100%"
-                            colorScheme="white"
-                          >
-                            Events
-                          </Checkbox>
+                            render={({ field }) => (
+                              <Checkbox
+                                {...field}
+                                isChecked={field.value}
+                                id="showEvents"
+                                size="md"
+                                w="100%"
+                                colorScheme="white"
+                              >
+                                Events
+                              </Checkbox>
+                            )}
+                          />
                         </Box>
                       </Stack>
                     </Box>
@@ -371,15 +400,22 @@ const FindQuidditch = ({
                           transition={'all .3s ease'}
                           p={2}
                         >
-                          <Checkbox
-                            ref={register}
+                          <Controller
+                            control={control}
                             name="showCommunity"
-                            size="md"
-                            w="100%"
-                            colorScheme="white"
-                          >
-                            Community
-                          </Checkbox>
+                            render={({ field }) => (
+                              <Checkbox
+                                {...field}
+                                isChecked={field.value}
+                                id="showCommunity"
+                                size="md"
+                                w="100%"
+                                colorScheme="white"
+                              >
+                                Community
+                              </Checkbox>
+                            )}
+                          />
                         </Box>
 
                         <Box
@@ -389,15 +425,22 @@ const FindQuidditch = ({
                           transition={'all .3s ease'}
                           p={2}
                         >
-                          <Checkbox
-                            ref={register}
+                          <Controller
+                            control={control}
                             name="showUniversity"
-                            size="md"
-                            w="100%"
-                            colorScheme="white"
-                          >
-                            University
-                          </Checkbox>
+                            render={({ field }) => (
+                              <Checkbox
+                                {...field}
+                                isChecked={field.value}
+                                id="showUniversity"
+                                size="md"
+                                w="100%"
+                                colorScheme="white"
+                              >
+                                University
+                              </Checkbox>
+                            )}
+                          />
                         </Box>
                       </Stack>
                     </Box>
@@ -416,22 +459,25 @@ const FindQuidditch = ({
                         <Controller
                           control={control}
                           name="distance"
-                          render={({ onChange }) => (
-                            <Slider
-                              defaultValue={100}
-                              onChangeEnd={onChange}
-                              onChange={(val) => setDistanceIndicator(val)}
-                              min={1}
-                              max={500}
-                              aria-label="Distance Slider"
-                              colorScheme="white"
-                            >
-                              <SliderTrack>
-                                <SliderFilledTrack bg="monarchRed" />
-                              </SliderTrack>
-                              <SliderThumb />
-                            </Slider>
-                          )}
+                          render={({ field }) => {
+                            return (
+                              <Slider
+                                name="distance"
+                                defaultValue={100}
+                                onChangeEnd={field.onChange}
+                                onChange={(val) => setDistanceIndicator(val)}
+                                min={1}
+                                max={500}
+                                aria-label="Distance Slider"
+                                colorScheme="white"
+                              >
+                                <SliderTrack>
+                                  <SliderFilledTrack bg="monarchRed" />
+                                </SliderTrack>
+                                <SliderThumb />
+                              </Slider>
+                            );
+                          }}
                         />
                       </Box>
                       <Button

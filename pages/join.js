@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { object, string, bool, ref } from 'yup';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import { Box, Grid, Flex, Heading, Text, Link, Switch } from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
@@ -29,11 +28,17 @@ const Required = dynamic(() => import('components/formControls/required'));
 
 const JoinFormSchema = object().shape({
   email: string()
+    .nullable()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  first_name: string().required('Please enter the first name you go by'),
-  last_name: string().required('Please enter the last name you go by'),
+  first_name: string()
+    .nullable()
+    .required('Please enter the first name you go by'),
+  last_name: string()
+    .nullable()
+    .required('Please enter the last name you go by'),
   password: string()
+    .nullable()
     .min(8, 'Must be at least 8 characters long')
     .required('Required'),
   confirm: string()
@@ -42,7 +47,9 @@ const JoinFormSchema = object().shape({
   is_student: bool().required(),
   university: string().when('is_student', {
     is: true,
-    then: string().required('Please enter the university you currently attend'),
+    then: string()
+      .nullable()
+      .required('Please enter the university you currently attend'),
     otherwise: string(),
   }),
 });
@@ -70,7 +77,12 @@ const handleJoinSubmit = async ({ confirm, ...formData }, setServerError) => {
 const Page = () => {
   const [serverError, setServerError] = useState(null);
 
-  const { register, handleSubmit, errors, watch, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(JoinFormSchema),
     defaultValues: {
@@ -83,8 +95,6 @@ const Page = () => {
       confirm: '',
     },
   });
-
-  const { isSubmitting } = formState;
 
   const watchIsStudent = watch('is_student');
   return (
@@ -133,13 +143,19 @@ const Page = () => {
               <Grid gridTemplateColumns="1fr">
                 <Label htmlFor="name">Email Address</Label>
 
-                <Input
+                <Controller
+                  control={control}
                   name="email"
-                  placeholder="Your email address"
-                  ref={register}
-                  my={3}
-                  error={errors.email}
-                  borderColor={errors.email ? 'alert' : 'greyLight'}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      id="email"
+                      placeholder="Your email address"
+                      my={3}
+                      error={errors.email}
+                      borderColor={errors.email ? 'alert' : 'greyLight'}
+                    />
+                  )}
                 />
 
                 {errors.email && (
@@ -152,14 +168,19 @@ const Page = () => {
                   Preferred first name <Required />
                 </Label>
 
-                <Input
+                <Controller
+                  control={control}
                   name="first_name"
-                  placeholder="First name"
-                  ref={register}
-                  my={3}
-                  type="first_name"
-                  error={errors.first_name}
-                  borderColor={errors.first_name ? 'alert' : 'greyLight'}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      id="first_name"
+                      placeholder="First name"
+                      my={3}
+                      error={errors.first_name}
+                      borderColor={errors.first_name ? 'alert' : 'greyLight'}
+                    />
+                  )}
                 />
 
                 {errors.first_name && (
@@ -172,15 +193,22 @@ const Page = () => {
                   Preferred last name <Required />
                 </Label>
 
-                <Input
+                <Controller
+                  control={control}
                   name="last_name"
-                  placeholder="Last name"
-                  ref={register}
-                  my={3}
-                  type="last_name"
-                  error={errors.last_name}
-                  borderColor={errors.last_name ? 'alert' : 'greyLight'}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      id="last_name"
+                      placeholder="Last name"
+                      my={3}
+                      type="last_name"
+                      error={errors.last_name}
+                      borderColor={errors.last_name ? 'alert' : 'greyLight'}
+                    />
+                  )}
                 />
+
                 {errors.last_name && (
                   <InlineError marginBottom={3}>
                     {errors.last_name.message}
@@ -189,13 +217,20 @@ const Page = () => {
 
                 <Label htmlFor="is_student">
                   Are you a student? <Required />
-                  <Switch
+                  <Controller
+                    control={control}
                     name="is_student"
-                    ref={register}
-                    colorScheme="green"
-                    ml={3}
-                    my={3}
-                    size="lg"
+                    render={({ field }) => (
+                      <Switch
+                        {...field}
+                        isChecked={field.value}
+                        id="is_student"
+                        colorScheme="green"
+                        ml={3}
+                        my={3}
+                        size="lg"
+                      />
+                    )}
                   />
                 </Label>
 
@@ -205,14 +240,19 @@ const Page = () => {
                       What university do you attend? <Required />
                     </Label>
 
-                    <Input
+                    <Controller
+                      control={control}
                       name="university"
-                      placeholder="Name of your university"
-                      ref={register}
-                      my={3}
-                      type="university"
-                      error={errors.university}
-                      borderColor={errors.university ? 'alert' : 'greyLight'}
+                      render={({ field }) => (
+                        <Input
+                          {...field}
+                          id="university"
+                          placeholder="Name of your university"
+                          my={3}
+                          type="university"
+                          error={errors.university}
+                        />
+                      )}
                     />
 
                     {errors.university && (
@@ -236,15 +276,22 @@ const Page = () => {
                   Password <Required />
                 </Label>
 
-                <Input
+                <Controller
+                  control={control}
                   name="password"
-                  placeholder="Password"
-                  ref={register}
-                  my={3}
-                  type="password"
-                  error={errors.password}
-                  borderColor={errors.password ? 'alert' : 'greyLight'}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      name="password"
+                      placeholder="Password"
+                      my={3}
+                      type="password"
+                      error={errors.password}
+                      borderColor={errors.password ? 'alert' : 'greyLight'}
+                    />
+                  )}
                 />
+
                 {errors.password && (
                   <InlineError marginBottom={3}>
                     {errors.password.message}
@@ -255,14 +302,20 @@ const Page = () => {
                   Confirm Password <Required />
                 </Label>
 
-                <Input
+                <Controller
+                  control={control}
                   name="confirm"
-                  placeholder="Confirm your password"
-                  my={3}
-                  ref={register}
-                  type="password"
-                  error={errors.confirm}
-                  borderColor={errors.confirm ? 'alert' : 'greyLight'}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      id="confirm"
+                      placeholder="Confirm your password"
+                      my={3}
+                      type="password"
+                      error={errors.confirm}
+                      borderColor={errors.confirm ? 'alert' : 'greyLight'}
+                    />
+                  )}
                 />
 
                 {errors.confirm && (

@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Heading, Flex, Text, Box, Grid } from '@chakra-ui/react';
 import Image from 'next/image';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import getSheet from 'modules/sheets';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
@@ -63,7 +63,7 @@ const handleSearchSubmit = async ({ values, setData }) => {
 const Page = ({ data: initialData }) => {
   const [data, setData] = useState(initialData);
 
-  const { handleSubmit, register } = useForm({
+  const { handleSubmit, control } = useForm({
     defaultValues: {
       searchTerm: '',
     },
@@ -119,11 +119,16 @@ const Page = ({ data: initialData }) => {
               gridGap={2}
             >
               <Flex flexDirection="column">
-                <Input
-                  id="searchTerm"
+                <Controller
+                  control={control}
                   name="searchTerm"
-                  placeholder="Search by Team or Tournament"
-                  ref={register}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      id="searchTerm"
+                      placeholder="Search by Team or Tournament"
+                    />
+                  )}
                 />
               </Flex>
 
