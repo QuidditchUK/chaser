@@ -31,10 +31,12 @@ const EditClubSchema = object().shape({
     .nullable()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  name: string().required('Please enter a club name'),
-  slug: string().required('Please enter the prismic club uid'),
+  name: string().nullable().required('Please enter a Club Name'),
+  slug: string().nullable().required('Please enter the Prismic Club UID'),
   active: bool().required(),
-  league: string().nullable(),
+  league: string()
+    .nullable()
+    .required('Please select the league the club plays in'),
 });
 
 const handleEditSubmit = async (
