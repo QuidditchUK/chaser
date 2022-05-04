@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useQuery } from 'react-query';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 import {
@@ -21,8 +22,27 @@ import { CLUBS_READ, CLUBS_WRITE } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import Button from 'components/shared/button';
 import isAuthorized from 'modules/auth';
+import { ChevronRightIcon } from '@chakra-ui/icons';
+
+const handleDeleteClick = async ({ uuid, name, refetch }) => {
+  try {
+    if (confirm(`Are you sure you want to delete ${name}?`)) {
+      await api.delete(`/clubs/${uuid}`);
+      refetch();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const Dashboard = ({ scopes, clubs }) => {
-  const [activeClubs, inactiveClubs] = clubs.reduce(
+  const { data: queryClubs, refetch } = useQuery(
+    '/clubs/all',
+    () => api.get('/clubs/all').then(({ data }) => data),
+    { initialData: clubs }
+  );
+
+  const [activeClubs, inactiveClubs] = queryClubs?.reduce(
     (result, club) => {
       result[club?.active ? 0 : 1].push(club);
       return result;
@@ -38,8 +58,14 @@ const Dashboard = ({ scopes, clubs }) => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Heading as="h3" fontFamily="body" color="qukBlue">
-          <Link href="/admin">Dashboard</Link> / Clubs
+        <Heading
+          as="h3"
+          fontFamily="body"
+          color="qukBlue"
+          display="flex"
+          alignItems="center"
+        >
+          <Link href="/admin">Dashboard</Link> <ChevronRightIcon /> Clubs
         </Heading>
 
         <Button
@@ -111,6 +137,7 @@ const Dashboard = ({ scopes, clubs }) => {
                 <Th>Email</Th>
                 <Th>Members</Th>
                 <Th></Th>
+                <Th></Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -125,9 +152,25 @@ const Dashboard = ({ scopes, clubs }) => {
                   </Td>
                   <Td>{club?._count?.users}</Td>
                   {hasScope([CLUBS_WRITE], scopes) && (
-                    <Td>
-                      <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
-                    </Td>
+                    <>
+                      <Td>
+                        <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
+                      </Td>
+                      <Td>
+                        <Button
+                          variant="secondary"
+                          onClick={() =>
+                            handleDeleteClick({
+                              name: club?.name,
+                              uuid: club.uuid,
+                              refetch,
+                            })
+                          }
+                        >
+                          Delete
+                        </Button>
+                      </Td>
+                    </>
                   )}
                 </Tr>
               ))}

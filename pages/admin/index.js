@@ -20,9 +20,7 @@ const Dashboard = ({ scopes }) => {
         gridGap={4}
         gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }}
       >
-        {hasScope([USERS_READ, EMT], scopes) && (
-          <Card title="Users" href="/admin/users" />
-        )}
+        {hasScope([USERS_READ, EMT], scopes) && <Card title="Users" />}
         {hasScope([CLUBS_READ, EMT], scopes) && (
           <Card title="Clubs" href="/admin/clubs" />
         )}

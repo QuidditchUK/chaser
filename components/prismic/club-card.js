@@ -31,8 +31,6 @@ const PrismicClubCard = ({ uid }) => {
     );
   }
 
-  console.log(data);
-
   return (
     <ClubCard
       backgroundColor={data?.featured_color}

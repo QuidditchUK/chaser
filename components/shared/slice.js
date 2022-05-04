@@ -121,12 +121,13 @@ export default function Slice({
   size = 'md',
   children,
   px,
+  py,
 }) {
   const styles = useMultiStyleConfig('Slice', { size, variant });
   return (
     <Box
       __css={styles}
-      py={{ base: 4, lg: 5 }}
+      py={py || { base: 4, lg: 5 }}
       px={px || { base: 4, sm: 8, md: 9 }}
       as="section"
     >

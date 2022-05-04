@@ -36,6 +36,7 @@ export default extendTheme({
     md: rem(768),
     lg: rem(992),
     xl: rem(1200),
+    '2xl': rem(1500),
   }),
 
   fonts: {

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { object, string, bool } from 'yup';
 import dynamic from 'next/dynamic';
 import { Heading, Grid, Flex, Switch, Select, Text } from '@chakra-ui/react';
-import { CheckIcon } from '@chakra-ui/icons';
+import { CheckIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -86,9 +86,16 @@ const Dashboard = ({ club }) => {
 
   return (
     <Slice>
-      <Heading as="h3" fontFamily="body" color="qukBlue">
-        <Link href="/admin">Dashboard</Link> /{' '}
-        <Link href="/admin/clubs/">Clubs</Link> / {club?.name}
+      <Heading
+        as="h3"
+        fontFamily="body"
+        color="qukBlue"
+        display="flex"
+        alignItems="center"
+      >
+        <Link href="/admin">Dashboard</Link> <ChevronRightIcon />{' '}
+        <Link href="/admin/clubs/">Clubs</Link> <ChevronRightIcon />{' '}
+        {club?.name}
       </Heading>
       <form
         onSubmit={handleSubmit((values) =>
