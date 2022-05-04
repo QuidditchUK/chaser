@@ -13,6 +13,7 @@ import { getUserScopes, hasScope } from 'modules/scopes';
 import { CLUBS_READ, CLUBS_WRITE } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import Meta from 'components/shared/meta';
 
 import isAuthorized from 'modules/auth';
 
@@ -85,177 +86,191 @@ const Dashboard = ({ club }) => {
   });
 
   return (
-    <Slice>
-      <Heading
-        as="h3"
-        fontFamily="body"
-        color="qukBlue"
-        display="flex"
-        alignItems="center"
-      >
-        <Link href="/admin">Dashboard</Link> <ChevronRightIcon />{' '}
-        <Link href="/admin/clubs/">Clubs</Link> <ChevronRightIcon />{' '}
-        {club?.name}
-      </Heading>
-      <form
-        onSubmit={handleSubmit((values) =>
-          handleEditSubmit(club?.uuid, values, setServerError, setServerSuccess)
-        )}
-      >
-        <Grid
-          bg="gray.100"
-          p={4}
-          borderRadius="lg"
-          gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
-          width="100%"
+    <>
+      <Meta subTitle={club?.name} title="Clubs Admin Dashboard" />
+      <Slice>
+        <Heading
+          as="h3"
+          fontFamily="body"
+          color="qukBlue"
+          display="flex"
+          alignItems="center"
         >
-          <Flex direction="column">
-            <Label htmlFor="name">
-              Name <Required />
-            </Label>
+          <Link href="/admin">Dashboard</Link> <ChevronRightIcon />{' '}
+          <Link href="/admin/clubs/">Clubs</Link> <ChevronRightIcon />{' '}
+          {club?.name}
+        </Heading>
+        <form
+          onSubmit={handleSubmit((values) =>
+            handleEditSubmit(
+              club?.uuid,
+              values,
+              setServerError,
+              setServerSuccess
+            )
+          )}
+        >
+          <Grid
+            bg="gray.100"
+            p={4}
+            borderRadius="lg"
+            gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
+            width="100%"
+          >
+            <Flex direction="column">
+              <Label htmlFor="name">
+                Name <Required />
+              </Label>
 
-            <Controller
-              control={control}
-              name="name"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  id="name"
-                  placeholder="Club name"
-                  my={3}
-                  error={errors.name}
-                />
-              )}
-            />
-
-            {errors.name && (
-              <InlineError marginBottom={3}>{errors.name.message}</InlineError>
-            )}
-
-            <Label htmlFor="email">
-              Email Address <Required />
-            </Label>
-
-            <Controller
-              control={control}
-              name="email"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  id="email"
-                  placeholder="Club email address"
-                  my={3}
-                  error={errors.email}
-                />
-              )}
-            />
-
-            {errors.email && (
-              <InlineError marginBottom={3}>{errors.email.message}</InlineError>
-            )}
-
-            <Label htmlFor="slug">
-              Prismic UID <Required />
-            </Label>
-
-            <Controller
-              control={control}
-              name="slug"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  id="slug"
-                  placeholder="Enter the Club Prismic UID e.g. london-quidditch-club"
-                  my={3}
-                  error={errors.slug}
-                />
-              )}
-            />
-
-            {errors.slug && (
-              <InlineError marginBottom={3}>{errors.slug.message}</InlineError>
-            )}
-
-            <Label htmlFor="email">
-              League <Required />
-            </Label>
-
-            <Controller
-              control={control}
-              name="league"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  id="league"
-                  my={3}
-                  placeholder="Select league the team plays in"
-                  bg="white"
-                  color="qukBlue"
-                >
-                  {LEAGUES.map((league) => (
-                    <option key={league} value={league}>
-                      {league}
-                    </option>
-                  ))}
-                </Select>
-              )}
-            />
-
-            {errors.league && (
-              <InlineError marginBottom={3}>
-                {errors.league.message}
-              </InlineError>
-            )}
-
-            <Label htmlFor="active">
-              Is the club active? <Required />
               <Controller
                 control={control}
-                name="active"
+                name="name"
                 render={({ field }) => (
-                  <Switch
+                  <Input
                     {...field}
-                    isChecked={field.value}
-                    id="active"
-                    colorScheme="green"
-                    ml={3}
+                    id="name"
+                    placeholder="Club name"
                     my={3}
-                    size="lg"
+                    error={errors.name}
                   />
                 )}
               />
-            </Label>
 
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting' : 'Update'}
-            </Button>
+              {errors.name && (
+                <InlineError marginBottom={3}>
+                  {errors.name.message}
+                </InlineError>
+              )}
+
+              <Label htmlFor="email">
+                Email Address <Required />
+              </Label>
+
+              <Controller
+                control={control}
+                name="email"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="email"
+                    placeholder="Club email address"
+                    my={3}
+                    error={errors.email}
+                  />
+                )}
+              />
+
+              {errors.email && (
+                <InlineError marginBottom={3}>
+                  {errors.email.message}
+                </InlineError>
+              )}
+
+              <Label htmlFor="slug">
+                Prismic UID <Required />
+              </Label>
+
+              <Controller
+                control={control}
+                name="slug"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="slug"
+                    placeholder="Enter the Club Prismic UID e.g. london-quidditch-club"
+                    my={3}
+                    error={errors.slug}
+                  />
+                )}
+              />
+
+              {errors.slug && (
+                <InlineError marginBottom={3}>
+                  {errors.slug.message}
+                </InlineError>
+              )}
+
+              <Label htmlFor="email">
+                League <Required />
+              </Label>
+
+              <Controller
+                control={control}
+                name="league"
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    id="league"
+                    my={3}
+                    placeholder="Select league the team plays in"
+                    bg="white"
+                    color="qukBlue"
+                  >
+                    {LEAGUES.map((league) => (
+                      <option key={league} value={league}>
+                        {league}
+                      </option>
+                    ))}
+                  </Select>
+                )}
+              />
+
+              {errors.league && (
+                <InlineError marginBottom={3}>
+                  {errors.league.message}
+                </InlineError>
+              )}
+
+              <Label htmlFor="active">
+                Is the club active? <Required />
+                <Controller
+                  control={control}
+                  name="active"
+                  render={({ field }) => (
+                    <Switch
+                      {...field}
+                      isChecked={field.value}
+                      id="active"
+                      colorScheme="green"
+                      ml={3}
+                      my={3}
+                      size="lg"
+                    />
+                  )}
+                />
+              </Label>
+
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting' : 'Update'}
+              </Button>
+            </Flex>
+          </Grid>
+        </form>
+
+        {serverError && (
+          <>
+            <InlineError my={3}>{serverError}</InlineError>
+          </>
+        )}
+
+        {serverSuccess && (
+          <Flex
+            alignItems="center"
+            bg="keeperGreen"
+            px={4}
+            py={1}
+            mt={6}
+            borderColor="keeperGreen"
+            borderWidth="1px"
+            borderStyle="solid"
+            color="white"
+            borderRadius="md"
+          >
+            <CheckIcon mr={3} /> <Text fontWeight="bold">Club updated</Text>
           </Flex>
-        </Grid>
-      </form>
-
-      {serverError && (
-        <>
-          <InlineError my={3}>{serverError}</InlineError>
-        </>
-      )}
-
-      {serverSuccess && (
-        <Flex
-          alignItems="center"
-          bg="keeperGreen"
-          px={4}
-          py={1}
-          mt={6}
-          borderColor="keeperGreen"
-          borderWidth="1px"
-          borderStyle="solid"
-          color="white"
-          borderRadius="md"
-        >
-          <CheckIcon mr={3} /> <Text fontWeight="bold">Club updated</Text>
-        </Flex>
-      )}
-    </Slice>
+        )}
+      </Slice>
+    </>
   );
 };
 

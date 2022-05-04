@@ -23,6 +23,7 @@ import Slice from 'components/shared/slice';
 import Button from 'components/shared/button';
 import isAuthorized from 'modules/auth';
 import { ChevronRightIcon } from '@chakra-ui/icons';
+import Meta from 'components/shared/meta';
 
 const handleDeleteClick = async ({ uuid, name, refetch }) => {
   try {
@@ -51,134 +52,143 @@ const Dashboard = ({ scopes, clubs }) => {
   );
 
   return (
-    <Slice>
-      <Flex
-        flexDirection="row"
-        width="100%"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Heading
-          as="h3"
-          fontFamily="body"
-          color="qukBlue"
-          display="flex"
+    <>
+      <Meta subTitle="Clubs Admin Dashboard" />
+      <Slice>
+        <Flex
+          flexDirection="row"
+          width="100%"
           alignItems="center"
+          justifyContent="space-between"
         >
-          <Link href="/admin">Dashboard</Link> <ChevronRightIcon /> Clubs
-        </Heading>
+          <Heading
+            as="h3"
+            fontFamily="body"
+            color="qukBlue"
+            display="flex"
+            alignItems="center"
+          >
+            <Link href="/admin">Dashboard</Link> <ChevronRightIcon /> Clubs
+          </Heading>
 
-        <Button
-          variant="transparent"
-          borderColor="qukBlue"
-          color="qukBlue"
-          _hover={{ bg: 'gray.300' }}
-          rightIcon={<SmallAddIcon />}
-          href="/admin/clubs/new"
-        >
-          Create new
-        </Button>
-      </Flex>
+          <Button
+            variant="transparent"
+            borderColor="qukBlue"
+            color="qukBlue"
+            _hover={{ bg: 'gray.300' }}
+            rightIcon={<SmallAddIcon />}
+            href="/admin/clubs/new"
+          >
+            Create new
+          </Button>
+        </Flex>
 
-      <Text>
-        These are our internal record of clubs that allow players to select
-        which club they are registered to play with. They are not to confused
-        with club profiles, which are powered by our CMS Prismic and have to be
-        set up separately. Members will only be able to select from active clubs
-        when choosing their clubs.
-      </Text>
+        <Text>
+          These are our internal record of clubs that allow players to select
+          which club they are registered to play with. They are not to confused
+          with club profiles, which are powered by our CMS Prismic and have to
+          be set up separately. Members will only be able to select from active
+          clubs when choosing their clubs.
+        </Text>
 
-      <Box bg="white" borderRadius="lg">
-        <TableContainer>
-          <Table variant="striped">
-            <Thead>
-              <Tr>
-                <Th>Name</Th>
-                <Th>League</Th>
-                <Th>Email</Th>
-                <Th>Members</Th>
-                <Th></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {activeClubs.map((club) => (
-                <Tr key={club?.uuid}>
-                  <Td>{club?.name}</Td>
-                  <Td>{club?.league}</Td>
-                  <Td>
-                    {club?.email && (
-                      <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
-                    )}
-                  </Td>
-                  <Td>{club?._count?.users}</Td>
-                  {hasScope([CLUBS_WRITE], scopes) && (
-                    <Td>
-                      <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
-                    </Td>
-                  )}
+        <Box bg="white" borderRadius="lg">
+          <TableContainer>
+            <Table variant="striped">
+              <Thead>
+                <Tr>
+                  <Th>Name</Th>
+                  <Th>League</Th>
+                  <Th>Email</Th>
+                  <Th>Members</Th>
+                  <Th></Th>
                 </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </Box>
-
-      <Heading as="h4" fontFamily="body" color="qukBlue">
-        Inactive Clubs
-      </Heading>
-
-      <Box bg="white" borderRadius="lg">
-        <TableContainer>
-          <Table variant="striped">
-            <Thead>
-              <Tr>
-                <Th>Name</Th>
-                <Th>League</Th>
-                <Th>Email</Th>
-                <Th>Members</Th>
-                <Th></Th>
-                <Th></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {inactiveClubs.map((club) => (
-                <Tr key={club?.uuid}>
-                  <Td>{club?.name}</Td>
-                  <Td>{club?.league}</Td>
-                  <Td>
-                    {club?.email && (
-                      <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
-                    )}
-                  </Td>
-                  <Td>{club?._count?.users}</Td>
-                  {hasScope([CLUBS_WRITE], scopes) && (
-                    <>
+              </Thead>
+              <Tbody>
+                {activeClubs.map((club) => (
+                  <Tr key={club?.uuid}>
+                    <Td>{club?.name}</Td>
+                    <Td>{club?.league}</Td>
+                    <Td>
+                      {club?.email && (
+                        <Link href={`mailto:${club?.email}`}>
+                          {club?.email}
+                        </Link>
+                      )}
+                    </Td>
+                    <Td>{club?._count?.users}</Td>
+                    {hasScope([CLUBS_WRITE], scopes) && (
                       <Td>
                         <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
                       </Td>
-                      <Td>
-                        <Button
-                          variant="secondary"
-                          onClick={() =>
-                            handleDeleteClick({
-                              name: club?.name,
-                              uuid: club.uuid,
-                              refetch,
-                            })
-                          }
-                        >
-                          Delete
-                        </Button>
-                      </Td>
-                    </>
-                  )}
+                    )}
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </Box>
+
+        <Heading as="h4" fontFamily="body" color="qukBlue">
+          Inactive Clubs
+        </Heading>
+
+        <Box bg="white" borderRadius="lg">
+          <TableContainer>
+            <Table variant="striped">
+              <Thead>
+                <Tr>
+                  <Th>Name</Th>
+                  <Th>League</Th>
+                  <Th>Email</Th>
+                  <Th>Members</Th>
+                  <Th></Th>
+                  <Th></Th>
                 </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </Box>
-    </Slice>
+              </Thead>
+              <Tbody>
+                {inactiveClubs.map((club) => (
+                  <Tr key={club?.uuid}>
+                    <Td>{club?.name}</Td>
+                    <Td>{club?.league}</Td>
+                    <Td>
+                      {club?.email && (
+                        <Link href={`mailto:${club?.email}`}>
+                          {club?.email}
+                        </Link>
+                      )}
+                    </Td>
+                    <Td>{club?._count?.users}</Td>
+                    {hasScope([CLUBS_WRITE], scopes) && (
+                      <>
+                        <Td>
+                          <Button href={`/admin/clubs/${club.uuid}`}>
+                            Edit
+                          </Button>
+                        </Td>
+                        <Td>
+                          <Button
+                            variant="secondary"
+                            onClick={() =>
+                              handleDeleteClick({
+                                name: club?.name,
+                                uuid: club.uuid,
+                                refetch,
+                              })
+                            }
+                          >
+                            Delete
+                          </Button>
+                        </Td>
+                      </>
+                    )}
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </Slice>
+    </>
   );
 };
 
