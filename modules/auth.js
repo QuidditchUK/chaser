@@ -1,7 +1,7 @@
 import { parseCookies } from 'modules/cookies';
 import { getUserScopes, hasScope } from 'modules/scopes';
 
-const isAuthorized = (req, res, pageScopes) => {
+const isAuthorized = async (req, res, pageScopes) => {
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
   if (!AUTHENTICATION_TOKEN) {
@@ -12,7 +12,7 @@ const isAuthorized = (req, res, pageScopes) => {
   }
 
   if (pageScopes) {
-    const userScopes = getUserScopes(AUTHENTICATION_TOKEN);
+    const userScopes = await getUserScopes(AUTHENTICATION_TOKEN);
 
     if (!hasScope(pageScopes, userScopes)) {
       res.setHeader('location', '/');

@@ -8,8 +8,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { api } from 'modules/api';
-import { parseCookies } from 'modules/cookies';
-import { CLUBS_READ, CLUBS_WRITE } from 'constants/scopes';
+import { CLUBS_READ, CLUBS_WRITE, EMT } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
@@ -217,11 +216,10 @@ const Dashboard = () => {
 };
 
 export const getServerSideProps = async ({ req, res, params }) => {
-  if (!isAuthorized(req, res, [CLUBS_READ, CLUBS_WRITE])) {
+  const auth = await isAuthorized(req, res, [CLUBS_READ, CLUBS_WRITE, EMT]);
+  if (!auth) {
     return { props: {} };
   }
-
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
   return {
     props: {},

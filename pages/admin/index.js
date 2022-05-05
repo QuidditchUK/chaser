@@ -29,7 +29,9 @@ const Dashboard = ({ scopes }) => {
           )}
           {hasScope([EMT], scopes) && <Card title="Transfers" />}
           {hasScope([EMT], scopes) && <Card title="National Teams" />}
-          {hasScope([EMT], scopes) && <Card title="Volunteer Permissions" />}
+          {hasScope([EMT], scopes) && (
+            <Card title="Volunteer Permissions" href="/admin/permissions" />
+          )}
         </Grid>
       </Slice>
     </>
@@ -37,13 +39,13 @@ const Dashboard = ({ scopes }) => {
 };
 
 export const getServerSideProps = async ({ req, res }) => {
-  if (!isAuthorized(req, res, DASHBOARD_SCOPES)) {
+  const auth = await isAuthorized(req, res, DASHBOARD_SCOPES);
+  if (!auth) {
     return { props: {} };
   }
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
-
-  const scopes = getUserScopes(AUTHENTICATION_TOKEN);
+  const scopes = await getUserScopes(AUTHENTICATION_TOKEN);
 
   return {
     props: {

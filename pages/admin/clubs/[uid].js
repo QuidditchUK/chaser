@@ -9,8 +9,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import { getUserScopes, hasScope } from 'modules/scopes';
-import { CLUBS_READ, CLUBS_WRITE } from 'constants/scopes';
+import { getUserScopes } from 'modules/scopes';
+import { CLUBS_READ, CLUBS_WRITE, EMT } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 import Meta from 'components/shared/meta';
@@ -277,13 +277,14 @@ const Dashboard = ({ club }) => {
 };
 
 export const getServerSideProps = async ({ req, res, params }) => {
-  if (!isAuthorized(req, res, [CLUBS_READ, CLUBS_WRITE])) {
+  const auth = await isAuthorized(req, res, [CLUBS_READ, CLUBS_WRITE, EMT]);
+  if (!auth) {
     return { props: {} };
   }
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
+  const scopes = await getUserScopes(AUTHENTICATION_TOKEN);
 
-  const scopes = getUserScopes(AUTHENTICATION_TOKEN);
   const { data: club } = await api.get(`/clubs/${params?.uid}`, {
     headers: {
       Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,

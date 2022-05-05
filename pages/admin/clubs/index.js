@@ -18,7 +18,7 @@ import {
 import { SmallAddIcon } from '@chakra-ui/icons';
 
 import { getUserScopes, hasScope } from 'modules/scopes';
-import { CLUBS_READ, CLUBS_WRITE } from 'constants/scopes';
+import { CLUBS_READ, CLUBS_WRITE, EMT } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import Button from 'components/shared/button';
 import isAuthorized from 'modules/auth';
@@ -53,7 +53,7 @@ const Dashboard = ({ scopes, clubs }) => {
 
   return (
     <>
-      <Meta subTitle="Clubs Admin Dashboard" />
+      <Meta subTitle="Clubs" title="Admin Dashboard" />
       <Slice>
         <Flex
           flexDirection="row"
@@ -116,7 +116,7 @@ const Dashboard = ({ scopes, clubs }) => {
                       )}
                     </Td>
                     <Td>{club?._count?.users}</Td>
-                    {hasScope([CLUBS_WRITE], scopes) && (
+                    {hasScope([CLUBS_WRITE, EMT], scopes) && (
                       <Td>
                         <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
                       </Td>
@@ -158,7 +158,7 @@ const Dashboard = ({ scopes, clubs }) => {
                       )}
                     </Td>
                     <Td>{club?._count?.users}</Td>
-                    {hasScope([CLUBS_WRITE], scopes) && (
+                    {hasScope([CLUBS_WRITE, EMT], scopes) && (
                       <>
                         <Td>
                           <Button href={`/admin/clubs/${club.uuid}`}>
@@ -193,13 +193,14 @@ const Dashboard = ({ scopes, clubs }) => {
 };
 
 export const getServerSideProps = async ({ req, res }) => {
-  if (!isAuthorized(req, res, [CLUBS_READ])) {
+  const auth = await isAuthorized(req, res, [CLUBS_READ, EMT]);
+  if (!auth) {
     return { props: {} };
   }
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
+  const scopes = await getUserScopes(AUTHENTICATION_TOKEN);
 
-  const scopes = getUserScopes(AUTHENTICATION_TOKEN);
   const { data: clubs } = await api.get('/clubs/all', {
     headers: {
       Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
