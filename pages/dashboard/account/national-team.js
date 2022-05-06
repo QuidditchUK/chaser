@@ -25,10 +25,6 @@ const Info = ({ user, events }) => (
     />
     <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>
       <Container>
-        <Flex justifyContent="center" alignItems="center">
-          <Logo />
-        </Flex>
-
         <Grid
           gridGap={4}
           gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}

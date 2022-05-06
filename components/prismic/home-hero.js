@@ -16,7 +16,18 @@ const handleFindQuidditch = async ({ postcode }, router) => {
 };
 
 const Video = (props) => (
-  <Box as="video" w="121%" minH="100%" objectFit="cover" {...props} />
+  <Box
+    as="video"
+    minHeight="100%"
+    position="absolute"
+    left={0}
+    right={0}
+    top={0}
+    bottom={0}
+    objectFit="cover"
+    width="100%"
+    {...props}
+  />
 );
 
 const HomeHero = ({ primary }) => {
@@ -35,23 +46,24 @@ const HomeHero = ({ primary }) => {
       overflow="hidden"
       position="relative"
     >
-      <Box minHeight={HERO_MIN_HEIGHTS} position="absolute">
+      <Flex maxHeight={HERO_MIN_HEIGHTS} overflow="hidden">
         <Video
           src={video_url?.url}
           poster={poster?.url}
           preload="metadata"
-          zIndex="0"
           autoPlay
           loop
           muted
         />
-      </Box>
+      </Flex>
       <Flex
-        position="relative"
+        position="absolute"
         minHeight={HERO_MIN_HEIGHTS}
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
+        top={0}
+        width="100%"
       >
         <Heading
           as="label"
