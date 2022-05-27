@@ -29,6 +29,7 @@ import Button from 'components/shared/button';
 import isAuthorized from 'modules/auth';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import Meta from 'components/shared/meta';
+import { getBasePageProps } from 'modules/prismic';
 
 const handleDeleteClick = async ({ uuid, name, scope, refetch }) => {
   try {
@@ -296,25 +297,31 @@ export const getServerSideProps = async ({ req, res }) => {
   }
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
-  const scopes = await getUserScopes(AUTHENTICATION_TOKEN);
 
-  const { data: emt_members } = await api.get(`/scopes/users/${EMT}`, {
+  const requestHeaders = {
     headers: {
       Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
     },
-  });
+  };
 
-  const { data: admin_members } = await api.get(`/scopes/users/${ADMIN}`, {
-    headers: {
-      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
-    },
-  });
+  const [
+    scopes,
+    { data: emt_members },
+    { data: admin_members },
+    basePageProps,
+  ] = await Promise.all([
+    getUserScopes(AUTHENTICATION_TOKEN),
+    api.get(`/scopes/users/${EMT}`, requestHeaders),
+    api.get(`/scopes/users/${ADMIN}`, requestHeaders),
+    getBasePageProps(),
+  ]);
 
   return {
     props: {
       emt_members,
       admin_members,
       scopes,
+      ...basePageProps,
     },
   };
 };

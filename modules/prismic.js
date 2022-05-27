@@ -190,7 +190,8 @@ export const linkResolver = ({ type, uid }) => {
 
 export async function getStaticPrismicProps({ type, uid, previewData }) {
   const { ref } = previewData;
-  const [page, posts] = await Promise.all([
+  const [basePageProps, page, posts] = await Promise.all([
+    getBasePageProps(),
     getPrismicDocByUid(type, uid, { ref }),
     getDocs('post', {
       orderings: '[my.post.date desc]',
@@ -199,5 +200,21 @@ export async function getStaticPrismicProps({ type, uid, previewData }) {
     }),
   ]);
 
-  return { page, posts };
+  return {
+    ...basePageProps,
+    page,
+    posts,
+  };
+}
+
+export async function getBasePageProps() {
+  const [header, footer] = await Promise.all([
+    Client().getSingle('header'),
+    Client().getSingle('footer'),
+  ]);
+
+  return {
+    header: header?.data,
+    // footer: footer?.data
+  };
 }

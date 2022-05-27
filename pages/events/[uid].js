@@ -3,7 +3,12 @@ import dynamic from 'next/dynamic';
 import format from 'date-fns/format';
 import { RichText } from 'prismic-reactjs';
 import { useQuery } from 'react-query';
-import { linkResolver, getDocs, getPrismicDocByUid } from 'modules/prismic';
+import {
+  linkResolver,
+  getDocs,
+  getPrismicDocByUid,
+  getBasePageProps,
+} from 'modules/prismic';
 
 import { Box, Grid, Heading, Image as ChakraImage } from '@chakra-ui/react';
 import GoogleMapReact from 'google-map-react';
@@ -167,9 +172,10 @@ export const getStaticProps = async ({
   const { ref } = previewData;
   const page =
     (await getPrismicDocByUid('events', uid, ref ? { ref } : null)) || null;
+  const basePageProps = await getBasePageProps();
 
   return {
-    props: { page, preview },
+    props: { page, preview, ...basePageProps },
     revalidate: 1,
   };
 };

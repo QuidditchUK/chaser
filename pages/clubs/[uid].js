@@ -9,6 +9,7 @@ import {
   getDocs,
   getPrismicDocByUid,
   getBlogTags,
+  getBasePageProps,
 } from 'modules/prismic';
 import { formatOrdinals } from 'modules/numbers';
 import {
@@ -390,6 +391,7 @@ export const getStaticProps = async ({
   const { ref } = previewData;
   const page =
     (await getPrismicDocByUid('clubs', uid, ref ? { ref } : null)) || null;
+  const basePageProps = await getBasePageProps();
 
   if (page?.tags) {
     const posts = await getBlogTags(page?.tags, {
@@ -398,13 +400,13 @@ export const getStaticProps = async ({
     });
 
     return {
-      props: { page, preview, posts },
+      props: { page, preview, posts, ...basePageProps },
       revalidate: 1,
     };
   }
 
   return {
-    props: { page, preview },
+    props: { page, preview, ...basePageProps },
     revalidate: 1,
   };
 };

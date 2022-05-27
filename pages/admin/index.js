@@ -11,6 +11,7 @@ import Slice from 'components/shared/slice';
 import Card from 'components/shared/card';
 import isAuthorized from 'modules/auth';
 import Meta from 'components/shared/meta';
+import { getBasePageProps } from 'modules/prismic';
 const Dashboard = ({ scopes }) => {
   return (
     <>
@@ -46,10 +47,12 @@ export const getServerSideProps = async ({ req, res }) => {
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
   const scopes = await getUserScopes(AUTHENTICATION_TOKEN);
+  const basePageProps = await getBasePageProps();
 
   return {
     props: {
       scopes,
+      ...basePageProps,
     },
   };
 };

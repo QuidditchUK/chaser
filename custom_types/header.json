@@ -1,0 +1,93 @@
+{
+  "Main": {
+    "top_level_navigation": {
+      "type": "Group",
+      "config": {
+        "fields": {
+          "link_label": {
+            "type": "Text",
+            "config": {
+              "label": "Link Label",
+              "placeholder": "Link Label..."
+            }
+          },
+          "link": {
+            "type": "Link",
+            "config": {
+              "label": "Link",
+              "placeholder": "Select a Link...",
+              "select": null
+            }
+          }
+        },
+        "label": "Top Level Navigation"
+      }
+    },
+    "body": {
+      "type": "Slices",
+      "fieldset": "Slice zone",
+      "config": {
+        "labels": null,
+        "choices": {
+          "menu_item": {
+            "type": "Slice",
+            "fieldset": "Menu Item",
+            "description": "Single Menu Item",
+            "icon": "looks_one",
+            "display": "list",
+            "non-repeat": {
+              "link_label": {
+                "type": "Text",
+                "config": {
+                  "label": "Link Label",
+                  "placeholder": "Link Label..."
+                }
+              },
+              "link": {
+                "type": "Link",
+                "config": {
+                  "label": "Link",
+                  "placeholder": "Select a Link..."
+                }
+              }
+            },
+            "repeat": {}
+          },
+          "menu_list": {
+            "type": "Slice",
+            "fieldset": "Menu List",
+            "description": "Menu with Dropdown",
+            "icon": "featured_play_list",
+            "display": "list",
+            "non-repeat": {
+              "label": {
+                "type": "Text",
+                "config": {
+                  "label": "Label",
+                  "placeholder": "Menu Label"
+                }
+              }
+            },
+            "repeat": {
+              "link_label": {
+                "type": "Text",
+                "config": {
+                  "label": "Link Label",
+                  "placeholder": "Link Label..."
+                }
+              },
+              "link": {
+                "type": "Link",
+                "config": {
+                  "label": "Link",
+                  "placeholder": "Select a Link...",
+                  "select": null
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

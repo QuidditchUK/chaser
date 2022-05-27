@@ -1,12 +1,14 @@
 import dynamic from 'next/dynamic';
-import { Box, Flex, Grid } from '@chakra-ui/react';
+import { Box, Grid } from '@chakra-ui/react';
 
-import { getScoutingApplicationEvents } from 'modules/prismic';
+import {
+  getBasePageProps,
+  getScoutingApplicationEvents,
+} from 'modules/prismic';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 import isAuthorized from 'modules/auth';
 
-const Logo = dynamic(() => import('components/shared/logo'));
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
 
@@ -50,18 +52,19 @@ export const getServerSideProps = async ({ req, res }) => {
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
-  const { data: user } = await api.get('/users/me', {
-    headers: {
-      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
-    },
-  });
-
-  const events = await getScoutingApplicationEvents();
+  const [{ data: user }, events, basePageProps] = await Promise.all([
+    api.get('/users/me', {
+      headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
+    }),
+    getScoutingApplicationEvents(),
+    getBasePageProps(),
+  ]);
 
   return {
     props: {
       user,
       events,
+      ...basePageProps,
     },
   };
 };

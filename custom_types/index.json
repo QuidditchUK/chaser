@@ -52,5 +52,11 @@
     "name": "Events",
     "repeatable": true,
     "value": "events.json"
+  },
+  {
+    "id": "header",
+    "name": "Header",
+    "repeatable": false,
+    "value": "header.json"
   }
 ]

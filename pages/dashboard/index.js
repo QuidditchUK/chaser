@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
 import isAuthorized from 'modules/auth';
+import { getBasePageProps } from 'modules/prismic';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -286,10 +287,12 @@ export const getServerSideProps = async ({ req, res }) => {
       Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
     },
   });
+  const basePageProps = await getBasePageProps();
 
   return {
     props: {
       user,
+      ...basePageProps,
     },
   };
 };

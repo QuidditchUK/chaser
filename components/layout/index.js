@@ -7,7 +7,7 @@ const PageErrorBoundary = dynamic(() =>
   import('components/errorBoundaries/page')
 );
 
-const Layout = ({ children, preview = false }) => {
+const Layout = ({ header, children, preview = false }) => {
   return (
     <Flex
       color="gray.800"
@@ -39,7 +39,7 @@ const Layout = ({ children, preview = false }) => {
           </Text>
         </Flex>
       )}
-      <Navigation />
+      <Navigation data={header} />
       <PageErrorBoundary>
         <Box as="main" display="flex" flexDirection="column" flexGrow="1">
           {children}

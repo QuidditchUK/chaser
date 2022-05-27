@@ -9,9 +9,7 @@ import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BRE
 const Button = dynamic(() => import('components/shared/button'));
 
 const handleFindQuidditch = async ({ postcode }, router) => {
-  await router.push(
-    `/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`
-  );
+  await router.push(`/clubs${postcode ? `?postcode=${postcode}` : ''}`);
   window.scrollTo(0, 0);
 };
 

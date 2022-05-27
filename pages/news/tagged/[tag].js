@@ -3,7 +3,12 @@ import Prismic from '@prismicio/client';
 import dynamic from 'next/dynamic';
 import { useInfiniteQuery } from 'react-query';
 import { Flex } from '@chakra-ui/react';
-import { getBlogTags, PAGE_SIZE, Client } from 'modules/prismic';
+import {
+  getBlogTags,
+  PAGE_SIZE,
+  Client,
+  getBasePageProps,
+} from 'modules/prismic';
 
 const LoadMore = dynamic(() =>
   import('pages/news').then(({ LoadMore }) => LoadMore)
@@ -81,13 +86,14 @@ const News = ({ posts: initialPosts = [], tag = '' }) => {
 };
 
 export const getServerSideProps = async ({ params: { tag } }) => {
+  const basePageProps = await getBasePageProps();
   const posts = await getBlogTags([unDasherizeTag(tag)], {
     orderings: '[my.post.date desc]',
     pageSize: PAGE_SIZE,
   });
 
   return {
-    props: { posts, tag },
+    props: { posts, tag, ...basePageProps },
   };
 };
 

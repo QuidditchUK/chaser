@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 
-import { getDocs, getPrismicDocByUid, formatMetadata } from 'modules/prismic';
+import { getDocs, getPrismicDocByUid, getBasePageProps } from 'modules/prismic';
 import PrismicSlice from 'components/prismic';
 
 const Page404 = dynamic(() => import('pages/404'));
@@ -55,12 +55,13 @@ export const getStaticProps = async ({
   preview = null,
   previewData = {},
 }) => {
+  const basePageProps = await getBasePageProps();
   const { ref } = previewData;
   const page =
     (await getPrismicDocByUid('post', uid, ref ? { ref } : null)) || null;
 
   return {
-    props: { page, preview },
+    props: { page, preview, ...basePageProps },
     revalidate: 1,
   };
 };

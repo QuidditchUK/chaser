@@ -16,6 +16,7 @@ import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BRE
 import Meta from 'components/shared/meta';
 
 import isAuthorized from 'modules/auth';
+import { getBasePageProps } from 'modules/prismic';
 
 const Label = dynamic(() => import('components/formControls/label'));
 const Button = dynamic(() => import('components/shared/button'));
@@ -283,18 +284,19 @@ export const getServerSideProps = async ({ req, res, params }) => {
   }
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
-  const scopes = await getUserScopes(AUTHENTICATION_TOKEN);
-
-  const { data: club } = await api.get(`/clubs/${params?.uid}`, {
-    headers: {
-      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
-    },
-  });
+  const [scopes, { data: club }, basePageProps] = await Promise.all([
+    getUserScopes(AUTHENTICATION_TOKEN),
+    api.get(`/clubs/${params?.uid}`, {
+      headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
+    }),
+    getBasePageProps(),
+  ]);
 
   return {
     props: {
       scopes,
       club,
+      ...basePageProps,
     },
   };
 };

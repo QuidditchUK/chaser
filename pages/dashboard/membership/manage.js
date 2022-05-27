@@ -20,6 +20,7 @@ import {
   Link,
   Checkbox,
 } from '@chakra-ui/react';
+import { getBasePageProps } from 'modules/prismic';
 
 const InlineError = dynamic(() =>
   import('components/shared/errors').then(({ InlineError }) => InlineError)
@@ -292,6 +293,7 @@ const ManageMembership = ({ products = [] }) => {
                   layout="fill"
                   alt="Two players laugh together at looking at the camera"
                   src="https://images.prismic.io/chaser/e8e1b385-cd00-469d-aa67-f66dca0d5491_trev_member_editQUK.jpg?auto=compress,format"
+                  priority={true}
                   borderRadius="0"
                   clipPath={{
                     base: 'none',
@@ -359,15 +361,17 @@ export const getServerSideProps = async ({ req, res }) => {
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
-  const { data } = await api.get('/products/me', {
-    headers: {
-      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
-    },
-  });
+  const [{ data: products }, basePageProps] = await Promise.all([
+    api.get('/products/me', {
+      headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
+    }),
+    getBasePageProps(),
+  ]);
 
   return {
     props: {
-      products: data,
+      products,
+      ...basePageProps,
     },
   };
 };

@@ -47,18 +47,23 @@ const moduleExports = {
         permanent: true,
       },
       {
-        source: '/clubs',
-        destination: '/find-quidditch',
+        source: '/find-quidditch',
+        destination: '/clubs',
         permanent: true,
       },
       {
         source: '/events',
-        destination: '/find-quidditch',
+        destination: '/clubs',
+        permanent: false,
+      },
+      {
+        source: '/teamuk',
+        destination: '/programmes/england',
         permanent: true,
       },
       {
         source: '/teamuk',
-        destination: '/programmes/team-england',
+        destination: '/programmes/england',
         permanent: true,
       },
     ];

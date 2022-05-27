@@ -5,6 +5,7 @@ import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 import isAuthorized from 'modules/auth';
+import { getBasePageProps } from 'modules/prismic';
 
 const Logo = dynamic(() => import('components/shared/logo'));
 const Meta = dynamic(() => import('components/shared/meta'));
@@ -70,15 +71,17 @@ export const getServerSideProps = async ({ req, res }) => {
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
-  const { data: user } = await api.get('/users/me', {
-    headers: {
-      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
-    },
-  });
+  const [{ data: user }, basePageProps] = await Promise.all([
+    api.get('/users/me', {
+      headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
+    }),
+    getBasePageProps(),
+  ]);
 
   return {
     props: {
       user,
+      ...basePageProps,
     },
   };
 };
