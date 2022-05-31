@@ -62,7 +62,7 @@
     "eslint-config-prettier": "^8.1.0",
     "g-sheets-api": "2.1.0",
     "husky": "^7.0.0",
-    "lint-staged": "11.1.2",
+    "lint-staged": "12.5.0",
     "prettier": "^2.2.1"
   },
   "ava": {
