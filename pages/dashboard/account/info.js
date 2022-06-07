@@ -20,7 +20,7 @@ const Info = ({ user }) => (
   <>
     <Meta
       description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
-      subTitle="Sign In"
+      subTitle="My info"
     />
     <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>
       <Container>
