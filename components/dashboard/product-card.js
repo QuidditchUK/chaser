@@ -71,7 +71,7 @@ const ProductCard = ({
       padding="3"
       bg={
         expires && parse(expires, 'dd-MM-yyyy', new Date()) < new Date()
-          ? 'alert'
+          ? 'monarchRed'
           : 'qukBlue'
       }
       clipPath={{
