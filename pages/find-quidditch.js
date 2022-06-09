@@ -400,7 +400,10 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
               </Heading>
 
               <Grid
-                gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }}
+                gridTemplateColumns={{
+                  base: '1fr',
+                  md: 'repeat(auto-fit, minmax(300px, 1fr))',
+                }}
                 gridGap={{ base: 4, md: 9 }}
                 pb={3}
               >
