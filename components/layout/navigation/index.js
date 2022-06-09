@@ -12,6 +12,9 @@ import {
   PopoverArrow,
   UnorderedList,
   ListItem,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import Router, { useRouter } from 'next/router';
@@ -25,15 +28,17 @@ import Link from 'next/link';
 
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import DesktopNavigation from '../navigationV2/desktop';
-
-const Button = dynamic(() => import('components/shared/button'));
-const Logo = dynamic(() => import('components/shared/logo'));
+import MobileNavigation from '../navigationV2/mobile';
 
 import FacebookIcon from 'public/images/facebook.svg';
 import YoutubeIcon from 'public/images/youtube.svg';
 import TwitterIcon from 'public/images/twitter.svg';
 import InstagramIcon from 'public/images/instagram.svg';
 import PersonIcon from 'public/images/person.svg';
+import { USER_NAVIGATION } from 'constants/navigation';
+
+const Button = dynamic(() => import('components/shared/button'));
+const Logo = dynamic(() => import('components/shared/logo'));
 
 const IconWrapper = (props) => (
   <ChakraLink height="15px" width="15px" {...props} />
@@ -41,28 +46,20 @@ const IconWrapper = (props) => (
 
 const Icon = (props) => <Box color="white" {...props} />;
 
-const USER_NAVIGATION = [
-  {
-    label: 'Dashboard',
-    href: '/dashboard',
-  },
-  {
-    label: 'My info',
-    href: '/dashboard/account/info',
-  },
-  {
-    label: 'QUK Membership',
-    href: '/dashboard/membership/manage',
-  },
-  {
-    label: 'Club',
-    href: '/dashboard/membership/club',
-  },
-  {
-    label: 'My National Team profile',
-    href: '/dashboard/account/national-team',
-  },
-];
+function Sidebar({ isOpen, onClose, data }) {
+  return (
+    <Drawer isOpen={isOpen} onClose={onClose} placement="right" size="xs">
+      <DrawerOverlay />
+      <DrawerContent bg="white" px={5} pt={3} overflowY="auto">
+        <MobileNavigation
+          onClose={onClose}
+          data={data?.body}
+          top_level_navigation={data?.top_level_navigation}
+        />
+      </DrawerContent>
+    </Drawer>
+  );
+}
 
 export default function Navigation({ data }) {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -278,7 +275,7 @@ export default function Navigation({ data }) {
         </Box>
       </Box>
 
-      {/* <Sidebar isOpen={isOpen} onClose={onClose} data={data} /> */}
+      <Sidebar isOpen={isOpen} onClose={onClose} data={data} />
     </>
   );
 }
