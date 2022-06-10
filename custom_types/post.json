@@ -694,6 +694,54 @@
               }
             },
             "repeat": {}
+          },
+          "event_cards": {
+            "type": "Slice",
+            "fieldset": "Event Card",
+            "description": "Grid of Event Cards",
+            "icon": "recent_actors",
+            "display": "list",
+            "non-repeat": {
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2",
+                  "label": "title"
+                }
+              },
+              "content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "content"
+                }
+              },
+              "variant": {
+                "type": "Select",
+                "config": {
+                  "options": [
+                    "light",
+                    "primary"
+                  ],
+                  "default_value": "light",
+                  "label": "Variant"
+                }
+              }
+            },
+            "repeat": {
+              "event": {
+                "type": "Link",
+                "config": {
+                  "select": "document",
+                  "customtypes": [
+                    "events"
+                  ],
+                  "label": "Events",
+                  "placeholder": "Select Event..."
+                }
+              }
+            }
           }
         }
       }

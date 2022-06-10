@@ -65,9 +65,7 @@ const ExternalLink = (props) => (
 );
 
 const handleFindQuidditch = async ({ postcode }, router) => {
-  await router.push(
-    `/find-quidditch${postcode ? `?postcode=${postcode}` : ''}`
-  );
+  await router.push(`/clubs${postcode ? `?postcode=${postcode}` : ''}`);
   window.scrollTo(0, 0);
 };
 
@@ -107,7 +105,7 @@ export const Footer = () => {
                   </ActiveLink>
                 </Item>
                 <Item>
-                  <ActiveLink href="/find-quidditch">
+                  <ActiveLink href="/clubs">
                     <span>All Clubs</span>
                   </ActiveLink>
                 </Item>

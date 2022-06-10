@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { Heading, Flex, Text, Box, Grid } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useForm, Controller } from 'react-hook-form';
-
+import { getBasePageProps } from 'modules/prismic';
 import getSheet from 'modules/sheets';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
@@ -221,12 +221,13 @@ const Page = ({ data: initialData }) => {
 };
 
 export const getStaticProps = async () => {
+  const basePageProps = await getBasePageProps();
   const sheet = await getSheet(SHEET_ID, 'Footage');
 
   const data = DEFAULT_VIDEO_ORDER(sheet);
 
   return {
-    props: { data },
+    props: { data, ...basePageProps },
     revalidate: 1,
   };
 };

@@ -24,13 +24,7 @@ import {
 
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';
-import {
-  getAllClubs,
-  getClubs,
-  getEvents,
-  getAllEvents,
-} from 'modules/prismic';
-import { forEach } from 'lodash';
+import { getAllClubs, getClubs, getBasePageProps } from 'modules/prismic';
 import RegisterClubForm from 'components/prismic/forms/register-club-form';
 
 const CloseIcon = dynamic(() => import('public/images/close.svg'));
@@ -406,7 +400,10 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
               </Heading>
 
               <Grid
-                gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }}
+                gridTemplateColumns={{
+                  base: '1fr',
+                  md: 'repeat(auto-fit, minmax(300px, 1fr))',
+                }}
                 gridGap={{ base: 4, md: 9 }}
                 pb={3}
               >
@@ -456,41 +453,6 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
               </p>
             </Flex>
           )}
-
-          {/* {watchShowEvents && !!events.length && (
-            <>
-              <Heading
-                as="h2"
-                fontSize="3xl"
-                fontFamily="body"
-                color="qukBlue"
-                mt={3}
-              >
-                Events
-              </Heading>
-
-              <Grid
-                gridTemplateColumns="1fr"
-                gridGap={{ base: 4, md: 9 }}
-                pb={3}
-              >
-                {events.map((event) => (
-                  <Flex flexDirection="column" key={event.uid}>
-                    <EventCard
-                      title={event.data.event_name}
-                      href={`/events/${event.uid}`}
-                      icon={event.data.icon?.url}
-                      leagues={event.data.leagues}
-                      venue={event.data.venue}
-                      startDate={event.data.event_start_date}
-                      endDate={event.data.event_end_date}
-                      image={event.data.images?.[0].image}
-                    />
-                  </Flex>
-                ))}
-              </Grid>
-            </>
-          )} */}
         </Container>
       </Box>
 
@@ -509,6 +471,8 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
 };
 
 export const getServerSideProps = async ({ query }) => {
+  const basePageProps = await getBasePageProps();
+
   if (!validPostcode(query.postcode)) {
     const clubs = await getAllClubs({
       showCommunity: true,
@@ -516,7 +480,7 @@ export const getServerSideProps = async ({ query }) => {
     });
 
     return {
-      props: { clubs },
+      props: { clubs, ...basePageProps },
     };
   }
 
@@ -533,7 +497,7 @@ export const getServerSideProps = async ({ query }) => {
   });
 
   return {
-    props: { clubs },
+    props: { clubs, ...basePageProps },
   };
 };
 

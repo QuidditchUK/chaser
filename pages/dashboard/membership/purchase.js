@@ -4,6 +4,7 @@ import { parseCookies } from 'modules/cookies';
 import { api } from 'modules/api';
 import isAuthorized from 'modules/auth';
 import { stripePromise } from 'modules/stripe';
+import { getBasePageProps } from 'modules/prismic';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -64,15 +65,17 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  const { data } = await api.get('/products', {
-    headers: {
-      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
-    },
-  });
+  const [{ data: products }, basePageProps] = await Promise.all([
+    api.get('/products', {
+      headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
+    }),
+    getBasePageProps(),
+  ]);
 
   return {
     props: {
-      products: data,
+      products,
+      ...basePageProps,
     },
   };
 };

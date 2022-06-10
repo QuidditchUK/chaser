@@ -25,6 +25,7 @@ const InlineError = dynamic(() =>
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
 import PrismicClubCard from 'components/prismic/club-card';
+import { getBasePageProps } from 'modules/prismic';
 
 const SelectClubSchema = object().shape({
   club_uuid: string().nullable().required('Required'),
@@ -233,18 +234,23 @@ export const getServerSideProps = async ({ req, res }) => {
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
-  const { data: clubs } = await api.get('/clubs/search');
-  const { data: user } = await api.get('/users/me', {
+  const requestHeaders = {
     headers: {
       Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
     },
-  });
+  };
 
-  const { data: products } = await api.get('/products/me', {
-    headers: {
-      Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
-    },
-  });
+  const [
+    { data: clubs },
+    { data: user },
+    { data: products },
+    basePageProps,
+  ] = await Promise.all([
+    api.get('/clubs/search'),
+    api.get('/users/me', requestHeaders),
+    api.get('/products/me', requestHeaders),
+    getBasePageProps(),
+  ]);
 
   if (
     !products.length ||
@@ -263,6 +269,7 @@ export const getServerSideProps = async ({ req, res }) => {
     props: {
       clubs,
       user,
+      ...basePageProps,
     },
   };
 };

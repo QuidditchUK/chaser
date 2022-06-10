@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { Flex, Button } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
-import { getDocs, PAGE_SIZE, Client } from 'modules/prismic';
+import { getDocs, PAGE_SIZE, Client, getBasePageProps } from 'modules/prismic';
 import { useInfiniteQuery } from 'react-query';
 
 const LatestNews = dynamic(() => import('components/prismic/latest-news'));
@@ -82,6 +82,7 @@ const News = ({ posts: initialPosts = [] }) => {
 };
 
 export const getStaticProps = async () => {
+  const basePageProps = await getBasePageProps();
   const posts = await getDocs('post', {
     orderings: '[my.post.date desc]',
     pageSize: PAGE_SIZE,
@@ -89,7 +90,7 @@ export const getStaticProps = async () => {
   });
 
   return {
-    props: { posts },
+    props: { posts, ...basePageProps },
     revalidate: 1,
   };
 };

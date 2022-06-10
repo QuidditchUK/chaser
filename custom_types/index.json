@@ -42,15 +42,15 @@
     "value": "clubs.json"
   },
   {
-    "id": "navigation",
-    "name": "Navigation",
-    "repeatable": false,
-    "value": "navigation.json"
-  },
-  {
     "id": "events",
     "name": "Events",
     "repeatable": true,
     "value": "events.json"
+  },
+  {
+    "id": "header",
+    "name": "Header",
+    "repeatable": false,
+    "value": "header.json"
   }
 ]

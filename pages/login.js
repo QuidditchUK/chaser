@@ -10,6 +10,7 @@ import { rem } from 'styles/theme';
 import { api } from 'modules/api';
 import { setCookies, parseCookies } from 'modules/cookies';
 import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import { getBasePageProps } from 'modules/prismic';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -72,9 +73,6 @@ const Page = () => {
         px={{ base: 4, sm: 8, md: 9 }}
       >
         <Container maxWidth={rem(500)}>
-          <Flex justifyContent="center" alignItems="center">
-            <Logo />
-          </Flex>
           <Heading as="h1" fontFamily="body" textAlign="center">
             Sign in to QuidditchUK
           </Heading>
@@ -192,6 +190,7 @@ const Page = () => {
 };
 
 export const getServerSideProps = async ({ req, res }) => {
+  const basePageProps = await getBasePageProps();
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
 
   if (AUTHENTICATION_TOKEN) {
@@ -200,7 +199,7 @@ export const getServerSideProps = async ({ req, res }) => {
   }
 
   return {
-    props: {},
+    props: basePageProps,
   };
 };
 

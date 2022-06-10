@@ -8,7 +8,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
 import { api } from 'modules/api';
-import { setCookies } from 'modules/cookies';
+import { setCookies, parseCookies } from 'modules/cookies';
+import { getBasePageProps } from 'modules/prismic';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
 
@@ -354,6 +355,20 @@ const Page = () => {
       </Box>
     </>
   );
+};
+
+export const getServerSideProps = async ({ req, res }) => {
+  const basePageProps = await getBasePageProps();
+  const { AUTHENTICATION_TOKEN } = parseCookies(req);
+
+  if (AUTHENTICATION_TOKEN) {
+    res.setHeader('location', '/dashboard');
+    res.statusCode = 302;
+  }
+
+  return {
+    props: basePageProps,
+  };
 };
 
 export default Page;

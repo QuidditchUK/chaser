@@ -3,6 +3,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import format from 'date-fns/format';
 import { Box, Flex, Text, Link as ChakraLink } from '@chakra-ui/react';
+import CATEGORIES from 'constants/categories';
 
 const Image = dynamic(() => import('components/shared/image'));
 const Slice = dynamic(() => import('components/shared/slice'));
@@ -21,10 +22,10 @@ const IconWrapper = (props) => (
 );
 
 const Icon = (props) => (
-  <Box color="greyDark" _hover={{ color: 'qukBlue' }} {...props} />
+  <Box color="white" _hover={{ color: 'monarchRed' }} {...props} />
 );
 
-const NewsSupport = ({ author, date, title, tags }) => {
+const NewsSupport = ({ author, date, title, tags, category }) => {
   const SITE_URL = 'https://quidditchuk.org';
 
   const router = useRouter();
@@ -53,69 +54,71 @@ const NewsSupport = ({ author, date, title, tags }) => {
         </Box>
       )}
 
-      <Slice size="sm">
-        <Flex alignItems="center" justifyContent="space-between">
-          <Flex alignItems="center">
-            <Image
-              src={renderAuthor(author)}
-              alt={author}
-              borderRadius="full"
-              height="80px"
-              width="80px"
-            />
+      <Box bg="gray.800" py={{ base: 4, lg: 5 }} px={{ base: 4, sm: 8, md: 9 }}>
+        <Container>
+          <Flex alignItems="center" justifyContent="space-between">
+            <Flex alignItems="center">
+              <Image
+                src={renderAuthor(author)}
+                alt={author}
+                borderRadius="full"
+                height="80px"
+                width="80px"
+              />
 
-            <Text
-              size="sm"
-              fontWeight="bold"
-              color="qukBlue"
-              lineHeight="body"
-              ml={5}
-            >
-              By {author}
-              <br />
-              {format(new Date(date), 'MMMM d, yyyy')}
-            </Text>
-          </Flex>
-
-          <Flex flexDirection="column">
-            <Text mt={0} size="sm" color="qukBlue">
-              Share this article
-            </Text>
-
-            <Flex justifyContent="space-between">
-              <IconWrapper
-                aria-label="Share this article on Facebook"
-                href={`https://www.facebook.com/sharer.php?u=${url}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Text
+                size="sm"
+                fontWeight="bold"
+                color="white"
+                lineHeight="body"
+                ml={5}
               >
-                <Icon as={FacebookIcon} />
-              </IconWrapper>
+                By {author}
+                <br />
+                {format(new Date(date), 'MMMM d, yyyy')}
+              </Text>
+            </Flex>
 
-              <IconWrapper
-                aria-label="Tweet this article"
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  `QuidditchUK: ${title} ${url}`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon as={TwitterIcon} />
-              </IconWrapper>
-              <IconWrapper
-                aria-label="Share this article on Whatsapp"
-                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                  `QuidditchUK: ${title} ${url}`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon as={WhatsappIcon} />
-              </IconWrapper>
+            <Flex flexDirection="column">
+              <Text mt={0} size="sm" color="white">
+                Share this article
+              </Text>
+
+              <Flex justifyContent="space-between">
+                <IconWrapper
+                  aria-label="Share this article on Facebook"
+                  href={`https://www.facebook.com/sharer.php?u=${url}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon as={FacebookIcon} />
+                </IconWrapper>
+
+                <IconWrapper
+                  aria-label="Tweet this article"
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                    `QuidditchUK: ${title} ${url}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon as={TwitterIcon} />
+                </IconWrapper>
+                <IconWrapper
+                  aria-label="Share this article on Whatsapp"
+                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                    `QuidditchUK: ${title} ${url}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon as={WhatsappIcon} />
+                </IconWrapper>
+              </Flex>
             </Flex>
           </Flex>
-        </Flex>
-      </Slice>
+        </Container>
+      </Box>
     </>
   );
 };

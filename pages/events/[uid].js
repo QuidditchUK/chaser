@@ -3,7 +3,12 @@ import dynamic from 'next/dynamic';
 import format from 'date-fns/format';
 import { RichText } from 'prismic-reactjs';
 import { useQuery } from 'react-query';
-import { linkResolver, getDocs, getPrismicDocByUid } from 'modules/prismic';
+import {
+  linkResolver,
+  getDocs,
+  getPrismicDocByUid,
+  getBasePageProps,
+} from 'modules/prismic';
 
 import { Box, Grid, Heading, Image as ChakraImage } from '@chakra-ui/react';
 import GoogleMapReact from 'google-map-react';
@@ -109,25 +114,36 @@ const EventPage = ({ page: initialPage, preview }) => {
                 term="QUK Membership Required"
                 description={event.quk_membership_required ? 'Yes' : 'No'}
               />
-              <Description
-                term="Individual Registration Deadline"
-                description={format(
-                  new Date(event.individual_registration_deadline),
-                  'MMMM d, yyyy'
-                )}
-              />
-              <Description
-                term="Individual Fee"
-                description={`£${event.player_fee}`}
-              />
-              <Description
-                term="Team Registration Deadline"
-                description={format(
-                  new Date(event.club_registration_deadline),
-                  'MMMM d, yyyy'
-                )}
-              />
-              <Description term="Team Fee" description={`£${event.team_fee}`} />
+              {event?.individual_registration_deadline && (
+                <Description
+                  term="Individual Registration Deadline"
+                  description={format(
+                    new Date(event.individual_registration_deadline),
+                    'MMMM d, yyyy'
+                  )}
+                />
+              )}
+              {event?.player_fee && (
+                <Description
+                  term="Individual Fee"
+                  description={`£${event.player_fee}`}
+                />
+              )}
+              {event?.club_registration_deadline && (
+                <Description
+                  term="Team Registration Deadline"
+                  description={format(
+                    new Date(event.club_registration_deadline),
+                    'MMMM d, yyyy'
+                  )}
+                />
+              )}
+              {event?.team_fee && (
+                <Description
+                  term="Team Fee"
+                  description={`£${event.team_fee}`}
+                />
+              )}
             </DescriptionList>
 
             <Box width="100%" h="250px" mt={4}>
@@ -167,9 +183,10 @@ export const getStaticProps = async ({
   const { ref } = previewData;
   const page =
     (await getPrismicDocByUid('events', uid, ref ? { ref } : null)) || null;
+  const basePageProps = await getBasePageProps();
 
   return {
-    props: { page, preview },
+    props: { page, preview, ...basePageProps },
     revalidate: 1,
   };
 };

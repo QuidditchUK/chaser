@@ -13,6 +13,7 @@ import Slice from 'components/shared/slice';
 import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
 import isAuthorized from 'modules/auth';
+import { getBasePageProps } from 'modules/prismic';
 
 const Label = dynamic(() => import('components/formControls/label'));
 const Button = dynamic(() => import('components/shared/button'));
@@ -221,8 +222,10 @@ export const getServerSideProps = async ({ req, res, params }) => {
     return { props: {} };
   }
 
+  const basePageProps = await getBasePageProps();
+
   return {
-    props: {},
+    props: basePageProps,
   };
 };
 
