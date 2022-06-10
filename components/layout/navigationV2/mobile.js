@@ -152,7 +152,7 @@ export default function MobileNavigation({
           border={0}
           bg="white"
           _hover={{
-            bg: 'white',
+            bg: 'gray.100',
             color: 'qukBlue',
           }}
           p={0}

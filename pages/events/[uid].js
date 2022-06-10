@@ -114,25 +114,36 @@ const EventPage = ({ page: initialPage, preview }) => {
                 term="QUK Membership Required"
                 description={event.quk_membership_required ? 'Yes' : 'No'}
               />
-              <Description
-                term="Individual Registration Deadline"
-                description={format(
-                  new Date(event.individual_registration_deadline),
-                  'MMMM d, yyyy'
-                )}
-              />
-              <Description
-                term="Individual Fee"
-                description={`£${event.player_fee}`}
-              />
-              <Description
-                term="Team Registration Deadline"
-                description={format(
-                  new Date(event.club_registration_deadline),
-                  'MMMM d, yyyy'
-                )}
-              />
-              <Description term="Team Fee" description={`£${event.team_fee}`} />
+              {event?.individual_registration_deadline && (
+                <Description
+                  term="Individual Registration Deadline"
+                  description={format(
+                    new Date(event.individual_registration_deadline),
+                    'MMMM d, yyyy'
+                  )}
+                />
+              )}
+              {event?.player_fee && (
+                <Description
+                  term="Individual Fee"
+                  description={`£${event.player_fee}`}
+                />
+              )}
+              {event?.club_registration_deadline && (
+                <Description
+                  term="Team Registration Deadline"
+                  description={format(
+                    new Date(event.club_registration_deadline),
+                    'MMMM d, yyyy'
+                  )}
+                />
+              )}
+              {event?.team_fee && (
+                <Description
+                  term="Team Fee"
+                  description={`£${event.team_fee}`}
+                />
+              )}
             </DescriptionList>
 
             <Box width="100%" h="250px" mt={4}>

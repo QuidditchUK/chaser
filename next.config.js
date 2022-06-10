@@ -52,11 +52,6 @@ const moduleExports = {
         permanent: true,
       },
       {
-        source: '/events',
-        destination: '/clubs',
-        permanent: false,
-      },
-      {
         source: '/teamuk',
         destination: '/programmes/england',
         permanent: true,
