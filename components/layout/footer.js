@@ -57,15 +57,6 @@ const ActiveLink = ({ href, children }) => {
   );
 };
 
-const ExternalLink = (props) => (
-  <ChakraLink
-    color="white"
-    textDecoration="none"
-    _hover={{ borderBottom: '2px solid', borderColor: 'white' }}
-    {...props}
-  />
-);
-
 const FooterMenu = ({ label, items }) => (
   <Box>
     <Heading as="h3" fontSize="lg">
