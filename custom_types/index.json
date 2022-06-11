@@ -52,5 +52,11 @@
     "name": "Header",
     "repeatable": false,
     "value": "header.json"
+  },
+  {
+    "id": "footer",
+    "name": "Footer",
+    "repeatable": false,
+    "value": "footer.json"
   }
 ]

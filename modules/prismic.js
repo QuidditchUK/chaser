@@ -215,6 +215,6 @@ export async function getBasePageProps() {
 
   return {
     header: header?.data,
-    // footer: footer?.data
+    footer: footer?.data,
   };
 }

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { Link as PrismicLink } from 'prismic-reactjs';
 import {
   Box,
   Grid,
@@ -13,6 +14,7 @@ import {
   ListItem,
 } from '@chakra-ui/react';
 import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import { linkResolver } from 'modules/prismic';
 
 const Logo = dynamic(() => import('components/shared/logo'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -64,12 +66,30 @@ const ExternalLink = (props) => (
   />
 );
 
+const FooterMenu = ({ label, items }) => (
+  <Box>
+    <Heading as="h3" fontSize="lg">
+      {label}
+    </Heading>
+
+    <UnorderedList pl={0} ml={0} styleType="none">
+      {items.map(({ link_label, link }) => (
+        <Item key={`${link?.url}-${link_label}`}>
+          <ActiveLink href={PrismicLink.url(link, linkResolver)}>
+            {link_label}
+          </ActiveLink>
+        </Item>
+      ))}
+    </UnorderedList>
+  </Box>
+);
+
 const handleFindQuidditch = async ({ postcode }, router) => {
   await router.push(`/clubs${postcode ? `?postcode=${postcode}` : ''}`);
   window.scrollTo(0, 0);
 };
 
-export const Footer = () => {
+export const Footer = ({ data }) => {
   const router = useRouter();
   const { control, handleSubmit } = useForm({
     defaultValues: { postcode: '' },
@@ -88,171 +108,16 @@ export const Footer = () => {
             gridTemplateColumns={{ base: '1fr 1fr', md: '1fr 1fr 1fr 1fr' }}
             gridGap={{ base: 4, md: 9 }}
           >
-            <Box>
-              <Heading as="h3" fontSize="lg">
-                Information
-              </Heading>
-
-              <UnorderedList pl={0} ml={0} styleType="none">
-                <Item>
-                  <ActiveLink href="/about/contact-us">
-                    <span>Contact Us</span>
-                  </ActiveLink>
-                </Item>
-                <Item>
-                  <ActiveLink href="/about/leadership">
-                    <span>Leadership</span>
-                  </ActiveLink>
-                </Item>
-                <Item>
-                  <ActiveLink href="/clubs">
-                    <span>All Clubs</span>
-                  </ActiveLink>
-                </Item>
-                <Item>
-                  <ExternalLink
-                    href="https://docs.google.com/spreadsheets/d/1QuGPhsj_LV81dRCXVRKHpdYvj9IrrupcxH9c8LWXZuE"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>Results</span>
-                  </ExternalLink>
-                </Item>
-                <Item>
-                  <ActiveLink href="/videos">
-                    <span>Videos</span>
-                  </ActiveLink>
-                </Item>
-                <Item>
-                  <ActiveLink href="/about/fees">
-                    <span>Season Fees</span>
-                  </ActiveLink>
-                </Item>
-                <Item>
-                  <ActiveLink href="/newsletters-archive">
-                    <span>Newsletters</span>
-                  </ActiveLink>
-                </Item>
-              </UnorderedList>
-            </Box>
+            <FooterMenu label={data?.menu_1_label} items={data?.menu_1_links} />
+            <FooterMenu label={data?.menu_2_label} items={data?.menu_2_links} />
+            <FooterMenu label={data?.menu_3_label} items={data?.menu_3_links} />
 
             <Box>
               <Heading as="h3" fontSize="lg">
-                Partners
+                {data?.disclaimer_label}
               </Heading>
 
-              <UnorderedList pl={0} ml={0} styleType="none">
-                <Item>
-                  <ExternalLink
-                    href="http://www.enricheducationuk.com/quidditch/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>Enrich Education</span>
-                  </ExternalLink>
-                </Item>
-                <Item>
-                  <ExternalLink
-                    href="https://www.epionemedical.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>Epione Medical</span>
-                  </ExternalLink>
-                </Item>
-                <Item>
-                  <ExternalLink
-                    href="https://www.utilityapparel.com/quidditch-uk/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>Utility Apparel</span>
-                  </ExternalLink>
-                </Item>
-                <Item>
-                  <ExternalLink
-                    href="https://www.quidditcheurope.org/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>Quidditch Europe</span>
-                  </ExternalLink>
-                </Item>
-                <Item>
-                  <ExternalLink
-                    href="https://iqasport.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>International Quidditch Association</span>
-                  </ExternalLink>
-                </Item>
-                <Item>
-                  <ExternalLink
-                    href="https://quidditchscheduler.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>Quidditch Scheduler</span>
-                  </ExternalLink>
-                </Item>
-              </UnorderedList>
-            </Box>
-
-            <Box>
-              <Heading as="h3" fontSize="lg">
-                Programmes
-              </Heading>
-
-              <UnorderedList pl={0} ml={0} styleType="none">
-                <Item>
-                  <ActiveLink href="/programmes/national-teams">
-                    <span>National Teams</span>
-                  </ActiveLink>
-                </Item>
-                <Item>
-                  <ActiveLink href="/programmes/grants">
-                    <span>Grants</span>
-                  </ActiveLink>
-                </Item>
-              </UnorderedList>
-
-              <Heading as="h3" fontSize="lg">
-                Resources
-              </Heading>
-
-              <UnorderedList pl={0} ml={0} styleType="none">
-                <Item>
-                  <ActiveLink href="/resources">
-                    <span>General Resources</span>
-                  </ActiveLink>
-                </Item>
-
-                <Item>
-                  <ActiveLink href="/play/coaching-resources">
-                    <span>Coaching Resources</span>
-                  </ActiveLink>
-                </Item>
-              </UnorderedList>
-            </Box>
-
-            <Box>
-              <Heading as="h3" fontSize="lg">
-                Disclaimer
-              </Heading>
-
-              <Text fontSize="sm">
-                QuidditchUK and its activities are not licensed by, sponsored by
-                or associated with Warner Bros., J.K. Rowling or their
-                affiliates. ‘Quidditch,’ ‘Harry Potter’ and all related names,
-                characters and indicia are trademarks of and &copy; Warner Bros.
-                – Harry Potter publishing rights &copy; J.K. Rowling.
-              </Text>
-
-              <Text fontSize="sm">
-                QuidditchUK is a Non-Profit Company Registered in England and
-                Wales, Company Registration No. 12178866
-              </Text>
+              <Text fontSize="sm">{data?.disclaimer}</Text>
 
               <ChakraLink
                 color="qukBlue"
