@@ -64,7 +64,7 @@ const FooterMenu = ({ label, items }) => (
     </Heading>
 
     <UnorderedList pl={0} ml={0} styleType="none">
-      {items.map(({ link_label, link }) => (
+      {items?.map(({ link_label, link }) => (
         <Item key={`${link?.url}-${link_label}`}>
           <ActiveLink href={PrismicLink.url(link, linkResolver)}>
             {link_label}
