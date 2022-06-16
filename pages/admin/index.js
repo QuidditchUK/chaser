@@ -6,6 +6,7 @@ import {
   EMT,
   USERS_READ,
   CLUBS_READ,
+  TRANSFER_READ,
 } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import Card from 'components/shared/card';
@@ -28,7 +29,9 @@ const Dashboard = ({ scopes }) => {
           {hasScope([CLUBS_READ, EMT], scopes) && (
             <Card title="Clubs" href="/admin/clubs" />
           )}
-          {hasScope([EMT], scopes) && <Card title="Transfers" />}
+          {hasScope([TRANSFER_READ, EMT], scopes) && (
+            <Card title="Transfers" href="/admin/transfers" />
+          )}
           {hasScope([EMT], scopes) && <Card title="National Teams" />}
           {hasScope([EMT], scopes) && (
             <Card title="Volunteer Permissions" href="/admin/permissions" />
