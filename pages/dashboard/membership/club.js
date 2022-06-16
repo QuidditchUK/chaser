@@ -3,13 +3,32 @@ import dynamic from 'next/dynamic';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import parse from 'date-fns/parse';
+import { orderBy } from 'lodash';
 import Router from 'next/router';
+import format from 'date-fns/format';
 import { object, string, bool } from 'yup';
+import { useQuery } from 'react-query';
 
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
 import isAuthorized from 'modules/auth';
-import { Box, Grid, Flex, Heading, Select, Checkbox } from '@chakra-ui/react';
+import {
+  Box,
+  Grid,
+  Flex,
+  Heading,
+  Select,
+  Checkbox,
+  Link,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+} from '@chakra-ui/react';
+import TransferRequestForm from 'components/dashboard/transfer-request-form';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -21,6 +40,21 @@ const Required = dynamic(() => import('components/formControls/required'));
 const InlineError = dynamic(() =>
   import('components/shared/errors').then(({ InlineError }) => InlineError)
 );
+
+const STATUS = {
+  APPROVED: {
+    label: 'Approved',
+    color: 'keeperGreen',
+  },
+  DECLINED: {
+    label: 'Declined',
+    color: 'monarchRed',
+  },
+  PENDING: {
+    label: 'Pending',
+    color: 'qukBlue',
+  },
+};
 
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
@@ -52,9 +86,15 @@ const handleClubSubmit = async ({ club_uuid }, setServerError) => {
   }
 };
 
-const ManageClub = ({ user, clubs = [] }) => {
+const ManageClub = ({ user, clubs = [], settings }) => {
+  const { data: queryUser, refetch } = useQuery(
+    '/users/me',
+    () => api.get('/users/me').then(({ data }) => data),
+    { initialData: user }
+  );
+
   const [selectedClub, setSelectedClub] = useState(
-    clubs.find(({ uuid }) => uuid === user?.club_uuid)
+    clubs.find(({ uuid }) => uuid === queryUser?.club_uuid)
   );
   const [serverError, setServerError] = useState(null);
 
@@ -66,12 +106,12 @@ const ManageClub = ({ user, clubs = [] }) => {
   } = useForm({
     resolver: yupResolver(SelectClubSchema),
     defaultValues: {
-      club_uuid: user.club_uuid,
+      club_uuid: queryUser?.club_uuid,
       confirm: false,
     },
   });
 
-  const currentSelectedClubUuid = watch('club_uuid', user.club_uuid);
+  const currentSelectedClubUuid = watch('club_uuid', queryUser?.club_uuid);
 
   useEffect(() => {
     if (selectedClub?.uuid !== currentSelectedClubUuid) {
@@ -104,11 +144,11 @@ const ManageClub = ({ user, clubs = [] }) => {
               borderRadius="md"
             >
               <Heading as="h2" fontFamily="body" color="qukBlue" fontSize="3xl">
-                Select your club
+                {queryUser?.club_uuid ? 'Your club' : 'Select your club'}
               </Heading>
 
               <Content>
-                {user.club_uuid ? (
+                {queryUser?.club_uuid ? (
                   <>
                     <p>
                       You have selected <strong>{selectedClub?.name}</strong> as
@@ -118,9 +158,36 @@ const ManageClub = ({ user, clubs = [] }) => {
                       If you need to change your club, you must submit a
                       transfer request to QuidditchUK to request any changes.
                     </p>
-                    <Button variant="secondary" href="/about/contact-us">
-                      Contact Us
-                    </Button>
+                    <p>
+                      The transfer window is currently{' '}
+                      <strong>
+                        {settings.transfer_window ? 'Open' : 'Closed'}.
+                      </strong>
+                    </p>
+                    <p>
+                      {queryUser?.transfers.some(
+                        (transfer) => transfer.status === 'PENDING'
+                      )
+                        ? 'Your transfer request is currently being reviewed.'
+                        : settings.transfer_window
+                        ? 'You can submit a Transfer request using the form below.'
+                        : ''}{' '}
+                      {settings?.transfer_window ? (
+                        'Transfer requests are subject to review to ensure all relevant gameplay policies are adhered to.'
+                      ) : (
+                        <>
+                          Any transfer requests outside the transfer window must
+                          be emailed to{' '}
+                          <Link
+                            href="mailto:clubs@quidditchuk.org"
+                            color="monarchRed"
+                            fontWeight="bold"
+                          >
+                            clubs@quidditchuk.org
+                          </Link>
+                        </>
+                      )}
+                    </p>
                   </>
                 ) : (
                   <>
@@ -132,14 +199,14 @@ const ManageClub = ({ user, clubs = [] }) => {
                     <p>
                       Please note that once you have chosen and locked in your
                       club you will not be able to undo it, and any changes will
-                      have to be requested via a Club Transfer Request to
+                      have to be requested via a Transfer Request to
                       QuidditchUK.
                     </p>
                   </>
                 )}
               </Content>
 
-              {!user.club_uuid && (
+              {!queryUser?.club_uuid && (
                 <form
                   onSubmit={handleSubmit((values) =>
                     handleClubSubmit(values, setServerError)
@@ -221,6 +288,57 @@ const ManageClub = ({ user, clubs = [] }) => {
               </Flex>
             )}
           </Grid>
+
+          {settings?.transfer_window &&
+            queryUser?.transfers?.every(
+              (transfer) => transfer?.status !== 'PENDING'
+            ) && (
+              <Grid gridTemplateColumns="1fr">
+                <TransferRequestForm
+                  currentClub={queryUser?.club_uuid}
+                  clubs={clubs}
+                  callback={refetch}
+                />
+              </Grid>
+            )}
+
+          {queryUser?.transfers?.length > 0 && (
+            <>
+              <Heading fontFamily="body" color="qukBlue">
+                Transfer History
+              </Heading>
+
+              <Box bg="white" borderRadius="lg">
+                <TableContainer>
+                  <Table variant="striped">
+                    <Thead>
+                      <Tr>
+                        <Th>Old Club</Th>
+                        <Th>New Club</Th>
+                        <Th>Status</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {orderBy(queryUser?.transfers, ['updated'], 'desc').map(
+                        (transfer) => (
+                          <Tr key={transfer?.uuid}>
+                            <Td>{transfer?.prevClub?.name}</Td>
+                            <Td>{transfer?.newClub?.name}</Td>
+                            <Td
+                              color={STATUS[transfer.status].color}
+                              fontWeight="bold"
+                            >
+                              {STATUS[transfer.status].label}
+                            </Td>
+                          </Tr>
+                        )
+                      )}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </Box>
+            </>
+          )}
         </Container>
       </Box>
     </>
@@ -244,11 +362,13 @@ export const getServerSideProps = async ({ req, res }) => {
     { data: clubs },
     { data: user },
     { data: products },
+    { data: settings },
     basePageProps,
   ] = await Promise.all([
     api.get('/clubs/search'),
     api.get('/users/me', requestHeaders),
     api.get('/products/me', requestHeaders),
+    api.get('/settings'),
     getBasePageProps(),
   ]);
 
@@ -269,6 +389,7 @@ export const getServerSideProps = async ({ req, res }) => {
     props: {
       clubs,
       user,
+      settings,
       ...basePageProps,
     },
   };

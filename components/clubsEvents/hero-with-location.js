@@ -63,8 +63,6 @@ const HeroWithLocation = ({
                     priority={isFirst}
                     src={image.url}
                     layout="fill"
-                    width="100%"
-                    height="100%"
                     alt={image.alt}
                     objectFit="cover"
                   />
