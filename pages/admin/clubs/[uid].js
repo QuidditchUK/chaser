@@ -300,8 +300,7 @@ const Dashboard = ({ club, members }) => {
                 <Tr>
                   <Th>Name</Th>
                   <Th>Email</Th>
-                  <Th>Latest QUK Membership Type</Th>
-                  <Th>Membership Status</Th>
+                  <Th>Membership</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -326,7 +325,13 @@ const Dashboard = ({ club, members }) => {
                         'dd-MM-yyyy',
                         new Date()
                       ) > new Date() ? (
-                        <Text color="qukBlue">Valid</Text>
+                        <Text color="qukBlue">
+                          {
+                            member?.stripe_products[
+                              member?.stripe_products.length - 1
+                            ].products?.description
+                          }
+                        </Text>
                       ) : (
                         <Text color="monarchRed">Expired</Text>
                       )}
