@@ -21,7 +21,7 @@ To begin developing, run the following commands:
 - `yarn install`
 - `yarn run dev`
 
-localhost will start at port 3000
+localhost will start at port 3000.
 
 You will need a `.env.local` file to set environment variables - use `.env.example` as a base to build off.
 
