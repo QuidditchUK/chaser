@@ -310,13 +310,6 @@ const Dashboard = ({ club, members }) => {
                       {member?.first_name} {member?.last_name}
                     </Td>
                     <Td>{member?.email}</Td>
-                    <Td>
-                      {
-                        member?.stripe_products[
-                          member?.stripe_products.length - 1
-                        ].products?.description
-                      }
-                    </Td>
                     <Td fontWeight="bold">
                       {parse(
                         member?.stripe_products[
