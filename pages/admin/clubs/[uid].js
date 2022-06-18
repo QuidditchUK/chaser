@@ -2,7 +2,22 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { object, string, bool } from 'yup';
 import dynamic from 'next/dynamic';
-import { Heading, Grid, Flex, Switch, Select, Text } from '@chakra-ui/react';
+import {
+  Heading,
+  Grid,
+  Flex,
+  Switch,
+  Select,
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  Box,
+} from '@chakra-ui/react';
 import { CheckIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -73,7 +88,6 @@ const Dashboard = ({ club, members }) => {
   }, [serverSuccess]);
 
   console.log(members);
-  console.log('test');
 
   const {
     control,
@@ -275,6 +289,53 @@ const Dashboard = ({ club, members }) => {
             <CheckIcon mr={3} /> <Text fontWeight="bold">Club updated</Text>
           </Flex>
         )}
+
+        <Heading as="h4" fontFamily="body" color="qukBlue">
+          Players
+        </Heading>
+
+        <Box bg="white" borderRadius="lg">
+          <TableContainer>
+            <Table variant="striped">
+              <Thead>
+                <Tr>
+                  <Th>Name</Th>
+                  <Th>Email</Th>
+                  <Th>Latest QUK Membership Type</Th>
+                  <Th>Membership Status</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {members.map((member) => (
+                  <Tr key={member?.email}>
+                    <Td>
+                      {member?.first_name} {member?.last_name}
+                    </Td>
+                    <Td>{member?.email}</Td>
+                    <Td>
+                      {
+                        member?.stripe_products[stripe_products.length - 1]
+                          .products?.description
+                      }
+                    </Td>
+                    <Td fontWeight="bold">
+                      {parse(
+                        member?.stripe_products[stripe_products.length - 1]
+                          .products?.expires,
+                        'dd-MM-yyyy',
+                        new Date()
+                      ) > new Date() ? (
+                        <Text color="qukBlue">Valid</Text>
+                      ) : (
+                        <Text color="monarchRed">Expired</Text>
+                      )}
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </Box>
       </Slice>
     </>
   );
