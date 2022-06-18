@@ -119,7 +119,9 @@ const Dashboard = ({ scopes, clubs }) => {
                     <Td>{club?._count?.users}</Td>
                     {hasScope([CLUBS_WRITE, EMT], scopes) && (
                       <Td>
-                        <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
+                        <Button href={`/admin/clubs/${club.uuid}`}>
+                          Details
+                        </Button>
                       </Td>
                     )}
                   </Tr>

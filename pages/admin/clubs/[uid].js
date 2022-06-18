@@ -57,7 +57,7 @@ const handleEditSubmit = async (
     setServerError(err?.response?.data?.error?.message);
   }
 };
-const Dashboard = ({ club }) => {
+const Dashboard = ({ club, members }) => {
   const [serverError, setServerError] = useState(null);
   const [serverSuccess, setServerSuccess] = useState(null);
 
@@ -71,6 +71,8 @@ const Dashboard = ({ club }) => {
 
     return () => {};
   }, [serverSuccess]);
+
+  console.log(members);
 
   const {
     control,
@@ -284,9 +286,17 @@ export const getServerSideProps = async ({ req, res, params }) => {
   }
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
-  const [scopes, { data: club }, basePageProps] = await Promise.all([
+  const [
+    scopes,
+    { data: club },
+    { data: members },
+    basePageProps,
+  ] = await Promise.all([
     getUserScopes(AUTHENTICATION_TOKEN),
     api.get(`/clubs/${params?.uid}`, {
+      headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
+    }),
+    api.get(`/clubs/${params?.uid}/members`, {
       headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
     }),
     getBasePageProps(),
@@ -296,6 +306,7 @@ export const getServerSideProps = async ({ req, res, params }) => {
     props: {
       scopes,
       club,
+      members,
       ...basePageProps,
     },
   };
