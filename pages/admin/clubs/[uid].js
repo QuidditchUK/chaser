@@ -73,7 +73,6 @@ const Dashboard = ({ club, members }) => {
   }, [serverSuccess]);
 
   console.log(members);
-  console.log('test');
 
   const {
     control,
