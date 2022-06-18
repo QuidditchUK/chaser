@@ -88,8 +88,6 @@ const Dashboard = ({ club, members }) => {
     return () => {};
   }, [serverSuccess]);
 
-  console.log(members);
-
   const {
     control,
     handleSubmit,
