@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import parse from 'date-fns/parse';
 import Link from 'next/link';
 import { object, string, bool } from 'yup';
 import dynamic from 'next/dynamic';
@@ -19,7 +18,7 @@ import {
   TableContainer,
   Box,
 } from '@chakra-ui/react';
-import { CheckIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { CheckIcon, ChevronRightIcon, DownloadIcon } from '@chakra-ui/icons';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -33,6 +32,8 @@ import Meta from 'components/shared/meta';
 
 import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
+import useCSVDownload from 'hooks/useCSVDownload';
+import { format, parse } from 'date-fns';
 
 const Label = dynamic(() => import('components/formControls/label'));
 const Button = dynamic(() => import('components/shared/button'));
@@ -55,6 +56,18 @@ const EditClubSchema = object().shape({
     .nullable()
     .required('Please select the league the club plays in'),
 });
+
+const getProductName = (member) => {
+  return parse(
+    member?.stripe_products[member?.stripe_products?.length - 1]?.products
+      ?.expires,
+    'dd-MM-yyyy',
+    new Date()
+  ) > new Date()
+    ? member?.stripe_products[member?.stripe_products?.length - 1]?.products
+        ?.description
+    : 'Expired';
+};
 
 const handleEditSubmit = async (
   uuid,
@@ -87,6 +100,18 @@ const Dashboard = ({ club, members }) => {
 
     return () => {};
   }, [serverSuccess]);
+
+  const { call, isLoading } = useCSVDownload({
+    data: [
+      ['first_name', 'last_name', 'membership'],
+      ...members.map((member) => [
+        member.first_name,
+        member.last_name,
+        getProductName(member),
+      ]),
+    ],
+    filename: `${club?.name}-members-${format(new Date(), 'yyyy-MM-dd')}.csv`,
+  });
 
   const {
     control,
@@ -289,9 +314,28 @@ const Dashboard = ({ club, members }) => {
           </Flex>
         )}
 
-        <Heading as="h4" fontFamily="body" color="qukBlue">
-          Players
-        </Heading>
+        <Flex
+          flexDirection="row"
+          width="100%"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Heading as="h4" fontFamily="body" color="qukBlue">
+            Players
+          </Heading>
+
+          <Button
+            variant="transparent"
+            borderColor="qukBlue"
+            color="qukBlue"
+            _hover={{ bg: 'gray.300' }}
+            rightIcon={<DownloadIcon />}
+            onClick={call}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Downloading...' : 'Download CSV'}
+          </Button>
+        </Flex>
 
         <Box bg="white" borderRadius="lg">
           <TableContainer>
@@ -304,7 +348,7 @@ const Dashboard = ({ club, members }) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {members.map((member) => (
+                {members?.map((member) => (
                   <Tr key={member?.email}>
                     <Td>
                       {member?.first_name} {member?.last_name}
@@ -314,7 +358,7 @@ const Dashboard = ({ club, members }) => {
                       {parse(
                         member?.stripe_products[
                           member?.stripe_products.length - 1
-                        ].products?.expires,
+                        ]?.products?.expires,
                         'dd-MM-yyyy',
                         new Date()
                       ) > new Date() ? (
@@ -322,7 +366,7 @@ const Dashboard = ({ club, members }) => {
                           {
                             member?.stripe_products[
                               member?.stripe_products.length - 1
-                            ].products?.description
+                            ]?.products?.description
                           }
                         </Text>
                       ) : (
