@@ -362,15 +362,17 @@ const Dashboard = ({ club, members }) => {
                         'dd-MM-yyyy',
                         new Date()
                       ) > new Date() ? (
-                        <Text color="qukBlue">
+                        <Box as="span" color="qukBlue">
                           {
                             member?.stripe_products[
                               member?.stripe_products.length - 1
                             ]?.products?.description
                           }
-                        </Text>
+                        </Box>
                       ) : (
-                        <Text color="monarchRed">Expired</Text>
+                        <Box as="span" color="monarchRed">
+                          Expired
+                        </Box>
                       )}
                     </Td>
                   </Tr>
