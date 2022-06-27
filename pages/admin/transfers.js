@@ -28,6 +28,7 @@ import {
   Switch,
   FormControl,
   FormLabel,
+  HStack,
 } from '@chakra-ui/react';
 import { useForm, Controller } from 'react-hook-form';
 import { orderBy } from 'lodash';
@@ -58,7 +59,13 @@ const STATUS = {
   DECLINED: 'Declined',
 };
 
-const Dashboard = ({ scopes, transfers, settings }) => {
+const Dashboard = ({
+  scopes,
+  actionedTransfers,
+  pendingTransfers,
+  settings,
+  pages,
+}) => {
   const {
     isOpen: isOpenApprove,
     onOpen: onOpenApprove,
@@ -72,10 +79,21 @@ const Dashboard = ({ scopes, transfers, settings }) => {
 
   const [selectedTransfer, setSelectedTransfer] = useState();
 
-  const { data: queryTransfers, refetch } = useQuery(
-    '/transfers',
-    () => api.get('/transfers').then(({ data }) => data),
-    { initialData: transfers }
+  const [page, setPage] = useState(0);
+
+  const { data: queryPendingTransfers, refetch: refetchPending } = useQuery(
+    ['/transfers/pending'],
+    () => api.get('/transfers/pending').then(({ data }) => data),
+    { initialData: pendingTransfers, keepPreviousData: true }
+  );
+
+  const { data: queryActionedTransfers, refetch } = useQuery(
+    ['/transfers/actioned', page],
+    () =>
+      api
+        .get(`/transfers/actioned/${page}`)
+        .then(({ data }) => data?.transfers),
+    { initialData: actionedTransfers, keepPreviousData: true }
   );
 
   const { data: querySettings, refetch: refetchSettings } = useQuery(
@@ -86,14 +104,6 @@ const Dashboard = ({ scopes, transfers, settings }) => {
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
     }
-  );
-
-  const [pendingTransfers, actionedTransfers] = queryTransfers?.reduce(
-    (result, transfer) => {
-      result[transfer?.status === 'PENDING' ? 0 : 1].push(transfer);
-      return result;
-    },
-    [[], []]
   );
 
   const { control, watch } = useForm({
@@ -173,14 +183,14 @@ const Dashboard = ({ scopes, transfers, settings }) => {
           Pending Transfers
         </Heading>
 
-        {pendingTransfers.length === 0 && (
+        {queryPendingTransfers.length === 0 && (
           <Text fontSize="2xl" textAlign="center">
             No transfers currently pending
           </Text>
         )}
 
         <Grid gridGap={4} gridTemplateColumns="1fr">
-          {pendingTransfers.map((transfer) => (
+          {queryPendingTransfers.map((transfer) => (
             <Grid
               bg="white"
               borderRadius="lg"
@@ -274,7 +284,7 @@ const Dashboard = ({ scopes, transfers, settings }) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {orderBy(actionedTransfers, ['updated'], 'desc').map(
+                {orderBy(queryActionedTransfers, ['updated'], 'desc').map(
                   (transfer) => (
                     <Tr key={transfer?.uuid}>
                       <Td>
@@ -313,6 +323,38 @@ const Dashboard = ({ scopes, transfers, settings }) => {
             </Table>
           </TableContainer>
         </Box>
+
+        <HStack
+          spacing={4}
+          textAlign="center"
+          width="100%"
+          justifyContent="center"
+          py={3}
+          mt={2}
+        >
+          {Array(pages)
+            .fill(0)
+            .map((v, index) => {
+              const currentPage = index === page;
+              return (
+                <Text
+                  cursor={currentPage ? 'default' : 'pointer'}
+                  key={index}
+                  color="qukBlue"
+                  p={0}
+                  m={0}
+                  fontWeight={currentPage ? '700' : 'normal'}
+                  _hover={{
+                    textDecoration: currentPage ? 'none' : 'underline',
+                  }}
+                  fontSize="xl"
+                  onClick={() => setPage(index)}
+                >
+                  {index + 1}
+                </Text>
+              );
+            })}
+        </HStack>
       </Slice>
 
       <Modal isOpen={isOpenApprove} onClose={onCloseApprove}>
@@ -418,12 +460,18 @@ export const getServerSideProps = async ({ req, res }) => {
 
   const [
     scopes,
-    { data: transfers },
+    { data: pendingTransfers },
+    { data: actionedTransfers },
     { data: settings },
     basePageProps,
   ] = await Promise.all([
     getUserScopes(AUTHENTICATION_TOKEN),
-    api.get('/transfers', {
+    api.get('transfers/pending', {
+      headers: {
+        Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
+      },
+    }),
+    api.get('/transfers/actioned/0', {
       headers: {
         Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
       },
@@ -435,7 +483,9 @@ export const getServerSideProps = async ({ req, res }) => {
   return {
     props: {
       scopes,
-      transfers,
+      pendingTransfers,
+      actionedTransfers: actionedTransfers?.transfers,
+      pages: actionedTransfers?.pages,
       settings,
       ...basePageProps,
     },
