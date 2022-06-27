@@ -10,18 +10,24 @@ const ClubCard = dynamic(() => import('components/clubsEvents/club-card'));
 
 const PrismicClubCard = ({ uid }) => {
   const [data, setData] = useState(null);
+  const [clubUid, setClubUid] = useState(uid);
 
   useEffect(() => {
-    if (!data) {
+    if (!data || clubUid !== uid) {
       const getClub = async () => {
-        const { data } = await getPrismicDocByUid('clubs', uid);
+        try {
+          const club = await getPrismicDocByUid('clubs', uid);
 
-        setData(data);
+          setData(club?.data);
+          setClubUid(uid);
+        } catch (err) {
+          throw err;
+        }
       };
 
       getClub();
     }
-  }, [data, setData, uid]);
+  }, [data, setData, uid, clubUid]);
 
   if (!data) {
     return (

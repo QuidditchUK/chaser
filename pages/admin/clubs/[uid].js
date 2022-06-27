@@ -34,6 +34,7 @@ import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
 import useCSVDownload from 'hooks/useCSVDownload';
 import { format, parse } from 'date-fns';
+import PrismicClubCard from 'components/prismic/club-card';
 
 const Label = dynamic(() => import('components/formControls/label'));
 const Button = dynamic(() => import('components/shared/button'));
@@ -117,6 +118,7 @@ const Dashboard = ({ club, members }) => {
     control,
     handleSubmit,
     formState: { isSubmitting, errors },
+    watch,
   } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(EditClubSchema),
@@ -128,6 +130,8 @@ const Dashboard = ({ club, members }) => {
       league: club?.league,
     },
   });
+
+  const prismicClub = watch('slug');
 
   return (
     <>
@@ -160,6 +164,7 @@ const Dashboard = ({ club, members }) => {
             borderRadius="lg"
             gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
             width="100%"
+            gridGap={4}
           >
             <Flex direction="column">
               <Label htmlFor="name">
@@ -287,6 +292,10 @@ const Dashboard = ({ club, members }) => {
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Submitting' : 'Update'}
               </Button>
+            </Flex>
+
+            <Flex flexDirection="column">
+              <PrismicClubCard uid={prismicClub} />
             </Flex>
           </Grid>
         </form>
