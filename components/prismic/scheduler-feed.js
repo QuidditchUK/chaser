@@ -19,6 +19,12 @@ import axios from 'axios';
 
 const Slice = dynamic(() => import('components/shared/slice'));
 
+// const clipPath = isImageLeft
+//   ? 'polygon(0 0, 100% 0, 90% 100%, 0 100%)'
+//   : 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)';
+const clipPathLeft = 'polygon(0 0, 100% 0, 90% 100%, 0 100%)';
+const clipPathRight = 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)';
+
 const LinkWrapper = ({ href, ...props }) => (
   <Link href={href} passHref>
     <GridItem
@@ -98,24 +104,109 @@ const SchedulerFeed = ({ primary }) => {
                 <Flex
                   borderRadius="lg"
                   bg="white"
-                  p={4}
                   flexDirection="column"
                   alignContent="center"
                   width="100%"
+                  height="100%"
                   textDecoration="none"
                   _hover={{ textDecoration: 'none' }}
                   lineHeight="24px"
+                  position="relative"
                 >
-                  <Flex alignItems="center" justifyContent="center">
-                    <Text m={0} fontSize="xs">
-                      Pitch {game?.pitch} |{' '}
-                      {DateTime.fromISO(game?.timeslot?.time).toFormat(
-                        'h:mm a'
+                  <Grid
+                    bg="qukBlue"
+                    width="100%"
+                    height="100%"
+                    gridTemplateColumns="1fr 1fr"
+                    position="absolute"
+                    borderRadius="lg"
+                  >
+                    <Box
+                      display="block"
+                      height="100%"
+                      overflow="hidden"
+                      position="relative"
+                      opacity={0.3}
+                    >
+                      {game?.teamA?.logoUrl && (
+                        <Image
+                          layout="fill"
+                          objectPosition="center center"
+                          objectFit="cover"
+                          src={game?.teamA?.logoUrl}
+                          alt={game?.teamA?.name}
+                          gridArea="teamA"
+                          borderRadius={0}
+                          clipPath={clipPathLeft}
+                        />
                       )}
-                    </Text>
+                    </Box>
+
+                    <Box
+                      display="block"
+                      height="100%"
+                      overflow="hidden"
+                      position="relative"
+                      opacity={0.3}
+                    >
+                      {game?.teamB?.logoUrl && (
+                        <Image
+                          layout="fill"
+                          src={game?.teamB?.logoUrl}
+                          alt={game?.teamB?.name}
+                          borderRadius={0}
+                          clipPath={clipPathRight}
+                        />
+                      )}
+                    </Box>
+                  </Grid>
+
+                  <Flex
+                    alignItems="center"
+                    justifyContent="center"
+                    pt={4}
+                    zIndex={1}
+                  >
+                    <Grid gridTemplateColumns="1fr auto 1fr" gridGap={2}>
+                      <Text
+                        my={0}
+                        fontSize="xs"
+                        justifySelf="end"
+                        color="white"
+                        textShadow="0 0 5px rgb(0,0,0)"
+                      >
+                        Pitch {game?.pitch}
+                      </Text>
+                      <Text
+                        my={0}
+                        fontSize="xs"
+                        justifySelf="center"
+                        color="white"
+                        textShadow="0 0 5px rgb(0,0,0)"
+                      >
+                        |
+                      </Text>
+                      <Text
+                        my={0}
+                        fontSize="xs"
+                        justifySelf="start"
+                        color="white"
+                        textShadow="0 0 5px rgb(0,0,0)"
+                      >
+                        {DateTime.fromISO(game?.timeslot?.time).toFormat(
+                          'h:mm a'
+                        )}
+                      </Text>
+                    </Grid>
                   </Flex>
 
-                  <Grid gridTemplateColumns="1fr 1fr 1fr" gridGap={4}>
+                  <Grid
+                    gridTemplateColumns="1fr 1fr 1fr"
+                    gridGap={4}
+                    px={4}
+                    pb={4}
+                    zIndex={1}
+                  >
                     <Grid
                       gridTemplateColumns={{ base: '1fr', md: '50px auto' }}
                       gridTemplateRows={{ base: '50px auto', md: 'auto' }}
@@ -136,6 +227,8 @@ const SchedulerFeed = ({ primary }) => {
                       <Text
                         fontWeight="bold"
                         fontSize={{ base: 'sm', md: 'md' }}
+                        color="white"
+                        textShadow="0 0 5px rgb(0,0,0)"
                       >
                         {game?.teamA?.name}
                       </Text>
@@ -148,6 +241,8 @@ const SchedulerFeed = ({ primary }) => {
                             fontWeight="bold"
                             fontSize="2xl"
                             justifySelf="end"
+                            color="white"
+                            textShadow="0 0 5px rgb(0,0,0)"
                           >
                             {game?.teamAScore}
                             {game?.snitchCaughtBy === 'TEAM_A' && <>*</>}
@@ -156,6 +251,8 @@ const SchedulerFeed = ({ primary }) => {
                             fontWeight="bold"
                             fontSize="2xl"
                             justifySelf="center"
+                            color="white"
+                            textShadow="0 0 5px rgb(0,0,0)"
                           >
                             —
                           </Text>
@@ -163,6 +260,8 @@ const SchedulerFeed = ({ primary }) => {
                             fontWeight="bold"
                             fontSize="2xl"
                             justifySelf="start"
+                            color="white"
+                            textShadow="0 0 5px rgb(0,0,0)"
                           >
                             {game?.teamBScore}
                             {game?.snitchCaughtBy === 'TEAM_B' && <>*</>}
@@ -185,6 +284,8 @@ const SchedulerFeed = ({ primary }) => {
                     >
                       <Text
                         fontWeight="bold"
+                        color="white"
+                        textShadow="0 0 5px rgb(0,0,0)"
                         fontSize={{ base: 'sm', md: 'md' }}
                         gridArea="name"
                         textAlign="right"
