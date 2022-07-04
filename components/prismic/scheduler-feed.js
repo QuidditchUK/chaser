@@ -238,7 +238,7 @@ const SchedulerFeed = ({ primary }) => {
                         <Grid gridTemplateColumns="1fr auto 1fr" gridGap={2}>
                           <Text
                             fontWeight="bold"
-                            fontSize="2xl"
+                            fontSize="4xl"
                             justifySelf="end"
                             color="white"
                             textShadow="0 0 5px rgb(0,0,0)"
@@ -248,7 +248,7 @@ const SchedulerFeed = ({ primary }) => {
                           </Text>
                           <Text
                             fontWeight="bold"
-                            fontSize="2xl"
+                            fontSize="4xl"
                             justifySelf="center"
                             color="white"
                             textShadow="0 0 5px rgb(0,0,0)"
@@ -257,7 +257,7 @@ const SchedulerFeed = ({ primary }) => {
                           </Text>
                           <Text
                             fontWeight="bold"
-                            fontSize="2xl"
+                            fontSize="4xl"
                             justifySelf="start"
                             color="white"
                             textShadow="0 0 5px rgb(0,0,0)"
