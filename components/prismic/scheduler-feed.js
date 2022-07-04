@@ -144,14 +144,26 @@ const SchedulerFeed = ({ primary }) => {
                     {game?.status === 'FINISHED' ? (
                       <Flex alignItems="center" justifyContent="center">
                         <Grid gridTemplateColumns="1fr auto 1fr" gridGap={2}>
-                          <Text fontWeight="bold" fontSize="2xl">
+                          <Text
+                            fontWeight="bold"
+                            fontSize="2xl"
+                            justifySelf="end"
+                          >
                             {game?.teamAScore}
                             {game?.snitchCaughtBy === 'TEAM_A' && <>*</>}
                           </Text>
-                          <Text fontWeight="bold" fontSize="2xl">
+                          <Text
+                            fontWeight="bold"
+                            fontSize="2xl"
+                            justifySelf="center"
+                          >
                             —
                           </Text>
-                          <Text fontWeight="bold" fontSize="2xl">
+                          <Text
+                            fontWeight="bold"
+                            fontSize="2xl"
+                            justifySelf="start"
+                          >
                             {game?.teamBScore}
                             {game?.snitchCaughtBy === 'TEAM_B' && <>*</>}
                           </Text>
