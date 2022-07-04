@@ -24,17 +24,17 @@ const clipPathRight = 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)';
 
 const PITCH_COLOR = [
   'northernMagenta',
-  'keeperGreen',
   'tornadoOrange',
   'southernBlue',
   'pink.500',
   'qukBlue',
+  'keeperGreen',
   'northernMagenta',
-  'keeperGreen',
   'tornadoOrange',
   'southernBlue',
   'pink.500',
   'qukBlue',
+  'keeperGreen',
 ];
 
 const LinkWrapper = ({ href, ...props }) => (
