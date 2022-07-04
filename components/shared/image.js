@@ -15,7 +15,7 @@ const ImageWithDefaults = ({
         '& img': {
           borderRadius: borderRadius ?? 'lg',
           clipPath: clipPath ?? 'initial',
-          filter: filter ? 'brightness(0) invert(1)' : 'inherit',
+          filter: filter ?? 'inherit',
         },
       }}
     >

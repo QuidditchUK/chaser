@@ -19,9 +19,6 @@ import axios from 'axios';
 
 const Slice = dynamic(() => import('components/shared/slice'));
 
-// const clipPath = isImageLeft
-//   ? 'polygon(0 0, 100% 0, 90% 100%, 0 100%)'
-//   : 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)';
 const clipPathLeft = 'polygon(0 0, 100% 0, 90% 100%, 0 100%)';
 const clipPathRight = 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)';
 
@@ -126,7 +123,7 @@ const SchedulerFeed = ({ primary }) => {
                       height="100%"
                       overflow="hidden"
                       position="relative"
-                      opacity={0.3}
+                      opacity={0.8}
                     >
                       {game?.teamA?.logoUrl && (
                         <Image
@@ -138,6 +135,7 @@ const SchedulerFeed = ({ primary }) => {
                           gridArea="teamA"
                           borderRadius={0}
                           clipPath={clipPathLeft}
+                          filter="blur(3px)"
                         />
                       )}
                     </Box>
@@ -147,7 +145,7 @@ const SchedulerFeed = ({ primary }) => {
                       height="100%"
                       overflow="hidden"
                       position="relative"
-                      opacity={0.3}
+                      opacity={0.8}
                     >
                       {game?.teamB?.logoUrl && (
                         <Image
@@ -156,6 +154,7 @@ const SchedulerFeed = ({ primary }) => {
                           alt={game?.teamB?.name}
                           borderRadius={0}
                           clipPath={clipPathRight}
+                          filter="blur(3px)"
                         />
                       )}
                     </Box>

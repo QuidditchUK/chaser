@@ -163,7 +163,7 @@ export default function Navigation({ data }) {
                 display="flex"
                 alignItems="center"
               >
-                <Logo filter={false} />
+                <Logo />
               </ChakraLink>
             </Link>
 

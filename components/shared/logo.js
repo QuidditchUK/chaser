@@ -15,7 +15,7 @@ export default function Logo({ filter = false }) {
         width={logoHeight}
         src="/images/logo.png"
         alt="Quidditch UK"
-        filter={filter ?? undefined}
+        filter={filter ? 'brightness(0) invert(1)' : false}
       />
       <Image
         priority={true}
@@ -24,7 +24,7 @@ export default function Logo({ filter = false }) {
         width={logoTextWidth}
         src="/images/logo-text.png"
         alt="Quidditch UK"
-        filter={filter ?? undefined}
+        filter={filter ? 'brightness(0) invert(1)' : false}
       />
     </Flex>
   );
