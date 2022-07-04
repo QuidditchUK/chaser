@@ -73,7 +73,7 @@ export default function Navigation({ data }) {
 
   return (
     <>
-      <Box as={Headroom} flexShrink="0">
+      <Box as={Headroom} flexShrink="0" zIndex={50}>
         <Box as="header">
           <Flex
             justifyContent="space-between"
