@@ -180,6 +180,7 @@ const SchedulerFeed = ({ primary }) => {
                     height="100%"
                     position="absolute"
                     bgGradient={`linear(to-t, ${PITCH_COLOR[i]}, rgba(0, 0, 0, 0))`}
+                    borderRadius="lg"
                   />
 
                   <Flex
