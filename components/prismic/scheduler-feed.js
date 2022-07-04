@@ -22,6 +22,21 @@ const Slice = dynamic(() => import('components/shared/slice'));
 const clipPathLeft = 'polygon(0 0, 100% 0, 90% 100%, 0 100%)';
 const clipPathRight = 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)';
 
+const PITCH_COLOR = [
+  'northernMagenta',
+  'keeperGreen',
+  'tornadoOrange',
+  'southernBlue',
+  'pink.500',
+  'qukBlue',
+  'northernMagenta',
+  'keeperGreen',
+  'tornadoOrange',
+  'southernBlue',
+  'pink.500',
+  'qukBlue',
+];
+
 const LinkWrapper = ({ href, ...props }) => (
   <Link href={href} passHref>
     <GridItem
@@ -93,7 +108,7 @@ const SchedulerFeed = ({ primary }) => {
               {DateTime.fromISO(k).toFormat('h:mm a')}
             </Heading>
 
-            {orderedByPitch.map((game) => (
+            {orderedByPitch.map((game, i) => (
               <LinkWrapper
                 href={`https://www.quidditchscheduler.com/tournaments/${game?.timeslot?.tournament?.id}/games/${game?.id}`}
                 key={game?.id}
@@ -159,6 +174,13 @@ const SchedulerFeed = ({ primary }) => {
                       )}
                     </Box>
                   </Grid>
+
+                  <Box
+                    width="100%"
+                    height="100%"
+                    position="absolute"
+                    bgGradient={`linear(to-t, ${PITCH_COLOR[i]}, rgba(0, 0, 0, 0))`}
+                  />
 
                   <Flex
                     alignItems="center"
