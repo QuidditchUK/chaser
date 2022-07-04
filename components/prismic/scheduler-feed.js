@@ -149,11 +149,16 @@ const SchedulerFeed = ({ primary }) => {
                           alt={game?.teamA?.name}
                           gridArea="teamA"
                           borderRadius={0}
-                          clipPath={clipPathLeft}
                           filter="blur(3px)"
                         />
                       )}
                     </Box>
+                    <Box
+                      position="absolute"
+                      width="50%"
+                      bgGradient="linear(to-l, qukBlue, rgba(0, 0, 0, 0))"
+                      height="100%"
+                    />
 
                     <Box
                       display="block"
@@ -168,11 +173,18 @@ const SchedulerFeed = ({ primary }) => {
                           src={game?.teamB?.logoUrl}
                           alt={game?.teamB?.name}
                           borderRadius={0}
-                          clipPath={clipPathRight}
+                          // clipPath={clipPathRight}
                           filter="blur(3px)"
                         />
                       )}
                     </Box>
+                    <Box
+                      position="absolute"
+                      right="0"
+                      width="50%"
+                      bgGradient="linear(to-r, qukBlue, rgba(0, 0, 0, 0))"
+                      height="100%"
+                    />
                   </Grid>
 
                   <Box
