@@ -19,9 +19,6 @@ import axios from 'axios';
 
 const Slice = dynamic(() => import('components/shared/slice'));
 
-const clipPathLeft = 'polygon(0 0, 100% 0, 90% 100%, 0 100%)';
-const clipPathRight = 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)';
-
 const PITCH_COLOR = [
   'northernMagenta',
   'tornadoOrange',
@@ -148,8 +145,7 @@ const SchedulerFeed = ({ primary }) => {
                           src={game?.teamA?.logoUrl}
                           alt={game?.teamA?.name}
                           gridArea="teamA"
-                          borderRadius={0}
-                          filter="blur(3px)"
+                          borderRadius="lg"
                         />
                       )}
                     </Box>
@@ -172,9 +168,7 @@ const SchedulerFeed = ({ primary }) => {
                           layout="fill"
                           src={game?.teamB?.logoUrl}
                           alt={game?.teamB?.name}
-                          borderRadius={0}
-                          // clipPath={clipPathRight}
-                          filter="blur(3px)"
+                          borderRadius="lg"
                         />
                       )}
                     </Box>
