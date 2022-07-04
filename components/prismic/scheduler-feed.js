@@ -27,14 +27,14 @@ const PITCH_COLOR = [
   'tornadoOrange',
   'southernBlue',
   'pink.500',
-  'qukBlue',
   'keeperGreen',
+  'monarchRed',
   'northernMagenta',
   'tornadoOrange',
   'southernBlue',
   'pink.500',
-  'qukBlue',
   'keeperGreen',
+  'monarchRed',
 ];
 
 const LinkWrapper = ({ href, ...props }) => (
