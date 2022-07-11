@@ -1,24 +1,16 @@
-/* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import { object, string, ref } from 'yup';
-import { Flex, Grid, Text } from '@chakra-ui/react';
-import { CheckIcon } from '@chakra-ui/icons';
+import { Grid } from '@chakra-ui/react';
 
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
-
-const Label = dynamic(() => import('components/formControls/label'));
-
-const Button = dynamic(() => import('components/shared/button'));
-const Required = dynamic(() => import('components/formControls/required'));
-const InlineError = dynamic(() =>
-  import('components/shared/errors').then(({ InlineError }) => InlineError)
-);
-
-import { api } from 'modules/api';
+import usersService from 'services/users';
+import useTempPopup from 'hooks/useTempPopup';
+import Error from 'components/shared/errors';
+import Success from 'components/formControls/success';
+import InputV2 from 'components/formControls/inputV2';
+import Button from 'components/shared/button';
+import Required from 'components/formControls/required';
 
 const PasswordFormSchema = object().shape({
   old_password: string()
@@ -32,17 +24,17 @@ const PasswordFormSchema = object().shape({
     .required('Required'),
 });
 
-const handlePasswordSubmit = async (
-  { confirm, ...values },
+const handlePasswordSubmit = async ({
+  values: { confirm, ...data },
   resetForm,
   setServerError,
-  setServerSuccess
-) => {
+  setServerSuccess,
+}) => {
   try {
     setServerError(null);
     setServerSuccess(null);
 
-    await api.put('/users/password', values);
+    await usersService.updatePassword({ data });
 
     setServerSuccess(true);
     resetForm({});
@@ -53,7 +45,7 @@ const handlePasswordSubmit = async (
 
 const InfoForm = () => {
   const {
-    control,
+    register,
     handleSubmit,
     reset,
     formState: { isSubmitting, errors },
@@ -67,128 +59,69 @@ const InfoForm = () => {
     },
   });
 
-  const [serverError, setServerError] = useState(null);
-  const [serverSuccess, setServerSuccess] = useState(null);
-
-  useEffect(() => {
-    if (serverSuccess) {
-      const timer = setTimeout(() => {
-        setServerSuccess(null);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-
-    return () => {};
-  }, [serverSuccess]);
+  const [serverError, setServerError] = useTempPopup();
+  const [serverSuccess, setServerSuccess] = useTempPopup();
 
   return (
     <>
       <form
         onSubmit={handleSubmit((values) =>
-          handlePasswordSubmit(values, reset, setServerError, setServerSuccess)
+          handlePasswordSubmit({
+            values,
+            reset,
+            setServerError,
+            setServerSuccess,
+          })
         )}
       >
-        <Grid gridTemplateColumns="1fr">
-          <Label htmlFor="old_password">
-            Current Password <Required />
-          </Label>
-
-          <Controller
-            control={control}
-            name="old_password"
-            render={({ field }) => (
-              <Input
-                {...field}
-                id="old_password"
-                placeholder="Your current password"
-                my={3}
-                type="password"
-                error={errors.old_password}
-              />
-            )}
+        <Grid gridTemplateColumns="1fr" gridGap={3}>
+          <InputV2
+            label={
+              <>
+                Current Password <Required />
+              </>
+            }
+            id="old_password"
+            placeholder="Your current password"
+            type="password"
+            error={errors.old_password}
+            {...register('old_password')}
           />
 
-          {errors.old_password && (
-            <InlineError marginBottom={3}>
-              {errors.old_password.message}
-            </InlineError>
-          )}
-
-          <Label htmlFor="password">
-            New Password <Required />
-          </Label>
-
-          <Controller
-            control={control}
-            name="password"
-            render={({ field }) => (
-              <Input
-                {...field}
-                id="password"
-                placeholder="Password"
-                my={3}
-                type="password"
-                error={errors.password}
-              />
-            )}
+          <InputV2
+            label={
+              <>
+                New Password <Required />
+              </>
+            }
+            id="password"
+            placeholder="New password"
+            type="password"
+            error={errors.password}
+            {...register('password')}
           />
 
-          {errors.password && (
-            <InlineError marginBottom={3}>
-              {errors.password.message}
-            </InlineError>
-          )}
-
-          <Label htmlFor="confirm">
-            Confirm New Password <Required />
-          </Label>
-
-          <Controller
-            control={control}
-            name="confirm"
-            render={({ field }) => (
-              <Input
-                {...field}
-                id="confirm"
-                placeholder="Confirm your new password"
-                my={3}
-                type="password"
-                error={errors.confirm}
-              />
-            )}
+          <InputV2
+            label={
+              <>
+                Confirm New Password <Required />
+              </>
+            }
+            id="confirm"
+            placeholder="Confirm your new password"
+            type="password"
+            error={errors.confirm}
+            {...register('confirm')}
           />
 
-          {errors.confirm && (
-            <InlineError marginBottom={3}>{errors.confirm.message}</InlineError>
-          )}
+          <Button type="submit" variant="green" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting' : 'Change password'}
+          </Button>
         </Grid>
-        <Button type="submit" variant="green" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting' : 'Change password'}
-        </Button>
       </form>
 
-      {serverError && (
-        <>
-          <InlineError my={3}>{serverError}</InlineError>
-        </>
-      )}
-
-      {serverSuccess && (
-        <Flex
-          alignItems="center"
-          bg="keeperGreen"
-          px={4}
-          py={1}
-          mt={6}
-          borderColor="keeperGreen"
-          borderWidth="1px"
-          borderStyle="solid"
-          color="white"
-          borderRadius="md"
-        >
-          <CheckIcon mr={3} /> <Text fontWeight="bold">Password updated</Text>
-        </Flex>
-      )}
+      {serverError && <Error>{serverError}</Error>}
+      {serverSuccess && <Success>Password updated</Success>}
     </>
   );
 };

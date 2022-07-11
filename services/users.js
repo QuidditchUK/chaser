@@ -13,6 +13,13 @@ const usersService = {
     data,
     ...params,
   }),
+
+  updatePassword: ({ data, ...params }) => ({
+    method: 'put',
+    url: '/users/password',
+    data,
+    ...params,
+  }),
 };
 
 export default createService(usersService);

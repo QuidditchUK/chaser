@@ -160,7 +160,7 @@ const InfoForm = ({ user }) => {
         </Grid>
       </form>
 
-      {serverError && <Error my={3}>{serverError}</Error>}
+      {serverError && <Error>{serverError}</Error>}
       {serverSuccess && <Success>User updated</Success>}
     </>
   );

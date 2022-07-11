@@ -65,6 +65,7 @@ const InputV2 = (
     leftAddonProps,
     variant,
     size,
+    type,
     ...rest
   },
   ref
@@ -112,6 +113,7 @@ const InputV2 = (
           size={size}
           sx={styles}
           errorBorderColor="monarchRed"
+          type={type}
         />
         {rightElementProps && (
           <ChakraInputRightElement {...rightElementProps} />
