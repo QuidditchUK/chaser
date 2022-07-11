@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { Flex, Link, Box, Text } from '@chakra-ui/react';
 
-const Navigation = dynamic(() => import('components/layout/navigation'));
+const Navigation = dynamic(() => import('components/layout/navigationV2'));
 const Footer = dynamic(() => import('components/layout/footer'));
 const PageErrorBoundary = dynamic(() =>
   import('components/errorBoundaries/page')

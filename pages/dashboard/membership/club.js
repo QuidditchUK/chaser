@@ -28,6 +28,7 @@ import {
   TableContainer,
 } from '@chakra-ui/react';
 import TransferRequestForm from 'components/dashboard/transfer-request-form';
+import settingsService from 'services/settings';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -367,7 +368,7 @@ export const getServerSideProps = async ({ req, res }) => {
     api.get('/clubs/search'),
     api.get('/users/me', requestHeaders),
     api.get('/products/me', requestHeaders),
-    api.get('/settings'),
+    settingsService.getSettings(),
     getBasePageProps(),
   ]);
 

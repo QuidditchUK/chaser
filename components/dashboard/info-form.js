@@ -1,23 +1,17 @@
-import { useState, useEffect } from 'react';
 import { object, string, bool } from 'yup';
-import dynamic from 'next/dynamic';
-import { Flex, Grid, Switch, Text } from '@chakra-ui/react';
-import { CheckIcon } from '@chakra-ui/icons';
-
-import { useForm, Controller } from 'react-hook-form';
+import { Grid } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
-
-const Label = dynamic(() => import('components/formControls/label'));
-const Button = dynamic(() => import('components/shared/button'));
-const Content = dynamic(() => import('components/shared/content'));
-const Required = dynamic(() => import('components/formControls/required'));
-const InlineError = dynamic(() =>
-  import('components/shared/errors').then(({ InlineError }) => InlineError)
-);
-
-import { api } from 'modules/api';
+import useTempPopup from 'hooks/useTempPopup';
+import usersService from 'services/users';
+import InputV2 from 'components/formControls/inputV2';
+import Switch from 'components/formControls/switch';
+import Required from 'components/formControls/required';
+import Success from 'components/formControls/success';
+import Error from 'components/shared/errors';
+import Button from 'components/shared/button';
+import Content from 'components/shared/content';
 
 const InfoFormSchema = object().shape({
   email: string()
@@ -35,14 +29,18 @@ const InfoFormSchema = object().shape({
   }),
 });
 
-const handleInfoSubmit = async (values, setServerError, setServerSuccess) => {
-  const data = { ...values, university: values.university || null };
-
+const handleInfoSubmit = async ({
+  values,
+  setServerError,
+  setServerSuccess,
+}) => {
   try {
     setServerError(null);
     setServerSuccess(null);
 
-    await api.put('/users/me', data);
+    await usersService.updateUser({
+      data: { ...values, university: values.university || null },
+    });
 
     setServerSuccess(true);
   } catch (err) {
@@ -52,7 +50,7 @@ const handleInfoSubmit = async (values, setServerError, setServerSuccess) => {
 
 const InfoForm = ({ user }) => {
   const {
-    control,
+    register,
     handleSubmit,
     watch,
     formState: { isSubmitting, errors },
@@ -69,145 +67,83 @@ const InfoForm = ({ user }) => {
   });
 
   const watchIsStudent = watch('is_student');
-  const [serverError, setServerError] = useState(null);
-  const [serverSuccess, setServerSuccess] = useState(null);
 
-  useEffect(() => {
-    if (serverSuccess) {
-      const timer = setTimeout(() => {
-        setServerSuccess(null);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-
-    return () => {};
-  }, [serverSuccess]);
+  const [serverSuccess, setServerSuccess] = useTempPopup();
+  const [serverError, setServerError] = useTempPopup();
 
   return (
     <>
       <form
         onSubmit={handleSubmit((values) =>
-          handleInfoSubmit(values, setServerError, setServerSuccess)
+          handleInfoSubmit({ values, setServerError, setServerSuccess })
         )}
       >
-        <Grid gridTemplateColumns="1fr">
-          <Label htmlFor="email">
-            Email Address <Required />
-          </Label>
-
-          <Controller
-            control={control}
-            name="email"
-            render={({ field }) => (
-              <Input
-                {...field}
-                id="email"
-                placeholder="Your email address"
-                my={3}
-                error={errors.email}
-              />
-            )}
+        <Grid gridTemplateColumns="1fr" gridGap={3}>
+          <InputV2
+            label={
+              <>
+                Email Address <Required />
+              </>
+            }
+            id="email"
+            placeholder="Your email address"
+            error={errors.email}
+            {...register('email')}
           />
 
-          {errors.email && (
-            <InlineError marginBottom={3}>{errors.email.message}</InlineError>
-          )}
-
-          <Label htmlFor="first_name">
-            Preferred first name <Required />
-          </Label>
-          <Controller
-            control={control}
-            name="first_name"
-            render={({ field }) => (
-              <Input
-                {...field}
-                id="first_name"
-                placeholder="First name"
-                my={3}
-                type="first_name"
-                error={errors.first_name}
-              />
-            )}
+          <InputV2
+            label={
+              <>
+                Preferred first name <Required />
+              </>
+            }
+            id="first_name"
+            placeholder="First name"
+            error={errors.first_name}
+            {...register('first_name')}
           />
 
-          {errors.first_name && (
-            <InlineError marginBottom={3}>
-              {errors.first_name.message}
-            </InlineError>
-          )}
-
-          <Label htmlFor="last_name">
-            Preferred last name <Required />
-          </Label>
-
-          <Controller
-            control={control}
-            name="last_name"
-            render={({ field }) => (
-              <Input
-                {...field}
-                id="last_name"
-                placeholder="Last name"
-                my={3}
-                type="last_name"
-                error={errors.last_name}
-              />
-            )}
+          <InputV2
+            label={
+              <>
+                Preferred last name <Required />
+              </>
+            }
+            id="last_name"
+            placeholder="Last name"
+            error={errors.last_name}
+            {...register('last_name')}
           />
 
-          {errors.last_name && (
-            <InlineError marginBottom={3}>
-              {errors.last_name.message}
-            </InlineError>
-          )}
-
-          <Label htmlFor="is_student">
-            Are you a student? <Required />
-            <Controller
-              control={control}
-              name="is_student"
-              render={({ field }) => (
-                <Switch
-                  {...field}
-                  isChecked={field.value}
-                  id="is_student"
-                  colorScheme="green"
-                  ml={3}
-                  my={3}
-                  size="lg"
-                />
-              )}
-            />
-          </Label>
+          <Switch
+            label={
+              <>
+                Are you a student? <Required />
+              </>
+            }
+            id="is_student"
+            colorScheme="green"
+            size="lg"
+            display="flex"
+            alignItems="center"
+            {...register('is_student')}
+          />
 
           {watchIsStudent && (
             <>
-              <Label htmlFor="university">
-                What university do you attend? <Required />
-              </Label>
-
-              <Controller
-                control={control}
-                name="university"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    id="university"
-                    placeholder="Name of your university"
-                    my={3}
-                    type="university"
-                    error={errors.university}
-                  />
-                )}
+              <InputV2
+                label={
+                  <>
+                    What university do you attend? <Required />
+                  </>
+                }
+                id="university"
+                placeholder="Name of your university"
+                error={errors.university}
+                {...register('university')}
               />
-              {errors.university && (
-                <InlineError marginBottom={3}>
-                  {errors.university.message}
-                </InlineError>
-              )}
 
-              <Content fontSize={1} marginBottom={3}>
+              <Content fontSize="sm" marginBottom={3}>
                 We need this as there are some player restrictions in place for
                 Student Clubs competing in QuidditchUK events. QuidditchUK may
                 require further verification from members regarding their
@@ -217,34 +153,15 @@ const InfoForm = ({ user }) => {
               </Content>
             </>
           )}
+
+          <Button type="submit" variant="green" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting' : 'Update Info'}
+          </Button>
         </Grid>
-        <Button type="submit" variant="green" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting' : 'Update Info'}
-        </Button>
       </form>
 
-      {serverError && (
-        <>
-          <InlineError my={3}>{serverError}</InlineError>
-        </>
-      )}
-
-      {serverSuccess && (
-        <Flex
-          alignItems="center"
-          bg="keeperGreen"
-          px={4}
-          py={1}
-          mt={6}
-          borderColor="keeperGreen"
-          borderWidth="1px"
-          borderStyle="solid"
-          color="white"
-          borderRadius="md"
-        >
-          <CheckIcon mr={3} /> <Text fontWeight="bold">User updated</Text>
-        </Flex>
-      )}
+      {serverError && <Error my={3}>{serverError}</Error>}
+      {serverSuccess && <Success>User updated</Success>}
     </>
   );
 };

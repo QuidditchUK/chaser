@@ -4,6 +4,7 @@ import { ButtonStyles } from 'components/shared/button';
 import { SliceStyles } from 'components/shared/slice';
 import { CardStyles } from 'components/shared/card';
 import { HorizontalCardStyles } from 'components/shared/horizontal-card';
+import { InputV2Styles } from 'components/formControls/inputV2';
 
 const emBase = 16;
 export const rem = (value) => `${value / emBase}rem`;
@@ -14,6 +15,7 @@ export default extendTheme({
     Slice: SliceStyles,
     Card: CardStyles,
     HorizontalCard: HorizontalCardStyles,
+    InputV2: InputV2Styles,
   },
 
   colors: {

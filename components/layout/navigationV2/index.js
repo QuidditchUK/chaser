@@ -27,8 +27,8 @@ import { removeCookie } from 'modules/cookies';
 import Link from 'next/link';
 
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import DesktopNavigation from '../navigationV2/desktop';
-import MobileNavigation from '../navigationV2/mobile';
+import DesktopNavigation from './desktop';
+import MobileNavigation from './mobile';
 
 import FacebookIcon from 'public/images/facebook.svg';
 import YoutubeIcon from 'public/images/youtube.svg';
