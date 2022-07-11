@@ -1,6 +1,30 @@
 import { forwardRef } from 'react';
-import { Button as ChakraButton, useStyleConfig, Box } from '@chakra-ui/react';
-import ExternalLink from 'components/shared/external-link';
+import {
+  Button as ChakraButton,
+  useStyleConfig,
+  Box,
+  Link as ChakraLink,
+} from '@chakra-ui/react';
+import Link from 'next/link';
+
+const ExternalLink = ({ href, children, ...props }) => {
+  const regex = new RegExp('(http)|(mailto)', 'g');
+
+  return regex.test(href) ? (
+    <ChakraLink
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      {...props}
+    >
+      {children}
+    </ChakraLink>
+  ) : (
+    <Link href={href} passHref>
+      <ChakraLink {...props}>{children}</ChakraLink>
+    </Link>
+  );
+};
 
 export const ButtonStyles = {
   baseStyle: {

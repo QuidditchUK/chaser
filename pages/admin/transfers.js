@@ -10,20 +10,6 @@ import {
   Heading,
   Grid,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
   Text,
   Switch,
   FormControl,
@@ -44,6 +30,8 @@ import isAuthorized from 'modules/auth';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import Meta from 'components/shared/meta';
 import { getBasePageProps } from 'modules/prismic';
+import Modal from 'components/shared/modal';
+import Table from 'components/shared/table';
 
 const handleConfirmClick = async ({ transfer_uuid, refetch, method }) => {
   try {
@@ -124,6 +112,56 @@ const Dashboard = ({
 
     update();
   }, [watchTransfer, querySettings, refetchSettings]);
+
+  const actionedTransfersTableData = orderBy(
+    queryActionedTransfers,
+    ['updated'],
+    'desc'
+  ).map((transfer) => ({
+    key: transfer?.uuid,
+    data: [
+      {
+        key: 'name',
+        children: (
+          <>
+            {transfer?.user?.first_name} {transfer?.user?.last_name}
+          </>
+        ),
+      },
+      {
+        key: 'prevClub',
+        children: <>{transfer?.prevClub?.name}</>,
+      },
+      {
+        key: 'newClub',
+        children: <>{transfer?.newClub?.name}</>,
+      },
+      {
+        key: 'status',
+        color: transfer.status === 'APPROVED' ? 'keeperGreen' : 'monarchRed',
+        fontWeight: 'bold',
+        children: <>{STATUS[transfer.status]}</>,
+      },
+      {
+        key: 'actionedBy',
+        children: (
+          <>
+            {transfer?.actioned_by && (
+              <>
+                {transfer.actionedBy.first_name} {transfer.actionedBy.last_name}
+              </>
+            )}
+          </>
+        ),
+      },
+      {
+        key: 'date',
+        children: (
+          <>{format(new Date(transfer?.updated), 'd/MM/yyyy h:mm a')}</>
+        ),
+      },
+    ],
+  }));
 
   return (
     <>
@@ -271,57 +309,17 @@ const Dashboard = ({
         </Heading>
 
         <Box bg="white" borderRadius="lg">
-          <TableContainer>
-            <Table variant="striped">
-              <Thead>
-                <Tr>
-                  <Th>Name</Th>
-                  <Th>Old Club</Th>
-                  <Th>New Club</Th>
-                  <Th>Status</Th>
-                  <Th>Actioned By</Th>
-                  <Th>Date</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {orderBy(queryActionedTransfers, ['updated'], 'desc').map(
-                  (transfer) => (
-                    <Tr key={transfer?.uuid}>
-                      <Td>
-                        {transfer?.user?.first_name} {transfer?.user?.last_name}
-                      </Td>
-                      <Td>{transfer?.prevClub?.name}</Td>
-                      <Td>{transfer?.newClub?.name}</Td>
-                      <Td
-                        color={
-                          transfer.status === 'APPROVED'
-                            ? 'keeperGreen'
-                            : 'monarchRed'
-                        }
-                        fontWeight="bold"
-                      >
-                        {STATUS[transfer.status]}
-                      </Td>
-                      <Td>
-                        {transfer?.actioned_by && (
-                          <>
-                            {transfer.actionedBy.first_name}{' '}
-                            {transfer.actionedBy.last_name}
-                          </>
-                        )}
-                      </Td>
-                      <Td>
-                        {format(
-                          new Date(transfer?.updated),
-                          'd/MM/yyyy h:mm a'
-                        )}
-                      </Td>
-                    </Tr>
-                  )
-                )}
-              </Tbody>
-            </Table>
-          </TableContainer>
+          <Table
+            columns={[
+              'Name',
+              'Old Club',
+              'New Club',
+              'Status',
+              'Actioned By',
+              'Date',
+            ]}
+            rows={actionedTransfersTableData}
+          />
         </Box>
 
         <HStack
@@ -357,94 +355,75 @@ const Dashboard = ({
         </HStack>
       </Slice>
 
-      <Modal isOpen={isOpenApprove} onClose={onCloseApprove}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Approve Transfer</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>
-              I confirm I am approving the following transfer. Once approved a
-              transfer is <strong>final</strong> and the player & clubs will be
-              notified of the transfer.
-            </Text>
-            <DescriptionList>
-              <Description
-                term="Member"
-                description={`${selectedTransfer?.user?.first_name} ${selectedTransfer?.user?.last_name}`}
-              />
-              <Description
-                term="Old Club"
-                description={selectedTransfer?.prevClub.name}
-              />
-              <Description
-                term="New Club"
-                description={selectedTransfer?.newClub.name}
-              />
-            </DescriptionList>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button
-              variant="green"
-              onClick={() => {
-                handleConfirmClick({
-                  transfer_uuid: selectedTransfer?.uuid,
-                  refetch,
-                  method: 'approve',
-                });
-                onCloseApprove();
-              }}
-            >
-              Approve
-            </Button>
-          </ModalFooter>
-        </ModalContent>
+      <Modal
+        title="Approve Transfer"
+        isOpen={isOpenApprove}
+        onClose={onCloseApprove}
+        footerAction={() => {
+          handleConfirmClick({
+            transfer_uuid: selectedTransfer?.uuid,
+            refetch,
+            method: 'approve',
+          });
+          onCloseApprove();
+        }}
+        footerTitle="Approve"
+      >
+        <Text>
+          I confirm I am approving the following transfer. Once approved a
+          transfer is <strong>final</strong> and the player & clubs will be
+          notified of the transfer.
+        </Text>
+        <DescriptionList>
+          <Description
+            term="Member"
+            description={`${selectedTransfer?.user?.first_name} ${selectedTransfer?.user?.last_name}`}
+          />
+          <Description
+            term="Old Club"
+            description={selectedTransfer?.prevClub.name}
+          />
+          <Description
+            term="New Club"
+            description={selectedTransfer?.newClub.name}
+          />
+        </DescriptionList>
       </Modal>
 
-      <Modal isOpen={isOpenDecline} onClose={onCloseDecline}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Decline Transfer</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>
-              I confirm I am declining the following transfer. Once declined a
-              transfer is <strong>final</strong> and the player will be notified
-              the transfer has been declined.
-            </Text>
-            <DescriptionList>
-              <Description
-                term="Member"
-                description={`${selectedTransfer?.user?.first_name} ${selectedTransfer?.user?.last_name}`}
-              />
-              <Description
-                term="Old Club"
-                description={selectedTransfer?.prevClub.name}
-              />
-              <Description
-                term="New Club"
-                description={selectedTransfer?.newClub.name}
-              />
-            </DescriptionList>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                handleConfirmClick({
-                  transfer_uuid: selectedTransfer?.uuid,
-                  refetch,
-                  method: 'decline',
-                });
-                onCloseDecline();
-              }}
-            >
-              Decline
-            </Button>
-          </ModalFooter>
-        </ModalContent>
+      <Modal
+        title="Decline Transfer"
+        isOpen={isOpenDecline}
+        onClose={onCloseDecline}
+        footerAction={() => {
+          handleConfirmClick({
+            transfer_uuid: selectedTransfer?.uuid,
+            refetch,
+            method: 'decline',
+          });
+          onCloseDecline();
+        }}
+        footerButtonProps={{ variant: 'secondary' }}
+        footerTitle="Decline"
+      >
+        <Text>
+          I confirm I am declining the following transfer. Once declined a
+          transfer is <strong>final</strong> and the player will be notified the
+          transfer has been declined.
+        </Text>
+        <DescriptionList>
+          <Description
+            term="Member"
+            description={`${selectedTransfer?.user?.first_name} ${selectedTransfer?.user?.last_name}`}
+          />
+          <Description
+            term="Old Club"
+            description={selectedTransfer?.prevClub.name}
+          />
+          <Description
+            term="New Club"
+            description={selectedTransfer?.newClub.name}
+          />
+        </DescriptionList>
       </Modal>
     </>
   );

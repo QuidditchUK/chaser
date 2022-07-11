@@ -1,20 +1,9 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import { useQuery } from 'react-query';
 import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
-import {
-  Box,
-  Flex,
-  Heading,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import { SmallAddIcon } from '@chakra-ui/icons';
 
 import { getUserScopes, hasScope } from 'modules/scopes';
@@ -25,13 +14,13 @@ import isAuthorized from 'modules/auth';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import Meta from 'components/shared/meta';
 import { getBasePageProps } from 'modules/prismic';
+import Table from 'components/shared/table';
+import Modal from 'components/shared/modal';
 
-const handleDeleteClick = async ({ uuid, name, refetch }) => {
+const handleDeleteClick = async ({ uuid, refetch }) => {
   try {
-    if (confirm(`Are you sure you want to delete ${name}?`)) {
-      await api.delete(`/clubs/${uuid}`);
-      refetch();
-    }
+    await api.delete(`/clubs/${uuid}`);
+    refetch();
   } catch (error) {
     console.log(error);
   }
@@ -51,6 +40,9 @@ const Dashboard = ({ scopes, clubs }) => {
     },
     [[], []]
   );
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedClub, setSelectedClub] = useState();
 
   return (
     <>
@@ -93,42 +85,40 @@ const Dashboard = ({ scopes, clubs }) => {
         </Text>
 
         <Box bg="white" borderRadius="lg">
-          <TableContainer>
-            <Table variant="striped">
-              <Thead>
-                <Tr>
-                  <Th>Name</Th>
-                  <Th>League</Th>
-                  <Th>Email</Th>
-                  <Th>Members</Th>
-                  <Th></Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {activeClubs.map((club) => (
-                  <Tr key={club?.uuid}>
-                    <Td>{club?.name}</Td>
-                    <Td>{club?.league}</Td>
-                    <Td>
+          <Table
+            name="Clubs"
+            columns={['Name', 'League', 'Email', 'Members', '']}
+            rows={activeClubs.map((club) => ({
+              key: club?.uuid,
+              data: [
+                { key: 'name', children: <>{club?.name}</> },
+                { key: 'league', children: <>{club?.league}</> },
+                {
+                  key: 'email',
+                  children: (
+                    <>
                       {club?.email && (
                         <Link href={`mailto:${club?.email}`}>
                           {club?.email}
                         </Link>
                       )}
-                    </Td>
-                    <Td>{club?._count?.users}</Td>
-                    {hasScope([CLUBS_WRITE, EMT], scopes) && (
-                      <Td>
-                        <Button href={`/admin/clubs/${club.uuid}`}>
-                          Details
-                        </Button>
-                      </Td>
-                    )}
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
+                    </>
+                  ),
+                },
+                { key: 'count', children: <>{club?._count?.users}</> },
+                ...(hasScope([CLUBS_WRITE, EMT], scopes) && [
+                  {
+                    key: 'edit',
+                    children: (
+                      <Button href={`/admin/clubs/${club.uuid}`}>
+                        Details
+                      </Button>
+                    ),
+                  },
+                ]),
+              ],
+            }))}
+          />
         </Box>
 
         <Heading as="h4" fontFamily="body" color="qukBlue">
@@ -136,61 +126,72 @@ const Dashboard = ({ scopes, clubs }) => {
         </Heading>
 
         <Box bg="white" borderRadius="lg">
-          <TableContainer>
-            <Table variant="striped">
-              <Thead>
-                <Tr>
-                  <Th>Name</Th>
-                  <Th>League</Th>
-                  <Th>Email</Th>
-                  <Th>Members</Th>
-                  <Th></Th>
-                  <Th></Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {inactiveClubs.map((club) => (
-                  <Tr key={club?.uuid}>
-                    <Td>{club?.name}</Td>
-                    <Td>{club?.league}</Td>
-                    <Td>
+          <Table
+            name="Inactive Clubs"
+            columns={['Name', 'League', 'Email', 'Members', '', '']}
+            rows={inactiveClubs.map((club) => ({
+              key: club?.uuid,
+              data: [
+                { key: 'name', children: <>{club?.name}</> },
+                { key: 'league', children: <>{club?.league}</> },
+                {
+                  key: 'email',
+                  children: (
+                    <>
                       {club?.email && (
                         <Link href={`mailto:${club?.email}`}>
                           {club?.email}
                         </Link>
                       )}
-                    </Td>
-                    <Td>{club?._count?.users}</Td>
-                    {hasScope([CLUBS_WRITE, EMT], scopes) && (
-                      <>
-                        <Td>
-                          <Button href={`/admin/clubs/${club.uuid}`}>
-                            Edit
-                          </Button>
-                        </Td>
-                        <Td>
-                          <Button
-                            variant="secondary"
-                            onClick={() =>
-                              handleDeleteClick({
-                                name: club?.name,
-                                uuid: club.uuid,
-                                refetch,
-                              })
-                            }
-                          >
-                            Delete
-                          </Button>
-                        </Td>
-                      </>
-                    )}
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
+                    </>
+                  ),
+                },
+                { key: 'count', children: <>{club?._count?.users}</> },
+                ...(hasScope([CLUBS_WRITE, EMT], scopes) && [
+                  {
+                    key: 'edit',
+                    children: (
+                      <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
+                    ),
+                  },
+                  {
+                    key: 'delete',
+                    children: (
+                      <Button
+                        variant="secondary"
+                        onClick={() => {
+                          setSelectedClub(club);
+                          onOpen();
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    ),
+                  },
+                ]),
+              ],
+            }))}
+          />
         </Box>
       </Slice>
+
+      <Modal
+        title="Delete Club"
+        isOpen={isOpen}
+        onClose={onClose}
+        footerAction={() => {
+          handleDeleteClick({
+            uuid: selectedClub?.uuid,
+            refetch,
+          });
+          onClose();
+          setSelectedClub();
+        }}
+        footerTitle="Delete"
+        footerButtonProps={{ variant: 'secondary' }}
+      >
+        <Text>Are you sure you want to delete {selectedClub?.name}?</Text>
+      </Modal>
     </>
   );
 };
