@@ -3,21 +3,22 @@ import { object, string } from 'yup';
 import Router from 'next/router';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
-import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
-import { Controller, useForm } from 'react-hook-form';
+import { Box, Grid, Link, Heading } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
-import { api } from 'modules/api';
+
 import { setCookies, parseCookies } from 'modules/cookies';
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 import { getBasePageProps } from 'modules/prismic';
+import InputV2 from 'components/formControls/inputV2';
+import usersService from 'services/users';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
-const Label = dynamic(() => import('components/formControls/label'));
+
 const Button = dynamic(() => import('components/shared/button'));
 const Content = dynamic(() => import('components/shared/content'));
-const Logo = dynamic(() => import('components/shared/logo'));
+
 const InlineError = dynamic(() =>
   import('components/shared/errors').then(({ InlineError }) => InlineError)
 );
@@ -31,11 +32,11 @@ const LoginFormSchema = object().shape({
     .required('Required'),
 });
 
-const handleLoginSubmit = async (values, setServerError) => {
+const handleLoginSubmit = async ({ values, setServerError }) => {
   try {
     setServerError(null);
 
-    const { data } = await api.post('/users/login', values);
+    const { data } = await usersService.login({ data: values });
 
     setCookies('AUTHENTICATION_TOKEN', data.access_token);
 
@@ -45,11 +46,11 @@ const handleLoginSubmit = async (values, setServerError) => {
   }
 };
 
-const Page = () => {
+const LoginPage = () => {
   const [serverError, setServerError] = useState(null);
 
   const {
-    control,
+    register,
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm({
@@ -79,59 +80,30 @@ const Page = () => {
 
           <form
             onSubmit={handleSubmit((values) =>
-              handleLoginSubmit(values, setServerError)
+              handleLoginSubmit({ values, setServerError })
             )}
           >
-            <Grid gridTemplateColumns="1fr">
-              <Label htmlFor="name">Email Address</Label>
-
-              <Controller
-                name="email"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    id="email"
-                    placeholder="Your email address"
-                    my={3}
-                    error={errors?.email}
-                  />
-                )}
+            <Grid gridTemplateColumns="1fr" gridGap={3}>
+              <InputV2
+                label="Email Address"
+                id="email"
+                placeholder="Your email address"
+                error={errors?.email}
+                {...register('email')}
+              />
+              <InputV2
+                label="Password"
+                id="password"
+                placeholder="Password"
+                type="password"
+                error={errors?.password}
+                {...register('password')}
               />
 
-              {errors.email && (
-                <InlineError marginBottom={3}>
-                  {errors.email.message}
-                </InlineError>
-              )}
-
-              <Label htmlFor="password">Password</Label>
-
-              <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    name="password"
-                    placeholder="Password"
-                    my={3}
-                    type="password"
-                    error={errors.password}
-                  />
-                )}
-              />
-
-              {errors.password && (
-                <InlineError marginBottom={3}>
-                  {errors.password.message}
-                </InlineError>
-              )}
+              <Button type="submit" variant="green" disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting' : 'Sign in'}
+              </Button>
             </Grid>
-
-            <Button type="submit" variant="green" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting' : 'Sign in'}
-            </Button>
           </form>
 
           {serverError && (
@@ -203,4 +175,4 @@ export const getServerSideProps = async ({ req, res }) => {
   };
 };
 
-export default Page;
+export default LoginPage;

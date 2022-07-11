@@ -1,26 +1,24 @@
-import { useState } from 'react';
 import { object, string, bool, ref } from 'yup';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import { Box, Grid, Flex, Heading, Text, Link, Switch } from '@chakra-ui/react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
-import { api } from 'modules/api';
+
 import { setCookies, parseCookies } from 'modules/cookies';
 import { getBasePageProps } from 'modules/prismic';
 import { event } from 'modules/analytics';
 import { CATEGORIES } from 'constants/analytics';
+import Error from 'components/shared/errors';
 
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import InputV2 from 'components/formControls/inputV2';
+import usersService from 'services/users';
+import useTempPopup from 'hooks/useTempPopup';
 
 const Logo = dynamic(() => import('components/shared/logo'));
-const InlineError = dynamic(() =>
-  import('components/shared/errors').then(({ InlineError }) => InlineError)
-);
 
-const Label = dynamic(() => import('components/formControls/label'));
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
 const Button = dynamic(() => import('components/shared/button'));
@@ -60,7 +58,7 @@ const handleJoinSubmit = async ({ confirm, ...formData }, setServerError) => {
 
   try {
     setServerError(null);
-    const { data } = await api.post('/users', values);
+    const { data } = await usersService.createUser({ data: values });
 
     setCookies('AUTHENTICATION_TOKEN', data.access_token);
 
@@ -75,11 +73,11 @@ const handleJoinSubmit = async ({ confirm, ...formData }, setServerError) => {
   }
 };
 
-const Page = () => {
-  const [serverError, setServerError] = useState(null);
+const JoinPage = () => {
+  const [serverError, setServerError] = useTempPopup();
 
   const {
-    control,
+    register,
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
@@ -141,128 +139,72 @@ const Page = () => {
                 handleJoinSubmit(values, setServerError)
               )}
             >
-              <Grid gridTemplateColumns="1fr">
-                <Label htmlFor="name">Email Address</Label>
-
-                <Controller
-                  control={control}
-                  name="email"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="email"
-                      placeholder="Your email address"
-                      my={3}
-                      error={errors.email}
-                      borderColor={errors.email ? 'alert' : 'greyLight'}
-                    />
-                  )}
+              <Grid gridTemplateColumns="1fr" gridGap={3}>
+                <InputV2
+                  label={
+                    <>
+                      Email Address <Required />
+                    </>
+                  }
+                  id="email"
+                  placeholder="Your email address"
+                  error={errors.email}
+                  {...register('email')}
                 />
 
-                {errors.email && (
-                  <InlineError marginBottom={3}>
-                    {errors.email.message}
-                  </InlineError>
-                )}
-
-                <Label htmlFor="first_name">
-                  Preferred first name <Required />
-                </Label>
-
-                <Controller
-                  control={control}
-                  name="first_name"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="first_name"
-                      placeholder="First name"
-                      my={3}
-                      error={errors.first_name}
-                      borderColor={errors.first_name ? 'alert' : 'greyLight'}
-                    />
-                  )}
+                <InputV2
+                  label={
+                    <>
+                      Preferred first name <Required />
+                    </>
+                  }
+                  id="first_name"
+                  placeholder="First name"
+                  error={errors.first_name}
+                  {...register('first_name')}
                 />
 
-                {errors.first_name && (
-                  <InlineError marginBottom={3}>
-                    {errors.first_name.message}
-                  </InlineError>
-                )}
-
-                <Label htmlFor="last_name">
-                  Preferred last name <Required />
-                </Label>
-
-                <Controller
-                  control={control}
-                  name="last_name"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="last_name"
-                      placeholder="Last name"
-                      my={3}
-                      type="last_name"
-                      error={errors.last_name}
-                      borderColor={errors.last_name ? 'alert' : 'greyLight'}
-                    />
-                  )}
+                <InputV2
+                  label={
+                    <>
+                      Preferred last name <Required />
+                    </>
+                  }
+                  id="last_name"
+                  placeholder="Last name"
+                  error={errors.last_name}
+                  {...register('last_name')}
                 />
 
-                {errors.last_name && (
-                  <InlineError marginBottom={3}>
-                    {errors.last_name.message}
-                  </InlineError>
-                )}
-
-                <Label htmlFor="is_student">
-                  Are you a student? <Required />
-                  <Controller
-                    control={control}
-                    name="is_student"
-                    render={({ field }) => (
-                      <Switch
-                        {...field}
-                        isChecked={field.value}
-                        id="is_student"
-                        colorScheme="green"
-                        ml={3}
-                        my={3}
-                        size="lg"
-                      />
-                    )}
-                  />
-                </Label>
+                <Switch
+                  label={
+                    <>
+                      Are you a student? <Required />
+                    </>
+                  }
+                  id="is_student"
+                  colorScheme="green"
+                  size="lg"
+                  display="flex"
+                  alignItems="center"
+                  {...register('is_student')}
+                />
 
                 {watchIsStudent && (
                   <>
-                    <Label htmlFor="last_name">
-                      What university do you attend? <Required />
-                    </Label>
-
-                    <Controller
-                      control={control}
-                      name="university"
-                      render={({ field }) => (
-                        <Input
-                          {...field}
-                          id="university"
-                          placeholder="Name of your university"
-                          my={3}
-                          type="university"
-                          error={errors.university}
-                        />
-                      )}
+                    <InputV2
+                      label={
+                        <>
+                          What university do you attend? <Required />
+                        </>
+                      }
+                      id="university"
+                      placeholder="Name of your university"
+                      error={errors.university}
+                      {...register('university')}
                     />
 
-                    {errors.university && (
-                      <InlineError marginBottom={3}>
-                        {errors.university.message}
-                      </InlineError>
-                    )}
-
-                    <Text fontSize={1} marginBottom={3}>
+                    <Text fontSize="sm" marginBottom={3}>
                       We need this as there are some player restrictions in
                       place for Student Clubs competing in QuidditchUK events.
                       QuidditchUK may require further verification from members
@@ -273,64 +215,39 @@ const Page = () => {
                   </>
                 )}
 
-                <Label htmlFor="password">
-                  Password <Required />
-                </Label>
-
-                <Controller
-                  control={control}
-                  name="password"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      name="password"
-                      placeholder="Password"
-                      my={3}
-                      type="password"
-                      error={errors.password}
-                      borderColor={errors.password ? 'alert' : 'greyLight'}
-                    />
-                  )}
+                <InputV2
+                  label={
+                    <>
+                      Password <Required />
+                    </>
+                  }
+                  id="password"
+                  placeholder="Password"
+                  type="password"
+                  error={errors.password}
+                  {...register('password')}
                 />
 
-                {errors.password && (
-                  <InlineError marginBottom={3}>
-                    {errors.password.message}
-                  </InlineError>
-                )}
-
-                <Label htmlFor="confirm">
-                  Confirm Password <Required />
-                </Label>
-
-                <Controller
-                  control={control}
-                  name="confirm"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="confirm"
-                      placeholder="Confirm your password"
-                      my={3}
-                      type="password"
-                      error={errors.confirm}
-                      borderColor={errors.confirm ? 'alert' : 'greyLight'}
-                    />
-                  )}
+                <InputV2
+                  label={
+                    <>
+                      Confirm Password <Required />
+                    </>
+                  }
+                  id="confirm"
+                  placeholder="Confirm your password"
+                  type="password"
+                  error={errors.confirm}
+                  {...register('confirm')}
                 />
 
-                {errors.confirm && (
-                  <InlineError marginBottom={3}>
-                    {errors.confirm.message}
-                  </InlineError>
-                )}
+                <Button type="submit" variant="green" disabled={isSubmitting}>
+                  {isSubmitting ? 'Submitting' : 'Join'}
+                </Button>
               </Grid>
-              <Button type="submit" variant="green" disabled={isSubmitting}>
-                {isSubmitting ? 'Submitting' : 'Join'}
-              </Button>
             </form>
 
-            {serverError && <InlineError my={3}>{serverError}</InlineError>}
+            {serverError && <Error>{serverError}</Error>}
 
             <Box
               bg="white"
@@ -371,4 +288,4 @@ export const getServerSideProps = async ({ req, res }) => {
   };
 };
 
-export default Page;
+export default JoinPage;
