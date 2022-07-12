@@ -122,8 +122,8 @@ const TransferCard = ({ transfer, scopes, refetchAll }) => {
             term="Member"
             description={`${transfer?.user?.first_name} ${transfer?.user?.last_name}`}
           />
-          <Description term="Old Club" description={transfer?.prevClub.name} />
-          <Description term="New Club" description={transfer?.newClub.name} />
+          <Description term="Old Club" description={transfer?.prevClub?.name} />
+          <Description term="New Club" description={transfer?.newClub?.name} />
         </DescriptionList>
       </Modal>
 
@@ -152,8 +152,8 @@ const TransferCard = ({ transfer, scopes, refetchAll }) => {
             term="Member"
             description={`${transfer?.user?.first_name} ${transfer?.user?.last_name}`}
           />
-          <Description term="Old Club" description={transfer?.prevClub.name} />
-          <Description term="New Club" description={transfer?.newClub.name} />
+          <Description term="Old Club" description={transfer?.prevClub?.name} />
+          <Description term="New Club" description={transfer?.newClub?.name} />
         </DescriptionList>
       </Modal>
     </>

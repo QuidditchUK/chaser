@@ -1,23 +1,15 @@
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string, bool } from 'yup';
 import { api } from 'modules/api';
-import {
-  Box,
-  Grid,
-  Flex,
-  Heading,
-  Select,
-  Checkbox,
-  Link,
-} from '@chakra-ui/react';
+import { Box, Grid, Flex, Heading } from '@chakra-ui/react';
 import PrismicClubCard from 'components/prismic/club-card';
+import Select from 'components/formControls/select';
+import Checkbox from 'components/formControls/checkbox';
 
 const Button = dynamic(() => import('components/shared/button'));
-const Label = dynamic(() => import('components/formControls/label'));
-const Required = dynamic(() => import('components/formControls/required'));
 
 const InlineError = dynamic(() =>
   import('components/shared/errors').then(({ InlineError }) => InlineError)
@@ -51,7 +43,7 @@ const TransferRequestForm = ({ currentClub, clubs = [], callback }) => {
   const [serverError, setServerError] = useState(null);
 
   const {
-    control,
+    register,
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
@@ -101,71 +93,40 @@ const TransferRequestForm = ({ currentClub, clubs = [], callback }) => {
               handleTransferSubmit(values, callback, setServerError)
             )}
           >
-            <Grid gridTemplateColumns="1fr" mt={5}>
-              <Label htmlFor="club_uuid" mb="2">
-                Select your club <Required />
-              </Label>
-
-              <Controller
-                control={control}
-                name="club_uuid"
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    id="club_uuid"
-                    as="select"
-                    placeholder="Select a club"
-                    bg="white"
-                    color="qukBlue"
-                    mb={3}
-                  >
-                    {clubs
-                      .filter(({ uuid }) => uuid !== currentClub)
-                      .map((club) => (
-                        <option key={club.uuid} value={club.uuid}>
-                          {club.name}
-                        </option>
-                      ))}
-                  </Select>
-                )}
+            <Grid gridTemplateColumns="1fr" mt={5} gridGap={3}>
+              <Select
+                label="Select your club"
+                isRequired={true}
+                id="club_uuid"
+                placeholder="Select a club"
+                options={clubs
+                  .filter(({ uuid }) => uuid !== currentClub)
+                  .map((club) => ({ value: club.uuid, label: club.name }))}
+                {...register('club_uuid')}
+                error={errors.club_uuid}
               />
 
-              {errors.club_uuid && (
-                <InlineError mb={3}>{errors.club_uuid.message}</InlineError>
-              )}
-              <Label mt="3">
-                <Controller
-                  control={control}
-                  name="confirm"
-                  render={({ field }) => (
-                    <Checkbox
-                      {...field}
-                      id="confirm"
-                      spacing={3}
-                      isChecked={field.value}
-                    >
-                      By checking this box I acknowledge that I have read the
-                      above disclaimer and I intend to transfer to{' '}
-                      <strong>{selectedClub?.name}</strong> to be my QuidditchUK
-                      club.
-                    </Checkbox>
-                  )}
-                />
-              </Label>
+              <Checkbox
+                id="confirm"
+                isRequired={true}
+                {...register('confirm')}
+                size="md"
+                error={errors.confirm}
+              >
+                By checking this box I acknowledge that I have read the above
+                disclaimer and I intend to transfer to{' '}
+                <strong>{selectedClub?.name}</strong> to be my QuidditchUK club.
+              </Checkbox>
 
-              {errors.confirm && (
-                <InlineError mb={3}>{errors.confirm.message}</InlineError>
-              )}
+              <Button
+                mt="2"
+                type="submit"
+                variant="green"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Submitting' : 'Request Transfer'}
+              </Button>
             </Grid>
-
-            <Button
-              mt="2"
-              type="submit"
-              variant="green"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Submitting' : 'Request Transfer'}
-            </Button>
           </form>
 
           {serverError && <InlineError my={3}>{serverError}</InlineError>}

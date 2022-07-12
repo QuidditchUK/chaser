@@ -10,7 +10,6 @@ import Error from 'components/shared/errors';
 import Success from 'components/formControls/success';
 import InputV2 from 'components/formControls/inputV2';
 import Button from 'components/shared/button';
-import Required from 'components/formControls/required';
 
 const PasswordFormSchema = object().shape({
   old_password: string()
@@ -76,11 +75,8 @@ const InfoForm = () => {
       >
         <Grid gridTemplateColumns="1fr" gridGap={3}>
           <InputV2
-            label={
-              <>
-                Current Password <Required />
-              </>
-            }
+            label="Current Password"
+            isRequired={true}
             id="old_password"
             placeholder="Your current password"
             type="password"
@@ -89,11 +85,8 @@ const InfoForm = () => {
           />
 
           <InputV2
-            label={
-              <>
-                New Password <Required />
-              </>
-            }
+            label="New Password"
+            isRequired={true}
             id="password"
             placeholder="New password"
             type="password"
@@ -102,11 +95,8 @@ const InfoForm = () => {
           />
 
           <InputV2
-            label={
-              <>
-                Confirm New Password <Required />
-              </>
-            }
+            label="Confirm New Password"
+            isRequired={true}
             id="confirm"
             placeholder="Confirm your new password"
             type="password"

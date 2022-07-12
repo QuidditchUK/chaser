@@ -1,7 +1,7 @@
 import React, { forwardRef, Fragment } from 'react';
 
 import {
-  Input as ChakraInput,
+  Select as ChakraSelect,
   InputGroup as ChakraInputGroup,
   FormControl as ChakraFormControl,
   FormLabel as ChakraFormLabel,
@@ -10,37 +10,12 @@ import {
   VisuallyHidden,
 } from '@chakra-ui/react';
 
-export const InputV2Styles = {
-  baseStyle: {
-    position: 'relative',
-    px: '4',
-    border: '1px solid',
-    fontFamily: 'body',
-    background: 'white',
-    borderColor: 'gray.300',
-    borderRadius: 'md',
-    margin: '0',
-    py: '2',
-    _hover: {
-      borderColor: 'gray.200',
-    },
-    _disabled: {
-      background: 'gray.100',
-      borderColor: 'gray.100',
-      cursor: 'not-allowed',
-    },
-    _placeholder: {
-      color: 'gray.300',
-      opacity: 1,
-    },
-  },
-};
-
-const InputV2 = (
+const Select = (
   {
     id,
     name,
     value,
+    options,
     label,
     hideLabel = false,
     error,
@@ -84,7 +59,7 @@ const InputV2 = (
       </LabelWrapper>
 
       <ChakraInputGroup>
-        <ChakraInput
+        <ChakraSelect
           id={id}
           name={name}
           value={value}
@@ -95,13 +70,17 @@ const InputV2 = (
           onFocus={onFocus}
           onClick={onClick}
           onKeyDown={onKeyDown}
-          px={3}
           variant={variant}
           size={size}
           sx={styles}
           errorBorderColor="monarchRed"
-          type={type}
-        />
+        >
+          {options.map((option) => (
+            <option value={option.value} key={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </ChakraSelect>
       </ChakraInputGroup>
 
       {error && error.message && (
@@ -119,4 +98,4 @@ const InputV2 = (
   );
 };
 
-export default forwardRef(InputV2);
+export default forwardRef(Select);

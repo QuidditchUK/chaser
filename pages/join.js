@@ -23,7 +23,6 @@ const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
 const Button = dynamic(() => import('components/shared/button'));
 const Content = dynamic(() => import('components/shared/content'));
-const Required = dynamic(() => import('components/formControls/required'));
 
 const JoinFormSchema = object().shape({
   email: string()
@@ -141,11 +140,8 @@ const JoinPage = () => {
             >
               <Grid gridTemplateColumns="1fr" gridGap={3}>
                 <InputV2
-                  label={
-                    <>
-                      Email Address <Required />
-                    </>
-                  }
+                  label="Email Address"
+                  isRequired={true}
                   id="email"
                   placeholder="Your email address"
                   error={errors.email}
@@ -153,11 +149,8 @@ const JoinPage = () => {
                 />
 
                 <InputV2
-                  label={
-                    <>
-                      Preferred first name <Required />
-                    </>
-                  }
+                  label="Preferred first name"
+                  isRequired={true}
                   id="first_name"
                   placeholder="First name"
                   error={errors.first_name}
@@ -165,11 +158,8 @@ const JoinPage = () => {
                 />
 
                 <InputV2
-                  label={
-                    <>
-                      Preferred last name <Required />
-                    </>
-                  }
+                  label="Preferred last name"
+                  isRequired={true}
                   id="last_name"
                   placeholder="Last name"
                   error={errors.last_name}
@@ -177,11 +167,8 @@ const JoinPage = () => {
                 />
 
                 <Switch
-                  label={
-                    <>
-                      Are you a student? <Required />
-                    </>
-                  }
+                  label="Are you a student?"
+                  isRequired={true}
                   id="is_student"
                   colorScheme="green"
                   size="lg"
@@ -193,11 +180,8 @@ const JoinPage = () => {
                 {watchIsStudent && (
                   <>
                     <InputV2
-                      label={
-                        <>
-                          What university do you attend? <Required />
-                        </>
-                      }
+                      label="What university do you attend?"
+                      isRequired={true}
                       id="university"
                       placeholder="Name of your university"
                       error={errors.university}
@@ -216,11 +200,8 @@ const JoinPage = () => {
                 )}
 
                 <InputV2
-                  label={
-                    <>
-                      Password <Required />
-                    </>
-                  }
+                  label="Password"
+                  isRequired={true}
                   id="password"
                   placeholder="Password"
                   type="password"
@@ -229,11 +210,8 @@ const JoinPage = () => {
                 />
 
                 <InputV2
-                  label={
-                    <>
-                      Confirm Password <Required />
-                    </>
-                  }
+                  label="Confirm Password"
+                  isRequired={true}
                   id="confirm"
                   placeholder="Confirm your password"
                   type="password"

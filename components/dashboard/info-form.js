@@ -7,7 +7,6 @@ import useTempPopup from 'hooks/useTempPopup';
 import usersService from 'services/users';
 import InputV2 from 'components/formControls/inputV2';
 import Switch from 'components/formControls/switch';
-import Required from 'components/formControls/required';
 import Success from 'components/formControls/success';
 import Error from 'components/shared/errors';
 import Button from 'components/shared/button';
@@ -80,23 +79,17 @@ const InfoForm = ({ user }) => {
       >
         <Grid gridTemplateColumns="1fr" gridGap={3}>
           <InputV2
-            label={
-              <>
-                Email Address <Required />
-              </>
-            }
+            label="Email Address"
             id="email"
             placeholder="Your email address"
             error={errors.email}
+            isRequired={true}
             {...register('email')}
           />
 
           <InputV2
-            label={
-              <>
-                Preferred first name <Required />
-              </>
-            }
+            label="Preferred first name"
+            isRequired={true}
             id="first_name"
             placeholder="First name"
             error={errors.first_name}
@@ -104,11 +97,8 @@ const InfoForm = ({ user }) => {
           />
 
           <InputV2
-            label={
-              <>
-                Preferred last name <Required />
-              </>
-            }
+            label="Preferred last name"
+            isRequired={true}
             id="last_name"
             placeholder="Last name"
             error={errors.last_name}
@@ -116,11 +106,8 @@ const InfoForm = ({ user }) => {
           />
 
           <Switch
-            label={
-              <>
-                Are you a student? <Required />
-              </>
-            }
+            label="Are you a student?"
+            isRequired={true}
             id="is_student"
             colorScheme="green"
             size="lg"
@@ -132,11 +119,8 @@ const InfoForm = ({ user }) => {
           {watchIsStudent && (
             <>
               <InputV2
-                label={
-                  <>
-                    What university do you attend? <Required />
-                  </>
-                }
+                label="What university do you attend?"
+                isRequired={true}
                 id="university"
                 placeholder="Name of your university"
                 error={errors.university}
