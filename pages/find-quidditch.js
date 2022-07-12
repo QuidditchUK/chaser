@@ -89,6 +89,7 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
     formState: { errors },
     watch,
     control,
+    register,
   } = useForm({
     mode: 'onBlur',
     defaultValues: {
@@ -223,21 +224,13 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
                   display={showLocation ? 'none' : 'inline-block'}
                   opacity={showLocation ? 0 : 1}
                 >
-                  <Controller
-                    control={control}
-                    name="postcode"
-                    render={({ field }) => (
-                      <Input
-                        {...field}
-                        id="postcode"
-                        placeholder="Postcode"
-                        size="8"
-                        width={{ base: '200px', md: '300px' }}
-                        onBlur={
-                          postcodeData ? () => setShowLocation(true) : null
-                        }
-                      />
-                    )}
+                  <Input
+                    {...register('postcode')}
+                    id="postcode"
+                    placeholder="Postcode"
+                    size="8"
+                    width={{ base: '200px', md: '300px' }}
+                    onBlur={postcodeData ? () => setShowLocation(true) : null}
                   />
 
                   {errors.postcode && (

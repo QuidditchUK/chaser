@@ -2,11 +2,11 @@ import { Fragment, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Heading, Flex, Text, Box, Grid } from '@chakra-ui/react';
 import Image from 'next/image';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { getBasePageProps } from 'modules/prismic';
 import getSheet from 'modules/sheets';
 import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import InputV2 from 'components/formControls/inputV2';
 
 const Slice = dynamic(() => import('components/shared/slice'));
 const Meta = dynamic(() => import('components/shared/meta'));
@@ -63,7 +63,7 @@ const handleSearchSubmit = async ({ values, setData }) => {
 const Page = ({ data: initialData }) => {
   const [data, setData] = useState(initialData);
 
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, register } = useForm({
     defaultValues: {
       searchTerm: '',
     },
@@ -119,16 +119,13 @@ const Page = ({ data: initialData }) => {
               gridGap={2}
             >
               <Flex flexDirection="column">
-                <Controller
-                  control={control}
-                  name="searchTerm"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="searchTerm"
-                      placeholder="Search by Team or Tournament"
-                    />
-                  )}
+                <InputV2
+                  {...register('searchTerm')}
+                  hideLabel
+                  label="Search by Team or Tournament"
+                  width="initial"
+                  id="searchTerm"
+                  placeholder="Search by Team or Tournament"
                 />
               </Flex>
 
