@@ -13,6 +13,12 @@ const clubsService = {
     ...params,
   }),
 
+  getClubMembers: ({ club_uuid, ...params }) => ({
+    method: 'get',
+    url: `/clubs/${club_uuid}/members`,
+    ...params,
+  }),
+
   registerClub: ({ data, ...params }) => ({
     method: 'post',
     url: '/clubs/register',
@@ -29,6 +35,13 @@ const clubsService = {
   deleteClub: ({ club_uuid, ...params }) => ({
     method: 'delete',
     url: `/clubs/${club_uuid}`,
+    ...params,
+  }),
+
+  updateClub: ({ club_uuid, data, ...params }) => ({
+    method: 'put',
+    url: `/clubs/${club_uuid}`,
+    data,
     ...params,
   }),
 };
