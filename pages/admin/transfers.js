@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import format from 'date-fns/format';
 import generateServerSideHeaders from 'modules/headers';
-import { parseCookies } from 'modules/cookies';
 import {
   Box,
   Flex,
@@ -255,7 +254,6 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
   const headers = generateServerSideHeaders(req);
 
   const [
@@ -265,7 +263,7 @@ export const getServerSideProps = async ({ req, res }) => {
     { data: settings },
     basePageProps,
   ] = await Promise.all([
-    getUserScopes(AUTHENTICATION_TOKEN),
+    getUserScopes(headers),
     transfersService.getPendingTransfers({ headers }),
     transfersService.getActionedTransfers({ page: 0, headers }),
     settingsService.getSettings(),

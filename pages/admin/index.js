@@ -1,4 +1,3 @@
-import { parseCookies } from 'modules/cookies';
 import { Grid, Heading } from '@chakra-ui/react';
 import { getUserScopes, hasScope } from 'modules/scopes';
 import {
@@ -13,6 +12,7 @@ import Card from 'components/shared/card';
 import isAuthorized from 'modules/auth';
 import Meta from 'components/shared/meta';
 import { getBasePageProps } from 'modules/prismic';
+import generateServerSideHeaders from 'modules/headers';
 const Dashboard = ({ scopes }) => {
   return (
     <>
@@ -48,8 +48,8 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
-  const scopes = await getUserScopes(AUTHENTICATION_TOKEN);
+  const headers = generateServerSideHeaders(req);
+  const scopes = await getUserScopes(headers);
   const basePageProps = await getBasePageProps();
 
   return {

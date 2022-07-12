@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Flex, Box, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 import dynamic from 'next/dynamic';
-import InputV2 from 'components/formControls/inputV2'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import InputV2 from 'components/formControls/inputV2';
 
 const Button = dynamic(() => import('components/shared/button'));
 

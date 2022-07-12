@@ -1,13 +1,8 @@
 import { ADMIN } from 'constants/scopes';
-import { api } from './api';
+import usersService from 'services/users';
 
-export const getUserScopes = async (token) => {
-  const { data: user } = await api.get('/users/me', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+export const getUserScopes = async (headers) => {
+  const { data: user } = await usersService.getUser({ headers });
   return user?.scopes.map(({ scope }) => scope);
 };
 

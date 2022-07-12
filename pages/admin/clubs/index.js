@@ -16,6 +16,7 @@ import Meta from 'components/shared/meta';
 import { getBasePageProps } from 'modules/prismic';
 import Table from 'components/shared/table';
 import Modal from 'components/shared/modal';
+import generateServerSideHeaders from 'modules/headers';
 
 const handleDeleteClick = async ({ uuid, refetch }) => {
   try {
@@ -203,9 +204,10 @@ export const getServerSideProps = async ({ req, res }) => {
   }
 
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
+  const headers = generateServerSideHeaders(req);
 
   const [scopes, { data: clubs }, basePageProps] = await Promise.all([
-    getUserScopes(AUTHENTICATION_TOKEN),
+    getUserScopes(headers),
     api.get('/clubs/all', {
       headers: {
         Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
