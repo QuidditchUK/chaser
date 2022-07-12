@@ -1,8 +1,5 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { useQuery } from 'react-query';
-import { api } from 'modules/api';
-import { parseCookies } from 'modules/cookies';
 import { Box, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import { SmallAddIcon } from '@chakra-ui/icons';
 
@@ -17,10 +14,12 @@ import { getBasePageProps } from 'modules/prismic';
 import Table from 'components/shared/table';
 import Modal from 'components/shared/modal';
 import generateServerSideHeaders from 'modules/headers';
+import clubsService from 'services/clubs';
+import useCachedResponse from 'hooks/useCachedResponse';
 
 const handleDeleteClick = async ({ uuid, refetch }) => {
   try {
-    await api.delete(`/clubs/${uuid}`);
+    await clubsService.deleteClub({ club_uuid: uuid });
     refetch();
   } catch (error) {
     console.log(error);
@@ -28,11 +27,11 @@ const handleDeleteClick = async ({ uuid, refetch }) => {
 };
 
 const Dashboard = ({ scopes, clubs }) => {
-  const { data: queryClubs, refetch } = useQuery(
-    '/clubs/all',
-    () => api.get('/clubs/all').then(({ data }) => data),
-    { initialData: clubs }
-  );
+  const { data: queryClubs, refetch } = useCachedResponse({
+    queryKey: '/clubs/all',
+    queryFn: clubsService.getAllClubs,
+    initialData: clubs,
+  });
 
   const [activeClubs, inactiveClubs] = queryClubs?.reduce(
     (result, club) => {
@@ -203,16 +202,11 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
   const headers = generateServerSideHeaders(req);
 
   const [scopes, { data: clubs }, basePageProps] = await Promise.all([
     getUserScopes(headers),
-    api.get('/clubs/all', {
-      headers: {
-        Authorization: `Bearer ${AUTHENTICATION_TOKEN}`,
-      },
-    }),
+    clubsService.getAllClubs({ headers }),
     getBasePageProps(),
   ]);
 

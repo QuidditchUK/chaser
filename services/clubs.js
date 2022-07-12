@@ -19,6 +19,18 @@ const clubsService = {
     data,
     ...params,
   }),
+
+  getAllClubs: (params) => ({
+    method: 'get',
+    url: '/clubs/all',
+    ...params,
+  }),
+
+  deleteClub: ({ club_uuid, ...params }) => ({
+    method: 'delete',
+    url: `/clubs/${club_uuid}`,
+    ...params,
+  }),
 };
 
 export default createService(clubsService);
