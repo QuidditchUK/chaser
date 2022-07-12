@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import format from 'date-fns/format';
 import { RichText } from 'prismic-reactjs';
-import { useQuery } from 'react-query';
 import {
   linkResolver,
   getDocs,
@@ -17,6 +16,7 @@ import PrismicSlice from 'components/prismic';
 import DescriptionList, {
   Description,
 } from 'components/shared/description-list';
+import useCachedResponse from 'hooks/useCachedResponse';
 
 const HeroWithLocation = dynamic(() =>
   import('components/clubsEvents/hero-with-location')
@@ -31,11 +31,14 @@ const Content = dynamic(() => import('components/shared/content'));
 
 const EventPage = ({ page: initialPage, preview }) => {
   const router = useRouter();
-  const { data: queryData } = useQuery(
-    ['clubs', router.query.uid],
-    () => getPrismicDocByUid('events', router.query.uid),
-    { initialData: initialPage, enabled: Boolean(!router.isFallback) }
-  );
+
+  const { data: queryData } = useCachedResponse({
+    queryKey: ['clubs', router.query.uid],
+    queryFn: () => getPrismicDocByUid('events', router.query.uid),
+    selector: (res) => res,
+    initialData: initialPage,
+    enabled: Boolean(!router.isFallback),
+  });
 
   const page = preview ? initialPage : queryData;
 

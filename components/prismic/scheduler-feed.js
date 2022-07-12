@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import { useQuery } from 'react-query';
 import Link from 'next/link';
 import groupBy from 'lodash/groupBy';
 import orderBy from 'lodash/orderBy';
@@ -16,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import Image from 'components/shared/image';
 import axios from 'axios';
+import useCachedResponse from 'hooks/useCachedResponse';
 
 const Slice = dynamic(() => import('components/shared/slice'));
 
@@ -66,15 +66,13 @@ const LinkWrapper = ({ href, ...props }) => (
 const SchedulerFeed = ({ primary }) => {
   const { scheduler_url } = primary;
 
-  const { data } = useQuery(
-    scheduler_url?.url,
-    () => axios.get(scheduler_url?.url),
-    {
-      refetchInterval: 300000, // 5 minute refetch
-    }
-  );
+  const { data } = useCachedResponse({
+    queryKey: scheduler_url?.url,
+    queryFn: () => axios.get(scheduler_url?.url),
+    refetchInterval: 300000, // 5 minute refetch
+  });
 
-  const grouped = groupBy(data?.data, (game) => game?.timeslot?.time);
+  const grouped = groupBy(data, (game) => game?.timeslot?.time);
   const groupedOrder = orderBy(Object.keys(grouped), (group) => group);
 
   return (

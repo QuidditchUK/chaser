@@ -1,9 +1,9 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
 
 import { getDocs, getPrismicDocByUid, getBasePageProps } from 'modules/prismic';
 import PrismicSlice from 'components/prismic';
+import useCachedResponse from 'hooks/useCachedResponse';
 
 const Page404 = dynamic(() => import('pages/404'));
 const PageLoading = dynamic(() => import('components/shared/page-loading'));
@@ -15,11 +15,13 @@ const SchemaArticle = dynamic(() => import('components/news/schema-article'));
 const Post = ({ page: initialPage, preview }) => {
   const router = useRouter();
 
-  const { data: queryData } = useQuery(
-    ['post', router.query.uid],
-    () => getPrismicDocByUid('post', router.query.uid),
-    { initialData: initialPage, enabled: !preview }
-  );
+  const { data: queryData } = useCachedResponse({
+    queryKey: ['post', router.query.uid],
+    queryFn: () => getPrismicDocByUid('post', router.query.uid),
+    selector: (res) => res,
+    initialData: initialPage,
+    enabled: !preview,
+  });
 
   if (router.isFallback && !queryData) {
     return <PageLoading />;

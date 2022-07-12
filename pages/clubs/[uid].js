@@ -1,7 +1,6 @@
 import { RichText } from 'prismic-reactjs';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { useQuery } from 'react-query';
 import GoogleMapReact from 'google-map-react';
 
 import {
@@ -30,6 +29,7 @@ import {
 import DescriptionList, {
   Description,
 } from 'components/shared/description-list';
+import useCachedResponse from 'hooks/useCachedResponse';
 
 const HeroWithLocation = dynamic(() =>
   import('components/clubsEvents/hero-with-location')
@@ -68,20 +68,25 @@ const Th = (props) => (
 
 const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
   const router = useRouter();
-  const { data: queryData } = useQuery(
-    ['clubs', router.query.uid],
-    () => getPrismicDocByUid('clubs', router.query.uid),
-    { initialData: initialPage, enabled: Boolean(!router.isFallback) }
-  );
-  const { data: posts } = useQuery(
-    ['posts', router.query.uid],
-    () =>
+  const { data: queryData } = useCachedResponse({
+    queryKey: ['clubs', router.query.uid],
+    queryFn: () => getPrismicDocByUid('clubs', router.query.uid),
+    selector: (res) => res,
+    initialData: initialPage,
+    enabled: Boolean(!router.isFallback),
+  });
+
+  const { data: posts } = useCachedResponse({
+    queryKey: ['posts', router.query.uid],
+    queryFn: () =>
       getBlogTags(page?.tags, {
         orderings: '[my.post.date desc]',
         pageSize: 3,
       }),
-    { initialData: initialPosts, enabled: Boolean(queryData) }
-  );
+    selector: (res) => res,
+    initialData: initialPosts,
+    enabled: Boolean(queryData),
+  });
 
   const page = preview ? initialPage : queryData;
 
