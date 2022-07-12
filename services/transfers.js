@@ -18,6 +18,13 @@ const transfersService = {
     url: `/transfers/${transfer_uuid}/${method}`,
     ...params,
   }),
+
+  requestTransfer: ({ data, ...params }) => ({
+    method: 'post',
+    url: '/transfers',
+    data,
+    ...params,
+  }),
 };
 
 export default createService(transfersService);

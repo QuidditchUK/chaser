@@ -1,11 +1,10 @@
 import dynamic from 'next/dynamic';
 import { Box, Flex, Heading, Grid } from '@chakra-ui/react';
 
-import { rem } from 'styles/theme';
-import { api } from 'modules/api';
-import { parseCookies } from 'modules/cookies';
 import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
+import generateServerSideHeaders from 'modules/headers';
+import usersService from 'services/users';
 
 const Logo = dynamic(() => import('components/shared/logo'));
 const Meta = dynamic(() => import('components/shared/meta'));
@@ -69,12 +68,10 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
+  const headers = generateServerSideHeaders(req);
 
   const [{ data: user }, basePageProps] = await Promise.all([
-    api.get('/users/me', {
-      headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
-    }),
+    usersService.getUser({ headers }),
     getBasePageProps(),
   ]);
 

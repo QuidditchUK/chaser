@@ -5,8 +5,8 @@ import {
   getBasePageProps,
   getScoutingApplicationEvents,
 } from 'modules/prismic';
-import { api } from 'modules/api';
-import { parseCookies } from 'modules/cookies';
+import generateServerSideHeaders from 'modules/headers';
+import usersService from 'services/users';
 import isAuthorized from 'modules/auth';
 
 const Meta = dynamic(() => import('components/shared/meta'));
@@ -50,12 +50,10 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
+  const headers = generateServerSideHeaders(req);
 
   const [{ data: user }, events, basePageProps] = await Promise.all([
-    api.get('/users/me', {
-      headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
-    }),
+    usersService.getUser({ headers }),
     getScoutingApplicationEvents(),
     getBasePageProps(),
   ]);

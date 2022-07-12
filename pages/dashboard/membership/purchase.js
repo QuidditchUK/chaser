@@ -1,17 +1,18 @@
 import dynamic from 'next/dynamic';
 import { Box, Grid, Heading } from '@chakra-ui/react';
 import { parseCookies } from 'modules/cookies';
-import { api } from 'modules/api';
 import isAuthorized from 'modules/auth';
 import { stripePromise } from 'modules/stripe';
 import { getBasePageProps } from 'modules/prismic';
+import generateServerSideHeaders from 'modules/headers';
+import productsService from 'services/products';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
 const ProductCard = dynamic(() => import('components/dashboard/product-card'));
 
-const handleClick = async (id) => {
-  const { data } = await api.get(`/products/session?price_id=${id}`);
+const handleClick = async (price_id) => {
+  const { data } = await productsService.getProductSession({ price_id });
 
   const stripe = await stripePromise;
   const { error } = await stripe.redirectToCheckout({
@@ -56,7 +57,8 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  const { AUTHENTICATION_TOKEN, MEMBERSHIP_AGREED } = parseCookies(req);
+  const { MEMBERSHIP_AGREED } = parseCookies(req);
+  const headers = generateServerSideHeaders(req);
 
   if (!MEMBERSHIP_AGREED) {
     res.setHeader('location', '/dashboard/membership/manage');
@@ -66,9 +68,7 @@ export const getServerSideProps = async ({ req, res }) => {
   }
 
   const [{ data: products }, basePageProps] = await Promise.all([
-    api.get('/products', {
-      headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
-    }),
+    productsService.getProducts({ headers }),
     getBasePageProps(),
   ]);
 

@@ -3,17 +3,14 @@ import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string, bool } from 'yup';
-import { api } from 'modules/api';
 import { Box, Grid, Flex, Heading } from '@chakra-ui/react';
 import PrismicClubCard from 'components/prismic/club-card';
 import Select from 'components/formControls/select';
 import Checkbox from 'components/formControls/checkbox';
+import transfersService from 'services/transfers';
+import Error from 'components/shared/errors';
 
 const Button = dynamic(() => import('components/shared/button'));
-
-const InlineError = dynamic(() =>
-  import('components/shared/errors').then(({ InlineError }) => InlineError)
-);
 
 const SelectClubSchema = object().shape({
   club_uuid: string().nullable().required('Required'),
@@ -30,8 +27,8 @@ const handleTransferSubmit = async (
 ) => {
   try {
     setServerError(null);
+    await transfersService.requestTransfer({ data: { club_uuid } });
 
-    await api.post('/transfers', { club_uuid });
     callback();
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
@@ -129,7 +126,7 @@ const TransferRequestForm = ({ currentClub, clubs = [], callback }) => {
             </Grid>
           </form>
 
-          {serverError && <InlineError my={3}>{serverError}</InlineError>}
+          {serverError && <Error>{serverError}</Error>}
         </Box>
         {selectedClub && (
           <Flex flexDirection="column" key={selectedClub?.uuid}>
