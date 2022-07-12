@@ -198,7 +198,6 @@ const Dashboard = ({ club, members }) => {
 
               <Switch
                 label="Is the club active?"
-                isRequired
                 id="active"
                 size="lg"
                 colorScheme="green"

@@ -26,6 +26,13 @@ const clubsService = {
     ...params,
   }),
 
+  createClub: ({ data, ...params }) => ({
+    method: 'post',
+    url: '/clubs',
+    data,
+    ...params,
+  }),
+
   getAllClubs: (params) => ({
     method: 'get',
     url: '/clubs/all',
