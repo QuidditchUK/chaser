@@ -48,6 +48,20 @@ const usersService = {
     data,
     ...params,
   }),
+
+  forgotPassword: ({ data, ...params }) => ({
+    method: 'post',
+    url: '/users/forgot',
+    data,
+    ...params,
+  }),
+
+  resetPassword: ({ data, ...params }) => ({
+    method: 'post',
+    url: '/users/reset',
+    data,
+    ...params,
+  }),
 };
 
 export default createService(usersService);

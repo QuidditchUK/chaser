@@ -16,6 +16,7 @@ import Error from 'components/shared/errors';
 import InputV2 from 'components/formControls/inputV2';
 import usersService from 'services/users';
 import useTempPopup from 'hooks/useTempPopup';
+import AuthCallout from 'components/shared/auth-callout';
 
 const Logo = dynamic(() => import('components/shared/logo'));
 
@@ -227,24 +228,12 @@ const JoinPage = () => {
 
             {serverError && <Error>{serverError}</Error>}
 
-            <Box
-              bg="white"
-              px="4"
-              py="2"
-              mt="6"
-              borderColor="qukBlue"
-              borderWidth="1px"
-              borderStyle="solid"
-              color="qukBlue"
-              borderRadius="sm"
-            >
-              <Content>
-                Already have an account?{' '}
-                <NextLink href="/login" passHref>
-                  <Link color="monarchRed">Sign in.</Link>
-                </NextLink>
-              </Content>
-            </Box>
+            <AuthCallout>
+              Already have an account?{' '}
+              <NextLink href="/login" passHref>
+                <Link color="monarchRed">Sign in.</Link>
+              </NextLink>
+            </AuthCallout>
           </Box>
         </Container>
       </Box>

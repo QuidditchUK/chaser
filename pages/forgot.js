@@ -2,22 +2,22 @@ import { useState } from 'react';
 import { object, string } from 'yup';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
-import { Box, Grid, Flex, Link, Heading } from '@chakra-ui/react';
-import { useForm, Controller } from 'react-hook-form';
+import { Grid, Flex, Link, Heading } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
-import { api } from 'modules/api';
 import { parseCookies } from 'modules/cookies';
+import { getBasePageProps } from 'modules/prismic';
 
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import InputV2 from 'components/formControls/inputV2';
+import Slice from 'components/shared/slice';
+import Error from 'components/shared/errors';
+import AuthCallout from 'components/shared/auth-callout';
+import usersService from 'services/users';
 
 const Logo = dynamic(() => import('components/shared/logo'));
-const InlineError = dynamic(() =>
-  import('components/shared/errors').then(({ InlineError }) => InlineError)
-);
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
-const Label = dynamic(() => import('components/formControls/label'));
 const Button = dynamic(() => import('components/shared/button'));
 const Content = dynamic(() => import('components/shared/content'));
 
@@ -30,7 +30,7 @@ const ForgotFormSchema = object().shape({
 const handleForgotSubmit = async (values, setServerError, setSent) => {
   try {
     setServerError(null);
-    api.post('/users/forgot', values);
+    usersService.forgotPassword({ data: values });
     setSent(true);
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
@@ -42,7 +42,7 @@ const Forgot = () => {
   const [sent, setSent] = useState(false);
 
   const {
-    control,
+    register,
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm({
@@ -59,11 +59,7 @@ const Forgot = () => {
         description="Forgot your password for QuidditchUK, request a reset here"
         subTitle="Forgot Password"
       />
-      <Box
-        bg="greyLight"
-        py={{ base: 4, lg: 10 }}
-        px={{ base: 4, sm: 8, md: 9 }}
-      >
+      <Slice>
         <Container maxWidth={rem(500)}>
           <Flex justifyContent="center" alignItems="center">
             <Logo />
@@ -79,35 +75,22 @@ const Forgot = () => {
                   handleForgotSubmit(values, setServerError, setSent)
                 )}
               >
-                <Grid gridTemplateColumns="1fr">
-                  <Label htmlFor="name">Email Address</Label>
-
-                  <Controller
-                    control={control}
-                    name="email"
-                    render={({ field }) => (
-                      <Input
-                        {...field}
-                        id="email"
-                        placeholder="Your email address"
-                        my={3}
-                        error={errors.email}
-                      />
-                    )}
+                <Grid gridTemplateColumns="1fr" gridGap={3}>
+                  <InputV2
+                    label="Email address"
+                    id="email"
+                    placeholder="Your email address"
+                    error={errors.email}
+                    {...register('email')}
                   />
 
-                  {errors.email && (
-                    <InlineError marginBottom={3}>
-                      {errors.email.message}
-                    </InlineError>
-                  )}
+                  <Button type="submit" variant="green" disabled={isSubmitting}>
+                    {isSubmitting ? 'Submitting' : 'Send reset email'}
+                  </Button>
                 </Grid>
-                <Button type="submit" variant="green" disabled={isSubmitting}>
-                  {isSubmitting ? 'Submitting' : 'Send reset email'}
-                </Button>
               </form>
 
-              {serverError && <InlineError my={3}>{serverError}</InlineError>}
+              {serverError && <Error>{serverError}</Error>}
             </>
           )}
 
@@ -117,26 +100,14 @@ const Forgot = () => {
             </Content>
           )}
 
-          <Box
-            bg="white"
-            px="4"
-            py="2"
-            mt="6"
-            borderColor="qukBlue"
-            borderWidth="1px"
-            borderStyle="solid"
-            color="qukBlue"
-            borderRadius="sm"
-          >
-            <Content>
-              Remembered your password?{' '}
-              <NextLink href="/login" passHref>
-                <Link color="monarchRed">Sign in.</Link>
-              </NextLink>
-            </Content>
-          </Box>
+          <AuthCallout>
+            Remembered your password?{' '}
+            <NextLink href="/login" passHref>
+              <Link color="monarchRed">Sign in.</Link>
+            </NextLink>
+          </AuthCallout>
         </Container>
-      </Box>
+      </Slice>
     </>
   );
 };
@@ -149,8 +120,10 @@ export const getServerSideProps = async ({ req, res }) => {
     res.statusCode = 302;
   }
 
+  const basePageProps = await getBasePageProps();
+
   return {
-    props: {},
+    props: basePageProps,
   };
 };
 
