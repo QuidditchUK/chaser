@@ -1,14 +1,16 @@
 import React, { forwardRef, Fragment } from 'react';
 
 import {
-  Switch as ChakraSwitch,
+  Textarea as ChakraTextarea,
+  InputGroup as ChakraInputGroup,
   FormControl as ChakraFormControl,
   FormLabel as ChakraFormLabel,
   FormErrorMessage as ChakraFormErrorMessage,
+  useStyleConfig,
   VisuallyHidden,
 } from '@chakra-ui/react';
 
-const Switch = (
+const TextareaV2 = (
   {
     id,
     name,
@@ -16,6 +18,7 @@ const Switch = (
     label,
     hideLabel = false,
     error,
+    placeholder,
     isDisabled = false,
     isReadOnly = false,
     isRequired = false,
@@ -25,10 +28,9 @@ const Switch = (
     onFocus,
     onClick,
     onKeyDown,
+    variant,
     size,
-    colorScheme,
-    fontSize = 'sm',
-    fontWeight = 'normal',
+    resize = 'vertical',
     color,
     ...rest
   },
@@ -36,6 +38,7 @@ const Switch = (
 ) => {
   const invalid = Boolean(error) || isInvalid;
   const LabelWrapper = hideLabel ? VisuallyHidden : Fragment;
+  const styles = useStyleConfig('InputV2', { variant, size });
 
   return (
     <ChakraFormControl
@@ -48,40 +51,40 @@ const Switch = (
       <LabelWrapper>
         <ChakraFormLabel
           htmlFor={id}
-          fontSize={fontSize}
-          fontWeight={fontWeight}
+          fontSize="sm"
           color={color ? color : invalid ? 'monarchRed' : 'qukBlue'}
-          m={0}
         >
           {label}
         </ChakraFormLabel>
       </LabelWrapper>
 
-      <ChakraSwitch
-        id={id}
-        name={name}
-        value={value}
-        ref={ref}
-        onChange={onChange}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        onClick={onClick}
-        onKeyDown={onKeyDown}
-        paddingLeft={3}
-        paddingRight={3}
-        colorScheme={colorScheme}
-        size={size}
-        errorBorderColor="monarchRed"
-        isChecked={value}
-      />
+      <ChakraInputGroup>
+        <ChakraTextarea
+          id={id}
+          name={name}
+          value={value}
+          ref={ref}
+          placeholder={placeholder}
+          onChange={onChange}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onClick={onClick}
+          onKeyDown={onKeyDown}
+          px={3}
+          variant={variant}
+          size={size}
+          sx={styles}
+          errorBorderColor="monarchRed"
+          resize={resize}
+        />
+      </ChakraInputGroup>
 
       {error && error.message && (
         <ChakraFormErrorMessage
           role="alert"
-          textStyle="text"
           color="monarchRed"
           bg="red.50"
-          borderRadius="sm"
+          borderRadius="md"
           p="4"
         >
           {error.message}
@@ -91,4 +94,4 @@ const Switch = (
   );
 };
 
-export default forwardRef(Switch);
+export default forwardRef(TextareaV2);

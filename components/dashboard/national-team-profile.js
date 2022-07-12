@@ -1,31 +1,20 @@
-import { useState, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import dynamic from 'next/dynamic';
 
 import { object, string, number } from 'yup';
-import {
-  Grid,
-  Flex,
-  Select,
-  Heading,
-  Text,
-  Switch,
-  Link,
-} from '@chakra-ui/react';
-import { CheckIcon } from '@chakra-ui/icons';
+import { Grid, Heading, Link } from '@chakra-ui/react';
 
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
-import Textarea from 'components/formControls/textarea'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
-
-const Label = dynamic(() => import('components/formControls/label'));
 const Button = dynamic(() => import('components/shared/button'));
-const Required = dynamic(() => import('components/formControls/required'));
-const InlineError = dynamic(() =>
-  import('components/shared/errors').then(({ InlineError }) => InlineError)
-);
 
-import { api } from 'modules/api';
+import Switch from 'components/formControls/switch';
+import Select from 'components/formControls/select';
+import InputV2 from 'components/formControls/inputV2';
+import useTempPopup from 'hooks/useTempPopup';
+import Success from 'components/formControls/success';
+import Error from 'components/shared/errors';
+import TextareaV2 from 'components/formControls/textareaV2';
+import usersService from 'services/users';
 
 const NATIONAL_TEAMS = ['England', 'Scotland', 'Wales'];
 const POSITIONS = ['Keeper/Chaser', 'Beater', 'Seeker'];
@@ -82,7 +71,7 @@ const handleFormSubmit = async (values, setServerError, setServerSuccess) => {
     setServerError(null);
     setServerSuccess(null);
 
-    await api.put('/users/national', values);
+    await usersService.updateUserNationalProfile({ data: values });
     setServerSuccess(true);
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
@@ -90,22 +79,11 @@ const handleFormSubmit = async (values, setServerError, setServerSuccess) => {
 };
 
 const NationalTeamProfileForm = ({ profile = {} }) => {
-  const [serverError, setServerError] = useState(null);
-  const [serverSuccess, setServerSuccess] = useState(null);
-
-  useEffect(() => {
-    if (serverSuccess) {
-      const timer = setTimeout(() => {
-        setServerSuccess(null);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-
-    return () => {};
-  }, [serverSuccess]);
+  const [serverError, setServerError] = useTempPopup();
+  const [serverSuccess, setServerSuccess] = useTempPopup();
 
   const {
-    control,
+    register,
     handleSubmit,
     watch,
     formState: { isSubmitting, errors },
@@ -148,236 +126,131 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
           handleFormSubmit(values, setServerError, setServerSuccess)
         )}
       >
-        <Grid gridTemplateColumns="1fr">
-          <Label htmlFor="national_team_interest">
-            Are you interested? <Required />
-            <Controller
-              control={control}
-              name="national_team_interest"
-              render={({ field }) => (
-                <Switch
-                  {...field}
-                  isChecked={field.value}
-                  id="national_team_interest"
-                  colorScheme="green"
-                  ml={3}
-                  my={3}
-                  size="lg"
-                />
-              )}
-            />
-          </Label>
+        <Grid gridTemplateColumns="1fr" gridGap={3}>
+          <Switch
+            label="Are you interested?"
+            isRequired={true}
+            id="national_team_interest"
+            size="lg"
+            colorScheme="green"
+            display="flex"
+            alignItems="center"
+            {...register('national_team_interest')}
+          />
 
           {watchInterest && (
             <>
-              <Label htmlFor="team" mb="2">
-                List the national teams that you are elligible for, and want to
-                be considered for, in order of preference. <Required />
-                <br />
-                <em>
-                  {/* National Eligibility Criteria URL should point to the pdf file in the CMS when possible. */}
-                  You can check eligibility criteria{' '}
-                  <Link href="https://quidditchuk.org/about/documents-and-policies">
-                    here
-                  </Link>
-                  .
-                </em>
-              </Label>
-
-              <Controller
-                control={control}
-                name="first_team"
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    id="first_team"
-                    marginBottom={3}
-                    placeholder="First choice national team"
-                    bg="white"
-                    color="qukBlue"
-                  >
-                    {NATIONAL_TEAMS.map((team) => (
-                      <option key={team} value={team}>
-                        {team}
-                      </option>
-                    ))}
-                  </Select>
-                )}
+              <Select
+                label={
+                  <>
+                    List the national teams that you are elligible for, and want
+                    to be considered for, in order of preference.
+                    <br />
+                    <em>
+                      {/* National Eligibility Criteria URL should point to the pdf file in the CMS when possible. */}
+                      You can check eligibility criteria{' '}
+                      <Link href="https://quidditchuk.org/about/documents-and-policies">
+                        here
+                      </Link>
+                      .
+                    </em>
+                  </>
+                }
+                id="first_team"
+                isRequired
+                placeholder="First choice national team"
+                options={NATIONAL_TEAMS.map((team) => ({
+                  value: team,
+                  label: team,
+                }))}
+                error={errors?.first_team}
+                {...register('first_team')}
               />
 
-              {errors.first_team && (
-                <InlineError marginBottom={3}>
-                  {errors.first_team.message}
-                </InlineError>
-              )}
-
-              <Controller
-                control={control}
-                name="second_team"
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    id="second_team"
-                    placeholder="Second choice national team"
-                    marginBottom={3}
-                    bg="white"
-                    color="qukBlue"
-                  >
-                    {NATIONAL_TEAMS.map((team) => (
-                      <option key={team} value={team}>
-                        {team}
-                      </option>
-                    ))}
-                  </Select>
-                )}
+              <Select
+                label="Second Team"
+                hideLabel
+                id="second_team"
+                placeholder="Second choice national team"
+                options={NATIONAL_TEAMS.map((team) => ({
+                  value: team,
+                  label: team,
+                }))}
+                error={errors?.second_team}
+                {...register('second_team')}
               />
 
-              {errors.second_team && (
-                <InlineError marginBottom={3}>
-                  {errors.second_team.message}
-                </InlineError>
-              )}
-
-              <Controller
-                control={control}
-                name="third_team"
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    id="third_team"
-                    placeholder="Third choice national team"
-                    marginBottom={3}
-                    bg="white"
-                    color="qukBlue"
-                  >
-                    {NATIONAL_TEAMS.map((team) => (
-                      <option key={team} value={team}>
-                        {team}
-                      </option>
-                    ))}
-                  </Select>
-                )}
+              <Select
+                label="Third Team"
+                hideLabel
+                id="third_team"
+                placeholder="Third choice national team"
+                options={NATIONAL_TEAMS.map((team) => ({
+                  value: team,
+                  label: team,
+                }))}
+                error={errors?.third_team}
+                {...register('third_team')}
               />
 
-              {errors.third_team && (
-                <InlineError marginBottom={3}>
-                  {errors.third_team.message}
-                </InlineError>
-              )}
-
-              <Label htmlFor="position">
-                What is your primary position? <Required />
-              </Label>
-
-              <Controller
-                control={control}
-                name="position"
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    id="position"
-                    placeholder="Select your primary position"
-                    mt={2}
-                    marginBottom={3}
-                    bg="white"
-                    color="qukBlue"
-                  >
-                    {POSITIONS.map((position) => (
-                      <option key={position} value={position}>
-                        {position}
-                      </option>
-                    ))}
-                  </Select>
-                )}
+              <Select
+                label="What is your primary position?"
+                id="position"
+                isRequired
+                placeholder="Select your primary position"
+                options={POSITIONS.map((position) => ({
+                  value: position,
+                  label: position,
+                }))}
+                error={errors?.position}
+                {...register('position')}
               />
 
-              {errors.position && (
-                <InlineError marginBottom={3}>
-                  {errors.position.message}
-                </InlineError>
-              )}
-
-              <Label htmlFor="playstyle">
-                Provide a brief description of your playstyle. <Required />
-                <br />
-                <em>
-                  We are not looking for anything specific here, just tell us
-                  about you and what makes you stand out on pitch.
-                </em>
-              </Label>
-
-              <Controller
-                control={control}
-                name="playstyle"
-                render={({ field }) => (
-                  <Textarea
-                    {...field}
-                    id="playstyle"
-                    placeholder="Your playstyle"
-                    my={3}
-                    error={errors.playstyle}
-                  />
-                )}
+              <TextareaV2
+                label={
+                  <>
+                    Provide a brief description of your playstyle.
+                    <br />
+                    <em>
+                      We are not looking for anything specific here, just tell
+                      us about you and what makes you stand out on pitch.
+                    </em>
+                  </>
+                }
+                isRequired
+                id="playstyle"
+                placeholder="Your playstyle"
+                error={errors?.playstyle}
+                {...register('playstyle')}
               />
 
-              {errors.playstyle && (
-                <InlineError marginBottom={3}>
-                  {errors.playstyle.message}
-                </InlineError>
-              )}
-
-              <Label htmlFor="years">
-                How many years have you been actively playing quidditch?{' '}
-                <Required />
-              </Label>
-
-              <Controller
-                control={control}
-                name="years"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    placeholder="Years active"
-                    my={3}
-                    error={errors.years}
-                    type="number"
-                  />
-                )}
+              <InputV2
+                label="How many years have you been actively playing quidditch?"
+                placeholder="Years active"
+                type="number"
+                error={errors?.years}
+                isRequired
+                id="years"
+                {...register('years')}
               />
 
-              {errors.years && (
-                <InlineError marginBottom={3}>
-                  {errors.years.message}
-                </InlineError>
-              )}
-
-              <Label htmlFor="experience">
-                Summarise your quidditch experience. <Required />
-                <br />
-                <em>
-                  Focus on high-level tournaments and matches that you have been
-                  a part of, and your current best finishes.
-                </em>
-              </Label>
-              <Controller
-                control={control}
-                name="experience"
-                render={({ field }) => (
-                  <Textarea
-                    {...field}
-                    id="experience"
-                    placeholder="Playing experience"
-                    my={3}
-                    error={errors.experience}
-                  />
-                )}
+              <TextareaV2
+                label={
+                  <>
+                    Summarise your quidditch experience.
+                    <br />
+                    <em>
+                      Focus on high-level tournaments and matches that you have
+                      been a part of, and your current best finishes.
+                    </em>
+                  </>
+                }
+                isRequired
+                id="experience"
+                placeholder="Playing experience"
+                error={errors?.experience}
+                {...register('experience')}
               />
-
-              {errors.experience && (
-                <InlineError marginBottom={3}>
-                  {errors.experience.message}
-                </InlineError>
-              )}
             </>
           )}
 
@@ -387,28 +260,8 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
         </Grid>
       </form>
 
-      {serverError && (
-        <>
-          <InlineError my={3}>{serverError}</InlineError>
-        </>
-      )}
-
-      {serverSuccess && (
-        <Flex
-          alignItems="center"
-          bg="keeperGreen"
-          px={4}
-          py={1}
-          mt={6}
-          borderColor="keeperGreen"
-          borderWidth="1px"
-          borderStyle="solid"
-          color="white"
-          borderRadius="md"
-        >
-          <CheckIcon mr={3} /> <Text fontWeight="bold">Profile updated</Text>
-        </Flex>
-      )}
+      {serverError && <Error>{serverError}</Error>}
+      {serverSuccess && <Success>Profile updated</Success>}
     </>
   );
 };

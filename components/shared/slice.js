@@ -108,6 +108,14 @@ export const buttonVariants = {
   dark: 'secondary',
 };
 
+export const labelVariants = {
+  light: 'qukBlue',
+  primary: 'white',
+  secondary: 'white',
+  dark: 'white',
+  white: 'qukBlue',
+};
+
 export const cardVariants = {
   light: 'white',
   primary: 'white',

@@ -28,9 +28,23 @@ const usersService = {
     ...params,
   }),
 
-  createUser: ({ data, params }) => ({
+  createUser: ({ data, ...params }) => ({
     method: 'post',
     url: '/users',
+    data,
+    ...params,
+  }),
+
+  updateUserNationalProfile: ({ data, ...params }) => ({
+    method: 'put',
+    url: '/users/national',
+    data,
+    ...params,
+  }),
+
+  scoutingRequest: ({ data, ...params }) => ({
+    method: 'put',
+    url: '/users/scouting',
     data,
     ...params,
   }),

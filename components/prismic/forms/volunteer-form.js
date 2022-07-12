@@ -1,26 +1,22 @@
-import { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
+import { Grid, Heading } from '@chakra-ui/react';
 
-import { Grid, Flex, Heading, Text } from '@chakra-ui/react';
-import { CheckIcon } from '@chakra-ui/icons';
-import { buttonVariants } from 'components/shared/slice';
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
-import Textarea from 'components/formControls/textarea'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import { buttonVariants, labelVariants } from 'components/shared/slice';
+import InputV2 from 'components/formControls/inputV2';
+import TextareaV2 from 'components/formControls/textareaV2';
+import Error from 'components/shared/errors';
+import Success from 'components/formControls/success';
+
+import { rem } from 'styles/theme';
+import useTempPopup from 'hooks/useTempPopup';
+import contactService from 'services/contact';
 
 const Slice = dynamic(() => import('components/shared/slice'));
-const Label = dynamic(() => import('components/formControls/label'));
 const Button = dynamic(() => import('components/shared/button'));
 const Container = dynamic(() => import('components/layout/container'));
-const Required = dynamic(() => import('components/formControls/required'));
-const InlineError = dynamic(() =>
-  import('components/shared/errors').then(({ InlineError }) => InlineError)
-);
-
-import { api } from 'modules/api';
-import { rem } from 'styles/theme';
 
 const VolunteerFormSchema = object().shape({
   name: string().required('Please enter your name'),
@@ -41,7 +37,7 @@ const handleVolunteerSubmit = async (
     setServerError(null);
     setServerSuccess(null);
 
-    await api.post('/contact/volunteer', values);
+    await contactService.volunteerForm({ data: values });
 
     setServerSuccess(true);
     resetForm({});
@@ -51,11 +47,11 @@ const handleVolunteerSubmit = async (
 };
 
 const VolunteerForm = ({ primary }) => {
-  const [serverError, setServerError] = useState(null);
-  const [serverSuccess, setServerSuccess] = useState(null);
+  const [serverError, setServerError] = useTempPopup();
+  const [serverSuccess, setServerSuccess] = useTempPopup();
 
   const {
-    control,
+    register,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
@@ -88,129 +84,59 @@ const VolunteerForm = ({ primary }) => {
             )
           )}
         >
-          <Grid gridTemplateColumns="1fr">
-            <Label htmlFor="name">
-              Your name <Required />
-            </Label>
-
-            <Controller
-              control={control}
-              name="name"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  id="name"
-                  placeholder="Your name"
-                  my={3}
-                  error={errors.name}
-                />
-              )}
+          <Grid gridTemplateColumns="1fr" gridGap={3}>
+            <InputV2
+              label="Your name"
+              isRequired
+              id="name"
+              {...register('name')}
+              placeholder="Your name"
+              error={errors?.name}
+              color={labelVariants[variant]}
             />
 
-            {errors.name && (
-              <InlineError marginBottom={3}>{errors.name.message}</InlineError>
-            )}
-
-            <Label htmlFor="email">
-              Your email <Required />
-            </Label>
-
-            <Controller
-              control={control}
-              name="email"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  id="email"
-                  placeholder="Your email address"
-                  my={3}
-                  error={errors.email}
-                />
-              )}
+            <InputV2
+              label="Your Email address"
+              isRequired
+              id="email"
+              {...register('email')}
+              placeholder="Your email"
+              error={errors?.email}
+              color={labelVariants[variant]}
             />
 
-            {errors.email && (
-              <InlineError marginBottom={3}>{errors.email.message}</InlineError>
-            )}
-
-            <Label htmlFor="role">
-              Role <Required />
-            </Label>
-
-            <Controller
-              control={control}
-              name="role"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  id="role"
-                  placeholder="The role you're applying for"
-                  my={3}
-                  error={errors.role}
-                />
-              )}
+            <InputV2
+              label="Role"
+              isRequired
+              id="role"
+              {...register('role')}
+              placeholder="The role you're applying for"
+              error={errors?.role}
+              color={labelVariants[variant]}
             />
 
-            {errors.role && (
-              <InlineError marginBottom={3}>{errors.role.message}</InlineError>
-            )}
-
-            <Label htmlFor="message">
-              A bit about you <Required />
-            </Label>
-
-            <Controller
-              control={control}
-              name="message"
-              render={({ field }) => (
-                <Textarea
-                  {...field}
-                  id="message"
-                  placeholder="Your message"
-                  my={3}
-                  error={errors.message}
-                />
-              )}
+            <TextareaV2
+              label="Your message"
+              isRequired
+              id="message"
+              placeholder="Your message"
+              {...register('message')}
+              error={errors?.message}
+              color={labelVariants[variant]}
             />
 
-            {errors.message && (
-              <InlineError marginBottom={3}>
-                {errors.message.message}
-              </InlineError>
-            )}
+            <Button
+              type="submit"
+              variant={buttonVariants[variant]}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Submitting' : 'Apply'}
+            </Button>
           </Grid>
-
-          <Button
-            type="submit"
-            variant={buttonVariants[variant]}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Submitting' : 'Apply'}
-          </Button>
         </form>
 
-        {serverError && (
-          <>
-            <InlineError my={3}>{serverError}</InlineError>
-          </>
-        )}
-
-        {serverSuccess && (
-          <Flex
-            alignItems="center"
-            bg="keeperGreen"
-            px={4}
-            py={1}
-            mt={6}
-            borderColor="keeperGreen"
-            borderWidth="1px"
-            borderStyle="solid"
-            color="white"
-            borderRadius="md"
-          >
-            <CheckIcon mr={3} /> <Text fontWeight="bold">Application sent</Text>
-          </Flex>
-        )}
+        {serverError && <Error>{serverError}</Error>}
+        {serverSuccess && <Success>Application sent</Success>}
       </Container>
     </Slice>
   );

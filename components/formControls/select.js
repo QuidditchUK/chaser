@@ -32,6 +32,7 @@ const Select = (
     variant,
     size,
     type,
+    color,
     ...rest
   },
   ref
@@ -52,7 +53,7 @@ const Select = (
         <ChakraFormLabel
           htmlFor={id}
           fontSize="sm"
-          color={invalid ? 'monarchRed' : 'qukBlue'}
+          color={color ? color : invalid ? 'monarchRed' : 'qukBlue'}
         >
           {label}
         </ChakraFormLabel>
