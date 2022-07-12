@@ -7,9 +7,16 @@ const clubsService = {
     ...params,
   }),
 
-  getClub: ({ club_uuid, params }) => ({
+  getClub: ({ club_uuid, ...params }) => ({
     method: 'get',
     url: `/clubs/${club_uuid}`,
+    ...params,
+  }),
+
+  registerClub: ({ data, ...params }) => ({
+    method: 'post',
+    url: '/clubs/register',
+    data,
     ...params,
   }),
 };

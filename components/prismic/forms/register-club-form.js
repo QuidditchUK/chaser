@@ -1,26 +1,23 @@
-import { useState, useEffect } from 'react';
 import { object, string } from 'yup';
 import dynamic from 'next/dynamic';
 
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Grid, Flex, Heading, Text, Box } from '@chakra-ui/react';
 
-import { Grid, Flex, Heading, Text, Box, Select } from '@chakra-ui/react';
-import { CheckIcon } from '@chakra-ui/icons';
-import { buttonVariants } from 'components/shared/slice';
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
-import Textarea from 'components/formControls/textarea'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import { buttonVariants, labelVariants } from 'components/shared/slice';
 import Image from 'components/shared/image';
+import InputV2 from 'components/formControls/inputV2';
+import TextareaV2 from 'components/formControls/textareaV2';
 
-import { api } from 'modules/api';
+import useTempPopup from 'hooks/useTempPopup';
+import Success from 'components/formControls/success';
+import Error from 'components/shared/errors';
+import Select from 'components/formControls/select';
+import clubsService from 'services/clubs';
 
 const Slice = dynamic(() => import('components/shared/slice'));
-const Label = dynamic(() => import('components/formControls/label'));
 const Button = dynamic(() => import('components/shared/button'));
-const Required = dynamic(() => import('components/formControls/required'));
-const InlineError = dynamic(() =>
-  import('components/shared/errors').then(({ InlineError }) => InlineError)
-);
 
 const RegisterClubFormSchema = object().shape({
   name: string().required('Please enter your name'),
@@ -45,7 +42,7 @@ const handleRegisterClubSubmit = async (
     setServerError(null);
     setServerSuccess(null);
 
-    await api.post('/clubs/register', values);
+    await clubsService.registerClub({ data: values });
 
     setServerSuccess(true);
     resetForm({});
@@ -65,13 +62,13 @@ const VARITANT_BG = {
 const LEAGUES = ['Community', 'University'];
 
 const RegisterClubForm = ({ primary }) => {
-  const [serverError, setServerError] = useState(null);
-  const [serverSuccess, setServerSuccess] = useState(null);
+  const [serverError, setServerError] = useTempPopup();
+  const [serverSuccess, setServerSuccess] = useTempPopup();
 
   const {
-    control,
     handleSubmit,
     reset,
+    register,
     formState: { errors, isSubmitting },
   } = useForm({
     mode: 'onBlur',
@@ -85,17 +82,6 @@ const RegisterClubForm = ({ primary }) => {
       message: '',
     },
   });
-
-  useEffect(() => {
-    if (serverSuccess) {
-      const timer = setTimeout(() => {
-        setServerSuccess(null);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-
-    return () => {};
-  }, [serverSuccess]);
 
   const clipPath = 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)';
   const { variant, image } = primary;
@@ -139,188 +125,83 @@ const RegisterClubForm = ({ primary }) => {
               gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
               gridGap={4}
             >
-              <Flex direction="column">
-                <Label htmlFor="name">
-                  Your name <Required />
-                </Label>
+              <InputV2
+                label="Your name"
+                isRequired
+                id="name"
+                placeholder="Your name"
+                error={errors?.name}
+                {...register('name')}
+                color={labelVariants[variant]}
+              />
 
-                <Controller
-                  control={control}
-                  name="name"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="name"
-                      placeholder="Your name"
-                      my={3}
-                      error={errors.name}
-                    />
-                  )}
-                />
+              <InputV2
+                label="Club email"
+                isRequired
+                id="email"
+                placeholder="Club email address"
+                error={errors?.email}
+                {...register('email')}
+                color={labelVariants[variant]}
+              />
 
-                {errors.name && (
-                  <InlineError marginBottom={3}>
-                    {errors.name.message}
-                  </InlineError>
-                )}
-              </Flex>
+              <InputV2
+                label="Name of your club"
+                isRequired
+                id="clubName"
+                placeholder="Name of your club"
+                error={errors?.clubName}
+                {...register('clubName')}
+                color={labelVariants[variant]}
+              />
 
-              <Flex direction="column">
-                <Label htmlFor="email">
-                  Club email <Required />
-                </Label>
-
-                <Controller
-                  control={control}
-                  name="email"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="email"
-                      placeholder="Club email address"
-                      my={3}
-                      error={errors.email}
-                    />
-                  )}
-                />
-
-                {errors.email && (
-                  <InlineError marginBottom={3}>
-                    {errors.email.message}
-                  </InlineError>
-                )}
-              </Flex>
-
-              <Flex direction="column">
-                <Label htmlFor="clubName">
-                  Name of the club <Required />
-                </Label>
-
-                <Controller
-                  control={control}
-                  name="clubName"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="clubName"
-                      placeholder="Name of your club"
-                      my={3}
-                      error={errors.clubName}
-                    />
-                  )}
-                />
-
-                {errors.clubName && (
-                  <InlineError marginBottom={3}>
-                    {errors.clubName.message}
-                  </InlineError>
-                )}
-              </Flex>
-
-              <Flex direction="column">
-                <Label htmlFor="location">
-                  Location of the club <Required />
-                </Label>
-
-                <Controller
-                  control={control}
-                  name="location"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="location"
-                      placeholder="Where you intend to be based"
-                      my={3}
-                      error={errors.location}
-                    />
-                  )}
-                />
-
-                {errors.location && (
-                  <InlineError marginBottom={3}>
-                    {errors.location.message}
-                  </InlineError>
-                )}
-              </Flex>
+              <InputV2
+                label="Location of the club"
+                isRequired
+                id="location"
+                placeholder="Where you intend to be based"
+                error={errors?.location}
+                {...register('location')}
+                color={labelVariants[variant]}
+              />
 
               <Flex gridColumn="1 / -1" flexDirection="column">
-                <Label htmlFor="league">
-                  Which league you intend to compete in <Required />
-                </Label>
-
-                <Controller
-                  control={control}
-                  name="league"
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      id="league"
-                      my={3}
-                      placeholder="Select your league"
-                      bg="white"
-                      color="qukBlue"
-                    >
-                      {LEAGUES.map((league) => (
-                        <option key={league} value={league}>
-                          {league}
-                        </option>
-                      ))}
-                    </Select>
-                  )}
+                <Select
+                  label="Which league you intend to compete in"
+                  isRequired
+                  id="league"
+                  placeholder="Select your league"
+                  options={LEAGUES.map((league) => ({
+                    value: league,
+                    label: league,
+                  }))}
+                  error={errors?.league}
+                  color={labelVariants[variant]}
+                  {...register('league')}
                 />
               </Flex>
 
               <Flex gridColumn="1 / -1" flexDirection="column">
-                <Label htmlFor="message">Any extra information</Label>
-
-                <Controller
-                  control={control}
-                  name="message"
-                  render={({ field }) => (
-                    <Textarea
-                      {...field}
-                      id="message"
-                      placeholder="Any extra information e.g. social media links, training details that you might have decided already"
-                      my={3}
-                      error={errors.message}
-                    />
-                  )}
+                <TextareaV2
+                  label="Any extra information"
+                  id="message"
+                  placeholder="Any extra information e.g. social media links, training details that you might have decided already"
+                  color={labelVariants[variant]}
+                  {...register('message')}
                 />
               </Flex>
+              <Button
+                type="submit"
+                variant={buttonVariants[variant]}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Submitting' : 'Register a Club'}
+              </Button>
             </Grid>
-
-            <Button
-              type="submit"
-              variant={buttonVariants[variant]}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Submitting' : 'Register a Club'}
-            </Button>
           </form>
 
-          {serverError && (
-            <>
-              <InlineError my={3}>{serverError}</InlineError>
-            </>
-          )}
-
-          {serverSuccess && (
-            <Flex
-              alignItems="center"
-              bg="keeperGreen"
-              px={4}
-              py={1}
-              mt={6}
-              borderColor="keeperGreen"
-              borderWidth="1px"
-              borderStyle="solid"
-              color="white"
-              borderRadius="md"
-            >
-              <CheckIcon mr={3} />{' '}
-              <Text fontWeight="bold">Club registration sent</Text>
-            </Flex>
-          )}
+          {serverError && <Error>{serverError}</Error>}
+          {serverSuccess && <Success>Club registration sent</Success>}
         </Flex>
 
         <Box

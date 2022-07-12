@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import InputV2 from 'components/formControls/inputV2';
 
 const Button = dynamic(() => import('components/shared/button'));
 
@@ -17,7 +17,7 @@ const FindQuidditch = ({ primary }) => {
   const router = useRouter();
   const { title, image, variant } = primary;
 
-  const { control, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: { postcode: '' },
   });
 
@@ -62,16 +62,13 @@ const FindQuidditch = ({ primary }) => {
           )}
         >
           <Flex flexDirection="row">
-            <Controller
-              control={control}
-              name="postcode"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  placeholder="Enter your postcode"
-                  id="postcode"
-                />
-              )}
+            <InputV2
+              id="postcode"
+              {...register('postcode')}
+              hideLabel
+              label="Postcode"
+              placeholder="Enter your postcode"
+              width="initial"
             />
             <Button type="submit" variant={variant} ml={2}>
               Find Quidditch

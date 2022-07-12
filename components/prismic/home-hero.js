@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { Flex, Box, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 import dynamic from 'next/dynamic';
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import InputV2 from 'components/formControls/inputV2'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
 
 const Button = dynamic(() => import('components/shared/button'));
 
@@ -30,7 +30,7 @@ const Video = (props) => (
 
 const HomeHero = ({ primary }) => {
   const router = useRouter();
-  const { control, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: { postcode: '' },
   });
 
@@ -82,13 +82,15 @@ const HomeHero = ({ primary }) => {
           )}
         >
           <Flex flexDirection="row">
-            <Controller
-              control={control}
-              name="postcode"
-              render={({ field }) => (
-                <Input {...field} id="postcode" placeholder="Postcode" />
-              )}
+            <InputV2
+              id="postcode"
+              {...register('postcode')}
+              hideLabel
+              label="Postcode"
+              placeholder="Postcode"
+              width="initial"
             />
+
             <Button type="submit" variant="primary" ml={2}>
               {cta_text}
             </Button>

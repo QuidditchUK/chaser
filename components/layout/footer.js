@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { Link as PrismicLink } from 'prismic-reactjs';
 import {
@@ -13,7 +13,7 @@ import {
   UnorderedList,
   ListItem,
 } from '@chakra-ui/react';
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import InputV2 from 'components/formControls/inputV2';
 import { linkResolver } from 'modules/prismic';
 
 const Logo = dynamic(() => import('components/shared/logo'));
@@ -82,7 +82,7 @@ const handleFindQuidditch = async ({ postcode }, router) => {
 
 export const Footer = ({ data }) => {
   const router = useRouter();
-  const { control, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: { postcode: '' },
   });
 
@@ -159,18 +159,13 @@ export const Footer = ({ data }) => {
                 )}
               >
                 <Flex alignItems="center">
-                  <Controller
-                    control={control}
-                    name="postcode"
-                    render={({ field }) => (
-                      <Input
-                        {...field}
-                        placeholder="Enter your postcode"
-                        id="postcode"
-                        aria-label="Find Quidditch"
-                        m={0}
-                      />
-                    )}
+                  <InputV2
+                    id="postcode"
+                    {...register('postcode')}
+                    hideLabel
+                    label="Postcode"
+                    placeholder="Enter your postcode"
+                    width="initial"
                   />
                   <Button type="submit" variant="secondary" ml={2} py={0}>
                     Find
