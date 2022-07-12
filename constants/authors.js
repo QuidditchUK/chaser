@@ -6,6 +6,7 @@ const DeclanRamsay = '/images/authors/declan-ramsay.jpg';
 const JasmineLowen = '/images/authors/jasmine-lowen.jpg';
 const GeorgiaChallinor = '/images/authors/georgia-challinor.jpg';
 const BeckThroup = '/images/authors/beck-throup.jpg';
+const JoshFogg = '/images/authors/josh-fogg.jpg';
 const Logo = '/images/authors/quk-logo.png';
 
 const authors = {
@@ -17,6 +18,7 @@ const authors = {
   'Jasmine Lowen': JasmineLowen,
   'Georgia Challinor': GeorgiaChallinor,
   'Beck Throup': BeckThroup,
+  'Josh Fogg': JoshFogg,
 };
 
 export default function Authors(author) {
