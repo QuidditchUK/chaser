@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { object, string, bool } from 'yup';
 import dynamic from 'next/dynamic';
@@ -6,9 +5,6 @@ import {
   Heading,
   Grid,
   Flex,
-  Switch,
-  Select,
-  Text,
   Table,
   Thead,
   Tbody,
@@ -17,31 +13,33 @@ import {
   Td,
   TableContainer,
   Box,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { CheckIcon, ChevronRightIcon, DownloadIcon } from '@chakra-ui/icons';
-import { useForm, Controller } from 'react-hook-form';
+import { ChevronRightIcon, DownloadIcon, SmallAddIcon } from '@chakra-ui/icons';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { api } from 'modules/api';
-import { parseCookies } from 'modules/cookies';
 import { getUserScopes } from 'modules/scopes';
 import { CLUBS_READ, CLUBS_WRITE, EMT } from 'constants/scopes';
 import Slice from 'components/shared/slice';
-import Input from 'components/formControls/input'; // DO NOT DYNAMIC IMPORT, BREAKS FORMS
+import InputV2 from 'components/formControls/inputV2';
+import Select from 'components/formControls/select';
+import Switch from 'components/formControls/switch';
 import Meta from 'components/shared/meta';
+import Modal from 'components/shared/modal';
 
 import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
 import useCSVDownload from 'hooks/useCSVDownload';
 import { format, parse } from 'date-fns';
 import PrismicClubCard from 'components/prismic/club-card';
+import generateServerSideHeaders from 'modules/headers';
+import clubsService from 'services/clubs';
+import useTempPopup from 'hooks/useTempPopup';
+import Success from 'components/formControls/success';
+import Error from 'components/shared/errors';
 
-const Label = dynamic(() => import('components/formControls/label'));
 const Button = dynamic(() => import('components/shared/button'));
-const Required = dynamic(() => import('components/formControls/required'));
-const InlineError = dynamic(() =>
-  import('components/shared/errors').then(({ InlineError }) => InlineError)
-);
 
 const LEAGUES = ['Community', 'University'];
 
@@ -80,7 +78,7 @@ const handleEditSubmit = async (
     setServerError(null);
     setServerSuccess(null);
 
-    await api.put(`clubs/${uuid}`, values);
+    await clubsService.updateClub({ club_uuid: uuid, data: values });
 
     setServerSuccess(true);
   } catch (err) {
@@ -88,19 +86,8 @@ const handleEditSubmit = async (
   }
 };
 const Dashboard = ({ club, members }) => {
-  const [serverError, setServerError] = useState(null);
-  const [serverSuccess, setServerSuccess] = useState(null);
-
-  useEffect(() => {
-    if (serverSuccess) {
-      const timer = setTimeout(() => {
-        setServerSuccess(null);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-
-    return () => {};
-  }, [serverSuccess]);
+  const [serverError, setServerError] = useTempPopup();
+  const [serverSuccess, setServerSuccess] = useTempPopup();
 
   const { call, isLoading } = useCSVDownload({
     data: [
@@ -115,7 +102,7 @@ const Dashboard = ({ club, members }) => {
   });
 
   const {
-    control,
+    register,
     handleSubmit,
     formState: { isSubmitting, errors },
     watch,
@@ -132,6 +119,8 @@ const Dashboard = ({ club, members }) => {
   });
 
   const prismicClub = watch('slug');
+
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
     <>
@@ -164,134 +153,65 @@ const Dashboard = ({ club, members }) => {
             borderRadius="lg"
             gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
             width="100%"
-            gridGap={4}
+            gridColumnGap={4}
           >
-            <Flex direction="column">
-              <Label htmlFor="name">
-                Name <Required />
-              </Label>
-
-              <Controller
-                control={control}
-                name="name"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    id="name"
-                    placeholder="Club name"
-                    my={3}
-                    error={errors.name}
-                  />
-                )}
+            <Flex flexDirection="column" gridGap={3}>
+              <InputV2
+                label="Name"
+                isRequired
+                id="name"
+                placeholder="Club name"
+                error={errors?.name}
+                {...register('name')}
               />
 
-              {errors.name && (
-                <InlineError marginBottom={3}>
-                  {errors.name.message}
-                </InlineError>
-              )}
-
-              <Label htmlFor="email">
-                Email Address <Required />
-              </Label>
-
-              <Controller
-                control={control}
-                name="email"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    id="email"
-                    placeholder="Club email address"
-                    my={3}
-                    error={errors.email}
-                  />
-                )}
+              <InputV2
+                label="Email Address"
+                isRequired
+                id="email"
+                placeholder="Club email address"
+                error={errors?.email}
+                {...register('email')}
               />
 
-              {errors.email && (
-                <InlineError marginBottom={3}>
-                  {errors.email.message}
-                </InlineError>
-              )}
-
-              <Label htmlFor="slug">
-                Prismic UID <Required />
-              </Label>
-
-              <Controller
-                control={control}
-                name="slug"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    id="slug"
-                    placeholder="Enter the Club Prismic UID e.g. london-quidditch-club"
-                    my={3}
-                    error={errors.slug}
-                  />
-                )}
+              <InputV2
+                label="Prismic UID"
+                isRequired
+                id="slug"
+                placeholder="Enter the Club Prismic UID e.g. london-quidditch-club"
+                error={errors?.slug}
+                {...register('slug')}
               />
 
-              {errors.slug && (
-                <InlineError marginBottom={3}>
-                  {errors.slug.message}
-                </InlineError>
-              )}
-
-              <Label htmlFor="email">
-                League <Required />
-              </Label>
-
-              <Controller
-                control={control}
-                name="league"
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    id="league"
-                    my={3}
-                    placeholder="Select league the team plays in"
-                    bg="white"
-                    color="qukBlue"
-                  >
-                    {LEAGUES.map((league) => (
-                      <option key={league} value={league}>
-                        {league}
-                      </option>
-                    ))}
-                  </Select>
-                )}
+              <Select
+                label="League"
+                isRequired
+                id="league"
+                placeholder="Select league the team plays in"
+                options={LEAGUES.map((league) => ({
+                  value: league,
+                  label: league,
+                }))}
+                error={errors?.league}
+                {...register('league')}
               />
 
-              {errors.league && (
-                <InlineError marginBottom={3}>
-                  {errors.league.message}
-                </InlineError>
-              )}
-
-              <Label htmlFor="active">
-                Is the club active? <Required />
-                <Controller
-                  control={control}
-                  name="active"
-                  render={({ field }) => (
-                    <Switch
-                      {...field}
-                      isChecked={field.value}
-                      id="active"
-                      colorScheme="green"
-                      ml={3}
-                      my={3}
-                      size="lg"
-                    />
-                  )}
-                />
-              </Label>
+              <Switch
+                label="Is the club active?"
+                isRequired
+                id="active"
+                size="lg"
+                colorScheme="green"
+                display="flex"
+                alignItems="center"
+                {...register('active')}
+              />
 
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Submitting' : 'Update'}
               </Button>
+              {serverError && <Error>{serverError}</Error>}
+              {serverSuccess && <Success>Club updated</Success>}
             </Flex>
 
             <Flex flexDirection="column">
@@ -300,28 +220,46 @@ const Dashboard = ({ club, members }) => {
           </Grid>
         </form>
 
-        {serverError && (
-          <>
-            <InlineError my={3}>{serverError}</InlineError>
-          </>
-        )}
+        <Flex
+          flexDirection="row"
+          width="100%"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Heading as="h4" fontFamily="body" color="qukBlue">
+            Teams
+          </Heading>
 
-        {serverSuccess && (
-          <Flex
-            alignItems="center"
-            bg="keeperGreen"
-            px={4}
-            py={1}
-            mt={6}
-            borderColor="keeperGreen"
-            borderWidth="1px"
-            borderStyle="solid"
-            color="white"
-            borderRadius="md"
+          <Button
+            variant="transparent"
+            borderColor="qukBlue"
+            color="qukBlue"
+            _hover={{ bg: 'gray.300' }}
+            rightIcon={<SmallAddIcon />}
+            onClick={onOpen}
           >
-            <CheckIcon mr={3} /> <Text fontWeight="bold">Club updated</Text>
-          </Flex>
-        )}
+            Add Team
+          </Button>
+        </Flex>
+
+        <Box bg="white" borderRadius="lg">
+          <TableContainer>
+            <Table variant="striped">
+              <Thead>
+                <Tr>
+                  <Th>Name</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {club?.teams?.map((team) => (
+                  <Tr key={team.uuid}>
+                    <Td>{team.name}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </Box>
 
         <Flex
           flexDirection="row"
@@ -391,6 +329,16 @@ const Dashboard = ({ club, members }) => {
           </TableContainer>
         </Box>
       </Slice>
+
+      <Modal
+        title="Add Team"
+        isOpen={isOpen}
+        onClose={onClose}
+        footerAction={() => {
+          onClose();
+        }}
+        footerTitle="Add"
+      ></Modal>
     </>
   );
 };
@@ -401,20 +349,17 @@ export const getServerSideProps = async ({ req, res, params }) => {
     return { props: {} };
   }
 
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
+  const headers = generateServerSideHeaders(req);
+
   const [
     scopes,
     { data: club },
     { data: members },
     basePageProps,
   ] = await Promise.all([
-    getUserScopes(AUTHENTICATION_TOKEN),
-    api.get(`/clubs/${params?.uid}`, {
-      headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
-    }),
-    api.get(`/clubs/${params?.uid}/members`, {
-      headers: { Authorization: `Bearer ${AUTHENTICATION_TOKEN}` },
-    }),
+    getUserScopes(headers),
+    clubsService.getClub({ club_uuid: params?.uid, headers }),
+    clubsService.getClubMembers({ club_uuid: params?.uid, headers }),
     getBasePageProps(),
   ]);
 
