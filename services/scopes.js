@@ -12,6 +12,13 @@ const scopesService = {
     url: `/scopes/${scope}/users/${user_uuid}`,
     ...params,
   }),
+
+  addScope: ({ data, ...params }) => ({
+    method: 'post',
+    url: '/scopes',
+    data,
+    ...params,
+  }),
 };
 
 export default createService(scopesService);
