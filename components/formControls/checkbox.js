@@ -1,6 +1,7 @@
-import React, { forwardRef, Fragment } from 'react';
+import React, { forwardRef } from 'react';
 
 import {
+  Box,
   Checkbox as ChakraCheckbox,
   FormControl as ChakraFormControl,
   FormErrorMessage as ChakraFormErrorMessage,
@@ -33,7 +34,7 @@ const Checkbox = (
   ref
 ) => {
   const invalid = Boolean(error) || isInvalid;
-  const LabelWrapper = hideLabel ? VisuallyHidden : Fragment;
+  const LabelWrapper = hideLabel ? VisuallyHidden : Box;
 
   return (
     <ChakraFormControl

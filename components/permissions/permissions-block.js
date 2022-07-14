@@ -2,25 +2,14 @@ import { useState } from 'react';
 import { object, string } from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  Box,
-  Flex,
-  Heading,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Box, Flex, Heading, Tr, Td, useDisclosure } from '@chakra-ui/react';
 
 import { hasScope } from 'modules/scopes';
 import { ADMIN } from 'constants/scopes';
 import InputV2 from 'components/formControls/inputV2';
 import Button from 'components/shared/button';
 import Modal from 'components/shared/modal';
+import Table from 'components/shared/table';
 
 import scopesService from 'services/scopes';
 import useCachedResponse from 'hooks/useCachedResponse';
@@ -93,41 +82,30 @@ const PermissionBlock = ({ label, scope, initialData, scopes }) => {
       </Heading>
 
       <Box bg="white" borderRadius="lg">
-        <TableContainer>
-          <Table variant="striped">
-            <Thead>
-              <Tr>
-                <Th>Name</Th>
-                <Th>Email</Th>
-                <Th>Scopes</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {data.map((user) => (
-                <Tr key={user?.uuid}>
-                  <Td>
-                    {user?.first_name} {user?.last_name}
-                  </Td>
-                  <Td>{user?.email}</Td>
-                  <Td>{user?.scopes.map(({ scope }) => scope).join(', ')}</Td>
-                  {hasScope([ADMIN], queryScopes) && (
-                    <Td textAlign="right">
-                      <Button
-                        variant="secondary"
-                        onClick={() => {
-                          onOpen();
-                          setSelectedUser(user);
-                        }}
-                      >
-                        Remove
-                      </Button>
-                    </Td>
-                  )}
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+        <Table name={scope} columns={['Name', 'Email', 'Scopes']}>
+          {data.map((user) => (
+            <Tr key={user?.uuid}>
+              <Td>
+                {user?.first_name} {user?.last_name}
+              </Td>
+              <Td>{user?.email}</Td>
+              <Td>{user?.scopes.map(({ scope }) => scope).join(', ')}</Td>
+              {hasScope([ADMIN], queryScopes) && (
+                <Td textAlign="right">
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      onOpen();
+                      setSelectedUser(user);
+                    }}
+                  >
+                    Remove
+                  </Button>
+                </Td>
+              )}
+            </Tr>
+          ))}
+        </Table>
       </Box>
 
       {hasScope([ADMIN], queryScopes) && (

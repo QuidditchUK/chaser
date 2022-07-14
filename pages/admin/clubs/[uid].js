@@ -5,15 +5,11 @@ import {
   Heading,
   Grid,
   Flex,
-  Table,
-  Thead,
-  Tbody,
   Tr,
-  Th,
   Td,
-  TableContainer,
   Box,
   useDisclosure,
+  HStack,
 } from '@chakra-ui/react';
 import { ChevronRightIcon, DownloadIcon, SmallAddIcon } from '@chakra-ui/icons';
 import { useForm } from 'react-hook-form';
@@ -27,6 +23,7 @@ import Select from 'components/formControls/select';
 import Switch from 'components/formControls/switch';
 import Meta from 'components/shared/meta';
 import Modal from 'components/shared/modal';
+import Table from 'components/shared/table';
 
 import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
@@ -38,6 +35,7 @@ import clubsService from 'services/clubs';
 import useTempPopup from 'hooks/useTempPopup';
 import Success from 'components/formControls/success';
 import Error from 'components/shared/errors';
+import Card from 'components/shared/card';
 
 const Button = dynamic(() => import('components/shared/button'));
 
@@ -56,15 +54,17 @@ const EditClubSchema = object().shape({
     .required('Please select the league the club plays in'),
 });
 
+const getLatestProduct = (member) =>
+  member?.stripe_products[member?.stripe_products?.length - 1]?.products;
+const getClubTeam = (teams, club_uuid) => {
+  console.log(teams);
+  return teams?.filter(({ teams }) => teams?.club_uuid === club_uuid)[0]?.teams;
+};
+
 const getProductName = (member) => {
-  return parse(
-    member?.stripe_products[member?.stripe_products?.length - 1]?.products
-      ?.expires,
-    'dd-MM-yyyy',
-    new Date()
-  ) > new Date()
-    ? member?.stripe_products[member?.stripe_products?.length - 1]?.products
-        ?.description
+  const product = getLatestProduct(member);
+  return parse(product?.expires, 'dd-MM-yyyy', new Date()) > new Date()
+    ? product?.description
     : 'Expired';
 };
 
@@ -229,36 +229,34 @@ const Dashboard = ({ club, members }) => {
             Teams
           </Heading>
 
-          <Button
-            variant="transparent"
-            borderColor="qukBlue"
-            color="qukBlue"
-            _hover={{ bg: 'gray.300' }}
-            rightIcon={<SmallAddIcon />}
-            onClick={onOpen}
-          >
-            Add Team
-          </Button>
+          <HStack spacing={3}>
+            <Button variant="green" onClick={onOpen}>
+              Assign Players
+            </Button>
+
+            <Button
+              variant="transparent"
+              borderColor="qukBlue"
+              color="qukBlue"
+              _hover={{ bg: 'gray.300' }}
+              rightIcon={<SmallAddIcon />}
+              onClick={onOpen}
+            >
+              Add Team
+            </Button>
+          </HStack>
         </Flex>
 
-        <Box bg="white" borderRadius="lg">
-          <TableContainer>
-            <Table variant="striped">
-              <Thead>
-                <Tr>
-                  <Th>Name</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {club?.teams?.map((team) => (
-                  <Tr key={team.uuid}>
-                    <Td>{team.name}</Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </Box>
+        {club?.teams?.length !== 0 && (
+          <Grid
+            gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }}
+            gridGap={4}
+          >
+            {club?.teams?.map((team) => (
+              <Card title={team?.name} key={team?.uuid} />
+            ))}
+          </Grid>
+        )}
 
         <Flex
           flexDirection="row"
@@ -284,48 +282,35 @@ const Dashboard = ({ club, members }) => {
         </Flex>
 
         <Box bg="white" borderRadius="lg">
-          <TableContainer>
-            <Table variant="striped">
-              <Thead>
-                <Tr>
-                  <Th>Name</Th>
-                  <Th>Email</Th>
-                  <Th>Membership</Th>
+          <Table
+            name="members"
+            columns={['Name', 'Email', 'Team', 'Membership']}
+          >
+            {members?.map((member) => {
+              const product = getLatestProduct(member);
+              return (
+                <Tr key={member?.email}>
+                  <Td>
+                    {member?.first_name} {member?.last_name}
+                  </Td>
+                  <Td>{member?.email}</Td>
+                  <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td>
+                  <Td fontWeight="bold">
+                    {parse(product?.expires, 'dd-MM-yyyy', new Date()) >
+                    new Date() ? (
+                      <Box as="span" color="qukBlue">
+                        {product?.description}
+                      </Box>
+                    ) : (
+                      <Box as="span" color="monarchRed">
+                        Expired
+                      </Box>
+                    )}
+                  </Td>
                 </Tr>
-              </Thead>
-              <Tbody>
-                {members?.map((member) => (
-                  <Tr key={member?.email}>
-                    <Td>
-                      {member?.first_name} {member?.last_name}
-                    </Td>
-                    <Td>{member?.email}</Td>
-                    <Td fontWeight="bold">
-                      {parse(
-                        member?.stripe_products[
-                          member?.stripe_products.length - 1
-                        ]?.products?.expires,
-                        'dd-MM-yyyy',
-                        new Date()
-                      ) > new Date() ? (
-                        <Box as="span" color="qukBlue">
-                          {
-                            member?.stripe_products[
-                              member?.stripe_products.length - 1
-                            ]?.products?.description
-                          }
-                        </Box>
-                      ) : (
-                        <Box as="span" color="monarchRed">
-                          Expired
-                        </Box>
-                      )}
-                    </Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
+              );
+            })}
+          </Table>
         </Box>
       </Slice>
 

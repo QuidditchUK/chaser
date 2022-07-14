@@ -9,20 +9,7 @@ import { object, string, bool } from 'yup';
 
 import generateServerSideHeaders from 'modules/headers';
 import isAuthorized from 'modules/auth';
-import {
-  Box,
-  Grid,
-  Flex,
-  Heading,
-  Link,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-} from '@chakra-ui/react';
+import { Box, Grid, Flex, Heading, Link, Tr, Td } from '@chakra-ui/react';
 import TransferRequestForm from 'components/dashboard/transfer-request-form';
 import settingsService from 'services/settings';
 import Select from 'components/formControls/select';
@@ -37,14 +24,12 @@ import clubsService from 'services/clubs';
 import productsService from 'services/products';
 import Checkbox from 'components/formControls/checkbox';
 import Slice from 'components/shared/slice';
+import Table from 'components/shared/table';
+import Error from 'components/shared/errors';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Content = dynamic(() => import('components/shared/content'));
 const Button = dynamic(() => import('components/shared/button'));
-
-const InlineError = dynamic(() =>
-  import('components/shared/errors').then(({ InlineError }) => InlineError)
-);
 
 const STATUS = {
   APPROVED: {
@@ -110,8 +95,8 @@ const ManageClub = ({ user, clubs = [], settings }) => {
     },
   });
 
-  const hasPendingTransfer = queryUser?.transfers?.every(
-    (transfer) => transfer?.status !== 'PENDING'
+  const hasPendingTransfer = queryUser?.transfers?.some(
+    (transfer) => transfer?.status === 'PENDING'
   );
   const canTransfer =
     settings?.transfer_window && !hasPendingTransfer && queryUser?.club_uuid;
@@ -250,7 +235,7 @@ const ManageClub = ({ user, clubs = [], settings }) => {
               </form>
             )}
 
-            {serverError && <InlineError my={3}>{serverError}</InlineError>}
+            {serverError && <Error>{serverError}</Error>}
           </Box>
           {selectedClub && (
             <Flex flexDirection="column" key={selectedClub?.uuid}>
@@ -276,33 +261,22 @@ const ManageClub = ({ user, clubs = [], settings }) => {
             </Heading>
 
             <Box bg="white" borderRadius="lg">
-              <TableContainer>
-                <Table variant="striped">
-                  <Thead>
-                    <Tr>
-                      <Th>Old Club</Th>
-                      <Th>New Club</Th>
-                      <Th>Status</Th>
+              <Table columns={['Old Club', 'New Club', 'Status']}>
+                {orderBy(queryUser?.transfers, ['updated'], 'desc').map(
+                  (transfer) => (
+                    <Tr key={transfer?.uuid}>
+                      <Td>{transfer?.prevClub?.name}</Td>
+                      <Td>{transfer?.newClub?.name}</Td>
+                      <Td
+                        color={STATUS[transfer.status].color}
+                        fontWeight="bold"
+                      >
+                        {STATUS[transfer.status].label}
+                      </Td>
                     </Tr>
-                  </Thead>
-                  <Tbody>
-                    {orderBy(queryUser?.transfers, ['updated'], 'desc').map(
-                      (transfer) => (
-                        <Tr key={transfer?.uuid}>
-                          <Td>{transfer?.prevClub?.name}</Td>
-                          <Td>{transfer?.newClub?.name}</Td>
-                          <Td
-                            color={STATUS[transfer.status].color}
-                            fontWeight="bold"
-                          >
-                            {STATUS[transfer.status].label}
-                          </Td>
-                        </Tr>
-                      )
-                    )}
-                  </Tbody>
-                </Table>
-              </TableContainer>
+                  )
+                )}
+              </Table>
             </Box>
           </>
         )}
@@ -332,18 +306,18 @@ export const getServerSideProps = async ({ req, res }) => {
     getBasePageProps(),
   ]);
 
-  if (
-    !products.length ||
-    !products.filter(
-      (product) =>
-        new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())
-    ).length
-  ) {
-    res.setHeader('location', '/dashboard/membership/manage');
-    res.statusCode = 302;
-    res.end();
-    return { props: {} };
-  }
+  // if (
+  //   !products.length ||
+  //   !products.filter(
+  //     (product) =>
+  //       new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())
+  //   ).length
+  // ) {
+  //   res.setHeader('location', '/dashboard/membership/manage');
+  //   res.statusCode = 302;
+  //   res.end();
+  //   return { props: {} };
+  // }
 
   return {
     props: {
