@@ -4,7 +4,6 @@ import {
   Tbody,
   Tr,
   Th,
-  Td,
   TableContainer,
 } from '@chakra-ui/react';
 
@@ -12,7 +11,7 @@ export default function Table({
   name = 'Table',
   columns,
   variant = 'striped',
-  rows,
+  children,
 }) {
   return (
     <TableContainer>
@@ -24,15 +23,7 @@ export default function Table({
             ))}
           </Tr>
         </Thead>
-        <Tbody>
-          {rows?.map((row) => (
-            <Tr key={row?.key}>
-              {row?.data?.map(({ key, ...data }) => (
-                <Td key={`${name}-row--${row?.key}-${key}`} {...data} />
-              ))}
-            </Tr>
-          ))}
-        </Tbody>
+        <Tbody>{children}</Tbody>
       </ChakraTable>
     </TableContainer>
   );

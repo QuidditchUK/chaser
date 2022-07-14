@@ -11,6 +11,8 @@ import {
   Switch,
   FormControl,
   FormLabel,
+  Tr,
+  Td,
 } from '@chakra-ui/react';
 import { useForm, Controller } from 'react-hook-form';
 import { orderBy } from 'lodash';
@@ -98,56 +100,6 @@ const Transfers = ({
     refetchPending();
     refetchActioned();
   };
-
-  const actionedTransfersTableData = orderBy(
-    queryActionedTransfers,
-    ['updated'],
-    'desc'
-  ).map((transfer) => ({
-    key: transfer?.uuid,
-    data: [
-      {
-        key: 'name',
-        children: (
-          <>
-            {transfer?.user?.first_name} {transfer?.user?.last_name}
-          </>
-        ),
-      },
-      {
-        key: 'prevClub',
-        children: <>{transfer?.prevClub?.name}</>,
-      },
-      {
-        key: 'newClub',
-        children: <>{transfer?.newClub?.name}</>,
-      },
-      {
-        key: 'status',
-        color: transfer.status === 'APPROVED' ? 'keeperGreen' : 'monarchRed',
-        fontWeight: 'bold',
-        children: <>{STATUS[transfer.status]}</>,
-      },
-      {
-        key: 'actionedBy',
-        children: (
-          <>
-            {transfer?.actioned_by && (
-              <>
-                {transfer.actionedBy.first_name} {transfer.actionedBy.last_name}
-              </>
-            )}
-          </>
-        ),
-      },
-      {
-        key: 'date',
-        children: (
-          <>{format(new Date(transfer?.updated), 'd/MM/yyyy h:mm a')}</>
-        ),
-      },
-    ],
-  }));
 
   return (
     <>
@@ -238,8 +190,42 @@ const Transfers = ({
               'Actioned By',
               'Date',
             ]}
-            rows={actionedTransfersTableData}
-          />
+          >
+            {orderBy(queryActionedTransfers, ['updated'], 'desc').map(
+              (transfer) => (
+                <Tr key={transfer?.uuid}>
+                  <Td>
+                    {transfer?.user?.first_name} {transfer?.user?.last_name}
+                  </Td>
+                  <Td>{transfer?.prevClub?.name}</Td>
+                  <Td>{transfer?.newClub?.name}</Td>
+                  <Td
+                    color={
+                      transfer.status === 'APPROVED'
+                        ? 'keeperGreen'
+                        : 'monarchRed'
+                    }
+                    fontWeight="bold"
+                  >
+                    {STATUS[transfer.status]}
+                  </Td>
+
+                  <Td>
+                    {transfer?.actioned_by && (
+                      <>
+                        {transfer.actionedBy.first_name}{' '}
+                        {transfer.actionedBy.last_name}
+                      </>
+                    )}
+                  </Td>
+
+                  <Td>
+                    {format(new Date(transfer?.updated), 'd/MM/yyyy h:mm a')}
+                  </Td>
+                </Tr>
+              )
+            )}
+          </Table>
         </Box>
 
         <Pagination pages={pages} page={page} setPage={setPage} />

@@ -1,6 +1,14 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { Box, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  useDisclosure,
+  Tr,
+  Td,
+} from '@chakra-ui/react';
 import { SmallAddIcon } from '@chakra-ui/icons';
 
 import { getUserScopes, hasScope } from 'modules/scopes';
@@ -88,37 +96,26 @@ const Dashboard = ({ scopes, clubs }) => {
           <Table
             name="Clubs"
             columns={['Name', 'League', 'Email', 'Members', '']}
-            rows={activeClubs.map((club) => ({
-              key: club?.uuid,
-              data: [
-                { key: 'name', children: <>{club?.name}</> },
-                { key: 'league', children: <>{club?.league}</> },
-                {
-                  key: 'email',
-                  children: (
-                    <>
-                      {club?.email && (
-                        <Link href={`mailto:${club?.email}`}>
-                          {club?.email}
-                        </Link>
-                      )}
-                    </>
-                  ),
-                },
-                { key: 'count', children: <>{club?._count?.users}</> },
-                ...(hasScope([CLUBS_WRITE, EMT], scopes) && [
-                  {
-                    key: 'edit',
-                    children: (
-                      <Button href={`/admin/clubs/${club.uuid}`}>
-                        Details
-                      </Button>
-                    ),
-                  },
-                ]),
-              ],
-            }))}
-          />
+          >
+            {activeClubs.map((club) => (
+              <Tr key={club?.uuid}>
+                <Td>{club?.name}</Td>
+                <Td>{club?.league}</Td>
+                <Td>
+                  {club?.email && (
+                    <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
+                  )}
+                </Td>
+                <Td>{club?._count?.users}</Td>
+
+                {hasScope([CLUBS_WRITE, EMT], scopes) && (
+                  <Td>
+                    <Button href={`/admin/clubs/${club.uuid}`}>Details</Button>
+                  </Td>
+                )}
+              </Tr>
+            ))}
+          </Table>
         </Box>
 
         <Heading as="h4" fontFamily="body" color="qukBlue">
@@ -129,34 +126,24 @@ const Dashboard = ({ scopes, clubs }) => {
           <Table
             name="Inactive Clubs"
             columns={['Name', 'League', 'Email', 'Members', '', '']}
-            rows={inactiveClubs.map((club) => ({
-              key: club?.uuid,
-              data: [
-                { key: 'name', children: <>{club?.name}</> },
-                { key: 'league', children: <>{club?.league}</> },
-                {
-                  key: 'email',
-                  children: (
-                    <>
-                      {club?.email && (
-                        <Link href={`mailto:${club?.email}`}>
-                          {club?.email}
-                        </Link>
-                      )}
-                    </>
-                  ),
-                },
-                { key: 'count', children: <>{club?._count?.users}</> },
-                ...(hasScope([CLUBS_WRITE, EMT], scopes) && [
-                  {
-                    key: 'edit',
-                    children: (
+          >
+            {inactiveClubs.map((club) => (
+              <Tr key={club?.uuid}>
+                <Td>{club?.name}</Td>
+                <Td>{club?.league}</Td>
+                <Td>
+                  {club?.email && (
+                    <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
+                  )}
+                </Td>
+                <Td>{club?._count?.users}</Td>
+
+                {hasScope([CLUBS_WRITE, EMT], scopes) && (
+                  <>
+                    <Td>
                       <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
-                    ),
-                  },
-                  {
-                    key: 'delete',
-                    children: (
+                    </Td>
+                    <Td>
                       <Button
                         variant="secondary"
                         onClick={() => {
@@ -166,12 +153,12 @@ const Dashboard = ({ scopes, clubs }) => {
                       >
                         Delete
                       </Button>
-                    ),
-                  },
-                ]),
-              ],
-            }))}
-          />
+                    </Td>
+                  </>
+                )}
+              </Tr>
+            ))}
+          </Table>
         </Box>
       </Slice>
 
