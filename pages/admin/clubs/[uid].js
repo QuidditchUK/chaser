@@ -56,8 +56,8 @@ const EditClubSchema = object().shape({
 
 const getLatestProduct = (member) =>
   member?.stripe_products[member?.stripe_products?.length - 1]?.products;
+
 const getClubTeam = (teams, club_uuid) => {
-  console.log(teams);
   return teams?.filter(({ teams }) => teams?.club_uuid === club_uuid)[0]?.teams;
 };
 
