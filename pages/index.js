@@ -1,4 +1,3 @@
-import SchedulerFeed from 'components/prismic/scheduler-feed';
 import { getStaticPrismicProps } from 'modules/prismic';
 import dynamic from 'next/dynamic';
 
