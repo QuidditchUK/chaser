@@ -54,6 +54,7 @@ const Icon = (props) => (
 const Td = (props) => (
   <ChakraTd p={1} fontSize={{ base: 'sm', md: 'md' }} {...props} />
 );
+
 const Th = (props) => (
   <ChakraTh
     textAlign="left"

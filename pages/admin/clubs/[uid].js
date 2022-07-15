@@ -1,17 +1,8 @@
 import Link from 'next/link';
 import { object, string, bool } from 'yup';
 import dynamic from 'next/dynamic';
-import {
-  Heading,
-  Grid,
-  Flex,
-  Tr,
-  Td,
-  Box,
-  useDisclosure,
-  HStack,
-} from '@chakra-ui/react';
-import { ChevronRightIcon, DownloadIcon, SmallAddIcon } from '@chakra-ui/icons';
+import { Heading, Grid, Flex } from '@chakra-ui/react';
+import { ChevronRightIcon } from '@chakra-ui/icons';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -22,20 +13,18 @@ import InputV2 from 'components/formControls/inputV2';
 import Select from 'components/formControls/select';
 import Switch from 'components/formControls/switch';
 import Meta from 'components/shared/meta';
-import Modal from 'components/shared/modal';
-import Table from 'components/shared/table';
+
+import ClubTeams from 'components/admin/clubs/club-teams';
+import ClubMembers from 'components/admin/clubs/club-members';
 
 import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
-import useCSVDownload from 'hooks/useCSVDownload';
-import { format, parse } from 'date-fns';
 import PrismicClubCard from 'components/prismic/club-card';
 import generateServerSideHeaders from 'modules/headers';
 import clubsService from 'services/clubs';
 import useTempPopup from 'hooks/useTempPopup';
 import Success from 'components/formControls/success';
 import Error from 'components/shared/errors';
-import Card from 'components/shared/card';
 
 const Button = dynamic(() => import('components/shared/button'));
 
@@ -53,20 +42,6 @@ const EditClubSchema = object().shape({
     .nullable()
     .required('Please select the league the club plays in'),
 });
-
-const getLatestProduct = (member) =>
-  member?.stripe_products[member?.stripe_products?.length - 1]?.products;
-
-const getClubTeam = (teams, club_uuid) => {
-  return teams?.filter(({ teams }) => teams?.club_uuid === club_uuid)[0]?.teams;
-};
-
-const getProductName = (member) => {
-  const product = getLatestProduct(member);
-  return parse(product?.expires, 'dd-MM-yyyy', new Date()) > new Date()
-    ? product?.description
-    : 'Expired';
-};
 
 const handleEditSubmit = async (
   uuid,
@@ -89,18 +64,6 @@ const Dashboard = ({ club, members }) => {
   const [serverError, setServerError] = useTempPopup();
   const [serverSuccess, setServerSuccess] = useTempPopup();
 
-  const { call, isLoading } = useCSVDownload({
-    data: [
-      ['first_name', 'last_name', 'membership'],
-      ...members.map((member) => [
-        member.first_name,
-        member.last_name,
-        getProductName(member),
-      ]),
-    ],
-    filename: `${club?.name}-members-${format(new Date(), 'yyyy-MM-dd')}.csv`,
-  });
-
   const {
     register,
     handleSubmit,
@@ -119,8 +82,6 @@ const Dashboard = ({ club, members }) => {
   });
 
   const prismicClub = watch('slug');
-
-  const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
     <>
@@ -219,110 +180,9 @@ const Dashboard = ({ club, members }) => {
           </Grid>
         </form>
 
-        <Flex
-          flexDirection="row"
-          width="100%"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Heading as="h4" fontFamily="body" color="qukBlue">
-            Teams
-          </Heading>
-
-          <HStack spacing={3}>
-            <Button variant="green" onClick={onOpen}>
-              Assign Players
-            </Button>
-
-            <Button
-              variant="transparent"
-              borderColor="qukBlue"
-              color="qukBlue"
-              _hover={{ bg: 'gray.300' }}
-              rightIcon={<SmallAddIcon />}
-              onClick={onOpen}
-            >
-              Add Team
-            </Button>
-          </HStack>
-        </Flex>
-
-        {club?.teams?.length !== 0 && (
-          <Grid
-            gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }}
-            gridGap={4}
-          >
-            {club?.teams?.map((team) => (
-              <Card title={team?.name} key={team?.uuid} />
-            ))}
-          </Grid>
-        )}
-
-        <Flex
-          flexDirection="row"
-          width="100%"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Heading as="h4" fontFamily="body" color="qukBlue">
-            Players
-          </Heading>
-
-          <Button
-            variant="transparent"
-            borderColor="qukBlue"
-            color="qukBlue"
-            _hover={{ bg: 'gray.300' }}
-            rightIcon={<DownloadIcon />}
-            onClick={call}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Downloading...' : 'Download CSV'}
-          </Button>
-        </Flex>
-
-        <Box bg="white" borderRadius="lg">
-          <Table
-            name="members"
-            columns={['Name', 'Email', 'Team', 'Membership']}
-          >
-            {members?.map((member) => {
-              const product = getLatestProduct(member);
-              return (
-                <Tr key={member?.email}>
-                  <Td>
-                    {member?.first_name} {member?.last_name}
-                  </Td>
-                  <Td>{member?.email}</Td>
-                  <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td>
-                  <Td fontWeight="bold">
-                    {parse(product?.expires, 'dd-MM-yyyy', new Date()) >
-                    new Date() ? (
-                      <Box as="span" color="qukBlue">
-                        {product?.description}
-                      </Box>
-                    ) : (
-                      <Box as="span" color="monarchRed">
-                        Expired
-                      </Box>
-                    )}
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Table>
-        </Box>
+        <ClubTeams club_uuid={club?.uuid} />
+        <ClubMembers members={members} club={club} />
       </Slice>
-
-      <Modal
-        title="Add Team"
-        isOpen={isOpen}
-        onClose={onClose}
-        footerAction={() => {
-          onClose();
-        }}
-        footerTitle="Add"
-      ></Modal>
     </>
   );
 };

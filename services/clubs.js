@@ -19,6 +19,12 @@ const clubsService = {
     ...params,
   }),
 
+  getClubTeams: ({ club_uuid, ...params }) => ({
+    method: 'get',
+    url: `/clubs/${club_uuid}/teams`,
+    ...params,
+  }),
+
   registerClub: ({ data, ...params }) => ({
     method: 'post',
     url: '/clubs/register',
@@ -48,6 +54,13 @@ const clubsService = {
   updateClub: ({ club_uuid, data, ...params }) => ({
     method: 'put',
     url: `/clubs/${club_uuid}`,
+    data,
+    ...params,
+  }),
+
+  createClubTeam: ({ club_uuid, data, ...params }) => ({
+    method: 'post',
+    url: `/clubs/${club_uuid}/teams`,
     data,
     ...params,
   }),

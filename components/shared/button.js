@@ -51,6 +51,9 @@ export const ButtonStyles = {
         bg: '#092642',
         borderColor: '#092642',
         textDecoration: 'none',
+        _disabled: {
+          bg: 'qukBlue',
+        },
       },
     },
     secondary: {
@@ -63,6 +66,9 @@ export const ButtonStyles = {
         bg: '#7f131d',
         borderColor: '#7f131d',
         textDecoration: 'none',
+        _disabled: {
+          bg: 'monarchRed',
+        },
       },
     },
     light: {
@@ -74,6 +80,9 @@ export const ButtonStyles = {
       _hover: {
         bg: 'gray.200',
         textDecoration: 'none',
+        _disabled: {
+          bg: 'white',
+        },
       },
     },
     white: {
@@ -84,6 +93,9 @@ export const ButtonStyles = {
       _hover: {
         bg: 'gray.200',
         textDecoration: 'none',
+        _disabled: {
+          bg: 'white',
+        },
       },
     },
     green: {
@@ -96,6 +108,12 @@ export const ButtonStyles = {
         bg: '#247214',
         borderColor: '#247214',
         textDecoration: 'none',
+        _disabled: {
+          bg: 'keeperGreen',
+        },
+      },
+      _disabled: {
+        bg: 'keeperGreen',
       },
     },
     transparent: {
