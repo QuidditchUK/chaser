@@ -2,7 +2,7 @@ import { object, string, bool, ref } from 'yup';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
-import { Box, Grid, Flex, Heading, Text, Link, Switch } from '@chakra-ui/react';
+import { Box, Grid, Flex, Heading, Text, Link } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
@@ -14,6 +14,7 @@ import { CATEGORIES } from 'constants/analytics';
 import Error from 'components/shared/errors';
 
 import InputV2 from 'components/formControls/inputV2';
+import Switch from 'components/formControls/switch';
 import usersService from 'services/users';
 import useTempPopup from 'hooks/useTempPopup';
 import AuthCallout from 'components/shared/auth-callout';
@@ -23,7 +24,6 @@ const Logo = dynamic(() => import('components/shared/logo'));
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
 const Button = dynamic(() => import('components/shared/button'));
-const Content = dynamic(() => import('components/shared/content'));
 
 const JoinFormSchema = object().shape({
   email: string()
@@ -169,7 +169,6 @@ const JoinPage = () => {
 
                 <Switch
                   label="Are you a student?"
-                  isRequired={true}
                   id="is_student"
                   colorScheme="green"
                   size="lg"
