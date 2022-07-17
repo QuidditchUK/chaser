@@ -281,22 +281,15 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
                           transition={'all .3s ease'}
                           p={2}
                         >
-                          <Controller
-                            control={control}
-                            name="showCommunity"
-                            render={({ field }) => (
-                              <Checkbox
-                                {...field}
-                                isChecked={field.value}
-                                id="showCommunity"
-                                size="md"
-                                w="100%"
-                                colorScheme="white"
-                              >
-                                Community
-                              </Checkbox>
-                            )}
-                          />
+                          <Checkbox
+                            {...register('showCommunity')}
+                            id="showCommunity"
+                            size="md"
+                            w="100%"
+                            colorScheme="white"
+                          >
+                            Community
+                          </Checkbox>
                         </Box>
 
                         <Box
@@ -306,22 +299,15 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
                           transition={'all .3s ease'}
                           p={2}
                         >
-                          <Controller
-                            control={control}
-                            name="showUniversity"
-                            render={({ field }) => (
-                              <Checkbox
-                                {...field}
-                                isChecked={field.value}
-                                id="showUniversity"
-                                size="md"
-                                w="100%"
-                                colorScheme="white"
-                              >
-                                University
-                              </Checkbox>
-                            )}
-                          />
+                          <Checkbox
+                            {...register('showUniversity')}
+                            id="showUniversity"
+                            size="md"
+                            w="100%"
+                            colorScheme="white"
+                          >
+                            University
+                          </Checkbox>
                         </Box>
                       </Stack>
                     </Box>
