@@ -21,6 +21,17 @@ const getProductName = (member) => {
     : 'Expired';
 };
 
+const CSVMemberRows = (members) => {
+  if (!members) {
+    return [];
+  }
+  return members.map((member) => [
+    member.first_name,
+    member.last_name,
+    getProductName(member),
+  ]);
+};
+
 const ClubMembers = ({ club }) => {
   const membersRes = useCachedResponse({
     queryKey: ['/clubs', club?.uuid, '/members'],
@@ -30,14 +41,7 @@ const ClubMembers = ({ club }) => {
   const { call, isLoading } = useCSVDownload({
     data: [
       ['first_name', 'last_name', 'membership'],
-      {
-        ...(membersRes?.data &&
-          membersRes?.data?.map((member) => [
-            member.first_name,
-            member.last_name,
-            getProductName(member),
-          ])),
-      },
+      ...CSVMemberRows(membersRes?.data),
     ],
     filename: `${club?.name}-members-${format(new Date(), 'yyyy-MM-dd')}.csv`,
   });
