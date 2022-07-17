@@ -35,7 +35,7 @@ const handleDeleteClick = async ({ uuid, refetch }) => {
 };
 
 const Dashboard = ({ scopes }) => {
-  const { data: queryClubs, refetch, isLoading } = useCachedResponse({
+  const { data: queryClubs = [], refetch, isLoading } = useCachedResponse({
     queryKey: '/clubs/all',
     queryFn: clubsService.getAllClubs,
   });
@@ -195,14 +195,12 @@ export const getServerSideProps = async ({ req, res }) => {
 
   const [scopes, basePageProps] = await Promise.all([
     getUserScopes(headers),
-    // clubsService.getAllClubs({ headers }),
     getBasePageProps(),
   ]);
 
   return {
     props: {
       scopes,
-      clubs,
       ...basePageProps,
     },
   };
