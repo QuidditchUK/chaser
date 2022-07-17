@@ -12,9 +12,7 @@ import Slice from 'components/shared/slice';
 import PermissionBlock from 'components/permissions/permissions-block';
 import Meta from 'components/shared/meta';
 
-import scopesService from 'services/scopes';
-
-const Dashboard = ({ scopes, emt_members, admin_members }) => {
+const Dashboard = ({ scopes }) => {
   return (
     <>
       <Meta subTitle="Volunteers Permissions" title="Admin Dashboard" />
@@ -37,18 +35,8 @@ const Dashboard = ({ scopes, emt_members, admin_members }) => {
           </Heading>
         </Flex>
 
-        <PermissionBlock
-          label="EMT"
-          scope={EMT}
-          initialData={emt_members}
-          scopes={scopes}
-        />
-        <PermissionBlock
-          label="Admin"
-          scope={ADMIN}
-          initialData={admin_members}
-          scopes={scopes}
-        />
+        <PermissionBlock label="EMT" scope={EMT} scopes={scopes} />
+        <PermissionBlock label="Admin" scope={ADMIN} scopes={scopes} />
       </Slice>
     </>
   );
@@ -62,22 +50,13 @@ export const getServerSideProps = async ({ req, res }) => {
 
   const headers = generateServerSideHeaders(req);
 
-  const [
-    scopes,
-    { data: emt_members },
-    { data: admin_members },
-    basePageProps,
-  ] = await Promise.all([
+  const [scopes, basePageProps] = await Promise.all([
     getUserScopes(headers),
-    scopesService.getUsersByScope({ headers, scope: EMT }),
-    scopesService.getUsersByScope({ headers, scope: ADMIN }),
     getBasePageProps(),
   ]);
 
   return {
     props: {
-      emt_members,
-      admin_members,
       scopes,
       ...basePageProps,
     },

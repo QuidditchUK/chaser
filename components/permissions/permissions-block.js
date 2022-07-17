@@ -40,7 +40,7 @@ const handleFormSubmit = async ({ values, reset, refetch }) => {
   }
 };
 
-const PermissionBlock = ({ label, scope, initialData, scopes }) => {
+const PermissionBlock = ({ label, scope, scopes }) => {
   const {
     register,
     handleSubmit,
@@ -52,11 +52,9 @@ const PermissionBlock = ({ label, scope, initialData, scopes }) => {
     defaultValues: { email: '' },
   });
 
-  const { data, refetch } = useCachedResponse({
+  const { data, refetch, isLoading } = useCachedResponse({
     queryKey: ['/scopes/users/', scope],
     queryFn: () => scopesService.getUsersByScope({ scope }),
-    initialData,
-    enabled: false,
   });
 
   const { data: queryScopes, refetchScopes } = useCachedResponse({
@@ -82,8 +80,12 @@ const PermissionBlock = ({ label, scope, initialData, scopes }) => {
       </Heading>
 
       <Box bg="white" borderRadius="lg">
-        <Table name={scope} columns={['Name', 'Email', 'Scopes']}>
-          {data.map((user) => (
+        <Table
+          name={scope}
+          columns={['Name', 'Email', 'Scopes']}
+          isLoading={isLoading}
+        >
+          {data?.map((user) => (
             <Tr key={user?.uuid}>
               <Td>
                 {user?.first_name} {user?.last_name}
