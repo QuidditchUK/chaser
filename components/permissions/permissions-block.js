@@ -57,7 +57,7 @@ const PermissionBlock = ({ label, scope, scopes }) => {
     queryFn: () => scopesService.getUsersByScope({ scope }),
   });
 
-  const { data: queryScopes, refetchScopes } = useCachedResponse({
+  const { data: queryScopes, refetch: refetchScopes } = useCachedResponse({
     queryKey: '/users/me',
     queryFn: usersService.getUser,
     selector: (res) => res?.data?.scopes?.map(({ scope }) => scope),

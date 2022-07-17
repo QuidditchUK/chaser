@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Flex, Heading } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 
-import { ADMIN, EMT } from 'constants/scopes';
+import { ADMIN, EMT, HEAD_SCOUT, VOLUNTEER } from 'constants/scopes';
 import { getUserScopes } from 'modules/scopes';
 import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
@@ -37,6 +37,12 @@ const Dashboard = ({ scopes }) => {
 
         <PermissionBlock label="EMT" scope={EMT} scopes={scopes} />
         <PermissionBlock label="Admin" scope={ADMIN} scopes={scopes} />
+        <PermissionBlock
+          label="Head Scout"
+          scope={HEAD_SCOUT}
+          scopes={scopes}
+        />
+        <PermissionBlock label="Volunteers" scope={VOLUNTEER} scopes={scopes} />
       </Slice>
     </>
   );
