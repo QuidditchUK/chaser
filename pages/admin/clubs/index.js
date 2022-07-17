@@ -34,11 +34,10 @@ const handleDeleteClick = async ({ uuid, refetch }) => {
   }
 };
 
-const Dashboard = ({ scopes, clubs }) => {
-  const { data: queryClubs, refetch } = useCachedResponse({
+const Dashboard = ({ scopes }) => {
+  const { data: queryClubs, refetch, isLoading } = useCachedResponse({
     queryKey: '/clubs/all',
     queryFn: clubsService.getAllClubs,
-    initialData: clubs,
   });
 
   const [activeClubs, inactiveClubs] = queryClubs?.reduce(
@@ -96,6 +95,8 @@ const Dashboard = ({ scopes, clubs }) => {
           <Table
             name="Clubs"
             columns={['Name', 'League', 'Email', 'Members', '']}
+            isLoading={isLoading}
+            skeletonRows={20}
           >
             {activeClubs.map((club) => (
               <Tr key={club?.uuid}>
@@ -126,6 +127,7 @@ const Dashboard = ({ scopes, clubs }) => {
           <Table
             name="Inactive Clubs"
             columns={['Name', 'League', 'Email', 'Members', '', '']}
+            isLoading={isLoading}
           >
             {inactiveClubs.map((club) => (
               <Tr key={club?.uuid}>
@@ -191,9 +193,9 @@ export const getServerSideProps = async ({ req, res }) => {
 
   const headers = generateServerSideHeaders(req);
 
-  const [scopes, { data: clubs }, basePageProps] = await Promise.all([
+  const [scopes, basePageProps] = await Promise.all([
     getUserScopes(headers),
-    clubsService.getAllClubs({ headers }),
+    // clubsService.getAllClubs({ headers }),
     getBasePageProps(),
   ]);
 
