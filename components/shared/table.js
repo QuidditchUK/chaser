@@ -36,24 +36,9 @@ export default function Table({
                   <Tr key={`skeleton-loader-${name}-${index}`}>
                     {columns?.map((column, index) => (
                       <Td key={`${name}-skeleton-${column}-${index}`}>
-                        <Skeleton />
+                        <Skeleton height="20px" />
                       </Td>
                     ))}
-                    <Td>
-                      <Skeleton />
-                    </Td>
-                    <Td>
-                      <Skeleton />
-                    </Td>
-                    <Td>
-                      <Skeleton />
-                    </Td>
-                    <Td>
-                      <Skeleton />
-                    </Td>
-                    <Td>
-                      <Skeleton />
-                    </Td>
                   </Tr>
                 ))}
             </>
