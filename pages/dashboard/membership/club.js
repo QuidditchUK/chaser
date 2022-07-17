@@ -306,18 +306,18 @@ export const getServerSideProps = async ({ req, res }) => {
     getBasePageProps(),
   ]);
 
-  // if (
-  //   !products.length ||
-  //   !products.filter(
-  //     (product) =>
-  //       new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())
-  //   ).length
-  // ) {
-  //   res.setHeader('location', '/dashboard/membership/manage');
-  //   res.statusCode = 302;
-  //   res.end();
-  //   return { props: {} };
-  // }
+  if (
+    !products.length ||
+    !products.filter(
+      (product) =>
+        new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())
+    ).length
+  ) {
+    res.setHeader('location', '/dashboard/membership/manage');
+    res.statusCode = 302;
+    res.end();
+    return { props: {} };
+  }
 
   return {
     props: {
