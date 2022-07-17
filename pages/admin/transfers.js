@@ -2,20 +2,10 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import format from 'date-fns/format';
 import generateServerSideHeaders from 'modules/headers';
-import {
-  Box,
-  Flex,
-  Heading,
-  Grid,
-  Text,
-  Switch,
-  FormControl,
-  FormLabel,
-  Tr,
-  Td,
-} from '@chakra-ui/react';
-import { useForm, Controller } from 'react-hook-form';
+import { Box, Flex, Heading, Grid, Text, Tr, Td } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 import { orderBy } from 'lodash';
+import Switch from 'components/formControls/switch';
 
 import transfersService from 'services/transfers';
 import settingsService from 'services/settings';
@@ -69,7 +59,7 @@ const Transfers = ({ scopes, settings }) => {
     refetchOnWindowFocus: false,
   });
 
-  const { control, watch } = useForm({
+  const { register, watch } = useForm({
     defaultValues: {
       transfer_window: settings?.transfer_window,
     },
@@ -116,36 +106,20 @@ const Transfers = ({ scopes, settings }) => {
           </Heading>
 
           <form>
-            <FormControl
+            <Switch
+              label="Accepting Transfers"
+              id="transfer_window"
+              colorScheme="green"
+              size="lg"
               display="flex"
               alignItems="center"
               justifyContent="end"
-            >
-              <FormLabel htmlFor="transfer_window" mb="0">
-                <Heading
-                  as="h4"
-                  fontFamily="body"
-                  color="qukBlue"
-                  fontSize="lg"
-                >
-                  Accepting Transfers
-                </Heading>
-              </FormLabel>
-              <Controller
-                control={control}
-                name="transfer_window"
-                render={({ field }) => (
-                  <Switch
-                    {...field}
-                    isChecked={field.value}
-                    isDisabled={!hasScope([EMT], scopes)}
-                    id="transfer_window"
-                    colorScheme="green"
-                    size="lg"
-                  />
-                )}
-              />
-            </FormControl>
+              color="qukBlue"
+              fontSize="lg"
+              fontWeight="bold"
+              isDisabled={!hasScope([EMT], scopes)}
+              {...register('transfer_window')}
+            />
           </form>
         </Flex>
 
