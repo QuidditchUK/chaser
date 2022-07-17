@@ -36,6 +36,8 @@ import TwitterIcon from 'public/images/twitter.svg';
 import InstagramIcon from 'public/images/instagram.svg';
 import PersonIcon from 'public/images/person.svg';
 import { USER_NAVIGATION } from 'constants/navigation';
+import { getScopesFromToken, hasScope } from 'modules/scopes';
+import { DASHBOARD_SCOPES } from 'constants/scopes';
 
 const Button = dynamic(() => import('components/shared/button'));
 const Logo = dynamic(() => import('components/shared/logo'));
@@ -64,7 +66,8 @@ function Sidebar({ isOpen, onClose, data }) {
 export default function Navigation({ data }) {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { asPath } = useRouter();
-  const loggedIn = cookies.get('AUTHENTICATION_TOKEN');
+  const token = cookies.get('AUTHENTICATION_TOKEN');
+  const userScopes = getScopesFromToken(token);
 
   const signOut = () => {
     removeCookie('AUTHENTICATION_TOKEN');
@@ -170,7 +173,7 @@ export default function Navigation({ data }) {
             <DesktopNavigation data={data?.body} />
 
             <Flex flexDirection="row" gridGap={2} alignItems="center" ml="auto">
-              {loggedIn ? (
+              {token ? (
                 <Popover>
                   <PopoverTrigger>
                     <Box w="30px" h="30px">
@@ -190,6 +193,29 @@ export default function Navigation({ data }) {
                         m={0}
                         spacing={3}
                       >
+                        {hasScope(DASHBOARD_SCOPES, userScopes) && (
+                          <ListItem tabIndex={0}>
+                            <Link href="/admin" passHref>
+                              <ChakraLink
+                                display="grid"
+                                gridTemplateColumns="1fr 10px"
+                                p={2}
+                                px={4}
+                                alignItems="center"
+                                textDecoration="none"
+                                color="white"
+                                fontWeight={600}
+                                _hover={{ bg: 'green.700' }}
+                                _active={{ bg: 'green.700' }}
+                                borderRadius="md"
+                                bg={'green.600'}
+                                fontSize="0.875rem"
+                              >
+                                Admin Dashboard
+                              </ChakraLink>
+                            </Link>
+                          </ListItem>
+                        )}
                         {USER_NAVIGATION.map((item) => {
                           const isActive = item?.href === asPath;
 
