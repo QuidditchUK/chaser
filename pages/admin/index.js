@@ -6,6 +6,8 @@ import {
   USERS_READ,
   CLUBS_READ,
   TRANSFER_READ,
+  NATIONAL_TEAM_READ,
+  HEAD_SCOUT,
 } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import Card from 'components/shared/card';
@@ -13,6 +15,7 @@ import isAuthorized from 'modules/auth';
 import Meta from 'components/shared/meta';
 import { getBasePageProps } from 'modules/prismic';
 import generateServerSideHeaders from 'modules/headers';
+
 const Dashboard = ({ scopes }) => {
   return (
     <>
@@ -32,7 +35,9 @@ const Dashboard = ({ scopes }) => {
           {hasScope([TRANSFER_READ, EMT], scopes) && (
             <Card title="Transfers" href="/admin/transfers" />
           )}
-          {hasScope([EMT], scopes) && <Card title="National Teams" />}
+          {hasScope([EMT, NATIONAL_TEAM_READ, HEAD_SCOUT], scopes) && (
+            <Card title="National Teams" href="/admin/national-teams" />
+          )}
           {hasScope([EMT], scopes) && (
             <Card title="Volunteer Permissions" href="/admin/permissions" />
           )}

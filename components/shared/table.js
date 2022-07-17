@@ -22,9 +22,19 @@ export default function Table({
       <ChakraTable variant={variant}>
         <Thead>
           <Tr>
-            {columns?.map((column, i) => (
-              <Th key={`${name}-column--${column}-${i}`}>{column}</Th>
-            ))}
+            {columns?.map((column, i) => {
+              const isString = typeof column === 'string';
+
+              const value = isString ? (
+                <Th key={`${name}-column--${column}-${i}`}>{column}</Th>
+              ) : (
+                <Th key={`${name}-column--${column.label}-${i}`} {...column}>
+                  {column.label}
+                </Th>
+              );
+
+              return value;
+            })}
           </Tr>
         </Thead>
         <Tbody>
