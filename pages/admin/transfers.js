@@ -37,35 +37,29 @@ const STATUS = {
   DECLINED: 'Declined',
 };
 
-const Transfers = ({
-  scopes,
-  actionedTransfers,
-  pendingTransfers,
-  settings,
-  pages,
-}) => {
+const Transfers = ({ scopes, settings }) => {
   const [page, setPage] = useState(0);
+
+  const pendingTransfersRes = useCachedResponse({
+    queryKey: '/transfers/pending',
+    queryFn: transfersService.getPendingTransfers,
+    keepPreviousData: true,
+  });
+
+  const actionedTransfersRes = useCachedResponse({
+    queryKey: ['/transfers/actioned', page],
+    queryFn: () => transfersService.getActionedTransfers({ page }),
+    keepPreviousData: true,
+  });
 
   const {
     data: queryPendingTransfers,
     refetch: refetchPending,
-  } = useCachedResponse({
-    queryKey: '/transfers/pending',
-    queryFn: transfersService.getPendingTransfers,
-    initialData: pendingTransfers,
-    keepPreviousData: true,
-  });
-
+  } = pendingTransfersRes;
   const {
     data: queryActionedTransfers,
     refetch: refetchActioned,
-  } = useCachedResponse({
-    queryKey: ['/transfers/actioned', page],
-    queryFn: () => transfersService.getActionedTransfers({ page }),
-    selector: (res) => res?.data?.transfers,
-    initialData: actionedTransfers,
-    keepPreviousData: true,
-  });
+  } = actionedTransfersRes;
 
   const { data: querySettings, refetch: refetchSettings } = useCachedResponse({
     queryKey: '/settings',
@@ -190,45 +184,53 @@ const Transfers = ({
               'Actioned By',
               'Date',
             ]}
+            isLoading={actionedTransfersRes?.isLoading}
+            skeletonRows={10}
           >
-            {orderBy(queryActionedTransfers, ['updated'], 'desc').map(
-              (transfer) => (
-                <Tr key={transfer?.uuid}>
-                  <Td>
-                    {transfer?.user?.first_name} {transfer?.user?.last_name}
-                  </Td>
-                  <Td>{transfer?.prevClub?.name}</Td>
-                  <Td>{transfer?.newClub?.name}</Td>
-                  <Td
-                    color={
-                      transfer.status === 'APPROVED'
-                        ? 'keeperGreen'
-                        : 'monarchRed'
-                    }
-                    fontWeight="bold"
-                  >
-                    {STATUS[transfer.status]}
-                  </Td>
+            {orderBy(
+              queryActionedTransfers?.transfers,
+              ['updated'],
+              'desc'
+            ).map((transfer) => (
+              <Tr key={transfer?.uuid}>
+                <Td>
+                  {transfer?.user?.first_name} {transfer?.user?.last_name}
+                </Td>
+                <Td>{transfer?.prevClub?.name}</Td>
+                <Td>{transfer?.newClub?.name}</Td>
+                <Td
+                  color={
+                    transfer.status === 'APPROVED'
+                      ? 'keeperGreen'
+                      : 'monarchRed'
+                  }
+                  fontWeight="bold"
+                >
+                  {STATUS[transfer.status]}
+                </Td>
 
-                  <Td>
-                    {transfer?.actioned_by && (
-                      <>
-                        {transfer.actionedBy.first_name}{' '}
-                        {transfer.actionedBy.last_name}
-                      </>
-                    )}
-                  </Td>
+                <Td>
+                  {transfer?.actioned_by && (
+                    <>
+                      {transfer.actionedBy.first_name}{' '}
+                      {transfer.actionedBy.last_name}
+                    </>
+                  )}
+                </Td>
 
-                  <Td>
-                    {format(new Date(transfer?.updated), 'd/MM/yyyy h:mm a')}
-                  </Td>
-                </Tr>
-              )
-            )}
+                <Td>
+                  {format(new Date(transfer?.updated), 'd/MM/yyyy h:mm a')}
+                </Td>
+              </Tr>
+            ))}
           </Table>
         </Box>
 
-        <Pagination pages={pages} page={page} setPage={setPage} />
+        <Pagination
+          pages={queryActionedTransfers?.pages}
+          page={page}
+          setPage={setPage}
+        />
       </Slice>
     </>
   );
@@ -242,16 +244,8 @@ export const getServerSideProps = async ({ req, res }) => {
 
   const headers = generateServerSideHeaders(req);
 
-  const [
-    scopes,
-    { data: pendingTransfers },
-    { data: actionedTransfers },
-    { data: settings },
-    basePageProps,
-  ] = await Promise.all([
+  const [scopes, { data: settings }, basePageProps] = await Promise.all([
     getUserScopes(headers),
-    transfersService.getPendingTransfers({ headers }),
-    transfersService.getActionedTransfers({ page: 0, headers }),
     settingsService.getSettings(),
     getBasePageProps(),
   ]);
@@ -259,9 +253,6 @@ export const getServerSideProps = async ({ req, res }) => {
   return {
     props: {
       scopes,
-      pendingTransfers,
-      actionedTransfers: actionedTransfers?.transfers,
-      pages: actionedTransfers?.pages,
       settings,
       ...basePageProps,
     },

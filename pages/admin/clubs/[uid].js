@@ -60,7 +60,7 @@ const handleEditSubmit = async (
     setServerError(err?.response?.data?.error?.message);
   }
 };
-const Dashboard = ({ club, members }) => {
+const Dashboard = ({ club }) => {
   const [serverError, setServerError] = useTempPopup();
   const [serverSuccess, setServerSuccess] = useTempPopup();
 
@@ -181,7 +181,7 @@ const Dashboard = ({ club, members }) => {
         </form>
 
         <ClubTeams club_uuid={club?.uuid} />
-        <ClubMembers members={members} club={club} />
+        <ClubMembers club={club} />
       </Slice>
     </>
   );
@@ -195,15 +195,9 @@ export const getServerSideProps = async ({ req, res, params }) => {
 
   const headers = generateServerSideHeaders(req);
 
-  const [
-    scopes,
-    { data: club },
-    { data: members },
-    basePageProps,
-  ] = await Promise.all([
+  const [scopes, { data: club }, basePageProps] = await Promise.all([
     getUserScopes(headers),
     clubsService.getClub({ club_uuid: params?.uid, headers }),
-    clubsService.getClubMembers({ club_uuid: params?.uid, headers }),
     getBasePageProps(),
   ]);
 
@@ -211,7 +205,6 @@ export const getServerSideProps = async ({ req, res, params }) => {
     props: {
       scopes,
       club,
-      members,
       ...basePageProps,
     },
   };

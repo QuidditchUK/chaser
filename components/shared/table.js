@@ -5,12 +5,16 @@ import {
   Tr,
   Th,
   TableContainer,
+  Skeleton,
+  Td,
 } from '@chakra-ui/react';
 
 export default function Table({
   name = 'Table',
   columns,
   variant = 'striped',
+  isLoading = false,
+  skeletonRows = 5,
   children,
 }) {
   return (
@@ -23,7 +27,40 @@ export default function Table({
             ))}
           </Tr>
         </Thead>
-        <Tbody>{children}</Tbody>
+        <Tbody>
+          {isLoading ? (
+            <>
+              {Array(skeletonRows)
+                .fill(0)
+                .map((v, index) => (
+                  <Tr key={`skeleton-loader-${name}-${index}`}>
+                    {columns?.map((column, index) => (
+                      <Td key={`${name}-skeleton-${column}-${index}`}>
+                        <Skeleton />
+                      </Td>
+                    ))}
+                    <Td>
+                      <Skeleton />
+                    </Td>
+                    <Td>
+                      <Skeleton />
+                    </Td>
+                    <Td>
+                      <Skeleton />
+                    </Td>
+                    <Td>
+                      <Skeleton />
+                    </Td>
+                    <Td>
+                      <Skeleton />
+                    </Td>
+                  </Tr>
+                ))}
+            </>
+          ) : (
+            <>{children}</>
+          )}
+        </Tbody>
       </ChakraTable>
     </TableContainer>
   );

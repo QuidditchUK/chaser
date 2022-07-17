@@ -21,21 +21,23 @@ const getProductName = (member) => {
     : 'Expired';
 };
 
-const ClubMembers = ({ members: initialMembers, club }) => {
-  const { data: members } = useCachedResponse({
+const ClubMembers = ({ club }) => {
+  const membersRes = useCachedResponse({
     queryKey: ['/clubs', club?.uuid, '/members'],
     queryFn: () => clubsService.getClubMembers({ club_uuid: club?.uuid }),
-    initialData: initialMembers,
   });
 
   const { call, isLoading } = useCSVDownload({
     data: [
       ['first_name', 'last_name', 'membership'],
-      ...members.map((member) => [
-        member.first_name,
-        member.last_name,
-        getProductName(member),
-      ]),
+      {
+        ...(membersRes?.data &&
+          membersRes?.data?.map((member) => [
+            member.first_name,
+            member.last_name,
+            getProductName(member),
+          ])),
+      },
     ],
     filename: `${club?.name}-members-${format(new Date(), 'yyyy-MM-dd')}.csv`,
   });
@@ -65,8 +67,12 @@ const ClubMembers = ({ members: initialMembers, club }) => {
       </Flex>
 
       <Box bg="white" borderRadius="lg">
-        <Table name="members" columns={['Name', 'Email', 'Team', 'Membership']}>
-          {members?.map((member) => {
+        <Table
+          name="members"
+          columns={['Name', 'Email', 'Team', 'Membership']}
+          isLoading={membersRes?.isLoading}
+        >
+          {membersRes?.data?.map((member) => {
             const product = getLatestProduct(member);
             return (
               <Tr key={member?.email}>
