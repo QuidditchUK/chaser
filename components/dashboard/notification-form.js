@@ -35,8 +35,8 @@ const NotificationForm = ({ user }) => {
     mode: 'onBlur',
     defaultValues: {
       transfer_window_notifications: user?.transfer_window_notifications,
-      scouting_window_notifications: user?.scouting_window_notifications,
-      event_registration_notifications: user?.event_registration_notifications,
+      // scouting_window_notifications: user?.scouting_window_notifications,
+      // event_registration_notifications: user?.event_registration_notifications,
     },
   });
 
@@ -71,7 +71,7 @@ const NotificationForm = ({ user }) => {
               {...register('transfer_window_notifications')}
             />
 
-            <Switch
+            {/* <Switch
               label="Scouting notifications"
               isDisabled
               id="scouting_window_notifications"
@@ -91,7 +91,7 @@ const NotificationForm = ({ user }) => {
               display="flex"
               alignItems="center"
               {...register('event_registration_notifications')}
-            />
+            /> */}
           </Grid>
 
           {serverError && <Error>{serverError}</Error>}
