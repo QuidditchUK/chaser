@@ -82,8 +82,7 @@ const NotificationBadge = ({ count = 0 }) => {
       borderRadius="full"
       alignItems="center"
       justifyContent="center"
-      position="absolute"
-      right="30px"
+      position="relative"
       pl={count > 9 ? 1 : 0}
     >
       {displayCount}
@@ -219,30 +218,17 @@ export default function Navigation({ data }) {
             <Flex flexDirection="row" gridGap={2} alignItems="center" ml="auto">
               {token ? (
                 <>
-                  <IconButton
-                    ml="auto"
-                    aria-label="Notifications"
+                  <Button
                     bg="white"
-                    color="gray.800"
-                    _hover={{
-                      bg: 'white',
-                      color: 'qukBlue',
-                    }}
+                    ml="auto"
                     border="none"
-                    p={0}
-                    icon={
-                      <>
-                        <NotificationBadge count={unreadCount} />
-                        <BellIcon
-                          color="qukBlue"
-                          cursor="pointer"
-                          w={6}
-                          h={6}
-                        />
-                      </>
-                    }
+                    _hover={{ bg: 'white', color: 'qukBlue' }}
                     onClick={notificationOnOpen}
-                  />
+                    p={0}
+                  >
+                    <NotificationBadge count={unreadCount} />
+                    <BellIcon color="qukBlue" cursor="pointer" w={6} h={6} />
+                  </Button>
 
                   <Popover>
                     <PopoverTrigger>
