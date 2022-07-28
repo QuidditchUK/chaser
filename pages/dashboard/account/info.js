@@ -14,6 +14,9 @@ const InfoForm = dynamic(() => import('components/dashboard/info-form'));
 const PasswordForm = dynamic(() =>
   import('components/dashboard/password-form')
 );
+const NotificationForm = dynamic(() =>
+  import('components/dashboard/notification-form')
+);
 
 const Info = ({ user }) => (
   <>
@@ -30,7 +33,10 @@ const Info = ({ user }) => (
           Update your Info
         </Heading>
 
-        <Grid gridGap={4} gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}>
+        <Grid
+          gridGap={4}
+          gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }}
+        >
           <Box bg="gray.100" borderRadius="lg" p={4}>
             <Heading
               as="h3"
@@ -44,7 +50,13 @@ const Info = ({ user }) => (
             <InfoForm user={user} />
           </Box>
 
-          <Box bg="gray.100" borderRadius="lg" p={4}>
+          <Grid
+            bg="gray.100"
+            borderRadius="lg"
+            p={4}
+            height="100%"
+            gridTemplateRows="min-content 1fr"
+          >
             <Heading
               as="h3"
               fontFamily="body"
@@ -56,7 +68,26 @@ const Info = ({ user }) => (
             </Heading>
 
             <PasswordForm />
-          </Box>
+          </Grid>
+
+          <Grid
+            bg="gray.100"
+            borderRadius="lg"
+            p={4}
+            height="100%"
+            gridTemplateRows="min-content 1fr"
+          >
+            <Heading
+              as="h3"
+              fontFamily="body"
+              color="qukBlue"
+              fontSize="xl"
+              mt={0}
+            >
+              Notification Settings
+            </Heading>
+            <NotificationForm user={user} />
+          </Grid>
         </Grid>
       </Container>
     </Box>

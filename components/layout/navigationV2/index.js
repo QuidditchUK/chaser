@@ -26,9 +26,10 @@ import { removeCookie } from 'modules/cookies';
 
 import Link from 'next/link';
 
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon, BellIcon } from '@chakra-ui/icons';
 import DesktopNavigation from './desktop';
 import MobileNavigation from './mobile';
+import Notifications from '../notifications';
 
 import FacebookIcon from 'public/images/facebook.svg';
 import YoutubeIcon from 'public/images/youtube.svg';
@@ -38,6 +39,8 @@ import PersonIcon from 'public/images/person.svg';
 import { USER_NAVIGATION } from 'constants/navigation';
 import { getScopesFromToken, hasScope } from 'modules/scopes';
 import { DASHBOARD_SCOPES } from 'constants/scopes';
+import useCachedResponse from 'hooks/useCachedResponse';
+import usersService from 'services/users';
 
 const Button = dynamic(() => import('components/shared/button'));
 const Logo = dynamic(() => import('components/shared/logo'));
@@ -63,11 +66,52 @@ function Sidebar({ isOpen, onClose, data }) {
   );
 }
 
+const NotificationBadge = ({ count = 0 }) => {
+  if (!count) {
+    return <></>;
+  }
+
+  const displayCount = count > 9 ? '9+' : count;
+  return (
+    <Flex
+      bg="monarchRed"
+      fontSize="0.62rem"
+      color="white"
+      h="20px"
+      w="20px"
+      borderRadius="full"
+      alignItems="center"
+      justifyContent="center"
+      position="absolute"
+      right="30px"
+      pl={count > 9 ? 1 : 0}
+    >
+      {displayCount}
+    </Flex>
+  );
+};
+
 export default function Navigation({ data }) {
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const {
+    isOpen: notificationIsOpen,
+    onClose: notificationOnClose,
+    onOpen: notificationOnOpen,
+  } = useDisclosure();
+  const {
+    isOpen: mobileIsOpen,
+    onClose: mobileOnClose,
+    onOpen: mobileOnOpen,
+  } = useDisclosure();
+
   const { asPath } = useRouter();
   const token = cookies.get('AUTHENTICATION_TOKEN');
   const userScopes = getScopesFromToken(token);
+
+  const { data: unreadCount } = useCachedResponse({
+    queryKey: '/users/notifications/unread',
+    queryFn: usersService.getUnreadNoticationsCount,
+    enabled: Boolean(token),
+  });
 
   const signOut = () => {
     removeCookie('AUTHENTICATION_TOKEN');
@@ -162,7 +206,7 @@ export default function Navigation({ data }) {
             <Link href="/" passHref>
               <ChakraLink
                 height={{ base: '35px', xl: '45px' }}
-                onClick={onClose}
+                onClick={mobileOnClose}
                 display="flex"
                 alignItems="center"
               >
@@ -174,54 +218,54 @@ export default function Navigation({ data }) {
 
             <Flex flexDirection="row" gridGap={2} alignItems="center" ml="auto">
               {token ? (
-                <Popover>
-                  <PopoverTrigger>
-                    <Box w="30px" h="30px">
-                      <Box as={PersonIcon} color="qukBlue" cursor="pointer" />
-                    </Box>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    bg="qukBlue"
-                    color="white"
-                    borderColor="qukBlue"
-                  >
-                    <PopoverArrow bg="qukBlue" />
-                    <PopoverBody as="nav" py={4} px={3}>
-                      <UnorderedList
-                        listStyleType="none"
-                        p={0}
-                        m={0}
-                        spacing={3}
-                      >
-                        {hasScope(DASHBOARD_SCOPES, userScopes) && (
-                          <ListItem tabIndex={0}>
-                            <Link href="/admin" passHref>
-                              <ChakraLink
-                                display="grid"
-                                gridTemplateColumns="1fr 10px"
-                                p={2}
-                                px={4}
-                                alignItems="center"
-                                textDecoration="none"
-                                color="white"
-                                fontWeight={600}
-                                _hover={{ bg: 'green.700' }}
-                                _active={{ bg: 'green.700' }}
-                                borderRadius="md"
-                                bg={'green.600'}
-                                fontSize="0.875rem"
-                              >
-                                Admin Dashboard
-                              </ChakraLink>
-                            </Link>
-                          </ListItem>
-                        )}
-                        {USER_NAVIGATION.map((item) => {
-                          const isActive = item?.href === asPath;
+                <>
+                  <IconButton
+                    ml="auto"
+                    aria-label="Notifications"
+                    bg="white"
+                    color="gray.800"
+                    _hover={{
+                      bg: 'white',
+                      color: 'qukBlue',
+                    }}
+                    border="none"
+                    p={0}
+                    icon={
+                      <>
+                        <NotificationBadge count={unreadCount} />
+                        <BellIcon
+                          color="qukBlue"
+                          cursor="pointer"
+                          w={6}
+                          h={6}
+                        />
+                      </>
+                    }
+                    onClick={notificationOnOpen}
+                  />
 
-                          return (
-                            <ListItem key={item?.label} tabIndex={0}>
-                              <Link href={item?.href} passHref>
+                  <Popover>
+                    <PopoverTrigger>
+                      <Box w="30px" h="30px">
+                        <Box as={PersonIcon} color="qukBlue" cursor="pointer" />
+                      </Box>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      bg="qukBlue"
+                      color="white"
+                      borderColor="qukBlue"
+                    >
+                      <PopoverArrow bg="qukBlue" />
+                      <PopoverBody as="nav" py={4} px={3}>
+                        <UnorderedList
+                          listStyleType="none"
+                          p={0}
+                          m={0}
+                          spacing={3}
+                        >
+                          {hasScope(DASHBOARD_SCOPES, userScopes) && (
+                            <ListItem tabIndex={0}>
+                              <Link href="/admin" passHref>
                                 <ChakraLink
                                   display="grid"
                                   gridTemplateColumns="1fr 10px"
@@ -231,44 +275,71 @@ export default function Navigation({ data }) {
                                   textDecoration="none"
                                   color="white"
                                   fontWeight={600}
-                                  _hover={{ bg: 'blue.600' }}
-                                  _active={{ bg: 'blue.600' }}
+                                  _hover={{ bg: 'green.700' }}
+                                  _active={{ bg: 'green.700' }}
                                   borderRadius="md"
-                                  bg={isActive ? 'blue.600' : 'transparent'}
+                                  bg={'green.600'}
                                   fontSize="0.875rem"
                                 >
-                                  {item?.label}
+                                  Admin Dashboard
                                 </ChakraLink>
                               </Link>
                             </ListItem>
-                          );
-                        })}
+                          )}
+                          {USER_NAVIGATION.map((item) => {
+                            const isActive = item?.href === asPath;
 
-                        <ListItem tabIndex={0}>
-                          <Box
-                            display="grid"
-                            gridTemplateColumns="1fr 10px"
-                            p={2}
-                            px={4}
-                            alignItems="center"
-                            textDecoration="none"
-                            color="white"
-                            fontWeight={600}
-                            _hover={{ bg: 'red.500' }}
-                            cursor="pointer"
-                            _active={{ bg: 'red.500' }}
-                            borderRadius="md"
-                            bg="red.600"
-                            fontSize="0.875rem"
-                            onClick={() => signOut()}
-                          >
-                            Sign out
-                          </Box>
-                        </ListItem>
-                      </UnorderedList>
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
+                            return (
+                              <ListItem key={item?.label} tabIndex={0}>
+                                <Link href={item?.href} passHref>
+                                  <ChakraLink
+                                    display="grid"
+                                    gridTemplateColumns="1fr 10px"
+                                    p={2}
+                                    px={4}
+                                    alignItems="center"
+                                    textDecoration="none"
+                                    color="white"
+                                    fontWeight={600}
+                                    _hover={{ bg: 'blue.600' }}
+                                    _active={{ bg: 'blue.600' }}
+                                    borderRadius="md"
+                                    bg={isActive ? 'blue.600' : 'transparent'}
+                                    fontSize="0.875rem"
+                                  >
+                                    {item?.label}
+                                  </ChakraLink>
+                                </Link>
+                              </ListItem>
+                            );
+                          })}
+
+                          <ListItem tabIndex={0}>
+                            <Box
+                              display="grid"
+                              gridTemplateColumns="1fr 10px"
+                              p={2}
+                              px={4}
+                              alignItems="center"
+                              textDecoration="none"
+                              color="white"
+                              fontWeight={600}
+                              _hover={{ bg: 'red.500' }}
+                              cursor="pointer"
+                              _active={{ bg: 'red.500' }}
+                              borderRadius="md"
+                              bg="red.600"
+                              fontSize="0.875rem"
+                              onClick={() => signOut()}
+                            >
+                              Sign out
+                            </Box>
+                          </ListItem>
+                        </UnorderedList>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+                </>
               ) : (
                 <Button href="/login" variant="light">
                   Sign In
@@ -288,20 +359,24 @@ export default function Navigation({ data }) {
                 border="none"
                 p={0}
                 icon={
-                  isOpen ? (
+                  mobileIsOpen ? (
                     <CloseIcon w={6} h={6} color="qukBlue" />
                   ) : (
                     <HamburgerIcon w={8} h={8} color="qukBlue" />
                   )
                 }
-                onClick={onOpen}
+                onClick={mobileOnOpen}
               />
             </Flex>
           </Flex>
         </Box>
       </Box>
 
-      <Sidebar isOpen={isOpen} onClose={onClose} data={data} />
+      <Sidebar isOpen={mobileIsOpen} onClose={mobileOnClose} data={data} />
+      <Notifications
+        isOpen={notificationIsOpen}
+        onClose={notificationOnClose}
+      />
     </>
   );
 }

@@ -62,6 +62,31 @@ const usersService = {
     data,
     ...params,
   }),
+
+  getNotifications: (params) => ({
+    method: 'get',
+    url: '/users/notifications',
+    ...params,
+  }),
+
+  getUnreadNoticationsCount: (params) => ({
+    method: 'get',
+    url: '/users/notifications/unread',
+    ...params,
+  }),
+
+  markNotificationRead: ({ notification_uuid, data, ...params }) => ({
+    method: 'put',
+    url: `/users/notifications/${notification_uuid}`,
+    data,
+    ...params,
+  }),
+
+  deleteNotification: ({ notification_uuid, ...params }) => ({
+    method: 'delete',
+    url: `/users/notifications/${notification_uuid}`,
+    ...params,
+  }),
 };
 
 export default createService(usersService);

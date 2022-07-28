@@ -1,5 +1,5 @@
 import { object, string, bool } from 'yup';
-import { Grid } from '@chakra-ui/react';
+import { Grid, Flex } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -77,71 +77,77 @@ const InfoForm = ({ user }) => {
           handleInfoSubmit({ values, setServerError, setServerSuccess })
         )}
       >
-        <Grid gridTemplateColumns="1fr" gridGap={3}>
-          <InputV2
-            label="Email Address"
-            id="email"
-            placeholder="Your email address"
-            error={errors.email}
-            isRequired={true}
-            {...register('email')}
-          />
+        <Flex
+          direction="column"
+          width="100%"
+          height="100%"
+          justifyContent="space-between"
+        >
+          <Grid gridTemplateColumns="1fr" gridGap={3} mb={3}>
+            <InputV2
+              label="Email Address"
+              id="email"
+              placeholder="Your email address"
+              error={errors.email}
+              isRequired={true}
+              {...register('email')}
+            />
 
-          <InputV2
-            label="Preferred first name"
-            isRequired={true}
-            id="first_name"
-            placeholder="First name"
-            error={errors.first_name}
-            {...register('first_name')}
-          />
+            <InputV2
+              label="Preferred first name"
+              isRequired={true}
+              id="first_name"
+              placeholder="First name"
+              error={errors.first_name}
+              {...register('first_name')}
+            />
 
-          <InputV2
-            label="Preferred last name"
-            isRequired={true}
-            id="last_name"
-            placeholder="Last name"
-            error={errors.last_name}
-            {...register('last_name')}
-          />
+            <InputV2
+              label="Preferred last name"
+              isRequired={true}
+              id="last_name"
+              placeholder="Last name"
+              error={errors.last_name}
+              {...register('last_name')}
+            />
 
-          <Switch
-            label="Are you a student?"
-            isRequired={true}
-            id="is_student"
-            colorScheme="green"
-            size="lg"
-            display="flex"
-            alignItems="center"
-            {...register('is_student')}
-          />
+            <Switch
+              label="Are you a student?"
+              isRequired={true}
+              id="is_student"
+              colorScheme="green"
+              size="lg"
+              display="flex"
+              alignItems="center"
+              {...register('is_student')}
+            />
 
-          {watchIsStudent && (
-            <>
-              <InputV2
-                label="What university do you attend?"
-                isRequired={true}
-                id="university"
-                placeholder="Name of your university"
-                error={errors.university}
-                {...register('university')}
-              />
+            {watchIsStudent && (
+              <>
+                <InputV2
+                  label="What university do you attend?"
+                  isRequired={true}
+                  id="university"
+                  placeholder="Name of your university"
+                  error={errors.university}
+                  {...register('university')}
+                />
 
-              <Content fontSize="sm" marginBottom={3}>
-                We need this as there are some player restrictions in place for
-                Student Clubs competing in QuidditchUK events. QuidditchUK may
-                require further verification from members regarding their
-                student status, should we need it. This information is not
-                shared with anyone outside of QuidditchUK, and is purely for our
-                own record.
-              </Content>
-            </>
-          )}
-
+                <Content fontSize="sm" marginBottom={3}>
+                  We need this as there are some player restrictions in place
+                  for Student Clubs competing in QuidditchUK events. QuidditchUK
+                  may require further verification from members regarding their
+                  student status, should we need it. This information is not
+                  shared with anyone outside of QuidditchUK, and is purely for
+                  our own record.
+                </Content>
+              </>
+            )}
+          </Grid>
           <Button type="submit" variant="green" disabled={isSubmitting}>
             {isSubmitting ? 'Submitting' : 'Update Info'}
           </Button>
-        </Grid>
+        </Flex>
       </form>
 
       {serverError && <Error>{serverError}</Error>}

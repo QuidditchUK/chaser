@@ -1,5 +1,5 @@
 import { object, string, ref } from 'yup';
-import { Grid } from '@chakra-ui/react';
+import { Grid, Flex } from '@chakra-ui/react';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -73,41 +73,47 @@ const InfoForm = () => {
           })
         )}
       >
-        <Grid gridTemplateColumns="1fr" gridGap={3}>
-          <InputV2
-            label="Current Password"
-            isRequired={true}
-            id="old_password"
-            placeholder="Your current password"
-            type="password"
-            error={errors.old_password}
-            {...register('old_password')}
-          />
+        <Flex
+          direction="column"
+          width="100%"
+          height="100%"
+          justifyContent="space-between"
+        >
+          <Grid gridTemplateColumns="1fr" gridGap={3} mb={3}>
+            <InputV2
+              label="Current Password"
+              isRequired={true}
+              id="old_password"
+              placeholder="Your current password"
+              type="password"
+              error={errors.old_password}
+              {...register('old_password')}
+            />
 
-          <InputV2
-            label="New Password"
-            isRequired={true}
-            id="password"
-            placeholder="New password"
-            type="password"
-            error={errors.password}
-            {...register('password')}
-          />
+            <InputV2
+              label="New Password"
+              isRequired={true}
+              id="password"
+              placeholder="New password"
+              type="password"
+              error={errors.password}
+              {...register('password')}
+            />
 
-          <InputV2
-            label="Confirm New Password"
-            isRequired={true}
-            id="confirm"
-            placeholder="Confirm your new password"
-            type="password"
-            error={errors.confirm}
-            {...register('confirm')}
-          />
-
+            <InputV2
+              label="Confirm New Password"
+              isRequired={true}
+              id="confirm"
+              placeholder="Confirm your new password"
+              type="password"
+              error={errors.confirm}
+              {...register('confirm')}
+            />
+          </Grid>
           <Button type="submit" variant="green" disabled={isSubmitting}>
             {isSubmitting ? 'Submitting' : 'Change password'}
           </Button>
-        </Grid>
+        </Flex>
       </form>
 
       {serverError && <Error>{serverError}</Error>}
