@@ -18,7 +18,7 @@ const SchedulerFeed = ({ primary }) => {
     refetchInterval: 300000, // 5 minute refetch
   });
 
-  const grouped = groupBy(data, (game) => game?.label);
+  const grouped = groupBy(data, (game) => game?.label?.trim());
   const groupedOrder = orderBy(Object.keys(grouped), (group) => group);
 
   return (
