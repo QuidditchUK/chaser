@@ -16,10 +16,10 @@ export const NotificationLink = {
   TRANSFERS_CLOSED: {
     url: '/dashboard/membership/club',
   },
-  TRANSFERS_APPROVED: {
+  TRANSFER_APPROVED: {
     url: '/dashboard/membership/club',
   },
-  TRANSFERS_DECLINED: {
+  TRANSFER_DECLINED: {
     url: '/dashboard/membership/club',
   },
 };
