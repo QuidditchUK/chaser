@@ -40,30 +40,31 @@ const SchedulerFeed = ({ primary }) => {
           );
 
           return (
-            <Grid
-              gridGap={4}
-              gridTemplateColumns="1fr"
-              key={k}
-              mb={2}
-              sx={{
-                '& a': {
-                  textDecoration: 'none',
-                  color: 'black',
-                  '&:hover': {
-                    textDecoration: 'none',
-                    color: 'black',
-                  },
-                },
-              }}
-            >
+            <>
               <Heading fontSize="xl" fontFamily="body" textAlign="center">
                 {k}
               </Heading>
-
-              {orderedByTimeslot.map((game, i) => (
-                <GameCard key={game?.id} game={game} index={i} />
-              ))}
-            </Grid>
+              <Grid
+                gridGap={4}
+                gridTemplateColumns="1fr"
+                key={k}
+                mb={2}
+                sx={{
+                  '& a': {
+                    textDecoration: 'none',
+                    color: 'black',
+                    '&:hover': {
+                      textDecoration: 'none',
+                      color: 'black',
+                    },
+                  },
+                }}
+              >
+                {orderedByTimeslot.map((game, i) => (
+                  <GameCard key={game?.id} game={game} size="sm" index={i} />
+                ))}
+              </Grid>
+            </>
           );
         })}
       </Grid>

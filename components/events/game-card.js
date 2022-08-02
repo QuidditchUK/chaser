@@ -54,7 +54,7 @@ const LinkWrapper = ({ href, ...props }) => (
   </Link>
 );
 
-function GameCard({ game, index }) {
+function GameCard({ game, size = 'md', index }) {
   return (
     <LinkWrapper
       href={`https://www.quidditchscheduler.com/tournaments/${game?.timeslot?.tournament?.id}/games/${game?.id}`}
@@ -178,8 +178,12 @@ function GameCard({ game, index }) {
           zIndex={1}
         >
           <Grid
-            gridTemplateColumns={{ base: '1fr', md: '50px auto' }}
-            gridTemplateRows={{ base: '50px auto', md: 'auto' }}
+            gridTemplateColumns={
+              size === 'sm' ? '1fr' : { base: '1fr', md: '50px auto' }
+            }
+            gridTemplateRows={
+              size === 'sm' ? '50px auto' : { base: '50px auto', md: 'auto' }
+            }
             gridGap={2}
             alignItems="center"
           >
@@ -209,7 +213,7 @@ function GameCard({ game, index }) {
               <Grid gridTemplateColumns="1fr auto 1fr" gridGap={2}>
                 <Text
                   fontWeight="bold"
-                  fontSize={{ base: '2xl', md: '4xl' }}
+                  fontSize={size === 'sm' ? '2xl ' : { base: '2xl', md: '4xl' }}
                   justifySelf="end"
                   color="white"
                   textShadow="0 0 5px rgb(0,0,0)"
@@ -219,7 +223,7 @@ function GameCard({ game, index }) {
                 </Text>
                 <Text
                   fontWeight="bold"
-                  fontSize={{ base: '2xl', md: '4xl' }}
+                  fontSize={size === 'sm' ? '2xl ' : { base: '2xl', md: '4xl' }}
                   justifySelf="center"
                   color="white"
                   textShadow="0 0 5px rgb(0,0,0)"
@@ -228,7 +232,7 @@ function GameCard({ game, index }) {
                 </Text>
                 <Text
                   fontWeight="bold"
-                  fontSize={{ base: '2xl', md: '4xl' }}
+                  fontSize={size === 'sm' ? '2xl ' : { base: '2xl', md: '4xl' }}
                   justifySelf="start"
                   color="white"
                   textShadow="0 0 5px rgb(0,0,0)"
@@ -243,20 +247,28 @@ function GameCard({ game, index }) {
           )}
 
           <Grid
-            gridTemplateColumns={{ base: '1fr', md: 'auto 50px' }}
-            gridTemplateRows={{ base: '50px auto', md: 'auto' }}
+            gridTemplateColumns={
+              size === 'sm' ? '1fr' : { base: '1fr', md: 'auto 50px' }
+            }
+            gridTemplateRows={
+              size === 'sm' ? '50px auto' : { base: '50px auto', md: 'auto' }
+            }
             gridGap={2}
-            gridTemplateAreas={{
-              base: "'logo' 'name'",
-              md: "'name logo'",
-            }}
+            gridTemplateAreas={
+              size === 'sm'
+                ? "'logo' 'name'"
+                : {
+                    base: "'logo' 'name'",
+                    md: "'name logo'",
+                  }
+            }
             alignItems="center"
           >
             <Text
               fontWeight="bold"
               color="white"
               textShadow="0 0 5px rgb(0,0,0)"
-              fontSize={{ base: 'sm', md: 'md' }}
+              fontSize={size === 'sm' ? 'sm' : { base: 'sm', md: 'md' }}
               gridArea="name"
               textAlign="right"
             >
