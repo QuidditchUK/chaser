@@ -213,7 +213,7 @@ function GameCard({ game, size = 'md', index }) {
               <Grid gridTemplateColumns="1fr auto 1fr" gridGap={2}>
                 <Text
                   fontWeight="bold"
-                  fontSize={size === 'sm' ? '2xl ' : { base: '2xl', md: '4xl' }}
+                  fontSize={size === 'sm' ? '2xl' : { base: '2xl', md: '4xl' }}
                   justifySelf="end"
                   color="white"
                   textShadow="0 0 5px rgb(0,0,0)"
@@ -223,7 +223,7 @@ function GameCard({ game, size = 'md', index }) {
                 </Text>
                 <Text
                   fontWeight="bold"
-                  fontSize={size === 'sm' ? '2xl ' : { base: '2xl', md: '4xl' }}
+                  fontSize={size === 'sm' ? '2xl' : { base: '2xl', md: '4xl' }}
                   justifySelf="center"
                   color="white"
                   textShadow="0 0 5px rgb(0,0,0)"
@@ -232,7 +232,7 @@ function GameCard({ game, size = 'md', index }) {
                 </Text>
                 <Text
                   fontWeight="bold"
-                  fontSize={size === 'sm' ? '2xl ' : { base: '2xl', md: '4xl' }}
+                  fontSize={size === 'sm' ? '2xl' : { base: '2xl', md: '4xl' }}
                   justifySelf="start"
                   color="white"
                   textShadow="0 0 5px rgb(0,0,0)"
