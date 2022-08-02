@@ -28,7 +28,7 @@ const SchedulerFeed = ({ primary }) => {
       </Heading>
 
       <Grid
-        gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
+        gridTemplateColumns="repeat(auto-fit, minmax(350px, 1fr))"
         gridGap={{ base: 4, md: 9 }}
       >
         {groupedOrder.map((k) => {
