@@ -60,7 +60,14 @@ const SchedulerFeed = ({ primary }) => {
                 }}
               >
                 {orderedByTimeslot.map((game, i) => (
-                  <GameCard key={game?.id} game={game} size="sm" index={i} />
+                  <GameCard
+                    key={game?.id}
+                    game={game}
+                    size="sm"
+                    index={data?.findIndex(
+                      (dataGame) => dataGame?.id === game.id
+                    )}
+                  />
                 ))}
               </Grid>
             </Box>

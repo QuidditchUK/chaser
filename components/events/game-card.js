@@ -134,7 +134,9 @@ function GameCard({ game, size = 'md', index }) {
           width="100%"
           height="100%"
           position="absolute"
-          bgGradient={`linear(to-t, ${PITCH_COLOR[index]}, rgba(0, 0, 0, 0))`}
+          bgGradient={`linear(to-t, ${
+            PITCH_COLOR[index % PITCH_COLOR.length]
+          }, rgba(0, 0, 0, 0))`}
           borderRadius="lg"
         />
 
