@@ -831,6 +831,24 @@
                 }
               }
             }
+          },
+          "scheduler_division": {
+            "type": "Slice",
+            "fieldset": "Scheduler Division",
+            "description": "Quidditch Scheduler results grouped by label",
+            "icon": "line_weight",
+            "display": "list",
+            "non-repeat": {
+              "scheduler_url": {
+                "type": "Link",
+                "config": {
+                  "label": "Scheduler URL",
+                  "placeholder": "https://api.quidditchscheduler.com/game/tournament/5",
+                  "select": null
+                }
+              }
+            },
+            "repeat": {}
           }
         }
       }

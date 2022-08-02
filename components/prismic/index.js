@@ -39,6 +39,10 @@ const EdiCommitteeForm = dynamic(() =>
 const SchedulerFeed = dynamic(() =>
   import('components/prismic/scheduler-feed')
 );
+const SchedulerDivision = dynamic(() =>
+  import('components/prismic/scheduler-division')
+);
+
 const EventCards = dynamic(() => import('components/prismic/event-cards'));
 
 const slices = {
@@ -60,6 +64,7 @@ const slices = {
   edi_committee_form: EdiCommitteeForm,
   scheduler_feed: SchedulerFeed,
   event_cards: EventCards,
+  scheduler_division: SchedulerDivision,
 };
 
 function PrismicSlice({ sections, posts }) {
