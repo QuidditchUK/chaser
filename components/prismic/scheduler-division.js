@@ -3,7 +3,7 @@ import groupBy from 'lodash/groupBy';
 import orderBy from 'lodash/orderBy';
 import GameCard from 'components/events/game-card';
 
-import { Heading, Grid } from '@chakra-ui/react';
+import { Heading, Grid, Box } from '@chakra-ui/react';
 import axios from 'axios';
 import useCachedResponse from 'hooks/useCachedResponse';
 
@@ -40,14 +40,13 @@ const SchedulerFeed = ({ primary }) => {
           );
 
           return (
-            <>
+            <Box key={k}>
               <Heading fontSize="xl" fontFamily="body" textAlign="center">
                 {k}
               </Heading>
               <Grid
                 gridGap={4}
                 gridTemplateColumns="1fr"
-                key={k}
                 mb={2}
                 sx={{
                   '& a': {
@@ -64,7 +63,7 @@ const SchedulerFeed = ({ primary }) => {
                   <GameCard key={game?.id} game={game} size="sm" index={i} />
                 ))}
               </Grid>
-            </>
+            </Box>
           );
         })}
       </Grid>
