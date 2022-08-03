@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import format from 'date-fns/format';
-import { RichText } from 'prismic-reactjs';
+import { RichText, Link } from 'prismic-reactjs';
 import {
   linkResolver,
   getDocs,
@@ -9,7 +9,13 @@ import {
   getBasePageProps,
 } from 'modules/prismic';
 
-import { Box, Grid, Heading, Image as ChakraImage } from '@chakra-ui/react';
+import {
+  Box,
+  Grid,
+  Heading,
+  Image as ChakraImage,
+  Link as ChakraLink,
+} from '@chakra-ui/react';
 import GoogleMapReact from 'google-map-react';
 import { TYPES } from 'components/clubsEvents/league-type';
 import PrismicSlice from 'components/prismic';
@@ -145,6 +151,23 @@ const EventPage = ({ page: initialPage, preview }) => {
                 <Description
                   term="Team Fee"
                   description={`£${event.team_fee}`}
+                />
+              )}
+              {event?.individual_registration_link && (
+                <Description
+                  term="Registration"
+                  description={
+                    <ChakraLink
+                      href={Link.url(
+                        event?.individual_registration_link,
+                        linkResolver
+                      )}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Register
+                    </ChakraLink>
+                  }
                 />
               )}
             </DescriptionList>
