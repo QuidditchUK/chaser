@@ -100,8 +100,8 @@ function GameCard({ game, size = 'md', index }) {
       ?.map(({ jerseyNumber, ...rest }) => ({
         ...rest,
         jerseyNumber: isNaN(parseInt(jerseyNumber))
-          ? parseInt(jerseyNumber)
-          : null,
+          ? null
+          : parseInt(jerseyNumber),
       })),
     ['jerseyNumber']
   );
@@ -111,8 +111,8 @@ function GameCard({ game, size = 'md', index }) {
       ?.map(({ jerseyNumber, ...rest }) => ({
         ...rest,
         jerseyNumber: isNaN(parseInt(jerseyNumber))
-          ? parseInt(jerseyNumber)
-          : null,
+          ? null
+          : parseInt(jerseyNumber),
       })),
     ['jerseyNumber']
   );
