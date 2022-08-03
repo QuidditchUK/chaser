@@ -95,11 +95,25 @@ function GameCard({ game, size = 'md', index }) {
   });
 
   const teamARoster = orderBy(
-    teamASheet?.filter((player) => player?.rostered),
+    teamASheet
+      ?.filter((player) => player?.rostered)
+      ?.map(({ jerseyNumber, ...rest }) => ({
+        ...rest,
+        jerseyNumber: isNaN(parseInt(jerseyNumber))
+          ? parseInt(jerseyNumber)
+          : null,
+      })),
     ['jerseyNumber']
   );
   const teamBRoster = orderBy(
-    teamBSheet?.filter((player) => player?.rostered),
+    teamBSheet
+      ?.filter((player) => player?.rostered)
+      ?.map(({ jerseyNumber, ...rest }) => ({
+        ...rest,
+        jerseyNumber: isNaN(parseInt(jerseyNumber))
+          ? parseInt(jerseyNumber)
+          : null,
+      })),
     ['jerseyNumber']
   );
 
