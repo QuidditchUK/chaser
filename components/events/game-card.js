@@ -372,6 +372,7 @@ function GameCard({ game, size = 'md', index }) {
                 width="100%"
                 textAlign="center"
                 justifyContent="center"
+                textShadow="0 0 5px rgb(0,0,0)"
               >
                 Details
                 <AccordionIcon />
