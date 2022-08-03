@@ -124,7 +124,7 @@ function GameCard({ game, size = 'md', index }) {
           <Box
             position="absolute"
             right="0"
-            width="50%"
+            width="51%"
             bgGradient="linear(to-r, qukBlue, rgba(0, 0, 0, 0))"
             height="100%"
           />
