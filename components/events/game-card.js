@@ -77,6 +77,7 @@ function GameCard({ game, size = 'md', index }) {
       axios.get(
         `https://api.quidditchscheduler.com/aff/team/${game?.teamA?.id}/tournament/${game?.timeslot?.tournament?.id}`
       ),
+    staleTime: 300000, // 5 minutes
   });
 
   const { data: teamBSheet } = useCachedResponse({
@@ -92,6 +93,7 @@ function GameCard({ game, size = 'md', index }) {
       axios.get(
         `https://api.quidditchscheduler.com/aff/team/${game?.teamB?.id}/tournament/${game?.timeslot?.tournament?.id}`
       ),
+    staleTime: 300000, // 5 minutes
   });
 
   const teamARoster = orderBy(
