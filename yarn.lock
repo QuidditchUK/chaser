@@ -3627,10 +3627,10 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
-g-sheets-api@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/g-sheets-api/-/g-sheets-api-2.1.0.tgz#282b82abe3cbd4eb2fef1ef07178dbf36ffd6d47"
-  integrity sha512-LEvmafmcrAZv1lc/p6nzuMAhbAQfM7806HHZcKMZEiggMeuuAzABSyBuAzkcm8QJ6wvdkPJQJe0zVapxHcX3KA==
+g-sheets-api@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/g-sheets-api/-/g-sheets-api-2.1.2.tgz#527ed407f3d34f9bddac7655b28e22cd62f61e16"
+  integrity sha512-d13dxX96UcPnaZW+XZMs40/MEWrjJlzvto9QgamVy95iWdBnRwJa9nInHtMqVsNHJtMqEodj3lBX1dryvaGSnQ==
   dependencies:
     cross-fetch "^3.1.4"
 
