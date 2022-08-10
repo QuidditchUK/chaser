@@ -2,20 +2,10 @@
 'use strict';
 
 self.addEventListener('push', function (event) {
-  // console.log(event);
-  console.log(event.data.text());
-  console.log(event.data.json());
-  // console.log('JSON Parse, json()');
-  // console.log(JSON.parse(event.data.json()));
-  // console.log('JSON Parse, text()');
-  // console.log(JSON.parse(event.data.text()));
-  // console.log('json()');
-  // console.log('text()');
-
-  const data = JSON.parse(event.data.text());
+  const data = event.data.json();
   event.waitUntil(
     registration.showNotification(data.title, {
-      body: data.message,
+      body: data.body,
       icon: '/android-chrome-192x192.png',
     })
   );
