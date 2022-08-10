@@ -42,8 +42,8 @@ const PushNotificationForm = ({ user }) => {
         user_uuid: user?.uuid,
         user_agent: userAgent,
         endpoint: push?.endpoint,
-        p256dh: push?.p256dh,
-        auth: push?.auth,
+        p256dh: push?.keys?.p256dh,
+        auth: push?.keys?.auth,
       },
     });
   };
