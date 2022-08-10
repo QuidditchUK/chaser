@@ -3,10 +3,14 @@
 
 self.addEventListener('push', function (event) {
   const data = event.data.json();
+
+  console.log(data.title);
+  console.log(data.body);
   event.waitUntil(
-    registration.showNotification(data.title, {
+    self.registration.showNotification(data.title, {
       body: data.body,
       icon: '/android-chrome-192x192.png',
+      vibrate: [30, 100, 30],
     })
   );
 });
