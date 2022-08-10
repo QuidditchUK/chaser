@@ -1,4 +1,5 @@
 import { ListItem, UnorderedList } from '@chakra-ui/react';
+import { Text, Box } from '@chakra-ui/react';
 import Button from 'components/shared/button';
 import useCachedResponse from 'hooks/useCachedResponse';
 import useResponse from 'hooks/useResponse';
@@ -52,10 +53,21 @@ const PushNotificationForm = ({ user }) => {
   return (
     <>
       {data?.length !== 0 && (
-        <UnorderedList listStyleType="none">
+        <UnorderedList listStyleType="none" p={0} m={0}>
           {data?.map((pn) => (
-            <ListItem key={pn.uuid} padding={2} borderRadius="md" bg="white">
-              {pn.user_agent}
+            <ListItem
+              key={pn.uuid}
+              padding={2}
+              borderRadius="md"
+              bg="white"
+              display="grid"
+              gridTemplateColumns="30px 1fr auto"
+            >
+              <Box />
+              <Text fontSize="sm" fontWeight="bold" color="qukBlue">
+                {pn.user_agent}
+              </Text>
+              <Box />
             </ListItem>
           ))}
         </UnorderedList>
