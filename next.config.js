@@ -4,6 +4,7 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 const { withSentryConfig } = require('@sentry/nextjs');
+const withPWA = require('next-pwa');
 
 const SentryWebpackPluginOptions = {
   // Additional config options for the Sentry Webpack plugin. Keep in mind that
@@ -18,6 +19,9 @@ const SentryWebpackPluginOptions = {
 };
 
 const moduleExports = {
+  pwa: {
+    dest: 'public',
+  },
   experimental: {
     emotion: true,
   },
@@ -81,4 +85,6 @@ const moduleExports = {
   },
 };
 
-module.exports = withSentryConfig(moduleExports, SentryWebpackPluginOptions);
+module.exports = withPWA(
+  withSentryConfig(moduleExports, SentryWebpackPluginOptions)
+);

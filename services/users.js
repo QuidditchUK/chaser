@@ -87,6 +87,25 @@ const usersService = {
     url: `/users/notifications/${notification_uuid}`,
     ...params,
   }),
+
+  getPushNotifications: (params) => ({
+    method: 'get',
+    url: '/users/push-notifications',
+    ...params,
+  }),
+
+  createPushNotification: ({ data, ...params }) => ({
+    method: 'post',
+    url: '/users/push-notifications',
+    data,
+    ...params,
+  }),
+
+  deletePushNotification: ({ push_uuid, ...params }) => ({
+    method: 'delete',
+    url: `/users/push-notifications/${push_uuid}`,
+    ...params,
+  }),
 };
 
 export default createService(usersService);
