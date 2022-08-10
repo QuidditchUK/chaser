@@ -5,7 +5,8 @@ self.addEventListener('push', function (event) {
   const data = event.data.json();
   event.waitUntil(
     self.registration.showNotification(data.title, {
-      body: data.body,
+      ...(data?.body && { body: data?.body }),
+      ...(data?.image && { image: data?.image }),
       icon: '/android-chrome-192x192.png',
       vibrate: [30, 100, 30],
       actions: data?.actions || [],
