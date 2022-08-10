@@ -37,13 +37,15 @@ const PushNotificationForm = ({ user }) => {
       applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     });
 
+    console.log(push);
+
     await mutate({
       data: {
         user_uuid: user?.uuid,
         user_agent: userAgent,
         endpoint: push?.endpoint,
-        p256dh: push?.keys?.p256dh,
-        auth: push?.keys?.auth,
+        p256dh: push?.getKey('p256dh'),
+        auth: push?.getKey('auth'),
       },
     });
   };
