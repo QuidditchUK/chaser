@@ -81,11 +81,10 @@ const PushNotificationForm = ({ user }) => {
                 borderRadius="md"
                 bg="white"
                 display="grid"
-                gridTemplateColumns="30px 1fr auto"
+                gridTemplateColumns="1fr auto"
                 gridGap={2}
                 alignItems="center"
               >
-                <Box />
                 <Text fontSize="sm" fontWeight="bold" color="qukBlue">
                   {parsedUA.browser.name} {parsedUA.browser.version} -{' '}
                   {parsedUA.os.name} {parsedUA.os.version}
