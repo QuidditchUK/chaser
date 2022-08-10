@@ -25,11 +25,10 @@ const PushNotificationForm = ({ user }) => {
   });
 
   const hasPushNotificationForDevice = data?.some(
-    (pn) => pn.device_id === userAgent
+    (pn) => pn.user_agent === userAgent
   );
 
   const subscribe = async () => {
-    console.log('in subscribe');
     const sw = await navigator?.serviceWorker?.ready;
 
     const push = await sw?.pushManager?.subscribe({
@@ -37,7 +36,6 @@ const PushNotificationForm = ({ user }) => {
       applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     });
 
-    console.log(push);
     const subscription = JSON.parse(JSON.stringify(push));
 
     await mutate({
@@ -54,10 +52,10 @@ const PushNotificationForm = ({ user }) => {
   return (
     <>
       {data?.length !== 0 && (
-        <UnorderedList>
+        <UnorderedList listStyleType="none">
           {data?.map((pn) => (
-            <ListItem key={pn.uuid}>
-              {pn.uuid} {pn.device_id}
+            <ListItem key={pn.uuid} padding={2} borderRadius="md" bg="white">
+              {pn.user_agent}
             </ListItem>
           ))}
         </UnorderedList>
