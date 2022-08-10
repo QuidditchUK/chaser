@@ -38,14 +38,15 @@ const PushNotificationForm = ({ user }) => {
     });
 
     console.log(push);
+    const subscription = JSON.parse(JSON.stringify(push));
 
     await mutate({
       data: {
         user_uuid: user?.uuid,
         user_agent: userAgent,
-        endpoint: push?.endpoint,
-        p256dh: push?.getKey('p256dh'),
-        auth: push?.getKey('auth'),
+        endpoint: subscription?.endpoint,
+        p256dh: subscription?.keys?.p256dh,
+        auth: subscription?.keys?.auth,
       },
     });
   };
