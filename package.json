@@ -7,7 +7,7 @@
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
     "@hookform/resolvers": "^2.8.8",
-    "@prismicio/client": "^5.0.0",
+    "@prismicio/client": "^6.0.0",
     "@sentry/nextjs": "^6.19.2",
     "@stripe/stripe-js": "^1.8.0",
     "@svgr/webpack": "^5.4.0",
