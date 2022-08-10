@@ -57,6 +57,7 @@ const PushNotificationForm = ({ user }) => {
 
   const deletePush = async ({ uuid }) => {
     try {
+      const sw = await navigator?.serviceWorker?.ready;
       const push = await sw?.pushManager?.getSubscription();
       await push.unsubscribe();
 
@@ -69,7 +70,7 @@ const PushNotificationForm = ({ user }) => {
   return (
     <>
       {data?.length !== 0 && (
-        <UnorderedList listStyleType="none" p={0} m={0}>
+        <UnorderedList listStyleType="none" p={0} m={0} spacing={2}>
           {data?.map((pn) => (
             <ListItem
               key={pn.uuid}
