@@ -22,9 +22,6 @@ const moduleExports = {
   pwa: {
     dest: 'public',
   },
-  experimental: {
-    emotion: true,
-  },
   async rewrites() {
     return [
       {

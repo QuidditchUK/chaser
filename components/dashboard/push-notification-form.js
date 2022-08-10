@@ -1,5 +1,5 @@
-import { ListItem, UnorderedList } from '@chakra-ui/react';
-import { Text, Box } from '@chakra-ui/react';
+import { Grid, ListItem, UnorderedList } from '@chakra-ui/react';
+import { Text, Heading } from '@chakra-ui/react';
 import UAParser from 'ua-parser-js';
 import Button from 'components/shared/button';
 import useCachedResponse from 'hooks/useCachedResponse';
@@ -69,44 +69,51 @@ const PushNotificationForm = ({ user }) => {
   };
 
   return (
-    <>
+    <Grid gridTemplateRows="min-content auto auto">
       {data?.length !== 0 && (
-        <UnorderedList listStyleType="none" p={0} m={0} spacing={2}>
-          {data?.map((pn) => {
-            const parsedUA = UAParser(pn.user_agent);
-            return (
-              <ListItem
-                key={pn.uuid}
-                padding={2}
-                borderRadius="md"
-                bg="white"
-                display="grid"
-                gridTemplateColumns="1fr auto"
-                gridGap={2}
-                alignItems="center"
-              >
-                <Text fontSize="sm" fontWeight="bold" color="qukBlue">
-                  {parsedUA.browser.name} {parsedUA.browser.version} -{' '}
-                  {parsedUA.os.name} {parsedUA.os.version}
-                </Text>
-                {pn.user_agent === userAgent && (
-                  <Button
-                    onClick={() => deletePush({ uuid: pn.uuid })}
-                    variant="secondary"
-                  >
-                    Remove
-                  </Button>
-                )}
-              </ListItem>
-            );
-          })}
-        </UnorderedList>
+        <>
+          <Heading as="h3" fontFamily="body" fontSize="lg">
+            Devices
+          </Heading>
+          <UnorderedList listStyleType="none" p={0} m={0} spacing={2}>
+            {data?.map((pn) => {
+              const parsedUA = UAParser(pn.user_agent);
+              return (
+                <ListItem
+                  key={pn.uuid}
+                  padding={2}
+                  borderRadius="md"
+                  bg="white"
+                  display="grid"
+                  gridTemplateColumns="1fr auto"
+                  gridGap={2}
+                  alignItems="center"
+                >
+                  <Text fontSize="sm" fontWeight="bold" color="qukBlue">
+                    {parsedUA.browser.name} {parsedUA.browser.version} -{' '}
+                    {parsedUA.os.name} {parsedUA.os.version}
+                  </Text>
+                  {pn.user_agent === userAgent && (
+                    <Button
+                      onClick={() => deletePush({ uuid: pn.uuid })}
+                      variant="secondary"
+                    >
+                      Remove
+                    </Button>
+                  )}
+                </ListItem>
+              );
+            })}
+          </UnorderedList>
+        </>
       )}
 
       {!hasPushNotificationForDevice && (
-        <Button onClick={subscribe}>Subscribe</Button>
+        <Button mt={data?.length !== 0 ? 3 : 0} onClick={subscribe}>
+          Subscribe
+        </Button>
       )}
-    </>
+    </Grid>
   );
 };
 

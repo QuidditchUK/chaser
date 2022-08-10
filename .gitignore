@@ -31,3 +31,10 @@ yarn-error.log*
 /.idea/
 .vscode/
 .eslintcache
+
+# sw
+**/public/workbox-*.js
+**/public/workbox-*.js.map
+**/public/sw.js
+**/public/sw.js.map
+**/public/worker-*.js

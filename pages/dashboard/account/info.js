@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { Box, Flex, Heading, Grid, Divider } from '@chakra-ui/react';
+import { Box, Flex, Heading, Grid, Divider, Text } from '@chakra-ui/react';
 
 import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
@@ -78,7 +78,7 @@ const Info = ({ user }) => (
             borderRadius="lg"
             p={4}
             height="100%"
-            gridTemplateRows="min-content min-content auto"
+            gridTemplateRows="min-content min-content min-content auto"
           >
             <Heading
               as="h3"
@@ -90,17 +90,26 @@ const Info = ({ user }) => (
               Notification Settings
             </Heading>
             <NotificationForm user={user} />
-            <Divider borderBottomWidth="2px" borderBottomColor="qukBlue" />
-            <Heading
-              as="h3"
-              fontFamily="body"
-              color="qukBlue"
-              fontSize="xl"
-              mt={0}
-            >
-              Push Notifications
-            </Heading>
-            <PushNotificationForm user={user} />
+            <Divider
+              borderBottomWidth="2px"
+              borderBottomColor="qukBlue"
+              py={3}
+            />
+            <Grid gridTemplateRows="min-content min-content auto" height="100%">
+              <Heading
+                as="h3"
+                fontFamily="body"
+                color="qukBlue"
+                fontSize="xl"
+                my={0}
+              >
+                Push Notifications
+              </Heading>
+              <Text fontSize="sm">
+                Push Notifications send notifications to your device.
+              </Text>
+              <PushNotificationForm user={user} />
+            </Grid>
           </Grid>
         </Grid>
       </Container>
