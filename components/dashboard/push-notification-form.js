@@ -79,6 +79,8 @@ const PushNotificationForm = ({ user }) => {
               bg="white"
               display="grid"
               gridTemplateColumns="30px 1fr auto"
+              gridGap={2}
+              alignItems="center"
             >
               <Box />
               <Text fontSize="sm" fontWeight="bold" color="qukBlue">
