@@ -72,7 +72,7 @@ const PushNotificationForm = ({ user }) => {
     <Grid gridTemplateRows="min-content auto auto">
       {data?.length !== 0 && (
         <>
-          <Heading as="h3" fontFamily="body" fontSize="lg">
+          <Heading as="h3" fontFamily="body" fontSize="lg" color="qukBlue">
             Devices
           </Heading>
           <UnorderedList listStyleType="none" p={0} m={0} spacing={2}>
@@ -109,8 +109,12 @@ const PushNotificationForm = ({ user }) => {
       )}
 
       {!hasPushNotificationForDevice && (
-        <Button mt={data?.length !== 0 ? 3 : 0} onClick={subscribe}>
-          Subscribe
+        <Button
+          mt={data?.length !== 0 ? 3 : 0}
+          onClick={subscribe}
+          variant="green"
+        >
+          Allow Push Notifications
         </Button>
       )}
     </Grid>

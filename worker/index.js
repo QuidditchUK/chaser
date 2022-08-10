@@ -8,12 +8,19 @@ self.addEventListener('push', function (event) {
       body: data.body,
       icon: '/android-chrome-192x192.png',
       vibrate: [30, 100, 30],
+      actions: data?.actions || [],
     })
   );
 });
 
 self.addEventListener('notificationclick', function (event) {
   event.notification.close();
+
+  if (event.action === 'TRANSFERS_OPEN') {
+    clients.openWindow('/dashboard/membership/club');
+    return;
+  }
+
   event.waitUntil(
     clients
       .matchAll({ type: 'window', includeUncontrolled: true })

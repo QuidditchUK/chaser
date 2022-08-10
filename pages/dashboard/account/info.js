@@ -91,8 +91,8 @@ const Info = ({ user }) => (
             </Heading>
             <NotificationForm user={user} />
             <Divider
-              borderBottomWidth="2px"
-              borderBottomColor="qukBlue"
+              borderBottomWidth="1px"
+              borderBottomColor="gray.300"
               py={3}
             />
             <Grid gridTemplateRows="min-content min-content auto" height="100%">
@@ -102,6 +102,7 @@ const Info = ({ user }) => (
                 color="qukBlue"
                 fontSize="xl"
                 my={0}
+                pt={3}
               >
                 Push Notifications
               </Heading>
