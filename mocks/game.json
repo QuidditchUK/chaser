@@ -1,0 +1,621 @@
+{
+  "id": 310,
+  "timeslot": {
+    "id": 121,
+    "tournament": {
+      "id": 14,
+      "name": "Community Fixture 1  - 22/23",
+      "location": " All Hallows R.C. High School, 150 Eccles Old Road, Salford, M6 8AA",
+      "pitches": 3,
+      "logoUrl": "",
+      "bannerUrl": "",
+      "details": "The 22/23 new season is about to kick off!.  \n\nUpdated Message from Omar 1/7/22:\n\n THE NEW VENUE FOR THIS FIXTURE HAS BEEN MOVED TO THE FOLLOWING LOCATION:   All Hallows R.C. High School, 150 Eccles Old Road, Salford, M6 8AA. \n\n\nTHIS LOCATION IS 10 MINUTES AWAY\n\nPLEASE DO NOT GO TO SALFORD SPORTS VILLAGE AS THE LOCATION HAS BEEN MOVED! THANK YOU",
+      "registrationOpens": "2022-06-10T13:00:00.000Z",
+      "registrationCloses": "2022-06-22T19:07:00.000Z",
+      "publicSchedule": true,
+      "registrationOpen": false
+    },
+    "time": "2022-07-02T09:00:00.000Z"
+  },
+  "teamA": {
+    "id": 19,
+    "name": "Werewolves of London Firsts",
+    "shortName": "Werewolves 1sts",
+    "location": "London",
+    "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/19-1628250428863"
+  },
+  "teamB": {
+    "id": 12,
+    "name": "Olympians QC",
+    "shortName": " ",
+    "location": "Manchester",
+    "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/12-1629914405532"
+  },
+  "label": "Division 1",
+  "status": "FINISHED",
+  "teamAScore": 130,
+  "teamBScore": 120,
+  "winner": "TEAM_A",
+  "snitchCaughtBy": "TEAM_A",
+  "regulationTimeLength": 1798,
+  "overtimeLength": 0,
+  "officials": [
+    {
+      "id": 3276,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1169,
+        "person": {
+          "id": 492,
+          "firstName": "Claude",
+          "lastName": "Gowan",
+          "headRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "snitchLevel": {
+            "value": "LEVEL_2",
+            "label": "Field test passed",
+            "index": 2
+          },
+          "firstAidQualified": false,
+          "pictureUrl": "https://qs-prod-person-picture.s3.eu-west-2.amazonaws.com/492-1635703449739",
+          "fullName": "Claude Gowan"
+        },
+        "tournamentId": 14,
+        "headReferee": false,
+        "assistantReferee": false,
+        "snitchReferee": false,
+        "snitchRunner": true,
+        "goalReferee": false,
+        "scorekeeper": false,
+        "timekeeper": false,
+        "pitchManager": false,
+        "firstAider": false,
+        "maxSlotsPerDay": 2,
+        "available": true
+      },
+      "role": "SNITCH_RUNNER"
+    },
+    {
+      "id": 3341,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1167,
+        "person": {
+          "id": 447,
+          "firstName": "Luis",
+          "lastName": "Teschner",
+          "headRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "firstAidQualified": false,
+          "pictureUrl": "https://qs-prod-person-picture.s3.eu-west-2.amazonaws.com/447-1635533125681",
+          "fullName": "Luis Teschner"
+        },
+        "tournamentId": 14,
+        "headReferee": false,
+        "assistantReferee": true,
+        "snitchReferee": false,
+        "snitchRunner": false,
+        "goalReferee": false,
+        "scorekeeper": false,
+        "timekeeper": false,
+        "pitchManager": false,
+        "firstAider": false,
+        "maxSlotsPerDay": 5,
+        "available": true
+      },
+      "role": "ASSISTANT_REFEREE"
+    },
+    {
+      "id": 3274,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1131,
+        "person": {
+          "id": 123,
+          "firstName": "Fran",
+          "lastName": "Morris",
+          "headRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "firstAidQualified": false,
+          "pictureUrl": null,
+          "fullName": "Fran Morris"
+        },
+        "tournamentId": 14,
+        "headReferee": false,
+        "assistantReferee": true,
+        "snitchReferee": false,
+        "snitchRunner": false,
+        "goalReferee": false,
+        "scorekeeper": false,
+        "timekeeper": false,
+        "pitchManager": false,
+        "firstAider": false,
+        "maxSlotsPerDay": 2,
+        "available": true
+      },
+      "role": "ASSISTANT_REFEREE"
+    },
+    {
+      "id": 3149,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1177,
+        "person": {
+          "id": 545,
+          "firstName": "Cameron",
+          "lastName": "Bell",
+          "headRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "snitchLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "firstAidQualified": false,
+          "pictureUrl": null,
+          "fullName": "Cameron Bell"
+        },
+        "tournamentId": 14,
+        "headReferee": false,
+        "assistantReferee": true,
+        "snitchReferee": true,
+        "snitchRunner": false,
+        "goalReferee": false,
+        "scorekeeper": false,
+        "timekeeper": false,
+        "pitchManager": true,
+        "firstAider": false,
+        "maxSlotsPerDay": 6,
+        "available": true
+      },
+      "role": "PITCH_MANAGER"
+    },
+    {
+      "id": 3301,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1170,
+        "person": {
+          "id": 386,
+          "firstName": "Olly",
+          "lastName": "Nguyen",
+          "headRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "snitchLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "firstAidQualified": false,
+          "pictureUrl": null,
+          "fullName": "Olly Nguyen"
+        },
+        "tournamentId": 14,
+        "headReferee": false,
+        "assistantReferee": true,
+        "snitchReferee": true,
+        "snitchRunner": false,
+        "goalReferee": false,
+        "scorekeeper": false,
+        "timekeeper": false,
+        "pitchManager": false,
+        "firstAider": false,
+        "maxSlotsPerDay": 4,
+        "available": false
+      },
+      "role": "ASSISTANT_REFEREE"
+    },
+    {
+      "id": 3269,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1207,
+        "person": {
+          "id": 916,
+          "firstName": "David",
+          "lastName": "Goswell",
+          "headRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "firstAidQualified": true,
+          "pictureUrl": null,
+          "fullName": "David Goswell"
+        },
+        "tournamentId": 14,
+        "headReferee": false,
+        "assistantReferee": false,
+        "snitchReferee": false,
+        "snitchRunner": false,
+        "goalReferee": false,
+        "scorekeeper": false,
+        "timekeeper": false,
+        "pitchManager": false,
+        "firstAider": true,
+        "maxSlotsPerDay": 2,
+        "available": true
+      },
+      "role": "FIRST_AIDER"
+    },
+    {
+      "id": 3275,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1212,
+        "person": {
+          "id": 534,
+          "firstName": "Rachael",
+          "lastName": "Breare",
+          "headRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "firstAidQualified": false,
+          "pictureUrl": null,
+          "fullName": "Rachael Breare"
+        },
+        "tournamentId": 14,
+        "headReferee": false,
+        "assistantReferee": false,
+        "snitchReferee": false,
+        "snitchRunner": false,
+        "goalReferee": false,
+        "scorekeeper": false,
+        "timekeeper": true,
+        "pitchManager": false,
+        "firstAider": false,
+        "maxSlotsPerDay": 1,
+        "available": true
+      },
+      "role": "TIMEKEEPER"
+    },
+    {
+      "id": 3336,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1215,
+        "person": {
+          "id": 429,
+          "firstName": "Betsy",
+          "lastName": "Lewin-Leigh",
+          "headRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "snitchLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "firstAidQualified": true,
+          "pictureUrl": null,
+          "fullName": "Betsy Lewin-Leigh"
+        },
+        "tournamentId": 14,
+        "headReferee": true,
+        "assistantReferee": true,
+        "snitchReferee": true,
+        "snitchRunner": false,
+        "goalReferee": false,
+        "scorekeeper": false,
+        "timekeeper": false,
+        "pitchManager": false,
+        "firstAider": true,
+        "maxSlotsPerDay": 2,
+        "available": true
+      },
+      "role": "HEAD_REFEREE"
+    },
+    {
+      "id": 3271,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1217,
+        "person": {
+          "id": 881,
+          "firstName": "Alexander",
+          "lastName": "Bruns",
+          "headRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "firstAidQualified": false,
+          "pictureUrl": null,
+          "fullName": "Alexander Bruns"
+        },
+        "tournamentId": 14,
+        "headReferee": false,
+        "assistantReferee": false,
+        "snitchReferee": false,
+        "snitchRunner": false,
+        "goalReferee": true,
+        "scorekeeper": true,
+        "timekeeper": true,
+        "pitchManager": false,
+        "firstAider": false,
+        "maxSlotsPerDay": 2,
+        "available": true
+      },
+      "role": "GOAL_REFEREE"
+    },
+    {
+      "id": 3273,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1118,
+        "person": {
+          "id": 624,
+          "firstName": "Callum",
+          "lastName": "Field",
+          "headRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "firstAidQualified": false,
+          "pictureUrl": null,
+          "fullName": "Callum Field"
+        },
+        "tournamentId": 14,
+        "headReferee": false,
+        "assistantReferee": false,
+        "snitchReferee": false,
+        "snitchRunner": false,
+        "goalReferee": true,
+        "scorekeeper": true,
+        "timekeeper": true,
+        "pitchManager": false,
+        "firstAider": false,
+        "maxSlotsPerDay": 2,
+        "available": true
+      },
+      "role": "GOAL_REFEREE"
+    },
+    {
+      "id": 3279,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1130,
+        "person": {
+          "id": 307,
+          "firstName": "Sam",
+          "lastName": "Wainwright",
+          "headRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "snitchLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "firstAidQualified": false,
+          "pictureUrl": "https://qs-prod-person-picture.s3.eu-west-2.amazonaws.com/307-1656003364499",
+          "fullName": "Sam Wainwright"
+        },
+        "tournamentId": 14,
+        "headReferee": false,
+        "assistantReferee": false,
+        "snitchReferee": false,
+        "snitchRunner": false,
+        "goalReferee": false,
+        "scorekeeper": true,
+        "timekeeper": true,
+        "pitchManager": false,
+        "firstAider": false,
+        "maxSlotsPerDay": 2,
+        "available": true
+      },
+      "role": "SCOREKEEPER"
+    },
+    {
+      "id": 3278,
+      "gameId": 310,
+      "volunteer": {
+        "id": 1134,
+        "person": {
+          "id": 393,
+          "firstName": "Connagh",
+          "lastName": "Doohan",
+          "headRefereeLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "assistantRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "snitchRefereeLevel": {
+            "value": "LEVEL_4",
+            "label": "Written test passed",
+            "index": 4
+          },
+          "snitchLevel": {
+            "value": "LEVEL_5",
+            "label": "Unqualified",
+            "index": 5
+          },
+          "firstAidQualified": false,
+          "pictureUrl": "https://qs-prod-person-picture.s3.eu-west-2.amazonaws.com/393-1648215052780",
+          "fullName": "Connagh Doohan"
+        },
+        "tournamentId": 14,
+        "headReferee": false,
+        "assistantReferee": false,
+        "snitchReferee": true,
+        "snitchRunner": false,
+        "goalReferee": false,
+        "scorekeeper": false,
+        "timekeeper": false,
+        "pitchManager": false,
+        "firstAider": false,
+        "maxSlotsPerDay": 6,
+        "available": true
+      },
+      "role": "SNITCH_REFEREE"
+    }
+  ],
+  "pitch": 1
+}

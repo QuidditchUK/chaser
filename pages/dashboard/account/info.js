@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { Box, Flex, Heading, Grid } from '@chakra-ui/react';
+import { Box, Flex, Heading, Grid, Divider } from '@chakra-ui/react';
 
 import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
@@ -16,6 +16,9 @@ const PasswordForm = dynamic(() =>
 );
 const NotificationForm = dynamic(() =>
   import('components/dashboard/notification-form')
+);
+const PushNotificationForm = dynamic(() =>
+  import('components/dashboard/push-notification-form')
 );
 
 const Info = ({ user }) => (
@@ -75,7 +78,7 @@ const Info = ({ user }) => (
             borderRadius="lg"
             p={4}
             height="100%"
-            gridTemplateRows="min-content 1fr"
+            gridTemplateRows="min-content min-content auto"
           >
             <Heading
               as="h3"
@@ -87,6 +90,17 @@ const Info = ({ user }) => (
               Notification Settings
             </Heading>
             <NotificationForm user={user} />
+            <Divider borderBottomWidth="2px" borderBottomColor="qukBlue" />
+            <Heading
+              as="h3"
+              fontFamily="body"
+              color="qukBlue"
+              fontSize="xl"
+              mt={0}
+            >
+              Push Notifications
+            </Heading>
+            <PushNotificationForm user={user} />
           </Grid>
         </Grid>
       </Container>
