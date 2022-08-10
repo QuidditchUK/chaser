@@ -1,5 +1,6 @@
 import { ListItem, UnorderedList } from '@chakra-ui/react';
 import { Text, Box } from '@chakra-ui/react';
+import UAParser from 'ua-parser-js';
 import Button from 'components/shared/button';
 import useCachedResponse from 'hooks/useCachedResponse';
 import useResponse from 'hooks/useResponse';
@@ -71,31 +72,35 @@ const PushNotificationForm = ({ user }) => {
     <>
       {data?.length !== 0 && (
         <UnorderedList listStyleType="none" p={0} m={0} spacing={2}>
-          {data?.map((pn) => (
-            <ListItem
-              key={pn.uuid}
-              padding={2}
-              borderRadius="md"
-              bg="white"
-              display="grid"
-              gridTemplateColumns="30px 1fr auto"
-              gridGap={2}
-              alignItems="center"
-            >
-              <Box />
-              <Text fontSize="sm" fontWeight="bold" color="qukBlue">
-                {pn.user_agent}
-              </Text>
-              {pn.user_agent === userAgent && (
-                <Button
-                  onClick={() => deletePush({ uuid: pn.uuid })}
-                  variant="secondary"
-                >
-                  Remove
-                </Button>
-              )}
-            </ListItem>
-          ))}
+          {data?.map((pn) => {
+            const parsedUA = UAParser(pn.user_agent);
+            return (
+              <ListItem
+                key={pn.uuid}
+                padding={2}
+                borderRadius="md"
+                bg="white"
+                display="grid"
+                gridTemplateColumns="30px 1fr auto"
+                gridGap={2}
+                alignItems="center"
+              >
+                <Box />
+                <Text fontSize="sm" fontWeight="bold" color="qukBlue">
+                  {parsedUA.browser.name} {parsedUA.browser.version} -{' '}
+                  {parsedUA.os.name} {parsedUA.os.version}
+                </Text>
+                {pn.user_agent === userAgent && (
+                  <Button
+                    onClick={() => deletePush({ uuid: pn.uuid })}
+                    variant="secondary"
+                  >
+                    Remove
+                  </Button>
+                )}
+              </ListItem>
+            );
+          })}
         </UnorderedList>
       )}
 
