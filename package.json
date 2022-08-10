@@ -11,8 +11,8 @@
     "@sentry/nextjs": "^6.19.2",
     "@stripe/stripe-js": "^1.8.0",
     "@svgr/webpack": "^5.4.0",
-    "axios": "^0.21.1",
-    "cookie": "^0.4.1",
+    "axios": "^0.21.2",
+    "cookie": "^0.5.0",
     "date-fns": "^2.28.0",
     "file-saver": "^2.0.5",
     "flickity": "^2.2.1",
@@ -62,9 +62,9 @@
     "eslint": "7.32.0",
     "eslint-config-next": "^12.1.1",
     "eslint-config-prettier": "^8.1.0",
-    "g-sheets-api": "2.1.0",
+    "g-sheets-api": "2.1.2",
     "husky": "^7.0.0",
-    "lint-staged": "11.1.2",
+    "lint-staged": "11.2.6",
     "prettier": "^2.2.1"
   },
   "lint-staged": {
