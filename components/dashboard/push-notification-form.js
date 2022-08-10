@@ -25,6 +25,11 @@ const PushNotificationForm = ({ user }) => {
     onSettled: refetch,
   });
 
+  const { mutate: deletePushNotification } = useResponse({
+    queryFn: usersService.deletePushNotification,
+    onSettled: refetch,
+  });
+
   const hasPushNotificationForDevice = data?.some(
     (pn) => pn.user_agent === userAgent
   );
@@ -50,6 +55,17 @@ const PushNotificationForm = ({ user }) => {
     });
   };
 
+  const deletePush = async ({ uuid }) => {
+    try {
+      const push = await sw?.pushManager?.getSubscription();
+      await push.unsubscribe();
+
+      await deletePushNotification({ push_uuid: uuid });
+    } catch (error) {
+      // unsubscribe failed
+    }
+  };
+
   return (
     <>
       {data?.length !== 0 && (
@@ -67,7 +83,14 @@ const PushNotificationForm = ({ user }) => {
               <Text fontSize="sm" fontWeight="bold" color="qukBlue">
                 {pn.user_agent}
               </Text>
-              <Box />
+              {pn.user_agent === userAgent && (
+                <Button
+                  onClick={() => deletePush({ uuid: pn.uuid })}
+                  variant="secondary"
+                >
+                  Remove
+                </Button>
+              )}
             </ListItem>
           ))}
         </UnorderedList>
