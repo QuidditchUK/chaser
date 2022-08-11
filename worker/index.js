@@ -3,22 +3,22 @@
 
 self.addEventListener('push', function (event) {
   const data = event.data.json();
-  console.log(data);
-  event.waitUntil(
-    self.registration
-      .getNotification({ tag: 'experiment-schedule-update' })
-      .then((notifications) => {
-        notifications.forEach((notification) => notification.close());
-      })
-  );
+  // console.log(data);
+  // event.waitUntil(
+  //   self.registration
+  //     .getNotification({ tag: 'experiment-schedule-update' })
+  //     .then((notifications) => {
+  //       notifications.forEach((notification) => notification.close());
+  //     })
+  // );
 
-  event.waitUntil(
-    self.registration
-      .getNotification({ tag: 'experiement-schedule-update' })
-      .then((notifications) => {
-        notifications.forEach((notification) => notification.close());
-      })
-  );
+  // event.waitUntil(
+  //   self.registration
+  //     .getNotification({ tag: 'experiement-schedule-update' })
+  //     .then((notifications) => {
+  //       notifications.forEach((notification) => notification.close());
+  //     })
+  // );
   event.waitUntil(
     self.registration.showNotification(data.title, {
       ...(data?.body && { body: data?.body }),
