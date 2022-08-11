@@ -3,6 +3,7 @@
 
 self.addEventListener('push', function (event) {
   const data = event.data.json();
+  console.log(data);
   event.waitUntil(
     self.registration.showNotification(data.title, {
       ...(data?.body && { body: data?.body }),
