@@ -24,21 +24,21 @@ self.addEventListener('notificationclick', function (event) {
     return;
   }
 
+  const url = event?.notification?.data?.url;
+
   event.waitUntil(
     clients
       .matchAll({ type: 'window', includeUncontrolled: true })
       .then(function (clientList) {
-        if (clientList.length > 0) {
-          let client = clientList[0];
-          for (let i = 0; i < clientList.length; i++) {
-            if (clientList[i].focused) {
-              client = clientList[i];
-            }
+        for (let i = 0; i < clientList.length; i++) {
+          let client = clientList[i];
+
+          if (client.url === url && 'focus' in client) {
+            return client.focus();
           }
-          return client.focus();
         }
+
         return clients.openWindow(event?.notification?.data?.url || '/');
-        // return clients.openWindow('/');
       })
   );
 });
