@@ -7,6 +7,7 @@ self.addEventListener('push', function (event) {
     self.registration.showNotification(data.title, {
       ...(data?.body && { body: data?.body }),
       ...(data?.image && { image: data?.image }),
+      ...(data?.data && { data: data?.data }),
       icon: '/android-chrome-192x192.png',
       vibrate: [30, 100, 30],
       actions: data?.actions || [],
@@ -35,7 +36,8 @@ self.addEventListener('notificationclick', function (event) {
           }
           return client.focus();
         }
-        return clients.openWindow('/');
+        return clients.openWindow(event?.notification?.data?.url || '/');
+        // return clients.openWindow('/');
       })
   );
 });
