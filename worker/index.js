@@ -3,13 +3,28 @@
 
 self.addEventListener('push', function (event) {
   const data = event.data.json();
+  console.log(data);
+  event.waitUntil(
+    self.registration
+      .getNotification({ tag: 'experiment-schedule-update' })
+      .then((notifications) => {
+        notifications.forEach((notification) => notification.close());
+      })
+  );
+
+  event.waitUntil(
+    self.registration
+      .getNotification({ tag: 'experiement-schedule-update' })
+      .then((notifications) => {
+        notifications.forEach((notification) => notification.close());
+      })
+  );
   event.waitUntil(
     self.registration.showNotification(data.title, {
       ...(data?.body && { body: data?.body }),
       ...(data?.image && { image: data?.image }),
       ...(data?.data && { data: data?.data }),
       ...(data?.tag && { tag: data?.tag }),
-      ...(data?.tag && { silent: true }), // if there is a tag, make it a silent notification
       icon: '/android-chrome-192x192.png',
       vibrate: [30, 100, 30],
       actions: data?.actions || [],
@@ -18,11 +33,9 @@ self.addEventListener('push', function (event) {
 });
 
 self.addEventListener('notificationclick', function (event) {
-  if (!event?.notification?.tag) {
-    event.notification.close();
-  }
+  event.notification.close();
 
-  if (event.notification?.action === 'TRANSFERS_OPEN') {
+  if (event?.action === 'TRANSFERS_OPEN') {
     clients.openWindow('/dashboard/membership/club');
     return;
   }
