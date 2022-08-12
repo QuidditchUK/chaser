@@ -37,6 +37,26 @@ self.addEventListener('notificationclick', function (event) {
     return;
   }
 
+  if (event?.action === 'full_schedule') {
+    event.preventDefault();
+    event.waitUntil(
+      clients
+        .matchAll({ type: 'window', includeUncontrolled: true })
+        .then(function (clientList) {
+          for (let i = 0; i < clientList.length; i++) {
+            let client = clientList[i];
+
+            if (client.url === url && 'focus' in client) {
+              return client.focus();
+            }
+          }
+
+          return clients.openWindow(event?.notification?.data?.url || '/');
+        })
+    );
+    return;
+  }
+
   // if is poc notification, don't close the notification
   if (
     (!event?.action || event?.action === '') &&
