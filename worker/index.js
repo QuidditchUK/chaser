@@ -36,8 +36,6 @@ self.addEventListener('notificationclick', function (event) {
     return;
   }
 
-  console.log(event);
-
   // if is poc notification, don't close the notification
   if (
     (!event?.action || event?.action === '') &&
