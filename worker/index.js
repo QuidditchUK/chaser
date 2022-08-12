@@ -9,6 +9,7 @@ self.addEventListener('push', function (event) {
       ...(data?.image && { image: data?.image }),
       ...(data?.data && { data: data?.data }),
       ...(data?.tag && { tag: data?.tag }),
+      ...(data?.requireInteraction && { tag: data?.requireInteraction }),
       icon: '/android-chrome-192x192.png',
       vibrate: [30, 100, 30],
       actions: data?.actions || [],
@@ -17,13 +18,19 @@ self.addEventListener('push', function (event) {
 });
 
 self.addEventListener('notificationclick', function (event) {
-  event.notification.close();
-
   if (event?.action === 'TRANSFERS_OPEN') {
+    event.notification.close();
     clients.openWindow('/dashboard/membership/club');
     return;
   }
 
+  // if (event?.action === 'dismiss') {
+  //   // in future would want to remove the push notification
+  //   event.notification.close();
+  //   return;
+  // }
+
+  event.notification.close();
   const url = event?.notification?.data?.url;
 
   event.waitUntil(
