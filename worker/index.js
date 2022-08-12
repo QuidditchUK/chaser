@@ -34,7 +34,7 @@ self.addEventListener('notificationclick', function (event) {
 
   // if is poc notification, don't close the notification
   if (
-    event?.action === '' &&
+    (!event?.action || event?.action === '') &&
     event?.notification?.tag === 'experiment-schedule-update'
   ) {
     event.preventDefault();
