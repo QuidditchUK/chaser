@@ -24,11 +24,19 @@ self.addEventListener('notificationclick', function (event) {
     return;
   }
 
-  // if (event?.action === 'dismiss') {
-  //   // in future would want to remove the push notification
-  //   event.notification.close();
-  //   return;
-  // }
+  if (event?.action === 'dismiss') {
+    // in future would want to remove the push notification
+    event.notification.close();
+    return;
+  }
+
+  // if is poc notification, don't close the notification
+  if (
+    event?.action === '' &&
+    event?.notification?.tag === 'experiment-schedule-update'
+  ) {
+    return;
+  }
 
   event.notification.close();
   const url = event?.notification?.data?.url;
