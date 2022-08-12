@@ -30,7 +30,7 @@ self.addEventListener('notificationclick', function (event) {
     return;
   }
 
-  console.log(event?.action);
+  console.log(event);
 
   // if is poc notification, don't close the notification
   if (
