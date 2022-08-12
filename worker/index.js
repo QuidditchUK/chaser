@@ -14,6 +14,7 @@ self.addEventListener('push', function (event) {
       requireInteraction: data?.requireInteraction,
     }),
     icon: '/android-chrome-192x192.png',
+    badge: '/badge-128x128.png',
     vibrate: [30, 100, 30],
     actions: data?.actions || [],
   };
