@@ -3,18 +3,24 @@
 
 self.addEventListener('push', function (event) {
   const data = event.data.json();
-  event.waitUntil(
-    self.registration.showNotification(data.title, {
-      ...(data?.body && { body: data?.body }),
-      ...(data?.image && { image: data?.image }),
-      ...(data?.data && { data: data?.data }),
-      ...(data?.tag && { tag: data?.tag }),
-      ...(data?.requireInteraction && { tag: data?.requireInteraction }),
-      icon: '/android-chrome-192x192.png',
-      vibrate: [30, 100, 30],
-      actions: data?.actions || [],
-    })
-  );
+  console.log(data);
+
+  const notification = {
+    ...(data?.body && { body: data?.body }),
+    ...(data?.image && { image: data?.image }),
+    ...(data?.data && { data: data?.data }),
+    ...(data?.tag && { tag: data?.tag }),
+    ...(data?.requireInteraction && {
+      requireInteraction: data?.requireInteraction,
+    }),
+    icon: '/android-chrome-192x192.png',
+    vibrate: [30, 100, 30],
+    actions: data?.actions || [],
+  };
+
+  console.log(notification);
+
+  event.waitUntil(self.registration.showNotification(data.title, notification));
 });
 
 self.addEventListener('notificationclick', function (event) {
