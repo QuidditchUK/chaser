@@ -11,6 +11,7 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import Image from 'components/shared/image';
 import DescriptionList, {
@@ -36,6 +37,8 @@ const PITCH_COLOR = [
 ];
 
 function GameCard({ game, size = 'md', index }) {
+  const logosMeasurement = useBreakpointValue({ base: 25, md: 50 }) || 25;
+
   const headReferee = game?.officials?.find(
     (official) => official?.role === 'HEAD_REFEREE'
   );
@@ -201,7 +204,12 @@ function GameCard({ game, size = 'md', index }) {
         borderRadius="lg"
       />
 
-      <Flex alignItems="center" justifyContent="center" pt={4} zIndex={1}>
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        pt={size === 'sm' ? 2 : 4}
+        zIndex={1}
+      >
         <Grid gridTemplateColumns="1fr auto 1fr" gridGap={2}>
           <Text
             my={0}
@@ -237,37 +245,42 @@ function GameCard({ game, size = 'md', index }) {
         gridTemplateColumns="1fr 1fr 1fr"
         gridGap={4}
         px={4}
-        pb={4}
+        pb={size === 'sm' ? 0 : 4}
         zIndex={1}
       >
         <Grid
           gridTemplateColumns={
-            size === 'sm' ? '1fr' : { base: '1fr', md: '50px auto' }
-          }
-          gridTemplateRows={
-            size === 'sm' ? '50px auto' : { base: '50px auto', md: 'auto' }
+            size === 'sm' ? '25px auto' : { base: '25px auto', md: '50px auto' }
           }
           gridGap={2}
           alignItems="center"
         >
-          <Box h="50px" w="50px">
+          <Box
+            height={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
+            width={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
+          >
             {game?.teamA?.logoUrl && (
               <Image
                 src={game?.teamA?.logoUrl}
                 alt={game?.teamA?.name}
-                height="50px"
-                width="50px"
+                height={size === 'sm' ? '25px' : logosMeasurement}
+                width={size === 'sm' ? '25px' : logosMeasurement}
                 layout="responsive"
               />
             )}
           </Box>
           <Text
             fontWeight="bold"
-            fontSize={{ base: 'sm', md: 'md' }}
+            fontSize={size === 'sm' ? 'sm' : { base: 'sm', md: 'md' }}
             color="white"
             textShadow="0 0 5px rgb(0,0,0)"
+            textOverflow="ellipsis"
+            whiteSpace="nowrap"
+            overflow="hidden"
           >
-            {game?.teamA?.name}
+            {game?.teamA?.shortName !== ' '
+              ? game?.teamA.shortName
+              : game?.teamA.name}
           </Text>
         </Grid>
 
@@ -276,29 +289,32 @@ function GameCard({ game, size = 'md', index }) {
             <Grid gridTemplateColumns="1fr auto 1fr" gridGap={2}>
               <Text
                 fontWeight="bold"
-                fontSize={size === 'sm' ? '2xl' : { base: '2xl', md: '4xl' }}
+                fontSize={size === 'sm' ? 'lg' : { base: 'lg', md: '4xl' }}
                 justifySelf="end"
                 color="white"
                 textShadow="0 0 5px rgb(0,0,0)"
+                marginY={0}
               >
                 {game?.teamAScore}
                 {game?.snitchCaughtBy === 'TEAM_A' && <>*</>}
               </Text>
               <Text
                 fontWeight="bold"
-                fontSize={size === 'sm' ? '2xl' : { base: '2xl', md: '4xl' }}
+                fontSize={size === 'sm' ? 'lg' : { base: 'lg', md: '4xl' }}
                 justifySelf="center"
                 color="white"
                 textShadow="0 0 5px rgb(0,0,0)"
+                marginY={0}
               >
                 —
               </Text>
               <Text
                 fontWeight="bold"
-                fontSize={size === 'sm' ? '2xl' : { base: '2xl', md: '4xl' }}
+                fontSize={size === 'sm' ? 'lg' : { base: 'lg', md: '4xl' }}
                 justifySelf="start"
                 color="white"
                 textShadow="0 0 5px rgb(0,0,0)"
+                marginY={0}
               >
                 {game?.teamBScore}
                 {game?.snitchCaughtBy === 'TEAM_B' && <>*</>}
@@ -311,20 +327,10 @@ function GameCard({ game, size = 'md', index }) {
 
         <Grid
           gridTemplateColumns={
-            size === 'sm' ? '1fr' : { base: '1fr', md: 'auto 50px' }
-          }
-          gridTemplateRows={
-            size === 'sm' ? '50px auto' : { base: '50px auto', md: 'auto' }
+            size === 'sm' ? 'auto 25px' : { base: 'auto 25px', md: 'auto 50px' }
           }
           gridGap={2}
-          gridTemplateAreas={
-            size === 'sm'
-              ? "'logo' 'name'"
-              : {
-                  base: "'logo' 'name'",
-                  md: "'name logo'",
-                }
-          }
+          gridTemplateAreas="'name logo'"
           alignItems="center"
         >
           <Text
@@ -334,12 +340,17 @@ function GameCard({ game, size = 'md', index }) {
             fontSize={size === 'sm' ? 'sm' : { base: 'sm', md: 'md' }}
             gridArea="name"
             textAlign="right"
+            textOverflow="ellipsis"
+            whiteSpace="nowrap"
+            overflow="hidden"
           >
-            {game?.teamB?.name}
+            {game?.teamB?.shortName !== ' '
+              ? game?.teamB.shortName
+              : game?.teamB.name}
           </Text>
           <Flex
-            h="50px"
-            w="50px"
+            height={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
+            width={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
             gridArea="logo"
             flexDirection="column"
             justifySelf="flex-end"
@@ -348,8 +359,8 @@ function GameCard({ game, size = 'md', index }) {
               <Image
                 src={game?.teamB?.logoUrl}
                 alt={game?.teamB?.name}
-                height="50px"
-                width="50px"
+                height={size === 'sm' ? '25px' : logosMeasurement}
+                width={size === 'sm' ? '25px' : logosMeasurement}
                 layout="responsive"
               />
             )}
@@ -368,6 +379,7 @@ function GameCard({ game, size = 'md', index }) {
               m={0}
               border="0"
               cursor="pointer"
+              fontSize={size === 'sm' ? 'sm' : { base: 'sm', md: 'md' }}
             >
               <Flex
                 alignItems="center"
