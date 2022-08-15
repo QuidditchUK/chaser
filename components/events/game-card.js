@@ -207,7 +207,7 @@ function GameCard({ game, size = 'md', index }) {
       <Flex
         alignItems="center"
         justifyContent="center"
-        pt={size === 'sm' ? 2 : 4}
+        pt={size === 'sm' ? 2 : { base: 2, md: 4 }}
         zIndex={1}
       >
         <Grid gridTemplateColumns="1fr auto 1fr" gridGap={2}>
@@ -245,7 +245,7 @@ function GameCard({ game, size = 'md', index }) {
         gridTemplateColumns="1fr 1fr 1fr"
         gridGap={4}
         px={4}
-        pb={size === 'sm' ? 0 : 4}
+        pb={size === 'sm' ? 0 : { base: 0, md: 4 }}
         zIndex={1}
       >
         <Grid
