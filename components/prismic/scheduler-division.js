@@ -31,7 +31,7 @@ const SchedulerFeed = ({ primary }) => {
         gridTemplateColumns="repeat(auto-fit, minmax(350px, 1fr))"
         gridGap={{ base: 4, md: 9 }}
       >
-        {groupedOrder.map((k) => {
+        {groupedOrder.map((k, index) => {
           const items = grouped[k];
 
           const orderedByTimeslot = orderBy(
@@ -64,9 +64,7 @@ const SchedulerFeed = ({ primary }) => {
                     key={game?.id}
                     game={game}
                     size="sm"
-                    index={data?.findIndex(
-                      (dataGame) => dataGame?.id === game.id
-                    )}
+                    index={index}
                   />
                 ))}
               </Grid>
