@@ -101,11 +101,18 @@ const VideoCard = ({ video }) => {
   useEffect(() => {
     const fetchYoutubeOembed = async () => {
       const [url] = videoLink.split('/').slice(-1);
+      const [videoId, timestamp] = url.split('?t=');
 
       try {
         const oemebedDetails = await axios.get(
-          `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${url}&format=json`
+          `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}${
+            timestamp !== undefined ? `%26t%3D${timestamp}` : ''
+          }`
         );
+
+        if (timestamp) {
+          console.log(oemebedDetails);
+        }
         setOembed(oemebedDetails);
       } catch (err) {
         if (err?.response?.status !== 400) {
