@@ -143,6 +143,7 @@ const ManualTransferForm = ({ onClose, isOpen, refetchActioned }) => {
                 setServerError,
                 callback: () => {
                   refetchActioned();
+                  setSelectedUser(null);
                   onClose();
                 },
               })
