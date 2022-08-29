@@ -2,7 +2,16 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import format from 'date-fns/format';
 import generateServerSideHeaders from 'modules/headers';
-import { Box, Flex, Heading, Grid, Text, Tr, Td } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  Grid,
+  Text,
+  Tr,
+  Td,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { orderBy } from 'lodash';
 import Switch from 'components/formControls/switch';
@@ -21,6 +30,8 @@ import Table from 'components/shared/table';
 import useCachedResponse from 'hooks/useCachedResponse';
 import Pagination from 'components/shared/pagination';
 import TransferCard from 'components/transfers/transferCard';
+import ManualTransferForm from 'components/transfers/manualTransferForm';
+import Button from 'components/shared/button';
 
 const STATUS = {
   APPROVED: 'Approved',
@@ -42,14 +53,10 @@ const Transfers = ({ scopes, settings }) => {
     keepPreviousData: true,
   });
 
-  const {
-    data: queryPendingTransfers,
-    refetch: refetchPending,
-  } = pendingTransfersRes;
-  const {
-    data: queryActionedTransfers,
-    refetch: refetchActioned,
-  } = actionedTransfersRes;
+  const { data: queryPendingTransfers, refetch: refetchPending } =
+    pendingTransfersRes;
+  const { data: queryActionedTransfers, refetch: refetchActioned } =
+    actionedTransfersRes;
 
   const { data: querySettings, refetch: refetchSettings } = useCachedResponse({
     queryKey: '/settings',
@@ -85,6 +92,8 @@ const Transfers = ({ scopes, settings }) => {
     refetchActioned();
   };
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <Meta subTitle="Transfers" title="Admin Dashboard" />
@@ -94,6 +103,7 @@ const Transfers = ({ scopes, settings }) => {
           width="100%"
           alignItems="center"
           justifyContent="space-between"
+          gap={2}
         >
           <Heading
             as="h3"
@@ -144,9 +154,21 @@ const Transfers = ({ scopes, settings }) => {
           ))}
         </Grid>
 
-        <Heading as="h4" fontFamily="body" color="qukBlue">
-          Actioned Transfers
-        </Heading>
+        <Flex
+          flexDirection="row"
+          width="100%"
+          alignItems="center"
+          justifyContent="space-between"
+          gap={2}
+        >
+          <Heading as="h4" fontFamily="body" color="qukBlue">
+            Actioned Transfers
+          </Heading>
+
+          <Button variant="green" onClick={onOpen}>
+            Manual Transfer
+          </Button>
+        </Flex>
 
         <Box bg="white" borderRadius="lg">
           <Table
@@ -206,6 +228,12 @@ const Transfers = ({ scopes, settings }) => {
           setPage={setPage}
         />
       </Slice>
+
+      <ManualTransferForm
+        isOpen={isOpen}
+        onClose={onClose}
+        refetchActioned={refetchActioned}
+      />
     </>
   );
 };

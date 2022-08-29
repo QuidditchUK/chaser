@@ -74,7 +74,6 @@ export default function AddClubTeamForm({ isOpen, onClose, club_uuid }) {
           </Button>
           {serverError && <Error>{serverError}</Error>}
         </Flex>
-        {/* </Grid> */}
       </form>
     </Modal>
   );

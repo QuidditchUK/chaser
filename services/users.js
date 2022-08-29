@@ -112,6 +112,11 @@ const usersService = {
     url: `/users/all/${page}`,
     ...params,
   }),
+
+  getAdminUser: ({ uuid, ...params }) => ({
+    method: 'get',
+    url: `/users/${uuid}`,
+  }),
 };
 
 export default createService(usersService);

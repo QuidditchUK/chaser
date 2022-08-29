@@ -25,6 +25,13 @@ const transfersService = {
     data,
     ...params,
   }),
+
+  manualTransfer: ({ data, ...params }) => ({
+    method: 'post',
+    url: '/transfers/manual',
+    data,
+    ...params,
+  }),
 };
 
 export default createService(transfersService);
