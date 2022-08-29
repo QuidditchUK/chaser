@@ -7,7 +7,7 @@ import clubsService from 'services/clubs';
 import Table from 'components/shared/table';
 import Button from 'components/shared/button';
 
-const getLatestProduct = (member) =>
+export const getLatestProduct = (member) =>
   member?.stripe_products[member?.stripe_products?.length - 1]?.products;
 
 const getClubTeam = (teams, club_uuid) => {

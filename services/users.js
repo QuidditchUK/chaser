@@ -106,6 +106,12 @@ const usersService = {
     url: `/users/push-notifications/${push_uuid}`,
     ...params,
   }),
+
+  getUsers: ({ page, ...params }) => ({
+    method: 'get',
+    url: `/users/all/${page}`,
+    ...params,
+  }),
 };
 
 export default createService(usersService);
