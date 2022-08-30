@@ -37,11 +37,11 @@ export default function CopyValueButton({ copyableValue }) {
 
   return (
     <Flex direction="row" my="auto" alignItems="center">
-      {hasCopied && (
+      {/* {hasCopied && (
         <Text m="0" mr={2} textColor="gray.400">
           Copied
         </Text>
-      )}
+      )} */}
       <IconButton
         aria-label="Copy"
         bg="transparent"
