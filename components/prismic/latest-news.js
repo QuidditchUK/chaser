@@ -29,7 +29,7 @@ const News = ({
         >
           <Heading
             as="h2"
-            fontSize="2xl"
+            fontSize="3xl"
             px={{ base: 8, md: 0 }}
             color="qukBlue"
             fontFamily="body"
