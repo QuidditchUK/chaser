@@ -1,11 +1,12 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import format from 'date-fns/format';
 import Image from 'next/image';
 
-import { rem } from 'styles/theme';
-import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
-import { Box, Flex, Heading, Link as ChakraLink } from '@chakra-ui/react';
+import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
+import { Box, Flex, Heading, Text, Link as ChakraLink } from '@chakra-ui/react';
 import CATEGORIES from 'constants/categories';
+import { rem } from 'styles/theme';
 
 const Container = dynamic(() => import('components/layout/container'));
 
@@ -25,14 +26,14 @@ const Tag = (props) => (
   />
 );
 
-const NewsHero = ({ title, image, category }) => {
+const NewsHero = ({ title, image, category, date }) => {
   return (
     <>
       <Box
         as="section"
         position="relative"
         backgroundColor="qukBlue"
-        minHeight={BLOG_MIN_HEIGHTS}
+        minHeight={HERO_MIN_HEIGHTS}
       >
         <Image
           src={image.url}
@@ -44,33 +45,43 @@ const NewsHero = ({ title, image, category }) => {
         />
         <Flex
           position="absolute"
-          minHeight={BLOG_MIN_HEIGHTS}
-          bg="qukBlue"
-          opacity={0.2}
+          bgGradient={`linear(to-t, ${CATEGORIES[category]}, rgba(0, 0, 0, 0))`}
           width="100%"
+          height="50%"
+          bottom="0"
         />
 
         <Flex
           position="relative"
-          minHeight={BLOG_MIN_HEIGHTS}
+          minHeight={HERO_MIN_HEIGHTS}
           alignItems="center"
           justifyContent="center"
+          px={{ base: 4, sm: 8, md: 9 }}
+          flexDirection="column"
+          color="white"
         >
-          <Container
-            maxWidth={rem(960)}
-            textAlign="center"
-            px={{ base: 4, sm: 8, md: 9 }}
-          >
+          <Container maxWidth={rem(960)} textAlign="center">
+            <Text
+              fontSize={{ base: 'sm', md: 'lg' }}
+              fontWeight="bold"
+              textShadow="0 0 5px rgb(0,0,0)"
+              mb={2}
+              mt={0}
+            >
+              {format(new Date(date), 'MMMM d, yyyy')}
+            </Text>
+
             <Heading
-              fontSize={{ base: '2xl', md: '4xl' }}
+              mt={0}
+              fontSize={{ base: '2xl', md: '5xl' }}
               color="white"
               textAlign="center"
               pb={2}
               textShadow="0 0 10px rgb(0,0,0)"
+              mb={2}
             >
               {title}
             </Heading>
-
             <Link href={`/news/${category?.toLowerCase()}`} passHref>
               <ChakraLink
                 textDecoration="none"

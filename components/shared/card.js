@@ -1,4 +1,5 @@
 import { RichText } from 'prismic-reactjs';
+import format from 'date-fns/format';
 import CATEGORIES from 'constants/categories';
 import { rem } from 'styles/theme';
 import {
@@ -8,6 +9,7 @@ import {
   Link as ChakraLink,
   GridItem,
   Text,
+  Flex,
 } from '@chakra-ui/react';
 import { linkResolver } from 'modules/prismic';
 import Image from 'next/image';
@@ -91,6 +93,83 @@ export const LinkWrapper = ({ href, ...props }) => (
 export const PlainWrapper = (props) => (
   <GridItem display="flex" flexGrow={1} {...props} />
 );
+
+export const NewsCard = ({
+  image,
+  title,
+  category,
+  content,
+  variant,
+  href,
+  target,
+  ariaLabel,
+  date,
+  ...cardProps
+}) => {
+  const styles = useStyleConfig('Card', { variant });
+
+  const Wrapper = href ? LinkWrapper : PlainWrapper;
+
+  return (
+    <Wrapper href={href} target={target} aria-label={ariaLabel} {...cardProps}>
+      <Box
+        __css={styles}
+        as="article"
+        bg={CATEGORIES[category]}
+        height="100%"
+        width="100%"
+        overflow="hidden"
+        position="relative"
+        borderRadius="xl"
+        {...cardProps}
+      >
+        <Image
+          src={image?.src}
+          alt={image?.alt}
+          layout="responsive"
+          objectFit="cover"
+          width={640}
+          height={700}
+        />
+
+        <Flex
+          position="absolute"
+          bottom="0"
+          width="100%"
+          height="70%"
+          bgGradient={`linear(to-t, ${CATEGORIES[category]}, rgba(0, 0, 0, 0))`}
+          color="white"
+          px={{ base: 4, sm: 8, md: 9 }}
+          py={4}
+          flexDirection="column"
+          justifyContent="flex-end"
+        >
+          {date && (
+            <Text
+              fontSize="sm"
+              fontWeight="bold"
+              textShadow="0 0 2px rgb(0,0,0)"
+              mb={2}
+            >
+              {format(new Date(date), 'MMMM d, yyyy')}
+            </Text>
+          )}
+          {title && (
+            <Heading
+              as="h2"
+              fontSize="2xl"
+              fontFamily="body"
+              textShadow="0 0 4px rgb(0,0,0)"
+              mt={0}
+            >
+              {title}
+            </Heading>
+          )}
+        </Flex>
+      </Box>
+    </Wrapper>
+  );
+};
 
 const Card = ({
   image,

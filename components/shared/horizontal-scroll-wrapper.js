@@ -10,6 +10,7 @@ const HorizontalScrollWrapper = ({
       <Box
         overflowX={{ base: 'scroll', md: 'initial' }}
         overflowY={{ base: 'hidden', md: 'initial' }}
+        py={{ base: 6, md: 0 }}
         sx={{
           '&::-webkit-scrollbar': { display: 'none' },
           scrollbarWidth: 'none',

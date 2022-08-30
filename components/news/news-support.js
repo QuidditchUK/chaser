@@ -70,7 +70,7 @@ const NewsSupport = ({ author, date, title, tags, category }) => {
                 size="sm"
                 fontWeight="bold"
                 color="white"
-                lineHeight="body"
+                lineHeight="1.3rem"
                 ml={5}
               >
                 By {author}
