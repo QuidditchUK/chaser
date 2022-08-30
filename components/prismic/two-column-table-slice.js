@@ -1,5 +1,6 @@
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
+import { linkResolver } from 'modules/prismic';
 
 import {
   Heading,
@@ -31,7 +32,7 @@ const TwoColumnTable = ({ primary, items }) => {
     <Slice variant={variant} size="sm">
       {RichText.asText(title) && (
         <Heading as="h2" fontSize="3xl" mt={2}>
-          {RichText.asText(title)}
+          <RichText render={title} linkResolver={linkResolver} />
         </Heading>
       )}
 
@@ -43,14 +44,14 @@ const TwoColumnTable = ({ primary, items }) => {
                 variant === 'light' || variant === 'white' ? 'inherit' : 'white'
               }
             >
-              {RichText.asText(column_one_title)}
+              <RichText render={column_one_title} linkResolver={linkResolver} />
             </Th>
             <Th
               color={
                 variant === 'light' || variant === 'white' ? 'inherit' : 'white'
               }
             >
-              {RichText.asText(column_two_title)}
+              <RichText render={column_two_title} linkResolver={linkResolver} />
             </Th>
           </Tr>
         </Thead>
@@ -58,8 +59,18 @@ const TwoColumnTable = ({ primary, items }) => {
         <Tbody>
           {items.map((item, i) => (
             <Tr key={`${column_one_title}_${column_two_title}_${i}`}>
-              <Td>{RichText.asText(item.column_one)}</Td>
-              <Td>{RichText.asText(item.column_two)}</Td>
+              <Td>
+                <RichText
+                  render={item.column_one}
+                  linkResolver={linkResolver}
+                />
+              </Td>
+              <Td>
+                <RichText
+                  render={item.column_two}
+                  linkResolver={linkResolver}
+                />
+              </Td>
             </Tr>
           ))}
         </Tbody>
