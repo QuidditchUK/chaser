@@ -46,7 +46,7 @@ const Users = ({ scopes }) => {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { errors },
     watch,
   } = useForm({
     mode: 'onBlur',
@@ -63,6 +63,7 @@ const Users = ({ scopes }) => {
   useEffect(() => {
     if (debouncedTerm !== searchTerm) {
       setSearchTerm(debouncedTerm);
+      setPage(0);
     }
   }, [debouncedTerm, searchTerm]);
 
