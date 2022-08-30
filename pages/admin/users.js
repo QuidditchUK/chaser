@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import generateServerSideHeaders from 'modules/headers';
-import { Box, Flex, Heading, Tr, Td, Grid } from '@chakra-ui/react';
+import { Box, Flex, Heading, Tr, Td, Grid, Text } from '@chakra-ui/react';
 import { parse } from 'date-fns';
 import { useForm } from 'react-hook-form';
 import { getUserScopes, hasScope } from 'modules/scopes';
@@ -14,7 +14,6 @@ import { getBasePageProps } from 'modules/prismic';
 import Table from 'components/shared/table';
 import useCachedResponse from 'hooks/useCachedResponse';
 import Pagination from 'components/shared/pagination';
-import Button from 'components/shared/button';
 import { getLatestProduct } from 'components/admin/clubs/club-members';
 import InputV2 from 'components/formControls/inputV2';
 
@@ -156,14 +155,20 @@ const Users = ({ scopes }) => {
                     )}
                   </Td>
 
-                  <Td
-                    display="flex"
-                    flexDirection="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    {user?.uuid}
-                    <CopyValueButton copyableValue={user?.uuid} />
+                  <Td>
+                    <Grid
+                      background="gray.50"
+                      borderRadius="md"
+                      px={2}
+                      width="100%"
+                      alignItems="center"
+                      gridTemplateColumns="auto min-content"
+                    >
+                      <Text as="code" fontSize="xs">
+                        {user?.uuid}
+                      </Text>
+                      <CopyValueButton copyableValue={user?.uuid} />
+                    </Grid>
                   </Td>
                 </Tr>
               );
