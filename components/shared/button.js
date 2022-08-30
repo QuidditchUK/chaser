@@ -34,7 +34,6 @@ export const ButtonStyles = {
     fontFamily: 'body',
     fontWeight: 'normal',
     textDecoration: 'none',
-    size: 'sm',
     alignItems: 'center',
     justifyContent: 'center',
     py: 2,
@@ -128,16 +127,29 @@ export const ButtonStyles = {
       },
     },
   },
+  sizes: {
+    sm: {
+      fontSize: 'sm',
+      py: 1,
+      px: 2,
+    },
+    md: {
+      fontSize: 'md',
+      py: 2,
+      px: 4,
+    },
+  },
   defaultProps: {
     variant: 'primary',
+    size: 'md',
   },
 };
 
 const Button = forwardRef(function Button(
-  { variant = 'primary', href, ...rest },
+  { variant = 'primary', size = 'md', href, ...rest },
   ref
 ) {
-  const styles = useStyleConfig('Button', { variant });
+  const styles = useStyleConfig('Button', { variant, size });
   const Wrapper = href ? ExternalLink : Box;
 
   return (

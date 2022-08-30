@@ -11,7 +11,8 @@ import {
   Stack,
   Box,
 } from '@chakra-ui/react';
-import Image from 'next/image';
+import DescriptionList, { Description } from './description-list';
+
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 
@@ -158,37 +159,24 @@ const VideoCard = ({ video }) => {
             <Text fontWeight="bold" textAlign="center">
               {video.Score}
             </Text>
-            <Table variant="unstyled" mx={0}>
-              <Tbody>
-                <Tr>
-                  <Td fontWeight="bold" py={0} px={2}>
-                    Tournament
-                  </Td>
-                  <Td py={0} px={2}>
-                    {video.Tournament}
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td fontWeight="bold" py={0} px={2}>
-                    Credit
-                  </Td>
-                  <Td py={0} px={2}>
-                    {video.Credit}
-                  </Td>
-                </Tr>
-              </Tbody>
-            </Table>
+
+            <DescriptionList>
+              <Description term="Event" description={video.Tournament} />
+              <Description term="Credit" description={video.Credit} />
+            </DescriptionList>
+
             {videos.length !== 1 && (
-              <Stack direction="row" spacing={2} pt={2}>
+              <Stack direction="row" spacing={2} pt={3}>
                 {videos.map((videoLink, i) => (
                   <Button
+                    size="sm"
                     onClick={() => {
                       setLoading(true);
                       setVideoLink(videoLink);
                     }}
                     key={`video-link-${videoLink}`}
                   >
-                    Link {i + 1}
+                    Video {i + 1}
                   </Button>
                 ))}
               </Stack>
