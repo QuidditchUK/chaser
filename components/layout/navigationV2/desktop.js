@@ -8,6 +8,7 @@ import {
   PopoverArrow,
   PopoverContent,
   PopoverBody,
+  Button as ChakraButton,
 } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
@@ -32,7 +33,7 @@ const MenuItem = ({ wrapperProps, data }) => {
           gridTemplateColumns="1fr"
           alignItems="center"
           textDecoration="none"
-          color={isActive ? 'monarchRed' : 'greyDark'}
+          color={isActive ? 'monarchRed' : 'gray.600'}
           fontWeight={600}
           _hover={{ color: 'monarchRed' }}
           fontSize="0.925rem"
@@ -62,10 +63,15 @@ const MenuList = ({ wrapperProps, data }) => {
     <ListItem role="listitem" {...wrapperProps}>
       <Popover>
         <PopoverTrigger>
-          <ChakraLink
+          <ChakraButton
+            bg="transparent"
+            border={0}
+            padding={0}
+            margin={0}
+            height="initial"
             position="relative"
             fontWeight={600}
-            color={childActive ? 'monarchRed' : 'greyDark'}
+            color={childActive ? 'monarchRed' : 'gray.600'}
             textDecoration="none"
             _hover={{ color: 'monarchRed' }}
             fontSize="0.925rem"
@@ -80,7 +86,7 @@ const MenuList = ({ wrapperProps, data }) => {
               borderLeft: '6px solid transparent',
               borderRight: '6px solid transparent',
               borderTop: '6px solid',
-              borderTopColor: childActive ? 'monarchRed' : 'greyDark',
+              borderTopColor: childActive ? 'monarchRed' : 'gray.600',
             }}
             sx={{
               '&:hover::after': {
@@ -90,7 +96,7 @@ const MenuList = ({ wrapperProps, data }) => {
             }}
           >
             {data?.primary?.label}
-          </ChakraLink>
+          </ChakraButton>
         </PopoverTrigger>
         <PopoverContent bg="qukBlue" color="white" borderColor="qukBlue">
           <PopoverArrow bg="qukBlue" />

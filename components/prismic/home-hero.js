@@ -52,7 +52,9 @@ const HomeHero = ({ primary }) => {
           autoPlay
           loop
           muted
-        />
+        >
+          <track default kind="captions" srcLang="en" src="/muted.vtt"></track>
+        </Video>
       </Flex>
       <Flex
         position="absolute"
@@ -71,7 +73,6 @@ const HomeHero = ({ primary }) => {
           mb={8}
           color="white"
           textShadow="0 0 10px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.4)"
-          id="home_hero_label" // FOR CAPE MODE
         >
           {slug}
         </Heading>

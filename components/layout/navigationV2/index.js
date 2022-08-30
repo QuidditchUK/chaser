@@ -224,6 +224,7 @@ export default function Navigation({ data }) {
                     border="none"
                     _hover={{ bg: 'white', color: 'qukBlue' }}
                     onClick={notificationOnOpen}
+                    aria-label="Notifications"
                     p={0}
                   >
                     <NotificationBadge count={unreadCount} />
@@ -232,9 +233,21 @@ export default function Navigation({ data }) {
 
                   <Popover>
                     <PopoverTrigger>
-                      <Box w="30px" h="30px">
-                        <Box as={PersonIcon} color="qukBlue" cursor="pointer" />
-                      </Box>
+                      {/* <Box w="30px" h="30px"> */}
+                      <IconButton
+                        icon={<PersonIcon />}
+                        cursor="pointer"
+                        bg="transparent"
+                        _hover={{
+                          bg: 'white',
+                          color: 'qukBlue',
+                        }}
+                        color="qukBlue"
+                        border={0}
+                        padding={1}
+                        aria-label="Personal settings"
+                      />
+                      {/* </Box> */}
                     </PopoverTrigger>
                     <PopoverContent
                       bg="qukBlue"
