@@ -5,7 +5,6 @@ import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { NewsCard } from 'components/shared/card';
 
 const Button = dynamic(() => import('components/shared/button'));
-// const Card = dynamic(() => import('components/shared/card'));
 const Container = dynamic(() => import('components/layout/container'));
 const HorizontalScrollWrapper = dynamic(() =>
   import('components/shared/horizontal-scroll-wrapper')
@@ -18,7 +17,6 @@ const News = ({
   showAllNewsButton = true,
   tag,
 }) => {
-  console.log(posts);
   return (
     <Box bg="greyLight" py={{ base: 6, lg: 10 }} px={{ base: 0, md: 9 }}>
       <Container>
