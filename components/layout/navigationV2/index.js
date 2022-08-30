@@ -224,6 +224,7 @@ export default function Navigation({ data }) {
                     border="none"
                     _hover={{ bg: 'white', color: 'qukBlue' }}
                     onClick={notificationOnOpen}
+                    id="notifications"
                     aria-label="Notifications"
                     p={0}
                   >
@@ -233,9 +234,8 @@ export default function Navigation({ data }) {
 
                   <Popover>
                     <PopoverTrigger>
-                      {/* <Box w="30px" h="30px"> */}
                       <IconButton
-                        icon={<PersonIcon />}
+                        icon={<PersonIcon color="qukBlue" />}
                         cursor="pointer"
                         bg="transparent"
                         _hover={{
@@ -247,7 +247,6 @@ export default function Navigation({ data }) {
                         padding={1}
                         aria-label="Personal settings"
                       />
-                      {/* </Box> */}
                     </PopoverTrigger>
                     <PopoverContent
                       bg="qukBlue"
@@ -345,10 +344,13 @@ export default function Navigation({ data }) {
                 </Button>
               )}
 
-              <IconButton
+              <Box
                 display={{ base: 'block', lg: 'none' }}
+                role="button"
                 ml="auto"
                 aria-label="Menu"
+                cursor="pointer"
+                id="menu"
                 bg="white"
                 color="gray.800"
                 _hover={{
@@ -357,15 +359,14 @@ export default function Navigation({ data }) {
                 }}
                 border="none"
                 p={0}
-                icon={
-                  mobileIsOpen ? (
-                    <CloseIcon w={6} h={6} color="qukBlue" />
-                  ) : (
-                    <HamburgerIcon w={8} h={8} color="qukBlue" />
-                  )
-                }
                 onClick={mobileOnOpen}
-              />
+              >
+                {mobileIsOpen ? (
+                  <CloseIcon w={6} h={6} color="qukBlue" />
+                ) : (
+                  <HamburgerIcon w={8} h={8} color="qukBlue" />
+                )}
+              </Box>
             </Flex>
           </Flex>
         </Box>

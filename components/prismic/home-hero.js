@@ -53,7 +53,7 @@ const HomeHero = ({ primary }) => {
           loop
           muted
         >
-          <track default kind="captions" srcLang="en" src="/muted.vtt"></track>
+          <track kind="captions" srcLang="en" src="/muted.vtt"></track>
         </Video>
       </Flex>
       <Flex
