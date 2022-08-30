@@ -113,6 +113,12 @@ const usersService = {
     ...params,
   }),
 
+  getSearchUsers: ({ page, term, ...params }) => ({
+    method: 'get',
+    url: `/users/search/${term}/page/${page}`,
+    ...params,
+  }),
+
   getAdminUser: ({ uuid, ...params }) => ({
     method: 'get',
     url: `/users/${uuid}`,
