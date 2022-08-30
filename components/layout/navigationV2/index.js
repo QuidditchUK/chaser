@@ -345,7 +345,6 @@ export default function Navigation({ data }) {
               )}
 
               <Box
-                display={{ base: 'block', lg: 'none' }}
                 role="button"
                 ml="auto"
                 aria-label="Menu"
