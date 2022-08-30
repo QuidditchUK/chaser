@@ -235,8 +235,10 @@ export default function Navigation({ data }) {
                   <Popover>
                     <PopoverTrigger>
                       <IconButton
-                        icon={<PersonIcon color="qukBlue" />}
+                        icon={<PersonIcon color="qukBlue" w={6} h={6} />}
                         cursor="pointer"
+                        w={6}
+                        h={6}
                         bg="transparent"
                         _hover={{
                           bg: 'white',
