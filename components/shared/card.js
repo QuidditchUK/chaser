@@ -122,6 +122,17 @@ export const NewsCard = ({
         position="relative"
         borderRadius="xl"
         {...cardProps}
+        _hover={{
+          '& img': {
+            filter: 'grayscale(0%)',
+          },
+        }}
+        sx={{
+          '& img': {
+            filter: 'grayscale(30%)',
+            transition: 'filter 0.2s ease-in',
+          },
+        }}
       >
         <Image
           src={image?.src}
