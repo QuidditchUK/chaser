@@ -193,17 +193,17 @@ export const ClubCardV2 = ({
         >
           <Flex flexDirection="row" gap={3}>
             {!status && (
-              <Type
-                fontWeight="bold"
-                fontSize={rem(10)}
-                bg="greyDark"
-                marginLeft="1"
-              >
+              <Type fontWeight="bold" fontSize={rem(12)} bg="greyDark" pt={2}>
                 Hiatus
               </Type>
             )}
             {league && (
-              <Type fontWeight="bold" fontSize={rem(10)} bg={TYPES[league]}>
+              <Type
+                fontWeight="bold"
+                fontSize={rem(12)}
+                bg={TYPES[league]}
+                pt={2}
+              >
                 {league}
               </Type>
             )}
