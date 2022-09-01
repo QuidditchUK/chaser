@@ -1,8 +1,5 @@
-import dynamic from 'next/dynamic';
-
+import { NewsCard } from 'components/shared/card';
 import { Grid, Flex } from '@chakra-ui/react';
-
-const Card = dynamic(() => import('components/shared/card'));
 
 const MIN_LENGTH = 3;
 
@@ -24,18 +21,18 @@ export const ClubNews = ({ posts, bgColor, color }) => {
     >
       {posts.map(({ uid, data }) => (
         <Flex flexDirection="column" key={uid}>
-          <Card
+          <NewsCard
             href={`/news/${uid}`}
             title={data.title}
-            category={data.category}
+            date={data?.date}
+            bg={bgColor}
+            color={color}
             image={{
               src: data.image.url,
               alt: data.image.alt,
               width: 640,
               height: 360,
             }}
-            bg={bgColor}
-            color={color}
           />
         </Flex>
       ))}

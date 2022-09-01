@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { Flex, Box, Heading } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { NewsCard } from 'components/shared/card';
+import CATEGORIES from 'constants/categories';
 
 const Button = dynamic(() => import('components/shared/button'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -61,7 +62,7 @@ const News = ({
                 title={data.title}
                 href={`/news/${uid}`}
                 ariaLabel={data?.title}
-                category={data.category}
+                bg={CATEGORIES[data?.category]}
                 date={data?.date}
                 image={{
                   src: data?.image?.url,

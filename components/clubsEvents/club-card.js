@@ -24,7 +24,7 @@ const MEDAL_WORDING = {
   3: 'Bronze Medalists',
 };
 
-const Medals = ({ tournament_results }) => {
+const Medals = ({ tournament_results, bg }) => {
   const resultsWithMedals = tournament_results.filter(
     ({ medal_icon }) => medal_icon?.url
   );
@@ -58,11 +58,18 @@ const Medals = ({ tournament_results }) => {
     });
 
   return (
-    <>
+    <Flex
+      flexDirection="row"
+      gap={3}
+      justifyContent="flex-start"
+      borderRadius="xl"
+      py={2}
+      px={{ base: 4, sm: 8, md: 9 }}
+      bg={bg}
+    >
       {medals.map((medal) => (
         <Box
           key={`${medal.tournament_name}_${medal.position}`}
-          ml={3}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -98,7 +105,122 @@ const Medals = ({ tournament_results }) => {
           </Tooltip>
         </Box>
       ))}
-    </>
+    </Flex>
+  );
+};
+
+export const ClubCardV2 = ({
+  image,
+  title,
+  league,
+  icon,
+  venue,
+  status,
+  href,
+  tournament_results = [],
+  bg,
+  ...cardProps
+}) => {
+  const Wrapper = href ? LinkWrapper : PlainWrapper;
+  const styles = useStyleConfig('Card');
+  return (
+    <Wrapper href={href} flexDirection="column" bg={bg} {...cardProps}>
+      <Box
+        __css={styles}
+        as="article"
+        bg={bg}
+        height="100%"
+        width="100%"
+        overflow="hidden"
+        position="relative"
+        borderRadius="xl"
+        {...cardProps}
+      >
+        <Image
+          src={image?.src ?? '/images/1x1.png'}
+          alt={image?.alt}
+          layout="responsive"
+          objectFit="cover"
+          width={640}
+          height={700}
+        />
+
+        <Flex
+          position="absolute"
+          bottom="0"
+          width="100%"
+          height="70%"
+          bgGradient={`linear(to-t, ${bg}, rgba(0, 0, 0, 0))`}
+          color="white"
+          px={{ base: 4, sm: 8, md: 9 }}
+          py={4}
+          flexDirection="column"
+          justifyContent="flex-end"
+        >
+          {title && (
+            <Heading
+              as="h2"
+              fontSize="2xl"
+              fontFamily="body"
+              textShadow="0 0 4px rgb(0,0,0)"
+              mb={0}
+            >
+              {title}
+            </Heading>
+          )}
+
+          {venue && (
+            <Text
+              fontSize="sm"
+              fontWeight="bold"
+              textShadow="0 0 2px rgb(0,0,0)"
+              mt={2}
+              mb={0}
+            >
+              {venue}
+            </Text>
+          )}
+        </Flex>
+
+        <Flex
+          px={{ base: 4, sm: 8, md: 9 }}
+          py={4}
+          position="absolute"
+          top="0"
+          justifyContent="space-between"
+          alignItems="center"
+          width="100%"
+        >
+          <Flex flexDirection="row" gap={3}>
+            {!status && (
+              <Type
+                fontWeight="bold"
+                fontSize={rem(10)}
+                bg="greyDark"
+                marginLeft="1"
+              >
+                Hiatus
+              </Type>
+            )}
+            {league && (
+              <Type fontWeight="bold" fontSize={rem(10)} bg={TYPES[league]}>
+                {league}
+              </Type>
+            )}
+          </Flex>
+          <ChakraImage
+            id="icon"
+            h="50px"
+            w="50px"
+            src={icon}
+            alt={`${title} logo`}
+          />
+        </Flex>
+      </Box>
+      <Flex h="75px">
+        <Medals tournament_results={tournament_results} bg={bg} />
+      </Flex>
+    </Wrapper>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   Heading,
   Link as ChakraLink,
   GridItem,
+  Grid,
   Text,
   Flex,
 } from '@chakra-ui/react';
@@ -18,7 +19,7 @@ import Link from 'next/link';
 
 export const CardStyles = {
   baseStyle: {
-    borderRadius: 'lg',
+    borderRadius: 'xl',
     display: 'flex',
     flexDirection: 'column',
     flexGrow: '1',
@@ -97,13 +98,14 @@ export const PlainWrapper = (props) => (
 export const NewsCard = ({
   image,
   title,
-  category,
   content,
   variant,
   href,
   target,
   ariaLabel,
   date,
+  bg,
+  color,
   ...cardProps
 }) => {
   const styles = useStyleConfig('Card', { variant });
@@ -115,7 +117,7 @@ export const NewsCard = ({
       <Box
         __css={styles}
         as="article"
-        bg={CATEGORIES[category]}
+        bg={bg}
         height="100%"
         width="100%"
         overflow="hidden"
@@ -137,7 +139,7 @@ export const NewsCard = ({
           bottom="0"
           width="100%"
           height="70%"
-          bgGradient={`linear(to-t, ${CATEGORIES[category]}, rgba(0, 0, 0, 0))`}
+          bgGradient={`linear(to-t, ${bg}, rgba(0, 0, 0, 0))`}
           color="white"
           px={{ base: 4, sm: 8, md: 9 }}
           py={4}
@@ -174,7 +176,6 @@ export const NewsCard = ({
 const Card = ({
   image,
   title,
-  category,
   content,
   variant,
   href,
@@ -188,68 +189,58 @@ const Card = ({
 
   return (
     <Wrapper href={href} target={target} aria-label={ariaLabel} {...cardProps}>
-      <Box __css={styles} as="article" {...cardProps}>
-        <Box
-          position="relative"
-          height={{ base: '100%', md: 'auto' }}
-          width={{ base: '100%', md: 'auto' }}
-          overflow="hidden"
+      <Grid
+        __css={styles}
+        as="article"
+        display="grid"
+        height="100%"
+        width="100%"
+        overflow="hidden"
+        position="relative"
+        gridTemplateRows="min-content 1fr"
+        {...cardProps}
+      >
+        {image?.src && (
+          <Image
+            src={image?.src}
+            alt={image?.alt}
+            layout="responsive"
+            objectFit="cover"
+            width={640}
+            height={700}
+          />
+        )}
+        <Flex
+          width="100%"
+          height="100%"
+          px={{ base: 4, sm: 8, md: 9 }}
+          py={4}
+          flexDirection="column"
+          justifyContent="flex-start"
         >
-          {image?.src && (
-            <Image
-              src={image?.src}
-              alt={image?.alt}
-              layout="responsive"
-              objectFit="cover"
-              width={640}
-              height={360}
-            />
-          )}
-        </Box>
-        <ContentBox
-          py={5}
-          px={4}
-          flexGrow="1"
-          sx={{
-            '& a': {
-              fontWeight: 'bold',
-              color: 'qukBlue',
-              textDecoration: 'none',
-              _hover: {
-                textDecoration: 'underline',
+          <ContentBox
+            sx={{
+              '& a': {
+                fontWeight: 'bold',
+                color: 'qukBlue',
+                textDecoration: 'none',
+                _hover: {
+                  textDecoration: 'underline',
+                },
               },
-            },
-          }}
-          {...(category && {
-            borderBottomWidth: '12px',
-            borderBottomStyle: 'solid',
-            borderBottomColor: CATEGORIES[category],
-          })}
-        >
-          {category && (
-            <Text
-              as="span"
-              fontWeight="bold"
-              color="white"
-              textTransform="uppercase"
-              borderRadius="lg"
-              py={1}
-              px={2}
-              fontSize={rem(10)}
-              bg={CATEGORIES[category]}
-            >
-              {category}
-            </Text>
-          )}
-
-          {title && (
-            <Heading as="h2" fontSize="xl" fontFamily="body">
-              {title}
-            </Heading>
-          )}
-          {content && <RichText render={content} linkResolver={linkResolver} />}
-        </ContentBox>
-      </Box>
+            }}
+          >
+            {title && (
+              <Heading as="h2" fontSize="xl" fontFamily="body">
+                {title}
+              </Heading>
+            )}
+            {content && (
+              <RichText render={content} linkResolver={linkResolver} />
+            )}
+          </ContentBox>
+        </Flex>
+      </Grid>
     </Wrapper>
   );
 };

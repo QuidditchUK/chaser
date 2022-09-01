@@ -1,12 +1,12 @@
+import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { ClubCardV2 } from 'components/clubsEvents/club-card';
 
 import { Flex } from '@chakra-ui/react';
 
 import { getPrismicDocByUid } from 'modules/prismic';
-import { useEffect, useState } from 'react';
 
 const Card = dynamic(() => import('components/shared/card'));
-const ClubCard = dynamic(() => import('components/clubsEvents/club-card'));
 
 const PrismicClubCard = ({ uid }) => {
   const [data, setData] = useState(null);
@@ -38,8 +38,8 @@ const PrismicClubCard = ({ uid }) => {
   }
 
   return (
-    <ClubCard
-      backgroundColor={data?.featured_color}
+    <ClubCardV2
+      bg={data?.featured_color}
       color={data?.text_color}
       title={data?.club_name}
       href={`/clubs/${uid}`}
@@ -51,6 +51,7 @@ const PrismicClubCard = ({ uid }) => {
         src: data?.images?.[0].image?.url,
         alt: data?.name,
       }}
+      tournament_results={data?.tournament_results}
     />
   );
 };

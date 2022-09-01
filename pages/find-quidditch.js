@@ -26,6 +26,7 @@ import { BLOG_MIN_HEIGHTS } from 'styles/hero-heights';
 import { postcodeRegex } from 'modules/validations';
 import { getAllClubs, getClubs, getBasePageProps } from 'modules/prismic';
 import RegisterClubForm from 'components/prismic/forms/register-club-form';
+import { ClubCardV2 } from 'components/clubsEvents/club-card';
 
 const CloseIcon = dynamic(() => import('public/images/close.svg'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -257,9 +258,9 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
                 <Container px={{ base: 4, sm: 8, md: 9 }}>
                   <Grid
                     gridGap={{ base: 4, md: 0 }}
-                    gridTemplateColumns={{ base: '1fr 1fr', md: '1fr 1fr' }}
+                    gridTemplateColumns="1fr 1fr"
                     gridTemplateAreas={{
-                      base: '"leagues" "distance distance"',
+                      base: "'leagues leagues' 'distance distance'",
                       md: '"leagues distance"',
                     }}
                   >
@@ -383,13 +384,13 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
                   base: '1fr',
                   md: 'repeat(auto-fit, minmax(300px, 1fr))',
                 }}
-                gridGap={{ base: 4, md: 9 }}
+                gridGap={{ base: 8, md: 9 }}
                 pb={3}
               >
                 {clubs.map((club) => (
                   <Flex flexDirection="column" key={club.uid}>
-                    <ClubCard
-                      backgroundColor={club?.data?.featured_color}
+                    <ClubCardV2
+                      bg={club?.data?.featured_color}
                       color={club.data.text_color}
                       title={club.data.club_name}
                       href={`/clubs/${club.uid}`}
@@ -439,8 +440,7 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
         primary={{
           variant: 'dark',
           image: {
-            url:
-              'https://images.prismic.io/chaser/bd3471a2-96d8-44a3-8357-df414a44f5fb_day1_pk_c-20.jpg?auto=compress,format',
+            url: 'https://images.prismic.io/chaser/bd3471a2-96d8-44a3-8357-df414a44f5fb_day1_pk_c-20.jpg?auto=compress,format',
             alt: '',
           },
         }}
