@@ -200,7 +200,7 @@ const Card = ({
         gridTemplateRows="min-content 1fr"
         {...cardProps}
       >
-        {image?.src && (
+        {image?.src ? (
           <Image
             src={image?.src}
             alt={image?.alt}
@@ -209,6 +209,8 @@ const Card = ({
             width={640}
             height={700}
           />
+        ) : (
+          <Box />
         )}
         <Flex
           width="100%"
@@ -216,7 +218,7 @@ const Card = ({
           px={{ base: 4, sm: 8, md: 9 }}
           py={4}
           flexDirection="column"
-          justifyContent="flex-start"
+          justifyContent={image?.src ? 'flex-start' : 'flex-end'}
         >
           <ContentBox
             sx={{
