@@ -96,7 +96,7 @@ const Notification = ({ notification, refetch, onClose }) => {
         />
         <Flex width="100%" gap={2} flexDirection="column">
           <Text color="qukBlue" m={0}>
-            {notification?.type?.description}
+            {notification?.message ?? notification?.type?.description}
           </Text>
           <Text color="qukBlue" m={0} fontStyle="italic" fontSize="xs">
             {format(new Date(notification?.created), 'd/MM/yyyy h:mm a')}

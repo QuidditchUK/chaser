@@ -64,6 +64,13 @@ const clubsService = {
     data,
     ...params,
   }),
+
+  assignClubManager: ({ club_uuid, data, ...params }) => ({
+    method: 'put',
+    url: `/clubs/${club_uuid}/manager`,
+    data,
+    ...params,
+  }),
 };
 
 export default createService(clubsService);
