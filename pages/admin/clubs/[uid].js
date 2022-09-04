@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { object, string, bool } from 'yup';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { Heading, Grid, Flex } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { useForm } from 'react-hook-form';
@@ -25,6 +26,7 @@ import clubsService from 'services/clubs';
 import useTempPopup from 'hooks/useTempPopup';
 import Success from 'components/formControls/success';
 import Error from 'components/shared/errors';
+import useCachedResponse from 'hooks/useCachedResponse';
 
 const Button = dynamic(() => import('components/shared/button'));
 
@@ -60,9 +62,16 @@ const handleEditSubmit = async (
     setServerError(err?.response?.data?.error?.message);
   }
 };
-const Dashboard = ({ club }) => {
+const Club = ({ club: initialData }) => {
   const [serverError, setServerError] = useTempPopup();
   const [serverSuccess, setServerSuccess] = useTempPopup();
+  const router = useRouter();
+
+  const { data: club, refetch } = useCachedResponse({
+    queryKey: ['/clubs/', router.query.uid],
+    queryFn: () => clubsService.getClub({ club_uuid: router.query.uid }),
+    initialData,
+  });
 
   const {
     register,
@@ -181,7 +190,7 @@ const Dashboard = ({ club }) => {
         </form>
 
         <ClubTeams club_uuid={club?.uuid} />
-        <ClubMembers club={club} />
+        <ClubMembers club={club} refetch={refetch} />
       </Slice>
     </>
   );
@@ -210,4 +219,4 @@ export const getServerSideProps = async ({ req, res, params }) => {
   };
 };
 
-export default Dashboard;
+export default Club;

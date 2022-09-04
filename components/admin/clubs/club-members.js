@@ -1,29 +1,17 @@
-import {
-  Heading,
-  Flex,
-  Tr,
-  Td,
-  Box,
-  useDisclosure,
-  Text,
-  Divider,
-} from '@chakra-ui/react';
-import { CheckIcon, DownloadIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
+import { Heading, Flex, Tr, Td, Box, useDisclosure } from '@chakra-ui/react';
+import { CheckCircleIcon, DownloadIcon } from '@chakra-ui/icons';
 import { format, parse } from 'date-fns';
 import Link from 'next/link';
-import { useForm } from 'react-hook-form';
 import useCSVDownload from 'hooks/useCSVDownload';
 import useCachedResponse from 'hooks/useCachedResponse';
-import useTempPopup from 'hooks/useTempPopup';
 import clubsService from 'services/clubs';
 import Table from 'components/shared/table';
 import Button from 'components/shared/button';
-import Modal from 'components/shared/modal';
-import Select from 'components/formControls/select';
-import DescriptionList, {
-  Description,
-} from 'components/shared/description-list';
-import Error from 'components/shared/errors';
+import UpdateClubManagerForm from './update-club-manager-form';
+import RemoveClubMemberForm from './remove-club-member-form';
+import { hasScope } from 'modules/scopes';
+import { DASHBOARD_SCOPES } from 'constants/scopes';
 
 export const getLatestProduct = (member) =>
   member?.stripe_products[member?.stripe_products?.length - 1]?.products;
@@ -50,26 +38,12 @@ const CSVMemberRows = (members) => {
   ]);
 };
 
-const handleAssignManager = async ({
-  values,
-  club_uuid,
-  callback,
-  setServerError,
-}) => {
-  try {
-    setServerError(null);
-    await clubsService.assignClubManager({ club_uuid, data: values });
-    callback();
-  } catch (err) {
-    setServerError(err?.response?.data?.error?.message);
-  }
-};
-
-const ClubMembers = ({ club }) => {
-  const [serverError, setServerError] = useTempPopup();
+const ClubMembers = ({ club, refetch, scopes }) => {
+  const [selectedMember, setSelectedMember] = useState(null);
   const membersRes = useCachedResponse({
     queryKey: ['/clubs', club?.uuid, '/members'],
     queryFn: () => clubsService.getClubMembers({ club_uuid: club?.uuid }),
+    enabled: Boolean(club?.uuid),
   });
 
   const { call, isLoading } = useCSVDownload({
@@ -81,18 +55,11 @@ const ClubMembers = ({ club }) => {
   });
 
   const { onOpen, onClose, isOpen } = useDisclosure();
-
   const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting, errors },
-    reset,
-  } = useForm({
-    mode: 'onBlur',
-    defaultValues: {
-      managed_by: null,
-    },
-  });
+    onOpen: onOpenRemove,
+    onClose: onCloseRemove,
+    isOpen: isOpenRemove,
+  } = useDisclosure();
 
   return (
     <>
@@ -107,9 +74,11 @@ const ClubMembers = ({ club }) => {
         </Heading>
 
         <Flex gap={2} justifyContent="flex-end">
-          <Button variant="green" onClick={onOpen}>
-            {club?.managed_by ? 'Update Club Manager' : 'Assign Club Manager'}
-          </Button>
+          {hasScope(DASHBOARD_SCOPES, scopes) && (
+            <Button variant="green" onClick={onOpen}>
+              {club?.managed_by ? 'Update Club Manager' : 'Assign Club Manager'}
+            </Button>
+          )}
           <Button
             variant="transparent"
             borderColor="qukBlue"
@@ -128,11 +97,11 @@ const ClubMembers = ({ club }) => {
         <Table
           name="members"
           columns={[
-            'Name',
+            'Name (Tick indicates Manager)',
             'Email',
             // 'Team',
             'Has Membership',
-            'Club Manager',
+            '',
           ]}
           isLoading={membersRes?.isLoading}
         >
@@ -141,7 +110,12 @@ const ClubMembers = ({ club }) => {
             return (
               <Tr key={member?.email}>
                 <Td>
-                  {member?.first_name} {member?.last_name}
+                  <Flex alignItems="center" gap={3}>
+                    {member?.first_name} {member?.last_name}{' '}
+                    {club?.managed_by === member?.uuid && (
+                      <CheckCircleIcon color="keeperGreen" />
+                    )}
+                  </Flex>
                 </Td>
                 <Td>
                   {member?.email && (
@@ -163,75 +137,44 @@ const ClubMembers = ({ club }) => {
                     </Box>
                   )}
                 </Td>
-                <Td>{club?.managed_by === member?.uuid && <CheckIcon />}</Td>
+
+                <Td>
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      setSelectedMember(member);
+                      onOpenRemove();
+                    }}
+                  >
+                    Remove Member
+                  </Button>
+                </Td>
               </Tr>
             );
           })}
         </Table>
       </Box>
 
-      <Modal
+      <UpdateClubManagerForm
+        club={club}
+        members={membersRes?.data}
         isOpen={isOpen}
-        onClose={onClose}
-        title={club?.managed_by ? 'Update Club Manager' : 'Assign Club Manager'}
-      >
-        <Text fontSize="sm">
-          The club manager can see their club&#39;s members and manage their
-          club affairs on QUK. This should be our primary contact with the club
-          and <strong>must</strong> be kept up to date.
-        </Text>
+        onClose={() => {
+          refetch();
+          onClose();
+        }}
+      />
 
-        {club?.managed_by && (
-          <>
-            <DescriptionList>
-              <Description
-                term="Current Manager"
-                description={`${club?.managedBy?.first_name} ${club?.managedBy?.last_name}`}
-              ></Description>
-            </DescriptionList>
-            <Divider />
-          </>
-        )}
-
-        <form
-          onSubmit={handleSubmit((values) =>
-            handleAssignManager({
-              values,
-              setServerError,
-              club_uuid: club?.uuid,
-              callback: () => {
-                reset();
-                membersRes?.refetch();
-                onClose();
-              },
-            })
-          )}
-        >
-          <Flex flexDirection="column" gridGap={3} mt={3}>
-            <Select
-              label="Select Manager"
-              isRequired
-              id="managed_by"
-              placeholder="Select a manager"
-              options={membersRes?.data?.map((member) => ({
-                value: member.uuid,
-                label: `${member?.first_name} ${member?.last_name}`,
-              }))}
-              {...register('managed_by')}
-              error={errors.managed_by}
-            />
-
-            <Button type="submit" disabled={isSubmitting} variant="green">
-              {isSubmitting
-                ? 'Assigning'
-                : club?.managed_by
-                ? 'Update Club Manager'
-                : 'Assign Club Manager'}
-            </Button>
-            {serverError && <Error>{serverError}</Error>}
-          </Flex>
-        </form>
-      </Modal>
+      <RemoveClubMemberForm
+        club={club}
+        member={selectedMember}
+        isOpen={isOpenRemove}
+        onClose={() => {
+          setSelectedMember();
+          membersRes.refetch();
+          onCloseRemove();
+        }}
+      />
     </>
   );
 };

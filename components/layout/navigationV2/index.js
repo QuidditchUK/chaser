@@ -38,7 +38,7 @@ import InstagramIcon from 'public/images/instagram.svg';
 import PersonIcon from 'public/images/person.svg';
 import { USER_NAVIGATION } from 'constants/navigation';
 import { getScopesFromToken, hasScope } from 'modules/scopes';
-import { DASHBOARD_SCOPES } from 'constants/scopes';
+import { DASHBOARD_SCOPES, CLUB_MANAGEMENT } from 'constants/scopes';
 import useCachedResponse from 'hooks/useCachedResponse';
 import usersService from 'services/users';
 
@@ -282,6 +282,29 @@ export default function Navigation({ data }) {
                                   fontSize="0.875rem"
                                 >
                                   Admin Dashboard
+                                </ChakraLink>
+                              </Link>
+                            </ListItem>
+                          )}
+                          {hasScope([CLUB_MANAGEMENT], userScopes, false) && (
+                            <ListItem tabIndex={0}>
+                              <Link href="/dashboard/club-management" passHref>
+                                <ChakraLink
+                                  display="grid"
+                                  gridTemplateColumns="1fr 10px"
+                                  p={2}
+                                  px={4}
+                                  alignItems="center"
+                                  textDecoration="none"
+                                  color="white"
+                                  fontWeight={600}
+                                  _hover={{ bg: 'purple.700' }}
+                                  _active={{ bg: 'purple.700' }}
+                                  borderRadius="md"
+                                  bg={'purple.600'}
+                                  fontSize="0.875rem"
+                                >
+                                  Club Management
                                 </ChakraLink>
                               </Link>
                             </ListItem>

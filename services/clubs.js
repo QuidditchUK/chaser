@@ -71,6 +71,12 @@ const clubsService = {
     data,
     ...params,
   }),
+
+  removeMember: ({ club_uuid, user_uuid, ...params }) => ({
+    method: 'put',
+    url: `/clubs/${club_uuid}/members/${user_uuid}`,
+    ...params,
+  }),
 };
 
 export default createService(clubsService);

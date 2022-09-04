@@ -7,11 +7,11 @@ export const getUserScopes = async (headers) => {
   return user?.scopes.map(({ scope }) => scope);
 };
 
-export const hasScope = (scopes, userScopes = []) => {
-  return (
-    scopes.some((scope) => userScopes?.includes(scope)) ||
-    userScopes?.includes(ADMIN)
-  );
+export const hasScope = (scopes, userScopes = [], adminFallback = true) => {
+  const isScoped = scopes.some((scope) => userScopes?.includes(scope));
+
+  if (isScoped) return true;
+  return adminFallback ? userScopes?.includes(ADMIN) : false;
 };
 
 export const getScopesFromToken = (token) => {
