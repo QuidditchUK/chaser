@@ -12,8 +12,6 @@ import { CheckIcon, DownloadIcon } from '@chakra-ui/icons';
 import { format, parse } from 'date-fns';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { object, string } from 'yup';
 import useCSVDownload from 'hooks/useCSVDownload';
 import useCachedResponse from 'hooks/useCachedResponse';
 import useTempPopup from 'hooks/useTempPopup';
