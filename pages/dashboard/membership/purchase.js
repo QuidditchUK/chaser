@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { Box, Grid, Heading } from '@chakra-ui/react';
+import { Box, Grid, Heading, Text } from '@chakra-ui/react';
 import { parseCookies } from 'modules/cookies';
 import isAuthorized from 'modules/auth';
 import { stripePromise } from 'modules/stripe';
@@ -34,6 +34,23 @@ const PurchaseMembership = ({ products }) => (
         <Heading as="h2" fontFamily="body">
           Purchase Membership
         </Heading>
+        <Box maxWidth="768px">
+          <Text>
+            We offer two tiers of membership: <strong>Trial</strong> and{' '}
+            <strong>Individual</strong>.
+          </Text>
+          <Text>
+            <strong>Trial</strong> Membership covers the cost of the membership
+            for the current season and a player fee for one QuidditchUK
+            Tournament. People who have never played the sport before should
+            purchase a Trial Membership.
+          </Text>
+          <Text>
+            <strong>Individual</strong> Membership covers the cost of the
+            membership for the current season. Seasoned players should purchase
+            an Individual Membership.
+          </Text>
+        </Box>
         <Grid gridTemplateColumns="1fr" gridGap={{ base: 4, sm: 8, md: 9 }}>
           {products.map((product) => (
             <ProductCard
