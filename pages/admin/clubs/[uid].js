@@ -62,7 +62,7 @@ const handleEditSubmit = async (
     setServerError(err?.response?.data?.error?.message);
   }
 };
-const Club = ({ club: initialData }) => {
+const Club = ({ club: initialData, scopes }) => {
   const [serverError, setServerError] = useTempPopup();
   const [serverSuccess, setServerSuccess] = useTempPopup();
   const router = useRouter();
@@ -190,7 +190,7 @@ const Club = ({ club: initialData }) => {
         </form>
 
         <ClubTeams club_uuid={club?.uuid} />
-        <ClubMembers club={club} refetch={refetch} />
+        <ClubMembers club={club} refetch={refetch} scopes={scopes} />
       </Slice>
     </>
   );

@@ -161,6 +161,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
         isOpen={isOpen}
         onClose={() => {
           refetch();
+          membersRes.refetch();
           onClose();
         }}
       />
@@ -171,6 +172,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
         isOpen={isOpenRemove}
         onClose={() => {
           setSelectedMember();
+          refetch();
           membersRes.refetch();
           onCloseRemove();
         }}

@@ -2,9 +2,10 @@ import Modal from 'components/shared/modal';
 import { Text } from '@chakra-ui/react';
 import clubsService from 'services/clubs';
 
-const handleRemoveClick = async ({ club_uuid, user_uuid }) => {
+const handleRemoveClick = async ({ club_uuid, user_uuid, onClose }) => {
   try {
     await clubsService.removeMember({ club_uuid, user_uuid });
+    onClose();
   } catch (error) {
     console.log(error);
   }
@@ -19,8 +20,8 @@ const RemoveClubMemberForm = ({ isOpen, member, club, onClose }) => (
       handleRemoveClick({
         club_uuid: club?.uuid,
         user_uuid: member?.uuid,
+        onClose,
       });
-      onClose();
     }}
     footerTitle="Remove"
     footerButtonProps={{ variant: 'secondary' }}
