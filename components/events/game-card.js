@@ -281,8 +281,8 @@ function GameCard({ game, size = 'md', index }) {
             overflow="hidden"
           >
             {game?.teamA?.shortName !== ' '
-              ? game?.teamA.shortName
-              : game?.teamA.name}
+              ? game?.teamA?.shortName
+              : game?.teamA?.name}
           </Text>
         </Grid>
 
@@ -347,8 +347,8 @@ function GameCard({ game, size = 'md', index }) {
             overflow="hidden"
           >
             {game?.teamB?.shortName !== ' '
-              ? game?.teamB.shortName
-              : game?.teamB.name}
+              ? game?.teamB?.shortName
+              : game?.teamB?.name}
           </Text>
           <Flex
             height={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}

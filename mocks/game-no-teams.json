@@ -1,0 +1,1210 @@
+[
+  {
+    "id": 351,
+    "timeslot": {
+      "id": 138,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T08:00:00.000Z"
+    },
+    "teamA": {
+      "id": 9,
+      "name": "LQC A",
+      "shortName": " ",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/9-1628683167719"
+    },
+    "teamB": {
+      "id": 12,
+      "name": "Olympians QC",
+      "shortName": " ",
+      "location": "Manchester",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/12-1629914405532"
+    },
+    "label": "Division 1 ",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 1
+  },
+  {
+    "id": 354,
+    "timeslot": {
+      "id": 138,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T08:00:00.000Z"
+    },
+    "teamA": {
+      "id": 16,
+      "name": "Velociraptors",
+      "shortName": " Raptors",
+      "location": "Midlands",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/16-1629845277008"
+    },
+    "teamB": {
+      "id": 79,
+      "name": "Olympians Seconds",
+      "shortName": " Prometheans",
+      "location": "Manchester/Leeds",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/79-1659121807101"
+    },
+    "label": "Division 2",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 4
+  },
+  {
+    "id": 356,
+    "timeslot": {
+      "id": 139,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T09:00:00.000Z"
+    },
+    "teamA": {
+      "id": 18,
+      "name": "East Midlands Vipers",
+      "shortName": " ",
+      "location": "Midlands",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/18-1628960095227"
+    },
+    "teamB": {
+      "id": 20,
+      "name": "West Country Rebels",
+      "shortName": " ",
+      "location": "South West",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/20-1633297465098"
+    },
+    "label": "Division 3",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 2
+  },
+  {
+    "id": 358,
+    "timeslot": {
+      "id": 139,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T09:00:00.000Z"
+    },
+    "teamA": {
+      "id": 10,
+      "name": "LQC B",
+      "shortName": " ",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/10-1628684036311"
+    },
+    "teamB": {
+      "id": 82,
+      "name": "Werewolves of London Thirds",
+      "shortName": "Werewolves 3rds",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/82-1662121046282"
+    },
+    "label": "Division 3",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 4
+  },
+  {
+    "id": 357,
+    "timeslot": {
+      "id": 139,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T09:00:00.000Z"
+    },
+    "teamA": {
+      "id": 15,
+      "name": "Southsea Quidditch",
+      "shortName": " ",
+      "location": "Portsmouth",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/15-1629989906580"
+    },
+    "teamB": {
+      "id": 11,
+      "name": "Oxford Mammoths",
+      "shortName": " ",
+      "location": "Oxford",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/11-1631801614592"
+    },
+    "label": "Division 2",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 3
+  },
+  {
+    "id": 353,
+    "timeslot": {
+      "id": 138,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T08:00:00.000Z"
+    },
+    "teamA": {
+      "id": 15,
+      "name": "Southsea Quidditch",
+      "shortName": " ",
+      "location": "Portsmouth",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/15-1629989906580"
+    },
+    "teamB": {
+      "id": 8,
+      "name": "Kelpies",
+      "shortName": " Kelpies",
+      "location": "Scotland",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/8-1628289095742"
+    },
+    "label": "Division 2",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 3
+  },
+  {
+    "id": 359,
+    "timeslot": {
+      "id": 140,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T10:00:00.000Z"
+    },
+    "teamA": {
+      "id": 19,
+      "name": "Werewolves of London Firsts",
+      "shortName": "Werewolves 1sts",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/19-1628250428863"
+    },
+    "teamB": {
+      "id": 21,
+      "name": "Werewolves of London Seconds",
+      "shortName": "Werewolves 2nds",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/21-1628250520959"
+    },
+    "label": "Division 1",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 1
+  },
+  {
+    "id": 360,
+    "timeslot": {
+      "id": 140,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T10:00:00.000Z"
+    },
+    "teamA": {
+      "id": 12,
+      "name": "Olympians QC",
+      "shortName": " ",
+      "location": "Manchester",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/12-1629914405532"
+    },
+    "teamB": {
+      "id": 80,
+      "name": "Phoenix Quidditch",
+      "shortName": " PQC ",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/80-1655935623606"
+    },
+    "label": "Division 1",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 2
+  },
+  {
+    "id": 355,
+    "timeslot": {
+      "id": 139,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T09:00:00.000Z"
+    },
+    "teamA": {
+      "id": 9,
+      "name": "LQC A",
+      "shortName": " ",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/9-1628683167719"
+    },
+    "teamB": {
+      "id": 21,
+      "name": "Werewolves of London Seconds",
+      "shortName": "Werewolves 2nds",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/21-1628250520959"
+    },
+    "label": "Division 1",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 1
+  },
+  {
+    "id": 361,
+    "timeslot": {
+      "id": 140,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T10:00:00.000Z"
+    },
+    "teamA": {
+      "id": 16,
+      "name": "Velociraptors",
+      "shortName": " Raptors",
+      "location": "Midlands",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/16-1629845277008"
+    },
+    "teamB": {
+      "id": 11,
+      "name": "Oxford Mammoths",
+      "shortName": " ",
+      "location": "Oxford",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/11-1631801614592"
+    },
+    "label": "Division 2",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 3
+  },
+  {
+    "id": 362,
+    "timeslot": {
+      "id": 140,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T10:00:00.000Z"
+    },
+    "teamA": {
+      "id": 8,
+      "name": "Kelpies",
+      "shortName": " Kelpies",
+      "location": "Scotland",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/8-1628289095742"
+    },
+    "teamB": {
+      "id": 79,
+      "name": "Olympians Seconds",
+      "shortName": " Prometheans",
+      "location": "Manchester/Leeds",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/79-1659121807101"
+    },
+    "label": "Division 2",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 4
+  },
+  {
+    "id": 363,
+    "timeslot": {
+      "id": 141,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T11:00:00.000Z"
+    },
+    "teamA": {
+      "id": 9,
+      "name": "LQC A",
+      "shortName": " ",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/9-1628683167719"
+    },
+    "teamB": {
+      "id": 80,
+      "name": "Phoenix Quidditch",
+      "shortName": " PQC ",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/80-1655935623606"
+    },
+    "label": "Division 1",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 1
+  },
+  {
+    "id": 364,
+    "timeslot": {
+      "id": 141,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T11:00:00.000Z"
+    },
+    "teamA": {
+      "id": 18,
+      "name": "East Midlands Vipers",
+      "shortName": " ",
+      "location": "Midlands",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/18-1628960095227"
+    },
+    "teamB": {
+      "id": 10,
+      "name": "LQC B",
+      "shortName": " ",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/10-1628684036311"
+    },
+    "label": "Division 3",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 2
+  },
+  {
+    "id": 365,
+    "timeslot": {
+      "id": 141,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T11:00:00.000Z"
+    },
+    "teamA": {
+      "id": 15,
+      "name": "Southsea Quidditch",
+      "shortName": " ",
+      "location": "Portsmouth",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/15-1629989906580"
+    },
+    "teamB": {
+      "id": 79,
+      "name": "Olympians Seconds",
+      "shortName": " Prometheans",
+      "location": "Manchester/Leeds",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/79-1659121807101"
+    },
+    "label": "Division 2",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 3
+  },
+  {
+    "id": 366,
+    "timeslot": {
+      "id": 141,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T11:00:00.000Z"
+    },
+    "teamA": {
+      "id": 20,
+      "name": "West Country Rebels",
+      "shortName": " ",
+      "location": "South West",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/20-1633297465098"
+    },
+    "teamB": {
+      "id": 82,
+      "name": "Werewolves of London Thirds",
+      "shortName": "Werewolves 3rds",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/82-1662121046282"
+    },
+    "label": "Division 3",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 4
+  },
+  {
+    "id": 367,
+    "timeslot": {
+      "id": 142,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T12:30:00.000Z"
+    },
+    "teamA": {
+      "id": 12,
+      "name": "Olympians QC",
+      "shortName": " ",
+      "location": "Manchester",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/12-1629914405532"
+    },
+    "teamB": {
+      "id": 21,
+      "name": "Werewolves of London Seconds",
+      "shortName": "Werewolves 2nds",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/21-1628250520959"
+    },
+    "label": "Division 1",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 1
+  },
+  {
+    "id": 368,
+    "timeslot": {
+      "id": 142,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T12:30:00.000Z"
+    },
+    "teamA": {
+      "id": 18,
+      "name": "East Midlands Vipers",
+      "shortName": " ",
+      "location": "Midlands",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/18-1628960095227"
+    },
+    "teamB": {
+      "id": 82,
+      "name": "Werewolves of London Thirds",
+      "shortName": "Werewolves 3rds",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/82-1662121046282"
+    },
+    "label": "Division 3",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 2
+  },
+  {
+    "id": 369,
+    "timeslot": {
+      "id": 142,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T12:30:00.000Z"
+    },
+    "teamA": {
+      "id": 8,
+      "name": "Kelpies",
+      "shortName": " Kelpies",
+      "location": "Scotland",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/8-1628289095742"
+    },
+    "teamB": {
+      "id": 11,
+      "name": "Oxford Mammoths",
+      "shortName": " ",
+      "location": "Oxford",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/11-1631801614592"
+    },
+    "label": "Division 2",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 3
+  },
+  {
+    "id": 370,
+    "timeslot": {
+      "id": 143,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T13:30:00.000Z"
+    },
+    "teamA": {
+      "id": 19,
+      "name": "Werewolves of London Firsts",
+      "shortName": "Werewolves 1sts",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/19-1628250428863"
+    },
+    "teamB": {
+      "id": 12,
+      "name": "Olympians QC",
+      "shortName": " ",
+      "location": "Manchester",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/12-1629914405532"
+    },
+    "label": "Division 1",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 1
+  },
+  {
+    "id": 371,
+    "timeslot": {
+      "id": 143,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T13:30:00.000Z"
+    },
+    "teamA": {
+      "id": 20,
+      "name": "West Country Rebels",
+      "shortName": " ",
+      "location": "South West",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/20-1633297465098"
+    },
+    "teamB": {
+      "id": 10,
+      "name": "LQC B",
+      "shortName": " ",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/10-1628684036311"
+    },
+    "label": "Division 3",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 2
+  },
+  {
+    "id": 372,
+    "timeslot": {
+      "id": 143,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T13:30:00.000Z"
+    },
+    "teamA": {
+      "id": 16,
+      "name": "Velociraptors",
+      "shortName": " Raptors",
+      "location": "Midlands",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/16-1629845277008"
+    },
+    "teamB": {
+      "id": 8,
+      "name": "Kelpies",
+      "shortName": " Kelpies",
+      "location": "Scotland",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/8-1628289095742"
+    },
+    "label": "Division 2",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 3
+  },
+  {
+    "id": 373,
+    "timeslot": {
+      "id": 144,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T14:30:00.000Z"
+    },
+    "teamA": {
+      "id": 21,
+      "name": "Werewolves of London Seconds",
+      "shortName": "Werewolves 2nds",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/21-1628250520959"
+    },
+    "teamB": {
+      "id": 80,
+      "name": "Phoenix Quidditch",
+      "shortName": " PQC ",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/80-1655935623606"
+    },
+    "label": "Division 1",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 1
+  },
+  {
+    "id": 374,
+    "timeslot": {
+      "id": 144,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T14:30:00.000Z"
+    },
+    "teamA": {
+      "id": 19,
+      "name": "Werewolves of London Firsts",
+      "shortName": "Werewolves 1sts",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/19-1628250428863"
+    },
+    "teamB": {
+      "id": 9,
+      "name": "LQC A",
+      "shortName": " ",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/9-1628683167719"
+    },
+    "label": "Division 1",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 2
+  },
+  {
+    "id": 375,
+    "timeslot": {
+      "id": 144,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T14:30:00.000Z"
+    },
+    "teamA": {
+      "id": 11,
+      "name": "Oxford Mammoths",
+      "shortName": " ",
+      "location": "Oxford",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/11-1631801614592"
+    },
+    "teamB": {
+      "id": 79,
+      "name": "Olympians Seconds",
+      "shortName": " Prometheans",
+      "location": "Manchester/Leeds",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/79-1659121807101"
+    },
+    "label": "Division 2",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 3
+  },
+  {
+    "id": 376,
+    "timeslot": {
+      "id": 144,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T14:30:00.000Z"
+    },
+    "teamA": {
+      "id": 16,
+      "name": "Velociraptors",
+      "shortName": " Raptors",
+      "location": "Midlands",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/16-1629845277008"
+    },
+    "teamB": {
+      "id": 15,
+      "name": "Southsea Quidditch",
+      "shortName": " ",
+      "location": "Portsmouth",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/15-1629989906580"
+    },
+    "label": "Division 4",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 4
+  },
+  {
+    "id": 352,
+    "timeslot": {
+      "id": 138,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T08:00:00.000Z"
+    },
+    "teamA": {
+      "id": 19,
+      "name": "Werewolves of London Firsts",
+      "shortName": "Werewolves 1sts",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/19-1628250428863"
+    },
+    "teamB": {
+      "id": 80,
+      "name": "Phoenix Quidditch",
+      "shortName": " PQC ",
+      "location": "London",
+      "logoUrl": "https://qs-prod-team-logo.s3.eu-west-2.amazonaws.com/80-1655935623606"
+    },
+    "label": "Division 1",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 2
+  },
+  {
+    "id": 377,
+    "timeslot": {
+      "id": 146,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T16:00:00.000Z"
+    },
+    "teamA": null,
+    "teamB": null,
+    "label": "D1 vs D2 playoff ",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 1
+  },
+  {
+    "id": 378,
+    "timeslot": {
+      "id": 146,
+      "tournament": {
+        "id": 16,
+        "name": "Community Fixture 3 2022/23",
+        "location": "Farnham Common Sports Club, Slough, SL2 3QY ",
+        "pitches": 4,
+        "logoUrl": "https://qs-prod-tournament-logo.s3.eu-west-2.amazonaws.com/16-1660824221832",
+        "bannerUrl": "",
+        "details": "The 3rd and final community fixture for the 2022/23 season ",
+        "registrationOpens": "2022-08-26T19:00:00.000Z",
+        "registrationCloses": "2022-09-09T19:00:00.000Z",
+        "publicSchedule": false,
+        "registrationOpen": true
+      },
+      "time": "2022-09-17T16:00:00.000Z"
+    },
+    "teamA": null,
+    "teamB": null,
+    "label": "D2 vs D3 playoff",
+    "status": "UPCOMING",
+    "teamAScore": 0,
+    "teamBScore": 0,
+    "winner": null,
+    "snitchCaughtBy": null,
+    "regulationTimeLength": 0,
+    "overtimeLength": 0,
+    "officials": [],
+    "pitch": 2
+  }
+]
