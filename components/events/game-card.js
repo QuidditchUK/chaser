@@ -67,7 +67,7 @@ function GameCard({ game, size = 'md', index }) {
     (official) => official?.role === 'GOAL_REFEREE'
   );
 
-  const { data: teamASheet } = useCachedResponse({
+  const { data: teamASheet = [] } = useCachedResponse({
     queryKey: [
       'quidditchScheduler',
       'aff',
@@ -81,9 +81,10 @@ function GameCard({ game, size = 'md', index }) {
         `https://api.quidditchscheduler.com/aff/team/${game?.teamA?.id}/tournament/${game?.timeslot?.tournament?.id}`
       ),
     staleTime: 300000, // 5 minutes
+    enabled: Boolean(game?.teamA),
   });
 
-  const { data: teamBSheet } = useCachedResponse({
+  const { data: teamBSheet = [] } = useCachedResponse({
     queryKey: [
       'quidditchScheduler',
       'aff',
@@ -97,6 +98,7 @@ function GameCard({ game, size = 'md', index }) {
         `https://api.quidditchscheduler.com/aff/team/${game?.teamB?.id}/tournament/${game?.timeslot?.tournament?.id}`
       ),
     staleTime: 300000, // 5 minutes
+    enabled: Boolean(game?.teamB),
   });
 
   const teamARoster = orderBy(
@@ -399,70 +401,74 @@ function GameCard({ game, size = 'md', index }) {
             backgroundColor="rgba(255,255,255,0.8)"
             borderBottomRadius="md"
           >
-            <Heading color="qukBlue" fontSize="2xl" fontFamily="body">
-              Volunteers
-            </Heading>
-            <Grid
-              gridTemplateColumns={
-                size === 'sm' ? '1fr' : { base: '1fr', md: '1fr 1fr' }
-              }
-              gridGap={16}
-            >
-              <DescriptionList>
-                <Description
-                  term="Head Referee"
-                  description={headReferee?.volunteer?.person?.fullName}
-                />
-                <Description
-                  term="Snitch Runner"
-                  description={snitchRunner?.volunteer?.person?.fullName}
-                />
-                <Description
-                  term="Snitch Referee"
-                  description={snitchReferee?.volunteer?.person?.fullName}
-                />
-                {assistantReferees?.map((referee) => (
-                  <Description
-                    key={referee?.id}
-                    term="Assistant Referee"
-                    description={referee?.volunteer?.person?.fullName}
-                  />
-                ))}
-              </DescriptionList>
+            {game?.officials?.length > 0 && (
+              <>
+                <Heading color="qukBlue" fontSize="2xl" fontFamily="body">
+                  Volunteers
+                </Heading>
+                <Grid
+                  gridTemplateColumns={
+                    size === 'sm' ? '1fr' : { base: '1fr', md: '1fr 1fr' }
+                  }
+                  gridGap={16}
+                >
+                  <DescriptionList>
+                    <Description
+                      term="Head Referee"
+                      description={headReferee?.volunteer?.person?.fullName}
+                    />
+                    <Description
+                      term="Snitch Runner"
+                      description={snitchRunner?.volunteer?.person?.fullName}
+                    />
+                    <Description
+                      term="Snitch Referee"
+                      description={snitchReferee?.volunteer?.person?.fullName}
+                    />
+                    {assistantReferees?.map((referee) => (
+                      <Description
+                        key={referee?.id}
+                        term="Assistant Referee"
+                        description={referee?.volunteer?.person?.fullName}
+                      />
+                    ))}
+                  </DescriptionList>
 
-              <DescriptionList>
-                <Description
-                  term="Scorekeeper"
-                  description={scorekeeper?.volunteer?.person?.fullName}
-                />
-                <Description
-                  term="Timekeeper"
-                  description={timekeeper?.volunteer?.person?.fullName}
-                />
-                {goalReferees?.map((referee) => (
-                  <Description
-                    key={referee?.id}
-                    term="Goal Referee"
-                    description={referee?.volunteer?.person?.fullName}
-                  />
-                ))}
-                <Description
-                  term="First Aider"
-                  description={firstAider?.volunteer?.person?.fullName}
-                />
-                <Description
-                  term="Pitch Manager"
-                  description={pitchManager?.volunteer?.person?.fullName}
-                />
-              </DescriptionList>
-            </Grid>
+                  <DescriptionList>
+                    <Description
+                      term="Scorekeeper"
+                      description={scorekeeper?.volunteer?.person?.fullName}
+                    />
+                    <Description
+                      term="Timekeeper"
+                      description={timekeeper?.volunteer?.person?.fullName}
+                    />
+                    {goalReferees?.map((referee) => (
+                      <Description
+                        key={referee?.id}
+                        term="Goal Referee"
+                        description={referee?.volunteer?.person?.fullName}
+                      />
+                    ))}
+                    <Description
+                      term="First Aider"
+                      description={firstAider?.volunteer?.person?.fullName}
+                    />
+                    <Description
+                      term="Pitch Manager"
+                      description={pitchManager?.volunteer?.person?.fullName}
+                    />
+                  </DescriptionList>
+                </Grid>
 
-            <Divider
-              borderColor="qukBlue"
-              opacity="1"
-              borderBottomWidth="2px"
-              mt={10}
-            />
+                <Divider
+                  borderColor="qukBlue"
+                  opacity="1"
+                  borderBottomWidth="2px"
+                  mt={10}
+                />
+              </>
+            )}
 
             <Grid
               gridTemplateColumns={
