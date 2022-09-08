@@ -58,11 +58,13 @@ const PushNotificationForm = ({ user }) => {
 
   const deletePush = async ({ uuid }) => {
     try {
+      await deletePushNotification({ push_uuid: uuid });
+
       const sw = await navigator?.serviceWorker?.ready;
       const push = await sw?.pushManager?.getSubscription();
-      await push.unsubscribe();
-
-      await deletePushNotification({ push_uuid: uuid });
+      if (push) {
+        await push.unsubscribe();
+      }
     } catch (error) {
       // unsubscribe failed
     }
