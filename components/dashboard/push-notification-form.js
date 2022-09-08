@@ -57,7 +57,7 @@ const PushNotificationForm = ({ user }) => {
     });
   };
 
-  const deletePush = async ({ uuid }) => {
+  const deletePush = async ({ uuid, endpoint }) => {
     try {
       await deletePushNotification({ push_uuid: uuid });
 
@@ -65,8 +65,9 @@ const PushNotificationForm = ({ user }) => {
       const push = await sw?.pushManager?.getSubscription();
 
       console.log(push);
+      console.log(endpoint);
 
-      if (push) {
+      if (push && push.endpoint === endpoint) {
         await push.unsubscribe();
       }
     } catch (error) {
@@ -100,10 +101,7 @@ const PushNotificationForm = ({ user }) => {
                     {parsedUA.os.name} {parsedUA.os.version}
                   </Text>
 
-                  <Button
-                    onClick={() => deletePush({ uuid: pn.uuid })}
-                    variant="secondary"
-                  >
+                  <Button onClick={() => deletePush(pn)} variant="secondary">
                     Remove
                   </Button>
                 </ListItem>
