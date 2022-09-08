@@ -8,18 +8,30 @@ export const SCOUTING_WINDOW_CLOSED = 'SCOUTING_WINDOW_CLOSED';
 export const EVENT_REGISTRATION_OPEN = 'EVENT_REGISTRATION_OPEN';
 export const EVENT_REGISTRATION_CLOSING_24 = 'EVENT_REGISTRATION_CLOSING_24';
 export const EVENT_REGISTRATION_CLOSED = 'EVENT_REGISTRATION_CLOSED';
+export const CLUB_MANAGEMENT = 'CLUB_MANAGEMENT';
+export const CLUB_MEMBER_REMOVED = 'CLUB_MEMBER_REMOVED';
+export const CLUB_MEMBER_ADDED = 'CLUB_MEMBER_ADDED';
 
 export const NotificationLink = {
-  TRANSFERS_OPEN: {
+  [TRANSFERS_OPEN]: {
     url: '/dashboard/membership/club',
   },
-  TRANSFERS_CLOSED: {
+  [TRANSFERS_CLOSED]: {
     url: '/dashboard/membership/club',
   },
-  TRANSFER_APPROVED: {
+  [TRANSFER_APPROVED]: {
     url: '/dashboard/membership/club',
   },
-  TRANSFER_DECLINED: {
+  [TRANSFER_DECLINED]: {
+    url: '/dashboard/membership/club',
+  },
+  [CLUB_MANAGEMENT]: {
+    url: '/dashboard/club-management',
+  },
+  [CLUB_MEMBER_ADDED]: {
+    url: '/dashboard/club-management',
+  },
+  [CLUB_MEMBER_REMOVED]: {
     url: '/dashboard/membership/club',
   },
 };

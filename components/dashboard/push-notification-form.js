@@ -93,14 +93,13 @@ const PushNotificationForm = ({ user }) => {
                     {parsedUA.browser.name} {parsedUA.browser.version} -{' '}
                     {parsedUA.os.name} {parsedUA.os.version}
                   </Text>
-                  {pn.user_agent === userAgent && (
-                    <Button
-                      onClick={() => deletePush({ uuid: pn.uuid })}
-                      variant="secondary"
-                    >
-                      Remove
-                    </Button>
-                  )}
+
+                  <Button
+                    onClick={() => deletePush({ uuid: pn.uuid })}
+                    variant="secondary"
+                  >
+                    Remove
+                  </Button>
                 </ListItem>
               );
             })}

@@ -31,6 +31,15 @@ self.addEventListener('notificationclick', function (event) {
     return;
   }
 
+  if (
+    event?.action === 'CLUB_MEMBER_ADDED' ||
+    event?.action === 'CLUB_MANAGEMENT'
+  ) {
+    event.notification.close();
+    clients.openWindow('/dashboard/club-membership');
+    return;
+  }
+
   if (event?.action === 'dismiss') {
     // in future would want to remove the push notification
     event.notification.close();
