@@ -43,6 +43,7 @@ const PushNotificationForm = ({ user }) => {
       applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     });
 
+    // must parse + stringify to get keys
     const subscription = JSON.parse(JSON.stringify(push));
 
     await mutate({
@@ -62,6 +63,9 @@ const PushNotificationForm = ({ user }) => {
 
       const sw = await navigator?.serviceWorker?.ready;
       const push = await sw?.pushManager?.getSubscription();
+
+      console.log(push);
+
       if (push) {
         await push.unsubscribe();
       }
