@@ -22,57 +22,61 @@ const SchedulerFeed = ({ primary }) => {
   const groupedOrder = orderBy(Object.keys(grouped), (group) => group);
 
   return (
-    <Slice variant="light">
-      <Heading as="h2" fontSize="3xl" mt={2} textAlign="center">
-        Results
-      </Heading>
+    <>
+      {data?.[0]?.timeslot?.tournament?.publicSchedule && (
+        <Slice variant="light">
+          <Heading as="h2" fontSize="3xl" mt={2} textAlign="center">
+            Results
+          </Heading>
 
-      <Grid
-        gridTemplateColumns="repeat(auto-fit, minmax(350px, 1fr))"
-        gridGap={{ base: 4, md: 9 }}
-      >
-        {groupedOrder.map((k, index) => {
-          const items = grouped[k];
+          <Grid
+            gridTemplateColumns="repeat(auto-fit, minmax(350px, 1fr))"
+            gridGap={{ base: 4, md: 9 }}
+          >
+            {groupedOrder.map((k, index) => {
+              const items = grouped[k];
 
-          const orderedByTimeslot = orderBy(
-            items,
-            ({ timeslot }) => timeslot?.time
-          );
+              const orderedByTimeslot = orderBy(
+                items,
+                ({ timeslot }) => timeslot?.time
+              );
 
-          return (
-            <Box key={k}>
-              <Heading fontSize="xl" fontFamily="body" textAlign="center">
-                {k}
-              </Heading>
-              <Grid
-                gridGap={4}
-                gridTemplateColumns="1fr"
-                mb={2}
-                sx={{
-                  '& a': {
-                    textDecoration: 'none',
-                    color: 'black',
-                    '&:hover': {
-                      textDecoration: 'none',
-                      color: 'black',
-                    },
-                  },
-                }}
-              >
-                {orderedByTimeslot.map((game, i) => (
-                  <GameCard
-                    key={game?.id}
-                    game={game}
-                    size="sm"
-                    index={index}
-                  />
-                ))}
-              </Grid>
-            </Box>
-          );
-        })}
-      </Grid>
-    </Slice>
+              return (
+                <Box key={k}>
+                  <Heading fontSize="xl" fontFamily="body" textAlign="center">
+                    {k}
+                  </Heading>
+                  <Grid
+                    gridGap={4}
+                    gridTemplateColumns="1fr"
+                    mb={2}
+                    sx={{
+                      '& a': {
+                        textDecoration: 'none',
+                        color: 'black',
+                        '&:hover': {
+                          textDecoration: 'none',
+                          color: 'black',
+                        },
+                      },
+                    }}
+                  >
+                    {orderedByTimeslot.map((game, i) => (
+                      <GameCard
+                        key={game?.id}
+                        game={game}
+                        size="sm"
+                        index={index}
+                      />
+                    ))}
+                  </Grid>
+                </Box>
+              );
+            })}
+          </Grid>
+        </Slice>
+      )}
+    </>
   );
 };
 

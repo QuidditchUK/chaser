@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import dynamic from 'next/dynamic';
 import groupBy from 'lodash/groupBy';
 import orderBy from 'lodash/orderBy';
@@ -23,40 +24,48 @@ const SchedulerFeed = ({ primary }) => {
   const groupedOrder = orderBy(Object.keys(grouped), (group) => group);
 
   return (
-    <Slice variant="light" size="sm">
-      {groupedOrder.map((k) => {
-        const items = grouped[k];
+    <>
+      {data?.[0]?.timeslot?.tournament?.publicSchedule && (
+        <Slice variant="light" size="sm">
+          {groupedOrder.map((k) => {
+            const items = grouped[k];
 
-        const orderedByPitch = orderBy(items, ({ pitch }) => pitch);
+            const orderedByPitch = orderBy(items, ({ pitch }) => pitch);
 
-        return (
-          <Grid
-            gridGap={4}
-            gridTemplateColumns="1fr"
-            key={k}
-            mb={2}
-            sx={{
-              '& a': {
-                textDecoration: 'none',
-                color: 'black',
-                '&:hover': {
-                  textDecoration: 'none',
-                  color: 'black',
-                },
-              },
-            }}
-          >
-            <Heading fontSize="xl" fontFamily="body" textAlign="center">
-              {DateTime.fromISO(k).toFormat('h:mm a')}
-            </Heading>
+            return (
+              <Grid
+                gridGap={4}
+                gridTemplateColumns="1fr"
+                key={k}
+                mb={2}
+                sx={{
+                  '& a': {
+                    textDecoration: 'none',
+                    color: 'black',
+                    '&:hover': {
+                      textDecoration: 'none',
+                      color: 'black',
+                    },
+                  },
+                }}
+              >
+                <Heading fontSize="xl" fontFamily="body" textAlign="center">
+                  {DateTime.fromISO(k).toFormat('h:mm a')}
+                </Heading>
 
-            {orderedByPitch.map((game, i) => (
-              <GameCard key={game?.id} game={game} index={i} />
-            ))}
-          </Grid>
-        );
-      })}
-    </Slice>
+                {orderedByPitch.map((game, i) => (
+                  <Fragment key={game?.id}>
+                    {game?.timeslot?.tournament?.publicSchedule && (
+                      <GameCard game={game} index={i} />
+                    )}
+                  </Fragment>
+                ))}
+              </Grid>
+            );
+          })}
+        </Slice>
+      )}
+    </>
   );
 };
 

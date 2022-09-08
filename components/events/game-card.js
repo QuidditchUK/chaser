@@ -243,34 +243,8 @@ function GameCard({ game, size = 'md', index }) {
         </Grid>
       </Flex>
 
-      <Grid
-        gridTemplateColumns="1fr 1fr 1fr"
-        gridGap={4}
-        px={4}
-        pb={size === 'sm' ? 0 : { base: 0, md: 4 }}
-        zIndex={1}
-      >
-        <Grid
-          gridTemplateColumns={
-            size === 'sm' ? '25px auto' : { base: '25px auto', md: '50px auto' }
-          }
-          gridGap={2}
-          alignItems="center"
-        >
-          <Box
-            height={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
-            width={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
-          >
-            {game?.teamA?.logoUrl && (
-              <Image
-                src={game?.teamA?.logoUrl}
-                alt={game?.teamA?.name}
-                height={size === 'sm' ? '25px' : logosMeasurement}
-                width={size === 'sm' ? '25px' : logosMeasurement}
-                layout="responsive"
-              />
-            )}
-          </Box>
+      {!game?.teamA && !game.teamB ? (
+        <Flex alignItems="center" justifyContent="center" zIndex={1}>
           <Text
             fontWeight="bold"
             fontSize={size === 'sm' ? 'sm' : { base: 'sm', md: 'md' }}
@@ -280,235 +254,283 @@ function GameCard({ game, size = 'md', index }) {
             whiteSpace="nowrap"
             overflow="hidden"
           >
-            {game?.teamA?.shortName !== ' '
-              ? game?.teamA?.shortName
-              : game?.teamA?.name}
+            {game?.label}
           </Text>
-        </Grid>
-
-        {game?.status === 'FINISHED' ? (
-          <Flex alignItems="center" justifyContent="center">
-            <Grid gridTemplateColumns="1fr auto 1fr" gridGap={2}>
-              <Text
-                fontWeight="bold"
-                fontSize={size === 'sm' ? 'lg' : { base: 'lg', md: '4xl' }}
-                justifySelf="end"
-                color="white"
-                textShadow="0 0 5px rgb(0,0,0)"
-                marginY={0}
-              >
-                {game?.teamAScore}
-                {game?.snitchCaughtBy === 'TEAM_A' && <>*</>}
-              </Text>
-              <Text
-                fontWeight="bold"
-                fontSize={size === 'sm' ? 'lg' : { base: 'lg', md: '4xl' }}
-                justifySelf="center"
-                color="white"
-                textShadow="0 0 5px rgb(0,0,0)"
-                marginY={0}
-              >
-                —
-              </Text>
-              <Text
-                fontWeight="bold"
-                fontSize={size === 'sm' ? 'lg' : { base: 'lg', md: '4xl' }}
-                justifySelf="start"
-                color="white"
-                textShadow="0 0 5px rgb(0,0,0)"
-                marginY={0}
-              >
-                {game?.teamBScore}
-                {game?.snitchCaughtBy === 'TEAM_B' && <>*</>}
-              </Text>
-            </Grid>
-          </Flex>
-        ) : (
-          <Box />
-        )}
-
+        </Flex>
+      ) : (
         <Grid
-          gridTemplateColumns={
-            size === 'sm' ? 'auto 25px' : { base: 'auto 25px', md: 'auto 50px' }
-          }
-          gridGap={2}
-          gridTemplateAreas="'name logo'"
-          alignItems="center"
+          gridTemplateColumns="1fr 1fr 1fr"
+          gridGap={4}
+          px={4}
+          pb={size === 'sm' ? 0 : { base: 0, md: 4 }}
+          zIndex={1}
         >
-          <Text
-            fontWeight="bold"
-            color="white"
-            textShadow="0 0 5px rgb(0,0,0)"
-            fontSize={size === 'sm' ? 'sm' : { base: 'sm', md: 'md' }}
-            gridArea="name"
-            textAlign="right"
-            textOverflow="ellipsis"
-            whiteSpace="nowrap"
-            overflow="hidden"
+          <Grid
+            gridTemplateColumns={
+              size === 'sm'
+                ? '25px auto'
+                : { base: '25px auto', md: '50px auto' }
+            }
+            gridGap={2}
+            alignItems="center"
           >
-            {game?.teamB?.shortName !== ' '
-              ? game?.teamB?.shortName
-              : game?.teamB?.name}
-          </Text>
-          <Flex
-            height={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
-            width={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
-            gridArea="logo"
-            flexDirection="column"
-            justifySelf="flex-end"
-          >
-            {game?.teamB?.logoUrl && (
-              <Image
-                src={game?.teamB?.logoUrl}
-                alt={game?.teamB?.name}
-                height={size === 'sm' ? '25px' : logosMeasurement}
-                width={size === 'sm' ? '25px' : logosMeasurement}
-                layout="responsive"
-              />
-            )}
-          </Flex>
-        </Grid>
-      </Grid>
-
-      <Accordion allowToggle zIndex="1" width="100%">
-        <AccordionItem>
-          <Heading m={0}>
-            <AccordionButton
-              bg="transparent"
-              color="white"
-              fontFamily="body"
-              fontWeight="bold"
-              m={0}
-              border="0"
-              cursor="pointer"
-              fontSize={size === 'sm' ? 'sm' : { base: 'sm', md: 'md' }}
+            <Box
+              height={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
+              width={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
             >
-              <Flex
-                alignItems="center"
-                width="100%"
-                textAlign="center"
-                justifyContent="center"
-                textShadow="0 0 5px rgb(0,0,0)"
-              >
-                Details
-                <AccordionIcon />
-              </Flex>
-            </AccordionButton>
-          </Heading>
-
-          <AccordionPanel
-            pb={4}
-            backgroundColor="rgba(255,255,255,0.8)"
-            borderBottomRadius="md"
-          >
-            {game?.officials?.length > 0 && (
-              <>
-                <Heading color="qukBlue" fontSize="2xl" fontFamily="body">
-                  Volunteers
-                </Heading>
-                <Grid
-                  gridTemplateColumns={
-                    size === 'sm' ? '1fr' : { base: '1fr', md: '1fr 1fr' }
-                  }
-                  gridGap={16}
-                >
-                  <DescriptionList>
-                    <Description
-                      term="Head Referee"
-                      description={headReferee?.volunteer?.person?.fullName}
-                    />
-                    <Description
-                      term="Snitch Runner"
-                      description={snitchRunner?.volunteer?.person?.fullName}
-                    />
-                    <Description
-                      term="Snitch Referee"
-                      description={snitchReferee?.volunteer?.person?.fullName}
-                    />
-                    {assistantReferees?.map((referee) => (
-                      <Description
-                        key={referee?.id}
-                        term="Assistant Referee"
-                        description={referee?.volunteer?.person?.fullName}
-                      />
-                    ))}
-                  </DescriptionList>
-
-                  <DescriptionList>
-                    <Description
-                      term="Scorekeeper"
-                      description={scorekeeper?.volunteer?.person?.fullName}
-                    />
-                    <Description
-                      term="Timekeeper"
-                      description={timekeeper?.volunteer?.person?.fullName}
-                    />
-                    {goalReferees?.map((referee) => (
-                      <Description
-                        key={referee?.id}
-                        term="Goal Referee"
-                        description={referee?.volunteer?.person?.fullName}
-                      />
-                    ))}
-                    <Description
-                      term="First Aider"
-                      description={firstAider?.volunteer?.person?.fullName}
-                    />
-                    <Description
-                      term="Pitch Manager"
-                      description={pitchManager?.volunteer?.person?.fullName}
-                    />
-                  </DescriptionList>
-                </Grid>
-
-                <Divider
-                  borderColor="qukBlue"
-                  opacity="1"
-                  borderBottomWidth="2px"
-                  mt={10}
+              {game?.teamA?.logoUrl && (
+                <Image
+                  src={game?.teamA?.logoUrl}
+                  alt={game?.teamA?.name}
+                  height={size === 'sm' ? '25px' : logosMeasurement}
+                  width={size === 'sm' ? '25px' : logosMeasurement}
+                  layout="responsive"
                 />
-              </>
-            )}
-
-            <Grid
-              gridTemplateColumns={
-                size === 'sm' ? '1fr' : { base: '1fr', md: '1fr 1fr' }
-              }
-              gridGap={16}
+              )}
+            </Box>
+            <Text
+              fontWeight="bold"
+              fontSize={size === 'sm' ? 'sm' : { base: 'sm', md: 'md' }}
+              color="white"
+              textShadow="0 0 5px rgb(0,0,0)"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+              overflow="hidden"
             >
-              <Box justifyItems="start">
-                <Heading color="qukBlue" fontSize="2xl" fontFamily="body">
-                  {game?.teamA?.name} Roster
-                </Heading>
-                <DescriptionList>
-                  {teamARoster?.map((player) => (
-                    <Description
-                      key={player?.id}
-                      term={player?.jerseyNumber}
-                      description={player?.person?.fullName}
-                    />
-                  ))}
-                </DescriptionList>
-              </Box>
+              {game?.teamA?.shortName !== ' '
+                ? game?.teamA?.shortName
+                : game?.teamA?.name}
+            </Text>
+          </Grid>
 
-              <Box>
-                <Heading color="qukBlue" fontSize="2xl" fontFamily="body">
-                  {game?.teamB?.name} Roster
-                </Heading>
-                <DescriptionList>
-                  {teamBRoster?.map((player) => (
-                    <Description
-                      key={player?.id}
-                      term={player?.jerseyNumber}
-                      description={player?.person?.fullName}
-                    />
-                  ))}
-                </DescriptionList>
-              </Box>
-            </Grid>
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
+          {game?.status === 'FINISHED' ? (
+            <Flex alignItems="center" justifyContent="center">
+              <Grid gridTemplateColumns="1fr auto 1fr" gridGap={2}>
+                <Text
+                  fontWeight="bold"
+                  fontSize={size === 'sm' ? 'lg' : { base: 'lg', md: '4xl' }}
+                  justifySelf="end"
+                  color="white"
+                  textShadow="0 0 5px rgb(0,0,0)"
+                  marginY={0}
+                >
+                  {game?.teamAScore}
+                  {game?.snitchCaughtBy === 'TEAM_A' && <>*</>}
+                </Text>
+                <Text
+                  fontWeight="bold"
+                  fontSize={size === 'sm' ? 'lg' : { base: 'lg', md: '4xl' }}
+                  justifySelf="center"
+                  color="white"
+                  textShadow="0 0 5px rgb(0,0,0)"
+                  marginY={0}
+                >
+                  —
+                </Text>
+                <Text
+                  fontWeight="bold"
+                  fontSize={size === 'sm' ? 'lg' : { base: 'lg', md: '4xl' }}
+                  justifySelf="start"
+                  color="white"
+                  textShadow="0 0 5px rgb(0,0,0)"
+                  marginY={0}
+                >
+                  {game?.teamBScore}
+                  {game?.snitchCaughtBy === 'TEAM_B' && <>*</>}
+                </Text>
+              </Grid>
+            </Flex>
+          ) : (
+            <Box />
+          )}
+
+          <Grid
+            gridTemplateColumns={
+              size === 'sm'
+                ? 'auto 25px'
+                : { base: 'auto 25px', md: 'auto 50px' }
+            }
+            gridGap={2}
+            gridTemplateAreas="'name logo'"
+            alignItems="center"
+          >
+            <Text
+              fontWeight="bold"
+              color="white"
+              textShadow="0 0 5px rgb(0,0,0)"
+              fontSize={size === 'sm' ? 'sm' : { base: 'sm', md: 'md' }}
+              gridArea="name"
+              textAlign="right"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+              overflow="hidden"
+            >
+              {game?.teamB?.shortName !== ' '
+                ? game?.teamB?.shortName
+                : game?.teamB?.name}
+            </Text>
+            <Flex
+              height={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
+              width={size === 'sm' ? '25px' : { base: '25px', md: '50px' }}
+              gridArea="logo"
+              flexDirection="column"
+              justifySelf="flex-end"
+            >
+              {game?.teamB?.logoUrl && (
+                <Image
+                  src={game?.teamB?.logoUrl}
+                  alt={game?.teamB?.name}
+                  height={size === 'sm' ? '25px' : logosMeasurement}
+                  width={size === 'sm' ? '25px' : logosMeasurement}
+                  layout="responsive"
+                />
+              )}
+            </Flex>
+          </Grid>
+        </Grid>
+      )}
+
+      {!game?.teamA && !game.teamB ? null : (
+        <Accordion allowToggle zIndex="1" width="100%">
+          <AccordionItem>
+            <Heading m={0}>
+              <AccordionButton
+                bg="transparent"
+                color="white"
+                fontFamily="body"
+                fontWeight="bold"
+                m={0}
+                border="0"
+                cursor="pointer"
+                fontSize={size === 'sm' ? 'sm' : { base: 'sm', md: 'md' }}
+              >
+                <Flex
+                  alignItems="center"
+                  width="100%"
+                  textAlign="center"
+                  justifyContent="center"
+                  textShadow="0 0 5px rgb(0,0,0)"
+                >
+                  Details
+                  <AccordionIcon />
+                </Flex>
+              </AccordionButton>
+            </Heading>
+
+            <AccordionPanel
+              pb={4}
+              backgroundColor="rgba(255,255,255,0.8)"
+              borderBottomRadius="md"
+            >
+              {game?.officials?.length > 0 && (
+                <>
+                  <Heading color="qukBlue" fontSize="2xl" fontFamily="body">
+                    Volunteers
+                  </Heading>
+                  <Grid
+                    gridTemplateColumns={
+                      size === 'sm' ? '1fr' : { base: '1fr', md: '1fr 1fr' }
+                    }
+                    gridGap={16}
+                  >
+                    <DescriptionList>
+                      <Description
+                        term="Head Referee"
+                        description={headReferee?.volunteer?.person?.fullName}
+                      />
+                      <Description
+                        term="Snitch Runner"
+                        description={snitchRunner?.volunteer?.person?.fullName}
+                      />
+                      <Description
+                        term="Snitch Referee"
+                        description={snitchReferee?.volunteer?.person?.fullName}
+                      />
+                      {assistantReferees?.map((referee) => (
+                        <Description
+                          key={referee?.id}
+                          term="Assistant Referee"
+                          description={referee?.volunteer?.person?.fullName}
+                        />
+                      ))}
+                    </DescriptionList>
+
+                    <DescriptionList>
+                      <Description
+                        term="Scorekeeper"
+                        description={scorekeeper?.volunteer?.person?.fullName}
+                      />
+                      <Description
+                        term="Timekeeper"
+                        description={timekeeper?.volunteer?.person?.fullName}
+                      />
+                      {goalReferees?.map((referee) => (
+                        <Description
+                          key={referee?.id}
+                          term="Goal Referee"
+                          description={referee?.volunteer?.person?.fullName}
+                        />
+                      ))}
+                      <Description
+                        term="First Aider"
+                        description={firstAider?.volunteer?.person?.fullName}
+                      />
+                      <Description
+                        term="Pitch Manager"
+                        description={pitchManager?.volunteer?.person?.fullName}
+                      />
+                    </DescriptionList>
+                  </Grid>
+
+                  <Divider
+                    borderColor="qukBlue"
+                    opacity="1"
+                    borderBottomWidth="2px"
+                    mt={10}
+                  />
+                </>
+              )}
+
+              <Grid
+                gridTemplateColumns={
+                  size === 'sm' ? '1fr' : { base: '1fr', md: '1fr 1fr' }
+                }
+                gridGap={16}
+              >
+                <Box justifyItems="start">
+                  <Heading color="qukBlue" fontSize="2xl" fontFamily="body">
+                    {game?.teamA?.name} Roster
+                  </Heading>
+                  <DescriptionList>
+                    {teamARoster?.map((player) => (
+                      <Description
+                        key={player?.id}
+                        term={player?.jerseyNumber}
+                        description={player?.person?.fullName}
+                      />
+                    ))}
+                  </DescriptionList>
+                </Box>
+
+                <Box>
+                  <Heading color="qukBlue" fontSize="2xl" fontFamily="body">
+                    {game?.teamB?.name} Roster
+                  </Heading>
+                  <DescriptionList>
+                    {teamBRoster?.map((player) => (
+                      <Description
+                        key={player?.id}
+                        term={player?.jerseyNumber}
+                        description={player?.person?.fullName}
+                      />
+                    ))}
+                  </DescriptionList>
+                </Box>
+              </Grid>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      )}
     </Flex>
   );
 }
