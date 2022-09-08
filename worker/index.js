@@ -3,7 +3,6 @@
 
 self.addEventListener('push', function (event) {
   const data = event.data.json();
-  console.log(data);
 
   const notification = {
     ...(data?.body && { body: data?.body }),
@@ -18,8 +17,6 @@ self.addEventListener('push', function (event) {
     vibrate: [30, 100, 30],
     actions: data?.actions || [],
   };
-
-  console.log(notification);
 
   event.waitUntil(self.registration.showNotification(data.title, notification));
 });

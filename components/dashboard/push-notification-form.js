@@ -64,9 +64,7 @@ const PushNotificationForm = ({ user }) => {
       const sw = await navigator?.serviceWorker?.ready;
       const push = await sw?.pushManager?.getSubscription();
 
-      console.log(push);
-      console.log(endpoint);
-
+      // only unsubscribe if the push notification being deleted is for this device
       if (push && push.endpoint === endpoint) {
         await push.unsubscribe();
       }
