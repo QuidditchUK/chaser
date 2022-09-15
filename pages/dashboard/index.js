@@ -1,6 +1,13 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Box, Grid, Flex, Heading, Link as ChakraLink } from '@chakra-ui/react';
+import {
+  Box,
+  Grid,
+  Flex,
+  Heading,
+  Link as ChakraLink,
+  Text,
+} from '@chakra-ui/react';
 import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
 import generateServerSideHeaders from 'modules/headers';
@@ -13,9 +20,9 @@ import clubsService from 'services/clubs';
 import Slice from 'components/shared/slice';
 import { PlusSquareIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import GroupIcon from 'public/images/group.svg';
+import { ProductCardV2 } from 'components/dashboard/product-card';
 
 const Meta = dynamic(() => import('components/shared/meta'));
-const ProductCard = dynamic(() => import('components/dashboard/product-card'));
 const PrismicClubCard = dynamic(() => import('components/prismic/club-card'));
 
 const Dashboard = ({ user }) => {
@@ -50,16 +57,17 @@ const Dashboard = ({ user }) => {
         </Heading>
 
         <Grid
-          gridTemplateColumns={{ base: '1fr', md: '2fr 1fr' }}
+          gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }}
           gridGap={{ base: 4, sm: 8, md: 9 }}
           minHeight="300px"
         >
           <Flex flexDirection="column">
             <Heading as="h2" fontFamily="body" color="qukBlue" fontSize="2xl">
-              My membership
+              Membership
             </Heading>
+
             {membership ? (
-              <ProductCard
+              <ProductCardV2
                 key={membership?.id}
                 id={membership?.id}
                 image={membership?.images ? membership?.images?.[0] : null}
@@ -90,9 +98,20 @@ const Dashboard = ({ user }) => {
           </Flex>
 
           <Flex flexDirection="column">
-            <Heading as="h2" fontFamily="body" color="qukBlue" fontSize="2xl">
-              My club
-            </Heading>
+            <Flex
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Heading as="h2" fontFamily="body" color="qukBlue" fontSize="2xl">
+                Club
+              </Heading>
+              <Link href="/dashboard/membership/club" passHref>
+                <ChakraLink fontSize="sm">
+                  Manage <ChevronRightIcon />
+                </ChakraLink>
+              </Link>
+            </Flex>
             {club ? (
               <PrismicClubCard uid={club?.slug} />
             ) : (
@@ -116,6 +135,7 @@ const Dashboard = ({ user }) => {
               </Link>
             )}
           </Flex>
+          <Box />
         </Grid>
       </Slice>
     </>

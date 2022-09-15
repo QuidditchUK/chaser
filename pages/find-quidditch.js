@@ -31,8 +31,6 @@ import { ClubCardV2 } from 'components/clubsEvents/club-card';
 const CloseIcon = dynamic(() => import('public/images/close.svg'));
 const Container = dynamic(() => import('components/layout/container'));
 
-const ClubCard = dynamic(() => import('components/clubsEvents/club-card'));
-
 const Meta = dynamic(() => import('components/shared/meta'));
 const Button = dynamic(() => import('components/shared/button'));
 

@@ -1,17 +1,30 @@
 import parse from 'date-fns/parse';
+import Link from 'next/link';
 import format from 'date-fns/format';
-import { Box, Flex, Grid, Heading, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Grid,
+  Heading,
+  Text,
+  useStyleConfig,
+  Link as ChakraLink,
+} from '@chakra-ui/react';
+import { ChevronRightIcon } from '@chakra-ui/icons';
 import { formatMinorUnitsToCurrency } from 'modules/numbers';
+import Image from 'next/image';
+import { PlainWrapper } from 'components/shared/card';
+import Button from 'components/shared/button';
 
-const StyledCard = (props) => (
+const StyledCard = ({ onClick, ...props }) => (
   <Grid
     borderRadius="md"
     overflow="hidden"
     transition="box-shadow 0.125s"
     bg="white"
-    cursor="pointer"
+    cursor={onClick ? 'pointer' : 'initial'}
     color="black"
-    _hover={{ boxShadow: 'md' }}
+    {...(onClick && { _hover: { boxShadow: 'md' } })}
     {...props}
   />
 );
@@ -104,5 +117,118 @@ const ProductCard = ({
     </Flex>
   </StyledCard>
 );
+
+export const ProductCardV2 = ({
+  image,
+  name,
+  description,
+  price,
+  expires,
+  ...props
+}) => {
+  const isValid = parse(expires, 'dd-MM-yyyy', new Date()) > new Date();
+
+  const styles = useStyleConfig('Card', { variant: 'white' });
+
+  return (
+    <PlainWrapper flexDirection="column" {...props}>
+      <Box
+        __css={styles}
+        as="article"
+        bg="qukBlue"
+        height="100%"
+        width="100%"
+        overflow="hidden"
+        position="relative"
+        borderRadius="xl"
+        {...props}
+      >
+        <Image
+          src={image}
+          alt={description}
+          layout="responsive"
+          objectFit="cover"
+          width={640}
+          height={800}
+        />
+        <Box
+          position="absolute"
+          bottom="0"
+          width="100%"
+          height="100%"
+          opacity={0.8}
+          bg="qukBlue"
+          color="white"
+        />
+        <Flex
+          position="absolute"
+          bottom="0"
+          width="100%"
+          height="100%"
+          bgGradient={`linear(to-tl, ${
+            isValid ? 'northernMagenta' : 'monarchRed'
+          }, rgba(0, 0, 0, 0))`}
+          color="white"
+          px={{ base: 4, sm: 8, md: 9 }}
+          py={4}
+          flexDirection="column"
+          justifyContent="center"
+          textAlign="center"
+        >
+          <Heading
+            as="h2"
+            fontSize="2xl"
+            fontFamily="body"
+            textShadow="0 0 4px rgb(0,0,0)"
+            mb={0}
+          >
+            {name}
+          </Heading>
+
+          {isValid && (
+            <Text
+              fontSize="sm"
+              fontWeight="bold"
+              textShadow="0 0 2px rgb(0,0,0)"
+              my={2}
+            >
+              {description}
+            </Text>
+          )}
+
+          {!isValid && (
+            <Link href="/dashboard/membership/manage" passHref>
+              <ChakraLink>
+                <Button variant="transparent" mt={2}>
+                  Renew your Quidditch UK Membership
+                </Button>
+              </ChakraLink>
+            </Link>
+          )}
+        </Flex>
+
+        <Flex
+          bg={isValid ? 'qukBlue' : 'monarchRed'}
+          width="100%"
+          overflow="hidden"
+          alignItems="center"
+          position="absolute"
+          bottom="0"
+          justifyContent="center"
+        >
+          <Text
+            fontSize="md"
+            fontWeight="bold"
+            color="white"
+            textAlign="center"
+          >
+            {isValid ? 'Valid until' : 'Expired'}{' '}
+            {format(parse(expires, 'dd-MM-yyyy', new Date()), 'd LLL yyyy')}
+          </Text>
+        </Flex>
+      </Box>
+    </PlainWrapper>
+  );
+};
 
 export default ProductCard;

@@ -1,7 +1,5 @@
 import { RichText } from 'prismic-reactjs';
 import format from 'date-fns/format';
-import CATEGORIES from 'constants/categories';
-import { rem } from 'styles/theme';
 import {
   useStyleConfig,
   Box,
