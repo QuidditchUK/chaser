@@ -303,7 +303,7 @@ function GameCard({ game, size = 'md', index }) {
             </Text>
           </Grid>
 
-          {game?.status === 'FINISHED' ? (
+          {game?.status === 'FINISHED' || game?.status === 'ABANDONED' ? (
             <Flex alignItems="center" justifyContent="center">
               <Grid gridTemplateColumns="1fr auto 1fr" gridGap={2}>
                 <Text
