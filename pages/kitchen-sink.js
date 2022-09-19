@@ -16,6 +16,7 @@ export const getServerSideProps = async ({
   res,
 }) => {
   const auth = await isAuthorized(req, res, DASHBOARD_SCOPES);
+
   if (!auth) {
     return {
       redirect: {
