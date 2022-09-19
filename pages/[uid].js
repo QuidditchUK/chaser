@@ -30,7 +30,7 @@ export const getStaticPaths = async () => {
   const allPages = await getDocs('pages');
 
   // TODO: Need to find a better way to power this
-  const nonPrismicPages = ['videos', 'clubs', 'merch', 'news'];
+  const nonPrismicPages = ['videos', 'clubs', 'merch', 'news', 'kitchen-sink'];
   const allPrismicPages = allPages.filter(
     ({ uid }) => !nonPrismicPages.includes(uid)
   );

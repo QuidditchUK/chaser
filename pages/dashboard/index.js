@@ -1,13 +1,6 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import {
-  Box,
-  Grid,
-  Flex,
-  Heading,
-  Link as ChakraLink,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Flex, Heading, Link as ChakraLink } from '@chakra-ui/react';
 import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
 import generateServerSideHeaders from 'modules/headers';
