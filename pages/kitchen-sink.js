@@ -13,7 +13,12 @@ export const getServerSideProps = async ({
 }) => {
   const auth = await isAuthorized(req, res, DASHBOARD_SCOPES);
   if (!auth) {
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
   }
 
   const prismicProps = await getStaticPrismicProps({
