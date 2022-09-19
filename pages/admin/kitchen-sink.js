@@ -1,5 +1,7 @@
 import { getStaticPrismicProps } from 'modules/prismic';
 import dynamic from 'next/dynamic';
+import { DASHBOARD_SCOPES } from 'constants/scopes';
+import isAuthorized from 'modules/auth';
 
 const PrismicPage = dynamic(() => import('components/shared/prismic-page'));
 
@@ -10,6 +12,8 @@ const KitchenSink = (props) => (
 export const getServerSideProps = async ({
   preview = null,
   previewData = { ref: null },
+  req,
+  res,
 }) => {
   const auth = await isAuthorized(req, res, DASHBOARD_SCOPES);
   if (!auth) {
