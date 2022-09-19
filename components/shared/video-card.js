@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
-  Grid,
   Heading,
   Flex,
   Text,
@@ -12,7 +11,6 @@ import {
   Stack,
   Box,
 } from '@chakra-ui/react';
-import Image from 'next/image';
 import DescriptionList, { Description } from './description-list';
 
 import { useInView } from 'react-intersection-observer';
@@ -149,57 +147,9 @@ const VideoCard = ({ video }) => {
     return undefined;
   }, [isYoutube, isFacebook, videoLink, oembed, inView, setLoading, loading]);
 
-  console.log(oembed?.data);
-
   return (
-    <Grid
-      flexDirection="row"
-      ref={ref}
-      borderRadius="lg"
-      gridTemplateColumns="1fr 2fr"
-      bg="white"
-      gridGap={3}
-    >
-      <Box
-        position="relative"
-        height={{ base: '100%', md: 'auto' }}
-        width={{ base: '100%', md: 'auto' }}
-        overflow="hidden"
-      >
-        {oembed?.data && !loading ? <Embed embed={oembed?.data} /> : null}
-      </Box>
-
-      <Box pr={3}>
-        <Heading as="h2" fontFamily="body" textAlign="center" fontSize="xl">
-          {video['Team 1']} vs {video['Team 2']}
-        </Heading>
-        <Text fontWeight="bold" textAlign="center">
-          {video.Score}
-        </Text>
-
-        <DescriptionList>
-          <Description term="Event" description={video.Tournament} />
-          <Description term="Credit" description={video.Credit} />
-        </DescriptionList>
-
-        {videos.length !== 1 && (
-          <Stack direction="row" spacing={2} pt={3}>
-            {videos.map((videoLink, i) => (
-              <Button
-                size="sm"
-                onClick={() => {
-                  setLoading(true);
-                  setVideoLink(videoLink);
-                }}
-                key={`video-link-${videoLink}`}
-              >
-                Video {i + 1}
-              </Button>
-            ))}
-          </Stack>
-        )}
-      </Box>
-      {/* <Card
+    <Flex flexDirection="column" ref={ref}>
+      <Card
         embed={oembed?.data && !loading ? <Embed embed={oembed?.data} /> : null}
         content={
           <>
@@ -233,8 +183,8 @@ const VideoCard = ({ video }) => {
             )}
           </>
         }
-      /> */}
-    </Grid>
+      />
+    </Flex>
   );
 };
 

@@ -172,7 +172,7 @@ const Page = ({ data: initialData }) => {
             <Heading>{row?.Date}</Heading>
 
             <Grid
-              gridTemplateColumns="1fr"
+              gridTemplateColumns="repeat(auto-fit, minmax(250px, 1fr))"
               gridGap={{ base: 4, md: 9 }}
               px={{ base: 4, sm: 8, md: 0 }}
             >

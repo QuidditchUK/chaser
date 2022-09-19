@@ -38,7 +38,7 @@ export const SliceStyles = {
     },
     primary: {
       color: 'white',
-      bgGradient: 'linear(to-br, qukBlue, blue.700)',
+      bg: 'qukBlue',
       '& a': {
         fontWeight: 'bold',
         textDecoration: 'none',
@@ -52,7 +52,7 @@ export const SliceStyles = {
     },
     secondary: {
       color: 'white',
-      bgGradient: 'linear(to-br, monarchRed, red.500)',
+      bg: 'monarchRed',
       '& a': {
         fontWeight: 'bold',
         textDecoration: 'none',
@@ -80,7 +80,7 @@ export const SliceStyles = {
     },
     dark: {
       color: 'white',
-      bgGradient: 'linear(to-br, darkBlue, gray.700)',
+      bg: 'darkBlue',
       '& a': {
         fontWeight: 'bold',
         textDecoration: 'none',
