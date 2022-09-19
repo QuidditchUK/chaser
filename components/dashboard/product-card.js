@@ -146,10 +146,9 @@ export const ProductCardV2 = ({
         <Image
           src={image}
           alt={description}
-          layout="responsive"
+          role="description"
+          layout="fill"
           objectFit="cover"
-          width={640}
-          height={800}
         />
         <Box
           position="absolute"

@@ -21,6 +21,13 @@ import Slice from 'components/shared/slice';
 import { PlusSquareIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import GroupIcon from 'public/images/group.svg';
 import { ProductCardV2 } from 'components/dashboard/product-card';
+import { InfoCard } from 'components/dashboard/info-card';
+
+const Container = dynamic(() => import('components/layout/container'));
+
+const HorizontalScrollWrapper = dynamic(() =>
+  import('components/shared/horizontal-scroll-wrapper')
+);
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const PrismicClubCard = dynamic(() => import('components/prismic/club-card'));
@@ -45,99 +52,128 @@ const Dashboard = ({ user }) => {
         description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
         subTitle="Dashboard"
       />
-      <Slice>
-        <Heading
-          as="h1"
-          fontFamily="body"
-          color="qukBlue"
-          mt={0}
-          fontSize="3xl"
-        >
-          Hello, {user.first_name} 👋
-        </Heading>
+      <Box
+        bg="greyLight"
+        py={{ base: 6, lg: 10 }}
+        px={{ base: 0, md: 9 }}
+        sx={{
+          '& a': {
+            fontWeight: 'bold',
+            textDecoration: 'none',
+            color: 'monarchRed',
 
-        <Grid
-          gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }}
-          gridGap={{ base: 4, sm: 8, md: 9 }}
-          minHeight="300px"
-        >
-          <Flex flexDirection="column">
-            <Heading as="h2" fontFamily="body" color="qukBlue" fontSize="2xl">
-              Membership
-            </Heading>
+            _hover: {
+              textDecoration: 'none',
+              color: 'monarchRed',
+            },
+          },
+        }}
+      >
+        <Container>
+          <Heading
+            as="h1"
+            fontFamily="body"
+            color="qukBlue"
+            mt={0}
+            px={{ base: 8, md: 0 }}
+            fontSize="3xl"
+          >
+            Hello, {user.first_name} 👋
+          </Heading>
 
-            {membership ? (
-              <ProductCardV2
-                key={membership?.id}
-                id={membership?.id}
-                image={membership?.images ? membership?.images?.[0] : null}
-                description={membership?.description}
-                name={membership?.name}
-                expires={membership?.metadata?.expires}
-              />
-            ) : (
-              <Link href="/dashboard/membership/manage" passHref>
-                <ChakraLink height="100%">
-                  <Flex
-                    direction="column"
-                    borderRadius="lg"
-                    bg="gray.300"
-                    height="100%"
-                    alignItems="center"
-                    justifyContent="center"
-                    p={4}
-                  >
-                    <PlusSquareIcon w={100} h={100} color="gray.400" />
-                    <Flex alignItems="center" color="gray.600">
-                      Purchase your Quidditch UK Membership <ChevronRightIcon />
-                    </Flex>
-                  </Flex>
-                </ChakraLink>
-              </Link>
-            )}
-          </Flex>
-
-          <Flex flexDirection="column">
-            <Flex
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
+          <HorizontalScrollWrapper horizontalScroll itemsCount={3}>
+            <Flex flexDirection="column">
               <Heading as="h2" fontFamily="body" color="qukBlue" fontSize="2xl">
-                Club
+                Membership
               </Heading>
-              <Link href="/dashboard/membership/club" passHref>
-                <ChakraLink fontSize="sm">
-                  Manage <ChevronRightIcon />
-                </ChakraLink>
-              </Link>
-            </Flex>
-            {club ? (
-              <PrismicClubCard uid={club?.slug} />
-            ) : (
-              <Link href="/dashboard/membership/club" passHref>
-                <ChakraLink height="100%">
-                  <Flex
-                    direction="column"
-                    borderRadius="lg"
-                    bg="gray.300"
-                    height="100%"
-                    alignItems="center"
-                    justifyContent="center"
-                    p={4}
-                  >
-                    <Box as={GroupIcon} w={100} h={100} color="gray.400" />
-                    <Flex alignItems="center" color="gray.600">
-                      Select your club <ChevronRightIcon />
+
+              {membership ? (
+                <ProductCardV2
+                  key={membership?.id}
+                  id={membership?.id}
+                  image={membership?.images ? membership?.images?.[0] : null}
+                  description={membership?.description}
+                  name={membership?.name}
+                  expires={membership?.metadata?.expires}
+                />
+              ) : (
+                <Link href="/dashboard/membership/manage" passHref>
+                  <ChakraLink height="100%">
+                    <Flex
+                      direction="column"
+                      borderRadius="lg"
+                      bg="gray.300"
+                      height="100%"
+                      alignItems="center"
+                      justifyContent="center"
+                      p={4}
+                    >
+                      <PlusSquareIcon w={100} h={100} color="gray.400" />
+                      <Flex alignItems="center" color="gray.600">
+                        Purchase your Quidditch UK Membership{' '}
+                        <ChevronRightIcon />
+                      </Flex>
                     </Flex>
-                  </Flex>
-                </ChakraLink>
-              </Link>
-            )}
-          </Flex>
-          <Box />
-        </Grid>
-      </Slice>
+                  </ChakraLink>
+                </Link>
+              )}
+            </Flex>
+
+            <Flex flexDirection="column">
+              <Flex
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Heading
+                  as="h2"
+                  fontFamily="body"
+                  color="qukBlue"
+                  fontSize="2xl"
+                >
+                  Club
+                </Heading>
+                {club && (
+                  <Link href="/dashboard/membership/club" passHref>
+                    <ChakraLink>
+                      Manage <ChevronRightIcon />
+                    </ChakraLink>
+                  </Link>
+                )}
+              </Flex>
+              {club ? (
+                <PrismicClubCard uid={club?.slug} />
+              ) : (
+                <Link href="/dashboard/membership/club" passHref>
+                  <ChakraLink height="100%">
+                    <Flex
+                      direction="column"
+                      borderRadius="lg"
+                      bg="gray.300"
+                      height="100%"
+                      alignItems="center"
+                      justifyContent="center"
+                      p={4}
+                    >
+                      <Box as={GroupIcon} w={100} h={100} color="gray.400" />
+                      <Flex alignItems="center" color="gray.600">
+                        Select your club <ChevronRightIcon />
+                      </Flex>
+                    </Flex>
+                  </ChakraLink>
+                </Link>
+              )}
+            </Flex>
+            <Flex flexDirection="column" alignContent="flex-end">
+              <Heading as="h2" fontFamily="body" color="qukBlue" fontSize="2xl">
+                Player Profile
+              </Heading>
+
+              <InfoCard user={user} club={club} />
+            </Flex>
+          </HorizontalScrollWrapper>
+        </Container>
+      </Box>
     </>
   );
 };
