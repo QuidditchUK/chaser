@@ -14,11 +14,11 @@ export const getServerSideProps = async ({ req, res }) => {
 
   if (!auth) {
     return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
       props: {},
+      // redirect: {
+      //   permanent: false,
+      //   destination: '/',
+      // },
     };
   }
 
