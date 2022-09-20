@@ -7,6 +7,7 @@ Disallow: /dashboard/*
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /youth/coach
+Disallow: /kitchen-sink
 Allow: /*?utm_source=*
 
 User-agent: Mediapartners-Google
@@ -15,6 +16,7 @@ Disallow: /dashboard/*
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /youth/coach
+Disallow: /kitchen-sink
 Allow: /*?utm_source=*
 
 User-agent: AdsBot-Google
@@ -23,6 +25,7 @@ Disallow: /dashboard/*
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /youth/coach
+Disallow: /kitchen-sink
 Allow: /*?utm_source=*
 
 User-agent: AdsBot-Google-Mobile
@@ -31,6 +34,7 @@ Disallow: /dashboard/*
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /youth/coach
+Disallow: /kitchen-sink
 Allow: /*?utm_source=*
 
 User-agent: Mediapartners-Google
@@ -39,6 +43,7 @@ Disallow: /dashboard/*
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /youth/coach
+Disallow: /kitchen-sink
 Allow: /*?utm_source=*
 
 User-agent: Bingbot
@@ -47,6 +52,7 @@ Disallow: /dashboard/*
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /youth/coach
+Disallow: /kitchen-sink
 Allow: /*?utm_source=*
 
 User-agent: YandexBot
@@ -55,6 +61,7 @@ Disallow: /dashboard/*
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /youth/coach
+Disallow: /kitchen-sink
 Allow: /*?utm_source=*
 
 User-agent: Baiduspider
@@ -63,6 +70,7 @@ Disallow: /dashboard/*
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /youth/coach
+Disallow: /kitchen-sink
 Allow: /*?utm_source=*
 
 User-agent: *
@@ -71,6 +79,7 @@ Disallow: /dashboard/*
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /youth/coach
+Disallow: /kitchen-sink
 Allow: /*?utm_source=*
 
 Sitemap: https://quidditchuk.org/sitemap.xml

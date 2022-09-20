@@ -15,10 +15,6 @@ export const getServerSideProps = async ({ req, res }) => {
   if (!auth) {
     return {
       props: {},
-      // redirect: {
-      //   permanent: false,
-      //   destination: '/',
-      // },
     };
   }
 
