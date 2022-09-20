@@ -24,7 +24,7 @@ const StyledCard = ({ onClick, ...props }) => (
     bg="white"
     cursor={onClick ? 'pointer' : 'initial'}
     color="black"
-    {...(onClick && { _hover: { boxShadow: 'md' } })}
+    {...(onClick && { _hover: { boxShadow: 'md' }, onClick })}
     {...props}
   />
 );
