@@ -1,7 +1,8 @@
 import cookies from 'js-cookie';
 import cookie from 'cookie';
+import { NextIncomingMessage } from 'next/dist/server/request-meta';
 
-export const setCookies = (name, value) => {
+export const setCookies = (name: string, value: string) => {
   const cookiesDomain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
   const cookiesSecure = process.env.NEXT_PUBLIC_COOKIE_SECURE;
 
@@ -12,7 +13,7 @@ export const setCookies = (name, value) => {
   });
 };
 
-export const removeCookie = (name) => {
+export const removeCookie = (name: string) => {
   const cookiesDomain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
   const cookiesSecure = process.env.NEXT_PUBLIC_COOKIE_SECURE;
 
@@ -22,5 +23,6 @@ export const removeCookie = (name) => {
   });
 };
 
-export const parseCookies = (req) =>
-  cookie.parse(req ? req.headers.cookie || '' : document.cookie);
+export const parseCookies = (req: NextIncomingMessage) => {
+  return cookie.parse(req ? req?.headers?.cookie || '' : document.cookie);
+};

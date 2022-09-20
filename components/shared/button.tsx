@@ -1,11 +1,21 @@
-import { forwardRef } from 'react';
+import { forwardRef, ForwardedRef } from 'react';
 import {
   Button as ChakraButton,
   useStyleConfig,
   Box,
   Link as ChakraLink,
+  BoxProps,
+  ButtonProps as ChakraButtonProps,
 } from '@chakra-ui/react';
 import Link from 'next/link';
+
+import React from 'react';
+
+type ForwardPropTypeHelper<ReturnType, ComponentProps, DefaultForwardRef> = <
+  T = DefaultForwardRef
+>(
+  props: ComponentProps & { ref?: React.ForwardedRef<T> }
+) => ReturnType;
 
 const ExternalLink = ({ href, children, ...props }) => {
   const regex = new RegExp('(http)|(mailto)', 'g');
@@ -145,9 +155,26 @@ export const ButtonStyles = {
   },
 };
 
-const Button = forwardRef(function Button(
-  { variant = 'primary', size = 'md', href, ...rest },
-  ref
+type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'light'
+  | 'white'
+  | 'green'
+  | 'transparent';
+
+type ButtonSize = 'sm' | 'md';
+
+export type ButtonProps = BoxProps &
+  ChakraButtonProps & {
+    variant?: ButtonVariant;
+    size?: ButtonSize;
+    href?: string;
+  };
+
+function Button(
+  { variant = 'primary', size = 'md', href, ...rest }: ButtonProps,
+  ref: ForwardedRef<HTMLButtonElement>
 ) {
   const styles = useStyleConfig('Button', { variant, size });
   const Wrapper = href ? ExternalLink : Box;
@@ -163,6 +190,10 @@ const Button = forwardRef(function Button(
       <ChakraButton __css={styles} ref={ref} {...rest} />
     </Wrapper>
   );
-});
+}
 
-export default Button;
+export default forwardRef(Button) as ForwardPropTypeHelper<
+  ReturnType<typeof Button>,
+  ButtonProps,
+  HTMLButtonElement
+>;

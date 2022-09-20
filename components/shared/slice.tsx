@@ -1,5 +1,9 @@
-import { useMultiStyleConfig, StylesProvider } from '@chakra-ui/react';
-import { Box } from '@chakra-ui/react';
+import {
+  useMultiStyleConfig,
+  StylesProvider,
+  BoxProps,
+  Box,
+} from '@chakra-ui/react';
 
 export const SliceStyles = {
   parts: ['slice', 'container'],
@@ -130,7 +134,7 @@ export default function Slice({
   children,
   px,
   py,
-}) {
+}: BoxProps & { variant?: string; size?: string }) {
   const styles = useMultiStyleConfig('Slice', { size, variant });
   return (
     <Box

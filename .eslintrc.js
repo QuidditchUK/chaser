@@ -4,12 +4,6 @@ module.exports = {
     'max-len': 0,
     'no-restricted-globals': 0,
     camelcase: 0,
-    'react/jsx-filename-extension': [
-      1,
-      {
-        extensions: ['.js', '.jsx'],
-      },
-    ],
     'react/destructuring-assignment': 0,
     'react/jsx-props-no-spreading': 0,
     'react/jsx-one-expression-per-line': 0,

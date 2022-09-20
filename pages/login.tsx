@@ -15,12 +15,12 @@ import usersService from 'services/users';
 import Slice from 'components/shared/slice';
 import AuthCallout from 'components/shared/auth-callout';
 import Error from 'components/shared/errors';
+import { GetServerSideProps } from 'next';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
 
 const Button = dynamic(() => import('components/shared/button'));
-const Content = dynamic(() => import('components/shared/content'));
 
 const LoginFormSchema = object().shape({
   email: string()
@@ -132,7 +132,7 @@ const LoginPage = () => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const basePageProps = await getBasePageProps();
   const { AUTHENTICATION_TOKEN } = parseCookies(req);
 

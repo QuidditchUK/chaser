@@ -1,13 +1,24 @@
 import dynamic from 'next/dynamic';
 import { Flex, Link, Box, Text } from '@chakra-ui/react';
+import { NextComponentType } from 'next';
 
 const Navigation = dynamic(() => import('components/layout/navigationV2'));
 const Footer = dynamic(() => import('components/layout/footer'));
-const PageErrorBoundary = dynamic(() =>
-  import('components/errorBoundaries/page')
+const PageErrorBoundary = dynamic(
+  () => import('components/errorBoundaries/page')
 );
 
-const Layout = ({ header, footer, children, preview = false }) => {
+const Layout = ({
+  header,
+  footer,
+  children,
+  preview = false,
+}: {
+  preview?: boolean;
+  children: NextComponentType | Element;
+  header: any;
+  footer: any;
+}) => {
   return (
     <Flex
       color="gray.800"
@@ -41,7 +52,7 @@ const Layout = ({ header, footer, children, preview = false }) => {
       )}
       <Navigation data={header} />
       <PageErrorBoundary>
-        <Box as="main" display="flex" flexDirection="column" flexGrow="1">
+        <Box as="main" display="flex" flexDirection="column" flexGrow={1}>
           {children}
         </Box>
       </PageErrorBoundary>

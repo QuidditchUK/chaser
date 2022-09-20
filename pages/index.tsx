@@ -1,3 +1,4 @@
+import { GetStaticProps } from 'next';
 import { getStaticPrismicProps } from 'modules/prismic';
 import dynamic from 'next/dynamic';
 
@@ -5,7 +6,7 @@ const PrismicPage = dynamic(() => import('components/shared/prismic-page'));
 
 const Home = (props) => <PrismicPage type="pages" uid="home" {...props} />;
 
-export const getStaticProps = async ({
+export const getStaticProps: GetStaticProps = async ({
   preview = null,
   previewData = { ref: null },
 }) => {
