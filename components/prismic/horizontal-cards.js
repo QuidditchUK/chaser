@@ -12,7 +12,8 @@ const HorizontalCard = dynamic(() =>
 const Slice = dynamic(() => import('components/shared/slice'));
 const Content = dynamic(() => import('components/shared/content'));
 
-const HorizontalCardsSlice = ({ primary, items }) => {
+const HorizontalCardsSlice = ({ slice }) => {
+  const { primary, items } = slice;
   const { title, content, variant } = primary;
 
   return (

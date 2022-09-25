@@ -4,7 +4,8 @@ import { Heading, Link } from '@chakra-ui/react';
 
 const Slice = dynamic(() => import('components/shared/slice'));
 
-const NationalTeamInterest = ({ primary }) => {
+const NationalTeamInterest = ({ slice }) => {
+  const { primary } = slice;
   return (
     <Slice variant={primary?.variant}>
       <Heading as="h1" fontFamily="body" textAlign="center">

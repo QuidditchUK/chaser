@@ -2,8 +2,8 @@ import Image from 'next/image';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import { HERO_MIN_HEIGHTS } from 'styles/hero-heights';
 
-const Hero = ({ primary }) => {
-  const { slug, image } = primary;
+const Hero = ({ slice }) => {
+  const { slug, image } = slice?.primary;
 
   return (
     <Box

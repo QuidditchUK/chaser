@@ -64,14 +64,20 @@ const Item = ({ item, isEmbedLeft }) => (
   </Grid>
 );
 
-const EmbedAndContent = ({ items }) => (
-  <>
-    {items.map((item, i) => (
-      <Slice variant={item?.variant} key={`embed-and-content-${i}`}>
-        <Item item={item} isEmbedLeft={item.layout_content === 'embed-left'} />
-      </Slice>
-    ))}
-  </>
-);
+const EmbedAndContent = ({ slice }) => {
+  const { items } = slice;
+  return (
+    <>
+      {items.map((item, i) => (
+        <Slice variant={item?.variant} key={`embed-and-content-${i}`}>
+          <Item
+            item={item}
+            isEmbedLeft={item.layout_content === 'embed-left'}
+          />
+        </Slice>
+      ))}
+    </>
+  );
+};
 
 export default EmbedAndContent;

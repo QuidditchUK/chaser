@@ -66,10 +66,10 @@ const Item = ({ item, isImageLeft }) => (
   </Grid>
 );
 
-const ImageAndContent = ({ items }) => {
+const ImageAndContent = ({ slice }) => {
   return (
     <>
-      {items.map((item, i) => (
+      {slice?.items?.map((item, i) => (
         <Slice variant={item.variant} key={`image-and-content-${i}`}>
           <Item
             item={item}

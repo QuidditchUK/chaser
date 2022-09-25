@@ -47,7 +47,8 @@ const handleContactSubmit = async (
   }
 };
 
-const ContactForm = ({ primary }) => {
+const ContactForm = ({ slice }) => {
+  const { primary } = slice;
   const [serverError, setServerError] = useTempPopup();
   const [serverSuccess, setServerSuccess] = useTempPopup();
 

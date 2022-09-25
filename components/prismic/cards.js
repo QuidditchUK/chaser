@@ -13,7 +13,8 @@ const HorizontalScrollWrapper = dynamic(() =>
 
 import { linkResolver } from 'modules/prismic';
 
-const CardsSlice = ({ primary = {}, items = [] }) => {
+const CardsSlice = ({ slice }) => {
+  const { primary = {}, items = [] } = slice;
   const { title, content, variant, horizontalScroll } = primary;
 
   return (

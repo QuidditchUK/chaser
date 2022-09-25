@@ -46,7 +46,7 @@ const handleVolunteerSubmit = async (
   }
 };
 
-const VolunteerForm = ({ primary }) => {
+const VolunteerForm = ({ slice }) => {
   const [serverError, setServerError] = useTempPopup();
   const [serverSuccess, setServerSuccess] = useTempPopup();
 
@@ -65,7 +65,7 @@ const VolunteerForm = ({ primary }) => {
       message: '',
     },
   });
-
+  const { primary } = slice;
   const { variant } = primary;
 
   return (

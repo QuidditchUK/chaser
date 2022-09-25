@@ -60,7 +60,8 @@ export const Item = ({ embed, support }) => (
   </Box>
 );
 
-const EmbedSlice = ({ primary, items }) => {
+const EmbedSlice = ({ slice }) => {
+  const { primary, items } = slice;
   const { title, content, variant, size = 'sm' } = primary;
 
   return (

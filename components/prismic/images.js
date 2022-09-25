@@ -26,7 +26,9 @@ const Item = ({ item }) => {
   );
 };
 
-const ImageSlice = ({ primary, items }) => {
+const ImageSlice = ({ slice }) => {
+  const { primary, items } = slice;
+
   return (
     <Slice variant={primary?.variant} size="md">
       <Grid

@@ -12,12 +12,14 @@ const HorizontalScrollWrapper = dynamic(() =>
 );
 
 const News = ({
-  posts = [],
+  posts,
   category,
   horizontalScroll = true,
   showAllNewsButton = true,
   tag,
+  context,
 }) => {
+  const items = (posts ?? context?.posts) || [];
   return (
     <Box bg="greyLight" py={{ base: 6, lg: 10 }} px={{ base: 0, md: 9 }}>
       <Container>
@@ -53,10 +55,10 @@ const News = ({
         </Flex>
 
         <HorizontalScrollWrapper
-          itemsCount={posts?.length}
+          itemsCount={items?.length}
           horizontalScroll={horizontalScroll}
         >
-          {posts.map(({ uid, data }) => (
+          {items.map(({ uid, data }) => (
             <Flex flexDirection="column" key={uid}>
               <NewsCard
                 title={data.title}

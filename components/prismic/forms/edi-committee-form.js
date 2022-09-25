@@ -49,7 +49,7 @@ const handleCommitteeSubmit = async (
   }
 };
 
-const EDICommitteeForm = ({ primary }) => {
+const EDICommitteeForm = ({ slice }) => {
   const [serverError, setServerError] = useTempPopup();
   const [serverSuccess, setServerSuccess] = useTempPopup();
 
@@ -70,6 +70,7 @@ const EDICommitteeForm = ({ primary }) => {
     },
   });
 
+  const { primary } = slice;
   const { variant } = primary;
 
   return (

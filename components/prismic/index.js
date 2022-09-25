@@ -69,16 +69,9 @@ const slices = {
 };
 
 function PrismicSlice({ sections, posts }) {
-  return sections.map((section, i) => {
-    const Component = slices[section.slice_type];
-
-    if (!Component) {
-      console.warn('Missing Prismic Component ID: ', section.slice_type);
-      return null;
-    }
-
-    return <Component key={`prismic${i}`} {...section} posts={posts} />;
-  });
+  return (
+    <SliceZone slices={sections} components={slices} context={{ posts }} />
+  );
 }
 
 export default PrismicSlice;

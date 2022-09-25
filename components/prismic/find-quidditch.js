@@ -13,9 +13,9 @@ const handleFindQuidditch = async ({ postcode }, router) => {
   window.scrollTo(0, 0);
 };
 
-const FindQuidditch = ({ primary }) => {
+const FindQuidditch = ({ slice }) => {
   const router = useRouter();
-  const { title, image, variant } = primary;
+  const { title, image, variant } = slice?.primary;
 
   const { register, handleSubmit } = useForm({
     defaultValues: { postcode: '' },

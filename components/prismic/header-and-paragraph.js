@@ -9,8 +9,9 @@ const Content = dynamic(() => import('components/shared/content'));
 
 import { buttonVariants } from 'components/shared/slice';
 
-const HeaderAndParagraph = ({ primary }) => {
-  const { title, center_title, content, variant, cta_text, cta_url } = primary;
+const HeaderAndParagraph = ({ slice }) => {
+  const { title, center_title, content, variant, cta_text, cta_url } =
+    slice?.primary;
 
   return (
     <Slice variant={variant} size="sm">

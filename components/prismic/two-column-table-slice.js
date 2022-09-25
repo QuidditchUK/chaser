@@ -26,7 +26,8 @@ const Th = (props) => (
   />
 );
 
-const TwoColumnTable = ({ primary, items }) => {
+const TwoColumnTable = ({ slice }) => {
+  const { primary, items } = slice;
   const { title, column_one_title, column_two_title, variant } = primary;
 
   return (

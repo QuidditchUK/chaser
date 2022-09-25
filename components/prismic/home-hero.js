@@ -28,13 +28,13 @@ const Video = (props) => (
   />
 );
 
-const HomeHero = ({ primary }) => {
+const HomeHero = ({ slice }) => {
   const router = useRouter();
   const { register, handleSubmit } = useForm({
     defaultValues: { postcode: '' },
   });
 
-  const { slug, cta_text, video_url, poster } = primary;
+  const { slug, cta_text, video_url, poster } = slice?.primary;
 
   return (
     <Box

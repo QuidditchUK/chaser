@@ -53,7 +53,8 @@ const PrismicEventCard = ({ event }) => {
   );
 };
 
-const EventsCardSlice = ({ primary, items }) => {
+const EventsCardSlice = ({ slice }) => {
+  const { primary, items } = slice;
   const { title, content, variant } = primary;
 
   return (

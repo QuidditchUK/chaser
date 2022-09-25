@@ -11,7 +11,8 @@ import useCachedResponse from 'hooks/useCachedResponse';
 
 const Slice = dynamic(() => import('components/shared/slice'));
 
-const SchedulerFeed = ({ primary }) => {
+const SchedulerFeed = ({ slice }) => {
+  const { primary } = slice;
   const { scheduler_url } = primary;
 
   const { data } = useCachedResponse({
