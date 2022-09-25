@@ -1,4 +1,5 @@
-import { RichText, Link } from 'prismic-reactjs';
+import { PrismicRichText, PrismicText } from '@prismicio/react';
+import * as prismicH from '@prismicio/helpers';
 import { cardVariants } from 'components/shared/slice';
 import dynamic from 'next/dynamic';
 
@@ -20,7 +21,7 @@ const CardsSlice = ({ primary = {}, items = [] }) => {
       variant={variant}
       px={horizontalScroll ? { base: 0, md: 9 } : { base: 4, sm: 8, md: 9 }}
     >
-      {RichText.asText(title) && (
+      {prismicH.asText(title) && (
         <Heading
           as="h2"
           mt={2}
@@ -28,7 +29,7 @@ const CardsSlice = ({ primary = {}, items = [] }) => {
           fontSize={{ base: '2xl', md: '3xl' }}
           px={horizontalScroll ? { base: 4, sm: 8, md: 9 } : { base: 0, md: 9 }}
         >
-          {RichText.asText(title)}
+          <PrismicText field={title} />
         </Heading>
       )}
 
@@ -38,7 +39,7 @@ const CardsSlice = ({ primary = {}, items = [] }) => {
           pb={3}
           px={horizontalScroll ? { base: 4, sm: 8, md: 9 } : { base: 0, md: 9 }}
         >
-          <RichText render={content} linkResolver={linkResolver} />
+          <PrismicRichText field={content} />
         </Box>
       )}
 
@@ -49,9 +50,9 @@ const CardsSlice = ({ primary = {}, items = [] }) => {
         {items.map((item, i) => {
           const { title, content, image, link } = item;
 
-          const linkProps = Link.url(link, linkResolver)
+          const linkProps = prismicH.asLink(link, linkResolver)
             ? {
-                href: Link.url(link, linkResolver),
+                href: prismicH.asLink(link, linkResolver),
                 target: link.target,
                 ariaLabel: title,
                 ...(link.target === '_blank' && {

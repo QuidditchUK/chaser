@@ -1,6 +1,7 @@
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
+import * as prismicH from '@prismicio/helpers';
+
 import dynamic from 'next/dynamic';
-import { linkResolver } from 'modules/prismic';
 
 import {
   Heading,
@@ -30,9 +31,9 @@ const TwoColumnTable = ({ primary, items }) => {
 
   return (
     <Slice variant={variant} size="sm">
-      {RichText.asText(title) && (
+      {prismicH.asText(title) && (
         <Heading as="h2" fontSize="3xl" mt={2}>
-          <RichText render={title} linkResolver={linkResolver} />
+          <PrismicRichText field={title} />
         </Heading>
       )}
 
@@ -44,14 +45,14 @@ const TwoColumnTable = ({ primary, items }) => {
                 variant === 'light' || variant === 'white' ? 'inherit' : 'white'
               }
             >
-              <RichText render={column_one_title} linkResolver={linkResolver} />
+              <PrismicRichText field={column_one_title} />
             </Th>
             <Th
               color={
                 variant === 'light' || variant === 'white' ? 'inherit' : 'white'
               }
             >
-              <RichText render={column_two_title} linkResolver={linkResolver} />
+              <PrismicRichText field={column_two_title} />
             </Th>
           </Tr>
         </Thead>
@@ -60,16 +61,10 @@ const TwoColumnTable = ({ primary, items }) => {
           {items.map((item, i) => (
             <Tr key={`${column_one_title}_${column_two_title}_${i}`}>
               <Td>
-                <RichText
-                  render={item.column_one}
-                  linkResolver={linkResolver}
-                />
+                <PrismicRichText field={item.column_one} />
               </Td>
               <Td>
-                <RichText
-                  render={item.column_two}
-                  linkResolver={linkResolver}
-                />
+                <PrismicRichText field={item.column_two} />
               </Td>
             </Tr>
           ))}

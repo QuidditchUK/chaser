@@ -1,9 +1,10 @@
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText, PrismicText } from '@prismicio/react';
+import * as prismicH from '@prismicio/helpers';
 import dynamic from 'next/dynamic';
 
 import { Flex, Heading, Box } from '@chakra-ui/react';
 
-import { getPrismicDocByUid, linkResolver } from 'modules/prismic';
+import { getPrismicDocByUid } from 'modules/prismic';
 import { useEffect, useState } from 'react';
 
 const Slice = dynamic(() => import('components/shared/slice'));
@@ -57,7 +58,7 @@ const EventsCardSlice = ({ primary, items }) => {
 
   return (
     <Slice variant={variant}>
-      {RichText.asText(title) && (
+      {prismicH.asText(title) && (
         <Heading
           as="h2"
           mt={2}
@@ -65,13 +66,13 @@ const EventsCardSlice = ({ primary, items }) => {
           px={{ base: 0, md: 9 }}
           fontFamily="body"
         >
-          {RichText.asText(title)}
+          <PrismicText field={title} />
         </Heading>
       )}
 
       {content && (
         <Box textAlign="center" pb={3} px={{ base: 0, md: 9 }}>
-          <RichText render={content} linkResolver={linkResolver} />
+          <PrismicRichText field={content} />
         </Box>
       )}
 

@@ -1,10 +1,10 @@
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
+import * as prismicH from '@prismicio/helpers';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import GoogleMapReact from 'google-map-react';
 
 import {
-  linkResolver,
   getDocs,
   getPrismicDocByUid,
   getBlogTags,
@@ -151,12 +151,9 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
             >
               About {club?.club_name}
             </Heading>
-            {RichText.asText(club.description) && (
+            {prismicH.asText(club.description) && (
               <Content color="qukBlue">
-                <RichText
-                  render={club.description}
-                  linkResolver={linkResolver}
-                />
+                <PrismicRichText field={club.description} />
               </Content>
             )}
           </Box>

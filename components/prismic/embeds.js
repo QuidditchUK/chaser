@@ -1,4 +1,5 @@
-import { RichText } from 'prismic-reactjs';
+import * as prismicH from '@prismicio/helpers';
+import { PrismicRichText } from '@prismicio/react';
 import dynamic from 'next/dynamic';
 import { Box, Grid, Heading } from '@chakra-ui/react';
 
@@ -64,15 +65,15 @@ const EmbedSlice = ({ primary, items }) => {
 
   return (
     <Slice variant={variant} size={size}>
-      {RichText.asText(title) && (
+      {prismicH.asText(title) && (
         <Heading as="h2" fontSize="xl" mt={2} textAlign="center">
-          {RichText.asText(title)}
+          {prismicH.asText(title)}
         </Heading>
       )}
 
       {content && (
         <Content textAlign="center" pb={3}>
-          <RichText render={content} linkResolver={linkResolver} />
+          <PrismicRichText field={content} linkResolver={linkResolver} />
         </Content>
       )}
 

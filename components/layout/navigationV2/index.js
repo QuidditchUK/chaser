@@ -19,7 +19,7 @@ import {
 import dynamic from 'next/dynamic';
 import Router, { useRouter } from 'next/router';
 import Headroom from 'react-headroom';
-import { Link as PrismicLink } from 'prismic-reactjs';
+import * as prismicH from '@prismicio/helpers';
 import { linkResolver } from 'modules/prismic';
 import cookies from 'js-cookie';
 import { removeCookie } from 'modules/cookies';
@@ -135,7 +135,7 @@ export default function Navigation({ data }) {
               {data?.top_level_navigation?.map(({ link_label, link }) => (
                 <Link
                   key={link_label}
-                  href={PrismicLink.url(link, linkResolver)}
+                  href={prismicH.asLink(link, linkResolver)}
                   passHref
                 >
                   <ChakraLink

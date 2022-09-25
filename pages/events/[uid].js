@@ -1,7 +1,8 @@
+import { PrismicRichText } from '@prismicio/react';
+import * as prismicH from '@prismicio/helpers';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import format from 'date-fns/format';
-import { RichText, Link } from 'prismic-reactjs';
 import {
   linkResolver,
   getDocs,
@@ -97,12 +98,9 @@ const EventPage = ({ page: initialPage, preview }) => {
             >
               About {event?.event_name}
             </Heading>
-            {RichText.asText(event.description) && (
+            {prismicH.asText(event.description) && (
               <Content color="qukBlue">
-                <RichText
-                  render={event.description}
-                  linkResolver={linkResolver}
-                />
+                <PrismicRichText field={event.description} />
               </Content>
             )}
           </Box>
@@ -158,7 +156,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                   term="Registration"
                   description={
                     <ChakraLink
-                      href={Link.url(
+                      href={prismicH.asLink(
                         event?.individual_registration_link,
                         linkResolver
                       )}

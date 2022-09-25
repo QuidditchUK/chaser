@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
-import { RichText, Link } from 'prismic-reactjs';
+import { PrismicRichText, PrismicText } from '@prismicio/react';
+import * as prismicH from '@prismicio/helpers';
 import { cardVariants } from 'components/shared/slice';
 
 import { Heading, Flex } from '@chakra-ui/react';
@@ -16,27 +17,27 @@ const HorizontalCardsSlice = ({ primary, items }) => {
 
   return (
     <Slice variant={variant} px={{ base: 4, sm: 8, md: 9 }}>
-      {RichText.asText(title) && (
+      {prismicH.asText(title) && (
         <Heading
           as="h2"
           mt={2}
           textAlign="center"
           px={{ base: 4, sm: 8, md: 9 }}
         >
-          {RichText.asText(title)}
+          <PrismicText field={title} />
         </Heading>
       )}
 
       {content && (
         <Content textAlign="center" pb={3} px={{ base: 4, sm: 8, md: 9 }}>
-          {RichText.render(content, linkResolver)}
+          <PrismicRichText field={content} />
         </Content>
       )}
 
       {items.map(({ title, content, image, layout_content, link }, i) => {
-        const linkProps = Link.url(link, linkResolver)
+        const linkProps = prismicH.asLink(link, linkResolver)
           ? {
-              href: Link.url(link, linkResolver),
+              href: prismicH.asLink(link, linkResolver),
               target: link.target,
               ariaLabel: title,
               ...(link.target === '_blank' && {

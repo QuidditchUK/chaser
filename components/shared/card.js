@@ -1,4 +1,5 @@
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
+
 import format from 'date-fns/format';
 import {
   useStyleConfig,
@@ -10,7 +11,6 @@ import {
   Text,
   Flex,
 } from '@chakra-ui/react';
-import { linkResolver } from 'modules/prismic';
 import Image from 'next/image';
 
 import Link from 'next/link';
@@ -235,9 +235,7 @@ const Card = ({
                 {title}
               </Heading>
             )}
-            {content && (
-              <RichText render={content} linkResolver={linkResolver} />
-            )}
+            {content && <PrismicRichText field={content} />}
           </ContentBox>
         </Flex>
       </Grid>

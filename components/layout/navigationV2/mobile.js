@@ -1,6 +1,5 @@
-import { Link as PrismicLink } from 'prismic-reactjs';
+import * as prismicH from '@prismicio/helpers';
 import { linkResolver } from 'modules/prismic';
-
 import {
   Flex,
   ListItem,
@@ -63,7 +62,7 @@ const MenuItem = ({ wrapperProps, data, onClose }) => {
 
   return (
     <ActiveLink
-      href={PrismicLink.url(link, linkResolver)}
+      href={prismicH.asLink(link, linkResolver)}
       wrapperProps={wrapperProps}
       onClick={onClose}
     >
@@ -96,7 +95,7 @@ const MenuList = ({ wrapperProps, data, onClose }) => {
       <UnorderedList listStyleType="none" pl={0} ml={0} spacing={3}>
         {items.map((item) => {
           const regexAs = RegExp(
-            PrismicLink.url(item?.link, linkResolver),
+            prismicH.asLink(item?.link, linkResolver),
             'g'
           );
 
@@ -105,7 +104,7 @@ const MenuList = ({ wrapperProps, data, onClose }) => {
 
           return (
             <ListItem key={item?.link_label} tabIndex={0}>
-              <Link href={PrismicLink.url(item?.link, linkResolver)} passHref>
+              <Link href={prismicH.asLink(item?.link, linkResolver)} passHref>
                 <ChakraLink
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noopener noreferrer' : undefined}
@@ -193,13 +192,13 @@ export default function MobileNavigation({
 
       <UnorderedList listStyleType="none" p={0} ml={0} mt={0} spacing={3}>
         {top_level_navigation?.map(({ link_label, link }) => {
-          const regexAs = RegExp(PrismicLink.url(link, linkResolver), 'g');
+          const regexAs = RegExp(prismicH.asLink(link, linkResolver), 'g');
 
           const isActive = regexAs.test(asPath);
           const isExternal = link?.link_type === 'Web';
           return (
             <ListItem key={link_label} tabIndex={0}>
-              <Link href={PrismicLink.url(link, linkResolver)} passHref>
+              <Link href={prismicH.asLink(link, linkResolver)} passHref>
                 <ChakraLink
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noopener noreferrer' : undefined}

@@ -31,7 +31,7 @@ You will need a `.env.local` file to set environment variables - use `.env.examp
 - [React](https://reactjs.org/docs/getting-started.html)
 - [ChakraUI](https://chakra-ui.com/docs/getting-started)
 - [Emotion](https://emotion.sh/docs/introduction)
-- [Prismic (CMS)](https://prismic.io/docs/reactjs/getting-started/getting-started-from-scratch)
+- [Prismic (CMS)](https://prismic.io/docs/technologies/react)
 
 ## Deployment
 

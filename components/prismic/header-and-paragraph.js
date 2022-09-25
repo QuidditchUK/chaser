@@ -1,4 +1,5 @@
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText, PrismicText } from '@prismicio/react';
+import * as prismicH from '@prismicio/helpers';
 import { Flex, Heading } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 
@@ -7,27 +8,26 @@ const Button = dynamic(() => import('components/shared/button'));
 const Content = dynamic(() => import('components/shared/content'));
 
 import { buttonVariants } from 'components/shared/slice';
-import { linkResolver } from 'modules/prismic';
 
 const HeaderAndParagraph = ({ primary }) => {
   const { title, center_title, content, variant, cta_text, cta_url } = primary;
 
   return (
     <Slice variant={variant} size="sm">
-      {RichText.asText(title) && (
+      {prismicH.asText(title) && (
         <Heading
           as="h2"
           fontSize="3xl"
           mt={2}
           textAlign={center_title ? 'center' : 'left'}
         >
-          {RichText.asText(title)}
+          <PrismicText field={title} />
         </Heading>
       )}
 
-      {RichText.asText(content) && (
+      {prismicH.asText(content) && (
         <Content>
-          <RichText render={content} linkResolver={linkResolver} />
+          <PrismicRichText field={content} />
         </Content>
       )}
 

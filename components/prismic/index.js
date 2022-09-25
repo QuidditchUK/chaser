@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import { SliceZone } from '@prismicio/react';
 
 const HomeHero = dynamic(() => import('components/prismic/home-hero'));
 const LatestNews = dynamic(() => import('components/prismic/latest-news'));

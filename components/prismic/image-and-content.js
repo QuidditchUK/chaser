@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText, PrismicText } from '@prismicio/react';
+import * as prismicH from '@prismicio/helpers';
 
 import { buttonVariants } from 'components/shared/slice';
 import { Grid, Flex, Heading, Box } from '@chakra-ui/react';
@@ -8,8 +9,6 @@ const Slice = dynamic(() => import('components/shared/slice'));
 const Image = dynamic(() => import('components/shared/image'));
 const Button = dynamic(() => import('components/shared/button'));
 const Content = dynamic(() => import('components/shared/content'));
-
-import { linkResolver } from 'modules/prismic';
 
 const Item = ({ item, isImageLeft }) => (
   <Grid
@@ -21,15 +20,13 @@ const Item = ({ item, isImageLeft }) => (
       justifyContent="center"
       order={{ base: 2, md: `${isImageLeft ? 2 : 1}` }}
     >
-      {RichText.asText(item.title) && (
+      {prismicH.asText(item.title) && (
         <Heading as="h2" fontSize={{ base: 'xl', md: '3xl' }} mt={2}>
-          {RichText.asText(item.title)}
+          <PrismicText field={item.title} />
         </Heading>
       )}
 
-      {item.content && (
-        <RichText render={item.content} linkResolver={linkResolver} />
-      )}
+      {item.content && <PrismicRichText field={item.content} />}
 
       {item.cta_text && (
         <Box>
@@ -58,10 +55,10 @@ const Item = ({ item, isImageLeft }) => (
           width={item.image?.dimensions?.width}
         />
       )}
-      {RichText.asText(item.support) && (
+      {prismicH.asText(item.support) && (
         <Box textAlign="center" pt={2} fontStyle="italic">
           <Content>
-            <RichText render={item.support} linkResolver={linkResolver} />
+            <PrismicRichText field={item.support} />
           </Content>
         </Box>
       )}

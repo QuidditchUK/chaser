@@ -1,4 +1,4 @@
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
 import Link from 'next/link';
 import {
   Heading,
@@ -166,7 +166,7 @@ const HorizontalCard = ({
               {title}
             </Heading>
           )}
-          {content && <RichText render={content} linkResolver={linkResolver} />}
+          {content && <PrismicRichText field={content} />}
         </ContentBox>
       </Box>
     </Wrapper>

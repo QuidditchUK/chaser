@@ -12,14 +12,15 @@ import {
 } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
-import { Link as PrismicLink } from 'prismic-reactjs';
+import * as prismicH from '@prismicio/helpers';
+
 import { useRouter } from 'next/router';
 import { linkResolver } from 'modules/prismic';
 
 const MenuItem = ({ wrapperProps, data }) => {
   const { asPath } = useRouter();
   const { link_label, link } = data.primary;
-  const href = PrismicLink.url(link, linkResolver);
+  const href = prismicH.asLink(link, linkResolver);
 
   const regexAs = RegExp(href.replace(/\//g, '\\/'), 'g');
 
@@ -51,7 +52,7 @@ const MenuList = ({ wrapperProps, data }) => {
 
   useEffect(() => {
     const childrenActive = data?.items?.map(({ link }) => {
-      const regexAs = RegExp(PrismicLink.url(link, linkResolver), 'g');
+      const regexAs = RegExp(prismicH.asLink(link, linkResolver), 'g');
 
       return regexAs.test(asPath);
     });
@@ -104,7 +105,7 @@ const MenuList = ({ wrapperProps, data }) => {
             <UnorderedList listStyleType="none" pl={0} ml={0} spacing={3}>
               {data?.items.map((item) => {
                 const regexAs = RegExp(
-                  PrismicLink.url(item?.link, linkResolver),
+                  prismicH.asLink(item?.link, linkResolver),
                   'g'
                 );
 
@@ -114,7 +115,7 @@ const MenuList = ({ wrapperProps, data }) => {
                 return (
                   <ListItem key={item?.link_label} tabIndex={0}>
                     <Link
-                      href={PrismicLink.url(item?.link, linkResolver)}
+                      href={prismicH.asLink(item?.link, linkResolver)}
                       passHref
                     >
                       <ChakraLink

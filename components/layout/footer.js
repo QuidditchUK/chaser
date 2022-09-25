@@ -2,7 +2,8 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { Link as PrismicLink } from 'prismic-reactjs';
+
+import * as prismicH from '@prismicio/helpers';
 import {
   Box,
   Grid,
@@ -66,7 +67,7 @@ const FooterMenu = ({ label, items }) => (
     <UnorderedList pl={0} ml={0} styleType="none">
       {items?.map(({ link_label, link }) => (
         <Item key={`${link?.url}-${link_label}`}>
-          <ActiveLink href={PrismicLink.url(link, linkResolver)}>
+          <ActiveLink href={prismicH.asLink(link, linkResolver)}>
             {link_label}
           </ActiveLink>
         </Item>

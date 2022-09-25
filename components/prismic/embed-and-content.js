@@ -1,8 +1,8 @@
-import { RichText } from 'prismic-reactjs';
+import * as prismicH from '@prismicio/helpers';
+import { PrismicRichText } from '@prismicio/react';
 import dynamic from 'next/dynamic';
 import { Grid, Flex, Heading, Text, Box } from '@chakra-ui/react';
 
-import { linkResolver } from 'modules/prismic';
 import { buttonVariants } from 'components/shared/slice';
 
 const Slice = dynamic(() => import('components/shared/slice'));
@@ -23,15 +23,15 @@ const Item = ({ item, isEmbedLeft }) => (
       justifyContent="center"
       order={{ base: 2, md: `${isEmbedLeft ? 2 : 1}` }}
     >
-      {RichText.asText(item.title) && (
+      {prismicH.asText(item.title) && (
         <Heading as="h2" fontSize="xl" mt={2}>
-          {RichText.asText(item.title)}
+          {prismicH.asText(item.title)}
         </Heading>
       )}
 
       {item.content && (
         <Content>
-          <RichText render={item.content} linkResolver={linkResolver} />
+          <PrismicRichText field={item.content} />
         </Content>
       )}
 
@@ -55,9 +55,9 @@ const Item = ({ item, isEmbedLeft }) => (
       order={{ base: 1, md: `${isEmbedLeft ? 1 : 2}` }}
     >
       <Embed embed={item.embed} />
-      {RichText.asText(item.support) && (
+      {prismicH.asText(item.support) && (
         <Text textAlign="center" pt={2} fontStyle="italic">
-          <RichText render={item.support} />
+          <PrismicRichText field={item.support} />
         </Text>
       )}
     </Flex>

@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { ChakraProvider } from '@chakra-ui/react';
+import { PrismicProvider } from '@prismicio/react';
+import { linkResolver } from 'modules/prismic';
 
 import dynamic from 'next/dynamic';
 import DocumentHead from 'document/head';
@@ -36,9 +38,11 @@ function App({ Component, pageProps }) {
         <GTag />
         <DocumentHead />
         <QueryClientProvider client={queryClient}>
-          <Layout {...pageProps}>
-            <Component {...pageProps} />
-          </Layout>
+          <PrismicProvider linkResolver={linkResolver}>
+            <Layout {...pageProps}>
+              <Component {...pageProps} />
+            </Layout>
+          </PrismicProvider>
         </QueryClientProvider>
       </ChakraProvider>
     </AppErrorBoundary>
