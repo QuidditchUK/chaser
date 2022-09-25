@@ -129,7 +129,6 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
         <Grid gridTemplateColumns="1fr" gridGap={3}>
           <Switch
             label="Are you interested?"
-            isRequired={true}
             id="national_team_interest"
             size="lg"
             colorScheme="green"
