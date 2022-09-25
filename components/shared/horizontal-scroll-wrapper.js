@@ -22,10 +22,6 @@ const HorizontalScrollWrapper = ({
             md: 'repeat(auto-fit, minmax(300px, 1fr))',
           }}
           gridGap={{ base: 4, md: 9 }}
-          gridTemplateRows={{
-            base: '1fr',
-            md: `repeat(auto-fill, minmax(1fr, auto))`,
-          }}
           gridAutoRows="1fr"
         >
           <Box display={{ base: 'block', md: 'none' }} />

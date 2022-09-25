@@ -1,13 +1,6 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import {
-  Box,
-  Grid,
-  Flex,
-  Heading,
-  Link as ChakraLink,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Flex, Heading, Link as ChakraLink } from '@chakra-ui/react';
 import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
 import generateServerSideHeaders from 'modules/headers';
@@ -17,7 +10,6 @@ import usersService from 'services/users';
 import productsService from 'services/products';
 import clubsService from 'services/clubs';
 
-import Slice from 'components/shared/slice';
 import { PlusSquareIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import GroupIcon from 'public/images/group.svg';
 import { ProductCardV2 } from 'components/dashboard/product-card';
