@@ -18,18 +18,18 @@ export const routes = [
 ] as prismic.ClientConfig['routes'];
 
 export const client = (config?: prismicNext.CreateClientConfig) => {
-  const client = prismic.createClient(repositoryName, {
+  const createdClient = prismic.createClient(repositoryName, {
     routes,
     ...config,
   });
 
   prismicNext.enableAutoPreviews({
-    client,
+    client: createdClient,
     previewData: config?.previewData,
     req: config?.req,
   });
 
-  return client;
+  return createdClient;
 };
 
 export const formatMetadata = ({

@@ -1,12 +1,12 @@
 import { setPreviewData, redirectToPreviewURL } from '@prismicio/next';
-import { createClient } from '../../modules/prismic';
+import { client } from '../../modules/prismic';
 
 const preview = async (req, res) => {
-  const client = createClient({ req });
+  const createdClient = client({ req });
 
   await setPreviewData({ req, res });
 
-  await redirectToPreviewURL({ req, res, client });
+  await redirectToPreviewURL({ req, res, client: createdClient });
 };
 
 export default preview;
