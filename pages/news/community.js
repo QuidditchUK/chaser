@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import Prismic from '@prismicio/client';
+import * as prismic from '@prismicio/client';
 import dynamic from 'next/dynamic';
 import { useInfiniteQuery } from 'react-query';
 import { Flex } from '@chakra-ui/react';
 import {
   getBlogCategory,
   PAGE_SIZE,
-  Client,
+  client,
   getBasePageProps,
 } from 'modules/prismic';
 
@@ -17,9 +17,13 @@ const LatestNews = dynamic(() => import('components/prismic/latest-news'));
 const NewsHeader = dynamic(() => import('components/news/news-header'));
 const Meta = dynamic(() => import('components/shared/meta'));
 
-const getPagedDocs = ({ pageParam = 0 }) =>
-  Client().query(Prismic.Predicates.at('my.post.category', 'Community'), {
-    orderings: '[my.post.date desc]',
+const getPagedDocs = ({ pageParam = 1 }) =>
+  client().get({
+    predicates: prismic.predicate.at('my.post.category', 'Community'),
+    orderings: {
+      field: 'my.post.date',
+      direction: 'desc',
+    },
     pageSize: PAGE_SIZE,
     page: pageParam,
   });
@@ -79,7 +83,10 @@ const News = ({ posts: initialPosts = [] }) => {
 export const getStaticProps = async () => {
   const basePageProps = await getBasePageProps();
   const posts = await getBlogCategory('Community', {
-    orderings: '[my.post.date desc]',
+    orderings: {
+      field: 'my.post.date',
+      direction: 'desc',
+    },
     pageSize: PAGE_SIZE,
   });
 

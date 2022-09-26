@@ -14,7 +14,6 @@ import Slice from 'components/shared/slice';
 import { CLUB_MANAGEMENT } from 'constants/scopes';
 
 const Meta = dynamic(() => import('components/shared/meta'));
-// const PrismicClubCard = dynamic(() => import('components/prismic/club-card'));
 
 const ClubManagement = ({ user, scopes }) => {
   const { data: club, refetch } = useCachedResponse({

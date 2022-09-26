@@ -15,7 +15,7 @@ import {
   ListItem,
 } from '@chakra-ui/react';
 import InputV2 from 'components/formControls/inputV2';
-import { linkResolver } from 'modules/prismic';
+import { linkResolver } from '../../modules/prismic';
 
 const Logo = dynamic(() => import('components/shared/logo'));
 const Container = dynamic(() => import('components/layout/container'));

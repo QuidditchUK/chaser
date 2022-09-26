@@ -1,0 +1,111 @@
+{
+  "id": "footer",
+  "label": "Footer",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "menu_1_label": {
+        "type": "Text",
+        "config": {
+          "label": "Menu 1 Label",
+          "placeholder": "Menu Label..."
+        }
+      },
+      "menu_1_links": {
+        "type": "Group",
+        "config": {
+          "fields": {
+            "link_label": {
+              "type": "Text",
+              "config": {
+                "label": "Link Label",
+                "placeholder": "Link Label..."
+              }
+            },
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "placeholder": "Select a Link...",
+                "select": null
+              }
+            }
+          },
+          "label": "Menu 1 Links"
+        }
+      },
+      "menu_2_label": {
+        "type": "Text",
+        "config": {
+          "label": "Menu 2 Label",
+          "placeholder": "Menu Label..."
+        }
+      },
+      "menu_2_links": {
+        "type": "Group",
+        "config": {
+          "fields": {
+            "link_label": {
+              "type": "Text",
+              "config": {
+                "label": "Link Label"
+              }
+            },
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "placeholder": "Select a Link...",
+                "select": null
+              }
+            }
+          },
+          "label": "Menu 2 Links"
+        }
+      },
+      "menu_3_label": {
+        "type": "Text",
+        "config": {
+          "label": "Menu 3 Label",
+          "placeholder": "Menu Label..."
+        }
+      },
+      "menu_3_links": {
+        "type": "Group",
+        "config": {
+          "fields": {
+            "link_label": {
+              "type": "Text",
+              "config": {
+                "label": "Link Label"
+              }
+            },
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "placeholder": "Select a Link...",
+                "select": null
+              }
+            }
+          },
+          "label": "Menu 3 Links"
+        }
+      },
+      "disclaimer_label": {
+        "type": "Text",
+        "config": {
+          "label": "Disclaimer Label",
+          "placeholder": "Disclaimer Label..."
+        }
+      },
+      "disclaimer": {
+        "type": "Text",
+        "config": {
+          "label": "Disclaimer"
+        }
+      }
+    }
+  }
+}

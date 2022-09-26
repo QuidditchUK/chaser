@@ -9,23 +9,15 @@ const Page = (props) => {
   return <PrismicPage type="programmes" uid={router.query.uid} {...props} />;
 };
 
-export const getStaticProps = async ({
-  params: { uid },
-  locale,
-  locales,
-  preview = null,
-  previewData = { ref: null },
-}) => {
+export const getStaticProps = async ({ params: { uid }, previewData }) => {
   const prismicProps = await getStaticPrismicProps({
-    previewData,
     type: 'programmes',
     uid,
-    lang: locale,
-    locales,
+    previewData,
   });
 
   return {
-    props: { ...prismicProps, preview },
+    props: prismicProps,
     revalidate: 1,
   };
 };

@@ -52,18 +52,13 @@ const Post = ({ page: initialPage, preview }) => {
   );
 };
 
-export const getStaticProps = async ({
-  params: { uid },
-  preview = null,
-  previewData = {},
-}) => {
+export const getStaticProps = async ({ params: { uid }, previewData }) => {
   const basePageProps = await getBasePageProps();
-  const { ref } = previewData;
-  const page =
-    (await getPrismicDocByUid('post', uid, ref ? { ref } : null)) || null;
+
+  const page = (await getPrismicDocByUid('post', uid, previewData)) || null;
 
   return {
-    props: { page, preview, ...basePageProps },
+    props: { page, ...basePageProps },
     revalidate: 1,
   };
 };

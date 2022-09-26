@@ -15,7 +15,7 @@ import Link from 'next/link';
 import * as prismicH from '@prismicio/helpers';
 
 import { useRouter } from 'next/router';
-import { linkResolver } from 'modules/prismic';
+import { linkResolver } from '../../../modules/prismic';
 
 const MenuItem = ({ wrapperProps, data }) => {
   const { asPath } = useRouter();

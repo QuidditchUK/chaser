@@ -1,0 +1,755 @@
+{
+  "id": "events",
+  "label": "Events",
+  "repeatable": true,
+  "hash": "6a9e3ee17ff7de8174a8438439acf187",
+  "status": true,
+  "json": {
+    "Main": {
+      "event_name": {
+        "type": "Text",
+        "config": {
+          "label": "Event name"
+        }
+      },
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "uid"
+        }
+      },
+      "venue": {
+        "type": "Text",
+        "config": {
+          "label": "Venue Description",
+          "placeholder": "Clapham Common"
+        }
+      },
+      "event_start_date": {
+        "type": "Date",
+        "config": {
+          "label": "Event Start Date"
+        }
+      },
+      "event_end_date": {
+        "type": "Date",
+        "config": {
+          "label": "Event End Date",
+          "placeholder": "If excluded defaults to same as start date"
+        }
+      },
+      "icon": {
+        "type": "Image",
+        "config": {
+          "constraint": {},
+          "thumbnails": [],
+          "label": "Event Icon"
+        }
+      },
+      "social_facebook": {
+        "type": "Link",
+        "config": {
+          "label": "Facebook",
+          "select": null
+        }
+      },
+      "leagues": {
+        "type": "Group",
+        "config": {
+          "fields": {
+            "league": {
+              "type": "Select",
+              "config": {
+                "options": [
+                  "Community",
+                  "University"
+                ],
+                "label": "League"
+              }
+            }
+          },
+          "label": "Leagues"
+        }
+      },
+      "images": {
+        "type": "Group",
+        "config": {
+          "fields": {
+            "image": {
+              "type": "Image",
+              "config": {
+                "constraint": {},
+                "thumbnails": [],
+                "label": "image"
+              }
+            }
+          },
+          "label": "images"
+        }
+      },
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,embed,list-item,o-list-item,rtl",
+          "label": "About"
+        }
+      },
+      "coordinates": {
+        "type": "GeoPoint",
+        "config": {
+          "label": "Coordinates"
+        }
+      }
+    },
+    "Registrations": {
+      "club_registration_link": {
+        "type": "Link",
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Club Registration Link",
+          "select": null
+        }
+      },
+      "club_registration_deadline": {
+        "type": "Timestamp",
+        "config": {
+          "label": "Club Registration Deadline"
+        }
+      },
+      "individual_registration_link": {
+        "type": "Link",
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Individual Registration Link",
+          "select": null
+        }
+      },
+      "individual_registration_deadline": {
+        "type": "Timestamp",
+        "config": {
+          "label": "Individual Registration Deadline"
+        }
+      },
+      "quk_membership_required": {
+        "type": "Boolean",
+        "config": {
+          "placeholder_false": "No",
+          "placeholder_true": "Yes",
+          "default_value": true,
+          "label": "QUK Membership Required"
+        }
+      }
+    },
+    "Fees": {
+      "player_fee": {
+        "type": "Number",
+        "config": {
+          "label": "Player Fee"
+        }
+      },
+      "team_fee": {
+        "type": "Number",
+        "config": {
+          "label": "Team Fee"
+        }
+      }
+    },
+    "Extra": {
+      "body": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "header_and_paragraph": {
+              "type": "Slice",
+              "fieldset": "Header and Paragraph",
+              "description": "Header and Paragraph",
+              "icon": "line_weight",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "Title"
+                  }
+                },
+                "center_title": {
+                  "type": "Boolean",
+                  "config": {
+                    "placeholder_false": "Left",
+                    "placeholder_true": "Center",
+                    "default_value": false,
+                    "label": "Align the Title text"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Content"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "white",
+                    "label": "Variant"
+                  }
+                },
+                "cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA Text",
+                    "placeholder": "CTA Button"
+                  }
+                },
+                "cta_url": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA URL",
+                    "placeholder": "If linking out of QUK, include the https://"
+                  }
+                }
+              },
+              "repeat": {}
+            },
+            "image_and_content": {
+              "type": "Slice",
+              "fieldset": "Image and Content",
+              "description": "Displays image and some copy",
+              "icon": "art_track",
+              "display": "list",
+              "non-repeat": {},
+              "repeat": {
+                "image": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "image"
+                  }
+                },
+                "layout_content": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "image-left",
+                      "image-right"
+                    ],
+                    "default_value": "image-left",
+                    "label": "Layout content"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "white",
+                    "label": "Variant"
+                  }
+                },
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "content"
+                  }
+                },
+                "support": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,strong,em,hyperlink",
+                    "allowTargetBlank": true,
+                    "label": "Image support",
+                    "placeholder": "Support Text that will appear under the image"
+                  }
+                },
+                "cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA Text",
+                    "placeholder": "CTA Button"
+                  }
+                },
+                "cta_url": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA URL",
+                    "placeholder": "If linking out of QUK, include the https://"
+                  }
+                }
+              }
+            },
+            "images": {
+              "type": "Slice",
+              "fieldset": "Images",
+              "description": "Images",
+              "icon": "face",
+              "display": "grid",
+              "non-repeat": {
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "white",
+                    "label": "Variant"
+                  }
+                }
+              },
+              "repeat": {
+                "image": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "image"
+                  }
+                },
+                "support": {
+                  "type": "Text",
+                  "config": {
+                    "label": "support"
+                  }
+                }
+              }
+            },
+            "cards": {
+              "type": "Slice",
+              "fieldset": "Cards",
+              "description": "Displays a grid of cards",
+              "icon": "apps",
+              "display": "grid",
+              "non-repeat": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "content"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "dark",
+                      "white"
+                    ],
+                    "default_value": "white",
+                    "label": "Variant"
+                  }
+                },
+                "horizontalScroll": {
+                  "type": "Boolean",
+                  "config": {
+                    "placeholder_false": "Off",
+                    "placeholder_true": "On",
+                    "default_value": false,
+                    "label": "Horizontal Scroll on Mobile"
+                  }
+                }
+              },
+              "repeat": {
+                "image": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "image"
+                  }
+                },
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Content"
+                  }
+                },
+                "link": {
+                  "type": "Link",
+                  "config": {
+                    "allowTargetBlank": true,
+                    "label": "Link (Whole Card)",
+                    "placeholder": "If using do not put links in Content",
+                    "select": null
+                  }
+                }
+              }
+            },
+            "horizontal_card": {
+              "type": "Slice",
+              "fieldset": "Horizontal Cards",
+              "description": "Displays a grid of horizontal cards",
+              "icon": "view_list",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "content"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "dark",
+                      "white"
+                    ],
+                    "default_value": "white",
+                    "label": "Variant"
+                  }
+                }
+              },
+              "repeat": {
+                "image": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "image"
+                  }
+                },
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Content"
+                  }
+                },
+                "layout_content": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "image-left",
+                      "image-right"
+                    ],
+                    "default_value": "image-left",
+                    "label": "Layout content"
+                  }
+                },
+                "link": {
+                  "type": "Link",
+                  "config": {
+                    "allowTargetBlank": true,
+                    "label": "Link (Whole Card)",
+                    "placeholder": "If using do not put links in Content",
+                    "select": null
+                  }
+                }
+              }
+            },
+            "embed": {
+              "type": "Slice",
+              "fieldset": "Embed",
+              "description": "Embed videos from Youtube or Facebook",
+              "icon": "burst_mode",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "Title"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "white",
+                    "label": "variant"
+                  }
+                },
+                "size": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "sm",
+                      "md",
+                      "full"
+                    ],
+                    "default_value": "sm",
+                    "label": "size"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Content"
+                  }
+                }
+              },
+              "repeat": {
+                "embed": {
+                  "type": "Embed",
+                  "config": {
+                    "label": "embed"
+                  }
+                },
+                "support": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Support Text"
+                  }
+                }
+              }
+            },
+            "embed_and_content": {
+              "type": "Slice",
+              "fieldset": "Embed and Content",
+              "description": "Displays embeded video and some copy",
+              "icon": "art_track",
+              "display": "list",
+              "non-repeat": {},
+              "repeat": {
+                "embed": {
+                  "type": "Embed",
+                  "config": {
+                    "label": "embed"
+                  }
+                },
+                "layout_content": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "embed-left",
+                      "embed-right"
+                    ],
+                    "default_value": "embed-left",
+                    "label": "Layout content"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "white",
+                    "label": "Variant"
+                  }
+                },
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "content"
+                  }
+                },
+                "support": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,strong,em,hyperlink",
+                    "allowTargetBlank": true,
+                    "label": "Embed Support text",
+                    "placeholder": "Text that will appear under the embedded video"
+                  }
+                },
+                "cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA Text",
+                    "placeholder": "CTA Button"
+                  }
+                },
+                "cta_url": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA URL",
+                    "placeholder": "If linking out of QUK, include the https://"
+                  }
+                }
+              }
+            },
+            "two_column_table": {
+              "type": "Slice",
+              "fieldset": "Two Column Table",
+              "description": "Two Column Table",
+              "icon": "border_all",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "Title"
+                  }
+                },
+                "column_one_title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,heading3,heading4,heading5,heading6,strong,em,hyperlink,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Column One Title"
+                  }
+                },
+                "column_two_title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,heading3,heading4,heading5,heading6,strong,em,hyperlink,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Column Two Title"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "white",
+                    "label": "variant"
+                  }
+                }
+              },
+              "repeat": {
+                "column_one": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,strong,em,hyperlink,image,list-item,o-list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Column One"
+                  }
+                },
+                "column_two": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Column Two"
+                  }
+                }
+              }
+            },
+            "scheduler_feed": {
+              "type": "Slice",
+              "fieldset": "Scheduler Feed",
+              "description": "Pull a feed of games from Quidditch Scheduler",
+              "icon": "line_weight",
+              "display": "list",
+              "non-repeat": {
+                "scheduler_url": {
+                  "type": "Link",
+                  "config": {
+                    "label": "Scheduler URL",
+                    "placeholder": "https://api.quidditchscheduler.com/game/tournament/5",
+                    "select": null
+                  }
+                }
+              },
+              "repeat": {}
+            },
+            "scheduler_division": {
+              "type": "Slice",
+              "fieldset": "Scheduler Division",
+              "description": "Quidditch Scheduler results grouped by label",
+              "icon": "line_weight",
+              "display": "list",
+              "non-repeat": {
+                "scheduler_url": {
+                  "type": "Link",
+                  "config": {
+                    "label": "Scheduler URL",
+                    "placeholder": "https://api.quidditchscheduler.com/game/tournament/5",
+                    "select": null
+                  }
+                }
+              },
+              "repeat": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

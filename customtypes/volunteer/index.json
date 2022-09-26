@@ -1,0 +1,849 @@
+{
+  "id": "volunteer",
+  "label": "Volunteer",
+  "repeatable": true,
+  "hash": "2f915ad7838101c08cba7d1a2208d60c",
+  "status": true,
+  "json": {
+    "Main": {
+      "title": {
+        "type": "StructuredText",
+        "config": {
+          "single": "heading1,heading2,heading3,heading4,heading5,heading6",
+          "label": "Title"
+        }
+      },
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID"
+        }
+      },
+      "body": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "video_hero_with_cta": {
+              "type": "Slice",
+              "fieldset": "Video Hero With CTA",
+              "description": "Video hero, with a title and a CTA",
+              "icon": "videocam",
+              "display": "list",
+              "non-repeat": {
+                "slug": {
+                  "type": "Text",
+                  "config": {
+                    "label": "slug"
+                  }
+                },
+                "cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA Text"
+                  }
+                },
+                "cta_url": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA URL"
+                  }
+                },
+                "video_url": {
+                  "type": "Link",
+                  "config": {
+                    "select": "media",
+                    "label": "Video URL"
+                  }
+                },
+                "poster": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "poster"
+                  }
+                }
+              },
+              "repeat": {}
+            },
+            "latest_news": {
+              "type": "Slice",
+              "fieldset": "Latest News",
+              "description": "Latest news pages",
+              "icon": "add_to_photos",
+              "display": "list",
+              "non-repeat": {},
+              "repeat": {}
+            },
+            "hero": {
+              "type": "Slice",
+              "fieldset": "Hero",
+              "description": "Image hero with a title",
+              "icon": "account_box",
+              "display": "list",
+              "non-repeat": {
+                "slug": {
+                  "type": "Text",
+                  "config": {
+                    "label": "slug"
+                  }
+                },
+                "image": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "image"
+                  }
+                }
+              },
+              "repeat": {}
+            },
+            "header_and_paragraph": {
+              "type": "Slice",
+              "fieldset": "Header and Paragraph",
+              "description": "Header and Paragraph",
+              "icon": "line_weight",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "Title"
+                  }
+                },
+                "center_title": {
+                  "type": "Boolean",
+                  "config": {
+                    "placeholder_false": "Left",
+                    "placeholder_true": "Center",
+                    "default_value": false,
+                    "label": "Align the Title text"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Content"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "light",
+                    "label": "Variant"
+                  }
+                },
+                "cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA Text",
+                    "placeholder": "CTA Button"
+                  }
+                },
+                "cta_url": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA URL",
+                    "placeholder": "If linking out of QUK, include the https://"
+                  }
+                }
+              },
+              "repeat": {}
+            },
+            "image_and_content": {
+              "type": "Slice",
+              "fieldset": "Image and Content",
+              "description": "Displays image and some copy",
+              "icon": "art_track",
+              "display": "list",
+              "non-repeat": {},
+              "repeat": {
+                "image": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "image"
+                  }
+                },
+                "layout_content": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "image-left",
+                      "image-right"
+                    ],
+                    "default_value": "image-left",
+                    "label": "Layout content"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "light",
+                    "label": "Variant"
+                  }
+                },
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "content"
+                  }
+                },
+                "support": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,strong,em,hyperlink",
+                    "allowTargetBlank": true,
+                    "label": "Image support",
+                    "placeholder": "Support Text that will appear under the image"
+                  }
+                },
+                "cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA Text",
+                    "placeholder": "CTA Button"
+                  }
+                },
+                "cta_url": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA URL",
+                    "placeholder": "If linking out of QUK, include the https://"
+                  }
+                }
+              }
+            },
+            "images": {
+              "type": "Slice",
+              "fieldset": "Images",
+              "description": "Images",
+              "icon": "face",
+              "display": "grid",
+              "non-repeat": {
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "light",
+                    "label": "Variant"
+                  }
+                }
+              },
+              "repeat": {
+                "image": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "image"
+                  }
+                },
+                "support": {
+                  "type": "Text",
+                  "config": {
+                    "label": "support"
+                  }
+                }
+              }
+            },
+            "cards": {
+              "type": "Slice",
+              "fieldset": "Cards",
+              "description": "Displays a grid of cards",
+              "icon": "apps",
+              "display": "grid",
+              "non-repeat": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "content"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "dark",
+                      "white"
+                    ],
+                    "default_value": "light",
+                    "label": "Variant"
+                  }
+                },
+                "horizontalScroll": {
+                  "type": "Boolean",
+                  "config": {
+                    "placeholder_false": "Off",
+                    "placeholder_true": "On",
+                    "default_value": false,
+                    "label": "Horizontal Scroll on Mobile"
+                  }
+                }
+              },
+              "repeat": {
+                "image": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "image"
+                  }
+                },
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Content"
+                  }
+                },
+                "link": {
+                  "type": "Link",
+                  "config": {
+                    "allowTargetBlank": true,
+                    "label": "Link (Whole Card)",
+                    "placeholder": "If using do not put links in Content",
+                    "select": null
+                  }
+                }
+              }
+            },
+            "horizontal_card": {
+              "type": "Slice",
+              "fieldset": "Horizontal Cards",
+              "description": "Displays a grid of horizontal cards",
+              "icon": "view_list",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "content"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "dark",
+                      "white"
+                    ],
+                    "default_value": "light",
+                    "label": "Variant"
+                  }
+                }
+              },
+              "repeat": {
+                "image": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "image"
+                  }
+                },
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Content"
+                  }
+                },
+                "layout_content": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "image-left",
+                      "image-right"
+                    ],
+                    "default_value": "image-left",
+                    "label": "Layout content"
+                  }
+                },
+                "link": {
+                  "type": "Link",
+                  "config": {
+                    "allowTargetBlank": true,
+                    "label": "Link (Whole Card)",
+                    "placeholder": "If using do not put links in Content",
+                    "select": null
+                  }
+                }
+              }
+            },
+            "embed": {
+              "type": "Slice",
+              "fieldset": "Embed",
+              "description": "Embed videos from Youtube or Facebook",
+              "icon": "burst_mode",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "Title"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "light",
+                    "label": "variant"
+                  }
+                },
+                "size": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "sm",
+                      "md",
+                      "full"
+                    ],
+                    "default_value": "sm",
+                    "label": "size"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Content"
+                  }
+                }
+              },
+              "repeat": {
+                "embed": {
+                  "type": "Embed",
+                  "config": {
+                    "label": "embed"
+                  }
+                },
+                "support": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Support Text"
+                  }
+                }
+              }
+            },
+            "embed_and_content": {
+              "type": "Slice",
+              "fieldset": "Embed and Content",
+              "description": "Displays embeded video and some copy",
+              "icon": "art_track",
+              "display": "list",
+              "non-repeat": {},
+              "repeat": {
+                "embed": {
+                  "type": "Embed",
+                  "config": {
+                    "label": "embed"
+                  }
+                },
+                "layout_content": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "embed-left",
+                      "embed-right"
+                    ],
+                    "default_value": "embed-left",
+                    "label": "Layout content"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "light",
+                    "label": "Variant"
+                  }
+                },
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "content"
+                  }
+                },
+                "support": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,strong,em,hyperlink",
+                    "allowTargetBlank": true,
+                    "label": "Embed Support text",
+                    "placeholder": "Text that will appear under the embedded video"
+                  }
+                },
+                "cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA Text",
+                    "placeholder": "CTA Button"
+                  }
+                },
+                "cta_url": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA URL",
+                    "placeholder": "If linking out of QUK, include the https://"
+                  }
+                }
+              }
+            },
+            "contact_form": {
+              "type": "Slice",
+              "fieldset": "Contact Us Form",
+              "description": "Contact Us Form",
+              "icon": "assignment",
+              "display": "list",
+              "non-repeat": {
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "dark"
+                    ],
+                    "default_value": "light",
+                    "label": "variant"
+                  }
+                }
+              },
+              "repeat": {}
+            },
+            "volunteer_form": {
+              "type": "Slice",
+              "fieldset": "Volunteer Form",
+              "description": "Volunteer Form",
+              "icon": "assignment",
+              "display": "list",
+              "non-repeat": {
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "dark"
+                    ],
+                    "default_value": "light",
+                    "label": "variant"
+                  }
+                }
+              },
+              "repeat": {}
+            },
+            "national_team_form": {
+              "type": "Slice",
+              "fieldset": "National Team Form",
+              "description": "National Team Form",
+              "icon": "assignment",
+              "display": "list",
+              "non-repeat": {
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "dark"
+                    ],
+                    "default_value": "light",
+                    "label": "variant"
+                  }
+                }
+              },
+              "repeat": {}
+            },
+            "edi_committee_form": {
+              "type": "Slice",
+              "fieldset": "EDI Committee Form",
+              "description": "EDI Commmittee Form",
+              "icon": "assignment",
+              "display": "list",
+              "non-repeat": {
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "dark"
+                    ],
+                    "default_value": "light",
+                    "label": "variant"
+                  }
+                }
+              },
+              "repeat": {}
+            },
+            "two_column_table": {
+              "type": "Slice",
+              "fieldset": "Two Column Table",
+              "description": "Two Column Table",
+              "icon": "border_all",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "Title"
+                  }
+                },
+                "column_one_title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,heading3,heading4,heading5,heading6,strong,em,hyperlink,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Column One Title"
+                  }
+                },
+                "column_two_title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,heading3,heading4,heading5,heading6,strong,em,hyperlink,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Column Two Title"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary",
+                      "secondary",
+                      "white",
+                      "dark"
+                    ],
+                    "default_value": "light",
+                    "label": "variant"
+                  }
+                }
+              },
+              "repeat": {
+                "column_one": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,strong,em,hyperlink,image,list-item,o-list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Column One"
+                  }
+                },
+                "column_two": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,strong,em,hyperlink,list-item,o-list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "Column Two"
+                  }
+                }
+              }
+            },
+            "scheduler_feed": {
+              "type": "Slice",
+              "fieldset": "Scheduler Feed",
+              "description": "Pull a feed of games from Quidditch Scheduler",
+              "icon": "line_weight",
+              "display": "list",
+              "non-repeat": {
+                "scheduler_url": {
+                  "type": "Link",
+                  "config": {
+                    "label": "Scheduler URL",
+                    "placeholder": "https://api.quidditchscheduler.com/game/tournament/5",
+                    "select": null
+                  }
+                }
+              },
+              "repeat": {}
+            },
+            "event_cards": {
+              "type": "Slice",
+              "fieldset": "Event Card",
+              "description": "Grid of Event Cards",
+              "icon": "recent_actors",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading2",
+                    "label": "title"
+                  }
+                },
+                "content": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
+                    "allowTargetBlank": true,
+                    "label": "content"
+                  }
+                },
+                "variant": {
+                  "type": "Select",
+                  "config": {
+                    "options": [
+                      "light",
+                      "primary"
+                    ],
+                    "default_value": "light",
+                    "label": "Variant"
+                  }
+                }
+              },
+              "repeat": {
+                "event": {
+                  "type": "Link",
+                  "config": {
+                    "select": "document",
+                    "customtypes": [
+                      "events"
+                    ],
+                    "label": "Events",
+                    "placeholder": "Select Event..."
+                  }
+                }
+              }
+            },
+            "scheduler_division": {
+              "type": "Slice",
+              "fieldset": "Scheduler Division",
+              "description": "Quidditch Scheduler results grouped by label",
+              "icon": "line_weight",
+              "display": "list",
+              "non-repeat": {
+                "scheduler_url": {
+                  "type": "Link",
+                  "config": {
+                    "label": "Scheduler URL",
+                    "placeholder": "https://api.quidditchscheduler.com/game/tournament/5",
+                    "select": null
+                  }
+                }
+              },
+              "repeat": {}
+            }
+          }
+        }
+      }
+    },
+    "Metadata": {
+      "meta_title": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Title"
+        }
+      },
+      "meta_description": {
+        "type": "Text",
+        "config": {
+          "label": "Meta description"
+        }
+      },
+      "meta_image": {
+        "type": "Image",
+        "config": {
+          "constraint": {},
+          "thumbnails": [],
+          "label": "Meta Image"
+        }
+      }
+    }
+  }
+}

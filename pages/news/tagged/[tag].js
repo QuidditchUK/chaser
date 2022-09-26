@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import Prismic from '@prismicio/client';
+import * as prismic from '@prismicio/client';
 import dynamic from 'next/dynamic';
 import { useInfiniteQuery } from 'react-query';
 import { Flex } from '@chakra-ui/react';
 import {
   getBlogTags,
   PAGE_SIZE,
-  Client,
+  client,
   getBasePageProps,
 } from 'modules/prismic';
 
@@ -19,18 +19,19 @@ const Meta = dynamic(() => import('components/shared/meta'));
 
 const unDasherizeTag = (tag) => tag.replace(/--/g, ' ').replace(/__/g, '/');
 
-const getPagedDocs = ({ pageParam = 0, tag }) => {
-  return Client().query(
-    [
-      Prismic.Predicates.at('document.type', 'post'),
-      Prismic.Predicates.any('document.tags', [unDasherizeTag(tag)]),
+const getPagedDocs = ({ pageParam = 1, tag }) => {
+  return client().get({
+    predicates: [
+      prismic.predicate.at('document.type', 'post'),
+      prismic.predicate.any('document.tags', [unDasherizeTag(tag)]),
     ],
-    {
-      orderings: '[my.post.date desc]',
-      pageSize: PAGE_SIZE,
-      page: pageParam,
-    }
-  );
+    orderings: {
+      field: 'my.post.date',
+      direction: 'desc',
+    },
+    pageSize: PAGE_SIZE,
+    page: pageParam,
+  });
 };
 
 const News = ({ posts: initialPosts = [], tag = '' }) => {
@@ -88,7 +89,10 @@ const News = ({ posts: initialPosts = [], tag = '' }) => {
 export const getServerSideProps = async ({ params: { tag } }) => {
   const basePageProps = await getBasePageProps();
   const posts = await getBlogTags([unDasherizeTag(tag)], {
-    orderings: '[my.post.date desc]',
+    orderings: {
+      field: 'my.post.date',
+      direction: 'desc',
+    },
     pageSize: PAGE_SIZE,
   });
 

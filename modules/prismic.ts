@@ -1,23 +1,36 @@
-import Prismic from '@prismicio/client';
+import * as prismicNext from '@prismicio/next';
+import * as prismic from '@prismicio/client';
 import add from 'date-fns/add';
+import sm from '../sm.json';
 
-const REF_API_URL = 'https://chaser.cdn.prismic.io/api/v2';
-const API_TOKEN = process.env.PRISMIC_API_TOKEN;
+export const repositoryName = prismic.getRepositoryName(sm.apiEndpoint);
 
-const createClientOptions = (req = null, prismicAccessToken = null) => {
-  const reqOption = req ? { req } : {};
-  const accessTokenOption = prismicAccessToken
-    ? { accessToken: prismicAccessToken }
-    : {};
+export const routes = [
+  { type: 'volunteer', path: '/volunteer/:uid' },
+  { type: 'play', path: '/play/:uid' },
+  { type: 'about', path: '/about/:uid' },
+  { type: 'post', path: '/post/:uid' },
+  { type: 'programmes', path: '/programmes/:uid' },
+  { type: 'clubs', path: '/clubs/:uid' },
+  { type: 'events', path: '/events/:uid' },
+  { type: 'youth', path: '/youth/:uid' },
+  { type: 'pages', path: '/:uid' },
+] as prismic.ClientConfig['routes'];
 
-  return {
-    ...reqOption,
-    ...accessTokenOption,
-  };
+export const client = (config?: prismicNext.CreateClientConfig) => {
+  const client = prismic.createClient(repositoryName, {
+    routes,
+    ...config,
+  });
+
+  prismicNext.enableAutoPreviews({
+    client,
+    previewData: config?.previewData,
+    req: config?.req,
+  });
+
+  return client;
 };
-
-export const Client = (req = null) =>
-  Prismic.client(REF_API_URL, createClientOptions(req, API_TOKEN));
 
 export const formatMetadata = ({
   meta_description,
@@ -30,33 +43,35 @@ export const formatMetadata = ({
 });
 
 export const getDocs = async (type, options = {}) => {
-  const { results } = await Client().query(
-    Prismic.Predicates.at('document.type', type),
-    options
-  );
+  const { results } = await client().get({
+    predicates: prismic.predicate.at('document.type', type),
+    ...options,
+  });
+
   return results;
 };
 
 export const getBlogCategory = async (category, options = {}) => {
-  const { results } = await Client().query(
-    Prismic.Predicates.at('my.post.category', category),
-    options
-  );
+  const { results } = await client().get({
+    predicates: prismic.predicate.at('my.post.category', category),
+    ...options,
+  });
   return results;
 };
 
-export const getPrismicDocByUid = (type, uid, options = {}) => {
-  return Client().getByUID(type, uid, options);
+export const getPrismicDocByUid = (type, uid, previewData) => {
+  return client({ previewData }).getByUID(type, uid);
 };
 
 export const getBlogTags = async (tags, options = {}) => {
-  const { results } = await Client().query(
-    [
-      Prismic.Predicates.at('document.type', 'post'),
-      Prismic.Predicates.any('document.tags', tags),
+  const { results } = await client().get({
+    predicates: [
+      prismic.predicate.at('document.type', 'post'),
+      prismic.predicate.any('document.tags', tags),
     ],
-    options
-  );
+    ...options,
+  });
+
   return results;
 };
 
@@ -70,10 +85,13 @@ export const getAllClubs = async ({ showCommunity, showUniversity }) => {
 
   if (!leagues.length) leagues = ['Community', 'University'];
 
-  const { results } = await Client().query(
-    [Prismic.Predicates.any('my.clubs.league', leagues)],
-    { orderings: '[my.clubs.club_name]', pageSize: 100 }
-  );
+  const { results } = await client().get({
+    predicates: prismic.predicate.any('my.clubs.league', leagues),
+    orderings: {
+      field: 'my.clubs.club_name',
+    },
+    pageSize: 100,
+  });
 
   return results;
 };
@@ -90,18 +108,18 @@ export const getClubs = async ({
     showUniversity ? 'University' : null,
   ].filter((league) => league);
 
-  const { results } = await Client().query(
-    [
-      Prismic.Predicates.geopoint.near(
+  const { results } = await client().get({
+    predicates: [
+      prismic.predicate.geopointNear(
         'my.clubs.coordinates',
         latitude,
         longitude,
         distance
       ),
-      Prismic.Predicates.any('my.clubs.league', leagues),
+      prismic.predicate.any('my.clubs.league', leagues),
     ],
-    { pageSize: 100 }
-  );
+    pageSize: 100,
+  });
 
   return results;
 };
@@ -118,48 +136,49 @@ export const getEvents = async ({
     showUniversity ? 'University' : null,
   ].filter((league) => league);
 
-  const { results } = await Client().query(
-    [
-      Prismic.Predicates.geopoint.near(
+  const { results } = await client().get({
+    predicates: [
+      prismic.predicate.geopointNear(
         'my.events.coordinates',
         latitude,
         longitude,
         distance
       ),
-      Prismic.Predicates.any('my.events.leagues.league', leagues),
-      Prismic.Predicates.dateAfter('my.events.event_start_date', new Date()),
+      prismic.predicate.any('my.events.leagues.league', leagues),
+      prismic.predicate.dateAfter('my.events.event_start_date', new Date()),
     ],
-    { pageSize: 100 }
-  );
+    pageSize: 100,
+  });
 
   return results;
 };
 
 export const getAllEvents = async () => {
-  const { results } = await Client().query(
-    [
-      Prismic.Predicates.at('document.type', 'events'),
-      Prismic.Predicates.dateAfter('my.events.event_start_date', new Date()),
+  const { results } = await client().get({
+    predicates: [
+      prismic.predicate.at('document.type', 'events'),
+      prismic.predicate.dateAfter('my.events.event_start_date', new Date()),
     ],
-    { pageSize: 100 }
-  );
+    pageSize: 100,
+  });
   return results;
 };
 
 export const getScoutingApplicationEvents = async () => {
   const twoWeeks = add(new Date(), { days: 12 });
   const fourWeeks = add(new Date(), { days: 28 });
-  const { results } = await Client().query(
-    [
-      Prismic.Predicates.at('document.type', 'events'),
-      Prismic.Predicates.dateBetween(
+  const { results } = await client().get({
+    predicates: [
+      prismic.predicate.at('document.type', 'events'),
+      prismic.predicate.dateBetween(
         'my.events.event_start_date',
         twoWeeks,
         fourWeeks
       ),
     ],
-    { pageSize: 100 }
-  );
+    pageSize: 100,
+  });
+
   return results;
 };
 
@@ -189,12 +208,14 @@ export const linkResolver = ({ type, uid }) => {
 };
 
 export async function getStaticPrismicProps({ type, uid, previewData }) {
-  const { ref } = previewData;
   const [basePageProps, page, posts] = await Promise.all([
     getBasePageProps(),
-    getPrismicDocByUid(type, uid, { ref }),
+    getPrismicDocByUid(type, uid, previewData),
     getDocs('post', {
-      orderings: '[my.post.date desc]',
+      orderings: {
+        field: 'my.post.date',
+        direction: 'desc',
+      },
       pageSize: PAGE_SIZE,
       page: 1,
     }),
@@ -209,8 +230,8 @@ export async function getStaticPrismicProps({ type, uid, previewData }) {
 
 export async function getBasePageProps() {
   const [header, footer] = await Promise.all([
-    Client().getSingle('header'),
-    Client().getSingle('footer'),
+    client().getSingle('header'),
+    client().getSingle('footer'),
   ]);
 
   return {

@@ -199,18 +199,12 @@ const EventPage = ({ page: initialPage, preview }) => {
   );
 };
 
-export const getStaticProps = async ({
-  params: { uid },
-  preview = null,
-  previewData = {},
-}) => {
-  const { ref } = previewData;
-  const page =
-    (await getPrismicDocByUid('events', uid, ref ? { ref } : null)) || null;
+export const getStaticProps = async ({ params: { uid }, previewData }) => {
+  const page = (await getPrismicDocByUid('events', uid, previewData)) || null;
   const basePageProps = await getBasePageProps();
 
   return {
-    props: { page, preview, ...basePageProps },
+    props: { page, ...basePageProps },
     revalidate: 1,
   };
 };

@@ -16,31 +16,32 @@ import {
   DrawerOverlay,
   DrawerContent,
 } from '@chakra-ui/react';
+import { HamburgerIcon, CloseIcon, BellIcon } from '@chakra-ui/icons';
 import dynamic from 'next/dynamic';
 import Router, { useRouter } from 'next/router';
 import Headroom from 'react-headroom';
 import * as prismicH from '@prismicio/helpers';
-import { linkResolver } from 'modules/prismic';
 import cookies from 'js-cookie';
-import { removeCookie } from 'modules/cookies';
-
 import Link from 'next/link';
 
-import { HamburgerIcon, CloseIcon, BellIcon } from '@chakra-ui/icons';
+import { removeCookie } from '../../../modules/cookies';
+import { linkResolver } from '../../../modules/prismic';
+import { getScopesFromToken, hasScope } from '../../../modules/scopes';
+
 import DesktopNavigation from './desktop';
 import MobileNavigation from './mobile';
 import Notifications from '../notifications';
+
+import { USER_NAVIGATION } from '../../../constants/navigation';
+import { DASHBOARD_SCOPES, CLUB_MANAGEMENT } from '../../../constants/scopes';
+import useCachedResponse from '../../../hooks/useCachedResponse';
+import usersService from '../../../services/users';
 
 import FacebookIcon from 'public/images/facebook.svg';
 import YoutubeIcon from 'public/images/youtube.svg';
 import TwitterIcon from 'public/images/twitter.svg';
 import InstagramIcon from 'public/images/instagram.svg';
 import PersonIcon from 'public/images/person.svg';
-import { USER_NAVIGATION } from 'constants/navigation';
-import { getScopesFromToken, hasScope } from 'modules/scopes';
-import { DASHBOARD_SCOPES, CLUB_MANAGEMENT } from 'constants/scopes';
-import useCachedResponse from 'hooks/useCachedResponse';
-import usersService from 'services/users';
 
 const Button = dynamic(() => import('components/shared/button'));
 const Logo = dynamic(() => import('components/shared/logo'));

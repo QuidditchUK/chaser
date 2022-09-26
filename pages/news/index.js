@@ -1,18 +1,27 @@
-import Prismic from '@prismicio/client';
+import * as prismic from '@prismicio/client';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { Flex, Button } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
-import { getDocs, PAGE_SIZE, Client, getBasePageProps } from 'modules/prismic';
 import { useInfiniteQuery } from 'react-query';
+import {
+  getDocs,
+  PAGE_SIZE,
+  client,
+  getBasePageProps,
+} from '../../modules/prismic';
 
 const LatestNews = dynamic(() => import('components/prismic/latest-news'));
 const NewsHeader = dynamic(() => import('components/news/news-header'));
 const Meta = dynamic(() => import('components/shared/meta'));
 
-const getPagedDocs = ({ pageParam = 0 }) =>
-  Client().query(Prismic.Predicates.at('document.type', 'post'), {
-    orderings: '[my.post.date desc]',
+const getPagedDocs = ({ pageParam = 1 }) =>
+  client().get({
+    predicates: prismic.predicate.at('document.type', 'post'),
+    orderings: {
+      field: 'my.post.date',
+      direction: 'desc',
+    },
     pageSize: PAGE_SIZE,
     page: pageParam,
   });
@@ -84,7 +93,10 @@ const News = ({ posts: initialPosts = [] }) => {
 export const getStaticProps = async () => {
   const basePageProps = await getBasePageProps();
   const posts = await getDocs('post', {
-    orderings: '[my.post.date desc]',
+    orderings: {
+      field: 'my.post.date',
+      direction: 'desc',
+    },
     pageSize: PAGE_SIZE,
     page: 1,
   });

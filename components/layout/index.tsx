@@ -1,20 +1,16 @@
 import dynamic from 'next/dynamic';
-import { Flex, Link, Box, Text } from '@chakra-ui/react';
+import { Flex, Box } from '@chakra-ui/react';
 import { NextComponentType } from 'next';
 
-const Navigation = dynamic(() => import('components/layout/navigationV2'));
-const Footer = dynamic(() => import('components/layout/footer'));
-const PageErrorBoundary = dynamic(
-  () => import('components/errorBoundaries/page')
-);
+const Navigation = dynamic(() => import('./navigationV2'));
+const Footer = dynamic(() => import('./footer'));
+const PageErrorBoundary = dynamic(() => import('../errorBoundaries/page'));
 
 const Layout = ({
   header,
   footer,
   children,
-  preview = false,
 }: {
-  preview?: boolean;
   children: NextComponentType | Element;
   header: any;
   footer: any;
@@ -28,28 +24,6 @@ const Layout = ({
       direction="column"
       minHeight="100%"
     >
-      {preview && (
-        <Flex
-          bg="monarchRed"
-          color="white"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Text>
-            This page is a preview.{' '}
-            <Link
-              fontWeight="bold"
-              color="white"
-              textDecoration="none"
-              href="/api/exit-preview"
-              _hover={{ textDecoration: 'underline' }}
-            >
-              Click here
-            </Link>{' '}
-            to exit preview mode.
-          </Text>
-        </Flex>
-      )}
       <Navigation data={header} />
       <PageErrorBoundary>
         <Box as="main" display="flex" flexDirection="column" flexGrow={1}>

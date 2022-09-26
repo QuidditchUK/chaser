@@ -9,7 +9,7 @@ import {
   getPrismicDocByUid,
   getBlogTags,
   getBasePageProps,
-} from 'modules/prismic';
+} from '../../modules/prismic';
 import { formatOrdinals } from 'modules/numbers';
 import {
   Box,
@@ -81,7 +81,10 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
     queryKey: ['posts', router.query.uid],
     queryFn: () =>
       getBlogTags(page?.tags, {
-        orderings: '[my.post.date desc]',
+        orderings: {
+          field: 'my.post.date',
+          direction: 'desc',
+        },
         pageSize: 3,
       }),
     selector: (res) => res,
@@ -386,30 +389,27 @@ const ClubPage = ({ page: initialPage, posts: initialPosts, preview }) => {
   );
 };
 
-export const getStaticProps = async ({
-  params: { uid },
-  preview = null,
-  previewData = {},
-}) => {
-  const { ref } = previewData;
-  const page =
-    (await getPrismicDocByUid('clubs', uid, ref ? { ref } : null)) || null;
+export const getStaticProps = async ({ params: { uid }, previewData }) => {
+  const page = (await getPrismicDocByUid('clubs', uid, previewData)) || null;
   const basePageProps = await getBasePageProps();
 
   if (page?.tags) {
     const posts = await getBlogTags(page?.tags, {
-      orderings: '[my.post.date desc]',
+      orderings: {
+        field: 'my.post.date',
+        direction: 'desc',
+      },
       pageSize: 3,
     });
 
     return {
-      props: { page, preview, posts, ...basePageProps },
+      props: { page, posts, ...basePageProps },
       revalidate: 1,
     };
   }
 
   return {
-    props: { page, preview, ...basePageProps },
+    props: { page, ...basePageProps },
     revalidate: 1,
   };
 };

@@ -1,24 +1,12 @@
-import { Client, linkResolver } from 'modules/prismic';
+import { setPreviewData, redirectToPreviewURL } from '@prismicio/next';
+import { createClient } from '../../modules/prismic';
 
-// eslint-disable-next-line consistent-return
-const Preview = async (req, res) => {
-  const { token: ref, documentId } = req.query;
-  try {
-    const redirectUrl = await Client(req)
-      .getPreviewResolver(ref, documentId)
-      .resolve(linkResolver, '/');
+const preview = async (req, res) => {
+  const client = createClient({ req });
 
-    if (!redirectUrl) {
-      return res.status(401).json({ message: 'Invalid token' });
-    }
+  await setPreviewData({ req, res });
 
-    res.setPreviewData({ ref });
-    res.setHeader('location', redirectUrl);
-    res.statusCode = 302;
-    res.end();
-  } catch {
-    res.status(400).json({ message: 'Something went wrong' });
-  }
+  await redirectToPreviewURL({ req, res, client });
 };
 
-export default Preview;
+export default preview;
