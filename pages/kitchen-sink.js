@@ -9,7 +9,7 @@ const KitchenSink = (props) => (
   <PrismicPage type="pages" uid="kitchen-sink" {...props} />
 );
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps = async ({ req, res, previewData }) => {
   const auth = await isAuthorized(req, res, DASHBOARD_SCOPES);
 
   if (!auth) {
@@ -19,13 +19,13 @@ export const getServerSideProps = async ({ req, res }) => {
   }
 
   const prismicProps = await getStaticPrismicProps({
-    previewData: { ref: null },
+    previewData,
     type: 'pages',
     uid: 'kitchen-sink',
   });
 
   return {
-    props: { ...prismicProps, preview: null },
+    props: prismicProps,
   };
 };
 

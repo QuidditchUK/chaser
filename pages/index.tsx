@@ -1,15 +1,12 @@
 import { GetStaticProps } from 'next';
-import { getStaticPrismicProps } from 'modules/prismic';
+import { getStaticPrismicProps } from '../modules/prismic';
 import dynamic from 'next/dynamic';
 
-const PrismicPage = dynamic(() => import('components/shared/prismic-page'));
+const PrismicPage = dynamic(() => import('../components/shared/prismic-page'));
 
 const Home = (props) => <PrismicPage type="pages" uid="home" {...props} />;
 
-export const getStaticProps: GetStaticProps = async ({
-  preview = null,
-  previewData = { ref: null },
-}) => {
+export const getStaticProps: GetStaticProps = async ({ previewData }) => {
   const prismicProps = await getStaticPrismicProps({
     previewData,
     type: 'pages',
@@ -17,7 +14,7 @@ export const getStaticProps: GetStaticProps = async ({
   });
 
   return {
-    props: { ...prismicProps, preview },
+    props: prismicProps,
     revalidate: 1,
   };
 };
