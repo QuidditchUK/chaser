@@ -2236,24 +2236,23 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.6.0.tgz#3c7c9c46e678feefe7a2e5bb609d3dbd665ffb3f"
   integrity sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==
 
-"@slicemachine/client@1.1.12":
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/@slicemachine/client/-/client-1.1.12.tgz#9b4f4877f11e98690eaf0dc1ac9f8acb92713abe"
-  integrity sha512-05KuQc+P1pGw31+h3BgyI0w1QxvU9FN2EOSVEwOozIFqODkM8xLntYNCwiSqEL4KF849vdguJEUc7lmSrpB1+A==
+"@slicemachine/client@1.1.13":
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/@slicemachine/client/-/client-1.1.13.tgz#8e0f96bd4ef47dbda8c2dadaa06bd0804f4fef32"
+  integrity sha512-Si75q6qCJK/19J2v9nMwK1VG/EHFAU4ojn9dJL2o3ThQ4f9LoW+pz9BOUJMlFNvqTGauOewXeLxS6Ayg1zWK5Q==
   dependencies:
     "@prismicio/types-internal" "^0.2.8"
-    "@slicemachine/core" "1.1.12"
+    "@slicemachine/core" "1.1.13"
     axios "^0.27.2"
     form-data "^3.0.0"
     fp-ts "^2.11.5"
     io-ts "^2.2.16"
     mime "^2.5.2"
-    uniqid "^5.4.0"
 
-"@slicemachine/core@1.1.12":
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/@slicemachine/core/-/core-1.1.12.tgz#65e6fcbe9783a8587700abfc74efd9f239de6064"
-  integrity sha512-BK4/y9lk9UYmaurYwVa/vOyWqDBRPF3ysHkNMBgeBy+XWoGxALxJwYeRRw1Pmm0j2F3JvJVrm7AX2bPLTMS1bQ==
+"@slicemachine/core@1.1.13":
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/@slicemachine/core/-/core-1.1.13.tgz#151a5b6556e2459b64b1e2cd7d42f87d2aead098"
+  integrity sha512-Mn1+AmP8/+y1nvejUbEVsKwqvDPdbqnIH2ovz5P3/9iOSs9+44CAOPW0FwDvXOCz/bBlV86azoEI8BsyTIuPRQ==
   dependencies:
     "@babel/runtime" "^7.18.9"
     "@prismicio/types-internal" "^0.2.8"
@@ -4004,10 +4003,10 @@ detect-node@^2.0.4, detect-node@^2.1.0:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.1.0.tgz#c9c70775a49c3d03bc2c06d9a73be550f978f8b1"
   integrity sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==
 
-devtools-protocol@0.0.981744:
-  version "0.0.981744"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.981744.tgz#9960da0370284577d46c28979a0b32651022bacf"
-  integrity sha512-0cuGS8+jhR67Fy7qG3i3Pc7Aw494sb9yG9QgpG97SFVWwolgYjlhJg7n+UaHxOQT30d1TYu/EYe9k01ivLErIg==
+devtools-protocol@0.0.1019158:
+  version "0.0.1019158"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.1019158.tgz#4b08d06108a784a2134313149626ba55f030a86f"
+  integrity sha512-wvq+KscQ7/6spEV7czhnZc9RM/woz1AY+/Vpd8/h2HFMwJSdTliu7f/yr1A6vDdJfKICZsShqsYpEQbdhg8AFQ==
 
 dir-glob@^3.0.1:
   version "3.0.1"
@@ -7067,19 +7066,19 @@ pirates@^4.0.5:
   resolved "https://registry.yarnpkg.com/pirates/-/pirates-4.0.5.tgz#feec352ea5c3268fb23a37c702ab1699f35a5f3b"
   integrity sha512-8V9+HQPupnaXMA23c5hvl69zXvTwTzyAYasnkb0Tts4XvO4CliqONMOnvlq26rkhLC3nWDFBJf73LU1e1VZLaQ==
 
-pkg-dir@4.2.0, pkg-dir@^4.1.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-4.2.0.tgz#f099133df7ede422e81d1d8448270eeb3e4261f3"
-  integrity sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==
-  dependencies:
-    find-up "^4.0.0"
-
 pkg-dir@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-3.0.0.tgz#2749020f239ed990881b1f71210d51eb6523bea3"
   integrity sha512-/E57AYkoeQ25qkxMj5PBOVgF8Kiu/h7cYS30Z5+R7WaiCCBfLq58ZI/dSeaEKb9WVJV5n/03QwrN3IeWIFllvw==
   dependencies:
     find-up "^3.0.0"
+
+pkg-dir@^4.1.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-4.2.0.tgz#f099133df7ede422e81d1d8448270eeb3e4261f3"
+  integrity sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==
+  dependencies:
+    find-up "^4.0.0"
 
 please-upgrade-node@^3.2.0:
   version "3.2.0"
@@ -7215,23 +7214,22 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-puppeteer@^13.5.1:
-  version "13.7.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-13.7.0.tgz#18e16f83e397cf02f7a0804c67c1603d381cfb0b"
-  integrity sha512-U1uufzBjz3+PkpCxFrWzh4OrMIdIb2ztzCu0YEPfRHjHswcSwHZswnK+WdsOQJsRV8WeTg3jLhJR4D867+fjsA==
+puppeteer@^16.0.0:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-16.2.0.tgz#3fc9cc0c461d3166a98562a7dcd0bf3424a0523c"
+  integrity sha512-7Au6iC98rS6WEAD110V4Bxd0iIbqoFtzz9XzkG1BSofidS1VAJ881E1+GFR7Xn2Yea0hbj8n0ErzRyseMp1Ctg==
   dependencies:
     cross-fetch "3.1.5"
     debug "4.3.4"
-    devtools-protocol "0.0.981744"
+    devtools-protocol "0.0.1019158"
     extract-zip "2.0.1"
     https-proxy-agent "5.0.1"
-    pkg-dir "4.2.0"
     progress "2.0.3"
     proxy-from-env "1.1.0"
     rimraf "3.0.2"
     tar-fs "2.1.1"
     unbzip2-stream "1.4.3"
-    ws "8.5.0"
+    ws "8.8.1"
 
 q@^1.1.2:
   version "1.5.1"
@@ -7927,17 +7925,17 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-slice-machine-ui@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/slice-machine-ui/-/slice-machine-ui-0.4.2.tgz#8e8c23145b9b5c28207a90125ef85f54d86862b6"
-  integrity sha512-jnGsh41vJIrFrg2GakIkMJG0TTbsPb5r0IAGpdifEH52ivt14kFQn93qOh8NEwZfICvKV7aCEENVzbUDUmyfrg==
+slice-machine-ui@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/slice-machine-ui/-/slice-machine-ui-0.5.0.tgz#546f66e758d5614b7a0c13cf5b1c27fce09cb19c"
+  integrity sha512-dakwmP4eNbqoVbBPD+UlOyBeq9b932H5QQZP6aXmO8ErSgs+lX3PyZyKN9hsH3HusdMTGz66f84SnvPSIg7MrQ==
   dependencies:
     "@babel/register" "^7.17.7"
     "@prismicio/api-renderer" "^0.1.7"
     "@prismicio/mocks" "^0.1.8"
     "@prismicio/types-internal" "^0.3.0"
-    "@slicemachine/client" "1.1.12"
-    "@slicemachine/core" "1.1.12"
+    "@slicemachine/client" "1.1.13"
+    "@slicemachine/core" "1.1.13"
     "@svgr/webpack" "^5.4.0"
     analytics-node "^6.1.0"
     atob "^2.1.2"
@@ -7967,7 +7965,6 @@ slice-machine-ui@^0.4.2:
     mime "^2.5.2"
     module-alias "^2.2.2"
     neverthrow "^4.2.1"
-    node-fetch "^2.6.7"
     npm-registry-fetch "^12.0.1"
     npmlog "^5.0.0"
     oembed-parser "^1.4.5"
@@ -7976,7 +7973,7 @@ slice-machine-ui@^0.4.2:
     parse-domain "^4.0.0"
     probe-image-size "^7.2.2"
     prompts "^2.4.0"
-    puppeteer "^13.5.1"
+    puppeteer "^16.0.0"
     random-sentence "^1.0.4"
     react "^17.0.2"
     semver "^7.3.2"
@@ -8677,11 +8674,6 @@ unipointer@^2.4.0:
   dependencies:
     ev-emitter "^1.0.1"
 
-uniqid@^5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/uniqid/-/uniqid-5.4.0.tgz#4e17bfcab66dfe33563411ae0c801f46ef964e66"
-  integrity sha512-38JRbJ4Fj94VmnC7G/J/5n5SC7Ab46OM5iNtSstB/ko3l1b5g7ALt4qzHFgGciFkyiRNtDXtLNb+VsxtMSE77A==
-
 unique-filename@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/unique-filename/-/unique-filename-2.0.1.tgz#e785f8675a9a7589e0ac77e0b5c34d2eaeac6da2"
@@ -9147,10 +9139,10 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
 
-ws@8.5.0:
-  version "8.5.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.5.0.tgz#bfb4be96600757fe5382de12c670dab984a1ed4f"
-  integrity sha512-BWX0SWVgLPzYwF8lTzEy1egjhS4S4OEAHfsO8o65WOVsrnSRGaSiUaa9e0ggGlkMTtBlmOpEXiie9RUcBO86qg==
+ws@8.8.1:
+  version "8.8.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.8.1.tgz#5dbad0feb7ade8ecc99b830c1d77c913d4955ff0"
+  integrity sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==
 
 xtend@~4.0.1:
   version "4.0.2"
