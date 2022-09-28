@@ -78,7 +78,8 @@ const LeagueTableCard = ({ table }) => {
         borderRadius="xl"
         zIndex={2}
       >
-        {data.title && !data?.logo && (
+        {data?.logo && <PrismicNextImage field={data?.logo} />}
+        {data.title && (
           <Heading
             as="h2"
             mt={2}
@@ -104,7 +105,7 @@ const LeagueTableCard = ({ table }) => {
               <Box {...dividedCellStyles} bg="white">
                 {item?.position}
               </Box>
-              <Box {...dividedCellStyles} bg="white">
+              <Box {...dividedCellStyles} bg="white" px={2}>
                 {item?.team}
               </Box>
             </Fragment>
