@@ -27,6 +27,9 @@
               "patternType": "PARAGRAPH",
               "blocks": 1
             }
+          },
+          "variant": {
+            "content": "primary"
           }
         },
         "items": {}
