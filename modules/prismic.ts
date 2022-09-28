@@ -9,7 +9,7 @@ export const routes = [
   { type: 'volunteer', path: '/volunteer/:uid' },
   { type: 'play', path: '/play/:uid' },
   { type: 'about', path: '/about/:uid' },
-  { type: 'post', path: '/post/:uid' },
+  { type: 'post', path: '/news/:uid' },
   { type: 'programmes', path: '/programmes/:uid' },
   { type: 'clubs', path: '/clubs/:uid' },
   { type: 'events', path: '/events/:uid' },

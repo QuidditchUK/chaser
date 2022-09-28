@@ -3,8 +3,6 @@ import dynamic from 'next/dynamic';
 import { getDocs, getPrismicDocByUid, getBasePageProps } from 'modules/prismic';
 import PrismicSlice from 'components/prismic';
 
-const Page404 = dynamic(() => import('pages/404'));
-const PageLoading = dynamic(() => import('components/shared/page-loading'));
 const Meta = dynamic(() => import('components/shared/meta'));
 const NewsSupport = dynamic(() => import('components/news/news-support'));
 const NewsHero = dynamic(() => import('components/news/news-hero'));
