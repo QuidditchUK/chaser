@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import { SliceZone } from '@prismicio/react';
+import { components as sliceMachineSlices } from '../../slices';
 
 const HomeHero = dynamic(() => import('components/prismic/home-hero'));
 const LatestNews = dynamic(() => import('components/prismic/latest-news'));
@@ -66,6 +67,7 @@ const slices = {
   scheduler_feed: SchedulerFeed,
   event_cards: EventCards,
   scheduler_division: SchedulerDivision,
+  ...sliceMachineSlices,
 };
 
 function PrismicSlice({ sections, posts }) {

@@ -10,7 +10,6 @@ import {
   useStyleConfig,
   Link as ChakraLink,
 } from '@chakra-ui/react';
-import { ChevronRightIcon } from '@chakra-ui/icons';
 import { formatMinorUnitsToCurrency } from 'modules/numbers';
 import Image from 'next/image';
 import { PlainWrapper } from 'components/shared/card';

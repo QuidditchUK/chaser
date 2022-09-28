@@ -1,0 +1,75 @@
+{
+  "id": "mock-doc-id",
+  "url": null,
+  "type": "events",
+  "href": null,
+  "tags": [],
+  "first_publication_date": "1970-01-01T00:00:01+0000",
+  "last_publication_date": "1970-01-01T00:00:01+0000",
+  "slugs": [],
+  "linked_documents": [],
+  "lang": "en-us",
+  "alternate_languages": [],
+  "data": {
+    "event_name": "action",
+    "venue": "location",
+    "event_start_date": "2016-04-07",
+    "event_end_date": "2017-09-17",
+    "icon": {
+      "dimensions": {
+        "width": 900,
+        "height": 500
+      },
+      "alt": null,
+      "copyright": null,
+      "url": "https://images.unsplash.com/photo-1560457079-9a6532ccb118"
+    },
+    "social_facebook": {
+      "link_type": "Web",
+      "url": "https://slicemachine.dev"
+    },
+    "leagues": [
+      {
+        "league": "University"
+      }
+    ],
+    "images": [
+      {
+        "image": {
+          "dimensions": {
+            "width": 900,
+            "height": 500
+          },
+          "alt": null,
+          "copyright": null,
+          "url": "https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+        }
+      }
+    ],
+    "description": [
+      {
+        "type": "paragraph",
+        "text": "Exercitation deserunt incididunt et aliqua pariatur aliqua aute.",
+        "spans": []
+      }
+    ],
+    "coordinates": {
+      "latitude": 48.8606111,
+      "longitude": 2.337644
+    },
+    "club_registration_link": {
+      "link_type": "Web",
+      "url": "http://twitter.com"
+    },
+    "club_registration_deadline": "2012-12-21T09:56:47+0000",
+    "individual_registration_link": {
+      "link_type": "Web",
+      "url": "https://slicemachine.dev"
+    },
+    "individual_registration_deadline": "2020-09-27T20:22:16+0000",
+    "quk_membership_required": true,
+    "player_fee": 17,
+    "team_fee": 70,
+    "body": []
+  }
+}

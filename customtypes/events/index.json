@@ -746,6 +746,9 @@
                 }
               },
               "repeat": {}
+            },
+            "league_table": {
+              "type": "SharedSlice"
             }
           }
         }

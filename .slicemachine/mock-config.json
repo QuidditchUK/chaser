@@ -1,0 +1,54 @@
+{
+  "slices": {
+    "LeagueTable": {
+      "default": {
+        "primary": {
+          "title": {
+            "content": "QuadballUK Community League"
+          },
+          "content": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          }
+        },
+        "items": {}
+      }
+    },
+    "LeagueTables": {
+      "default": {
+        "primary": {
+          "title": {
+            "content": "QuadballUK Community League"
+          },
+          "content": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          }
+        },
+        "items": {}
+      }
+    }
+  },
+  "_cts": {
+    "league_table": {
+      "table": {
+        "position": {
+          "content": "1st"
+        },
+        "team": {
+          "content": "London Quidditch Club"
+        }
+      },
+      "title": {
+        "content": "Division 3"
+      }
+    },
+    "pages": {},
+    "events": {},
+    "post": {}
+  }
+}

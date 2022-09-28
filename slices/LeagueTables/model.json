@@ -1,0 +1,59 @@
+{
+  "id": "league_table",
+  "type": "SharedSlice",
+  "name": "LeagueTables",
+  "description": "LeagueTable",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8626",
+      "description": "LeagueTable",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Title"
+          }
+        },
+        "content": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Content",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink"
+          }
+        },
+        "variant": {
+          "type": "Select",
+          "config": {
+            "label": "Variant",
+            "placeholder": "",
+            "options": [
+              "light",
+              "primary",
+              "dark"
+            ],
+            "default_value": "light"
+          }
+        }
+      },
+      "items": {
+        "table": {
+          "type": "Link",
+          "config": {
+            "label": "Table",
+            "select": "document",
+            "customtypes": [
+              "league_table"
+            ]
+          }
+        }
+      },
+      "imageUrl": "https://images.prismic.io/slice-machine/621a5ec4-0387-4bc5-9860-2dd46cbc07cd_default_ss.png?auto=compress,format"
+    }
+  ]
+}

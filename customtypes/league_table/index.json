@@ -1,0 +1,67 @@
+{
+  "id": "league_table",
+  "label": "League Table",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "uid",
+          "placeholder": ""
+        }
+      },
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": ""
+        }
+      },
+      "logo": {
+        "type": "Image",
+        "config": {
+          "label": "Logo",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "variant": {
+        "type": "Select",
+        "config": {
+          "label": "Variant",
+          "placeholder": "",
+          "options": [
+            "northernMagenta",
+            "tornadoOrange",
+            "southernBlue"
+          ],
+          "default_value": "northernMagenta"
+        }
+      },
+      "table": {
+        "type": "Group",
+        "config": {
+          "label": "Table",
+          "fields": {
+            "position": {
+              "type": "Text",
+              "config": {
+                "label": "position",
+                "placeholder": ""
+              }
+            },
+            "team": {
+              "type": "Text",
+              "config": {
+                "label": "Team",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
