@@ -20,7 +20,7 @@ const SchedulerFeed = ({ slice }) => {
   });
 
   const grouped = groupBy(data, (game) => game?.label?.trim());
-  const groupedOrder = orderBy(Object.keys(grouped), (group) => group);
+  const groupedOrder = orderBy(grouped, (group) => group.length, 'desc');
 
   return (
     <>
