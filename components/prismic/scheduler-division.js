@@ -9,7 +9,7 @@ import useCachedResponse from 'hooks/useCachedResponse';
 
 const Slice = dynamic(() => import('components/shared/slice'));
 
-const SchedulerFeed = ({ slice }) => {
+const SchedulerDivision = ({ slice }) => {
   const { primary } = slice;
   const { scheduler_url } = primary;
 
@@ -20,7 +20,11 @@ const SchedulerFeed = ({ slice }) => {
   });
 
   const grouped = groupBy(data, (game) => game?.label?.trim());
-  const groupedOrder = orderBy(grouped, (group) => group.length, 'desc');
+  const groupedOrder = orderBy(
+    Object.keys(grouped),
+    (key) => grouped[key].length,
+    'desc'
+  );
 
   return (
     <>
@@ -81,4 +85,4 @@ const SchedulerFeed = ({ slice }) => {
   );
 };
 
-export default SchedulerFeed;
+export default SchedulerDivision;
