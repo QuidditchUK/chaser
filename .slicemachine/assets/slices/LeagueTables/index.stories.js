@@ -28,11 +28,11 @@ export const _Default = () => (
         content: [
           {
             type: 'paragraph',
-            text: 'Nostrud consequat ullamco incididunt qui consequat consectetur.',
+            text: 'Ut pariatur nulla sunt commodo exercitation.',
             spans: [],
           },
         ],
-        variant: 'primary',
+        variant: 'light',
       },
       slice_type: 'league_table',
       id: '_Default',

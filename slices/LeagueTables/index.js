@@ -119,8 +119,6 @@ const LeagueTableCard = ({ table }) => {
 const LeagueTable = ({ slice }) => {
   const { primary = {}, items = [] } = slice;
 
-  console.log(slice);
-
   return (
     <Slice variant={primary?.variant}>
       {primary.title && (
