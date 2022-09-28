@@ -92,8 +92,6 @@ const LeagueTableCard = ({ table }) => {
           </Heading>
         )}
 
-        {data?.logo && <PrismicNextImage field={data?.logo} />}
-
         <Grid
           gridTemplateColumns="60px auto"
           width="100%"
