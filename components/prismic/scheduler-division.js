@@ -20,9 +20,10 @@ const SchedulerDivision = ({ slice }) => {
   });
 
   const grouped = groupBy(data, (game) => game?.label?.trim());
+  // order by number of games in group, then by alphabetical label name
   const groupedOrder = orderBy(
     Object.keys(grouped),
-    (key) => grouped[key].length,
+    [(key) => grouped[key].length, (key) => key],
     'desc'
   );
 
