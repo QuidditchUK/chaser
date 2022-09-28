@@ -131,7 +131,7 @@ const LeagueTable = ({ slice }) => {
         </Heading>
       )}
       {prismicH.asText(primary.content) && (
-        <Content>
+        <Content pb={3} px={{ base: 4, sm: 8, md: 9 }} textAlign="center">
           <PrismicRichText field={primary.content} />
         </Content>
       )}
