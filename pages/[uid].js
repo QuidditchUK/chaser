@@ -17,7 +17,7 @@ export const getStaticProps = async ({ params: { uid }, previewData }) => {
   });
 
   return {
-    props: { ...prismicProps },
+    props: prismicProps,
     revalidate: 1,
   };
 };
