@@ -9,7 +9,7 @@ const scopesService = {
 
   removeScope: ({ user_uuid, scope, ...params }) => ({
     method: 'delete',
-    url: `/scopes/${scope}/users/${user_uuid}`,
+    url: `/scopes/${scope}/user/${user_uuid}`,
     ...params,
   }),
 

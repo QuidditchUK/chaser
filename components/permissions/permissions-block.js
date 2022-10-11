@@ -16,6 +16,7 @@ import useCachedResponse from 'hooks/useCachedResponse';
 import usersService from 'services/users';
 
 const handleDeleteClick = async ({ uuid, scope, refetch }) => {
+  console.log('in Handle');
   try {
     await scopesService.removeScope({ user_uuid: uuid, scope });
     refetch();
@@ -143,10 +144,11 @@ const PermissionBlock = ({ label, scope, scopes }) => {
         onClose={onClose}
         footerAction={() => {
           handleDeleteClick({
-            uuid: user?.uuid,
+            uuid: selectedUser?.uuid,
             scope,
             refetch: refetchAll,
           });
+          setSelectedUser(null);
           onClose();
         }}
         footerButtonProps={{ variant: 'secondary' }}
