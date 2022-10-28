@@ -195,7 +195,7 @@ export const Footer = ({ data }) => {
 
                 <IconWrapper
                   aria-label="Follow us on Instagram"
-                  href="https://www.instagram.com/quadballuk"
+                  href="https://www.instagram.com/quadball_uk"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
