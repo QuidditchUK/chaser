@@ -53,7 +53,7 @@ const News = ({ posts: initialPosts = [] }) => {
     <>
       <Meta
         subTitle="Leagues"
-        description="All the latest results and news across QuidditchUK's leagues"
+        description="All the latest results and news across QuadballUK's leagues"
       />
       <NewsHeader />
       <LatestNews

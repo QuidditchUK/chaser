@@ -8,9 +8,9 @@ const NationalTeamInterest = ({ slice }) => {
   const { primary } = slice;
   return (
     <Slice variant={primary?.variant}>
-      <Heading as="h1" fontFamily="body" textAlign="center">
+      <Heading as="h2" fontFamily="body" textAlign="center">
         Register your interest today through your{' '}
-        <Link href="/login">QuidditchUK account</Link>, by completing your{' '}
+        <Link href="/login">QuadballUK account</Link>, by completing your{' '}
         <Link href="/dashboard/account/national-team">
           National Team Profile
         </Link>

@@ -56,7 +56,7 @@ const Forgot = () => {
   return (
     <>
       <Meta
-        description="Forgot your password for QuidditchUK, request a reset here"
+        description="Forgot your password for QuadballUK, request a reset here"
         subTitle="Forgot Password"
       />
       <Slice>

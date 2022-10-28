@@ -99,8 +99,8 @@ const JoinPage = () => {
   return (
     <>
       <Meta
-        description="Join QuidditchUK to manage your QuidditchUK Membership, Account details and more"
-        subTitle="Join QuidditchUK"
+        description="Join QuadballUK to manage your QuadballUK Membership, Account details and more"
+        subTitle="Join QuadballUK"
       />
       <Box
         backgroundImage="url(https://images.prismic.io/chaser/60b691d5-72f3-42d0-b634-b2548525fd65_QD_FN-325.jpg?auto=compress,format)"
@@ -127,11 +127,11 @@ const JoinPage = () => {
               <Logo />
             </Flex>
             <Heading as="h1" fontFamily="body" textAlign="center">
-              Join QuidditchUK
+              Join QuadballUK
             </Heading>
             <Text pb={5} textAlign="center">
-              Join QuidditchUK to manage your QuidditchUK and Club Membership,
-              and register for official events
+              Join QuadballUK to manage your QuadballUK and Club Membership, and
+              register for official events
             </Text>
 
             <form
@@ -190,11 +190,11 @@ const JoinPage = () => {
 
                     <Text fontSize="sm" marginBottom={3}>
                       We need this as there are some player restrictions in
-                      place for Student Clubs competing in QuidditchUK events.
-                      QuidditchUK may require further verification from members
+                      place for Student Clubs competing in QuadballUK events.
+                      QuadballUK may require further verification from members
                       regarding their student status, should we need it. This
                       information is not shared with anyone outside of
-                      QuidditchUK, and is purely for our own record.
+                      QuadballUK, and is purely for our own record.
                     </Text>
                   </>
                 )}

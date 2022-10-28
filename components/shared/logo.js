@@ -14,7 +14,7 @@ export default function Logo({ filter = false }) {
         height={logoHeight}
         width={logoHeight}
         src="/images/logo.png"
-        alt="Quidditch UK"
+        alt="Quadball UK"
         filter={filter ? 'brightness(0) invert(1)' : false}
       />
       <Image
@@ -22,8 +22,8 @@ export default function Logo({ filter = false }) {
         layout="fixed"
         height={logoHeight}
         width={logoTextWidth}
-        src="/images/logo-text.png"
-        alt="Quidditch UK"
+        src="/images/logo-text2.png"
+        alt="Quadball UK"
         filter={filter ? 'brightness(0) invert(1)' : false}
       />
     </Flex>

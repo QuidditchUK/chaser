@@ -112,7 +112,7 @@ const TransferRequestForm = ({ currentClub, clubs = [], callback }) => {
               >
                 By checking this box I acknowledge that I have read the above
                 disclaimer and I intend to transfer to{' '}
-                <strong>{selectedClub?.name}</strong> to be my QuidditchUK club.
+                <strong>{selectedClub?.name}</strong> to be my QuadballUK club.
               </Checkbox>
 
               <Button

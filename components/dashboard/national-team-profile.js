@@ -49,7 +49,7 @@ const NationalTeamFormSchema = object().shape({
       })
       .nullable()
       .required(
-        'Please estimate how many years of active quidditch experience you have.'
+        'Please estimate how many years of active quadball experience you have.'
       ),
     otherwise: number()
       .transform((currentValue, originalValue) => {
@@ -61,7 +61,7 @@ const NationalTeamFormSchema = object().shape({
     is: true,
     then: string()
       .nullable()
-      .required('Please summarise your quidditch experience.'),
+      .required('Please summarise your quadball experience.'),
     otherwise: string().nullable(),
   }),
 });
@@ -112,8 +112,8 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
       <p>
         Welcome to <strong>your</strong> National Team Profile. Use the form
         below to get on the radar of the best Managers and Coaches in the UK,
-        and register your interest in playing for one of the QuidditchUK
-        National Teams.
+        and register your interest in playing for one of the QuadballUK National
+        Teams.
         <br />
         <em>
           You can check out our National Team policies{' '}
@@ -148,7 +148,7 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
                     <em>
                       {/* National Eligibility Criteria URL should point to the pdf file in the CMS when possible. */}
                       You can check eligibility criteria{' '}
-                      <Link href="https://quidditchuk.org/about/documents-and-policies">
+                      <Link href="https://quadballuk.org/about/documents-and-policies">
                         here
                       </Link>
                       .
@@ -224,7 +224,7 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
               />
 
               <InputV2
-                label="How many years have you been actively playing quidditch?"
+                label="How many years have you been actively playing quadball?"
                 placeholder="Years active"
                 type="number"
                 error={errors?.years}
@@ -236,7 +236,7 @@ const NationalTeamProfileForm = ({ profile = {} }) => {
               <TextareaV2
                 label={
                   <>
-                    Summarise your quidditch experience.
+                    Summarise your quadball experience.
                     <br />
                     <em>
                       Focus on high-level tournaments and matches that you have

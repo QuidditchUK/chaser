@@ -135,10 +135,10 @@ const InfoForm = ({ user }) => {
 
                 <Content fontSize="sm" marginBottom={3}>
                   We need this as there are some player restrictions in place
-                  for Student Clubs competing in QuidditchUK events. QuidditchUK
+                  for Student Clubs competing in QuadballUK events. QuadballUK
                   may require further verification from members regarding their
                   student status, should we need it. This information is not
-                  shared with anyone outside of QuidditchUK, and is purely for
+                  shared with anyone outside of QuadballUK, and is purely for
                   our own record.
                 </Content>
               </>

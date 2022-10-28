@@ -74,7 +74,7 @@ const Page = ({ data: initialData }) => {
       <Meta
         subTitle="Video Library"
         image="https://images.prismic.io/chaser/43a62356-5609-45c4-a9dc-737db619449d_Volunteers%21.jpg?auto=compress,format"
-        description="Browse the QuidditchUK Community Video Library for footage of Quidditch being played in the UK"
+        description="Browse the QuadballUK Community Video Library for footage of Quadball being played in the UK"
       />
       <form
         onSubmit={handleSubmit((values) =>
@@ -141,7 +141,7 @@ const Page = ({ data: initialData }) => {
         <Content>
           <Text>
             The Video Library is a Community Project to collate all film of
-            Quidditch in the UK. This library is driven by{' '}
+            Quadball in the UK. This library is driven by{' '}
             <a
               href="https://docs.google.com/spreadsheets/d/1SBfVt4GBCoyFGpjb-Y7dt4uDsbhZFPbkY-rBVNgZsgo/edit?fbclid=IwAR3Khtk0kQTbhWu1j10NtfdOj5NNDMw677g8zyf6Gu2fPCw9qn3Cv5yeJQ0#gid=0"
               target="_blank"

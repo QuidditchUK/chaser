@@ -198,7 +198,7 @@ export const ProductCardV2 = ({
             <Link href="/dashboard/membership/manage" passHref>
               <ChakraLink>
                 <Button variant="transparent" mt={2}>
-                  Renew your Quidditch UK Membership
+                  Renew your Quadball Membership
                 </Button>
               </ChakraLink>
             </Link>

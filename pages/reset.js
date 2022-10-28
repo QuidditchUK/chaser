@@ -74,7 +74,7 @@ const Reset = () => {
   return (
     <>
       <Meta
-        description="Forgot your password for QuidditchUK, reset it here"
+        description="Forgot your password for QuadballUK, reset it here"
         subTitle="Reset Password"
       />
       <Slice>

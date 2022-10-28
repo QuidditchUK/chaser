@@ -83,8 +83,8 @@ const EDICommitteeForm = ({ slice }) => {
         <Content fontSize="bodyCard" fontStyle="italic" pb={4}>
           Applications of interest are open for both committee chair and regular
           member positions. These will remain open and be advertised until 31st
-          October, QuidditchUK will then be in contact with applicants to
-          discuss the role(s).
+          October, QuadballUK will then be in contact with applicants to discuss
+          the role(s).
         </Content>
 
         <form
