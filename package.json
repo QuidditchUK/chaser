@@ -7,6 +7,7 @@
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
     "@hookform/resolvers": "^2.8.8",
+    "@prisma/client": "^4.5.0",
     "@prismicio/client": "^6.7.1",
     "@prismicio/helpers": "^2.3.5",
     "@prismicio/next": "^0.1.5",
@@ -73,6 +74,7 @@
     "husky": "^7.0.0",
     "lint-staged": "11.2.6",
     "prettier": "^2.2.1",
+    "prisma": "^4.5.0",
     "slice-machine-ui": "^0.5.0",
     "typescript": "4.8.3"
   },

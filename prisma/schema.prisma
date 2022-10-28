@@ -1,0 +1,212 @@
+generator client {
+  provider        = "prisma-client-js"
+  binaryTargets   = ["native"]
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model clubs {
+  uuid                                      String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created                                   DateTime?   @db.Timestamptz(6)
+  updated                                   DateTime?   @db.Timestamptz(6)
+  name                                      String?     @db.VarChar(255)
+  slug                                      String?     @unique @db.VarChar
+  league                                    String?     @db.VarChar(255)
+  email                                     String?     @db.VarChar(255)
+  active                                    Boolean     @default(true)
+  managed_by                                String?     @db.Uuid
+  users_clubs_managed_byTousers             users?      @relation("clubs_managed_byTousers", fields: [managed_by], references: [uuid])
+  teams                                     teams[]
+  transfers_clubsTotransfers_new_club_uuid  transfers[] @relation("clubsTotransfers_new_club_uuid")
+  transfers_clubsTotransfers_prev_club_uuid transfers[] @relation("clubsTotransfers_prev_club_uuid")
+  users_clubsTousers_club_uuid              users[]     @relation("clubsTousers_club_uuid")
+}
+
+model notification_types {
+  type          String          @id
+  description   String
+  notifications notifications[]
+}
+
+model notifications {
+  uuid               String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created            DateTime           @default(now()) @db.Timestamptz(6)
+  user_uuid          String             @db.Uuid
+  read               Boolean            @default(false)
+  read_date          DateTime?          @db.Timestamptz(6)
+  event              String?
+  type_id            String
+  message            String?
+  notification_types notification_types @relation(fields: [type_id], references: [type])
+  users              users              @relation(fields: [user_uuid], references: [uuid], onDelete: Cascade)
+}
+
+model push_notifications {
+  uuid       String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  endpoint   String  @unique
+  p256dh     String
+  auth       String
+  user_agent String?
+  device_id  String?
+  user_uuid  String  @db.Uuid
+  users      users   @relation(fields: [user_uuid], references: [uuid], onDelete: Cascade)
+}
+
+model scopes {
+  uuid      String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created   DateTime? @default(now()) @db.Timestamptz(6)
+  updated   DateTime? @default(now()) @db.Timestamptz(6)
+  scope     String    @db.VarChar(255)
+  user_uuid String    @db.Uuid
+  users     users     @relation(fields: [user_uuid], references: [uuid])
+}
+
+model scouting_requests {
+  uuid                                      String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created                                   DateTime?        @default(now()) @db.Timestamptz(6)
+  updated                                   DateTime?        @default(now()) @db.Timestamptz(6)
+  user_uuid                                 String           @db.Uuid
+  status                                    ScoutingStatus   @default(PENDING)
+  reason                                    String?
+  event                                     String?
+  number                                    Int?
+  team                                      String?
+  pronouns                                  String?
+  scouted_by                                String?          @db.Uuid
+  outcome                                   ScoutingOutcome? @default(PENDING)
+  notes                                     String?
+  users_scouting_requests_scouted_byTousers users?           @relation("scouting_requests_scouted_byTousers", fields: [scouted_by], references: [uuid])
+  users_scouting_requests_user_uuidTousers  users            @relation("scouting_requests_user_uuidTousers", fields: [user_uuid], references: [uuid], onDelete: Cascade)
+}
+
+model stripe_products {
+  uuid                  String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created               DateTime                @default(now()) @db.Timestamptz(6)
+  stripe_product_id     String                  @unique @db.VarChar(255)
+  description           String
+  expires               String                  @db.VarChar(255)
+  users_stripe_products users_stripe_products[]
+}
+
+model system_settings {
+  uuid            String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created         DateTime? @default(now()) @db.Timestamptz(6)
+  transfer_window Boolean?  @default(false)
+}
+
+model teams {
+  uuid        String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created     DateTime?     @default(now()) @db.Timestamptz(6)
+  updated     DateTime?     @default(now()) @db.Timestamptz(6)
+  name        String?       @db.VarChar(255)
+  type        TeamType      @default(CLUB)
+  club_uuid   String?       @db.Uuid
+  icon        String?
+  short_name  String?
+  clubs       clubs?        @relation(fields: [club_uuid], references: [uuid], onDelete: Cascade)
+  teams_users teams_users[]
+}
+
+model teams_users {
+  uuid      String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created   DateTime? @db.Timestamptz(6)
+  updated   DateTime? @db.Timestamptz(6)
+  team_uuid String    @db.Uuid
+  user_uuid String    @db.Uuid
+  teams     teams     @relation(fields: [team_uuid], references: [uuid], onDelete: Cascade)
+  users     users     @relation(fields: [user_uuid], references: [uuid], onDelete: Cascade)
+}
+
+model transfers {
+  uuid                                  String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created                               DateTime?      @default(now()) @db.Timestamptz(6)
+  updated                               DateTime?      @default(now()) @db.Timestamptz(6)
+  user_uuid                             String         @db.Uuid
+  prev_club_uuid                        String?        @db.Uuid
+  new_club_uuid                         String?        @db.Uuid
+  status                                TransferStatus @default(PENDING)
+  actioned_by                           String?        @db.Uuid
+  reason                                String?
+  users_transfers_actioned_byTousers    users?         @relation("transfers_actioned_byTousers", fields: [actioned_by], references: [uuid])
+  clubs_clubsTotransfers_new_club_uuid  clubs?         @relation("clubsTotransfers_new_club_uuid", fields: [new_club_uuid], references: [uuid])
+  clubs_clubsTotransfers_prev_club_uuid clubs?         @relation("clubsTotransfers_prev_club_uuid", fields: [prev_club_uuid], references: [uuid])
+  users_transfers_user_uuidTousers      users          @relation("transfers_user_uuidTousers", fields: [user_uuid], references: [uuid])
+}
+
+model users {
+  uuid                                                  String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created                                               DateTime?               @default(now()) @db.Timestamptz(6)
+  updated                                               DateTime?               @default(now()) @db.Timestamptz(6)
+  email                                                 String                  @unique @db.VarChar(255)
+  hashed_password                                       String?                 @db.VarChar
+  salt                                                  String?                 @db.VarChar
+  type                                                  String                  @default("user") @db.VarChar
+  first_name                                            String?                 @db.VarChar(255)
+  last_name                                             String?                 @db.VarChar(255)
+  phone                                                 String?                 @db.VarChar(30)
+  last_login                                            DateTime?               @db.Timestamptz(6)
+  stripe_customer_id                                    String?                 @db.VarChar(255)
+  club_uuid                                             String?                 @db.Uuid
+  is_student                                            Boolean?
+  university                                            String?
+  experience                                            String?
+  first_team                                            String?                 @db.VarChar(10)
+  national_team_interest                                Boolean?
+  playstyle                                             String?
+  position                                              String?                 @db.VarChar(20)
+  second_team                                           String?                 @db.VarChar(10)
+  third_team                                            String?                 @db.VarChar(10)
+  years                                                 Int?
+  event_registration_notifications                      Boolean                 @default(false)
+  scouting_window_notifications                         Boolean                 @default(false)
+  transfer_window_notifications                         Boolean                 @default(false)
+  clubs_clubsTousers_club_uuid                          clubs?                  @relation("clubsTousers_club_uuid", fields: [club_uuid], references: [uuid])
+  clubs_clubs_managed_byTousers                         clubs[]                 @relation("clubs_managed_byTousers")
+  notifications                                         notifications[]
+  push_notifications                                    push_notifications[]
+  scopes                                                scopes[]
+  scouting_requests_scouting_requests_scouted_byTousers scouting_requests[]     @relation("scouting_requests_scouted_byTousers")
+  scouting_requests_scouting_requests_user_uuidTousers  scouting_requests[]     @relation("scouting_requests_user_uuidTousers")
+  teams_users                                           teams_users[]
+  transfers_transfers_actioned_byTousers                transfers[]             @relation("transfers_actioned_byTousers")
+  transfers_transfers_user_uuidTousers                  transfers[]             @relation("transfers_user_uuidTousers")
+  users_stripe_products                                 users_stripe_products[]
+}
+
+model users_stripe_products {
+  uuid              String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created           DateTime?       @default(now()) @db.Timestamptz(6)
+  updated           DateTime?       @default(now()) @db.Timestamptz(6)
+  user_uuid         String          @db.Uuid
+  stripe_product_id String          @db.VarChar(255)
+  stripe_products   stripe_products @relation(fields: [stripe_product_id], references: [stripe_product_id])
+  users             users           @relation(fields: [user_uuid], references: [uuid])
+}
+
+enum ScoutingOutcome {
+  PENDING
+  SUCCEEDED
+  UNSUCCESSFUL
+}
+
+enum ScoutingStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+enum TeamType {
+  CLUB
+  MERC
+  NATIONAL
+}
+
+enum TransferStatus {
+  PENDING
+  APPROVED
+  DECLINED
+}
