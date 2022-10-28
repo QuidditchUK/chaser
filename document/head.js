@@ -10,12 +10,12 @@ const DocumentHead = () => (
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="theme-color" content="#0e375f" />
 
-    <meta property="og:site_name" content="QuidditchUK – Find Your Passion" />
+    <meta property="og:site_name" content="QuadballUK – Find Your Passion" />
     <meta property="og:locale" content="en_GB" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:site" content="@QuidditchUK" />
+    <meta property="twitter:site" content="@QuadballUK" />
 
     <link rel="preconnect" href="//images.prismic.io" />
     <link rel="preconnect" href="//chaser.prismic.io" />

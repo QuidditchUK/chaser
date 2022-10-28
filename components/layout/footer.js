@@ -177,7 +177,7 @@ export const Footer = ({ data }) => {
               <Flex justifyContent={{ base: 'center', md: 'flex-end' }} mt={5}>
                 <IconWrapper
                   aria-label="Like us on Facebook"
-                  href="https://www.facebook.com/QuidditchUK"
+                  href="https://www.facebook.com/quadballuk"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -186,7 +186,7 @@ export const Footer = ({ data }) => {
 
                 <IconWrapper
                   aria-label="Follow us on Twitter"
-                  href="https://twitter.com/QuidditchUK"
+                  href="https://twitter.com/QuadballUK"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -195,7 +195,7 @@ export const Footer = ({ data }) => {
 
                 <IconWrapper
                   aria-label="Follow us on Instagram"
-                  href="https://instagram.com/ukquidditch"
+                  href="https://www.instagram.com/quadballuk"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

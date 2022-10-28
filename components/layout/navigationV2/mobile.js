@@ -235,7 +235,7 @@ export default function MobileNavigation({
       <HStack spacing={5} mt={1} mb={2}>
         <IconWrapper
           aria-label="Like us on Facebook"
-          href="https://www.facebook.com/QuidditchUK"
+          href="https://www.facebook.com/quadballuk"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -244,7 +244,7 @@ export default function MobileNavigation({
 
         <IconWrapper
           aria-label="Follow us on Twitter"
-          href="https://twitter.com/QuidditchUK"
+          href="https://twitter.com/QuadballUK"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -253,13 +253,12 @@ export default function MobileNavigation({
 
         <IconWrapper
           aria-label="Follow us on Instagram"
-          href="https://instagram.com/ukquidditch"
+          href="https://www.instagram.com/quadballuk"
           target="_blank"
           rel="noopener noreferrer"
         >
           <Icon as={InstagramIcon} />
         </IconWrapper>
-
         <IconWrapper
           aria-label="Subscribe to our Youtube Channel"
           href="https://www.youtube.com/channel/UCef5ZmqGJvff6RIqA0KS0wQ"
