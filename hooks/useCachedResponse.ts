@@ -9,10 +9,10 @@ function isAxiosError(tdb) {
 
 const dataSelector = (res) => res.data;
 
-export default function useCachedResponse(rawOptions) {
+export default function useCachedResponse<TData>(rawOptions) {
   const { queryFn, selector = dataSelector, ...options } = rawOptions;
 
-  return useQuery({
+  return useQuery<TData>({
     queryFn: async (context) => {
       try {
         const res = await queryFn(context);

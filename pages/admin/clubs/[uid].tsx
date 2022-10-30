@@ -6,6 +6,7 @@ import { Heading, Grid, Flex } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import type { clubs as Club } from '@prisma/client';
 
 import { getUserScopes } from 'modules/scopes';
 import { CLUBS_READ, CLUBS_WRITE, EMT } from 'constants/scopes';
@@ -62,12 +63,18 @@ const handleEditSubmit = async (
     setServerError(err?.response?.data?.error?.message);
   }
 };
-const Club = ({ club: initialData, scopes }) => {
+const Club = ({
+  club: initialData,
+  scopes,
+}: {
+  club: Club;
+  scopes: string[];
+}) => {
   const [serverError, setServerError] = useTempPopup();
   const [serverSuccess, setServerSuccess] = useTempPopup();
   const router = useRouter();
 
-  const { data: club, refetch } = useCachedResponse({
+  const { data: club, refetch } = useCachedResponse<Club>({
     queryKey: ['/clubs/', router.query.uid],
     queryFn: () => clubsService.getClub({ club_uuid: router.query.uid }),
     initialData,
