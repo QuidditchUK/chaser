@@ -151,8 +151,8 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
   return (
     <>
       <Meta
-        subTitle="Find Quidditch"
-        description="Find your nearest clubs and upcoming Quidditch events in the UK"
+        subTitle="Find Quadball"
+        description="Find your nearest clubs and upcoming Quadball events in the UK"
         image="https://images.prismic.io/chaser/187adf69-c199-4a01-82db-179bf9ed72c5_ET2_0158.jpg?auto=compress,format&rect=0,0,3360,1959&w=3360&h=1959"
       />
       <form onSubmit={handleSubmit(() => {})}>
@@ -200,7 +200,7 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
               >
                 <Box as="span" display="inline-block" mr={[2, 4]}>
                   {' '}
-                  Quidditch near
+                  Quadball near
                 </Box>
                 <Box
                   onClick={() => setShowLocation(false)}
@@ -426,8 +426,8 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
               </Heading>
               <p>
                 We can still help! Adjust your filters, or if you are ready to
-                bring Quidditch to your area, fill out the form below to
-                register your club with QuidditchUK
+                bring Quadball to your area, fill out the form below to register
+                your club with QuadballUK
               </p>
             </Flex>
           )}

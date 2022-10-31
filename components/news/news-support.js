@@ -26,7 +26,7 @@ const Icon = (props) => (
 );
 
 const NewsSupport = ({ author, date, title, tags, category }) => {
-  const SITE_URL = 'https://quidditchuk.org';
+  const SITE_URL = 'https://quadballuk.org';
 
   const router = useRouter();
   const url = `${SITE_URL}${router.asPath}`;
@@ -97,7 +97,7 @@ const NewsSupport = ({ author, date, title, tags, category }) => {
                 <IconWrapper
                   aria-label="Tweet this article"
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                    `QuidditchUK: ${title} ${url}`
+                    `QuadballUK: ${title} ${url}`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -107,7 +107,7 @@ const NewsSupport = ({ author, date, title, tags, category }) => {
                 <IconWrapper
                   aria-label="Share this article on Whatsapp"
                   href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                    `QuidditchUK: ${title} ${url}`
+                    `QuadballUK: ${title} ${url}`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"

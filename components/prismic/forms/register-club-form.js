@@ -109,7 +109,7 @@ const RegisterClubForm = ({ primary }) => {
           <Text>
             Starting a new club in your area? Get in touch so we can help you on
             your journey, from the first training session to playing in your
-            first QuidditchUK Tournament.
+            first QuadballUK Tournament.
           </Text>
           <form
             onSubmit={handleSubmit((values) =>

@@ -64,13 +64,13 @@ const LoginPage = () => {
   return (
     <>
       <Meta
-        description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+        description="Sign in to QuadballUK to manage your QuadballUK Membership, Account details and more"
         subTitle="Sign In"
       />
       <Slice>
         <Container maxWidth={rem(500)}>
           <Heading as="h1" fontFamily="body" textAlign="center">
-            Sign in to QuidditchUK
+            Sign in to QuadballUK
           </Heading>
 
           <form
@@ -121,7 +121,7 @@ const LoginPage = () => {
           )}
 
           <AuthCallout>
-            New to QuidditchUK?{' '}
+            New to QuadballUK?{' '}
             <NextLink href="/join" passHref>
               <Link color="monarchRed">Create an account.</Link>
             </NextLink>

@@ -12,7 +12,7 @@ const SchemaClub = ({ club }) => {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'SportsClub',
-            '@id': `https://quidditchuk.org/clubs/${club.uid}`,
+            '@id': `https://quadballuk.org/clubs/${club.uid}`,
             address: {
               '@type': 'PostalAddress',
               addressCountry: 'UK',
@@ -23,7 +23,7 @@ const SchemaClub = ({ club }) => {
               latitude: location?.latitude,
               longitude: location?.longitude,
             },
-            url: `https://quidditchuk.org/clubs/${club.uid}`,
+            url: `https://quadballuk.org/clubs/${club.uid}`,
             priceRange: '£',
           }),
         }}

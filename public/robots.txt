@@ -82,4 +82,4 @@ Disallow: /youth/coach
 Disallow: /kitchen-sink
 Allow: /*?utm_source=*
 
-Sitemap: https://quidditchuk.org/sitemap.xml
+Sitemap: https://quadballuk.org/sitemap.xml

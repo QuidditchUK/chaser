@@ -71,7 +71,7 @@ const FindQuidditch = ({ slice }) => {
               width="initial"
             />
             <Button type="submit" variant={variant} ml={2}>
-              Find Quidditch
+              Find Quadball
             </Button>
           </Flex>
         </form>

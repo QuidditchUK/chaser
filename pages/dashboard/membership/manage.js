@@ -37,7 +37,7 @@ const ManageMembership = ({ products = [] }) => {
   return (
     <>
       <Meta
-        description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+        description="Sign in to QuadballUK to manage your QuadballUK Membership, Account details and more"
         subTitle="Manage"
       />
       <Slice>

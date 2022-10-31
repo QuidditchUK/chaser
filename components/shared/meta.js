@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-const SITE_URL = 'https://quidditchuk.org'; // TODO: Use env variable
+const SITE_URL = 'https://quadballuk.org'; // TODO: Use env variable
 
 const Meta = ({
   subTitle = 'Find Your Passion',
-  description = 'The official source for Quidditch UK news, highlights, results and more',
+  description = 'The official source for Quadball UK news, highlights, results and more',
   image = `${SITE_URL}/open-graph.png`,
-  title = 'QuidditchUK',
+  title = 'QuadballUK',
   type = 'website',
 }) => {
   const { asPath } = useRouter();

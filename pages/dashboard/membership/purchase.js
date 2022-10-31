@@ -26,7 +26,7 @@ const handleClick = async (price_id) => {
 const PurchaseMembership = ({ products }) => (
   <>
     <Meta
-      description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+      description="Sign in to QuadballUK to manage your QuadballUK Membership, Account details and more"
       subTitle="Manage"
     />
     <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>
@@ -41,7 +41,7 @@ const PurchaseMembership = ({ products }) => (
           </Text>
           <Text>
             <strong>Trial</strong> Membership covers the cost of the membership
-            for the current season and a player fee for one QuidditchUK
+            for the current season and a player fee for one QuadballUK
             Tournament. People who have never played the sport before should
             purchase a Trial Membership.
           </Text>

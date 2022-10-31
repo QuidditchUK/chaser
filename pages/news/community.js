@@ -53,7 +53,7 @@ const News = ({ posts: initialPosts = [] }) => {
     <>
       <Meta
         subTitle="Community"
-        description="All community news from QuidditchUK"
+        description="All community news from QuadballUK"
       />
       <NewsHeader />
       <LatestNews

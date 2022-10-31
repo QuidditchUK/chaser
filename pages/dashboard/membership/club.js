@@ -114,7 +114,7 @@ const ManageClub = ({ user, clubs = [], settings }) => {
   return (
     <>
       <Meta
-        description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+        description="Sign in to QuadballUK to manage your QuadballUK Membership, Account details and more"
         subTitle="Manage"
       />
       <Slice>
@@ -137,11 +137,11 @@ const ManageClub = ({ user, clubs = [], settings }) => {
                 <>
                   <p>
                     You have selected <strong>{selectedClub?.name}</strong> as
-                    your QuidditchUK Club.
+                    your QuadballUK Club.
                   </p>
                   <p>
                     If you need to change your club, you must submit a transfer
-                    request to QuidditchUK to request any changes.
+                    request to QuadballUK to request any changes.
                   </p>
                   <p>
                     The transfer window is currently{' '}
@@ -184,7 +184,7 @@ const ManageClub = ({ user, clubs = [], settings }) => {
                   <p>
                     Please note that once you have chosen and locked in your
                     club you will not be able to undo it, and any changes will
-                    have to be requested via a Transfer Request to QuidditchUK.
+                    have to be requested via a Transfer Request to QuadballUK.
                   </p>
                 </>
               )}
@@ -219,7 +219,7 @@ const ManageClub = ({ user, clubs = [], settings }) => {
                   >
                     By checking this box I acknowledge that I have read the
                     above disclaimer and I intend for{' '}
-                    <strong>{selectedClub?.name}</strong> to be my QuidditchUK
+                    <strong>{selectedClub?.name}</strong> to be my QuadballUK
                     club for the 2022/2023 Season.
                   </Checkbox>
 

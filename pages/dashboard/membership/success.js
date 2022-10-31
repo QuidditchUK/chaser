@@ -26,7 +26,7 @@ const SuccessMembership = ({ product }) => {
   return (
     <>
       <Meta
-        description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+        description="Sign in to QuadballUK to manage your QuadballUK Membership, Account details and more"
         subTitle="Manage"
       />
       <Slice>
@@ -34,7 +34,7 @@ const SuccessMembership = ({ product }) => {
           Membership Purchased
         </Heading>
         <Content textAlign="center" py="4">
-          Thank you for purchasing the following QuidditchUK Membership.
+          Thank you for purchasing the following QuadballUK Membership.
           <br /> A receipt has been emailed to you.
         </Content>
 

@@ -84,7 +84,7 @@ const NationalTeamScoutingForm = ({ events = [] }) => {
         <>
           <p>
             Use the following form to apply to be scouted at an upcoming event,
-            and begin your journey onto a QuidditchUK National Team. Good luck!
+            and begin your journey onto a QuadballUK National Team. Good luck!
           </p>
           <form
             onSubmit={handleSubmit((values) =>

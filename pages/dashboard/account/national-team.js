@@ -22,7 +22,7 @@ const NationalTeamScouting = dynamic(() =>
 const Info = ({ user, events }) => (
   <>
     <Meta
-      description="Sign in to QuidditchUK to manage your QuidditchUK National Team Profile"
+      description="Sign in to QuadballUK to manage your QuadballUK National Team Profile"
       subTitle="National Team Profile"
     />
     <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>

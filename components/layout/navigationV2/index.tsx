@@ -157,7 +157,7 @@ export default function Navigation({ data }) {
             <HStack spacing={5}>
               <IconWrapper
                 aria-label="Like us on Facebook"
-                href="https://www.facebook.com/QuidditchUK"
+                href="https://www.facebook.com/quadballuk"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -166,7 +166,7 @@ export default function Navigation({ data }) {
 
               <IconWrapper
                 aria-label="Follow us on Twitter"
-                href="https://twitter.com/QuidditchUK"
+                href="https://twitter.com/QuadballUK"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -175,7 +175,7 @@ export default function Navigation({ data }) {
 
               <IconWrapper
                 aria-label="Follow us on Instagram"
-                href="https://instagram.com/ukquidditch"
+                href="https://www.instagram.com/quadball_uk"
                 target="_blank"
                 rel="noopener noreferrer"
               >

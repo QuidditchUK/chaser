@@ -24,7 +24,7 @@ const PushNotificationForm = dynamic(() =>
 const Info = ({ user }) => (
   <>
     <Meta
-      description="Sign in to QuidditchUK to manage your QuidditchUK Membership, Account details and more"
+      description="Sign in to QuadballUK to manage your QuadballUK Membership, Account details and more"
       subTitle="My info"
     />
     <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>

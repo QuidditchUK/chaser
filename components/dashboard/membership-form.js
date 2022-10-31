@@ -28,12 +28,12 @@ const MembershipFormSchema = object({
     .oneOf([true], 'You must agree to the Individual Membership Policy')
     .required(),
   checkboxTwo: boolean()
-    .oneOf([true], 'You must agree to the  QuidditchUK Media Usage Policy')
+    .oneOf([true], 'You must agree to the  QuadballUK Media Usage Policy')
     .required(),
   checkboxThree: boolean()
     .oneOf(
       [true],
-      'You must agree to the QuidditchUK membership and gameplay policies'
+      'You must agree to the QuadballUK membership and gameplay policies'
     )
     .required(),
 });
@@ -71,13 +71,13 @@ const MembershipForm = () => {
           Membership Benefits
         </Heading>
         <Benefits>
-          <p>QuidditchUK Membership entitles a member to:</p>
+          <p>QuadballUK Membership entitles a member to:</p>
 
           <List>
             <li>
               <strong>
-                Eligibility to register for and compete at QuidditchUK official
-                events and QuidditchUK affiliated events.
+                Eligibility to register for and compete at QuadballUK official
+                events and QuadballUK affiliated events.
               </strong>
             </li>
             <li>
@@ -85,18 +85,18 @@ const MembershipForm = () => {
               Cup.
             </li>
             <li>
-              Included under QuidditchUK Public Liability insurance whenever
-              training or competing with official QuidditchUK clubs or events.
+              Included under QuadballUK Public Liability insurance whenever
+              training or competing with official QuadballUK clubs or events.
             </li>
             <li>
               Access to coaching, refereeing, and snitching resources and
-              training provided by QuidditchUK.
+              training provided by QuadballUK.
             </li>
             <li>
-              Access to QuidditchUK grants and funding provided via your club.
+              Access to QuadballUK grants and funding provided via your club.
             </li>
             <li>
-              Eligibility to be scouted and selected for QuidditchUK recognised
+              Eligibility to be scouted and selected for QuadballUK recognised
               national training squads.
             </li>
             <li>
@@ -107,12 +107,12 @@ const MembershipForm = () => {
               Coverage and regulation of transfers within European clubs
               overseen by Quidditch Europe.
             </li>
-            <li>Transfer between QuidditchUK Clubs.</li>
+            <li>Transfer between QuadballUK Clubs.</li>
             <li>
-              Access to discounts and perks from QuidditchUK through our
+              Access to discounts and perks from QuadballUK through our
               affiliated partners.
             </li>
-            <li>Register under a single QuidditchUK Club.</li>
+            <li>Register under a single QuadballUK Club.</li>
           </List>
         </Benefits>
 
@@ -136,7 +136,7 @@ const MembershipForm = () => {
                 I acknowledge that I have read, understood, and agree to the{' '}
                 <Link
                   color="monarchRed"
-                  href="https://prismic-io.s3.amazonaws.com/chaser/7a339771-8248-4244-b141-cd2eb39a0028_QuidditchUK+Individual+Membership+Policy+2020_2021.pdf"
+                  href="https://prismic-io.s3.amazonaws.com/chaser/7a339771-8248-4244-b141-cd2eb39a0028_QuadballUK+Individual+Membership+Policy+2020_2021.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -158,7 +158,7 @@ const MembershipForm = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  QuidditchUK Media Usage Policy
+                  QuadballUK Media Usage Policy
                 </Link>
               </Checkbox>
 
@@ -175,8 +175,8 @@ const MembershipForm = () => {
                     membership and gameplay policies
                   </Link>
                 </NextLink>{' '}
-                set out by QuidditchUK, and will uphold their values as a member
-                of the quidditch community.
+                set out by QuadballUK, and will uphold their values as a member
+                of the quadball community.
               </Checkbox>
 
               <Button type="submit" variant="primary">
