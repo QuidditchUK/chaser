@@ -1,21 +1,20 @@
 import { useState } from 'react';
 import { object, string } from 'yup';
-import Router from 'next/router';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
+import { signIn } from 'next-auth/react';
 import { Grid, Link, Heading } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
 
-import { setCookies, parseCookies } from 'modules/cookies';
 import { getBasePageProps } from 'modules/prismic';
 import InputV2 from 'components/formControls/inputV2';
-import usersService from 'services/users';
 import Slice from 'components/shared/slice';
 import AuthCallout from 'components/shared/auth-callout';
 import Error from 'components/shared/errors';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -31,23 +30,9 @@ const LoginFormSchema = object().shape({
     .required('Required'),
 });
 
-const handleLoginSubmit = async ({ values, setServerError }) => {
-  try {
-    setServerError(null);
-
-    const { data } = await usersService.login({ data: values });
-
-    setCookies('AUTHENTICATION_TOKEN', data.access_token);
-
-    Router.push('/dashboard');
-  } catch (err) {
-    setServerError(err?.response?.data?.error?.message);
-  }
-};
-
 const LoginPage = () => {
   const [serverError, setServerError] = useState(null);
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -60,6 +45,21 @@ const LoginPage = () => {
       password: '',
     },
   });
+
+  const handleLoginSubmit = async ({ values, setServerError }) => {
+    try {
+      setServerError(null);
+
+      const data = await signIn('credentials', {
+        ...values,
+        callbackUrl: '/dashboard',
+        redirect: false,
+      });
+      router.push(data.url);
+    } catch (err) {
+      setServerError(err?.response?.data?.error?.message);
+    }
+  };
 
   return (
     <>
@@ -132,14 +132,8 @@ const LoginPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const basePageProps = await getBasePageProps();
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
-
-  if (AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/dashboard');
-    res.statusCode = 302;
-  }
 
   return {
     props: basePageProps,

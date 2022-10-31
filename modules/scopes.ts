@@ -1,5 +1,5 @@
+import { scopes as PrismaScope } from '@prisma/client';
 import { ADMIN } from 'constants/scopes';
-import jwtDecode from 'jwt-decode';
 import usersService from 'services/users';
 
 export const getUserScopes = async (headers) => {
@@ -14,10 +14,5 @@ export const hasScope = (scopes, userScopes = [], adminFallback = true) => {
   return adminFallback ? userScopes?.includes(ADMIN) : false;
 };
 
-export const getScopesFromToken = (token) => {
-  if (!token) {
-    return;
-  }
-  const decoded = jwtDecode(token);
-  return decoded?.scopes?.map(({ scope }) => scope);
-};
+export const getPlainScopes = (scopes: PrismaScope[]) =>
+  scopes.map(({ scope }) => scope);

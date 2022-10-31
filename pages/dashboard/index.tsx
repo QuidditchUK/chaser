@@ -1,12 +1,18 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Box, Flex, Heading, Link as ChakraLink } from '@chakra-ui/react';
-import isAuthorized from 'modules/auth';
+import {
+  Box,
+  Flex,
+  Heading,
+  Link as ChakraLink,
+  Skeleton,
+  Grid,
+} from '@chakra-ui/react';
+
 import { getBasePageProps } from 'modules/prismic';
-import generateServerSideHeaders from 'modules/headers';
+
 import useCachedResponse from 'hooks/useCachedResponse';
 
-import usersService from 'services/users';
 import productsService from 'services/products';
 import clubsService from 'services/clubs';
 
@@ -14,23 +20,29 @@ import { PlusSquareIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import GroupIcon from 'public/images/group.svg';
 import { ProductCardV2 } from 'components/dashboard/product-card';
 import { InfoCard } from 'components/dashboard/info-card';
+import { useSession } from 'next-auth/react';
+import { clubs as Club } from '@prisma/client';
 
 const Container = dynamic(() => import('components/layout/container'));
 
-const HorizontalScrollWrapper = dynamic(() =>
-  import('components/shared/horizontal-scroll-wrapper')
+const HorizontalScrollWrapper = dynamic(
+  () => import('components/shared/horizontal-scroll-wrapper')
 );
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const PrismicClubCard = dynamic(() => import('components/prismic/club-card'));
 
-const Dashboard = ({ user }) => {
-  const { data: memberships } = useCachedResponse({
+const Dashboard = () => {
+  const { data: session } = useSession();
+
+  const { user } = session;
+
+  const { data: memberships } = useCachedResponse<any>({
     queryKey: '/products/me',
     queryFn: productsService.getUserProducts,
   });
 
-  const { data: club } = useCachedResponse({
+  const { data: club } = useCachedResponse<Club>({
     queryKey: ['/clubs', user?.club_uuid],
     queryFn: () => clubsService.getClub({ club_uuid: user?.club_uuid }),
     enabled: Boolean(user?.club_uuid),
@@ -170,22 +182,43 @@ const Dashboard = ({ user }) => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  if (!isAuthorized(req, res)) {
-    return { props: {} };
-  }
+const DashboardSkeleton = () => (
+  <Box py={{ base: 6, lg: 10 }}>
+    <Container>
+      <Skeleton>
+        <Heading
+          as="h1"
+          fontFamily="body"
+          color="qukBlue"
+          mt={0}
+          px={{ base: 8, md: 0 }}
+          fontSize="3xl"
+        >
+          Hello
+        </Heading>
+      </Skeleton>
 
-  const headers = generateServerSideHeaders(req);
+      <Grid
+        gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
+        gridGap={{ base: 4, md: 9 }}
+        px={{ base: 4, sm: 8, md: 0 }}
+      >
+        <Skeleton height="300px" />
+        <Skeleton height="300px" />
+        <Skeleton height="300px" />
+      </Grid>
+    </Container>
+  </Box>
+);
 
-  const { data: user } = await usersService.getUser({ headers });
+export const getServerSideProps = async () => {
   const basePageProps = await getBasePageProps();
 
-  return {
-    props: {
-      user,
-      ...basePageProps,
-    },
-  };
+  return { props: basePageProps };
 };
 
 export default Dashboard;
+
+Dashboard.auth = {
+  skeleton: <DashboardSkeleton />,
+};

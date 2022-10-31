@@ -15,27 +15,28 @@ import {
   Drawer,
   DrawerOverlay,
   DrawerContent,
+  BoxProps,
+  LinkProps,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, BellIcon } from '@chakra-ui/icons';
 import dynamic from 'next/dynamic';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Headroom from 'react-headroom';
 import * as prismicH from '@prismicio/helpers';
-import cookies from 'js-cookie';
 import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
 
-import { removeCookie } from '../../../modules/cookies';
-import { linkResolver } from '../../../modules/prismic';
-import { getScopesFromToken, hasScope } from '../../../modules/scopes';
+import { linkResolver } from 'modules/prismic';
+import { hasScope, getPlainScopes } from 'modules/scopes';
 
 import DesktopNavigation from './desktop';
 import MobileNavigation from './mobile';
 import Notifications from '../notifications';
 
-import { USER_NAVIGATION } from '../../../constants/navigation';
-import { DASHBOARD_SCOPES, CLUB_MANAGEMENT } from '../../../constants/scopes';
-import useCachedResponse from '../../../hooks/useCachedResponse';
-import usersService from '../../../services/users';
+import { USER_NAVIGATION } from 'constants/navigation';
+import { DASHBOARD_SCOPES, CLUB_MANAGEMENT } from 'constants/scopes';
+import useCachedResponse from 'hooks/useCachedResponse';
+import usersService from 'services/users';
 
 import FacebookIcon from 'public/images/facebook.svg';
 import YoutubeIcon from 'public/images/youtube.svg';
@@ -46,11 +47,11 @@ import PersonIcon from 'public/images/person.svg';
 const Button = dynamic(() => import('components/shared/button'));
 const Logo = dynamic(() => import('components/shared/logo'));
 
-const IconWrapper = (props) => (
+const IconWrapper = (props: LinkProps) => (
   <ChakraLink height="15px" width="15px" {...props} />
 );
 
-const Icon = (props) => <Box color="white" {...props} />;
+const Icon = (props: BoxProps) => <Box color="white" {...props} />;
 
 function Sidebar({ isOpen, onClose, data }) {
   return (
@@ -103,24 +104,24 @@ export default function Navigation({ data }) {
     onOpen: mobileOnOpen,
   } = useDisclosure();
 
-  const { asPath } = useRouter();
-  const token = cookies.get('AUTHENTICATION_TOKEN');
-  const userScopes = getScopesFromToken(token);
+  const { asPath, push } = useRouter();
+  const { data: session, status } = useSession();
+  const isAuthenticated = status === 'authenticated';
 
-  const { data: unreadCount } = useCachedResponse({
+  const { data: unread } = useCachedResponse<{ count: number }>({
     queryKey: '/users/notifications/unread',
     queryFn: usersService.getUnreadNoticationsCount,
-    enabled: Boolean(token),
+    enabled: Boolean(isAuthenticated),
   });
 
-  const signOut = () => {
-    removeCookie('AUTHENTICATION_TOKEN');
-    Router.push('/');
+  const handleSignOut = async () => {
+    const data = await signOut({ redirect: false, callbackUrl: '/' });
+    push(data?.url);
   };
 
   return (
     <>
-      <Box as={Headroom} flexShrink="0" zIndex={50}>
+      <Box as={Headroom} flexShrink={0} zIndex={50}>
         <Box as="header">
           <Flex
             justifyContent="space-between"
@@ -217,7 +218,7 @@ export default function Navigation({ data }) {
             <DesktopNavigation data={data?.body} />
 
             <Flex flexDirection="row" gridGap={2} alignItems="center" ml="auto">
-              {token ? (
+              {isAuthenticated ? (
                 <>
                   <Button
                     bg="white"
@@ -229,7 +230,7 @@ export default function Navigation({ data }) {
                     aria-label="Notifications"
                     p={0}
                   >
-                    <NotificationBadge count={unreadCount} />
+                    <NotificationBadge count={unread?.count} />
                     <BellIcon color="qukBlue" cursor="pointer" w={6} h={6} />
                   </Button>
 
@@ -264,7 +265,10 @@ export default function Navigation({ data }) {
                           m={0}
                           spacing={3}
                         >
-                          {hasScope(DASHBOARD_SCOPES, userScopes) && (
+                          {hasScope(
+                            DASHBOARD_SCOPES,
+                            getPlainScopes(session?.user.scopes)
+                          ) && (
                             <ListItem tabIndex={0}>
                               <Link href="/admin" passHref>
                                 <ChakraLink
@@ -287,7 +291,11 @@ export default function Navigation({ data }) {
                               </Link>
                             </ListItem>
                           )}
-                          {hasScope([CLUB_MANAGEMENT], userScopes, false) && (
+                          {hasScope(
+                            [CLUB_MANAGEMENT],
+                            getPlainScopes(session?.user.scopes),
+                            false
+                          ) && (
                             <ListItem tabIndex={0}>
                               <Link href="/dashboard/club-management" passHref>
                                 <ChakraLink
@@ -354,7 +362,7 @@ export default function Navigation({ data }) {
                               borderRadius="md"
                               bg="red.600"
                               fontSize="0.875rem"
-                              onClick={() => signOut()}
+                              onClick={() => handleSignOut()}
                             >
                               Sign out
                             </Box>

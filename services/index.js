@@ -1,9 +1,7 @@
 import axios from 'axios';
-import cookies from 'js-cookie';
 import mapValues from 'lodash/mapValues';
 
 export function generateSettings(reqConfig) {
-  const token = cookies.get('AUTHENTICATION_TOKEN');
   const {
     method,
     data,
@@ -25,10 +23,6 @@ export function generateSettings(reqConfig) {
     },
   };
 
-  if (token) {
-    settings.headers.Authorization = `Bearer ${token}`;
-  }
-
   if (data) {
     settings.data = data;
   }
@@ -41,7 +35,7 @@ export function generateSettings(reqConfig) {
 
 export function wrapServiceCall(service, key) {
   function makeCall(params) {
-    const { ...config } = service(params);
+    const config = service(params);
 
     let settings = generateSettings(config);
 

@@ -121,7 +121,6 @@ export const ProductCardV2 = ({
   image,
   name,
   description,
-  price,
   expires,
   ...props
 }) => {
