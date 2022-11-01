@@ -48,7 +48,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
 
   const { call, isLoading } = useCSVDownload({
     data: [
-      ['first_name', 'last_name', 'membership'],
+      ['first_name', 'last_name', 'membership', 'is_student', 'university'],
       ...CSVMemberRows(membersRes?.data),
     ],
     filename: `${club?.name}-members-${format(new Date(), 'yyyy-MM-dd')}.csv`,
@@ -101,6 +101,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
             'Email',
             // 'Team',
             'Has Membership',
+            'Member Type',
             '',
           ]}
           isLoading={membersRes?.isLoading}
@@ -138,6 +139,15 @@ const ClubMembers = ({ club, refetch, scopes }) => {
                   )}
                 </Td>
 
+                <Td>
+                  {member?.is_student ? (
+                    <Flex alignItems="center" gap={3}>
+                      Student at {member?.university}
+                    </Flex>
+                  ) : (
+                    <>Community member</>
+                  )}
+                </Td>
                 <Td>
                   <Button
                     variant="secondary"
