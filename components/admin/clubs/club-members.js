@@ -35,6 +35,8 @@ const CSVMemberRows = (members) => {
     member.first_name,
     member.last_name,
     getProductName(member),
+    member.is_student,
+    member.university,
   ]);
 };
 
