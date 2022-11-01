@@ -21,13 +21,6 @@ const usersService = {
     ...params,
   }),
 
-  login: ({ data, ...params }) => ({
-    method: 'post',
-    url: '/users/login',
-    data,
-    ...params,
-  }),
-
   createUser: ({ data, ...params }) => ({
     method: 'post',
     url: '/users',

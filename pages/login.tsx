@@ -1,20 +1,23 @@
 import { useState } from 'react';
+import { GetServerSideProps } from 'next';
 import { object, string } from 'yup';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
 import { Grid, Link, Heading } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
 
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]';
+
 import { getBasePageProps } from 'modules/prismic';
 import InputV2 from 'components/formControls/inputV2';
 import Slice from 'components/shared/slice';
 import AuthCallout from 'components/shared/auth-callout';
 import Error from 'components/shared/errors';
-import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -57,7 +60,7 @@ const LoginPage = () => {
       });
       router.push(data.url);
     } catch (err) {
-      setServerError(err?.response?.data?.error?.message);
+      setServerError('Login failed');
     }
   };
 
@@ -132,12 +135,23 @@ const LoginPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const basePageProps = await getBasePageProps();
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
-  return {
-    props: basePageProps,
-  };
+  if (session) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
+  }
+  return { props: basePageProps };
 };
 
 export default LoginPage;

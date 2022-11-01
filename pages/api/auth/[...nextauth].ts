@@ -66,7 +66,6 @@ export const authOptions: NextAuthOptions = {
     signIn: '/login',
     // signOut: '/auth/signOut',
     // error: '/auth/error',
-    newUser: '/join',
   },
   callbacks: {
     // pass user in to JWT token, which is then passed into the session

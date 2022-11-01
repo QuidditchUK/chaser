@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
-const useTempPopup = () => {
-  const [popup, setPopup] = useState(null);
+const useTempPopup = (): [string, Dispatch<SetStateAction<string>>] => {
+  const [popup, setPopup] = useState<string>(null);
 
   useEffect(() => {
     if (popup) {

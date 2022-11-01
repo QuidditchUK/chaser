@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+import { GetServerSideProps } from 'next';
 import { object, string, bool, ref } from 'yup';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
@@ -5,12 +7,15 @@ import NextLink from 'next/link';
 import { Box, Grid, Flex, Heading, Text, Link } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { rem } from 'styles/theme';
+import { unstable_getServerSession } from 'next-auth/next';
+import { signIn } from 'next-auth/react';
 
-import { setCookies, parseCookies } from 'modules/cookies';
+import { rem } from 'styles/theme';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import type { JoinFormProps } from 'types/user';
+
 import { getBasePageProps } from 'modules/prismic';
-import { event } from 'modules/analytics';
-import { CATEGORIES } from 'constants/analytics';
+
 import Error from 'components/shared/errors';
 
 import InputV2 from 'components/formControls/inputV2';
@@ -53,23 +58,26 @@ const JoinFormSchema = object().shape({
   }),
 });
 
-const handleJoinSubmit = async ({ confirm, ...formData }, setServerError) => {
+const handleJoinSubmit = async (
+  { confirm, ...formData }: JoinFormProps,
+  setServerError: Dispatch<SetStateAction<string>>
+) => {
   const values = { ...formData, university: formData.university || null };
 
   try {
     setServerError(null);
-    const { data } = await usersService.createUser({ data: values });
+    await usersService.createUser({ data: values });
 
-    setCookies('AUTHENTICATION_TOKEN', data.access_token);
-
-    event({
-      action: 'Joined',
-      category: CATEGORIES.MEMBERSHIP,
+    const data = await signIn('credentials', {
+      email: values?.email,
+      password: values?.password,
+      callbackUrl: '/dashboard',
+      redirect: false,
     });
 
-    Router.push('/dashboard');
-  } catch (err) {
-    setServerError(err?.response?.data?.error);
+    Router.push(data.url);
+  } catch (err: any) {
+    setServerError(err?.response?.data?.message);
   }
 };
 
@@ -81,7 +89,7 @@ const JoinPage = () => {
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm({
+  } = useForm<JoinFormProps>({
     mode: 'onBlur',
     resolver: yupResolver(JoinFormSchema),
     defaultValues: {
@@ -89,7 +97,6 @@ const JoinPage = () => {
       first_name: '',
       last_name: '',
       is_student: false,
-      university: '',
       password: '',
       confirm: '',
     },
@@ -240,13 +247,21 @@ const JoinPage = () => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const basePageProps = await getBasePageProps();
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
-  if (AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/dashboard');
-    res.statusCode = 302;
+  if (session) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
   return {
