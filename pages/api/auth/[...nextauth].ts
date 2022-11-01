@@ -69,6 +69,8 @@ export const authOptions: NextAuthOptions = {
     newUser: '/join',
   },
   callbacks: {
+    // pass user in to JWT token, which is then passed into the session
+    // making that data available in session hooks e.g. useSession
     async jwt({ token, user }) {
       user && (token.user = user);
       return token;
