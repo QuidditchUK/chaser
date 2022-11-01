@@ -23,6 +23,7 @@ const Button = dynamic(() => import('components/shared/button'));
 const FacebookIcon = dynamic(() => import('public/images/facebook.svg'));
 const TwitterIcon = dynamic(() => import('public/images/twitter.svg'));
 const InstagramIcon = dynamic(() => import('public/images/instagram.svg'));
+const TiktokIcon = dynamic(() => import('public/images/tiktok.svg'));
 const YoutubeIcon = dynamic(() => import('public/images/youtube.svg'));
 const VercelLogo = dynamic(() => import('public/images/powered-by-vercel.svg'));
 
@@ -185,12 +186,12 @@ export const Footer = ({ data }) => {
                 </IconWrapper>
 
                 <IconWrapper
-                  aria-label="Follow us on Twitter"
-                  href="https://twitter.com/QuadballUK"
+                  aria-label="Follow us on TikTok"
+                  href="https://tiktok.com/@quadballuk"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Icon as={TwitterIcon} />
+                  <Icon as={TiktokIcon} />
                 </IconWrapper>
 
                 <IconWrapper
@@ -201,7 +202,6 @@ export const Footer = ({ data }) => {
                 >
                   <Icon as={InstagramIcon} />
                 </IconWrapper>
-
                 <IconWrapper
                   aria-label="Subscribe to our Youtube Channel"
                   href="https://www.youtube.com/channel/UCef5ZmqGJvff6RIqA0KS0wQ"
@@ -209,6 +209,15 @@ export const Footer = ({ data }) => {
                   rel="noopener noreferrer"
                 >
                   <Icon as={YoutubeIcon} />
+                </IconWrapper>
+
+                <IconWrapper
+                  aria-label="Follow us on Twitter"
+                  href="https://twitter.com/QuadballUK"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon as={TwitterIcon} />
                 </IconWrapper>
               </Flex>
             </Flex>

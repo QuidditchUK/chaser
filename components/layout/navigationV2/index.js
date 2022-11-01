@@ -41,6 +41,7 @@ import FacebookIcon from 'public/images/facebook.svg';
 import YoutubeIcon from 'public/images/youtube.svg';
 import TwitterIcon from 'public/images/twitter.svg';
 import InstagramIcon from 'public/images/instagram.svg';
+import TiktokIcon from 'public/images/tiktok.svg';
 import PersonIcon from 'public/images/person.svg';
 
 const Button = dynamic(() => import('components/shared/button'));
@@ -164,12 +165,12 @@ export default function Navigation({ data }) {
               </IconWrapper>
 
               <IconWrapper
-                aria-label="Follow us on Twitter"
-                href="https://twitter.com/QuadballUK"
+                aria-label="Follow us on TikTok"
+                href="https://tiktok.com/@quadballuk"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Icon as={TwitterIcon} />
+                <Icon as={TiktokIcon} />
               </IconWrapper>
 
               <IconWrapper
@@ -180,7 +181,6 @@ export default function Navigation({ data }) {
               >
                 <Icon as={InstagramIcon} />
               </IconWrapper>
-
               <IconWrapper
                 aria-label="Subscribe to our Youtube Channel"
                 href="https://www.youtube.com/channel/UCef5ZmqGJvff6RIqA0KS0wQ"
@@ -188,6 +188,15 @@ export default function Navigation({ data }) {
                 rel="noopener noreferrer"
               >
                 <Icon as={YoutubeIcon} />
+              </IconWrapper>
+
+              <IconWrapper
+                aria-label="Follow us on Twitter"
+                href="https://twitter.com/QuadballUK"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon as={TwitterIcon} />
               </IconWrapper>
             </HStack>
           </Flex>

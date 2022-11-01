@@ -19,6 +19,7 @@ import FacebookIcon from 'public/images/facebook.svg';
 import YoutubeIcon from 'public/images/youtube.svg';
 import TwitterIcon from 'public/images/twitter.svg';
 import InstagramIcon from 'public/images/instagram.svg';
+import TiktokIcon from 'public/images/tiktok.svg';
 
 const IconWrapper = (props) => (
   <ChakraLink height="20px" width="20px" {...props} />
@@ -243,12 +244,12 @@ export default function MobileNavigation({
         </IconWrapper>
 
         <IconWrapper
-          aria-label="Follow us on Twitter"
-          href="https://twitter.com/QuadballUK"
+          aria-label="Follow us on TikTok"
+          href="https://tiktok.com/@quadballuk"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Icon as={TwitterIcon} />
+          <Icon as={TiktokIcon} />
         </IconWrapper>
 
         <IconWrapper
@@ -266,6 +267,15 @@ export default function MobileNavigation({
           rel="noopener noreferrer"
         >
           <Icon as={YoutubeIcon} />
+        </IconWrapper>
+
+        <IconWrapper
+          aria-label="Follow us on Twitter"
+          href="https://twitter.com/QuadballUK"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon as={TwitterIcon} />
         </IconWrapper>
       </HStack>
     </>
