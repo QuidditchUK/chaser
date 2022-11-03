@@ -5,7 +5,7 @@ import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
-import { Grid, Link, Heading } from '@chakra-ui/react';
+import { Grid, Link, Heading, Text } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
@@ -60,7 +60,7 @@ const LoginPage = () => {
       });
       router.push(data.url);
     } catch (err) {
-      setServerError('Login failed');
+      setServerError('Login failed: Check your email and password');
     }
   };
 
@@ -98,30 +98,34 @@ const LoginPage = () => {
                 {...register('password')}
               />
 
+              {serverError && (
+                <>
+                  <Error>
+                    <Text fontWeight="bold" mb={1}>
+                      {serverError}
+                    </Text>
+                    <Text color="qukBlue" mt={1}>
+                      Forgot your password?{' '}
+                      <NextLink href="/forgot" passHref>
+                        <Link
+                          color="qukBlue"
+                          borderColor="white"
+                          borderBottom="1px solid"
+                          _hover={{ textDecoration: 'none' }}
+                        >
+                          Request a reset.
+                        </Link>
+                      </NextLink>
+                    </Text>
+                  </Error>
+                </>
+              )}
+
               <Button type="submit" variant="green" disabled={isSubmitting}>
                 {isSubmitting ? 'Submitting' : 'Sign in'}
               </Button>
             </Grid>
           </form>
-
-          {serverError && (
-            <>
-              <Error>{serverError}</Error>
-              <AuthCallout>
-                Forgot password?{' '}
-                <NextLink href="/forgot" passHref>
-                  <Link
-                    color="white"
-                    borderColor="white"
-                    borderBottom="1px solid"
-                    _hover={{ textDecoration: 'none' }}
-                  >
-                    Request a reset.
-                  </Link>
-                </NextLink>
-              </AuthCallout>
-            </>
-          )}
 
           <AuthCallout>
             New to QuadballUK?{' '}

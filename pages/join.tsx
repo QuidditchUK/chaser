@@ -237,7 +237,9 @@ const JoinPage = () => {
             <AuthCallout>
               Already have an account?{' '}
               <NextLink href="/login" passHref>
-                <Link color="monarchRed">Sign in.</Link>
+                <Link color="monarchRed" fontWeight="bold">
+                  Sign in.
+                </Link>
               </NextLink>
             </AuthCallout>
           </Box>

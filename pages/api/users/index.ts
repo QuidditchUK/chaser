@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import crypto from 'crypto';
 import prisma from 'modules/prisma';
 import { JoinFormProps } from 'types/user';
+import sendEmail from 'modules/email';
 
 interface Request extends NextApiRequest {
   body: JoinFormProps;
@@ -28,18 +29,22 @@ export default async function handler(req: Request, res: NextApiResponse) {
           .update(req.body.password)
           .digest('hex');
 
-        const { password, ...rest } = req.body;
+        const { password, ...user } = req.body;
 
         await prisma.users.create({
           data: {
             salt,
             hashed_password,
             type: 'user',
-            ...rest,
+            ...user,
           },
         });
 
-        // SEND WELCOME EMAIL
+        sendEmail({
+          template: 'welcome',
+          to: user.email,
+          data: { first_name: user.first_name },
+        });
 
         res.status(201).end();
         return;

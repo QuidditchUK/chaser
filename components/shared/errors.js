@@ -1,5 +1,5 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
-import { CloseIcon } from '@chakra-ui/icons';
+import { Box, Flex } from '@chakra-ui/react';
+import { WarningIcon } from '@chakra-ui/icons';
 
 const Error = (props) => (
   <Box display="block" color="monarchRed" fontSize="sm" {...props} />
@@ -14,17 +14,16 @@ export const InlineError = ({ children, ...errorProps }) => (
 export const ErrorBanner = ({ children }) => (
   <Flex
     alignItems="center"
-    bg="monarchRed"
+    bg="red.50"
     px={4}
     py={1}
-    mt={6}
     borderColor="monarchRed"
     borderWidth="1px"
     borderStyle="solid"
-    color="white"
+    color="monarchRed"
     borderRadius="md"
   >
-    <CloseIcon mr={3} /> <Text fontWeight="bold">{children}</Text>
+    <WarningIcon mr={3} /> <Box>{children}</Box>
   </Flex>
 );
 
