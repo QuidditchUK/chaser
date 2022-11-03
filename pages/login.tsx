@@ -140,7 +140,6 @@ const LoginPage = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const basePageProps = await getBasePageProps();
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -155,6 +154,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+
+  const basePageProps = await getBasePageProps();
   return { props: basePageProps };
 };
 

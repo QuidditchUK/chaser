@@ -3,10 +3,12 @@ import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { Grid, Flex, Link, Heading } from '@chakra-ui/react';
 import { rem } from 'styles/theme';
-import { setCookies, parseCookies } from 'modules/cookies';
+import { signIn } from 'next-auth/react';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]';
 
 import { getBasePageProps } from 'modules/prismic';
 
@@ -16,6 +18,7 @@ import Error from 'components/shared/errors';
 import AuthCallout from 'components/shared/auth-callout';
 import usersService from 'services/users';
 import useTempPopup from 'hooks/useTempPopup';
+import { GetServerSideProps } from 'next';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -36,8 +39,8 @@ const ResetFormSchema = object().shape({
 
 const Reset = () => {
   const [serverError, setServerError] = useTempPopup();
-  const { query } = useRouter();
-  const { token, uuid } = query;
+  const { query, push } = useRouter();
+  const { token, email } = query;
 
   const {
     register,
@@ -52,22 +55,23 @@ const Reset = () => {
     },
   });
 
-  const handleResetSubmit = async ({ confirm, ...formData }) => {
+  const handleResetSubmit = async ({ password }) => {
     try {
       setServerError(null);
-      const { data } = await usersService.resetPassword({
-        data: {
-          ...formData,
-          token,
-          uuid,
-        },
+      await usersService.resetPassword({
+        data: { password, token, email },
       });
 
-      setCookies('AUTHENTICATION_TOKEN', data.access_token);
+      const data = await signIn('credentials', {
+        email,
+        password,
+        callbackUrl: '/dashboard',
+        redirect: false,
+      });
 
-      Router.push('/dashboard');
+      push(data.url);
     } catch (err) {
-      setServerError(err?.response?.data?.error?.message);
+      setServerError(err?.response?.data?.message);
     }
   };
 
@@ -128,19 +132,23 @@ const Reset = () => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
-  if (AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/dashboard');
-    res.statusCode = 302;
+  if (session) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
-  const basePageProps = await getBasePageProps();
-
-  return {
-    props: basePageProps,
-  };
+  return { props: await getBasePageProps() };
 };
 
 export default Reset;

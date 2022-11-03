@@ -1,3 +1,4 @@
+import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import { object, string } from 'yup';
 import NextLink from 'next/link';
@@ -5,9 +6,10 @@ import dynamic from 'next/dynamic';
 import { Grid, Flex, Link, Heading } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { rem } from 'styles/theme';
-import { parseCookies } from 'modules/cookies';
 import { getBasePageProps } from 'modules/prismic';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]';
+import { rem } from 'styles/theme';
 
 import InputV2 from 'components/formControls/inputV2';
 import Slice from 'components/shared/slice';
@@ -33,7 +35,7 @@ const handleForgotSubmit = async (values, setServerError, setSent) => {
     usersService.forgotPassword({ data: values });
     setSent(true);
   } catch (err) {
-    setServerError(err?.response?.data?.error?.message);
+    setServerError(err?.response?.data?.message);
   }
 };
 
@@ -112,19 +114,23 @@ const Forgot = () => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
-  if (AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/dashboard');
-    res.statusCode = 302;
+  if (session) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
-  const basePageProps = await getBasePageProps();
-
-  return {
-    props: basePageProps,
-  };
+  return { props: await getBasePageProps() };
 };
 
 export default Forgot;

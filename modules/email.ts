@@ -6,7 +6,7 @@ export default function sendEmail<T extends Templates>({
   template,
   data,
   to,
-  from = 'admin@quidditchuk',
+  from = 'admin@quidditchuk.org',
   cc,
 }: {
   template: T;
