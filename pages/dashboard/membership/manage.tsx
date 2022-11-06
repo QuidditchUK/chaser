@@ -1,18 +1,16 @@
 import { useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import parse from 'date-fns/parse';
-import { Grid, Heading } from '@chakra-ui/react';
+import { Grid, Heading, Box } from '@chakra-ui/react';
 import productsService from 'services/products';
 import Slice from 'components/shared/slice';
-
-import isAuthorized from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
-import generateServerSideHeaders from 'modules/headers';
+import { GetServerSideProps } from 'next';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const ProductCard = dynamic(() => import('components/dashboard/product-card'));
-const MembershipForm = dynamic(() =>
-  import('components/dashboard/membership-form')
+const MembershipForm = dynamic(
+  () => import('components/dashboard/membership-form')
 );
 
 const ManageMembership = ({ products = [] }) => {
@@ -86,15 +84,9 @@ const ManageMembership = ({ products = [] }) => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  if (!isAuthorized(req, res)) {
-    return { props: {} };
-  }
-
-  const headers = generateServerSideHeaders(req);
-
+export const getServerSideProps: GetServerSideProps = async () => {
   const [{ data: products }, basePageProps] = await Promise.all([
-    productsService.getUserProducts({ headers }),
+    productsService.getUserProducts(),
     getBasePageProps(),
   ]);
 
@@ -107,3 +99,7 @@ export const getServerSideProps = async ({ req, res }) => {
 };
 
 export default ManageMembership;
+
+ManageMembership.auth = {
+  skeleton: <Box />,
+};

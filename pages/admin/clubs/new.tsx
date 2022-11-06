@@ -2,7 +2,7 @@ import Router from 'next/router';
 import Link from 'next/link';
 import { object, string, bool } from 'yup';
 import dynamic from 'next/dynamic';
-import { Heading, Grid, Flex } from '@chakra-ui/react';
+import { Heading, Grid, Flex, Box } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -15,9 +15,10 @@ import InputV2 from 'components/formControls/inputV2';
 import Select from 'components/formControls/select';
 import Switch from 'components/formControls/switch';
 
-import isAuthorized from 'modules/auth';
+import { isScoped_ServerProps } from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
 import useTempPopup from 'hooks/useTempPopup';
+import { GetServerSideProps } from 'next';
 
 const Button = dynamic(() => import('components/shared/button'));
 
@@ -44,7 +45,7 @@ const handleCreateSubmit = async (values, setServerError) => {
     setServerError(err?.response?.data?.error?.message);
   }
 };
-const Dashboard = () => {
+const CreateClub = () => {
   const [serverError, setServerError] = useTempPopup();
 
   const {
@@ -144,17 +145,24 @@ const Dashboard = () => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  const auth = await isAuthorized(req, res, [CLUBS_READ, CLUBS_WRITE, EMT]);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const auth = isScoped_ServerProps(context, [CLUBS_READ, CLUBS_WRITE, EMT]);
   if (!auth) {
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
-  const basePageProps = await getBasePageProps();
-
   return {
-    props: basePageProps,
+    props: await getBasePageProps(),
   };
 };
 
-export default Dashboard;
+export default CreateClub;
+
+CreateClub.auth = {
+  skeleton: <Box />,
+};

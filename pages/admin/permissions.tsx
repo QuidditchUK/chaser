@@ -1,18 +1,23 @@
 import Link from 'next/link';
-import { Flex, Heading } from '@chakra-ui/react';
+import { Flex, Heading, Box } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 
 import { ADMIN, EMT, HEAD_SCOUT, VOLUNTEER } from 'constants/scopes';
-import { getUserScopes } from 'modules/scopes';
-import isAuthorized from 'modules/auth';
+import { getPlainScopes } from 'modules/scopes';
+import { isScoped_ServerProps } from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
-import generateServerSideHeaders from 'modules/headers';
 
 import Slice from 'components/shared/slice';
 import PermissionBlock from 'components/permissions/permissions-block';
 import Meta from 'components/shared/meta';
+import { GetServerSideProps } from 'next';
+import { useSession } from 'next-auth/react';
 
-const Dashboard = ({ scopes }) => {
+const Permissions = () => {
+  const { data: session } = useSession();
+  const { user } = session;
+  const userScopes = getPlainScopes(user.scopes);
+
   return (
     <>
       <Meta subTitle="Volunteers Permissions" title="Admin Dashboard" />
@@ -35,38 +40,41 @@ const Dashboard = ({ scopes }) => {
           </Heading>
         </Flex>
 
-        <PermissionBlock label="EMT" scope={EMT} scopes={scopes} />
-        <PermissionBlock label="Admin" scope={ADMIN} scopes={scopes} />
+        <PermissionBlock label="EMT" scope={EMT} scopes={userScopes} />
+        <PermissionBlock label="Admin" scope={ADMIN} scopes={userScopes} />
         <PermissionBlock
           label="Head Scout"
           scope={HEAD_SCOUT}
-          scopes={scopes}
+          scopes={userScopes}
         />
-        <PermissionBlock label="Volunteers" scope={VOLUNTEER} scopes={scopes} />
+        <PermissionBlock
+          label="Volunteers"
+          scope={VOLUNTEER}
+          scopes={userScopes}
+        />
       </Slice>
     </>
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  const auth = await isAuthorized(req, res, [EMT]);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const auth = isScoped_ServerProps(context, [EMT]);
   if (!auth) {
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
-  const headers = generateServerSideHeaders(req);
-
-  const [scopes, basePageProps] = await Promise.all([
-    getUserScopes(headers),
-    getBasePageProps(),
-  ]);
-
   return {
-    props: {
-      scopes,
-      ...basePageProps,
-    },
+    props: await getBasePageProps(),
   };
 };
 
-export default Dashboard;
+export default Permissions;
+
+Permissions.auth = {
+  skeleton: <Box />,
+};

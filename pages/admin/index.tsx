@@ -1,5 +1,8 @@
-import { Grid, Heading } from '@chakra-ui/react';
-import { getUserScopes, hasScope } from 'modules/scopes';
+import { GetServerSideProps } from 'next';
+import { useSession } from 'next-auth/react';
+import { Grid, Heading, Box } from '@chakra-ui/react';
+import { getPlainScopes, hasScope } from 'modules/scopes';
+import { isScoped_ServerProps } from 'modules/auth';
 import {
   DASHBOARD_SCOPES,
   EMT,
@@ -11,12 +14,14 @@ import {
 } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import Card from 'components/shared/card';
-import isAuthorized from 'modules/auth';
-import Meta from 'components/shared/meta';
 import { getBasePageProps } from 'modules/prismic';
-import generateServerSideHeaders from 'modules/headers';
+import Meta from 'components/shared/meta';
 
-const Dashboard = ({ scopes }) => {
+const Dashboard = () => {
+  const { data: session } = useSession();
+  const { user } = session;
+  const userScopes = getPlainScopes(user.scopes);
+
   return (
     <>
       <Meta subTitle="Admin Dashboard" />
@@ -24,23 +29,24 @@ const Dashboard = ({ scopes }) => {
         <Heading as="h3" fontFamily="body" color="qukBlue">
           Dashboard
         </Heading>
+
         <Grid
           gridGap={4}
           gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }}
         >
-          {hasScope([USERS_READ, EMT], scopes) && (
+          {hasScope([USERS_READ, EMT], userScopes) && (
             <Card href="/admin/users" title="Users" />
           )}
-          {hasScope([CLUBS_READ, EMT], scopes) && (
+          {hasScope([CLUBS_READ, EMT], userScopes) && (
             <Card title="Clubs" href="/admin/clubs" />
           )}
-          {hasScope([TRANSFER_READ, EMT], scopes) && (
+          {hasScope([TRANSFER_READ, EMT], userScopes) && (
             <Card title="Transfers" href="/admin/transfers" />
           )}
-          {hasScope([EMT, NATIONAL_TEAM_READ, HEAD_SCOUT], scopes) && (
+          {hasScope([EMT, NATIONAL_TEAM_READ, HEAD_SCOUT], userScopes) && (
             <Card title="National Teams" href="/admin/national-teams" />
           )}
-          {hasScope([EMT], scopes) && (
+          {hasScope([EMT], userScopes) && (
             <Card title="Volunteer Permissions" href="/admin/permissions" />
           )}
         </Grid>
@@ -49,22 +55,25 @@ const Dashboard = ({ scopes }) => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  const auth = await isAuthorized(req, res, DASHBOARD_SCOPES);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const auth = await isScoped_ServerProps(context, DASHBOARD_SCOPES);
+
   if (!auth) {
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
-  const headers = generateServerSideHeaders(req);
-  const scopes = await getUserScopes(headers);
-  const basePageProps = await getBasePageProps();
-
   return {
-    props: {
-      scopes,
-      ...basePageProps,
-    },
+    props: await getBasePageProps(),
   };
 };
 
 export default Dashboard;
+
+Dashboard.auth = {
+  skeleton: <Box />,
+};

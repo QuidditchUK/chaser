@@ -1,6 +1,5 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { getToken } from 'next-auth/jwt';
-import { SafeUserWithScopes } from 'types/user';
 import prisma from 'modules/prisma';
 
 export default async function handler(
@@ -17,11 +16,9 @@ export default async function handler(
           return;
         }
 
-        const user = token.user as SafeUserWithScopes;
-
         const count = await prisma.notifications.count({
           where: {
-            AND: [{ user_uuid: user?.uuid }, { read: false }],
+            AND: [{ user_uuid: token.user.uuid }, { read: false }],
           },
         });
         res.status(200).json({ count });

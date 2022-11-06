@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import generateServerSideHeaders from 'modules/headers';
+
 import { Box, Flex, Heading, Tr, Td, Grid, Text } from '@chakra-ui/react';
 import { parse } from 'date-fns';
 import { useForm } from 'react-hook-form';
-import { getUserScopes, hasScope } from 'modules/scopes';
+
 import { USERS_READ, EMT } from 'constants/scopes';
 import Slice from 'components/shared/slice';
-import isAuthorized from 'modules/auth';
+import { isScoped_ServerProps } from 'modules/auth';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import Meta from 'components/shared/meta';
 import { getBasePageProps } from 'modules/prismic';
@@ -19,6 +19,9 @@ import InputV2 from 'components/formControls/inputV2';
 
 import usersService from 'services/users';
 import CopyValueButton from 'components/shared/copy-value-button';
+import { GetServerSideProps } from 'next';
+
+import { AdminUserWithRelations } from 'types/user';
 
 function useDebounce(value, delay) {
   // State and setters for debounced value
@@ -41,7 +44,7 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-const Users = ({ scopes }) => {
+const Users = () => {
   const [page, setPage] = useState(0);
   const {
     register,
@@ -67,7 +70,10 @@ const Users = ({ scopes }) => {
     }
   }, [debouncedTerm, searchTerm]);
 
-  const { data, isLoading } = useCachedResponse({
+  const { data, isLoading } = useCachedResponse<{
+    users: AdminUserWithRelations[];
+    pages: number;
+  }>({
     queryKey: ['/users/', page, searchTerm],
     queryFn: () => {
       return Boolean(searchTerm)
@@ -183,25 +189,25 @@ const Users = ({ scopes }) => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  const auth = await isAuthorized(req, res, [USERS_READ, EMT]);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const auth = isScoped_ServerProps(context, [USERS_READ, EMT]);
+
   if (!auth) {
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
-  const headers = generateServerSideHeaders(req);
-
-  const [scopes, basePageProps] = await Promise.all([
-    getUserScopes(headers),
-    getBasePageProps(),
-  ]);
-
   return {
-    props: {
-      scopes,
-      ...basePageProps,
-    },
+    props: await getBasePageProps(),
   };
 };
 
 export default Users;
+
+Users.auth = {
+  skeleton: <Box />,
+};

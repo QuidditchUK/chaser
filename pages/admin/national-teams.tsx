@@ -1,18 +1,23 @@
+import { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import { Flex, Heading } from '@chakra-ui/react';
+import { Flex, Heading, Box } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 
 import { EMT, HEAD_SCOUT } from 'constants/scopes';
-import { getUserScopes, hasScope } from 'modules/scopes';
-import isAuthorized from 'modules/auth';
+import { getPlainScopes, hasScope } from 'modules/scopes';
+import { isScoped_ServerProps } from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
-import generateServerSideHeaders from 'modules/headers';
 import PendingScoutingRequests from 'components/admin/scouting/pending-scouting-requests';
 
 import Slice from 'components/shared/slice';
 import Meta from 'components/shared/meta';
+import { useSession } from 'next-auth/react';
 
-const NationalTeams = ({ scopes }) => {
+const NationalTeams = () => {
+  const { data: session } = useSession();
+  const { user } = session;
+  const userScopes = getPlainScopes(user.scopes);
+
   return (
     <>
       <Meta subTitle="National Teams" title="Admin Dashboard" />
@@ -35,33 +40,33 @@ const NationalTeams = ({ scopes }) => {
           </Heading>
         </Flex>
 
-        {hasScope([HEAD_SCOUT], scopes) && (
-          <PendingScoutingRequests scopes={scopes} />
+        {hasScope([HEAD_SCOUT], userScopes) && (
+          <PendingScoutingRequests scopes={userScopes} />
         )}
       </Slice>
     </>
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  const auth = await isAuthorized(req, res, [EMT, HEAD_SCOUT]);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const auth = await isScoped_ServerProps(context, [EMT, HEAD_SCOUT]);
+
   if (!auth) {
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
-  const headers = generateServerSideHeaders(req);
-
-  const [scopes, basePageProps] = await Promise.all([
-    getUserScopes(headers),
-    getBasePageProps(),
-  ]);
-
   return {
-    props: {
-      scopes,
-      ...basePageProps,
-    },
+    props: await getBasePageProps(),
   };
 };
 
 export default NationalTeams;
+
+NationalTeams.auth = {
+  skeleton: <Box />,
+};

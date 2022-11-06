@@ -1,11 +1,10 @@
 import dynamic from 'next/dynamic';
 import { Box, Grid, Heading, Text } from '@chakra-ui/react';
 import { parseCookies } from 'modules/cookies';
-import isAuthorized from 'modules/auth';
 import { stripePromise } from 'modules/stripe';
 import { getBasePageProps } from 'modules/prismic';
-import generateServerSideHeaders from 'modules/headers';
 import productsService from 'services/products';
+import { GetServerSideProps } from 'next';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -69,23 +68,20 @@ const PurchaseMembership = ({ products }) => (
   </>
 );
 
-export const getServerSideProps = async ({ req, res }) => {
-  if (!isAuthorized(req, res)) {
-    return { props: {} };
-  }
-
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { MEMBERSHIP_AGREED } = parseCookies(req);
-  const headers = generateServerSideHeaders(req);
 
   if (!MEMBERSHIP_AGREED) {
-    res.setHeader('location', '/dashboard/membership/manage');
-    res.statusCode = 302;
-    res.end();
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/dashboard/membership/manage',
+        permanent: false,
+      },
+    };
   }
 
   const [{ data: products }, basePageProps] = await Promise.all([
-    productsService.getProducts({ headers }),
+    productsService.getProducts(),
     getBasePageProps(),
   ]);
 
@@ -98,3 +94,7 @@ export const getServerSideProps = async ({ req, res }) => {
 };
 
 export default PurchaseMembership;
+
+PurchaseMembership.auth = {
+  skeleton: <Box />,
+};

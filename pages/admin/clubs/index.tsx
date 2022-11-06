@@ -1,4 +1,7 @@
+import { GetServerSideProps } from 'next';
 import { useState } from 'react';
+import { clubs as PrismaClubs } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import {
   Box,
@@ -11,17 +14,18 @@ import {
 } from '@chakra-ui/react';
 import { SmallAddIcon } from '@chakra-ui/icons';
 
-import { getUserScopes, hasScope } from 'modules/scopes';
+import { hasScope, getPlainScopes } from 'modules/scopes';
+import { getBasePageProps } from 'modules/prismic';
 import { CLUBS_READ, CLUBS_WRITE, EMT } from 'constants/scopes';
+
 import Slice from 'components/shared/slice';
 import Button from 'components/shared/button';
-import isAuthorized from 'modules/auth';
+import { isScoped_ServerProps } from 'modules/auth';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import Meta from 'components/shared/meta';
-import { getBasePageProps } from 'modules/prismic';
 import Table from 'components/shared/table';
 import Modal from 'components/shared/modal';
-import generateServerSideHeaders from 'modules/headers';
+
 import clubsService from 'services/clubs';
 import useCachedResponse from 'hooks/useCachedResponse';
 
@@ -34,8 +38,16 @@ const handleDeleteClick = async ({ uuid, refetch }) => {
   }
 };
 
-const Dashboard = ({ scopes }) => {
-  const { data: queryClubs = [], refetch, isLoading } = useCachedResponse({
+const ClubAdminDashboard = () => {
+  const { data: session } = useSession();
+  const { user } = session;
+  const userScopes = getPlainScopes(user.scopes);
+
+  const {
+    data: queryClubs = [],
+    refetch,
+    isLoading,
+  } = useCachedResponse<PrismaClubs[]>({
     queryKey: '/clubs/all',
     queryFn: clubsService.getAllClubs,
   });
@@ -49,7 +61,7 @@ const Dashboard = ({ scopes }) => {
   );
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedClub, setSelectedClub] = useState();
+  const [selectedClub, setSelectedClub] = useState<PrismaClubs>(null);
 
   return (
     <>
@@ -109,7 +121,7 @@ const Dashboard = ({ scopes }) => {
                 </Td>
                 <Td>{club?._count?.users}</Td>
 
-                {hasScope([CLUBS_WRITE, EMT], scopes) && (
+                {hasScope([CLUBS_WRITE, EMT], userScopes) && (
                   <Td>
                     <Button href={`/admin/clubs/${club.uuid}`}>Details</Button>
                   </Td>
@@ -140,7 +152,7 @@ const Dashboard = ({ scopes }) => {
                 </Td>
                 <Td>{club?._count?.users}</Td>
 
-                {hasScope([CLUBS_WRITE, EMT], scopes) && (
+                {hasScope([CLUBS_WRITE, EMT], userScopes) && (
                   <>
                     <Td>
                       <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
@@ -174,7 +186,7 @@ const Dashboard = ({ scopes }) => {
             refetch,
           });
           onClose();
-          setSelectedClub();
+          setSelectedClub(null);
         }}
         footerTitle="Delete"
         footerButtonProps={{ variant: 'secondary' }}
@@ -185,25 +197,24 @@ const Dashboard = ({ scopes }) => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  const auth = await isAuthorized(req, res, [CLUBS_READ, EMT]);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const auth = await isScoped_ServerProps(context, [CLUBS_READ, EMT]);
   if (!auth) {
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
-  const headers = generateServerSideHeaders(req);
-
-  const [scopes, basePageProps] = await Promise.all([
-    getUserScopes(headers),
-    getBasePageProps(),
-  ]);
-
   return {
-    props: {
-      scopes,
-      ...basePageProps,
-    },
+    props: await getBasePageProps(),
   };
 };
 
-export default Dashboard;
+export default ClubAdminDashboard;
+
+ClubAdminDashboard.auth = {
+  skeleton: <Box />,
+};

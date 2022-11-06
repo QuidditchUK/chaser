@@ -1,13 +1,11 @@
-import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { Grid, Flex, Heading } from '@chakra-ui/react';
-import isAuthorized from 'modules/auth';
-import { event } from 'modules/analytics';
-import { CATEGORIES } from 'constants/analytics';
+import { Grid, Flex, Heading, Box } from '@chakra-ui/react';
+
 import { getBasePageProps } from 'modules/prismic';
-import generateServerSideHeaders from 'modules/headers';
+
 import productsService from 'services/products';
 import Slice from 'components/shared/slice';
+import { GetServerSideProps } from 'next';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const ProductCard = dynamic(() => import('components/dashboard/product-card'));
@@ -15,14 +13,6 @@ const Content = dynamic(() => import('components/shared/content'));
 const Button = dynamic(() => import('components/shared/button'));
 
 const SuccessMembership = ({ product }) => {
-  useEffect(() => {
-    event({
-      action: 'Purchased',
-      category: CATEGORIES.MEMBERSHIP,
-      label: product.name,
-    });
-  }, [product]);
-
   return (
     <>
       <Meta
@@ -65,15 +55,9 @@ const SuccessMembership = ({ product }) => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  if (!isAuthorized(req, res)) {
-    return { props: {} };
-  }
-
-  const headers = generateServerSideHeaders(req);
-
+export const getServerSideProps: GetServerSideProps = async () => {
   const [{ data: products }, basePageProps] = await Promise.all([
-    productsService.getUserProducts({ headers }),
+    productsService.getUserProducts(),
     getBasePageProps(),
   ]);
 
@@ -86,3 +70,7 @@ export const getServerSideProps = async ({ req, res }) => {
 };
 
 export default SuccessMembership;
+
+SuccessMembership.auth = {
+  skeleton: <Box />,
+};

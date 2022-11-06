@@ -7,15 +7,11 @@ import { orderBy } from 'lodash';
 import Router from 'next/router';
 import { object, string, bool } from 'yup';
 
-import generateServerSideHeaders from 'modules/headers';
-import isAuthorized from 'modules/auth';
 import { Box, Grid, Flex, Heading, Link, Tr, Td } from '@chakra-ui/react';
 import TransferRequestForm from 'components/dashboard/transfer-request-form';
 import settingsService from 'services/settings';
 import Select from 'components/formControls/select';
 
-import { event } from 'modules/analytics';
-import { CATEGORIES } from 'constants/analytics';
 import PrismicClubCard from 'components/prismic/club-card';
 import { getBasePageProps } from 'modules/prismic';
 import useCachedResponse from 'hooks/useCachedResponse';
@@ -26,6 +22,9 @@ import Checkbox from 'components/formControls/checkbox';
 import Slice from 'components/shared/slice';
 import Table from 'components/shared/table';
 import Error from 'components/shared/errors';
+import { useSession } from 'next-auth/react';
+import { SafeUserWithTransfersAndScopes } from 'types/user';
+import { GetServerSideProps } from 'next';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Content = dynamic(() => import('components/shared/content'));
@@ -59,23 +58,21 @@ const handleClubSubmit = async ({ club_uuid }, setServerError) => {
     setServerError(null);
     await usersService.updateUser({ data: { club_uuid } });
 
-    event({
-      category: CATEGORIES.MEMBERSHIP,
-      action: 'Club selected',
-    });
-
     Router.push('/dashboard');
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
   }
 };
 
-const ManageClub = ({ user, clubs = [], settings }) => {
-  const { data: queryUser, refetch } = useCachedResponse({
-    queryKey: '/users/me',
-    queryFn: usersService.getUser,
-    initialData: user,
-  });
+const ManageClub = ({ clubs = [], settings }) => {
+  const { data: session } = useSession();
+
+  const { data: queryUser, refetch } =
+    useCachedResponse<SafeUserWithTransfersAndScopes>({
+      queryKey: '/users/me',
+      queryFn: usersService.getUser,
+      initialData: session.user,
+    });
 
   const [selectedClub, setSelectedClub] = useState(
     clubs.find(({ uuid }) => uuid === queryUser?.club_uuid)
@@ -285,26 +282,8 @@ const ManageClub = ({ user, clubs = [], settings }) => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  if (!isAuthorized(req, res)) {
-    return { props: {} };
-  }
-
-  const headers = generateServerSideHeaders(req);
-
-  const [
-    { data: clubs },
-    { data: user },
-    { data: products },
-    { data: settings },
-    basePageProps,
-  ] = await Promise.all([
-    clubsService.getPublicClubs({ headers }),
-    usersService.getUser({ headers }),
-    productsService.getUserProducts({ headers }),
-    settingsService.getSettings(),
-    getBasePageProps(),
-  ]);
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data: products } = await productsService.getUserProducts();
 
   if (
     !products.length ||
@@ -313,16 +292,24 @@ export const getServerSideProps = async ({ req, res }) => {
         new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())
     ).length
   ) {
-    res.setHeader('location', '/dashboard/membership/manage');
-    res.statusCode = 302;
-    res.end();
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/dashboard/membership/manage',
+        permanent: false,
+      },
+    };
   }
+
+  const [{ data: clubs }, { data: settings }, basePageProps] =
+    await Promise.all([
+      clubsService.getPublicClubs(),
+      settingsService.getSettings(),
+      getBasePageProps(),
+    ]);
 
   return {
     props: {
       clubs,
-      user,
       settings,
       ...basePageProps,
     },
@@ -330,3 +317,7 @@ export const getServerSideProps = async ({ req, res }) => {
 };
 
 export default ManageClub;
+
+ManageClub.auth = {
+  skeleton: <Box />,
+};

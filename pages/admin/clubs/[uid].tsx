@@ -1,14 +1,14 @@
+import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { object, string, bool } from 'yup';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { Heading, Grid, Flex } from '@chakra-ui/react';
+import { Heading, Grid, Flex, Box } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import type { clubs as Club } from '@prisma/client';
+import type { clubs as PrismaClub } from '@prisma/client';
 
-import { getUserScopes } from 'modules/scopes';
 import { CLUBS_READ, CLUBS_WRITE, EMT } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import InputV2 from 'components/formControls/inputV2';
@@ -19,15 +19,16 @@ import Meta from 'components/shared/meta';
 import ClubTeams from 'components/admin/clubs/club-teams';
 import ClubMembers from 'components/admin/clubs/club-members';
 
-import isAuthorized from 'modules/auth';
+import { isScoped_ServerProps } from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
 import PrismicClubCard from 'components/prismic/club-card';
-import generateServerSideHeaders from 'modules/headers';
 import clubsService from 'services/clubs';
 import useTempPopup from 'hooks/useTempPopup';
 import Success from 'components/formControls/success';
 import Error from 'components/shared/errors';
 import useCachedResponse from 'hooks/useCachedResponse';
+import { useSession } from 'next-auth/react';
+import { getPlainScopes } from 'modules/scopes';
 
 const Button = dynamic(() => import('components/shared/button'));
 
@@ -63,18 +64,15 @@ const handleEditSubmit = async (
     setServerError(err?.response?.data?.error?.message);
   }
 };
-const Club = ({
-  club: initialData,
-  scopes,
-}: {
-  club: Club;
-  scopes: string[];
-}) => {
+const ClubPage = ({ club: initialData }: { club: PrismaClub }) => {
   const [serverError, setServerError] = useTempPopup();
   const [serverSuccess, setServerSuccess] = useTempPopup();
   const router = useRouter();
+  const { data: session } = useSession();
+  const { user } = session;
+  const userScopes = getPlainScopes(user.scopes);
 
-  const { data: club, refetch } = useCachedResponse<Club>({
+  const { data: club, refetch } = useCachedResponse<PrismaClub>({
     queryKey: ['/clubs/', router.query.uid],
     queryFn: () => clubsService.getClub({ club_uuid: router.query.uid }),
     initialData,
@@ -197,33 +195,43 @@ const Club = ({
         </form>
 
         <ClubTeams club_uuid={club?.uuid} />
-        <ClubMembers club={club} refetch={refetch} scopes={scopes} />
+        <ClubMembers club={club} refetch={refetch} scopes={userScopes} />
       </Slice>
     </>
   );
 };
 
-export const getServerSideProps = async ({ req, res, params }) => {
-  const auth = await isAuthorized(req, res, [CLUBS_READ, CLUBS_WRITE, EMT]);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const auth = await isScoped_ServerProps(context, [
+    CLUBS_READ,
+    CLUBS_WRITE,
+    EMT,
+  ]);
+
   if (!auth) {
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
-  const headers = generateServerSideHeaders(req);
-
-  const [scopes, { data: club }, basePageProps] = await Promise.all([
-    getUserScopes(headers),
-    clubsService.getClub({ club_uuid: params?.uid, headers }),
+  const [{ data: club }, basePageProps] = await Promise.all([
+    clubsService.getClub({ club_uuid: context.params?.uid }),
     getBasePageProps(),
   ]);
 
   return {
     props: {
-      scopes,
       club,
       ...basePageProps,
     },
   };
 };
 
-export default Club;
+export default ClubPage;
+
+ClubPage.auth = {
+  skeleton: <Box />,
+};

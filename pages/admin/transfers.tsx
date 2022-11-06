@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import format from 'date-fns/format';
-import generateServerSideHeaders from 'modules/headers';
+
 import {
   Box,
   Flex,
@@ -19,10 +19,10 @@ import Switch from 'components/formControls/switch';
 import transfersService from 'services/transfers';
 import settingsService from 'services/settings';
 
-import { getUserScopes, hasScope } from 'modules/scopes';
+import { getPlainScopes, hasScope } from 'modules/scopes';
 import { TRANSFER_READ, EMT } from 'constants/scopes';
 import Slice from 'components/shared/slice';
-import isAuthorized from 'modules/auth';
+import { isScoped_ServerProps } from 'modules/auth';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import Meta from 'components/shared/meta';
 import { getBasePageProps } from 'modules/prismic';
@@ -32,22 +32,36 @@ import Pagination from 'components/shared/pagination';
 import TransferCard from 'components/transfers/transferCard';
 import ManualTransferForm from 'components/transfers/manualTransferForm';
 import Button from 'components/shared/button';
+import { GetServerSideProps } from 'next';
+import { useSession } from 'next-auth/react';
+import {
+  system_settings as PrismaSystemSetting,
+  transfers as PrismaTransfer,
+} from '@prisma/client';
+import { AdminTransferWithRelations } from 'types/transfer';
 
 const STATUS = {
   APPROVED: 'Approved',
   DECLINED: 'Declined',
 };
 
-const Transfers = ({ scopes, settings }) => {
+const Transfers = ({ settings }: { settings: PrismaSystemSetting }) => {
+  const { data: session } = useSession();
+  const { user } = session;
+  const userScopes = getPlainScopes(user.scopes);
+
   const [page, setPage] = useState(0);
 
-  const pendingTransfersRes = useCachedResponse({
+  const pendingTransfersRes = useCachedResponse<PrismaTransfer[]>({
     queryKey: '/transfers/pending',
     queryFn: transfersService.getPendingTransfers,
     keepPreviousData: true,
   });
 
-  const actionedTransfersRes = useCachedResponse({
+  const actionedTransfersRes = useCachedResponse<{
+    transfers: AdminTransferWithRelations[];
+    pages: number;
+  }>({
     queryKey: ['/transfers/actioned', page],
     queryFn: () => transfersService.getActionedTransfers({ page }),
     keepPreviousData: true,
@@ -58,13 +72,14 @@ const Transfers = ({ scopes, settings }) => {
   const { data: queryActionedTransfers, refetch: refetchActioned } =
     actionedTransfersRes;
 
-  const { data: querySettings, refetch: refetchSettings } = useCachedResponse({
-    queryKey: '/settings',
-    queryFn: settingsService?.getSettings,
-    initialData: settings,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-  });
+  const { data: querySettings, refetch: refetchSettings } =
+    useCachedResponse<PrismaSystemSetting>({
+      queryKey: '/settings',
+      queryFn: settingsService?.getSettings,
+      initialData: settings,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+    });
 
   const { register, watch } = useForm({
     defaultValues: {
@@ -127,7 +142,7 @@ const Transfers = ({ scopes, settings }) => {
               color="qukBlue"
               fontSize="lg"
               fontWeight="bold"
-              isDisabled={!hasScope([EMT], scopes)}
+              isDisabled={!hasScope([EMT], userScopes)}
               {...register('transfer_window')}
             />
           </form>
@@ -148,7 +163,7 @@ const Transfers = ({ scopes, settings }) => {
             <TransferCard
               transfer={transfer}
               key={transfer?.uuid}
-              scopes={scopes}
+              scopes={userScopes}
               refetchAll={refetchAll}
             />
           ))}
@@ -238,23 +253,25 @@ const Transfers = ({ scopes, settings }) => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  const auth = await isAuthorized(req, res, [TRANSFER_READ, EMT]);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const auth = await isScoped_ServerProps(context, [TRANSFER_READ, EMT]);
+
   if (!auth) {
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
-  const headers = generateServerSideHeaders(req);
-
-  const [scopes, { data: settings }, basePageProps] = await Promise.all([
-    getUserScopes(headers),
+  const [{ data: settings }, basePageProps] = await Promise.all([
     settingsService.getSettings(),
     getBasePageProps(),
   ]);
 
   return {
     props: {
-      scopes,
       settings,
       ...basePageProps,
     },
@@ -262,3 +279,7 @@ export const getServerSideProps = async ({ req, res }) => {
 };
 
 export default Transfers;
+
+Transfers.auth = {
+  skeleton: <Box />,
+};

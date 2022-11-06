@@ -1,4 +1,8 @@
-import { users as PrismaUser, scopes as PrismaScope } from '@prisma/client';
+import {
+  users as PrismaUser,
+  scopes as PrismaScope,
+  Prisma,
+} from '@prisma/client';
 
 export type SafeUser = Omit<PrismaUser, 'hashed_password' | 'salt'>;
 export type SafeUserWithScopes = SafeUser & { scopes: PrismaScope[] };
@@ -16,3 +20,25 @@ type StudentProps =
   | { is_student: true; university?: string };
 
 export type JoinFormProps = CreateUserProps & StudentProps;
+
+type SafeTransfersWithRelations = Prisma.transfersGetPayload<{
+  include: {
+    prevClub: { select: { name: true } };
+    newClub: { select: { name: true } };
+  };
+}>;
+
+export type SafeTransfer = Omit<
+  SafeTransfersWithRelations,
+  'actioned_by' | 'reason' | 'prev_club_uuid' | 'new_club_uuid' | 'user_uuid'
+>;
+
+export type SafeUserWithTransfersAndScopes = SafeUserWithScopes & {
+  transfers: SafeTransfer[];
+};
+
+export type AdminUserWithRelations = Prisma.usersGetPayload<{
+  include: {
+    clubs: true;
+  };
+}>;

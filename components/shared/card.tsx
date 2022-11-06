@@ -1,4 +1,5 @@
 import { PrismicRichText } from '@prismicio/react';
+import * as prismicT from '@prismicio/types';
 
 import format from 'date-fns/format';
 import {
@@ -10,6 +11,7 @@ import {
   Grid,
   Text,
   Flex,
+  BoxProps,
 } from '@chakra-ui/react';
 import Image from 'next/image';
 
@@ -180,6 +182,17 @@ const Card = ({
   target,
   ariaLabel,
   ...cardProps
+}: BoxProps & {
+  image?: {
+    src: string;
+    alt: string;
+  };
+  title?: string;
+  content?: prismicT.RichTextField;
+  href?: string;
+  variant?: string;
+  target?: string;
+  ariaLabel?: string;
 }) => {
   const styles = useStyleConfig('Card', { variant });
 

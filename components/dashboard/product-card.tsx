@@ -9,13 +9,17 @@ import {
   Text,
   useStyleConfig,
   Link as ChakraLink,
+  BoxProps,
 } from '@chakra-ui/react';
 import { formatMinorUnitsToCurrency } from 'modules/numbers';
 import Image from 'next/image';
 import { PlainWrapper } from 'components/shared/card';
 import Button from 'components/shared/button';
 
-const StyledCard = ({ onClick, ...props }) => (
+const StyledCard = ({
+  onClick,
+  ...props
+}: BoxProps & { onClick?: () => void }) => (
   <Grid
     borderRadius="md"
     overflow="hidden"
@@ -52,6 +56,15 @@ const ProductCard = ({
   price,
   expires,
   ...cardProps
+}: BoxProps & {
+  image: string;
+  name: string;
+  description: string;
+  expires?: string;
+  price?: {
+    unit_amount: number;
+  };
+  onClick?: () => void;
 }) => (
   <StyledCard
     {...cardProps}
