@@ -9,7 +9,7 @@
     "@hookform/resolvers": "^2.8.8",
     "@prismicio/client": "^6.7.1",
     "@prismicio/helpers": "^2.3.5",
-    "@prismicio/next": "^0.1.5",
+    "@prismicio/next": "^1.0.0",
     "@prismicio/react": "^2.5.0",
     "@prismicio/slice-simulator-react": "^0.2.2",
     "@sentry/nextjs": "^6.19.2",
