@@ -8,6 +8,7 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { clubs as PrismaClub } from '@prisma/client';
+import generateServerSideHeaders from 'modules/headers';
 
 import { CLUBS_READ, CLUBS_WRITE, EMT } from 'constants/scopes';
 import Slice from 'components/shared/slice';
@@ -217,8 +218,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
+  const headers = generateServerSideHeaders(context.req);
+
   const [{ data: club }, basePageProps] = await Promise.all([
-    clubsService.getClub({ club_uuid: context.params?.uid }),
+    clubsService.getClub({ club_uuid: context.params?.uid, headers }),
     getBasePageProps(),
   ]);
 

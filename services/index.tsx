@@ -1,17 +1,23 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import mapValues from 'lodash/mapValues';
 
-export function generateSettings(reqConfig) {
-  const {
-    method,
-    data,
-    params,
-    url,
-    accept = 'application/json',
-    responseType = 'json',
-    headers = {},
-  } = reqConfig;
-
+export function generateSettings({
+  method,
+  data,
+  params,
+  url,
+  accept = 'application/json',
+  responseType = 'json',
+  headers = {},
+}: {
+  method: string;
+  data?: any;
+  params?: any;
+  url: string;
+  accept?: string;
+  responseType?: string;
+  headers?: object;
+}) {
   const settings = {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     method,
@@ -21,20 +27,21 @@ export function generateSettings(reqConfig) {
       ...headers,
       Accept: accept,
     },
-  };
+  } as AxiosRequestConfig;
+
+  if (params) {
+    settings.params = params;
+  }
 
   if (data) {
     settings.data = data;
-  }
-  if (params) {
-    settings.params = params;
   }
 
   return settings;
 }
 
 export function wrapServiceCall(service, key) {
-  function makeCall(params) {
+  async function makeCall(params?: object) {
     const config = service(params);
 
     let settings = generateSettings(config);

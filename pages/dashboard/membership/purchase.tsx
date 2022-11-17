@@ -1,10 +1,12 @@
 import dynamic from 'next/dynamic';
 import { Box, Grid, Heading, Text } from '@chakra-ui/react';
 import { parseCookies } from 'modules/cookies';
-import { stripePromise } from 'modules/stripe';
+import { getClientStripe } from 'modules/stripe';
 import { getBasePageProps } from 'modules/prismic';
 import productsService from 'services/products';
 import { GetServerSideProps } from 'next';
+import generateServerSideHeaders from 'modules/headers';
+import Stripe from 'stripe';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -13,7 +15,7 @@ const ProductCard = dynamic(() => import('components/dashboard/product-card'));
 const handleClick = async (price_id) => {
   const { data } = await productsService.getProductSession({ price_id });
 
-  const stripe = await stripePromise;
+  const stripe = await getClientStripe();
   const { error } = await stripe.redirectToCheckout({
     sessionId: data.id,
   });
@@ -22,7 +24,15 @@ const handleClick = async (price_id) => {
   console.log(error.message);
 };
 
-const PurchaseMembership = ({ products }) => (
+interface ProductWithPrice extends Stripe.Product {
+  price: Stripe.Price;
+}
+
+const PurchaseMembership = ({
+  products,
+}: {
+  products: { products?: ProductWithPrice[] };
+}) => (
   <>
     <Meta
       description="Sign in to QuadballUK to manage your QuadballUK Membership, Account details and more"
@@ -51,7 +61,7 @@ const PurchaseMembership = ({ products }) => (
           </Text>
         </Box>
         <Grid gridTemplateColumns="1fr" gridGap={{ base: 4, sm: 8, md: 9 }}>
-          {products.map((product) => (
+          {products.products?.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
@@ -70,6 +80,7 @@ const PurchaseMembership = ({ products }) => (
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { MEMBERSHIP_AGREED } = parseCookies(req);
+  const headers = generateServerSideHeaders(req);
 
   if (!MEMBERSHIP_AGREED) {
     return {
@@ -81,7 +92,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
 
   const [{ data: products }, basePageProps] = await Promise.all([
-    productsService.getProducts(),
+    productsService.getProducts({ headers }),
     getBasePageProps(),
   ]);
 

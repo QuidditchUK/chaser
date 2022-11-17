@@ -6,6 +6,7 @@ import productsService from 'services/products';
 import Slice from 'components/shared/slice';
 import { getBasePageProps } from 'modules/prismic';
 import { GetServerSideProps } from 'next';
+import generateServerSideHeaders from 'modules/headers';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const ProductCard = dynamic(() => import('components/dashboard/product-card'));
@@ -13,23 +14,23 @@ const MembershipForm = dynamic(
   () => import('components/dashboard/membership-form')
 );
 
-const ManageMembership = ({ products = [] }) => {
+const ManageMembership = ({ products }) => {
   const currentProducts = useMemo(
     () =>
-      products.filter(
+      products?.products?.filter(
         (product) =>
           new Date() < parse(product.metadata.expires, 'dd-MM-yyyy', new Date())
       ),
-    [products]
+    [products.products]
   );
   const expiredProducts = useMemo(
     () =>
-      products.filter(
+      products?.products?.filter(
         (product) =>
           new Date() >=
           parse(product.metadata.expires, 'dd-MM-yyyy', new Date())
       ),
-    [products]
+    [products.products]
   );
 
   return (
@@ -39,8 +40,8 @@ const ManageMembership = ({ products = [] }) => {
         subTitle="Manage"
       />
       <Slice>
-        {!currentProducts.length && <MembershipForm />}
-        {!!currentProducts.length && (
+        {!currentProducts?.length && <MembershipForm />}
+        {!!currentProducts?.length && (
           <>
             <Heading as="h2" fontFamily="body">
               Current Membership
@@ -60,7 +61,7 @@ const ManageMembership = ({ products = [] }) => {
           </>
         )}
 
-        {!!expiredProducts.length && (
+        {!!expiredProducts?.length && (
           <>
             <Heading as="h2" fontFamily="body" pt="5">
               Past Memberships
@@ -84,17 +85,16 @@ const ManageMembership = ({ products = [] }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const headers = generateServerSideHeaders(req);
+
   const [{ data: products }, basePageProps] = await Promise.all([
-    productsService.getUserProducts(),
+    productsService.getUserProducts({ headers }),
     getBasePageProps(),
   ]);
 
   return {
-    props: {
-      products,
-      ...basePageProps,
-    },
+    props: { products, ...basePageProps },
   };
 };
 

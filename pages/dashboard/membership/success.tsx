@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import { Grid, Flex, Heading, Box } from '@chakra-ui/react';
-
+import generateServerSideHeaders from 'modules/headers';
 import { getBasePageProps } from 'modules/prismic';
 
 import productsService from 'services/products';
@@ -55,9 +55,11 @@ const SuccessMembership = ({ product }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const headers = generateServerSideHeaders(req);
+
   const [{ data: products }, basePageProps] = await Promise.all([
-    productsService.getUserProducts(),
+    productsService.getUserProducts({ headers }),
     getBasePageProps(),
   ]);
 

@@ -15,6 +15,7 @@ import { formatMinorUnitsToCurrency } from 'modules/numbers';
 import Image from 'next/image';
 import { PlainWrapper } from 'components/shared/card';
 import Button from 'components/shared/button';
+import Stripe from 'stripe';
 
 const StyledCard = ({
   onClick,
@@ -61,9 +62,7 @@ const ProductCard = ({
   name: string;
   description: string;
   expires?: string;
-  price?: {
-    unit_amount: number;
-  };
+  price?: Stripe.Price;
   onClick?: () => void;
 }) => (
   <StyledCard

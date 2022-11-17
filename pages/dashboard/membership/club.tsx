@@ -25,6 +25,7 @@ import Error from 'components/shared/errors';
 import { useSession } from 'next-auth/react';
 import { SafeUserWithTransfersAndScopes } from 'types/user';
 import { GetServerSideProps } from 'next';
+import generateServerSideHeaders from 'modules/headers';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Content = dynamic(() => import('components/shared/content'));
@@ -282,8 +283,9 @@ const ManageClub = ({ clubs = [], settings }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const { data: products } = await productsService.getUserProducts();
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const headers = generateServerSideHeaders(req);
+  const { data: products } = await productsService.getUserProducts({ headers });
 
   if (
     !products.length ||

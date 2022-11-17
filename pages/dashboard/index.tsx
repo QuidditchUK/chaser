@@ -22,6 +22,7 @@ import { ProductCardV2 } from 'components/dashboard/product-card';
 import { InfoCard } from 'components/dashboard/info-card';
 import { useSession } from 'next-auth/react';
 import { clubs as Club } from '@prisma/client';
+import Stripe from 'stripe';
 
 const Container = dynamic(() => import('components/layout/container'));
 
@@ -37,7 +38,9 @@ const Dashboard = () => {
 
   const { user } = session;
 
-  const { data: memberships } = useCachedResponse<any>({
+  const { data: memberships } = useCachedResponse<{
+    products: Stripe.Product[];
+  }>({
     queryKey: '/products/me',
     queryFn: productsService.getUserProducts,
   });
@@ -48,7 +51,7 @@ const Dashboard = () => {
     enabled: Boolean(user?.club_uuid),
   });
 
-  const [membership] = memberships || [];
+  const [membership] = memberships?.products || [];
 
   return (
     <>
