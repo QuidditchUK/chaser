@@ -101,10 +101,10 @@ const LeagueTableCard = ({ table }) => {
           {data?.table?.map((item) => (
             <Fragment key={`league-table--${item.position}-${item.team}`}>
               <Box {...dividedCellStyles} bg="white">
-                {item?.position}
+                <PrismicRichText field={data.table.position} />
               </Box>
               <Box {...dividedCellStyles} bg="white" px={2}>
-                {item?.team}
+                <PrismicRichText field={data.table.team} />
               </Box>
             </Fragment>
           ))}
