@@ -172,7 +172,7 @@ type ScoutingResponseData = {
   event: string;
 };
 
-type RegisterClubFormData = {
+export type RegisterClubFormData = {
   name: string;
   email: string;
   clubName: string;

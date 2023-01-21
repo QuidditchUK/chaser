@@ -45,7 +45,7 @@ const handleRegisterClubSubmit = async (
     await clubsService.registerClub({ data: values });
 
     setServerSuccess(true);
-    resetForm({});
+    resetForm();
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
   }
