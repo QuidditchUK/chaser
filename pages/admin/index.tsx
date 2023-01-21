@@ -42,9 +42,6 @@ const Dashboard = () => {
           {hasScope([TRANSFER_READ, EMT], userScopes) && (
             <Card title="Transfers" href="/admin/transfers" />
           )}
-          {hasScope([EMT, NATIONAL_TEAM_READ, HEAD_SCOUT], userScopes) && (
-            <Card title="National Teams" href="/admin/national-teams" />
-          )}
           {hasScope([EMT], userScopes) && (
             <Card title="Volunteer Permissions" href="/admin/permissions" />
           )}
