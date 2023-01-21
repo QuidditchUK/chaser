@@ -25,7 +25,7 @@ const PasswordFormSchema = object().shape({
 
 const handlePasswordSubmit = async ({
   values: { confirm, ...data },
-  resetForm,
+  reset,
   setServerError,
   setServerSuccess,
 }) => {
@@ -36,7 +36,7 @@ const handlePasswordSubmit = async ({
     await usersService.updatePassword({ data });
 
     setServerSuccess(true);
-    resetForm({});
+    reset();
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
   }
@@ -110,13 +110,13 @@ const InfoForm = () => {
               {...register('confirm')}
             />
           </Grid>
+          {serverError && <Error>{serverError}</Error>}
           <Button type="submit" variant="green" disabled={isSubmitting}>
             {isSubmitting ? 'Submitting' : 'Change password'}
           </Button>
         </Flex>
       </form>
 
-      {serverError && <Error>{serverError}</Error>}
       {serverSuccess && <Success>Password updated</Success>}
     </>
   );
