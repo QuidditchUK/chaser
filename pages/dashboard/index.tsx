@@ -48,6 +48,7 @@ const Dashboard = () => {
     queryKey: ['/clubs', user?.club_uuid],
     queryFn: () => clubsService.getClub({ club_uuid: user?.club_uuid }),
     enabled: Boolean(user?.club_uuid),
+    selector: (res) => res.data.club,
   });
 
   const [membership] = memberships?.products || [];

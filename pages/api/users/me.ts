@@ -5,9 +5,6 @@ import sendEmail from 'modules/email';
 import prisma from 'modules/prisma';
 import sendNotifications from 'modules/sendNotification';
 import { CLUB_MEMBER_ADDED } from 'constants/notifications';
-import axios from 'axios';
-// import { authOptions } from 'pages/api/auth/[...nextauth]';
-// import { unstable_getServerSession } from 'next-auth/next';
 
 export const getSafeUserWithTransfersAndScopes = async (uuid: string) => {
   const { hashed_password, salt, ...user } = await prisma.users.findUnique({

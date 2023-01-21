@@ -276,7 +276,8 @@ const ManageClub = ({ clubs = [], settings }) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const headers = generateServerSideHeaders(req);
-  const { data: products } = await productsService.getUserProducts({ headers });
+  const { data } = await productsService.getUserProducts({ headers });
+  const { products } = data;
 
   if (
     !products.length ||
@@ -293,7 +294,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     };
   }
 
-  const [{ data: clubs }, { data: settings }, basePageProps] =
+  const [{ data: clubsData }, { data: settingsData }, basePageProps] =
     await Promise.all([
       clubsService.getPublicClubs(),
       settingsService.getSettings(),
@@ -302,8 +303,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   return {
     props: {
-      clubs,
-      settings,
+      clubs: clubsData.clubs,
+      settings: settingsData.settings,
       ...basePageProps,
     },
   };
