@@ -102,7 +102,7 @@ type WelcomeData = {
   first_name: string;
 };
 
-type ContactFormData = {
+export type ContactFormData = {
   name: string;
   email: string;
   subject: string;
@@ -113,14 +113,14 @@ type ForgotPasswordData = {
   reset_url: string;
 };
 
-type VolunteerFormData = {
+export type VolunteerFormData = {
   name: string;
   email: string;
   role: string;
   message: string;
 };
 
-type EdiCommitteeFormData = {
+export type EdiCommitteeFormData = {
   name: string;
   email: string;
   club: string;

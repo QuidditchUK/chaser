@@ -41,7 +41,7 @@ const handleContactSubmit = async (
     await contactService.contactForm({ data: values });
 
     setServerSuccess(true);
-    resetForm({});
+    resetForm();
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
   }

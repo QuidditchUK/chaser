@@ -1,33 +1,36 @@
-import { useForm } from 'react-hook-form';
+import { object, string, bool } from 'yup';
 import dynamic from 'next/dynamic';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { object, string } from 'yup';
+
 import { Grid, Heading } from '@chakra-ui/react';
 
-import { buttonVariants, labelVariants } from 'components/shared/slice';
 import InputV2 from 'components/formControls/inputV2';
 import TextareaV2 from 'components/formControls/textareaV2';
 import Error from 'components/shared/errors';
+import Switch from 'components/formControls/switch';
 import Success from 'components/formControls/success';
 
 import { rem } from 'styles/theme';
-import useTempPopup from 'hooks/useTempPopup';
+
+import { buttonVariants, labelVariants } from 'components/shared/slice';
 import contactService from 'services/contact';
+import useTempPopup from 'hooks/useTempPopup';
 
 const Slice = dynamic(() => import('components/shared/slice'));
 const Button = dynamic(() => import('components/shared/button'));
 const Container = dynamic(() => import('components/layout/container'));
+const Content = dynamic(() => import('components/shared/content'));
 
-const VolunteerFormSchema = object().shape({
+const EDICommitteeSchema = object().shape({
   name: string().required('Please enter your name'),
   email: string()
     .email('Invalid email address')
     .required('Please enter a valid email address'),
-  role: string().required('Please enter the role you are applying for'),
-  message: string().required('Required'),
+  chair: bool().required(),
 });
 
-const handleVolunteerSubmit = async (
+const handleCommitteeSubmit = async (
   values,
   resetForm,
   setServerError,
@@ -37,16 +40,16 @@ const handleVolunteerSubmit = async (
     setServerError(null);
     setServerSuccess(null);
 
-    await contactService.volunteerForm({ data: values });
+    await contactService.ediForm({ data: values });
 
     setServerSuccess(true);
-    resetForm({});
+    resetForm();
   } catch (err) {
     setServerError(err?.response?.data?.error?.message);
   }
 };
 
-const VolunteerForm = ({ slice }) => {
+const EDICommitteeForm = ({ slice }) => {
   const [serverError, setServerError] = useTempPopup();
   const [serverSuccess, setServerSuccess] = useTempPopup();
 
@@ -54,29 +57,39 @@ const VolunteerForm = ({ slice }) => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm({
     mode: 'onBlur',
-    resolver: yupResolver(VolunteerFormSchema),
+    resolver: yupResolver(EDICommitteeSchema),
     defaultValues: {
       name: '',
       email: '',
-      role: '',
+      chair: false,
+      club: '',
       message: '',
     },
   });
+
   const { primary } = slice;
   const { variant } = primary;
 
   return (
     <Slice variant={variant}>
       <Heading as="h1" fontFamily="body" textAlign="center">
-        Apply to Volunteer
+        EDI Committee Expression of Interest
       </Heading>
+
       <Container maxWidth={rem(500)} paddingBottom={4}>
+        <Content fontSize="bodyCard" fontStyle="italic" pb={4}>
+          Applications of interest are open for both committee chair and regular
+          member positions. These will remain open and be advertised until 31st
+          October, QuadballUK will then be in contact with applicants to discuss
+          the role(s).
+        </Content>
+
         <form
           onSubmit={handleSubmit((values) =>
-            handleVolunteerSubmit(
+            handleCommitteeSubmit(
               values,
               reset,
               setServerError,
@@ -106,18 +119,28 @@ const VolunteerForm = ({ slice }) => {
             />
 
             <InputV2
-              label="Role"
-              isRequired
-              id="role"
-              {...register('role')}
-              placeholder="The role you're applying for"
-              error={errors?.role}
+              label="Club"
+              id="club"
+              {...register('club')}
+              placeholder="The club you currently play for"
+              error={errors?.club}
+              color={labelVariants[variant]}
+            />
+
+            <Switch
+              label="Do you wish to be considered for the EDI Committee Chair?"
+              id="chair"
+              colorScheme="green"
+              size="lg"
+              display="flex"
+              alignItems="center"
+              {...register('chair')}
               color={labelVariants[variant]}
             />
 
             <TextareaV2
-              label="Your message"
-              isRequired
+              label="Do you have any questions or queries related to the role,
+              committee, or announcement?"
               id="message"
               placeholder="Your message"
               {...register('message')}
@@ -136,10 +159,10 @@ const VolunteerForm = ({ slice }) => {
         </form>
 
         {serverError && <Error>{serverError}</Error>}
-        {serverSuccess && <Success>Application sent</Success>}
+        {serverSuccess && <Success>Message sent</Success>}
       </Container>
     </Slice>
   );
 };
 
-export default VolunteerForm;
+export default EDICommitteeForm;
