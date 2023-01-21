@@ -8,6 +8,12 @@ const usersService = {
     ...params,
   }),
 
+  getUser: (params) => ({
+    method: 'get',
+    url: '/users/me',
+    ...params,
+  }),
+
   updatePassword: ({ data, ...params }) => ({
     method: 'put',
     url: '/users/password',

@@ -22,8 +22,6 @@ export default async function handler(
           where: { user_uuid: token.user.uuid },
         });
 
-        console.log(rows);
-
         if (!rows.length) {
           res.status(200).json({ products: [] });
           return;

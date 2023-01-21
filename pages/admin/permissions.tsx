@@ -11,48 +11,52 @@ import Slice from 'components/shared/slice';
 import PermissionBlock from 'components/permissions/permissions-block';
 import Meta from 'components/shared/meta';
 import { GetServerSideProps } from 'next';
-import { useSession } from 'next-auth/react';
+import useMe from 'hooks/useMe';
+import SkeletonLoaderWrapper from 'components/shared/SkeletonLoaderWrapper';
 
 const Permissions = () => {
-  const { data: session } = useSession();
-  const { user } = session;
-  const userScopes = getPlainScopes(user.scopes);
+  const { data: user, isLoading } = useMe();
+  const userScopes = getPlainScopes(user?.scopes);
+
+  console.log(userScopes);
 
   return (
     <>
       <Meta subTitle="Volunteers Permissions" title="Admin Dashboard" />
-      <Slice>
-        <Flex
-          flexDirection="row"
-          width="100%"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Heading
-            as="h3"
-            fontFamily="body"
-            color="qukBlue"
-            display="flex"
+      <SkeletonLoaderWrapper isLoading={isLoading} loaderComponent={<Box />}>
+        <Slice>
+          <Flex
+            flexDirection="row"
+            width="100%"
             alignItems="center"
+            justifyContent="space-between"
           >
-            <Link href="/admin">Dashboard</Link> <ChevronRightIcon /> Volunteer
-            Permissions
-          </Heading>
-        </Flex>
+            <Heading
+              as="h3"
+              fontFamily="body"
+              color="qukBlue"
+              display="flex"
+              alignItems="center"
+            >
+              <Link href="/admin">Dashboard</Link> <ChevronRightIcon />{' '}
+              Volunteer Permissions
+            </Heading>
+          </Flex>
 
-        <PermissionBlock label="EMT" scope={EMT} scopes={userScopes} />
-        <PermissionBlock label="Admin" scope={ADMIN} scopes={userScopes} />
-        <PermissionBlock
-          label="Head Scout"
-          scope={HEAD_SCOUT}
-          scopes={userScopes}
-        />
-        <PermissionBlock
-          label="Volunteers"
-          scope={VOLUNTEER}
-          scopes={userScopes}
-        />
-      </Slice>
+          <PermissionBlock label="EMT" scope={EMT} scopes={userScopes} />
+          <PermissionBlock label="Admin" scope={ADMIN} scopes={userScopes} />
+          <PermissionBlock
+            label="Head Scout"
+            scope={HEAD_SCOUT}
+            scopes={userScopes}
+          />
+          <PermissionBlock
+            label="Volunteers"
+            scope={VOLUNTEER}
+            scopes={userScopes}
+          />
+        </Slice>
+      </SkeletonLoaderWrapper>
     </>
   );
 };

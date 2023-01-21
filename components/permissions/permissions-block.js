@@ -13,7 +13,6 @@ import Table from 'components/shared/table';
 
 import scopesService from 'services/scopes';
 import useCachedResponse from 'hooks/useCachedResponse';
-import usersService from 'services/users';
 
 const handleDeleteClick = async ({ uuid, scope, refetch }) => {
   console.log('in Handle');
@@ -58,14 +57,6 @@ const PermissionBlock = ({ label, scope, scopes }) => {
     queryFn: () => scopesService.getUsersByScope({ scope }),
   });
 
-  const { data: queryScopes, refetch: refetchScopes } = useCachedResponse({
-    queryKey: '/users/me',
-    queryFn: usersService.getUser,
-    selector: (res) => res?.data?.scopes?.map(({ scope }) => scope),
-    initialData: scopes,
-    enabled: false,
-  });
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -93,7 +84,7 @@ const PermissionBlock = ({ label, scope, scopes }) => {
               </Td>
               <Td>{user?.email}</Td>
               <Td>{user?.scopes.map(({ scope }) => scope).join(', ')}</Td>
-              {hasScope([ADMIN], queryScopes) && (
+              {hasScope([ADMIN], scopes) && (
                 <Td textAlign="right">
                   <Button
                     variant="secondary"
@@ -111,7 +102,7 @@ const PermissionBlock = ({ label, scope, scopes }) => {
         </Table>
       </Box>
 
-      {hasScope([ADMIN], queryScopes) && (
+      {hasScope([ADMIN], scopes) && (
         <form
           onSubmit={handleSubmit((values) =>
             handleFormSubmit({

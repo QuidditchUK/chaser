@@ -1,5 +1,4 @@
 import { GetServerSideProps } from 'next';
-import { useSession } from 'next-auth/react';
 import { Grid, Heading, Box } from '@chakra-ui/react';
 import { getPlainScopes, hasScope } from 'modules/scopes';
 import { isScoped_ServerProps } from 'modules/auth';
@@ -16,12 +15,12 @@ import Slice from 'components/shared/slice';
 import Card from 'components/shared/card';
 import { getBasePageProps } from 'modules/prismic';
 import Meta from 'components/shared/meta';
+import useMe from 'hooks/useMe';
 
 const Dashboard = () => {
-  const { data: session } = useSession();
-  const { user } = session;
-  const userScopes = getPlainScopes(user.scopes);
+  const { data: user } = useMe();
 
+  const userScopes = getPlainScopes(user?.scopes);
   return (
     <>
       <Meta subTitle="Admin Dashboard" />

@@ -1,7 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import { clubs as PrismaClubs } from '@prisma/client';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import {
   Box,
@@ -28,6 +27,7 @@ import Modal from 'components/shared/modal';
 
 import clubsService from 'services/clubs';
 import useCachedResponse from 'hooks/useCachedResponse';
+import useMe from 'hooks/useMe';
 
 const handleDeleteClick = async ({ uuid, refetch }) => {
   try {
@@ -39,8 +39,7 @@ const handleDeleteClick = async ({ uuid, refetch }) => {
 };
 
 const ClubAdminDashboard = () => {
-  const { data: session } = useSession();
-  const { user } = session;
+  const { data: user } = useMe();
   const userScopes = getPlainScopes(user.scopes);
 
   const {

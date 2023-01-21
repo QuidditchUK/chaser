@@ -11,39 +11,41 @@ import PendingScoutingRequests from 'components/admin/scouting/pending-scouting-
 
 import Slice from 'components/shared/slice';
 import Meta from 'components/shared/meta';
-import { useSession } from 'next-auth/react';
+import useMe from 'hooks/useMe';
+import SkeletonLoaderWrapper from 'components/shared/SkeletonLoaderWrapper';
 
 const NationalTeams = () => {
-  const { data: session } = useSession();
-  const { user } = session;
+  const { data: user, isLoading } = useMe();
   const userScopes = getPlainScopes(user.scopes);
 
   return (
     <>
       <Meta subTitle="National Teams" title="Admin Dashboard" />
-      <Slice>
-        <Flex
-          flexDirection="row"
-          width="100%"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Heading
-            as="h3"
-            fontFamily="body"
-            color="qukBlue"
-            display="flex"
+      <SkeletonLoaderWrapper isLoading={isLoading} loaderComponent={<Box />}>
+        <Slice>
+          <Flex
+            flexDirection="row"
+            width="100%"
             alignItems="center"
+            justifyContent="space-between"
           >
-            <Link href="/admin">Dashboard</Link> <ChevronRightIcon /> National
-            Teams
-          </Heading>
-        </Flex>
+            <Heading
+              as="h3"
+              fontFamily="body"
+              color="qukBlue"
+              display="flex"
+              alignItems="center"
+            >
+              <Link href="/admin">Dashboard</Link> <ChevronRightIcon /> National
+              Teams
+            </Heading>
+          </Flex>
 
-        {hasScope([HEAD_SCOUT], userScopes) && (
-          <PendingScoutingRequests scopes={userScopes} />
-        )}
-      </Slice>
+          {hasScope([HEAD_SCOUT], userScopes) && (
+            <PendingScoutingRequests scopes={userScopes} />
+          )}
+        </Slice>
+      </SkeletonLoaderWrapper>
     </>
   );
 };

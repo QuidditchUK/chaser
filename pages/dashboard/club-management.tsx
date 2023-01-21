@@ -2,7 +2,6 @@ import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import { Heading, Box } from '@chakra-ui/react';
 import { clubs as PrismaClub } from '@prisma/client';
-import { useSession } from 'next-auth/react';
 import { getBasePageProps } from 'modules/prismic';
 import { isScoped_ServerProps } from 'modules/auth';
 import useCachedResponse from 'hooks/useCachedResponse';
@@ -13,12 +12,12 @@ import { getPlainScopes } from 'modules/scopes';
 import { CLUB_MANAGEMENT } from 'constants/scopes';
 
 import Slice from 'components/shared/slice';
+import useMe from 'hooks/useMe';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 
 const ClubManagement = () => {
-  const { data: session } = useSession();
-  const { user } = session;
+  const { data: user } = useMe();
 
   const { data: club, refetch } = useCachedResponse<PrismaClub>({
     queryKey: ['/clubs/', user.club_uuid],

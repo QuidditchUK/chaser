@@ -6,7 +6,7 @@ import {
   getScoutingApplicationEvents,
 } from 'modules/prismic';
 import { GetServerSideProps } from 'next';
-import { useSession } from 'next-auth/react';
+import useMe from 'hooks/useMe';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -19,8 +19,7 @@ const NationalTeamScouting = dynamic(
 );
 
 const NationalTeam = ({ events }) => {
-  const { data: session } = useSession();
-  const { user } = session;
+  const { data: user } = useMe();
 
   return (
     <>

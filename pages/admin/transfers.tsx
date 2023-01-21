@@ -33,12 +33,12 @@ import TransferCard from 'components/transfers/transferCard';
 import ManualTransferForm from 'components/transfers/manualTransferForm';
 import Button from 'components/shared/button';
 import { GetServerSideProps } from 'next';
-import { useSession } from 'next-auth/react';
 import {
   system_settings as PrismaSystemSetting,
   transfers as PrismaTransfer,
 } from '@prisma/client';
 import { AdminTransferWithRelations } from 'types/transfer';
+import useMe from 'hooks/useMe';
 
 const STATUS = {
   APPROVED: 'Approved',
@@ -46,8 +46,7 @@ const STATUS = {
 };
 
 const Transfers = ({ settings }: { settings: PrismaSystemSetting }) => {
-  const { data: session } = useSession();
-  const { user } = session;
+  const { data: user } = useMe();
   const userScopes = getPlainScopes(user.scopes);
 
   const [page, setPage] = useState(0);

@@ -14,7 +14,6 @@ import Select from 'components/formControls/select';
 
 import PrismicClubCard from 'components/prismic/club-card';
 import { getBasePageProps } from 'modules/prismic';
-import useCachedResponse from 'hooks/useCachedResponse';
 import usersService from 'services/users';
 import clubsService from 'services/clubs';
 import productsService from 'services/products';
@@ -22,10 +21,9 @@ import Checkbox from 'components/formControls/checkbox';
 import Slice from 'components/shared/slice';
 import Table from 'components/shared/table';
 import Error from 'components/shared/errors';
-import { useSession } from 'next-auth/react';
-import { SafeUserWithTransfersAndScopes } from 'types/user';
 import { GetServerSideProps } from 'next';
 import generateServerSideHeaders from 'modules/headers';
+import useMe from 'hooks/useMe';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Content = dynamic(() => import('components/shared/content'));
@@ -66,17 +64,10 @@ const handleClubSubmit = async ({ club_uuid }, setServerError) => {
 };
 
 const ManageClub = ({ clubs = [], settings }) => {
-  const { data: session } = useSession();
-
-  const { data: queryUser, refetch } =
-    useCachedResponse<SafeUserWithTransfersAndScopes>({
-      queryKey: '/users/me',
-      queryFn: usersService.getUser,
-      initialData: session.user,
-    });
+  const { data: user, refetch } = useMe();
 
   const [selectedClub, setSelectedClub] = useState(
-    clubs.find(({ uuid }) => uuid === queryUser?.club_uuid)
+    clubs.find(({ uuid }) => uuid === user?.club_uuid)
   );
   const [serverError, setServerError] = useState(null);
 
@@ -88,18 +79,18 @@ const ManageClub = ({ clubs = [], settings }) => {
   } = useForm({
     resolver: yupResolver(SelectClubSchema),
     defaultValues: {
-      club_uuid: queryUser?.club_uuid,
+      club_uuid: user?.club_uuid,
       confirm: false,
     },
   });
 
-  const hasPendingTransfer = queryUser?.transfers?.some(
+  const hasPendingTransfer = user?.transfers?.some(
     (transfer) => transfer?.status === 'PENDING'
   );
   const canTransfer =
-    settings?.transfer_window && !hasPendingTransfer && queryUser?.club_uuid;
+    settings?.transfer_window && !hasPendingTransfer && user?.club_uuid;
 
-  const currentSelectedClubUuid = watch('club_uuid', queryUser?.club_uuid);
+  const currentSelectedClubUuid = watch('club_uuid', user?.club_uuid);
 
   useEffect(() => {
     if (selectedClub?.uuid !== currentSelectedClubUuid) {
@@ -127,11 +118,11 @@ const ManageClub = ({ clubs = [], settings }) => {
             borderRadius="md"
           >
             <Heading as="h2" fontFamily="body" color="qukBlue" fontSize="3xl">
-              {queryUser?.club_uuid ? 'Your club' : 'Select your club'}
+              {user?.club_uuid ? 'Your club' : 'Select your club'}
             </Heading>
 
             <Content>
-              {queryUser?.club_uuid ? (
+              {user?.club_uuid ? (
                 <>
                   <p>
                     You have selected <strong>{selectedClub?.name}</strong> as
@@ -148,7 +139,7 @@ const ManageClub = ({ clubs = [], settings }) => {
                     </strong>
                   </p>
                   <p>
-                    {queryUser?.transfers.some(
+                    {user?.transfers.some(
                       (transfer) => transfer.status === 'PENDING'
                     )
                       ? 'Your transfer request is currently being reviewed.'
@@ -188,7 +179,7 @@ const ManageClub = ({ clubs = [], settings }) => {
               )}
             </Content>
 
-            {!queryUser?.club_uuid && (
+            {!user?.club_uuid && (
               <form
                 onSubmit={handleSubmit((values) =>
                   handleClubSubmit(values, setServerError)
@@ -245,14 +236,14 @@ const ManageClub = ({ clubs = [], settings }) => {
         {canTransfer && (
           <Grid gridTemplateColumns="1fr">
             <TransferRequestForm
-              currentClub={queryUser?.club_uuid}
+              currentClub={user?.club_uuid}
               clubs={clubs}
               callback={refetch}
             />
           </Grid>
         )}
 
-        {queryUser?.transfers?.length > 0 && (
+        {user?.transfers?.length > 0 && (
           <>
             <Heading fontFamily="body" color="qukBlue">
               Transfer History
@@ -260,7 +251,7 @@ const ManageClub = ({ clubs = [], settings }) => {
 
             <Box bg="white" borderRadius="lg">
               <Table columns={['Old Club', 'New Club', 'Status']}>
-                {orderBy(queryUser?.transfers, ['updated'], 'desc').map(
+                {orderBy(user?.transfers, ['updated'], 'desc').map(
                   (transfer) => (
                     <Tr key={transfer?.uuid}>
                       <Td>{transfer?.prevClub?.name}</Td>

@@ -28,8 +28,8 @@ import useTempPopup from 'hooks/useTempPopup';
 import Success from 'components/formControls/success';
 import Error from 'components/shared/errors';
 import useCachedResponse from 'hooks/useCachedResponse';
-import { useSession } from 'next-auth/react';
 import { getPlainScopes } from 'modules/scopes';
+import useMe from 'hooks/useMe';
 
 const Button = dynamic(() => import('components/shared/button'));
 
@@ -69,8 +69,7 @@ const ClubPage = ({ club: initialData }: { club: PrismaClub }) => {
   const [serverError, setServerError] = useTempPopup();
   const [serverSuccess, setServerSuccess] = useTempPopup();
   const router = useRouter();
-  const { data: session } = useSession();
-  const { user } = session;
+  const { data: user } = useMe();
   const userScopes = getPlainScopes(user.scopes);
 
   const { data: club, refetch } = useCachedResponse<PrismaClub>({

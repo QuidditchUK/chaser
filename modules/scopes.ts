@@ -9,4 +9,4 @@ export const hasScope = (scopes, userScopes = [], adminFallback = true) => {
 };
 
 export const getPlainScopes = (scopes: PrismaScope[]) =>
-  scopes.map(({ scope }) => scope);
+  scopes?.map(({ scope }) => scope);
