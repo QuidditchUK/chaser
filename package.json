@@ -16,6 +16,7 @@
     "@sentry/nextjs": "^6.19.2",
     "@stripe/stripe-js": "^1.8.0",
     "@svgr/webpack": "^5.4.0",
+    "@types/web-push": "^3.3.2",
     "axios": "^0.21.2",
     "cookie": "^0.5.0",
     "copy-to-clipboard": "^3.3.2",
@@ -44,6 +45,7 @@
     "stripe": "^10.16.0",
     "throttle-debounce": "^3.0.0",
     "ua-parser-js": "^1.0.2",
+    "web-push": "^3.5.0",
     "webpack": "5.51.1",
     "yup": "^0.32.0"
   },

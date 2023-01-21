@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import { scopes, users as User } from '@prisma/client';
 import omit from 'lodash/omit';
 import { SafeUserWithScopes } from 'types/user';
+import { getSafeUserWithTransfersAndScopes } from '../users/me';
 
 export const checkPassword = ({
   user,
@@ -23,7 +24,7 @@ export const checkPassword = ({
   }
 };
 
-export const authOptions: NextAuthOptions = {
+export const createOptions = (req) => ({
   session: {
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
@@ -64,14 +65,22 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: '/login',
-    // signOut: '/auth/signOut',
-    // error: '/auth/error',
   },
   callbacks: {
     // pass user in to JWT token, which is then passed into the session
     // making that data available in session hooks e.g. useSession
     async jwt({ token, user }) {
-      user && (token.user = user);
+      if (user) {
+        token.user = user as unknown as SafeUserWithScopes;
+      }
+
+      if (req.url === '/api/auth/jwt?update') {
+        const updatedUser = await getSafeUserWithTransfersAndScopes(
+          token.user.uuid
+        );
+        token.user = updatedUser;
+      }
+
       return token;
     },
     async session({ session, token }) {
@@ -80,6 +89,8 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-};
+});
 
-export default NextAuth(authOptions);
+const Auth = async (req, res) => NextAuth(req, res, createOptions(req));
+
+export default Auth;

@@ -102,7 +102,7 @@ const FindQuidditch = ({ clubs: initialClubs = [] }) => {
   const watchShowUniversity = watch('showUniversity', showUniversity ?? true);
   const watchShowCommunity = watch('showCommunity', showCommunity ?? true);
   const watchPostcode = watch('postcode', postcode ?? '');
-  const watchDistance = watch('distance', postcode ?? 100);
+  const watchDistance = watch('distance', distance ?? 100);
 
   useEffect(() => {
     const refreshQuery = async () => {

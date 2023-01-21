@@ -113,7 +113,6 @@ const InfoForm = ({ user }) => {
 
             <Switch
               label="Are you a student?"
-              isRequired={true}
               id="is_student"
               colorScheme="green"
               size="lg"
