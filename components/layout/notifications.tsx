@@ -17,13 +17,14 @@ import useCachedResponse from 'hooks/useCachedResponse';
 import usersService from 'services/users';
 import format from 'date-fns/format';
 import Link from 'next/link';
-import cookies from 'js-cookie';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { NotificationLink } from 'constants/notifications';
 
 import Image from 'components/shared/image';
 import useResponse from 'hooks/useResponse';
 import { useQueryClient } from 'react-query';
+import { notifications as Notification } from '@prisma/client';
 
 const LinkWrapper = ({ children, ...notification }) => {
   const href = NotificationLink[notification?.type_id].url;
@@ -144,12 +145,14 @@ const Notification = ({ notification, refetch, onClose }) => {
 
 function Notifications({ isOpen, onClose }) {
   const { push } = useRouter();
-  const token = cookies.get('AUTHENTICATION_TOKEN');
+  const { status } = useSession();
+  const isAuthenticated = status === 'authenticated';
 
-  const { data, refetch } = useCachedResponse({
+  const { data, refetch } = useCachedResponse<Notification[]>({
     queryKey: '/users/notifications',
     queryFn: usersService.getNotifications,
-    enabled: Boolean(token),
+    enabled: Boolean(isAuthenticated),
+    selector: (res) => res.data.notifications,
   });
 
   return (

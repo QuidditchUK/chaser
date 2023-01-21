@@ -1,4 +1,4 @@
-import NextImage from 'next/image';
+import NextImage, { ImageProps } from 'next/image';
 import { PrismicNextImage } from '@prismicio/next';
 import { Box } from '@chakra-ui/react';
 
@@ -46,6 +46,10 @@ const ImageWithDefaults = ({
   borderRadius,
   clipPath,
   ...props
+}: ImageProps & {
+  filter?: string;
+  borderRadius?: string;
+  clipPath?: string;
 }) => {
   return (
     <ImageWrapper
