@@ -39,6 +39,7 @@ const LinkWrapper = ({ children, ...notification }) => {
 
 const Notification = ({ notification, refetch, onClose }) => {
   const queryClient = useQueryClient();
+
   const Wrapper = NotificationLink[notification?.type_id]?.url
     ? LinkWrapper
     : Fragment;
