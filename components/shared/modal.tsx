@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
   Modal as ChakraModal,
   ModalContent,
@@ -6,8 +7,9 @@ import {
   ModalCloseButton,
   ModalHeader,
   ModalBody,
+  ModalProps,
 } from '@chakra-ui/react';
-import Button from 'components/shared/button';
+import Button, { ButtonProps } from 'components/shared/button';
 
 export default function Modal({
   title,
@@ -17,6 +19,11 @@ export default function Modal({
   footerButtonProps,
   footerTitle,
   children,
+}: ModalProps & {
+  title: string;
+  footerButtonProps?: ButtonProps;
+  footerTitle?: string | ReactNode;
+  footerAction?: () => void;
 }) {
   return (
     <ChakraModal isOpen={isOpen} onClose={onClose}>

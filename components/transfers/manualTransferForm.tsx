@@ -15,6 +15,7 @@ import DescriptionList, {
 import transfersService from 'services/transfers';
 import Error from 'components/shared/errors';
 import Select from 'components/formControls/select';
+import { clubs as Club, users as User } from '@prisma/client';
 
 const UserLookupSchema = object().shape({
   uuid: string().nullable().uuid().required('Please enter a UUID'),
@@ -43,17 +44,19 @@ const ManualTransferForm = ({ onClose, isOpen, refetchActioned }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [serverError, setServerError] = useState(null);
 
-  const { data: queryClubs = [] } = useCachedResponse({
+  const { data: queryClubs = [] } = useCachedResponse<Club[]>({
     queryKey: '/clubs/all',
     queryFn: clubsService.getAllClubs,
+    selector: (res) => res.data.clubs,
   });
 
   const activeClubs = queryClubs?.filter((club) => club.active);
 
-  const { data: user } = useCachedResponse({
+  const { data: user } = useCachedResponse<User>({
     queryKey: ['/users/', selectedUser],
     queryFn: () => usersService.getAdminUser({ uuid: selectedUser }),
     enabled: Boolean(selectedUser),
+    selector: (res) => res.data.user,
   });
 
   const {
