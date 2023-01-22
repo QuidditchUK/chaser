@@ -1,4 +1,3 @@
-import { Stripe, loadStripe } from '@stripe/stripe-js';
 import ServerStripe from 'stripe';
 
 let serverStripePromise: ServerStripe | null;
@@ -9,12 +8,4 @@ export const getServerStripe = () => {
     });
   }
   return serverStripePromise;
-};
-
-let stripePromise: Promise<Stripe | null>;
-export const getClientStripe = () => {
-  if (!stripePromise) {
-    stripePromise = loadStripe(`${process.env.STRIPE_TOKEN}`);
-  }
-  return stripePromise;
 };

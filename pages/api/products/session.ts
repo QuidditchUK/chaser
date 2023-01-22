@@ -20,7 +20,6 @@ export default async function handler(
         const stripe = getServerStripe();
 
         const session = await stripe.checkout.sessions.create({
-          payment_method_types: ['card'],
           line_items: [
             {
               price: req.query.price_id as string,

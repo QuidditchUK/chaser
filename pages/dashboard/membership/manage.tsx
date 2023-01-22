@@ -95,7 +95,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   return {
     props: {
-      products: productsData,
+      products: productsData?.products,
       ...basePageProps,
     },
   };

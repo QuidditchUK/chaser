@@ -1,12 +1,10 @@
 import dynamic from 'next/dynamic';
 import { Box, Grid, Heading, Text } from '@chakra-ui/react';
 import { parseCookies } from 'modules/cookies';
-import { getClientStripe } from 'modules/stripe';
 import { getBasePageProps } from 'modules/prismic';
 import productsService from 'services/products';
 import { GetServerSideProps } from 'next';
 import generateServerSideHeaders from 'modules/headers';
-import Stripe from 'stripe';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -15,24 +13,11 @@ const ProductCard = dynamic(() => import('components/dashboard/product-card'));
 const handleClick = async (price_id) => {
   const { data } = await productsService.getProductSession({ price_id });
 
-  const stripe = await getClientStripe();
-  const { error } = await stripe.redirectToCheckout({
-    sessionId: data.id,
-  });
-
-  // TODO HANDLE REDIRECT ERROR
-  console.log(error.message);
+  // redirect to checkout
+  window.location = data.url;
 };
 
-interface ProductWithPrice extends Stripe.Product {
-  price: Stripe.Price;
-}
-
-const PurchaseMembership = ({
-  products,
-}: {
-  products: { products?: ProductWithPrice[] };
-}) => (
+const PurchaseMembership = ({ products }: { products: { products?: any } }) => (
   <>
     <Meta
       description="Sign in to QuadballUK to manage your QuadballUK Membership, Account details and more"
