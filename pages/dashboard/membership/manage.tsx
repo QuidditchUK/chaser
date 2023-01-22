@@ -17,20 +17,20 @@ const MembershipForm = dynamic(
 const ManageMembership = ({ products }) => {
   const currentProducts = useMemo(
     () =>
-      products?.products?.filter(
+      products?.filter(
         (product) =>
           new Date() < parse(product.metadata.expires, 'dd-MM-yyyy', new Date())
       ),
-    [products.products]
+    [products]
   );
   const expiredProducts = useMemo(
     () =>
-      products?.products?.filter(
+      products?.filter(
         (product) =>
           new Date() >=
           parse(product.metadata.expires, 'dd-MM-yyyy', new Date())
       ),
-    [products.products]
+    [products]
   );
 
   return (
@@ -88,13 +88,16 @@ const ManageMembership = ({ products }) => {
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const headers = generateServerSideHeaders(req);
 
-  const [{ data: products }, basePageProps] = await Promise.all([
+  const [{ data: productsData }, basePageProps] = await Promise.all([
     productsService.getUserProducts({ headers }),
     getBasePageProps(),
   ]);
 
   return {
-    props: { products, ...basePageProps },
+    props: {
+      products: productsData,
+      ...basePageProps,
+    },
   };
 };
 

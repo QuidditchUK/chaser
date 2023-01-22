@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from 'modules/prisma';
+import { getToken } from 'next-auth/jwt';
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,6 +10,13 @@ export default async function handler(
     // mark a notification as read
     case 'PUT':
       try {
+        const token = await getToken({ req });
+
+        if (!token || !token?.user) {
+          res.status(401).end();
+          return;
+        }
+
         const uuid = req.query.uuid as string;
 
         await prisma?.notifications?.update({
