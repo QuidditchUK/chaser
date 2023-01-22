@@ -88,14 +88,14 @@ const ManageMembership = ({ products }) => {
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const headers = generateServerSideHeaders(req);
 
-  const [{ data: productsData }, basePageProps] = await Promise.all([
+  const [{ data: products }, basePageProps] = await Promise.all([
     productsService.getUserProducts({ headers }),
     getBasePageProps(),
   ]);
 
   return {
     props: {
-      products: productsData?.products,
+      products,
       ...basePageProps,
     },
   };

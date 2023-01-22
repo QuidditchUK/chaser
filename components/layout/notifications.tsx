@@ -153,7 +153,6 @@ function Notifications({ isOpen, onClose }) {
     queryKey: '/users/notifications',
     queryFn: usersService.getNotifications,
     enabled: Boolean(isAuthenticated),
-    selector: (res) => res.data.notifications,
   });
 
   return (

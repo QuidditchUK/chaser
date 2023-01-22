@@ -5,7 +5,7 @@ import { getServerStripe } from 'modules/stripe';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ products?: Stripe.Product[] }>
+  res: NextApiResponse<Stripe.Product[]>
 ) {
   switch (req.method) {
     case 'GET':
@@ -29,7 +29,7 @@ export default async function handler(
           })
           .sort((a, b) => a.price.unit_amount - b.price.unit_amount);
 
-        res.status(200).json({ products: results });
+        res.status(200).json(results);
 
         return;
       } catch (err) {

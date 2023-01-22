@@ -69,6 +69,14 @@ const ManageClub = ({ clubs = [], settings }) => {
   const [selectedClub, setSelectedClub] = useState(
     clubs.find(({ uuid }) => uuid === user?.club_uuid)
   );
+
+  useEffect(() => {
+    if (!selectedClub) {
+      const club = clubs.find(({ uuid }) => uuid === user?.club_uuid);
+      setSelectedClub(club);
+    }
+  }, [user.club_uuid, setSelectedClub, clubs, selectedClub]);
+
   const [serverError, setServerError] = useState(null);
 
   const {
@@ -276,8 +284,7 @@ const ManageClub = ({ clubs = [], settings }) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const headers = generateServerSideHeaders(req);
-  const { data } = await productsService.getUserProducts({ headers });
-  const { products } = data;
+  const { data: products } = await productsService.getUserProducts({ headers });
 
   if (
     !products.length ||
@@ -294,7 +301,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     };
   }
 
-  const [{ data: clubsData }, { data: settingsData }, basePageProps] =
+  const [{ data: clubs }, { data: settings }, basePageProps] =
     await Promise.all([
       clubsService.getPublicClubs(),
       settingsService.getSettings(),
@@ -303,8 +310,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   return {
     props: {
-      clubs: clubsData.clubs,
-      settings: settingsData.settings,
+      clubs,
+      settings,
       ...basePageProps,
     },
   };

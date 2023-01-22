@@ -38,7 +38,7 @@ export const getSafeUserWithTransfersAndScopes = async (uuid: string) => {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ user: SafeUserWithTransfersAndScopes }>
+  res: NextApiResponse<SafeUserWithTransfersAndScopes>
 ) {
   switch (req.method) {
     case 'GET':
@@ -52,7 +52,7 @@ export default async function handler(
 
         const user = await getSafeUserWithTransfersAndScopes(token.user.uuid);
 
-        res.status(200).json({ user });
+        res.status(200).json(user);
 
         return;
       } catch (err) {
@@ -101,7 +101,7 @@ export default async function handler(
 
         const user = await getSafeUserWithTransfersAndScopes(token.user.uuid);
 
-        res.status(200).json({ user });
+        res.status(200).json(user);
       } catch (err) {
         res.status(400).end();
       }

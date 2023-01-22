@@ -5,7 +5,7 @@ import prisma from 'modules/prisma';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ notifications: PrismaNotifications[] }>
+  res: NextApiResponse<PrismaNotifications[]>
 ) {
   switch (req.method) {
     case 'GET':
@@ -29,7 +29,7 @@ export default async function handler(
           },
         });
 
-        res.status(200).json({ notifications });
+        res.status(200).json(notifications);
         return;
       } catch (err) {
         res.status(400).end();

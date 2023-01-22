@@ -22,7 +22,7 @@ export default async function handler(
           where: { club_uuid: uuid },
         });
 
-        res.json({ teams });
+        res.json(teams);
         return;
       } catch (err) {
         res.status(400).end();

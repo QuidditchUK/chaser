@@ -49,7 +49,6 @@ const ClubAdminDashboard = () => {
   } = useCachedResponse<PrismaClubs[]>({
     queryKey: '/clubs/all',
     queryFn: clubsService.getAllClubs,
-    selector: (res) => res.data.clubs,
   });
 
   const [activeClubs, inactiveClubs] = queryClubs?.reduce(

@@ -58,14 +58,14 @@ const SuccessMembership = ({ product }) => {
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const headers = generateServerSideHeaders(req);
 
-  const [{ data: productsData }, basePageProps] = await Promise.all([
+  const [{ data: products }, basePageProps] = await Promise.all([
     productsService.getUserProducts({ headers }),
     getBasePageProps(),
   ]);
 
   return {
     props: {
-      product: productsData.products[0],
+      product: products[0],
       ...basePageProps,
     },
   };

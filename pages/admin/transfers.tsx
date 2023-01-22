@@ -55,7 +55,6 @@ const Transfers = ({ settings }: { settings: PrismaSystemSetting }) => {
     queryKey: '/transfers/pending',
     queryFn: transfersService.getPendingTransfers,
     keepPreviousData: true,
-    selector: (res) => res.data.transfers,
   });
 
   const actionedTransfersRes = useCachedResponse<{
@@ -79,7 +78,6 @@ const Transfers = ({ settings }: { settings: PrismaSystemSetting }) => {
       initialData: settings,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
-      selector: (res) => res.data.settings,
     });
 
   const { register, watch } = useForm({
@@ -266,14 +264,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  const [{ data: settingsData }, basePageProps] = await Promise.all([
+  const [{ data: settings }, basePageProps] = await Promise.all([
     settingsService.getSettings(),
     getBasePageProps(),
   ]);
 
   return {
     props: {
-      settings: settingsData.settings,
+      settings,
       ...basePageProps,
     },
   };

@@ -4,7 +4,7 @@ import { clubs as PrismaClub } from '@prisma/client';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ clubs: PrismaClub[] }>
+  res: NextApiResponse<PrismaClub[]>
 ) {
   switch (req.method) {
     case 'GET':
@@ -14,7 +14,7 @@ export default async function handler(
           orderBy: { name: 'asc' },
         });
 
-        res.status(200).json({ clubs });
+        res.status(200).json(clubs);
         return;
       } catch (err) {
         res.status(400).end();

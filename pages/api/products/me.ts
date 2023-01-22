@@ -6,7 +6,7 @@ import prisma from 'modules/prisma';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ products?: Stripe.Product[] }>
+  res: NextApiResponse<Stripe.Product[]>
 ) {
   switch (req.method) {
     case 'GET':
@@ -23,7 +23,7 @@ export default async function handler(
         });
 
         if (!rows.length) {
-          res.status(200).json({ products: [] });
+          res.status(200).json([]);
           return;
         }
 
@@ -45,7 +45,7 @@ export default async function handler(
           return { ...prod, price };
         });
 
-        res.status(200).json({ products: results });
+        res.status(200).json(results);
 
         return;
       } catch (err) {

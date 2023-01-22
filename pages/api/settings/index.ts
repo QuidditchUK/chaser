@@ -12,7 +12,7 @@ import {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ settings: PrismaSystemSettings }>
+  res: NextApiResponse<PrismaSystemSettings>
 ) {
   switch (req.method) {
     case 'GET':
@@ -24,7 +24,7 @@ export default async function handler(
           take: 1,
         });
 
-        res.status(200).json({ settings });
+        res.status(200).json(settings);
         return;
       } catch (err) {
         res.status(400).end();
@@ -66,7 +66,7 @@ export default async function handler(
           oldSettings?.transfer_window !== settings?.transfer_window;
 
         if (!transferChanged) {
-          res.json({ settings });
+          res.json(settings);
           return;
         }
 
@@ -112,7 +112,7 @@ export default async function handler(
           );
         });
 
-        res.status(200).json({ settings });
+        res.status(200).json(settings);
         return;
       } catch (error) {
         res.status(400).end();

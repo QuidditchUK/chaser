@@ -28,7 +28,7 @@ export default async function handler(
             scopes: true,
           },
         });
-        res.json({ users });
+        res.json(users);
 
         return;
       } catch (err) {

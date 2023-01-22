@@ -22,7 +22,6 @@ const ClubManagement = () => {
   const { data: club, refetch } = useCachedResponse<PrismaClub>({
     queryKey: ['/clubs/', user?.club_uuid],
     queryFn: () => clubsService.getClub({ club_uuid: user.club_uuid }),
-    selector: (res) => res.data.club,
     enabled: Boolean(user),
   });
 

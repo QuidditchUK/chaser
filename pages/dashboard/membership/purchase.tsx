@@ -17,7 +17,7 @@ const handleClick = async (price_id) => {
   window.location = data.url;
 };
 
-const PurchaseMembership = ({ products }: { products: { products?: any } }) => (
+const PurchaseMembership = ({ products }: { products: any }) => (
   <>
     <Meta
       description="Sign in to QuadballUK to manage your QuadballUK Membership, Account details and more"
@@ -46,7 +46,7 @@ const PurchaseMembership = ({ products }: { products: { products?: any } }) => (
           </Text>
         </Box>
         <Grid gridTemplateColumns="1fr" gridGap={{ base: 4, sm: 8, md: 9 }}>
-          {products.products?.map((product) => (
+          {products?.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}

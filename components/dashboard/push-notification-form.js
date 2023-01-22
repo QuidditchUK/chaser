@@ -19,7 +19,6 @@ const PushNotificationForm = ({ user }) => {
   const { data, refetch } = useCachedResponse({
     queryKey: '/users/push-notifications',
     queryFn: usersService.getPushNotifications,
-    selector: (res) => res.data.pushNotifications,
   });
 
   const { mutate } = useResponse({

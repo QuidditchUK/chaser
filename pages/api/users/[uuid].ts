@@ -18,7 +18,7 @@ export default async function handler(
         const uuid = req.query.uuid as string;
 
         const user = await getSafeUserWithTransfersAndScopes(uuid);
-        res.json({ user });
+        res.json(user);
 
         return;
       } catch (err) {

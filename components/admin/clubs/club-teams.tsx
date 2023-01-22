@@ -13,7 +13,6 @@ const ClubTeams = ({ club_uuid }) => {
   const { data: teams, refetch } = useCachedResponse<Team[]>({
     queryKey: ['/clubs', club_uuid, '/teams'],
     queryFn: () => clubsService.getClubTeams({ club_uuid }),
-    selector: (res) => res.data.teams,
   });
 
   const onAddTeam = () => {

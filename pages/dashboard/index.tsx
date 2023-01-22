@@ -37,9 +37,7 @@ const PrismicClubCard = dynamic(() => import('components/prismic/club-card'));
 const Dashboard = () => {
   const { data: user, isLoading } = useMe();
 
-  const { data: memberships } = useCachedResponse<{
-    products: Stripe.Product[];
-  }>({
+  const { data: memberships } = useCachedResponse<Stripe.Product[]>({
     queryKey: '/products/me',
     queryFn: productsService.getUserProducts,
   });
@@ -48,10 +46,9 @@ const Dashboard = () => {
     queryKey: ['/clubs', user?.club_uuid],
     queryFn: () => clubsService.getClub({ club_uuid: user?.club_uuid }),
     enabled: Boolean(user?.club_uuid),
-    selector: (res) => res.data.club,
   });
 
-  const [membership] = memberships?.products || [];
+  const [membership] = memberships || [];
 
   return (
     <>

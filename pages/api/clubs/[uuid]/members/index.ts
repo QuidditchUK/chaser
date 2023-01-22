@@ -64,7 +64,7 @@ export default async function handler(
           return;
         }
 
-        res.json({ users: club.users });
+        res.json(club.users);
         return;
       } catch (err) {
         res.status(400).end();

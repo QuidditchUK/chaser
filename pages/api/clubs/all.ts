@@ -30,7 +30,7 @@ export default async function handler(
           },
         });
 
-        res.json({ clubs });
+        res.json(clubs);
         return;
       } catch (err) {
         res.status(400).end();

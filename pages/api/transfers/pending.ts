@@ -39,7 +39,7 @@ export default async function handler(
           },
         });
 
-        res.status(200).json({ transfers });
+        res.status(200).json(transfers);
 
         return;
       } catch (err) {

@@ -7,7 +7,7 @@ import { PUSH_PAYLOADS } from 'constants/notifications';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ pushNotifications: PrismaPushNotifications[] }>
+  res: NextApiResponse<PrismaPushNotifications[]>
 ) {
   switch (req.method) {
     case 'GET':
@@ -25,7 +25,7 @@ export default async function handler(
           },
         });
 
-        res.status(200).json({ pushNotifications });
+        res.status(200).json(pushNotifications);
         return;
       } catch (err) {
         res.status(400).end();

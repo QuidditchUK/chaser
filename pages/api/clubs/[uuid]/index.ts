@@ -6,7 +6,7 @@ import { EMT, CLUBS_WRITE } from 'constants/scopes';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ club: PrismaClub }>
+  res: NextApiResponse<PrismaClub>
 ) {
   switch (req.method) {
     case 'GET':
@@ -29,7 +29,7 @@ export default async function handler(
           return;
         }
 
-        res.status(200).json({ club });
+        res.status(200).json(club);
         return;
       } catch (err) {
         res.status(400).end();

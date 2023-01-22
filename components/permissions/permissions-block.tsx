@@ -64,9 +64,8 @@ const PermissionBlock = ({
   });
 
   const { data, refetch, isLoading } = useCachedResponse<SafeUserWithScopes[]>({
-    queryKey: ['/scopes/users/', scope],
+    queryKey: ['/scopes/', scope],
     queryFn: () => scopesService.getUsersByScope({ scope }),
-    selector: (res) => res.data.users,
   });
 
   const { isOpen, onOpen, onClose } = useDisclosure();

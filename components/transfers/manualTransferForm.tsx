@@ -47,7 +47,6 @@ const ManualTransferForm = ({ onClose, isOpen, refetchActioned }) => {
   const { data: queryClubs = [] } = useCachedResponse<Club[]>({
     queryKey: '/clubs/all',
     queryFn: clubsService.getAllClubs,
-    selector: (res) => res.data.clubs,
   });
 
   const activeClubs = queryClubs?.filter((club) => club.active);
@@ -56,7 +55,6 @@ const ManualTransferForm = ({ onClose, isOpen, refetchActioned }) => {
     queryKey: ['/users/', selectedUser],
     queryFn: () => usersService.getAdminUser({ uuid: selectedUser }),
     enabled: Boolean(selectedUser),
-    selector: (res) => res.data.user,
   });
 
   const {
@@ -134,7 +132,7 @@ const ManualTransferForm = ({ onClose, isOpen, refetchActioned }) => {
             <Description
               term="Current Team"
               description={
-                queryClubs?.find((club) => club.uuid === user?.club_uuid).name
+                queryClubs?.find((club) => club.uuid === user?.club_uuid)?.name
               }
             />
           </DescriptionList>

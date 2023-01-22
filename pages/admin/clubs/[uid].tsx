@@ -34,7 +34,6 @@ const ClubPage = ({ club: initialData }: { club: PrismaClub }) => {
     queryKey: ['/clubs/', router.query.uid],
     queryFn: () => clubsService.getClub({ club_uuid: router.query.uid }),
     initialData,
-    selector: (res) => res.data.club,
   });
 
   return (
@@ -82,14 +81,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const headers = generateServerSideHeaders(context.req);
 
-  const [{ data: clubData }, basePageProps] = await Promise.all([
+  const [{ data: club }, basePageProps] = await Promise.all([
     clubsService.getClub({ club_uuid: context.params?.uid, headers }),
     getBasePageProps(),
   ]);
 
   return {
     props: {
-      club: clubData.club,
+      club,
       ...basePageProps,
     },
   };
