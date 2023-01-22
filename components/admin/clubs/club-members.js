@@ -46,6 +46,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
     queryKey: ['/clubs', club?.uuid, '/members'],
     queryFn: () => clubsService.getClubMembers({ club_uuid: club?.uuid }),
     enabled: Boolean(club?.uuid),
+    selector: (res) => res.data.users,
   });
 
   const { call, isLoading } = useCSVDownload({

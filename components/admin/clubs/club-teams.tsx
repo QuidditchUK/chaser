@@ -5,13 +5,15 @@ import clubsService from 'services/clubs';
 import AddClubTeamForm from 'components/admin/clubs/add-club-team-form';
 import Card from 'components/shared/card';
 import Button from 'components/shared/button';
+import { teams as Team } from '@prisma/client';
 
 const ClubTeams = ({ club_uuid }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const { data: teams, refetch } = useCachedResponse({
+  const { data: teams, refetch } = useCachedResponse<Team[]>({
     queryKey: ['/clubs', club_uuid, '/teams'],
     queryFn: () => clubsService.getClubTeams({ club_uuid }),
+    selector: (res) => res.data.teams,
   });
 
   const onAddTeam = () => {

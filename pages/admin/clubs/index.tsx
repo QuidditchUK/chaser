@@ -40,7 +40,7 @@ const handleDeleteClick = async ({ uuid, refetch }) => {
 
 const ClubAdminDashboard = () => {
   const { data: user } = useMe();
-  const userScopes = getPlainScopes(user.scopes);
+  const userScopes = getPlainScopes(user?.scopes);
 
   const {
     data: queryClubs = [],
@@ -49,6 +49,7 @@ const ClubAdminDashboard = () => {
   } = useCachedResponse<PrismaClubs[]>({
     queryKey: '/clubs/all',
     queryFn: clubsService.getAllClubs,
+    selector: (res) => res.data.clubs,
   });
 
   const [activeClubs, inactiveClubs] = queryClubs?.reduce(

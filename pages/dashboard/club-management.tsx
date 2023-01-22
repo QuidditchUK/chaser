@@ -20,8 +20,10 @@ const ClubManagement = () => {
   const { data: user } = useMe();
 
   const { data: club, refetch } = useCachedResponse<PrismaClub>({
-    queryKey: ['/clubs/', user.club_uuid],
+    queryKey: ['/clubs/', user?.club_uuid],
     queryFn: () => clubsService.getClub({ club_uuid: user.club_uuid }),
+    selector: (res) => res.data.club,
+    enabled: Boolean(user),
   });
 
   return (
@@ -38,7 +40,7 @@ const ClubManagement = () => {
         <ClubMembers
           club={club}
           refetch={refetch}
-          scopes={getPlainScopes(user.scopes)}
+          scopes={getPlainScopes(user?.scopes)}
         />
       </Slice>
     </>

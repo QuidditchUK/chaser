@@ -10,7 +10,8 @@ export default async function handler(
   switch (req.method) {
     case 'GET':
       try {
-        if (!isScoped_ApiRoute(req, [EMT, USERS_READ])) {
+        const isScoped = await isScoped_ApiRoute(req, [EMT, USERS_READ]);
+        if (!isScoped) {
           res.status(401).end();
           return;
         }
