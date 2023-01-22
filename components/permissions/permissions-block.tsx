@@ -13,6 +13,7 @@ import Table from 'components/shared/table';
 
 import scopesService from 'services/scopes';
 import useCachedResponse from 'hooks/useCachedResponse';
+import { SafeUserWithScopes } from 'types/user';
 
 const handleDeleteClick = async ({ uuid, scope, refetch }) => {
   console.log('in Handle');
@@ -33,14 +34,24 @@ const FormSchema = object().shape({
 const handleFormSubmit = async ({ values, reset, refetch }) => {
   try {
     await scopesService.addScope({ data: values });
-    reset({});
+    reset();
     refetch();
   } catch (err) {
     console.log(err);
   }
 };
 
-const PermissionBlock = ({ label, scope, scopes }) => {
+const PermissionBlock = ({
+  label,
+  scope,
+  userScopes,
+  actionScopes,
+}: {
+  label: string;
+  scope: string;
+  userScopes: string[];
+  actionScopes: string[]; // scope with permission to add/remove
+}) => {
   const {
     register,
     handleSubmit,
@@ -52,18 +63,14 @@ const PermissionBlock = ({ label, scope, scopes }) => {
     defaultValues: { email: '' },
   });
 
-  const { data, refetch, isLoading } = useCachedResponse({
+  const { data, refetch, isLoading } = useCachedResponse<SafeUserWithScopes[]>({
     queryKey: ['/scopes/users/', scope],
     queryFn: () => scopesService.getUsersByScope({ scope }),
+    selector: (res) => res.data.users,
   });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedUser, setSelectedUser] = useState(null);
-
-  const refetchAll = () => {
-    refetchScopes();
-    refetch();
-  };
 
   return (
     <>
@@ -84,7 +91,7 @@ const PermissionBlock = ({ label, scope, scopes }) => {
               </Td>
               <Td>{user?.email}</Td>
               <Td>{user?.scopes.map(({ scope }) => scope).join(', ')}</Td>
-              {hasScope([ADMIN], scopes) && (
+              {hasScope(actionScopes, userScopes) && (
                 <Td textAlign="right">
                   <Button
                     variant="secondary"
@@ -102,13 +109,13 @@ const PermissionBlock = ({ label, scope, scopes }) => {
         </Table>
       </Box>
 
-      {hasScope([ADMIN], scopes) && (
+      {hasScope(actionScopes, userScopes) && (
         <form
           onSubmit={handleSubmit((values) =>
             handleFormSubmit({
               values: { scope, ...values },
               reset,
-              refetch: refetchAll,
+              refetch,
             })
           )}
         >
@@ -137,7 +144,7 @@ const PermissionBlock = ({ label, scope, scopes }) => {
           handleDeleteClick({
             uuid: selectedUser?.uuid,
             scope,
-            refetch: refetchAll,
+            refetch,
           });
           setSelectedUser(null);
           onClose();

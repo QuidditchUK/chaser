@@ -18,8 +18,6 @@ const Permissions = () => {
   const { data: user, isLoading } = useMe();
   const userScopes = getPlainScopes(user?.scopes);
 
-  console.log(userScopes);
-
   return (
     <>
       <Meta subTitle="Volunteers Permissions" title="Admin Dashboard" />
@@ -43,17 +41,29 @@ const Permissions = () => {
             </Heading>
           </Flex>
 
-          <PermissionBlock label="EMT" scope={EMT} scopes={userScopes} />
-          <PermissionBlock label="Admin" scope={ADMIN} scopes={userScopes} />
+          <PermissionBlock
+            label="EMT"
+            scope={EMT}
+            userScopes={userScopes}
+            actionScopes={[ADMIN]}
+          />
+          <PermissionBlock
+            label="Admin"
+            scope={ADMIN}
+            userScopes={userScopes}
+            actionScopes={[ADMIN]}
+          />
           <PermissionBlock
             label="Head Scout"
             scope={HEAD_SCOUT}
-            scopes={userScopes}
+            userScopes={userScopes}
+            actionScopes={[ADMIN, EMT]}
           />
           <PermissionBlock
             label="Volunteers"
             scope={VOLUNTEER}
-            scopes={userScopes}
+            userScopes={userScopes}
+            actionScopes={[ADMIN, EMT]}
           />
         </Slice>
       </SkeletonLoaderWrapper>
