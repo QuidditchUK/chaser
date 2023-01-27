@@ -2311,11 +2311,6 @@
     io-ts-reporters "^2.0.1"
     io-ts-types "^0.5.16"
 
-"@stripe/stripe-js@^1.8.0":
-  version "1.35.0"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.35.0.tgz#f809e2e5e0a00f01aa12e8aed0b89d27728c05c0"
-  integrity sha512-UIuzpbJqgXCTvJhY/aZYvBtaKdMfQgnIv6kkLlfRJ9smZcC4zoPvq3j7k9wobYI+idHAWP4BRiPnqA8lvzJCtg==
-
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@surma/rollup-plugin-off-main-thread/-/rollup-plugin-off-main-thread-2.2.3.tgz#ee34985952ca21558ab0d952f00298ad2190c053"
@@ -8597,10 +8592,10 @@ strip-json-comments@^3.1.0, strip-json-comments@^3.1.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
 
-stripe@^10.16.0:
-  version "10.16.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-10.16.0.tgz#bfa619dc8ef84b1beb9ce8c2239ab9f6954047bb"
-  integrity sha512-nae4WV8W8xJ8KpjRx3aUD9FavoCQ98F1kaF5v0ltNHoNbtwIPTgrfmq92J0PXKDvb4TOd0tcXXkR5LG3UxjxGw==
+stripe@^11.0.0:
+  version "11.8.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-11.8.0.tgz#4c163bbfa30b2f20d642c9dc40ac05bd8fade1fb"
+  integrity sha512-aGwrJDqYzpjQj0ejt7oN7BE7kUjZFxhUz/gDeyDCS7CBpZhDb26Eb6z9sS8KdbsbmuS8rkkn2lBY4koK7L1ZCw==
   dependencies:
     "@types/node" ">=8.1.0"
     qs "^6.11.0"
