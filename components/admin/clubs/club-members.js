@@ -48,6 +48,18 @@ const ClubMembers = ({ club, refetch, scopes }) => {
     enabled: Boolean(club?.uuid),
   });
 
+  const [activeMembers, inactiveMembers] = membersRes?.data?.reduce(
+    (result, member) => {
+      const product = getLatestProduct(member);
+      const isActive =
+        parse(product?.expires, 'dd-MM-yyyy', new Date()) > new Date();
+
+      result[isActive ? 0 : 1].push(club);
+      return result;
+    },
+    [[], []]
+  );
+
   const { call, isLoading } = useCSVDownload({
     data: [
       ['first_name', 'last_name', 'membership', 'is_student', 'university'],
@@ -108,7 +120,83 @@ const ClubMembers = ({ club, refetch, scopes }) => {
           ]}
           isLoading={membersRes?.isLoading}
         >
-          {membersRes?.data?.map((member) => {
+          {activeMembers?.map((member) => {
+            const product = getLatestProduct(member);
+            return (
+              <Tr key={member?.email}>
+                <Td>
+                  <Flex alignItems="center" gap={3}>
+                    {member?.first_name} {member?.last_name}{' '}
+                    {club?.managed_by === member?.uuid && (
+                      <CheckCircleIcon color="keeperGreen" />
+                    )}
+                  </Flex>
+                </Td>
+                <Td>
+                  {member?.email && (
+                    <Link href={`mailto:${member?.email}`}>
+                      {member?.email}
+                    </Link>
+                  )}
+                </Td>
+                {/* <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td> */}
+                <Td fontWeight="bold">
+                  {parse(product?.expires, 'dd-MM-yyyy', new Date()) >
+                  new Date() ? (
+                    <Box as="span" color="qukBlue">
+                      Yes
+                    </Box>
+                  ) : (
+                    <Box as="span" color="monarchRed">
+                      No
+                    </Box>
+                  )}
+                </Td>
+
+                <Td>
+                  {member?.is_student ? (
+                    <Flex alignItems="center" gap={3}>
+                      Student at {member?.university}
+                    </Flex>
+                  ) : (
+                    <>Community member</>
+                  )}
+                </Td>
+                <Td>
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      setSelectedMember(member);
+                      onOpenRemove();
+                    }}
+                  >
+                    Remove Member
+                  </Button>
+                </Td>
+              </Tr>
+            );
+          })}
+        </Table>
+      </Box>
+
+      <Heading as="h4" fontFamily="body" color="qukBlue">
+        Inactive Members
+      </Heading>
+
+      <Box bg="white" borderRadius="lg">
+        <Table
+          name="members"
+          columns={[
+            'Name (Tick indicates Manager)',
+            'Email',
+            // 'Team',
+            'Has Membership',
+            'Member Type',
+            '',
+          ]}
+          isLoading={membersRes?.isLoading}
+        >
+          {inactiveMembers?.map((member) => {
             const product = getLatestProduct(member);
             return (
               <Tr key={member?.email}>
