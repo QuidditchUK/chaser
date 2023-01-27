@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { Heading, Flex, Tr, Td, Box, useDisclosure } from '@chakra-ui/react';
+import {
+  Heading,
+  Flex,
+  Tr,
+  Td,
+  Box,
+  useDisclosure,
+  Text,
+} from '@chakra-ui/react';
 import { CheckCircleIcon, DownloadIcon } from '@chakra-ui/icons';
 import { format, parse } from 'date-fns';
 import Link from 'next/link';
@@ -89,7 +97,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
         justifyContent="space-between"
       >
         <Heading as="h4" fontFamily="body" color="qukBlue">
-          Members
+          Active Members ({activeMembers?.length})
         </Heading>
 
         <Flex gap={2} justifyContent="flex-end">
@@ -119,7 +127,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
             'Name (Tick indicates Manager)',
             'Email',
             // 'Team',
-            'Member Type',
+            'Student/Community',
             '',
           ]}
           isLoading={membersIsLoading}
@@ -144,15 +152,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
                 </Td>
                 {/* <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td> */}
 
-                <Td>
-                  {member?.is_student ? (
-                    <Flex alignItems="center" gap={3}>
-                      Student at {member?.university}
-                    </Flex>
-                  ) : (
-                    <>Community member</>
-                  )}
-                </Td>
+                <Td>{member?.is_student ? <>Student</> : <>Community</>}</Td>
                 <Td>
                   <Button
                     variant="secondary"
@@ -171,8 +171,15 @@ const ClubMembers = ({ club, refetch, scopes }) => {
       </Box>
 
       <Heading as="h4" fontFamily="body" color="qukBlue">
-        Inactive Members
+        Inactive Members ({inactiveMembers?.length})
       </Heading>
+
+      <Text>
+        Inactive members are club members who <strong>do not</strong> have a
+        current QUK Membership, and are therefore ineligible for roster
+        selection. Players are responsible for maintaining their QUK membership
+        via the QUK website.
+      </Text>
 
       <Box bg="white" borderRadius="lg">
         <Table
@@ -181,7 +188,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
             'Name (Tick indicates Manager)',
             'Email',
             // 'Team',
-            'Member Type',
+            'Student/Community',
             '',
           ]}
           isLoading={membersIsLoading}
@@ -209,10 +216,10 @@ const ClubMembers = ({ club, refetch, scopes }) => {
                 <Td>
                   {member?.is_student ? (
                     <Flex alignItems="center" gap={3}>
-                      Student at {member?.university}
+                      Student
                     </Flex>
                   ) : (
-                    <>Community member</>
+                    <>Community</>
                   )}
                 </Td>
                 <Td>

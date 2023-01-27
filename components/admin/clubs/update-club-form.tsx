@@ -2,7 +2,7 @@ import { clubs as Club } from '@prisma/client';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string, bool } from 'yup';
-import { Grid, Flex } from '@chakra-ui/react';
+import { Grid, Flex, Box } from '@chakra-ui/react';
 
 import Success from 'components/formControls/success';
 import Error from 'components/shared/errors';
@@ -95,7 +95,7 @@ const UpdateClubForm = ({
         bg="gray.100"
         p={4}
         borderRadius="lg"
-        gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
+        gridTemplateColumns={{ base: '1fr', md: '3fr 1fr 2fr' }}
         width="100%"
         gridColumnGap={4}
       >
@@ -157,6 +157,7 @@ const UpdateClubForm = ({
           {serverSuccess && <Success>Club updated</Success>}
         </Flex>
 
+        <Box />
         <Flex flexDirection="column">
           <PrismicClubCard uid={prismicClub} />
         </Flex>
