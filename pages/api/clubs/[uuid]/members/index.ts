@@ -67,6 +67,7 @@ export default async function handler(
         res.json(club.users);
         return;
       } catch (err) {
+        console.log(err);
         res.status(400).end();
         return;
       }
