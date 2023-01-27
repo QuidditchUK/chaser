@@ -1,3 +1,11 @@
-import { loadStripe } from '@stripe/stripe-js';
+import ServerStripe from 'stripe';
 
-export const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_TOKEN);
+let serverStripePromise: ServerStripe | null;
+export const getServerStripe = () => {
+  if (!serverStripePromise) {
+    serverStripePromise = new ServerStripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2022-08-01',
+    });
+  }
+  return serverStripePromise;
+};

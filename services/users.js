@@ -1,12 +1,6 @@
 import createService from './index';
 
 const usersService = {
-  getUser: (params) => ({
-    method: 'get',
-    url: '/users/me',
-    ...params,
-  }),
-
   updateUser: ({ data, ...params }) => ({
     method: 'put',
     url: '/users/me',
@@ -14,16 +8,15 @@ const usersService = {
     ...params,
   }),
 
-  updatePassword: ({ data, ...params }) => ({
-    method: 'put',
-    url: '/users/password',
-    data,
+  getUser: (params) => ({
+    method: 'get',
+    url: '/users/me',
     ...params,
   }),
 
-  login: ({ data, ...params }) => ({
-    method: 'post',
-    url: '/users/login',
+  updatePassword: ({ data, ...params }) => ({
+    method: 'put',
+    url: '/users/password',
     data,
     ...params,
   }),

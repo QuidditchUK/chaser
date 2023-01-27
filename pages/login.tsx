@@ -1,21 +1,23 @@
 import { useState } from 'react';
+import { GetServerSideProps } from 'next';
 import { object, string } from 'yup';
-import Router from 'next/router';
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
-import { Grid, Link, Heading } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { signIn } from 'next-auth/react';
+import { Grid, Link, Heading, Text } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { rem } from 'styles/theme';
 
-import { setCookies, parseCookies } from 'modules/cookies';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]';
+
 import { getBasePageProps } from 'modules/prismic';
 import InputV2 from 'components/formControls/inputV2';
-import usersService from 'services/users';
 import Slice from 'components/shared/slice';
 import AuthCallout from 'components/shared/auth-callout';
 import Error from 'components/shared/errors';
-import { GetServerSideProps } from 'next';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const Container = dynamic(() => import('components/layout/container'));
@@ -31,23 +33,9 @@ const LoginFormSchema = object().shape({
     .required('Required'),
 });
 
-const handleLoginSubmit = async ({ values, setServerError }) => {
-  try {
-    setServerError(null);
-
-    const { data } = await usersService.login({ data: values });
-
-    setCookies('AUTHENTICATION_TOKEN', data.access_token);
-
-    Router.push('/dashboard');
-  } catch (err) {
-    setServerError(err?.response?.data?.error?.message);
-  }
-};
-
 const LoginPage = () => {
   const [serverError, setServerError] = useState(null);
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -60,6 +48,21 @@ const LoginPage = () => {
       password: '',
     },
   });
+
+  const handleLoginSubmit = async ({ values, setServerError }) => {
+    try {
+      setServerError(null);
+
+      const data = await signIn('credentials', {
+        ...values,
+        callbackUrl: '/dashboard',
+        redirect: false,
+      });
+      router.push(data.url);
+    } catch (err) {
+      setServerError('Login failed: Check your email and password');
+    }
+  };
 
   return (
     <>
@@ -95,30 +98,34 @@ const LoginPage = () => {
                 {...register('password')}
               />
 
+              {serverError && (
+                <>
+                  <Error>
+                    <Text fontWeight="bold" mb={1}>
+                      {serverError}
+                    </Text>
+                    <Text color="qukBlue" mt={1}>
+                      Forgot your password?{' '}
+                      <NextLink href="/forgot" passHref>
+                        <Link
+                          color="qukBlue"
+                          borderColor="white"
+                          borderBottom="1px solid"
+                          _hover={{ textDecoration: 'none' }}
+                        >
+                          Request a reset.
+                        </Link>
+                      </NextLink>
+                    </Text>
+                  </Error>
+                </>
+              )}
+
               <Button type="submit" variant="green" disabled={isSubmitting}>
                 {isSubmitting ? 'Submitting' : 'Sign in'}
               </Button>
             </Grid>
           </form>
-
-          {serverError && (
-            <>
-              <Error>{serverError}</Error>
-              <AuthCallout>
-                Forgot password?{' '}
-                <NextLink href="/forgot" passHref>
-                  <Link
-                    color="white"
-                    borderColor="white"
-                    borderBottom="1px solid"
-                    _hover={{ textDecoration: 'none' }}
-                  >
-                    Request a reset.
-                  </Link>
-                </NextLink>
-              </AuthCallout>
-            </>
-          )}
 
           <AuthCallout>
             New to QuadballUK?{' '}
@@ -132,18 +139,24 @@ const LoginPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const basePageProps = await getBasePageProps();
-  const { AUTHENTICATION_TOKEN } = parseCookies(req);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
-  if (AUTHENTICATION_TOKEN) {
-    res.setHeader('location', '/dashboard');
-    res.statusCode = 302;
+  if (session) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
-  return {
-    props: basePageProps,
-  };
+  const basePageProps = await getBasePageProps();
+  return { props: basePageProps };
 };
 
 export default LoginPage;

@@ -13,10 +13,10 @@ const PrismicClubCard = ({ uid }) => {
   const [clubUid, setClubUid] = useState(uid);
 
   useEffect(() => {
-    if (!data || clubUid !== uid) {
+    if ((!data || clubUid !== uid) && uid) {
       const getClub = async () => {
         try {
-          const club = await getPrismicDocByUid('clubs', uid);
+          const club = await getPrismicDocByUid('clubs', uid, null);
 
           setData(club?.data);
           setClubUid(uid);

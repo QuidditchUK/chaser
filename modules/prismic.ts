@@ -184,7 +184,7 @@ export const getScoutingApplicationEvents = async () => {
 
 export const PAGE_SIZE = 6;
 
-export const linkResolver = ({ type, uid }) => {
+export const linkResolver = ({ type, uid }: { type: string; uid?: string }) => {
   switch (type) {
     case 'volunteer':
       return `/volunteer/${uid}`;

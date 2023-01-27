@@ -3,13 +3,13 @@ import createService from './index';
 const scopesService = {
   getUsersByScope: ({ scope, ...params }) => ({
     method: 'get',
-    url: `/scopes/users/${scope}`,
+    url: `/scopes/${scope}`,
     ...params,
   }),
 
   removeScope: ({ user_uuid, scope, ...params }) => ({
     method: 'delete',
-    url: `/scopes/${scope}/user/${user_uuid}`,
+    url: `/scopes/${scope}/users/${user_uuid}`,
     ...params,
   }),
 
