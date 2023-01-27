@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerStripe } from 'modules/stripe';
+import prisma from 'modules/prisma';
 
 export default async function handler(
   req: NextApiRequest,

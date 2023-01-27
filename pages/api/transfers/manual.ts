@@ -5,6 +5,7 @@ import sendEmail from 'modules/email';
 import sendNotifications from 'modules/sendNotification';
 import { TRANSFER_APPROVED, CLUB_MEMBER_ADDED } from 'constants/notifications';
 import { EMT, TRANSFER_WRITE } from 'constants/scopes';
+import prisma from 'modules/prisma';
 
 export default async function handler(
   req: NextApiRequest,

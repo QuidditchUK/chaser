@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getToken } from 'next-auth/jwt';
 import prisma from 'modules/prisma';
 import sendEmail from 'modules/email';
-import { string } from 'yup';
 
 interface Request extends NextApiRequest {
   body: {

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isScoped_ApiRoute } from 'modules/auth';
 import { EMT } from 'constants/scopes';
+import prisma from 'modules/prisma';
 
 export default async function handler(
   req: NextApiRequest,
