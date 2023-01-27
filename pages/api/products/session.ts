@@ -27,8 +27,8 @@ export default async function handler(
             },
           ],
           mode: 'payment',
-          success_url: `https://${process.env.VERCEL_URL}/dashboard/membership/success`,
-          cancel_url: `https://${process.env.VERCEL_URL}/dashboard/membership/purchase`,
+          success_url: `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/dashboard/membership/success`,
+          cancel_url: `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/dashboard/membership/purchase`,
           metadata: {
             user_uuid: token.user.uuid,
           },
