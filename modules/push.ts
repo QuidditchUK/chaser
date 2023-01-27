@@ -5,7 +5,7 @@ const client = push;
 client.setVapidDetails(
   'https://quadballuk.org/about/contact',
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-  process.env.VAPID_PRIVATE_KEY
+  process.env.NEXT_PUBLIC_VAPID_PRIVATE_KEY
 );
 
 const pushNotification = async (subscription, payload, uuid) => {
