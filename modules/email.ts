@@ -1,6 +1,8 @@
 import * as postmark from 'postmark';
 
-const client = new postmark.ServerClient(process.env.POSTMARK_TOKEN);
+const client = new postmark.ServerClient(
+  process.env.NEXT_PUBLIC_POSTMARK_TOKEN
+);
 
 export default function sendEmail<T extends Templates>({
   template,
