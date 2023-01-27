@@ -19,7 +19,9 @@ export function generateSettings({
   headers?: object;
 }) {
   const settings = {
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    baseURL: `${
+      process.env.NODE_ENV === 'development' ? 'http://' : 'https://'
+    }${process.env.NEXT_PUBLIC_VERCEL_URL}${process.env.NEXT_PUBLIC_API_URL}`,
     method,
     url,
     responseType,
