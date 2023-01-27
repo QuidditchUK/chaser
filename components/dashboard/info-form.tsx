@@ -57,11 +57,11 @@ const InfoForm = ({ user }) => {
     mode: 'onBlur',
     resolver: yupResolver(InfoFormSchema),
     defaultValues: {
-      email: user.email,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      is_student: user.is_student || false,
-      university: user.university,
+      email: user?.email,
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+      is_student: user?.is_student || false,
+      university: user?.university,
     },
   });
 

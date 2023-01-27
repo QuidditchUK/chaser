@@ -12,6 +12,7 @@ import UpdateClubManagerForm from './update-club-manager-form';
 import RemoveClubMemberForm from './remove-club-member-form';
 import { hasScope } from 'modules/scopes';
 import { DASHBOARD_SCOPES } from 'constants/scopes';
+import { SafeUserWithScopes } from 'types/user';
 
 export const getLatestProduct = (member) =>
   member?.stripe_products[member?.stripe_products?.length - 1]?.products;
@@ -42,19 +43,23 @@ const CSVMemberRows = (members) => {
 
 const ClubMembers = ({ club, refetch, scopes }) => {
   const [selectedMember, setSelectedMember] = useState(null);
-  const membersRes = useCachedResponse({
+  const {
+    data: members = [],
+    isLoading: membersIsLoading,
+    refetch: membersRefetch,
+  } = useCachedResponse<SafeUserWithScopes[]>({
     queryKey: ['/clubs', club?.uuid, '/members'],
     queryFn: () => clubsService.getClubMembers({ club_uuid: club?.uuid }),
     enabled: Boolean(club?.uuid),
   });
 
-  const [activeMembers, inactiveMembers] = membersRes?.data?.reduce(
+  const [activeMembers, inactiveMembers] = members?.reduce(
     (result, member) => {
       const product = getLatestProduct(member);
       const isActive =
         parse(product?.expires, 'dd-MM-yyyy', new Date()) > new Date();
 
-      result[isActive ? 0 : 1].push(club);
+      result[isActive ? 0 : 1].push(member);
       return result;
     },
     [[], []]
@@ -63,7 +68,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
   const { call, isLoading } = useCSVDownload({
     data: [
       ['first_name', 'last_name', 'membership', 'is_student', 'university'],
-      ...CSVMemberRows(membersRes?.data),
+      ...CSVMemberRows(members),
     ],
     filename: `${club?.name}-members-${format(new Date(), 'yyyy-MM-dd')}.csv`,
   });
@@ -114,14 +119,12 @@ const ClubMembers = ({ club, refetch, scopes }) => {
             'Name (Tick indicates Manager)',
             'Email',
             // 'Team',
-            'Has Membership',
             'Member Type',
             '',
           ]}
-          isLoading={membersRes?.isLoading}
+          isLoading={membersIsLoading}
         >
           {activeMembers?.map((member) => {
-            const product = getLatestProduct(member);
             return (
               <Tr key={member?.email}>
                 <Td>
@@ -140,18 +143,6 @@ const ClubMembers = ({ club, refetch, scopes }) => {
                   )}
                 </Td>
                 {/* <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td> */}
-                <Td fontWeight="bold">
-                  {parse(product?.expires, 'dd-MM-yyyy', new Date()) >
-                  new Date() ? (
-                    <Box as="span" color="qukBlue">
-                      Yes
-                    </Box>
-                  ) : (
-                    <Box as="span" color="monarchRed">
-                      No
-                    </Box>
-                  )}
-                </Td>
 
                 <Td>
                   {member?.is_student ? (
@@ -190,14 +181,12 @@ const ClubMembers = ({ club, refetch, scopes }) => {
             'Name (Tick indicates Manager)',
             'Email',
             // 'Team',
-            'Has Membership',
             'Member Type',
             '',
           ]}
-          isLoading={membersRes?.isLoading}
+          isLoading={membersIsLoading}
         >
           {inactiveMembers?.map((member) => {
-            const product = getLatestProduct(member);
             return (
               <Tr key={member?.email}>
                 <Td>
@@ -216,18 +205,6 @@ const ClubMembers = ({ club, refetch, scopes }) => {
                   )}
                 </Td>
                 {/* <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td> */}
-                <Td fontWeight="bold">
-                  {parse(product?.expires, 'dd-MM-yyyy', new Date()) >
-                  new Date() ? (
-                    <Box as="span" color="qukBlue">
-                      Yes
-                    </Box>
-                  ) : (
-                    <Box as="span" color="monarchRed">
-                      No
-                    </Box>
-                  )}
-                </Td>
 
                 <Td>
                   {member?.is_student ? (
@@ -257,11 +234,11 @@ const ClubMembers = ({ club, refetch, scopes }) => {
 
       <UpdateClubManagerForm
         club={club}
-        members={membersRes?.data}
+        members={members}
         isOpen={isOpen}
         onClose={() => {
           refetch();
-          membersRes.refetch();
+          membersRefetch();
           onClose();
         }}
       />
@@ -271,9 +248,9 @@ const ClubMembers = ({ club, refetch, scopes }) => {
         member={selectedMember}
         isOpen={isOpenRemove}
         onClose={() => {
-          setSelectedMember();
+          setSelectedMember(null);
           refetch();
-          membersRes.refetch();
+          membersRefetch();
           onCloseRemove();
         }}
       />
