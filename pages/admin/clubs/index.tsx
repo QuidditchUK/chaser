@@ -120,7 +120,7 @@ const ClubAdminDashboard = () => {
                 </Td>
                 <Td>{club?._count?.users}</Td>
 
-                {hasScope([CLUBS_WRITE, EMT], userScopes) && (
+                {hasScope([CLUBS_READ, EMT], userScopes) && (
                   <Td>
                     <Button href={`/admin/clubs/${club.uuid}`}>Details</Button>
                   </Td>
@@ -151,23 +151,23 @@ const ClubAdminDashboard = () => {
                 </Td>
                 <Td>{club?._count?.users}</Td>
 
+                {hasScope([CLUBS_READ, EMT], userScopes) && (
+                  <Td>
+                    <Button href={`/admin/clubs/${club.uuid}`}>Details</Button>
+                  </Td>
+                )}
                 {hasScope([CLUBS_WRITE, EMT], userScopes) && (
-                  <>
-                    <Td>
-                      <Button href={`/admin/clubs/${club.uuid}`}>Edit</Button>
-                    </Td>
-                    <Td>
-                      <Button
-                        variant="secondary"
-                        onClick={() => {
-                          setSelectedClub(club);
-                          onOpen();
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </Td>
-                  </>
+                  <Td>
+                    <Button
+                      variant="secondary"
+                      onClick={() => {
+                        setSelectedClub(club);
+                        onOpen();
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </Td>
                 )}
               </Tr>
             ))}

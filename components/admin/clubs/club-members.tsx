@@ -19,7 +19,7 @@ import Button from 'components/shared/button';
 import UpdateClubManagerForm from './update-club-manager-form';
 import RemoveClubMemberForm from './remove-club-member-form';
 import { hasScope } from 'modules/scopes';
-import { DASHBOARD_SCOPES } from 'constants/scopes';
+import { CLUBS_WRITE, CLUB_MANAGEMENT, EMT } from 'constants/scopes';
 import { SafeUserWithScopes } from 'types/user';
 
 export const getLatestProduct = (member) =>
@@ -101,7 +101,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
         </Heading>
 
         <Flex gap={2} justifyContent="flex-end">
-          {hasScope(DASHBOARD_SCOPES, scopes) && (
+          {hasScope([EMT, CLUBS_WRITE, CLUB_MANAGEMENT], scopes) && (
             <Button variant="green" onClick={onOpen}>
               {club?.managed_by ? 'Update Club Manager' : 'Assign Club Manager'}
             </Button>
@@ -153,17 +153,19 @@ const ClubMembers = ({ club, refetch, scopes }) => {
                 {/* <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td> */}
 
                 <Td>{member?.is_student ? <>Student</> : <>Community</>}</Td>
-                <Td>
-                  <Button
-                    variant="secondary"
-                    onClick={() => {
-                      setSelectedMember(member);
-                      onOpenRemove();
-                    }}
-                  >
-                    Remove Member
-                  </Button>
-                </Td>
+                {hasScope([EMT, CLUBS_WRITE, CLUB_MANAGEMENT], scopes) && (
+                  <Td>
+                    <Button
+                      variant="secondary"
+                      onClick={() => {
+                        setSelectedMember(member);
+                        onOpenRemove();
+                      }}
+                    >
+                      Remove Member
+                    </Button>
+                  </Td>
+                )}
               </Tr>
             );
           })}
@@ -222,17 +224,19 @@ const ClubMembers = ({ club, refetch, scopes }) => {
                     <>Community</>
                   )}
                 </Td>
-                <Td>
-                  <Button
-                    variant="secondary"
-                    onClick={() => {
-                      setSelectedMember(member);
-                      onOpenRemove();
-                    }}
-                  >
-                    Remove Member
-                  </Button>
-                </Td>
+                {hasScope([EMT, CLUBS_WRITE, CLUB_MANAGEMENT], scopes) && (
+                  <Td>
+                    <Button
+                      variant="secondary"
+                      onClick={() => {
+                        setSelectedMember(member);
+                        onOpenRemove();
+                      }}
+                    >
+                      Remove Member
+                    </Button>
+                  </Td>
+                )}
               </Tr>
             );
           })}
