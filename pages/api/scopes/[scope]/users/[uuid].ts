@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isScoped_ApiRoute } from 'modules/auth';
-import { ADMIN, EMT } from 'constants/scopes';
+import { ADMIN, EMT, CLUB_MANAGEMENT } from 'constants/scopes';
 import { getToken } from 'next-auth/jwt';
 import prisma from 'modules/prisma';
 
@@ -32,6 +32,14 @@ export default async function handler(
 
         await prisma.scopes.deleteMany({
           where: { user_uuid, scope },
+        });
+
+        // remove any scopes NOT club-management
+        await prisma.scopes.deleteMany({
+          where: {
+            user_uuid,
+            NOT: { scope: CLUB_MANAGEMENT },
+          },
         });
 
         res.status(204).end();

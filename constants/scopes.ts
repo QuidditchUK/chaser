@@ -20,3 +20,10 @@ export const SCOUTING_SCOTLAND_READ = 'scouting-scotland:read';
 export const SCOUTING_SCOTLAND_WRITE = 'scouting-scotland:write';
 
 export const DASHBOARD_SCOPES = [VOLUNTEER, EMT, ADMIN];
+export const VOLUNTEER_SCOPES = [
+  USERS_READ,
+  CLUBS_READ,
+  CLUBS_WRITE,
+  TRANSFER_READ,
+  TRANSFER_WRITE,
+];

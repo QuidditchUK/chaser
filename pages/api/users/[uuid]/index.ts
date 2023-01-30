@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isScoped_ApiRoute } from 'modules/auth';
 import { EMT, USERS_READ } from 'constants/scopes';
-import { getSafeUserWithTransfersAndScopes } from './me';
+import { getSafeUserWithTransfersAndScopes } from '../me';
 
 export default async function handler(
   req: NextApiRequest,

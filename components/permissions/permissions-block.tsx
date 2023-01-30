@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Flex, Heading, Tr, Td, useDisclosure } from '@chakra-ui/react';
 
 import { hasScope } from 'modules/scopes';
-import { ADMIN } from 'constants/scopes';
 import InputV2 from 'components/formControls/inputV2';
 import Button from 'components/shared/button';
 import Modal from 'components/shared/modal';
@@ -14,9 +13,9 @@ import Table from 'components/shared/table';
 import scopesService from 'services/scopes';
 import useCachedResponse from 'hooks/useCachedResponse';
 import { SafeUserWithScopes } from 'types/user';
+import EditPermissions from './edit-permissions';
 
 const handleDeleteClick = async ({ uuid, scope, refetch }) => {
-  console.log('in Handle');
   try {
     await scopesService.removeScope({ user_uuid: uuid, scope });
     refetch();
@@ -69,7 +68,10 @@ const PermissionBlock = ({
   });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<SafeUserWithScopes | null>(
+    null
+  );
+  const [editPermissions, setEditPermissions] = useState(false);
 
   return (
     <>
@@ -80,27 +82,47 @@ const PermissionBlock = ({
       <Box bg="white" borderRadius="lg">
         <Table
           name={scope}
-          columns={['Name', 'Email', 'Scopes']}
+          columns={['Name', 'Scopes', 'Actions']}
           isLoading={isLoading}
+          tableProps={{
+            sx: {
+              'th, td': {
+                '&:last-of-type': {
+                  textAlign: 'right',
+                },
+              },
+            },
+          }}
         >
           {data?.map((user) => (
             <Tr key={user?.uuid}>
               <Td>
                 {user?.first_name} {user?.last_name}
               </Td>
-              <Td>{user?.email}</Td>
               <Td>{user?.scopes.map(({ scope }) => scope).join(', ')}</Td>
               {hasScope(actionScopes, userScopes) && (
                 <Td textAlign="right">
-                  <Button
-                    variant="secondary"
-                    onClick={() => {
-                      onOpen();
-                      setSelectedUser(user);
-                    }}
-                  >
-                    Remove
-                  </Button>
+                  <Flex direction="row" justifyContent="flex-end" gap={3}>
+                    <Button
+                      variant="green"
+                      onClick={() => {
+                        setSelectedUser(user);
+                        setEditPermissions(true);
+                      }}
+                    >
+                      Edit Permissions
+                    </Button>
+
+                    <Button
+                      variant="secondary"
+                      onClick={() => {
+                        onOpen();
+                        setSelectedUser(user);
+                      }}
+                    >
+                      Remove
+                    </Button>
+                  </Flex>
                 </Td>
               )}
             </Tr>
@@ -153,6 +175,16 @@ const PermissionBlock = ({
       >
         Are you sure you want to delete {selectedUser?.first_name} as {scope}?
       </Modal>
+
+      {editPermissions && (
+        <EditPermissions
+          user={selectedUser}
+          onClose={() => {
+            refetch();
+            setEditPermissions(false);
+          }}
+        />
+      )}
     </>
   );
 };

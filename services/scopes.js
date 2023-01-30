@@ -19,6 +19,13 @@ const scopesService = {
     data,
     ...params,
   }),
+
+  updateVolunteerScopes: ({ user_uuid, data, ...params }) => ({
+    method: 'put',
+    url: `/users/${user_uuid}/scopes`,
+    data,
+    ...params,
+  }),
 };
 
 export default createService(scopesService);
