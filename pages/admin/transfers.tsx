@@ -20,7 +20,7 @@ import transfersService from 'services/transfers';
 import settingsService from 'services/settings';
 
 import { getPlainScopes, hasScope } from 'modules/scopes';
-import { TRANSFER_READ, EMT } from 'constants/scopes';
+import { TRANSFER_READ, EMT, TRANSFER_WRITE } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import { isScoped_ServerProps } from 'modules/auth';
 import { ChevronRightIcon } from '@chakra-ui/icons';
@@ -179,9 +179,11 @@ const Transfers = ({ settings }: { settings: PrismaSystemSetting }) => {
             Actioned Transfers
           </Heading>
 
-          <Button variant="green" onClick={onOpen}>
-            Manual Transfer
-          </Button>
+          {hasScope([EMT, TRANSFER_WRITE], userScopes) && (
+            <Button variant="green" onClick={onOpen}>
+              Manual Transfer
+            </Button>
+          )}
         </Flex>
 
         <Box bg="white" borderRadius="lg">
