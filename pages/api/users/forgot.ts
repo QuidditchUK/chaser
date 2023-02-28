@@ -29,7 +29,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
             { expiresIn: '1d' }
           );
 
-          const reset_url = `${process.env.NEXTAUTH_URL}/reset?token=${token}&email=${req.body.email}`;
+          const reset_url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/reset?token=${token}&email=${req.body.email}`;
 
           sendEmail({
             template: 'forgotPassword',
