@@ -12,7 +12,7 @@ const getPostmarkClient = () => {
   return postmarkClient;
 };
 
-export default function sendEmail<T extends Templates>({
+export default async function sendEmail<T extends Templates>({
   template,
   data,
   to,
@@ -33,13 +33,20 @@ export default function sendEmail<T extends Templates>({
 
   const client = getPostmarkClient();
 
-  return client.sendEmailWithTemplate({
-    TemplateId: templateIds[template],
-    TemplateModel: data,
-    From: from,
-    To: to,
-    Cc: cc,
-  });
+  try {
+    await client.sendEmailWithTemplate({
+      TemplateId: templateIds[template],
+      TemplateModel: data,
+      From: from,
+      To: to,
+      Cc: cc,
+    });
+  } catch (err) {
+    console.log(err);
+    // throw(err);
+  }
+
+  return;
 }
 
 type Templates =
