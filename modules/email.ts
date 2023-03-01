@@ -1,8 +1,16 @@
 import * as postmark from 'postmark';
 
-const client = new postmark.ServerClient(
-  process.env.NEXT_PUBLIC_POSTMARK_TOKEN
-);
+let postmarkClient: postmark.ServerClient | null;
+
+const getPostmarkClient = () => {
+  if (!postmarkClient) {
+    postmarkClient = new postmark.ServerClient(
+      process.env.NEXT_PUBLIC_POSTMARK_TOKEN
+    );
+  }
+
+  return postmarkClient;
+};
 
 export default function sendEmail<T extends Templates>({
   template,
@@ -22,6 +30,8 @@ export default function sendEmail<T extends Templates>({
     console.log({ to, template, data, from, cc });
     return {};
   }
+
+  const client = getPostmarkClient();
 
   return client.sendEmailWithTemplate({
     TemplateId: templateIds[template],

@@ -31,8 +31,6 @@ export default async function handler(req: Request, res: NextApiResponse) {
 
           const reset_url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/reset?token=${token}&email=${req.body.email}`;
 
-          console.log(reset_url);
-
           sendEmail({
             template: 'forgotPassword',
             data: { reset_url },
@@ -40,9 +38,6 @@ export default async function handler(req: Request, res: NextApiResponse) {
           });
         }
 
-        if (!existingUser) {
-          console.log(`No user found for email: ${req.body.email}`);
-        }
         return res.status(200).end();
       } catch (err) {
         console.log(err);
