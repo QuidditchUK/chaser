@@ -31,6 +31,8 @@ export default async function handler(req: Request, res: NextApiResponse) {
 
           const reset_url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/reset?token=${token}&email=${req.body.email}`;
 
+          console.log(reset_url);
+
           sendEmail({
             template: 'forgotPassword',
             data: { reset_url },
@@ -43,6 +45,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
         }
         return res.status(200).end();
       } catch (err) {
+        console.log(err);
         // console.log(`No user found for email: ${req.body.email}`);
         // "fail" silently, regardless of if there is a user with that email or not
         // so an attacker can't use this functionality to sniff for user emails
