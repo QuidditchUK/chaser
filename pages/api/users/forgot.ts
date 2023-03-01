@@ -37,8 +37,13 @@ export default async function handler(req: Request, res: NextApiResponse) {
             to: req.body.email,
           });
         }
+
+        if (!existingUser) {
+          console.log(`No user found for email: ${req.body.email}`);
+        }
         return res.status(200).end();
       } catch (err) {
+        // console.log(`No user found for email: ${req.body.email}`);
         // "fail" silently, regardless of if there is a user with that email or not
         // so an attacker can't use this functionality to sniff for user emails
         res.status(200).end();
