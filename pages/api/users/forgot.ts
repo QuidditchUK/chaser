@@ -22,7 +22,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
         });
 
         if (existingUser) {
-          const { hashed_password, uuid, created } = existingUser;
+          const { hashed_password, uuid, created, first_name } = existingUser;
           const token = jwt.sign(
             { uuid, email: req.body.email },
             `${hashed_password}-${created.toISOString()}`,
@@ -33,7 +33,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
 
           await sendEmail({
             template: 'forgotPassword',
-            data: { reset_url },
+            data: { reset_url, first_name },
             to: req.body.email,
           });
         }

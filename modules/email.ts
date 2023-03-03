@@ -128,6 +128,7 @@ export type ContactFormData = {
 
 type ForgotPasswordData = {
   reset_url: string;
+  first_name: string;
 };
 
 export type VolunteerFormData = {
