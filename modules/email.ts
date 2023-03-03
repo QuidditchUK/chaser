@@ -1,15 +1,14 @@
-import * as postmark from 'postmark';
+import sendgrid, { MailService } from '@sendgrid/mail';
 
-let postmarkClient: postmark.ServerClient | null;
+let sendgridClient: MailService | null;
 
-const getPostmarkClient = () => {
-  if (!postmarkClient) {
-    postmarkClient = new postmark.ServerClient(
-      process.env.NEXT_PUBLIC_POSTMARK_TOKEN
-    );
+const getSendgridClient = () => {
+  if (!sendgridClient) {
+    sendgrid.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
+    sendgridClient = sendgrid;
   }
 
-  return postmarkClient;
+  return sendgridClient;
 };
 
 export default async function sendEmail<T extends Templates>({
@@ -31,19 +30,18 @@ export default async function sendEmail<T extends Templates>({
     return {};
   }
 
-  const client = getPostmarkClient();
+  const client = getSendgridClient();
 
   try {
-    await client.sendEmailWithTemplate({
-      TemplateId: templateIds[template],
-      TemplateModel: data,
-      From: from,
-      To: to,
-      Cc: cc,
+    await client.send({
+      templateId: templateIds[template],
+      dynamicTemplateData: data,
+      from,
+      to,
+      cc,
     });
   } catch (err) {
     console.log(err);
-    // throw(err);
   }
 
   return;
@@ -66,24 +64,24 @@ type Templates =
   | 'transferApproved';
 
 type TemplateOptions = {
-  [key in Templates]: number;
+  [key in Templates]: string;
 };
 
 const templateIds: TemplateOptions = {
-  welcome: 19455866,
-  forgotPassword: 19133707,
-  contactForm: 19443708,
-  volunteerForm: 19447684,
-  newMember: 19486834,
-  ediCommitteeForm: 20291343,
-  nationalTeamInterest: 24631798,
-  scoutingApplication: 24628586,
-  scoutingResponse: 24632999,
-  registerClubForm: 27851237,
-  transferClubNewMember: 28284441,
-  transferRequestForm: 28284444,
-  transferDeclined: 28283993,
-  transferApproved: 28284451,
+  welcome: 'd-0b4360295d454c6ca334be2aaec50770',
+  forgotPassword: 'd-d1c2c93d98c14ad7aa098ea138132ae2',
+  contactForm: 'd-df84ce69bcef4c4786aa90fddfe6180f',
+  volunteerForm: 'd-b58d8c9d99c34d4fa38fbb3e8b4998e8',
+  newMember: 'd-87974a7e6f9744d7bc1b253562c86761',
+  ediCommitteeForm: 'd-79027f2dd974486a93f738380b40796c',
+  nationalTeamInterest: 'd-4948efce11dd4d89b4f836541dbb54f3',
+  scoutingApplication: 'd-12c80f42861b4483a3e16605e6079e17',
+  scoutingResponse: 'd-9013b700912c41e5bec306aa1f3c581d',
+  registerClubForm: 'd-80bc196e28bc4bcaa4cf8acda3e2e99f',
+  transferClubNewMember: 'd-43193539dcc4491b852743c8b64a7193',
+  transferRequestForm: 'd-293537fd38c64b1197d13db3263732da',
+  transferDeclined: 'd-cfd0e15d732e4d309f51315187b41572',
+  transferApproved: 'd-eee3725c92b842a4af0463d3dbf9dc57',
 };
 
 type DataType<T extends Templates> = T extends 'welcome'
