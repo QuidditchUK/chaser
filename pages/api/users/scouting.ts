@@ -46,7 +46,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
         }
 
         // Email to head scout, with application and national team profile information.
-        sendEmail({
+        await sendEmail({
           template: 'scoutingApplication',
           to: 'quk.scouting@gmail.com',
           data: {

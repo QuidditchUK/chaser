@@ -19,7 +19,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
         },
       });
 
-      sendEmail({
+      await sendEmail({
         template: 'registerClubForm',
         to: 'clubs@quidditchuk.org',
         cc: 'admin@quidditchuk.org',

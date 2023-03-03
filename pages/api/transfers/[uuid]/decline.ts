@@ -45,7 +45,7 @@ export default async function handler(
         });
 
         // Notifications
-        sendEmail({
+        await sendEmail({
           to: user?.email,
           template: 'transferDeclined',
           data: {

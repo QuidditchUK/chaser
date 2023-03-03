@@ -40,7 +40,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
           },
         });
 
-        sendEmail({
+        await sendEmail({
           template: 'welcome',
           to: user.email,
           data: { first_name: user.first_name },

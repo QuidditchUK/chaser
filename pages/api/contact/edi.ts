@@ -9,7 +9,7 @@ interface Request extends NextApiRequest {
 export default async function handler(req: Request, res: NextApiResponse) {
   switch (req.method) {
     case 'POST':
-      sendEmail({
+      await sendEmail({
         template: 'ediCommitteeForm',
         to: 'president@quidditchuk.org, vicepresident@quidditchuk.org, volunteer-form@quidditchuk.org',
         data: req.body,

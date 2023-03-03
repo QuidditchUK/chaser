@@ -51,7 +51,7 @@ export default async function handler(
           },
         });
 
-        sendEmail({
+        await sendEmail({
           to: 'clubs@quidditchuk.org',
           template: 'transferRequestForm',
           data: {

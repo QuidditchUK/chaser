@@ -31,7 +31,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
 
           const reset_url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/reset?token=${token}&email=${req.body.email}`;
 
-          sendEmail({
+          await sendEmail({
             template: 'forgotPassword',
             data: { reset_url },
             to: req.body.email,

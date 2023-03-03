@@ -84,7 +84,7 @@ export default async function handler(
         }
 
         // Notifications
-        sendEmail({
+        await sendEmail({
           to: transfer?.newClub?.email,
           template: 'transferClubNewMember',
           data: {
@@ -96,7 +96,7 @@ export default async function handler(
           from: 'clubs@quidditchuk.org',
         });
 
-        sendEmail({
+        await sendEmail({
           to: user?.email,
           template: 'transferApproved',
           data: {

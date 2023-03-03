@@ -82,7 +82,7 @@ export default async function handler(
             where: { uuid: req.body.club_uuid },
           });
 
-          sendEmail({
+          await sendEmail({
             template: 'newMember',
             data: {
               first_name: token.user.first_name,

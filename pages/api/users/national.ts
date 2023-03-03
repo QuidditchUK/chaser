@@ -42,7 +42,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
           club_name = club.name;
         }
 
-        sendEmail({
+        await sendEmail({
           template: 'nationalTeamInterest',
           to: 'quk.scouting@gmail.com',
           data: {
