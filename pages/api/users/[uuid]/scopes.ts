@@ -3,6 +3,7 @@ import { isScoped_ApiRoute } from 'modules/auth';
 import { EMT } from 'constants/scopes';
 import { getSafeUserWithTransfersAndScopes } from '../me';
 import { getPlainScopes } from 'modules/scopes';
+import prisma from 'modules/prisma';
 
 interface Request extends NextApiRequest {
   body: {
