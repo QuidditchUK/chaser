@@ -25,6 +25,21 @@ import { SafeUserWithScopes } from 'types/user';
 export const getLatestProduct = (member) =>
   member?.stripe_products[member?.stripe_products?.length - 1]?.products;
 
+const groupByActive = (members: any[]): { active: any[]; inactive: any[] } => {
+  const [active, inactive] = members?.reduce(
+    (result, member) => {
+      const product = getLatestProduct(member);
+      const isActive =
+        parse(product?.expires, 'dd-MM-yyyy', new Date()) > new Date();
+
+      result[isActive ? 0 : 1].push(member);
+      return result;
+    },
+    [[], []]
+  );
+  return { active, inactive };
+};
+
 // const getClubTeam = (teams, club_uuid) => {
 //   return teams?.filter(({ teams }) => teams?.club_uuid === club_uuid)[0]?.teams;
 // };
@@ -51,32 +66,36 @@ const CSVMemberRows = (members) => {
 
 const ClubMembers = ({ club, refetch, scopes }) => {
   const [selectedMember, setSelectedMember] = useState(null);
+
   const {
-    data: members = [],
+    data: clubMembers = { studentPassMembers: [], members: [] },
     isLoading: membersIsLoading,
     refetch: membersRefetch,
-  } = useCachedResponse<SafeUserWithScopes[]>({
+  } = useCachedResponse<{
+    members: SafeUserWithScopes[];
+    studentPassMembers: SafeUserWithScopes[];
+  }>({
     queryKey: ['/clubs', club?.uuid, '/members'],
     queryFn: () => clubsService.getClubMembers({ club_uuid: club?.uuid }),
     enabled: Boolean(club?.uuid),
   });
 
-  const [activeMembers, inactiveMembers] = members?.reduce(
-    (result, member) => {
-      const product = getLatestProduct(member);
-      const isActive =
-        parse(product?.expires, 'dd-MM-yyyy', new Date()) > new Date();
+  const { members, studentPassMembers } = clubMembers;
 
-      result[isActive ? 0 : 1].push(member);
-      return result;
-    },
-    [[], []]
-  );
+  const {
+    active: activeStudentPassMembers,
+    inactive: inactiveStudentPassMembers,
+  } = groupByActive(studentPassMembers);
+  const { active: activeMembers, inactive: inactiveMembers } =
+    groupByActive(members);
+
+  const inactive = inactiveMembers.concat(inactiveStudentPassMembers);
 
   const { call, isLoading } = useCSVDownload({
     data: [
       ['first_name', 'last_name', 'membership', 'is_student', 'university'],
       ...CSVMemberRows(members),
+      ...CSVMemberRows(studentPassMembers),
     ],
     filename: `${club?.name}-members-${format(new Date(), 'yyyy-MM-dd')}.csv`,
   });
@@ -173,7 +192,78 @@ const ClubMembers = ({ club, refetch, scopes }) => {
       </Box>
 
       <Heading as="h4" fontFamily="body" color="qukBlue">
-        Inactive Members ({inactiveMembers?.length})
+        Student Summer Pass Members ({activeStudentPassMembers?.length})
+      </Heading>
+
+      <Text>
+        Student Summer Pass members are club members who have joined using the
+        Student Summer Pass scheme for the duration of the Community League.
+        They will automatically be removed from the club when the community
+        league ends.
+      </Text>
+
+      <Box bg="white" borderRadius="lg">
+        <Table
+          name="members"
+          columns={[
+            'Name (Tick indicates Manager)',
+            'Email',
+            // 'Team',
+            'Student/Community',
+            '',
+          ]}
+          isLoading={membersIsLoading}
+        >
+          {activeStudentPassMembers?.map((member) => {
+            return (
+              <Tr key={member?.email}>
+                <Td>
+                  <Flex alignItems="center" gap={3}>
+                    {member?.first_name} {member?.last_name}{' '}
+                    {club?.managed_by === member?.uuid && (
+                      <CheckCircleIcon color="keeperGreen" />
+                    )}
+                  </Flex>
+                </Td>
+                <Td>
+                  {member?.email && (
+                    <Link href={`mailto:${member?.email}`}>
+                      {member?.email}
+                    </Link>
+                  )}
+                </Td>
+                {/* <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td> */}
+
+                <Td>
+                  {member?.is_student ? (
+                    <Flex alignItems="center" gap={3}>
+                      Student
+                    </Flex>
+                  ) : (
+                    <>Community</>
+                  )}
+                </Td>
+                {hasScope([EMT, CLUBS_WRITE, CLUB_MANAGEMENT], scopes) && (
+                  <Td>
+                    <Button
+                      variant="secondary"
+                      onClick={() => {
+                        setSelectedMember(member);
+                        onOpenRemove();
+                      }}
+                    >
+                      Remove Member
+                    </Button>
+                  </Td>
+                )}
+              </Tr>
+            );
+          })}
+        </Table>
+      </Box>
+
+      <Heading as="h4" fontFamily="body" color="qukBlue">
+        Inactive Members ({inactive?.length})
       </Heading>
 
       <Text>
@@ -195,7 +285,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
           ]}
           isLoading={membersIsLoading}
         >
-          {inactiveMembers?.map((member) => {
+          {inactive?.map((member) => {
             return (
               <Tr key={member?.email}>
                 <Td>

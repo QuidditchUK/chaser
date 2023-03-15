@@ -56,6 +56,45 @@ export default async function handler(
                 last_name: 'asc',
               },
             },
+            student_summer_pass: {
+              where: {
+                expires: {
+                  gt: new Date(),
+                },
+              },
+              select: {
+                user: {
+                  select: {
+                    uuid: true,
+                    first_name: true,
+                    last_name: true,
+                    email: true,
+                    is_student: true,
+                    university: true,
+                    stripe_products: {
+                      select: {
+                        products: {
+                          select: {
+                            description: true,
+                            expires: true,
+                          },
+                        },
+                      },
+                    },
+                    teams: {
+                      select: {
+                        teams: {
+                          select: {
+                            name: true,
+                            club_uuid: true,
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
         });
 
@@ -64,7 +103,10 @@ export default async function handler(
           return;
         }
 
-        res.json(club.users);
+        res.json({
+          members: club.users,
+          studentPassMembers: club.student_summer_pass,
+        });
         return;
       } catch (err) {
         res.status(400).end();
