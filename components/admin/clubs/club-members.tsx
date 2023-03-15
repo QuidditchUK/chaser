@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 import {
   Heading,
   Flex,
@@ -21,6 +21,7 @@ import RemoveClubMemberForm from './remove-club-member-form';
 import { hasScope } from 'modules/scopes';
 import { CLUBS_WRITE, CLUB_MANAGEMENT, EMT } from 'constants/scopes';
 import { SafeUserWithScopes } from 'types/user';
+import { clubs as Club } from '@prisma/client';
 
 export const getLatestProduct = (member) =>
   member?.stripe_products[member?.stripe_products?.length - 1]?.products;
@@ -64,9 +65,104 @@ const CSVMemberRows = (members) => {
   ]);
 };
 
-const ClubMembers = ({ club, refetch, scopes }) => {
+const MembersTable = ({
+  members,
+  title,
+  supportText,
+  name,
+  scopes,
+  refetch,
+  membersRefetch,
+  isLoading,
+  club,
+}: {
+  members: SafeUserWithScopes[];
+  title?: ReactNode;
+  name: string;
+  supportText?: ReactNode;
+  scopes: any[];
+  refetch: () => void;
+  membersRefetch: () => void;
+  isLoading: boolean;
+  club: Club;
+}) => {
   const [selectedMember, setSelectedMember] = useState(null);
 
+  const { onOpen, onClose, isOpen } = useDisclosure();
+
+  return (
+    <>
+      {title}
+      {supportText}
+
+      <Box bg="white" borderRadius="lg">
+        <Table
+          name={name}
+          columns={[
+            'Name (Tick indicates Manager)',
+            'Email',
+            // 'Team',
+            'Student/Community',
+            '',
+          ]}
+          isLoading={isLoading}
+        >
+          {members?.map((member) => {
+            return (
+              <Tr key={member?.email}>
+                <Td>
+                  <Flex alignItems="center" gap={3}>
+                    {member?.first_name} {member?.last_name}{' '}
+                    {club?.managed_by === member?.uuid && (
+                      <CheckCircleIcon color="keeperGreen" />
+                    )}
+                  </Flex>
+                </Td>
+                <Td>
+                  {member?.email && (
+                    <Link href={`mailto:${member?.email}`}>
+                      {member?.email}
+                    </Link>
+                  )}
+                </Td>
+                {/* <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td> */}
+
+                <Td>{member?.is_student ? <>Student</> : <>Community</>}</Td>
+                {hasScope([EMT, CLUBS_WRITE, CLUB_MANAGEMENT], scopes) && (
+                  <Td>
+                    <Button
+                      variant="secondary"
+                      onClick={() => {
+                        setSelectedMember(member);
+                        onOpen();
+                      }}
+                    >
+                      Remove Member
+                    </Button>
+                  </Td>
+                )}
+              </Tr>
+            );
+          })}
+        </Table>
+      </Box>
+
+      <RemoveClubMemberForm
+        club={club}
+        member={selectedMember}
+        isOpen={isOpen}
+        onClose={() => {
+          setSelectedMember(null);
+          refetch();
+          membersRefetch();
+          onClose();
+        }}
+      />
+    </>
+  );
+};
+
+const ClubMembers = ({ club, refetch, scopes }) => {
   const {
     data: clubMembers = { studentPassMembers: [], members: [] },
     isLoading: membersIsLoading,
@@ -86,6 +182,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
     active: activeStudentPassMembers,
     inactive: inactiveStudentPassMembers,
   } = groupByActive(studentPassMembers);
+
   const { active: activeMembers, inactive: inactiveMembers } =
     groupByActive(members);
 
@@ -101,11 +198,6 @@ const ClubMembers = ({ club, refetch, scopes }) => {
   });
 
   const { onOpen, onClose, isOpen } = useDisclosure();
-  const {
-    onOpen: onOpenRemove,
-    onClose: onCloseRemove,
-    isOpen: isOpenRemove,
-  } = useDisclosure();
 
   return (
     <>
@@ -139,199 +231,61 @@ const ClubMembers = ({ club, refetch, scopes }) => {
         </Flex>
       </Flex>
 
-      <Box bg="white" borderRadius="lg">
-        <Table
-          name="members"
-          columns={[
-            'Name (Tick indicates Manager)',
-            'Email',
-            // 'Team',
-            'Student/Community',
-            '',
-          ]}
-          isLoading={membersIsLoading}
-        >
-          {activeMembers?.map((member) => {
-            return (
-              <Tr key={member?.email}>
-                <Td>
-                  <Flex alignItems="center" gap={3}>
-                    {member?.first_name} {member?.last_name}{' '}
-                    {club?.managed_by === member?.uuid && (
-                      <CheckCircleIcon color="keeperGreen" />
-                    )}
-                  </Flex>
-                </Td>
-                <Td>
-                  {member?.email && (
-                    <Link href={`mailto:${member?.email}`}>
-                      {member?.email}
-                    </Link>
-                  )}
-                </Td>
-                {/* <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td> */}
+      <MembersTable
+        name="members"
+        scopes={scopes}
+        members={activeMembers}
+        refetch={refetch}
+        membersRefetch={membersRefetch}
+        isLoading={membersIsLoading}
+        club={club}
+      />
 
-                <Td>{member?.is_student ? <>Student</> : <>Community</>}</Td>
-                {hasScope([EMT, CLUBS_WRITE, CLUB_MANAGEMENT], scopes) && (
-                  <Td>
-                    <Button
-                      variant="secondary"
-                      onClick={() => {
-                        setSelectedMember(member);
-                        onOpenRemove();
-                      }}
-                    >
-                      Remove Member
-                    </Button>
-                  </Td>
-                )}
-              </Tr>
-            );
-          })}
-        </Table>
-      </Box>
+      <MembersTable
+        name="studentSummerPass"
+        scopes={scopes}
+        members={activeStudentPassMembers}
+        refetch={refetch}
+        membersRefetch={membersRefetch}
+        isLoading={membersIsLoading}
+        club={club}
+        title={
+          <Heading as="h4" fontFamily="body" color="qukBlue" mb={0}>
+            Student Summer Pass Members ({activeStudentPassMembers?.length})
+          </Heading>
+        }
+        supportText={
+          <Text>
+            Student Summer Pass members are club members who have joined using
+            the Student Summer Pass scheme for the duration of the current
+            Community League. They will automatically be removed from the club
+            when the Community League ends.
+          </Text>
+        }
+      />
 
-      <Heading as="h4" fontFamily="body" color="qukBlue">
-        Student Summer Pass Members ({activeStudentPassMembers?.length})
-      </Heading>
-
-      <Text>
-        Student Summer Pass members are club members who have joined using the
-        Student Summer Pass scheme for the duration of the Community League.
-        They will automatically be removed from the club when the community
-        league ends.
-      </Text>
-
-      <Box bg="white" borderRadius="lg">
-        <Table
-          name="members"
-          columns={[
-            'Name (Tick indicates Manager)',
-            'Email',
-            // 'Team',
-            'Student/Community',
-            '',
-          ]}
-          isLoading={membersIsLoading}
-        >
-          {activeStudentPassMembers?.map((member) => {
-            return (
-              <Tr key={member?.email}>
-                <Td>
-                  <Flex alignItems="center" gap={3}>
-                    {member?.first_name} {member?.last_name}{' '}
-                    {club?.managed_by === member?.uuid && (
-                      <CheckCircleIcon color="keeperGreen" />
-                    )}
-                  </Flex>
-                </Td>
-                <Td>
-                  {member?.email && (
-                    <Link href={`mailto:${member?.email}`}>
-                      {member?.email}
-                    </Link>
-                  )}
-                </Td>
-                {/* <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td> */}
-
-                <Td>
-                  {member?.is_student ? (
-                    <Flex alignItems="center" gap={3}>
-                      Student
-                    </Flex>
-                  ) : (
-                    <>Community</>
-                  )}
-                </Td>
-                {hasScope([EMT, CLUBS_WRITE, CLUB_MANAGEMENT], scopes) && (
-                  <Td>
-                    <Button
-                      variant="secondary"
-                      onClick={() => {
-                        setSelectedMember(member);
-                        onOpenRemove();
-                      }}
-                    >
-                      Remove Member
-                    </Button>
-                  </Td>
-                )}
-              </Tr>
-            );
-          })}
-        </Table>
-      </Box>
-
-      <Heading as="h4" fontFamily="body" color="qukBlue">
-        Inactive Members ({inactive?.length})
-      </Heading>
-
-      <Text>
-        Inactive members are club members who <strong>do not</strong> have a
-        current QUK Membership, and are therefore ineligible for roster
-        selection. Players are responsible for maintaining their QUK membership
-        via the QUK website.
-      </Text>
-
-      <Box bg="white" borderRadius="lg">
-        <Table
-          name="members"
-          columns={[
-            'Name (Tick indicates Manager)',
-            'Email',
-            // 'Team',
-            'Student/Community',
-            '',
-          ]}
-          isLoading={membersIsLoading}
-        >
-          {inactive?.map((member) => {
-            return (
-              <Tr key={member?.email}>
-                <Td>
-                  <Flex alignItems="center" gap={3}>
-                    {member?.first_name} {member?.last_name}{' '}
-                    {club?.managed_by === member?.uuid && (
-                      <CheckCircleIcon color="keeperGreen" />
-                    )}
-                  </Flex>
-                </Td>
-                <Td>
-                  {member?.email && (
-                    <Link href={`mailto:${member?.email}`}>
-                      {member?.email}
-                    </Link>
-                  )}
-                </Td>
-                {/* <Td>{getClubTeam(member?.teams, club?.uuid)?.name}</Td> */}
-
-                <Td>
-                  {member?.is_student ? (
-                    <Flex alignItems="center" gap={3}>
-                      Student
-                    </Flex>
-                  ) : (
-                    <>Community</>
-                  )}
-                </Td>
-                {hasScope([EMT, CLUBS_WRITE, CLUB_MANAGEMENT], scopes) && (
-                  <Td>
-                    <Button
-                      variant="secondary"
-                      onClick={() => {
-                        setSelectedMember(member);
-                        onOpenRemove();
-                      }}
-                    >
-                      Remove Member
-                    </Button>
-                  </Td>
-                )}
-              </Tr>
-            );
-          })}
-        </Table>
-      </Box>
+      <MembersTable
+        name="inactiveMembers"
+        scopes={scopes}
+        members={inactive}
+        refetch={refetch}
+        membersRefetch={membersRefetch}
+        isLoading={membersIsLoading}
+        club={club}
+        title={
+          <Heading as="h4" fontFamily="body" color="qukBlue" mb={0}>
+            Inactive Members ({inactive?.length})
+          </Heading>
+        }
+        supportText={
+          <Text>
+            Inactive members are club members who <strong>do not</strong> have a
+            current QUK Membership, and are therefore ineligible for roster
+            selection. Players are responsible for maintaining their QUK
+            membership via the QUK website.
+          </Text>
+        }
+      />
 
       <UpdateClubManagerForm
         club={club}
@@ -341,18 +295,6 @@ const ClubMembers = ({ club, refetch, scopes }) => {
           refetch();
           membersRefetch();
           onClose();
-        }}
-      />
-
-      <RemoveClubMemberForm
-        club={club}
-        member={selectedMember}
-        isOpen={isOpenRemove}
-        onClose={() => {
-          setSelectedMember(null);
-          refetch();
-          membersRefetch();
-          onCloseRemove();
         }}
       />
     </>
