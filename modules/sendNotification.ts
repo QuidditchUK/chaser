@@ -6,6 +6,11 @@ import {
 } from '../constants/notifications';
 import prisma from './prisma';
 
+/**
+ * Sends a push notification (if enabled) and a regular notification to the user
+ * @param  {{user_uuid:string;type_id:NotificationType}}
+ * @param  {any} data
+ */
 const sendNotifications = async (
   { user_uuid, type_id }: { user_uuid: string; type_id: NotificationType },
   data: any

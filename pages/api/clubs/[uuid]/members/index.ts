@@ -62,7 +62,7 @@ export default async function handler(
                   gt: new Date(),
                 },
               },
-              select: {
+              include: {
                 user: {
                   select: {
                     uuid: true,
@@ -103,9 +103,12 @@ export default async function handler(
           return;
         }
 
+        const studentSummerPassMembers = club.student_summer_pass.map(
+          ({ user }) => user
+        );
         res.json({
           members: club.users,
-          studentPassMembers: club.student_summer_pass,
+          studentSummerPassMembers,
         });
         return;
       } catch (err) {

@@ -37,6 +37,19 @@ export type SafeUserWithTransfersAndScopes = SafeUserWithScopes & {
   transfers: SafeTransfer[];
 };
 
+type StudentSummerPassRelations = Prisma.student_summer_passGetPayload<{
+  include: {
+    club: { select: { name: true } };
+  };
+}>;
+
+export type SafeUserWithIncludes = SafeUserWithTransfersAndScopes & {
+  student_summer_pass: Omit<
+    StudentSummerPassRelations,
+    'user' | 'user_uuid' | 'club_uuid'
+  >[];
+};
+
 export type AdminUserWithRelations = Prisma.usersGetPayload<{
   include: {
     clubs: true;

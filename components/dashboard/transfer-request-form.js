@@ -71,7 +71,7 @@ const TransferRequestForm = ({ currentClub, clubs = [], callback }) => {
         Transfer Request
       </Heading>
       <Grid
-        gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
+        gridTemplateColumns={{ base: '1fr', md: '2fr 1fr' }}
         gridGap={{ base: 4, md: 9 }}
       >
         <Box bg="white" py={4} px={{ base: 4, sm: 8, md: 9 }} borderRadius="md">

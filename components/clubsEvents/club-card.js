@@ -87,6 +87,7 @@ const Medals = ({ tournament_results, bg }) => {
               variant="unstyled"
               border={0}
               p={0}
+              zIndex={3}
               icon={
                 <Image
                   src={medal.medal_icon.url}
@@ -119,17 +120,25 @@ export const ClubCardV2 = ({
   href,
   tournament_results = [],
   bg,
+  isStudentSummerPass,
   ...cardProps
 }) => {
   const Wrapper = href ? LinkWrapper : PlainWrapper;
   const styles = useStyleConfig('Card');
   return (
-    <Wrapper href={href} flexDirection="column" bg={bg} {...cardProps}>
+    <Wrapper
+      href={href}
+      flexDirection="column"
+      bg={bg}
+      sx={isStudentSummerPass && Sparkles}
+      position={isStudentSummerPass && 'relative'}
+      borderRadius="xl"
+      {...cardProps}
+    >
       <Box
         __css={styles}
         as="article"
         bg={bg}
-        height="100%"
         width="100%"
         overflow="hidden"
         position="relative"
@@ -152,34 +161,35 @@ export const ClubCardV2 = ({
           height="70%"
           bgGradient={`linear(to-t, ${bg}, rgba(0, 0, 0, 0))`}
           color="white"
-          px={{ base: 4, sm: 8, md: 9 }}
           py={4}
           flexDirection="column"
           justifyContent="flex-end"
         >
-          {title && (
-            <Heading
-              as="h2"
-              fontSize="2xl"
-              fontFamily="body"
-              textShadow="0 0 4px rgb(0,0,0)"
-              mb={0}
-            >
-              {title}
-            </Heading>
-          )}
+          <Box px={{ base: 4, sm: 8, md: 9 }}>
+            {title && (
+              <Heading
+                as="h2"
+                fontSize="2xl"
+                fontFamily="body"
+                textShadow="0 0 4px rgb(0,0,0)"
+                mb={0}
+              >
+                {title}
+              </Heading>
+            )}
 
-          {venue && (
-            <Text
-              fontSize="sm"
-              fontWeight="bold"
-              textShadow="0 0 2px rgb(0,0,0)"
-              mt={2}
-              mb={0}
-            >
-              {venue}
-            </Text>
-          )}
+            {venue && (
+              <Text
+                fontSize="sm"
+                fontWeight="bold"
+                textShadow="0 0 2px rgb(0,0,0)"
+                mt={2}
+                mb={0}
+              >
+                {venue}
+              </Text>
+            )}
+          </Box>
         </Flex>
 
         <Flex
@@ -220,6 +230,116 @@ export const ClubCardV2 = ({
       <Flex h="75px">
         <Medals tournament_results={tournament_results} bg={bg} />
       </Flex>
+      {isStudentSummerPass && (
+        <Box width="100%" bg="white" borderRadius="xl" borderTopRadius={0}>
+          <Text
+            fontFamily="body"
+            fontWeight="bold"
+            fontSize="md"
+            textAlign="center"
+            color={bg}
+            my={2}
+          >
+            Student Summer Pass
+          </Text>
+        </Box>
+      )}
     </Wrapper>
   );
+};
+
+const color1 = '#ec9bb6';
+const color2 = '#ccac6f';
+const color3 = '#69e4a5';
+const color4 = '#8ec5d6';
+const color5 = '#b98cce';
+
+const Sparkles = {
+  '&:before,&:after': {
+    content: '""',
+    position: 'absolute',
+    left: '0',
+    right: '0',
+    bottom: '0',
+    top: '0',
+    backgroundRepeat: 'no-repeat',
+    opacity: 0.5,
+    mixBlendMode: 'color-dodge',
+    transition: 'all .33s ease',
+    borderRadius: 'xl',
+  },
+  '&:before': {
+    backgroundPosition: '50% 50%',
+    backgroundSize: '300% 300%',
+    backgroundImage: `linear-gradient(
+    115deg,
+    transparent 0%,
+    ${color1} 25%,
+    transparent 47%,
+    transparent 53%,
+    ${color2} 75%,
+    transparent 100%
+  )`,
+    opacity: 0.5,
+    filter: 'brightness(.5) contrast(1)',
+    zIndex: 1,
+  },
+
+  '&:after': {
+    opacity: 1,
+    backgroundImage:
+      'url("/images/sparkles.gif"), url(/images/holo.webp), linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%)',
+    backgroundPosition: '50% 50%',
+    backgroundSize: '160%',
+    backgroundBlendMode: 'overlay',
+    zIndex: 2,
+    filter: 'brightness(1) contrast(1)',
+    transition: 'all .33s ease',
+    mixBlendMode: 'color-dodge',
+    opacity: 0.75,
+  },
+
+  '&:hover:after': {
+    filter: 'brightness(1) contrast(1)',
+    opacity: 1,
+    borderRadius: 'xl',
+  },
+  '&:hover:before': {
+    backgroundImage: `linear-gradient(
+      115deg,
+      transparent 20%,
+      ${color1} 36%,
+      ${color2} 43%,
+      ${color3} 50%,
+      ${color4} 57%,
+      ${color5} 64%,
+      transparent 80%
+    )`,
+    animation: 'holoGradient 24s ease 0s infinite',
+    borderRadius: 'xl',
+  },
+
+  '@keyframes holoGradient': {
+    '0%, 100%': {
+      opacity: 0.5,
+      backgroundPosition: '50% 50%',
+      filter: 'brightness(.5) contrast(1)',
+    },
+    '5%, 9%': {
+      opacity: 1,
+      backgroundPosition: '100% 100%',
+      filter: 'brightness(.75) contrast(1.25)',
+    },
+    '13%, 17%': { opacity: 0.88, backgroundPosition: '0% 0%' },
+    '35%, 39%': {
+      opacity: 1,
+      backgroundPosition: '100% 100%',
+      filter: 'brightness(.5) contrast(1)',
+    },
+    '55%': {
+      opacity: 1,
+      backgroundPosition: '0% 0%',
+      filter: 'brightness(.75) contrast(1.25)',
+    },
+  },
 };

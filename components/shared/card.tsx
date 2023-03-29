@@ -22,7 +22,6 @@ export const CardStyles = {
     borderRadius: 'xl',
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: '1',
     overflow: 'hidden',
   },
   variants: {
@@ -84,7 +83,6 @@ export const LinkWrapper = ({ href, ...props }) => (
       }}
       _active={{ transform: 'scale(1)' }}
       borderRadius="2xl"
-      flexGrow={1}
       display="flex"
       {...props}
     />

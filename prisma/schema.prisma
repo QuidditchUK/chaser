@@ -129,9 +129,10 @@ enum ScoutingOutcome {
 }
 
 model system_settings {
-  uuid            String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  created         DateTime? @default(now()) @db.Timestamptz(6)
-  transfer_window Boolean?  @default(false)
+  uuid                       String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created                    DateTime? @default(now()) @db.Timestamptz(6)
+  transfer_window            Boolean?  @default(false)
+  student_summer_pass_expiry DateTime? @default(now()) @db.Timestamptz(6)
 }
 
 model stripe_products {

@@ -8,7 +8,13 @@ import { getPrismicDocByUid } from 'modules/prismic';
 
 const Card = dynamic(() => import('components/shared/card'));
 
-const PrismicClubCard = ({ uid }) => {
+const PrismicClubCard = ({
+  uid,
+  isStudentSummerPass,
+}: {
+  uid: string;
+  isStudentSummerPass?: boolean;
+}) => {
   const [data, setData] = useState(null);
   const [clubUid, setClubUid] = useState(uid);
 
@@ -31,14 +37,15 @@ const PrismicClubCard = ({ uid }) => {
 
   if (!data) {
     return (
-      <Flex flexDirection="column">
-        <Card />
+      <Flex flexDirection="column" height="100%">
+        <Card height="100%" />
       </Flex>
     );
   }
 
   return (
     <ClubCardV2
+      isStudentSummerPass={isStudentSummerPass}
       bg={data?.featured_color}
       color={data?.text_color}
       title={data?.club_name}

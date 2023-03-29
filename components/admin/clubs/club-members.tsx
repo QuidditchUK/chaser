@@ -164,24 +164,24 @@ const MembersTable = ({
 
 const ClubMembers = ({ club, refetch, scopes }) => {
   const {
-    data: clubMembers = { studentPassMembers: [], members: [] },
+    data: clubMembers = { studentSummerPassMembers: [], members: [] },
     isLoading: membersIsLoading,
     refetch: membersRefetch,
   } = useCachedResponse<{
     members: SafeUserWithScopes[];
-    studentPassMembers: SafeUserWithScopes[];
+    studentSummerPassMembers: SafeUserWithScopes[];
   }>({
     queryKey: ['/clubs', club?.uuid, '/members'],
     queryFn: () => clubsService.getClubMembers({ club_uuid: club?.uuid }),
     enabled: Boolean(club?.uuid),
   });
 
-  const { members, studentPassMembers } = clubMembers;
+  const { members, studentSummerPassMembers } = clubMembers;
 
   const {
     active: activeStudentPassMembers,
     inactive: inactiveStudentPassMembers,
-  } = groupByActive(studentPassMembers);
+  } = groupByActive(studentSummerPassMembers);
 
   const { active: activeMembers, inactive: inactiveMembers } =
     groupByActive(members);
@@ -192,7 +192,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
     data: [
       ['first_name', 'last_name', 'membership', 'is_student', 'university'],
       ...CSVMemberRows(members),
-      ...CSVMemberRows(studentPassMembers),
+      ...CSVMemberRows(studentSummerPassMembers),
     ],
     filename: `${club?.name}-members-${format(new Date(), 'yyyy-MM-dd')}.csv`,
   });
