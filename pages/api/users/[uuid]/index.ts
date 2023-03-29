@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isScoped_ApiRoute } from 'modules/auth';
 import { EMT, USERS_READ } from 'constants/scopes';
-import { getSafeUserWithTransfersAndScopes } from '../me';
+import { getSafeUserWithIncludes } from '../me';
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,7 +17,7 @@ export default async function handler(
         }
         const uuid = req.query.uuid as string;
 
-        const user = await getSafeUserWithTransfersAndScopes(uuid);
+        const user = await getSafeUserWithIncludes(uuid);
         res.json(user);
 
         return;
