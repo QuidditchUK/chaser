@@ -67,7 +67,12 @@ const EmbedSlice = ({ slice }) => {
   return (
     <Slice variant={variant} size={size}>
       {prismicH.asText(title) && (
-        <Heading as="h2" fontSize="xl" mt={2} textAlign="center">
+        <Heading
+          as="h2"
+          fontSize={{ base: '2xl', md: '3xl' }}
+          mt={2}
+          textAlign="center"
+        >
           {prismicH.asText(title)}
         </Heading>
       )}
