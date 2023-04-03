@@ -8,6 +8,7 @@ const GeorgiaChallinor = '/images/authors/georgia-challinor.jpg';
 const BeckThroup = '/images/authors/beck-throup.jpg';
 const JoshFogg = '/images/authors/josh-fogg.jpg';
 const Logo = '/images/authors/quk-logo.png';
+const GioForino = '/images/authors/gio-forino.jpg';
 
 const authors = {
   'Sam Instone': SamInstone,
@@ -19,6 +20,7 @@ const authors = {
   'Georgia Challinor': GeorgiaChallinor,
   'Beck Throup': BeckThroup,
   'Josh Fogg': JoshFogg,
+  'Gio Forino': GioForino,
 };
 
 export default function Authors(author) {
