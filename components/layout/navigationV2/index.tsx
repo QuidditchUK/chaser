@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
   Box,
   Flex,
@@ -17,8 +18,14 @@ import {
   DrawerContent,
   BoxProps,
   LinkProps,
+  Tooltip,
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon, BellIcon } from '@chakra-ui/icons';
+import {
+  HamburgerIcon,
+  CloseIcon,
+  BellIcon,
+  ChevronDownIcon,
+} from '@chakra-ui/icons';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import Headroom from 'react-headroom';
@@ -53,6 +60,31 @@ const IconWrapper = (props: LinkProps) => (
 );
 
 const Icon = (props: BoxProps) => <Box color="white" {...props} />;
+
+const IconWithTooltip = ({
+  label,
+  icon,
+}: {
+  label: string;
+  icon: ReactNode;
+}) => {
+  return (
+    <Tooltip
+      placement="bottom-end"
+      fontSize="sm"
+      bg="qukBlue"
+      color="white"
+      label={label}
+      paddingY={2}
+      paddingX={3}
+      borderRadius="lg"
+    >
+      <Flex as="span" alignSelf="center">
+        {icon}
+      </Flex>
+    </Tooltip>
+  );
+};
 
 function Sidebar({ isOpen, onClose, data }) {
   return (
@@ -240,13 +272,48 @@ export default function Navigation({ data }) {
                     p={0}
                   >
                     <NotificationBadge count={unread?.count} />
-                    <BellIcon color="qukBlue" cursor="pointer" w={6} h={6} />
+                    <IconWithTooltip
+                      icon={
+                        <BellIcon
+                          color="qukBlue"
+                          cursor="pointer"
+                          width="28px"
+                          height="28px"
+                        />
+                      }
+                      label="Notifications"
+                    />
                   </Button>
 
                   <Popover>
                     <PopoverTrigger>
                       <IconButton
-                        icon={<PersonIcon color="qukBlue" w={6} h={6} />}
+                        icon={
+                          <IconWithTooltip
+                            icon={
+                              <Flex position="relative" alignItems="center">
+                                <PersonIcon
+                                  width="32px"
+                                  height="32px"
+                                  color="qukBlue"
+                                />
+                                <ChevronDownIcon
+                                  zIndex="1"
+                                  position="absolute"
+                                  bottom="-4px"
+                                  right="0"
+                                  bg="gray.100"
+                                  borderRadius="full"
+                                  width="15px"
+                                  height="15px"
+                                  border="1px solid"
+                                  borderColor="qukBlue"
+                                />
+                              </Flex>
+                            }
+                            label="Account"
+                          />
+                        }
                         cursor="pointer"
                         w={6}
                         h={6}
@@ -258,7 +325,7 @@ export default function Navigation({ data }) {
                         color="qukBlue"
                         border={0}
                         padding={1}
-                        aria-label="Personal settings"
+                        aria-label="Account"
                       />
                     </PopoverTrigger>
                     <PopoverContent
