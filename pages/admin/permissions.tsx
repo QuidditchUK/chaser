@@ -1,6 +1,4 @@
-import Link from 'next/link';
-import { Flex, Heading, Box } from '@chakra-ui/react';
-import { ChevronRightIcon } from '@chakra-ui/icons';
+import { Flex, Box } from '@chakra-ui/react';
 
 import { ADMIN, EMT, HEAD_SCOUT, VOLUNTEER } from 'constants/scopes';
 import { getPlainScopes } from 'modules/scopes';
@@ -13,6 +11,7 @@ import Meta from 'components/shared/meta';
 import { GetServerSideProps } from 'next';
 import useMe from 'hooks/useMe';
 import SkeletonLoaderWrapper from 'components/shared/SkeletonLoaderWrapper';
+import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
 
 const Permissions = () => {
   const { data: user, isLoading } = useMe();
@@ -29,16 +28,10 @@ const Permissions = () => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Heading
-              as="h3"
-              fontFamily="body"
-              color="qukBlue"
-              display="flex"
-              alignItems="center"
-            >
-              <Link href="/admin">Dashboard</Link> <ChevronRightIcon />{' '}
-              Volunteer Permissions
-            </Heading>
+            <HeadingWithBreadcrumbs
+              breadcrumbs={[{ link: '/admin', title: 'Dashboard' }]}
+              heading="Volunteer Permissions"
+            />
           </Flex>
 
           <PermissionBlock

@@ -1,8 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 import { GetServerSideProps } from 'next';
-import { Box, Flex, Grid, Heading, useToast, Text } from '@chakra-ui/react';
-import { ChevronRightIcon } from '@chakra-ui/icons';
+import { Box, Flex, Grid, useToast } from '@chakra-ui/react';
 import { system_settings as PrismaSystemSetting } from '@prisma/client';
 import { useForm } from 'react-hook-form';
 import { DateTime } from 'luxon';
@@ -16,6 +14,7 @@ import Meta from 'components/shared/meta';
 import Slice from 'components/shared/slice';
 import InputV2 from 'components/formControls/inputV2';
 import Button from 'components/shared/button';
+import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
 
 function Settings({ settings }: { settings: PrismaSystemSetting }) {
   const toast = useToast();
@@ -55,16 +54,10 @@ function Settings({ settings }: { settings: PrismaSystemSetting }) {
     <>
       <Meta subTitle="System Settings" title="Admin Dashboard" />
       <Slice>
-        <Heading
-          as="h3"
-          fontFamily="body"
-          color="qukBlue"
-          display="flex"
-          alignItems="center"
-        >
-          <Link href="/admin">Dashboard</Link> <ChevronRightIcon /> System
-          Settings
-        </Heading>
+        <HeadingWithBreadcrumbs
+          breadcrumbs={[{ link: '/admin', title: 'Dashboard' }]}
+          heading="System Settings"
+        />
 
         <form
           onSubmit={handleSubmit((values) =>
