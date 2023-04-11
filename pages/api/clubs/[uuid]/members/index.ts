@@ -4,6 +4,35 @@ import { isScoped_ApiRoute } from 'modules/auth';
 import { CLUBS_READ, EMT } from 'constants/scopes';
 import { isManager } from 'modules/clubs';
 
+export const safeMemberProps = {
+  uuid: true,
+  first_name: true,
+  last_name: true,
+  email: true,
+  is_student: true,
+  university: true,
+  stripe_products: {
+    select: {
+      products: {
+        select: {
+          description: true,
+          expires: true,
+        },
+      },
+    },
+  },
+  teams: {
+    select: {
+      teams: {
+        select: {
+          name: true,
+          club_uuid: true,
+        },
+      },
+    },
+  },
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -24,34 +53,7 @@ export default async function handler(
           where: { uuid },
           include: {
             users: {
-              select: {
-                uuid: true,
-                first_name: true,
-                last_name: true,
-                email: true,
-                is_student: true,
-                university: true,
-                stripe_products: {
-                  select: {
-                    products: {
-                      select: {
-                        description: true,
-                        expires: true,
-                      },
-                    },
-                  },
-                },
-                teams: {
-                  select: {
-                    teams: {
-                      select: {
-                        name: true,
-                        club_uuid: true,
-                      },
-                    },
-                  },
-                },
-              },
+              select: safeMemberProps,
               orderBy: {
                 last_name: 'asc',
               },
@@ -64,34 +66,7 @@ export default async function handler(
               },
               include: {
                 user: {
-                  select: {
-                    uuid: true,
-                    first_name: true,
-                    last_name: true,
-                    email: true,
-                    is_student: true,
-                    university: true,
-                    stripe_products: {
-                      select: {
-                        products: {
-                          select: {
-                            description: true,
-                            expires: true,
-                          },
-                        },
-                      },
-                    },
-                    teams: {
-                      select: {
-                        teams: {
-                          select: {
-                            name: true,
-                            club_uuid: true,
-                          },
-                        },
-                      },
-                    },
-                  },
+                  select: safeMemberProps,
                 },
               },
             },

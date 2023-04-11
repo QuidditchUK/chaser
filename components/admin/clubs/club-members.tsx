@@ -26,7 +26,9 @@ import { clubs as Club } from '@prisma/client';
 export const getLatestProduct = (member) =>
   member?.stripe_products[member?.stripe_products?.length - 1]?.products;
 
-const groupByActive = (members: any[]): { active: any[]; inactive: any[] } => {
+export const groupByActive = (
+  members: any[]
+): { active: any[]; inactive: any[] } => {
   const [active, inactive] = members?.reduce(
     (result, member) => {
       const product = getLatestProduct(member);

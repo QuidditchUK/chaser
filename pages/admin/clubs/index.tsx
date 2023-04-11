@@ -105,7 +105,7 @@ const ClubAdminDashboard = () => {
         <Box bg="white" borderRadius="lg">
           <Table
             name="Clubs"
-            columns={['Name', 'League', 'Email', 'Members', '']}
+            columns={['Name', 'League', 'Email', 'Active Members', '']}
             isLoading={isLoading}
             skeletonRows={20}
           >
@@ -118,7 +118,7 @@ const ClubAdminDashboard = () => {
                     <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
                   )}
                 </Td>
-                <Td>{club?._count?.users}</Td>
+                <Td>{club?.activeMemberCount}</Td>
 
                 {hasScope([CLUBS_READ, EMT], userScopes) && (
                   <Td>
@@ -137,7 +137,7 @@ const ClubAdminDashboard = () => {
         <Box bg="white" borderRadius="lg">
           <Table
             name="Inactive Clubs"
-            columns={['Name', 'League', 'Email', 'Members', '', '']}
+            columns={['Name', 'League', 'Email', 'Active Members', '', '']}
             isLoading={isLoading}
           >
             {inactiveClubs.map((club) => (
@@ -149,7 +149,7 @@ const ClubAdminDashboard = () => {
                     <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
                   )}
                 </Td>
-                <Td>{club?._count?.users}</Td>
+                <Td>{club?.activeMemberCount}</Td>
 
                 {hasScope([CLUBS_READ, EMT], userScopes) && (
                   <Td>
