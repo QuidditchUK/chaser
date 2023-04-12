@@ -28,7 +28,7 @@ const ClubTeams = ({ club_uuid }) => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Heading as="h4" fontFamily="body" color="qukBlue">
+        <Heading as="h4" fontFamily="body" color="qukBlue" fontSize="2xl">
           Teams
         </Heading>
 

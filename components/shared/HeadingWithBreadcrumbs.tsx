@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import Link from 'next/link';
 import { Box, Heading, Flex } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
@@ -18,10 +19,10 @@ export default function HeadingWithBreadcrumbs({
     <Box mt={4}>
       <Flex alignItems="center">
         {breadcrumbs.map((breadcrumb) => (
-          <>
+          <Fragment key={breadcrumb.title}>
             <Link href={breadcrumb.link}>{breadcrumb.title}</Link>{' '}
             <ChevronRightIcon />
-          </>
+          </Fragment>
         ))}
       </Flex>
       <Heading

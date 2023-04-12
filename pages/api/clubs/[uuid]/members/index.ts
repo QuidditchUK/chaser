@@ -11,6 +11,7 @@ export const safeMemberProps = {
   email: true,
   is_student: true,
   university: true,
+  position: true,
   stripe_products: {
     select: {
       products: {

@@ -56,6 +56,9 @@ const ClubPage = ({ club: initialData }: { club: PrismaClub }) => {
         {hasScope([CLUBS_WRITE, EMT], userScopes) && (
           <ClubTeams club_uuid={club?.uuid} />
         )}
+        <Heading fontFamily="body" color="qukBlue" fontSize="2xl">
+          Members
+        </Heading>
         <ClubMembers club={club} refetch={refetch} scopes={userScopes} />
       </Slice>
     </>
