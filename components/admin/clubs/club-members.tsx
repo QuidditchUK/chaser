@@ -168,9 +168,9 @@ const MembersTable = ({
           Inactive ({inactive.length})
         </Button>
 
-        <Button fontSize={{ base: 'xs', md: 'md' }} variant="light" isDisabled>
+        {/* <Button fontSize={{ base: 'xs', md: 'md' }} variant="light" isDisabled>
           Student Summer Pass
-        </Button>
+        </Button> */}
       </Flex>
 
       {viewMembers.length > 0 ? (

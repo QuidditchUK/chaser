@@ -203,38 +203,46 @@ function StudentSummerPass({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const headers = generateServerSideHeaders(req);
-  const { data: products } = await productsService.getUserProducts({ headers });
-
-  if (
-    !products.length ||
-    !products.filter(
-      (product) =>
-        new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())
-    ).length
-  ) {
-    return {
-      redirect: {
-        destination: '/dashboard/membership/manage',
-        permanent: false,
-      },
-    };
-  }
-
-  const [{ data: clubs }, { data: settings }, basePageProps] =
-    await Promise.all([
-      clubsService.getPublicClubs(),
-      settingsService.getSettings(),
-      getBasePageProps(),
-    ]);
-
+  // TODO: Remove on release of Student Summer Pass
   return {
-    props: {
-      clubs,
-      settings,
-      ...basePageProps,
+    redirect: {
+      destination: '/dashboard/membership/manage',
+      permanent: false,
     },
   };
+
+  // const headers = generateServerSideHeaders(req);
+  // const { data: products } = await productsService.getUserProducts({ headers });
+
+  // if (
+  //   !products.length ||
+  //   !products.filter(
+  //     (product) =>
+  //       new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())
+  //   ).length
+  // ) {
+  //   return {
+  //     redirect: {
+  //       destination: '/dashboard/membership/manage',
+  //       permanent: false,
+  //     },
+  //   };
+  // }
+
+  // const [{ data: clubs }, { data: settings }, basePageProps] =
+  //   await Promise.all([
+  //     clubsService.getPublicClubs(),
+  //     settingsService.getSettings(),
+  //     getBasePageProps(),
+  //   ]);
+
+  // return {
+  //   props: {
+  //     clubs,
+  //     settings,
+  //     ...basePageProps,
+  //   },
+  // };
 };
 
 export default StudentSummerPass;
