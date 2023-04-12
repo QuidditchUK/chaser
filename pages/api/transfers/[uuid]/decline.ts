@@ -55,10 +55,11 @@ export default async function handler(
           from: 'clubs@quidditchuk.org',
         });
 
-        await sendNotifications(
-          { user_uuid: transfer?.user_uuid, type_id: TRANSFER_DECLINED },
-          { club_name: transfer?.newClub?.name }
-        );
+        await sendNotifications({
+          user_uuid: transfer?.user_uuid,
+          type_id: TRANSFER_DECLINED,
+          data: { club_name: transfer?.newClub?.name },
+        });
 
         res.status(200).end();
         return;

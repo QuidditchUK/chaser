@@ -93,10 +93,11 @@ export default async function handler(
         }
 
         // notify user they have been removed
-        await sendNotifications(
-          { user_uuid: member_uuid, type_id: CLUB_MEMBER_REMOVED },
-          { club_name: club?.name }
-        );
+        await sendNotifications({
+          user_uuid: member_uuid,
+          type_id: CLUB_MEMBER_REMOVED,
+          data: { club_name: club?.name },
+        });
         res.status(200).end();
 
         return;

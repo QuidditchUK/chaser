@@ -105,10 +105,14 @@ export default async function handler(
           });
 
           if (club.managed_by) {
-            await sendNotifications(
-              { user_uuid: club.managed_by, type_id: CLUB_MEMBER_ADDED },
-              { club_name: club.name, user_name: `${first_name} ${last_name}` }
-            );
+            await sendNotifications({
+              user_uuid: club.managed_by,
+              type_id: CLUB_MEMBER_ADDED,
+              data: {
+                club_name: club.name,
+                user_name: `${first_name} ${last_name}`,
+              },
+            });
           }
         }
 

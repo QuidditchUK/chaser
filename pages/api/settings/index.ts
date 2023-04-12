@@ -89,13 +89,15 @@ export default async function handler(
             ({ push_notifications }) => push_notifications?.length !== 0
           );
 
+          const payloadLookup = PUSH_PAYLOADS[type_id];
+
           // for Each of the users, loop over their push notifications and send a notification
           pushUsers.forEach((pushUser) => {
             pushUser.push_notifications.forEach(
               ({ endpoint, auth, p256dh, uuid }) => {
                 pushNotification(
                   { endpoint, keys: { auth, p256dh } },
-                  PUSH_PAYLOADS[type_id],
+                  payloadLookup(),
                   uuid
                 );
               }

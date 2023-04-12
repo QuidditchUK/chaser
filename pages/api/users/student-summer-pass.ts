@@ -36,12 +36,9 @@ export default async function handler(req: Request, res: NextApiResponse) {
         });
 
         if (!is_student && !(clubs.league === 'Community')) {
-          res
-            .status(400)
-            .json({
-              message:
-                'Only students playing for university clubs are eligible',
-            });
+          res.status(400).json({
+            message: 'Only students playing for university clubs are eligible',
+          });
           return;
         }
 
@@ -84,23 +81,22 @@ export default async function handler(req: Request, res: NextApiResponse) {
 
         // Send notification to club
         if (club.managed_by) {
-          await sendNotifications(
-            { user_uuid: club.managed_by, type_id: CLUB_MEMBER_ADDED },
-            {
+          await sendNotifications({
+            user_uuid: club.managed_by,
+            type_id: CLUB_MEMBER_ADDED,
+            data: {
               club_name: club.name,
               user_name: `${token.user?.first_name} ${token.user.last_name}`,
-            }
-          );
+            },
+          });
         }
 
         // send notification to user
-        await sendNotifications(
-          {
-            user_uuid: token.user.uuid,
-            type_id: STUDENT_SUMMER_PASS_PURCHASED,
-          },
-          { club_name: club.name }
-        );
+        await sendNotifications({
+          user_uuid: token.user.uuid,
+          type_id: STUDENT_SUMMER_PASS_PURCHASED,
+          data: { club_name: club.name },
+        });
 
         res.status(200).end();
         return;
