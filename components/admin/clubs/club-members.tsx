@@ -168,6 +168,7 @@ const MembersTable = ({
           Inactive ({inactive.length})
         </Button>
 
+        {/* TODO: Add when SSP released */}
         {/* <Button fontSize={{ base: 'xs', md: 'md' }} variant="light" isDisabled>
           Student Summer Pass
         </Button> */}
