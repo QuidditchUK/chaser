@@ -25,6 +25,12 @@ async function main() {
         league: 'University',
         active: false,
       },
+      {
+        name: 'Sheffield Quadball Club',
+        slug: 'sheffield-quidditch-club',
+        league: 'University',
+        active: true,
+      },
     ],
   });
 
@@ -40,6 +46,7 @@ async function main() {
   await prisma.system_settings.create({
     data: {
       transfer_window: false,
+      student_summer_pass_expiry: new Date('2023-10-01'),
     },
   });
 

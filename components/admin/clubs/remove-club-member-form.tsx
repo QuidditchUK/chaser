@@ -1,6 +1,8 @@
 import Modal from 'components/shared/modal';
-import { Text } from '@chakra-ui/react';
+import { Text, UseModalProps } from '@chakra-ui/react';
 import clubsService from 'services/clubs';
+import { SafeUserWithScopes } from 'types/user';
+import { clubs as Club } from '@prisma/client';
 
 const handleRemoveClick = async ({ club_uuid, user_uuid, onClose }) => {
   try {
@@ -11,7 +13,17 @@ const handleRemoveClick = async ({ club_uuid, user_uuid, onClose }) => {
   }
 };
 
-const RemoveClubMemberForm = ({ isOpen, member, club, onClose }) => (
+type RemoveClubMemberFormProps = Pick<UseModalProps, 'isOpen' | 'onClose'> & {
+  member: SafeUserWithScopes;
+  club: Club;
+};
+
+const RemoveClubMemberForm = ({
+  isOpen,
+  member,
+  club,
+  onClose,
+}: RemoveClubMemberFormProps) => (
   <Modal
     title="Remove Member"
     isOpen={isOpen}

@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-import { Box, Flex, Heading, Tr, Td, Grid, Text } from '@chakra-ui/react';
+import { Box, Flex, Tr, Td, Grid, Text } from '@chakra-ui/react';
 import { parse } from 'date-fns';
 import { useForm } from 'react-hook-form';
 
 import { USERS_READ, EMT } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import { isScoped_ServerProps } from 'modules/auth';
-import { ChevronRightIcon } from '@chakra-ui/icons';
 import Meta from 'components/shared/meta';
 import { getBasePageProps } from 'modules/prismic';
 import Table from 'components/shared/table';
@@ -22,6 +21,7 @@ import CopyValueButton from 'components/shared/copy-value-button';
 import { GetServerSideProps } from 'next';
 
 import { AdminUserWithRelations } from 'types/user';
+import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
 
 function useDebounce(value, delay) {
   // State and setters for debounced value
@@ -93,15 +93,10 @@ const Users = () => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Heading
-            as="h3"
-            fontFamily="body"
-            color="qukBlue"
-            display="flex"
-            alignItems="center"
-          >
-            <Link href="/admin">Dashboard</Link> <ChevronRightIcon /> Users
-          </Heading>
+          <HeadingWithBreadcrumbs
+            breadcrumbs={[{ link: '/admin', title: 'Dashboard' }]}
+            heading="Users"
+          />
         </Flex>
 
         <form onSubmit={handleSubmit(() => {})}>

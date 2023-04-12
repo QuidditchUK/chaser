@@ -61,56 +61,64 @@ export default async function handler(
           },
         });
 
-        // notifications
-        const transferChanged =
-          oldSettings?.transfer_window !== settings?.transfer_window;
+        // TRANSFER WINDOW UPDATE
+        if (oldSettings?.transfer_window !== settings?.transfer_window) {
+          // find all users that want transfer window updates
+          const users = await prisma?.users?.findMany({
+            where: { transfer_window_notifications: true },
+            select: {
+              uuid: true,
+              push_notifications: true,
+            },
+          });
 
-        if (!transferChanged) {
-          res.json(settings);
-          return;
+          const type_id = settings?.transfer_window
+            ? TRANSFERS_OPEN
+            : TRANSFERS_CLOSED;
+
+          await prisma?.notifications?.createMany({
+            data: users.map(({ uuid: user_uuid }) => ({
+              user_uuid,
+              type_id,
+            })),
+          });
+
+          // push notifications
+          // only users that have push notifications
+          const pushUsers = users.filter(
+            ({ push_notifications }) => push_notifications?.length !== 0
+          );
+
+          // for Each of the users, loop over their push notifications and send a notification
+          pushUsers.forEach((pushUser) => {
+            pushUser.push_notifications.forEach(
+              ({ endpoint, auth, p256dh, uuid }) => {
+                pushNotification(
+                  { endpoint, keys: { auth, p256dh } },
+                  PUSH_PAYLOADS[type_id],
+                  uuid
+                );
+              }
+            );
+          });
         }
 
-        const whereUsers = transferChanged
-          ? { transfer_window_notifications: true }
-          : {};
-
-        const users = await prisma?.users?.findMany({
-          where: whereUsers,
-          select: {
-            uuid: true,
-            push_notifications: true,
-          },
-        });
-
-        const type_id = settings?.transfer_window
-          ? TRANSFERS_OPEN
-          : TRANSFERS_CLOSED;
-
-        await prisma?.notifications?.createMany({
-          data: users.map(({ uuid: user_uuid }) => ({
-            user_uuid,
-            type_id,
-          })),
-        });
-
-        // push notifications
-        // only users that have push notifications
-        const pushUsers = users.filter(
-          ({ push_notifications }) => push_notifications?.length !== 0
-        );
-
-        // for Each of the users, loop over their push notifications and send a notification
-        pushUsers.forEach((pushUser) => {
-          pushUser.push_notifications.forEach(
-            ({ endpoint, auth, p256dh, uuid }) => {
-              pushNotification(
-                { endpoint, keys: { auth, p256dh } },
-                PUSH_PAYLOADS[type_id],
-                uuid
-              );
-            }
-          );
-        });
+        // update active student summer passes
+        if (
+          oldSettings?.student_summer_pass_expiry !==
+          settings.student_summer_pass_expiry
+        ) {
+          await prisma.student_summer_pass.updateMany({
+            where: {
+              expires: {
+                gt: oldSettings.student_summer_pass_expiry,
+              },
+            },
+            data: {
+              expires: settings.student_summer_pass_expiry,
+            },
+          });
+        }
 
         res.status(200).json(settings);
         return;

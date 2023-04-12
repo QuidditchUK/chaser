@@ -11,6 +11,7 @@ export const EVENT_REGISTRATION_CLOSED = 'EVENT_REGISTRATION_CLOSED';
 export const CLUB_MANAGEMENT = 'CLUB_MANAGEMENT';
 export const CLUB_MEMBER_REMOVED = 'CLUB_MEMBER_REMOVED';
 export const CLUB_MEMBER_ADDED = 'CLUB_MEMBER_ADDED';
+export const STUDENT_SUMMER_PASS_PURCHASED = 'STUDENT_SUMMER_PASS_PURCHASED';
 
 export type NotificationType =
   | typeof TRANSFERS_OPEN
@@ -25,7 +26,8 @@ export type NotificationType =
   | typeof EVENT_REGISTRATION_CLOSED
   | typeof CLUB_MANAGEMENT
   | typeof CLUB_MEMBER_ADDED
-  | typeof CLUB_MEMBER_REMOVED;
+  | typeof CLUB_MEMBER_REMOVED
+  | typeof STUDENT_SUMMER_PASS_PURCHASED;
 
 export const NotificationLink = {
   [TRANSFERS_OPEN]: {
@@ -49,6 +51,9 @@ export const NotificationLink = {
   [CLUB_MEMBER_REMOVED]: {
     url: '/dashboard/membership/club',
   },
+  [STUDENT_SUMMER_PASS_PURCHASED]: {
+    url: '/dashboard/membership/student-summer-pass',
+  },
 };
 
 export const NOTIFICATION_PAYLOADS = {
@@ -62,6 +67,8 @@ export const NOTIFICATION_PAYLOADS = {
     `You have been removed as a member of ${club_name}`,
   [CLUB_MEMBER_ADDED]: ({ club_name, user_name }) =>
     `${user_name} has joined ${club_name}`,
+  [STUDENT_SUMMER_PASS_PURCHASED]: ({ club_name }) =>
+    `Your Student Summer Pass with ${club_name} has been activated`,
 };
 
 export const PUSH_PAYLOADS = {
@@ -95,6 +102,10 @@ export const PUSH_PAYLOADS = {
     title: 'New Member',
     body: `${user_name} has joined ${club_name}`,
     actions: [{ action: CLUB_MANAGEMENT, title: 'Manage Club' }],
+  }),
+  [STUDENT_SUMMER_PASS_PURCHASED]: ({ club_name }) => ({
+    title: 'Student Summer Pass',
+    body: `Your Student Summer Pass with ${club_name} has been activated`,
   }),
   NEWS: ({ title, body, image, data }) => ({
     title,

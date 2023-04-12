@@ -116,6 +116,13 @@ const usersService = {
     method: 'get',
     url: `/users/${uuid}`,
   }),
+
+  studentSummerPass: ({ data, ...params }) => ({
+    method: 'post',
+    url: '/users/student-summer-pass',
+    data,
+    ...params,
+  }),
 };
 
 export default createService(usersService);

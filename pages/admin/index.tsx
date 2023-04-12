@@ -45,6 +45,10 @@ const Dashboard = () => {
           {hasScope([EMT], userScopes) && (
             <Card title="Volunteer Permissions" href="/admin/permissions" />
           )}
+          {/* TODO: Enable when SSP released */}
+          {/* {hasScope([EMT], userScopes) && (
+            <Card title="System Settings" href="/admin/settings" />
+          )} */}
         </Grid>
       </Slice>
     </>

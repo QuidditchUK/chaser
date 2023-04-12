@@ -10,20 +10,21 @@ datasource db {
 }
 
 model clubs {
-  uuid             String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  created          DateTime?   @db.Timestamptz(6)
-  updated          DateTime?   @db.Timestamptz(6)
-  name             String?     @db.VarChar(255)
-  slug             String?     @unique @db.VarChar
-  league           String?     @db.VarChar(255)
-  active           Boolean     @default(true)
-  email            String?     @db.VarChar(255)
-  users            users[]
-  prevClubTransfer transfers[] @relation("prevClub")
-  newClubTransfer  transfers[] @relation("newClub")
-  teams            teams[]
-  managed_by       String?     @db.Uuid
-  managedBy        users?      @relation(name: "managedBy", fields: [managed_by], references: [uuid])
+  uuid                String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created             DateTime?             @db.Timestamptz(6)
+  updated             DateTime?             @db.Timestamptz(6)
+  name                String?               @db.VarChar(255)
+  slug                String?               @unique @db.VarChar
+  league              String?               @db.VarChar(255)
+  active              Boolean               @default(true)
+  email               String?               @db.VarChar(255)
+  users               users[]
+  prevClubTransfer    transfers[]           @relation("prevClub")
+  newClubTransfer     transfers[]           @relation("newClub")
+  teams               teams[]
+  managed_by          String?               @db.Uuid
+  managedBy           users?                @relation(name: "managedBy", fields: [managed_by], references: [uuid])
+  student_summer_pass student_summer_pass[]
 }
 
 model users {
@@ -55,16 +56,17 @@ model users {
   transfer_window_notifications    Boolean   @default(false)
   event_registration_notifications Boolean   @default(false)
 
-  scopes             scopes[]
-  transfers          transfers[]
-  actionedBy         transfers[]             @relation("actionedBy")
-  stripe_products    users_stripe_products[]
-  teams              teams_users[]
-  scouting_requests  scouting_requests[]
-  scoutedBy          scouting_requests[]     @relation("scoutedBy")
-  notifications      notifications[]
-  push_notifications push_notifications[]
-  managedBy          clubs[]                 @relation("managedBy")
+  scopes              scopes[]
+  transfers           transfers[]
+  actionedBy          transfers[]             @relation("actionedBy")
+  stripe_products     users_stripe_products[]
+  teams               teams_users[]
+  scouting_requests   scouting_requests[]
+  scoutedBy           scouting_requests[]     @relation("scoutedBy")
+  notifications       notifications[]
+  push_notifications  push_notifications[]
+  managedBy           clubs[]                 @relation("managedBy")
+  student_summer_pass student_summer_pass[]
 }
 
 model users_stripe_products {
@@ -127,9 +129,10 @@ enum ScoutingOutcome {
 }
 
 model system_settings {
-  uuid            String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  created         DateTime? @default(now()) @db.Timestamptz(6)
-  transfer_window Boolean?  @default(false)
+  uuid                       String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created                    DateTime? @default(now()) @db.Timestamptz(6)
+  transfer_window            Boolean?  @default(false)
+  student_summer_pass_expiry DateTime? @default(now()) @db.Timestamptz(6)
 }
 
 model stripe_products {
@@ -211,4 +214,13 @@ model push_notifications {
   device_id  String? @db.Text
   user_uuid  String  @db.Uuid
   user       users   @relation(fields: [user_uuid], references: [uuid], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model student_summer_pass {
+  uuid      String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  expires   DateTime @default(now()) @db.Timestamptz(6)
+  user_uuid String   @db.Uuid
+  club_uuid String   @db.Uuid
+  user      users    @relation(fields: [user_uuid], references: [uuid], onDelete: Cascade, onUpdate: Cascade)
+  club      clubs    @relation(fields: [club_uuid], references: [uuid], onDelete: Cascade, onUpdate: Cascade)
 }

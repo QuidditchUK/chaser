@@ -28,6 +28,7 @@ import Modal from 'components/shared/modal';
 import clubsService from 'services/clubs';
 import useCachedResponse from 'hooks/useCachedResponse';
 import useMe from 'hooks/useMe';
+import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
 
 const handleDeleteClick = async ({ uuid, refetch }) => {
   try {
@@ -72,15 +73,10 @@ const ClubAdminDashboard = () => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Heading
-            as="h3"
-            fontFamily="body"
-            color="qukBlue"
-            display="flex"
-            alignItems="center"
-          >
-            <Link href="/admin">Dashboard</Link> <ChevronRightIcon /> Clubs
-          </Heading>
+          <HeadingWithBreadcrumbs
+            breadcrumbs={[{ link: '/admin', title: 'Dashboard' }]}
+            heading="Clubs"
+          />
 
           <Button
             variant="transparent"
@@ -105,7 +101,7 @@ const ClubAdminDashboard = () => {
         <Box bg="white" borderRadius="lg">
           <Table
             name="Clubs"
-            columns={['Name', 'League', 'Email', 'Members', '']}
+            columns={['Name', 'League', 'Email', 'Active Members', '']}
             isLoading={isLoading}
             skeletonRows={20}
           >
@@ -118,7 +114,7 @@ const ClubAdminDashboard = () => {
                     <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
                   )}
                 </Td>
-                <Td>{club?._count?.users}</Td>
+                <Td>{club?.activeMemberCount}</Td>
 
                 {hasScope([CLUBS_READ, EMT], userScopes) && (
                   <Td>
@@ -137,7 +133,7 @@ const ClubAdminDashboard = () => {
         <Box bg="white" borderRadius="lg">
           <Table
             name="Inactive Clubs"
-            columns={['Name', 'League', 'Email', 'Members', '', '']}
+            columns={['Name', 'League', 'Email', 'Active Members', '', '']}
             isLoading={isLoading}
           >
             {inactiveClubs.map((club) => (
@@ -149,7 +145,7 @@ const ClubAdminDashboard = () => {
                     <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
                   )}
                 </Td>
-                <Td>{club?._count?.users}</Td>
+                <Td>{club?.activeMemberCount}</Td>
 
                 {hasScope([CLUBS_READ, EMT], userScopes) && (
                   <Td>

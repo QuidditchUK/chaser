@@ -1,12 +1,12 @@
 import usersService from 'services/users';
-import { SafeUserWithTransfersAndScopes } from 'types/user';
+import { SafeUserWithIncludes } from 'types/user';
 import useCachedResponse from './useCachedResponse';
 
 /**
  * Hook to fetch the current user
  */
 export default function useMe() {
-  const response = useCachedResponse<SafeUserWithTransfersAndScopes>({
+  const response = useCachedResponse<SafeUserWithIncludes>({
     queryKey: '/users/me',
     queryFn: usersService.getUser,
   });

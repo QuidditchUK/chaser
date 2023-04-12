@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import format from 'date-fns/format';
 
 import {
@@ -23,7 +22,6 @@ import { getPlainScopes, hasScope } from 'modules/scopes';
 import { TRANSFER_READ, EMT, TRANSFER_WRITE } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import { isScoped_ServerProps } from 'modules/auth';
-import { ChevronRightIcon } from '@chakra-ui/icons';
 import Meta from 'components/shared/meta';
 import { getBasePageProps } from 'modules/prismic';
 import Table from 'components/shared/table';
@@ -39,6 +37,7 @@ import {
 } from '@prisma/client';
 import { AdminTransferWithRelations } from 'types/transfer';
 import useMe from 'hooks/useMe';
+import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
 
 const STATUS = {
   APPROVED: 'Approved',
@@ -119,15 +118,10 @@ const Transfers = ({ settings }: { settings: PrismaSystemSetting }) => {
           justifyContent="space-between"
           gap={2}
         >
-          <Heading
-            as="h3"
-            fontFamily="body"
-            color="qukBlue"
-            display="flex"
-            alignItems="center"
-          >
-            <Link href="/admin">Dashboard</Link> <ChevronRightIcon /> Transfers
-          </Heading>
+          <HeadingWithBreadcrumbs
+            breadcrumbs={[{ link: '/admin', title: 'Dashboard' }]}
+            heading="Transfers"
+          />
 
           <form>
             <Switch

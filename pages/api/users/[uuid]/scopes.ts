@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isScoped_ApiRoute } from 'modules/auth';
 import { EMT } from 'constants/scopes';
-import { getSafeUserWithTransfersAndScopes } from '../me';
+import { getSafeUserWithIncludes } from '../me';
 import { getPlainScopes } from 'modules/scopes';
 import prisma from 'modules/prisma';
 
@@ -21,7 +21,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
           return;
         }
         const uuid = req.query.uuid as string;
-        const user = await getSafeUserWithTransfersAndScopes(uuid);
+        const user = await getSafeUserWithIncludes(uuid);
 
         // array of [transfer:read, user:read] etc
         const userScopes = getPlainScopes(user.scopes);

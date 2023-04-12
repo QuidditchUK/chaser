@@ -75,7 +75,7 @@ const ManageClub = ({ clubs = [], settings }) => {
       const club = clubs.find(({ uuid }) => uuid === user?.club_uuid);
       setSelectedClub(club);
     }
-  }, [user.club_uuid, setSelectedClub, clubs, selectedClub]);
+  }, [user?.club_uuid, setSelectedClub, clubs, selectedClub, user]);
 
   const [serverError, setServerError] = useState(null);
 
@@ -116,7 +116,7 @@ const ManageClub = ({ clubs = [], settings }) => {
       />
       <Slice>
         <Grid
-          gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
+          gridTemplateColumns={{ base: '1fr', md: '2fr 1fr' }}
           gridGap={{ base: 4, md: 9 }}
         >
           <Box
@@ -138,7 +138,7 @@ const ManageClub = ({ clubs = [], settings }) => {
                   </p>
                   <p>
                     If you need to change your club, you must submit a transfer
-                    request to QuadballUK to request any changes.
+                    request to QuadballUK.
                   </p>
                   <p>
                     The transfer window is currently{' '}

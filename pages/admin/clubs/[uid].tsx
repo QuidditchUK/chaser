@@ -24,6 +24,7 @@ import clubsService from 'services/clubs';
 import useCachedResponse from 'hooks/useCachedResponse';
 import { getPlainScopes, hasScope } from 'modules/scopes';
 import useMe from 'hooks/useMe';
+import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
 
 const ClubPage = ({ club: initialData }: { club: PrismaClub }) => {
   const router = useRouter();
@@ -40,17 +41,13 @@ const ClubPage = ({ club: initialData }: { club: PrismaClub }) => {
     <>
       <Meta subTitle={club?.name} title="Clubs Admin Dashboard" />
       <Slice>
-        <Heading
-          as="h3"
-          fontFamily="body"
-          color="qukBlue"
-          display="flex"
-          alignItems="center"
-        >
-          <Link href="/admin">Dashboard</Link> <ChevronRightIcon />{' '}
-          <Link href="/admin/clubs/">Clubs</Link> <ChevronRightIcon />{' '}
-          {club?.name}
-        </Heading>
+        <HeadingWithBreadcrumbs
+          breadcrumbs={[
+            { link: '/admin', title: 'Dashboard' },
+            { link: '/admin/clubs', title: 'Clubs' },
+          ]}
+          heading={club?.name}
+        />
 
         {hasScope([CLUBS_WRITE, EMT], userScopes) && (
           <UpdateClubForm club={club} refetch={refetch} />
@@ -59,6 +56,9 @@ const ClubPage = ({ club: initialData }: { club: PrismaClub }) => {
         {hasScope([CLUBS_WRITE, EMT], userScopes) && (
           <ClubTeams club_uuid={club?.uuid} />
         )}
+        <Heading fontFamily="body" color="qukBlue" fontSize="2xl">
+          Members
+        </Heading>
         <ClubMembers club={club} refetch={refetch} scopes={userScopes} />
       </Slice>
     </>

@@ -4,6 +4,36 @@ import { isScoped_ApiRoute } from 'modules/auth';
 import { CLUBS_READ, EMT } from 'constants/scopes';
 import { isManager } from 'modules/clubs';
 
+export const safeMemberProps = {
+  uuid: true,
+  first_name: true,
+  last_name: true,
+  email: true,
+  is_student: true,
+  university: true,
+  position: true,
+  stripe_products: {
+    select: {
+      products: {
+        select: {
+          description: true,
+          expires: true,
+        },
+      },
+    },
+  },
+  teams: {
+    select: {
+      teams: {
+        select: {
+          name: true,
+          club_uuid: true,
+        },
+      },
+    },
+  },
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -24,36 +54,21 @@ export default async function handler(
           where: { uuid },
           include: {
             users: {
-              select: {
-                uuid: true,
-                first_name: true,
-                last_name: true,
-                email: true,
-                is_student: true,
-                university: true,
-                stripe_products: {
-                  select: {
-                    products: {
-                      select: {
-                        description: true,
-                        expires: true,
-                      },
-                    },
-                  },
-                },
-                teams: {
-                  select: {
-                    teams: {
-                      select: {
-                        name: true,
-                        club_uuid: true,
-                      },
-                    },
-                  },
-                },
-              },
+              select: safeMemberProps,
               orderBy: {
                 last_name: 'asc',
+              },
+            },
+            student_summer_pass: {
+              where: {
+                expires: {
+                  gt: new Date(),
+                },
+              },
+              include: {
+                user: {
+                  select: safeMemberProps,
+                },
               },
             },
           },
@@ -64,7 +79,13 @@ export default async function handler(
           return;
         }
 
-        res.json(club.users);
+        const studentSummerPassMembers = club.student_summer_pass.map(
+          ({ user }) => user
+        );
+        res.json({
+          members: club.users,
+          studentSummerPassMembers,
+        });
         return;
       } catch (err) {
         res.status(400).end();

@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getToken } from 'next-auth/jwt';
-import { SafeUserWithTransfersAndScopes } from 'types/user';
+import { SafeUserWithIncludes } from 'types/user';
 import sendEmail from 'modules/email';
 import prisma from 'modules/prisma';
 import sendNotifications from 'modules/sendNotification';
 import { CLUB_MEMBER_ADDED } from 'constants/notifications';
 
-export const getSafeUserWithTransfersAndScopes = async (uuid: string) => {
+export const getSafeUserWithIncludes = async (uuid: string) => {
   const { hashed_password, salt, ...user } = await prisma.users.findUnique({
     where: { uuid },
 
@@ -30,6 +30,17 @@ export const getSafeUserWithTransfersAndScopes = async (uuid: string) => {
           created: true,
         },
       },
+      student_summer_pass: {
+        select: {
+          club: {
+            select: {
+              name: true,
+            },
+          },
+          uuid: true,
+          expires: true,
+        },
+      },
     },
   });
 
@@ -38,7 +49,7 @@ export const getSafeUserWithTransfersAndScopes = async (uuid: string) => {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<SafeUserWithTransfersAndScopes>
+  res: NextApiResponse<SafeUserWithIncludes>
 ) {
   switch (req.method) {
     case 'GET':
@@ -50,7 +61,7 @@ export default async function handler(
           return;
         }
 
-        const user = await getSafeUserWithTransfersAndScopes(token.user.uuid);
+        const user = await getSafeUserWithIncludes(token.user.uuid);
 
         res.status(200).json(user);
 
@@ -93,13 +104,15 @@ export default async function handler(
             to: club.email,
           });
 
-          await sendNotifications(
-            { user_uuid: club.managed_by, type_id: CLUB_MEMBER_ADDED },
-            { club_name: name, user_name: `${first_name} ${last_name}` }
-          );
+          if (club.managed_by) {
+            await sendNotifications(
+              { user_uuid: club.managed_by, type_id: CLUB_MEMBER_ADDED },
+              { club_name: club.name, user_name: `${first_name} ${last_name}` }
+            );
+          }
         }
 
-        const user = await getSafeUserWithTransfersAndScopes(token.user.uuid);
+        const user = await getSafeUserWithIncludes(token.user.uuid);
 
         res.status(200).json(user);
       } catch (err) {
