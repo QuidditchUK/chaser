@@ -116,7 +116,8 @@ const ClubAdminDashboard = () => {
                     }
                     subtitle={
                       <Text fontWeight="normal" my={1}>
-                        Active Members: {club.activeMemberCount}
+                        Active Members: {club.activeMemberCount} | League:{' '}
+                        {club.league}
                       </Text>
                     }
                   />
