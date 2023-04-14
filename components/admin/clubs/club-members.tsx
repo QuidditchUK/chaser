@@ -7,18 +7,17 @@ import {
   useDisclosure,
   Text,
   UnorderedList,
-  ListItem,
-  ListProps,
-  ListItemProps,
   Drawer,
   DrawerContent,
   DrawerOverlay,
   DrawerCloseButton,
   DrawerHeader,
-  Skeleton,
-  SkeletonCircle,
 } from '@chakra-ui/react';
-import { CheckCircleIcon, DownloadIcon } from '@chakra-ui/icons';
+import {
+  CheckCircleIcon,
+  DownloadIcon,
+  NotAllowedIcon,
+} from '@chakra-ui/icons';
 import { format, parse } from 'date-fns';
 import { clubs as Club } from '@prisma/client';
 
@@ -29,6 +28,12 @@ import { hasScope } from 'modules/scopes';
 import { SafeUserWithScopes } from 'types/user';
 import { CLUBS_WRITE, CLUB_MANAGEMENT, EMT } from 'constants/scopes';
 
+import {
+  List,
+  Li,
+  SidebarListItem,
+  SkeletonList,
+} from 'components/shared/List';
 import Button from 'components/shared/button';
 import UpdateClubManagerForm from './update-club-manager-form';
 import RemoveClubMemberForm from './remove-club-member-form';
@@ -37,6 +42,8 @@ import DescriptionList, {
 } from 'components/shared/description-list';
 
 import PersonIcon from 'public/images/person.svg';
+import PageBody from 'components/layout/PageBody';
+import SkeletonLoaderWrapper from 'components/shared/SkeletonLoaderWrapper';
 
 export const getLatestProduct = (member) =>
   member?.stripe_products[member?.stripe_products?.length - 1]?.products;
@@ -70,7 +77,7 @@ const getProductName = (member) => {
     : 'Expired';
 };
 
-const CSVMemberRows = (members) => {
+const CSVMemberRows = (members: SafeUserWithScopes[]) => {
   if (!members) {
     return [];
   }
@@ -82,32 +89,6 @@ const CSVMemberRows = (members) => {
     member.university,
   ]);
 };
-
-const List = (props: ListProps) => (
-  <UnorderedList
-    listStyleType="none"
-    m={0}
-    p={0}
-    bg="white"
-    borderRadius="lg"
-    {...props}
-  />
-);
-
-const Li = (props: ListItemProps) => (
-  <ListItem
-    _hover={{ bg: 'gray.100' }}
-    cursor="pointer"
-    display="grid"
-    gridTemplateColumns="auto 1fr auto"
-    alignItems="center"
-    p={3}
-    gridColumnGap={3}
-    borderBottom="1px solid"
-    borderColor="gray.100"
-    {...props}
-  />
-);
 
 const MembersTable = ({
   members,
@@ -185,32 +166,23 @@ const MembersTable = ({
                   setSelectedMember(member);
                   onOpen();
                 }}
-              >
-                <Box color="gray.400">
-                  <PersonIcon height="3rem" width="3rem" />
-                </Box>
-                <Box>
-                  <Flex alignItems="center" direction="row" gridGap={2}>
+                icon={<PersonIcon height="3rem" width="3rem" />}
+                name={
+                  <>
                     <Text fontWeight="bold" alignItems="center" my={1}>
                       {member?.first_name} {member?.last_name}
                     </Text>{' '}
                     {club?.managed_by === member?.uuid && (
                       <CheckCircleIcon color="keeperGreen" />
                     )}
-                  </Flex>
-                  <Text mt={0} mb={1} fontSize="sm" color="gray.500">
-                    {member?.position ?? 'Utility'} |{' '}
-                    {member?.is_student ? 'Student' : 'Community'}
-                  </Text>
-                </Box>
-
-                <Text
-                  color={active ? 'keeperGreen' : 'monarchRed'}
-                  fontWeight="bold"
-                >
-                  {active ? 'Active' : 'Expired'}
-                </Text>
-              </Li>
+                  </>
+                }
+                subtitle={`${member?.position ?? 'Utility'} | ${
+                  member?.is_student ? 'Student' : 'Community'
+                }`}
+                active={active}
+                inactiveLabel="Expired"
+              />
             );
           })}
         </List>
@@ -297,22 +269,6 @@ const MembersTable = ({
   );
 };
 
-const SidebarListItem = (props: ListItemProps) => (
-  <ListItem
-    borderBottom="1px solid"
-    borderColor="gray.100"
-    _hover={{ bg: 'gray.100' }}
-    display="grid"
-    alignItems="center"
-    color="qukBlue"
-    gridTemplateColumns="auto 1fr"
-    cursor="pointer"
-    p={4}
-    gridGap={3}
-    {...props}
-  />
-);
-
 const ClubMembers = ({ club, refetch, scopes }) => {
   const {
     data: clubMembers = { studentSummerPassMembers: [], members: [] },
@@ -344,53 +300,12 @@ const ClubMembers = ({ club, refetch, scopes }) => {
 
   return (
     <>
-      <Grid
-        gridTemplateColumns={{ base: '1fr', lg: '2fr 1fr' }}
-        gridGap={4}
-        gridTemplateAreas={{
-          base: "'actions' 'members'",
-          lg: "'members actions'",
-        }}
-      >
-        <Box gridArea="members">
-          {membersIsLoading ? (
-            <>
-              <Flex direction="row" gridGap={3} mb={5}>
-                <Skeleton>
-                  <Button>All</Button>
-                </Skeleton>
-                <Skeleton>
-                  <Button>Active</Button>
-                </Skeleton>
-                <Skeleton>
-                  <Button>Inactive</Button>
-                </Skeleton>
-                <Skeleton>
-                  <Button>Student Summer Pass</Button>
-                </Skeleton>
-              </Flex>
-              <Box borderRadius="lg" bg="white" p={3}>
-                <Grid
-                  gridTemplateColumns="auto 1fr auto"
-                  alignItems="center"
-                  gridGap={3}
-                >
-                  <SkeletonCircle h="3rem" width="3rem" />
-                  <Box>
-                    <Skeleton mb={2}>
-                      <Text>John Smith</Text>
-                    </Skeleton>
-                    <Skeleton>
-                      <Text>Utility | Community</Text>
-                    </Skeleton>
-                  </Box>
-                  <Skeleton>
-                    <Text m={0}>Active</Text>
-                  </Skeleton>
-                </Grid>
-              </Box>
-            </>
-          ) : (
+      <PageBody>
+        <Box gridArea="main">
+          <SkeletonLoaderWrapper
+            isLoading={membersIsLoading}
+            loaderComponent={<SkeletonList />}
+          >
             <MembersTable
               scopes={scopes}
               members={allMembers}
@@ -398,13 +313,14 @@ const ClubMembers = ({ club, refetch, scopes }) => {
               membersRefetch={membersRefetch}
               club={club}
             />
-          )}
+          </SkeletonLoaderWrapper>
         </Box>
 
-        <Box gridArea="actions">
+        <Box gridArea="sidebar">
           <Heading fontFamily="body" color="gray.600" fontSize="xl">
             Actions
           </Heading>
+
           <Box borderRadius="lg" bg="white" height="initial">
             <UnorderedList listStyleType="none" m={0} p={0}>
               {hasScope([EMT, CLUBS_WRITE, CLUB_MANAGEMENT], scopes) && (
@@ -426,7 +342,7 @@ const ClubMembers = ({ club, refetch, scopes }) => {
             </UnorderedList>
           </Box>
         </Box>
-      </Grid>
+      </PageBody>
       <UpdateClubManagerForm
         club={club}
         members={members}

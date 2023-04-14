@@ -1,58 +1,35 @@
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import { clubs as PrismaClubs } from '@prisma/client';
-import Link from 'next/link';
-import {
-  Box,
-  Flex,
-  Heading,
-  Text,
-  useDisclosure,
-  Tr,
-  Td,
-} from '@chakra-ui/react';
-import { SmallAddIcon } from '@chakra-ui/icons';
+import { Box, Flex, Heading, Text, UnorderedList } from '@chakra-ui/react';
+import { PlusSquareIcon } from '@chakra-ui/icons';
 
-import { hasScope, getPlainScopes } from 'modules/scopes';
 import { getBasePageProps } from 'modules/prismic';
-import { CLUBS_READ, CLUBS_WRITE, EMT } from 'constants/scopes';
-
-import Slice from 'components/shared/slice';
-import Button from 'components/shared/button';
+import { CLUBS_READ, EMT } from 'constants/scopes';
 import { isScoped_ServerProps } from 'modules/auth';
-import { ChevronRightIcon } from '@chakra-ui/icons';
-import Meta from 'components/shared/meta';
-import Table from 'components/shared/table';
-import Modal from 'components/shared/modal';
-
 import clubsService from 'services/clubs';
 import useCachedResponse from 'hooks/useCachedResponse';
-import useMe from 'hooks/useMe';
-import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
 
-const handleDeleteClick = async ({ uuid, refetch }) => {
-  try {
-    await clubsService.deleteClub({ club_uuid: uuid });
-    refetch();
-  } catch (error) {
-    console.log(error);
-  }
-};
+import {
+  List,
+  Li,
+  SidebarListItem,
+  SkeletonList,
+} from 'components/shared/List';
+import Slice from 'components/shared/slice';
+import Button from 'components/shared/button';
+import Meta from 'components/shared/meta';
+import PageBody from 'components/layout/PageBody';
+import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
+import SkeletonLoaderWrapper from 'components/shared/SkeletonLoaderWrapper';
 
 const ClubAdminDashboard = () => {
-  const { data: user } = useMe();
-  const userScopes = getPlainScopes(user?.scopes);
-
-  const {
-    data: queryClubs = [],
-    refetch,
-    isLoading,
-  } = useCachedResponse<PrismaClubs[]>({
+  const { data: clubs = [], isLoading } = useCachedResponse<PrismaClubs[]>({
     queryKey: '/clubs/all',
     queryFn: clubsService.getAllClubs,
   });
 
-  const [activeClubs, inactiveClubs] = queryClubs?.reduce(
+  const [activeClubs, inactiveClubs] = clubs?.reduce(
     (result, club) => {
       result[club?.active ? 0 : 1].push(club);
       return result;
@@ -60,134 +37,112 @@ const ClubAdminDashboard = () => {
     [[], []]
   );
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedClub, setSelectedClub] = useState<PrismaClubs>(null);
+  const [activeFilter, setActiveFilter] = useState('ACTIVE');
+
+  const viewClubs =
+    activeFilter === 'ALL'
+      ? clubs
+      : activeFilter === 'ACTIVE'
+      ? activeClubs
+      : inactiveClubs;
 
   return (
     <>
       <Meta subTitle="Clubs" title="Admin Dashboard" />
       <Slice>
-        <Flex
-          flexDirection="row"
-          width="100%"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <HeadingWithBreadcrumbs
-            breadcrumbs={[{ link: '/admin', title: 'Dashboard' }]}
-            heading="Clubs"
-          />
+        <HeadingWithBreadcrumbs
+          breadcrumbs={[{ link: '/admin', title: 'Dashboard' }]}
+          heading="Clubs"
+        />
 
-          <Button
-            variant="transparent"
-            borderColor="qukBlue"
-            color="qukBlue"
-            _hover={{ bg: 'gray.300' }}
-            rightIcon={<SmallAddIcon />}
-            href="/admin/clubs/new"
-          >
-            Create new
-          </Button>
-        </Flex>
-
-        <Text>
+        <Text mt={0}>
           These are our internal record of clubs that allow players to select
           which club they are registered to play with. They are not to confused
-          with club profiles, which are powered by our CMS Prismic and have to
-          be set up separately. Members will only be able to select from active
-          clubs when choosing their clubs.
+          with club profiles, which are powered by our Content Management System{' '}
+          <strong>Prismic</strong> and have to be set up and maintained
+          separately. Members will only be able to select from active clubs when
+          choosing their clubs.
         </Text>
 
-        <Box bg="white" borderRadius="lg">
-          <Table
-            name="Clubs"
-            columns={['Name', 'League', 'Email', 'Active Members', '']}
-            isLoading={isLoading}
-            skeletonRows={20}
-          >
-            {activeClubs.map((club) => (
-              <Tr key={club?.uuid}>
-                <Td>{club?.name}</Td>
-                <Td>{club?.league}</Td>
-                <Td>
-                  {club?.email && (
-                    <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
-                  )}
-                </Td>
-                <Td>{club?.activeMemberCount}</Td>
+        <PageBody>
+          <Box gridArea="main">
+            <SkeletonLoaderWrapper
+              isLoading={isLoading}
+              loaderComponent={<SkeletonList />}
+            >
+              <Flex flexDirection="row" alignItems="center" gridGap={3} mb={5}>
+                <Button
+                  variant={activeFilter === 'ALL' ? 'primary' : 'light'}
+                  fontSize={{ base: 'xs', md: 'md' }}
+                  onClick={() => setActiveFilter('ALL')}
+                >
+                  All ({clubs.length})
+                </Button>
 
-                {hasScope([CLUBS_READ, EMT], userScopes) && (
-                  <Td>
-                    <Button href={`/admin/clubs/${club.uuid}`}>Details</Button>
-                  </Td>
-                )}
-              </Tr>
-            ))}
-          </Table>
-        </Box>
+                <Button
+                  variant={activeFilter === 'ACTIVE' ? 'primary' : 'light'}
+                  fontSize={{ base: 'xs', md: 'md' }}
+                  onClick={() => setActiveFilter('ACTIVE')}
+                >
+                  Active ({activeClubs.length})
+                </Button>
 
-        <Heading as="h4" fontFamily="body" color="qukBlue">
-          Inactive Clubs
-        </Heading>
+                <Button
+                  variant={activeFilter === 'INACTIVE' ? 'primary' : 'light'}
+                  fontSize={{ base: 'xs', md: 'md' }}
+                  onClick={() => setActiveFilter('INACTIVE')}
+                >
+                  Inactive ({inactiveClubs.length})
+                </Button>
+              </Flex>
+              <List>
+                {viewClubs?.map((club) => (
+                  <Li
+                    key={club.uuid}
+                    href={`/admin/clubs/${club.uuid}`}
+                    icon={
+                      <Box
+                        height="3rem"
+                        width="3rem"
+                        borderRadius="full"
+                        bg="gray.400"
+                      />
+                    }
+                    active={club.active}
+                    name={
+                      <Text color="qukBlue" fontWeight="bold" my={1}>
+                        {club.name}
+                      </Text>
+                    }
+                    subtitle={
+                      <Text fontWeight="normal" my={1}>
+                        Active Members: {club.activeMemberCount}
+                      </Text>
+                    }
+                  />
+                ))}
+              </List>
+            </SkeletonLoaderWrapper>
+          </Box>
 
-        <Box bg="white" borderRadius="lg">
-          <Table
-            name="Inactive Clubs"
-            columns={['Name', 'League', 'Email', 'Active Members', '', '']}
-            isLoading={isLoading}
-          >
-            {inactiveClubs.map((club) => (
-              <Tr key={club?.uuid}>
-                <Td>{club?.name}</Td>
-                <Td>{club?.league}</Td>
-                <Td>
-                  {club?.email && (
-                    <Link href={`mailto:${club?.email}`}>{club?.email}</Link>
-                  )}
-                </Td>
-                <Td>{club?.activeMemberCount}</Td>
+          <Box gridArea="sidebar">
+            <Heading fontFamily="body" color="gray.600" fontSize="xl">
+              Actions
+            </Heading>
 
-                {hasScope([CLUBS_READ, EMT], userScopes) && (
-                  <Td>
-                    <Button href={`/admin/clubs/${club.uuid}`}>Details</Button>
-                  </Td>
-                )}
-                {hasScope([CLUBS_WRITE, EMT], userScopes) && (
-                  <Td>
-                    <Button
-                      variant="secondary"
-                      onClick={() => {
-                        setSelectedClub(club);
-                        onOpen();
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </Td>
-                )}
-              </Tr>
-            ))}
-          </Table>
-        </Box>
+            <Box borderRadius="lg" bg="white" height="initial">
+              <UnorderedList listStyleType="none" m={0} p={0}>
+                <SidebarListItem href="/admin/clubs/new">
+                  <PlusSquareIcon />
+                  <Text fontWeight="bold" my={1}>
+                    Create New Club
+                  </Text>
+                </SidebarListItem>
+              </UnorderedList>
+            </Box>
+          </Box>
+        </PageBody>
       </Slice>
-
-      <Modal
-        title="Delete Club"
-        isOpen={isOpen}
-        onClose={onClose}
-        footerAction={() => {
-          handleDeleteClick({
-            uuid: selectedClub?.uuid,
-            refetch,
-          });
-          onClose();
-          setSelectedClub(null);
-        }}
-        footerTitle="Delete"
-        footerButtonProps={{ variant: 'secondary' }}
-      >
-        <Text>Are you sure you want to delete {selectedClub?.name}?</Text>
-      </Modal>
     </>
   );
 };
