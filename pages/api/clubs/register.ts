@@ -12,7 +12,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
     case 'POST':
       await prisma.clubs.create({
         data: {
-          email: req.body.email,
+          email: req.body.email.toLowerCase(),
           name: req.body.clubName,
           league: req.body.league,
           active: false,

@@ -17,14 +17,16 @@ export default async function handler(req: Request, res: NextApiResponse) {
   switch (req.method) {
     case 'POST':
       try {
+        const sanitisedEmail = req.body.email.toLowerCase();
+
         const existingUser = await prisma.users?.findUnique({
-          where: { email: req.body.email },
+          where: { email: sanitisedEmail },
         });
 
         if (existingUser) {
           const { hashed_password, uuid, created, first_name } = existingUser;
           const token = jwt.sign(
-            { uuid, email: req.body.email },
+            { uuid, email: sanitisedEmail },
             `${hashed_password}-${created.toISOString()}`,
             { expiresIn: '1d' }
           );
@@ -34,14 +36,12 @@ export default async function handler(req: Request, res: NextApiResponse) {
           await sendEmail({
             template: 'forgotPassword',
             data: { reset_url, first_name },
-            to: req.body.email,
+            to: sanitisedEmail,
           });
         }
 
         return res.status(200).end();
       } catch (err) {
-        console.log(err);
-        // console.log(`No user found for email: ${req.body.email}`);
         // "fail" silently, regardless of if there is a user with that email or not
         // so an attacker can't use this functionality to sniff for user emails
         res.status(200).end();

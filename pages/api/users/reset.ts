@@ -20,8 +20,9 @@ export default async function handler(req: Request, res: NextApiResponse) {
   switch (req.method) {
     case 'POST':
       try {
+        const sanitisedEmail = req.body.email.toLowerCase();
         const existingUser = await prisma.users?.findUnique({
-          where: { email: req.body.email },
+          where: { email: sanitisedEmail },
         });
 
         if (existingUser) {
