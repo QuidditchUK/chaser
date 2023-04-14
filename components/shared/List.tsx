@@ -107,13 +107,13 @@ export const SkeletonList = () => (
   <>
     <Flex direction="row" gridGap={3} mb={5}>
       <Skeleton>
-        <Button>All</Button>
+        <Button>All (00)</Button>
       </Skeleton>
       <Skeleton>
-        <Button>Active</Button>
+        <Button>Active (00)</Button>
       </Skeleton>
       <Skeleton>
-        <Button>Inactive</Button>
+        <Button>Inactive (00)</Button>
       </Skeleton>
     </Flex>
     <Box borderRadius="lg" bg="white" p={3}>
