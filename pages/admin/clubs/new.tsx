@@ -1,8 +1,7 @@
 import Router from 'next/router';
-import Link from 'next/link';
 import { object, string, bool } from 'yup';
 import dynamic from 'next/dynamic';
-import { Heading, Grid, Flex, Box } from '@chakra-ui/react';
+import { Grid, Flex, Box } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -19,6 +18,7 @@ import { isScoped_ServerProps } from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
 import useTempPopup from 'hooks/useTempPopup';
 import { GetServerSideProps } from 'next';
+import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
 
 const Button = dynamic(() => import('components/shared/button'));
 
@@ -66,10 +66,13 @@ const CreateClub = () => {
 
   return (
     <Slice>
-      <Heading as="h3" fontFamily="body" color="qukBlue">
-        <Link href="/admin">Dashboard</Link> /{' '}
-        <Link href="/admin/clubs/">Clubs</Link> / New
-      </Heading>
+      <HeadingWithBreadcrumbs
+        breadcrumbs={[
+          { link: '/admin', title: 'Dashboard' },
+          { link: '/admin/clubs', title: 'Clubs' },
+        ]}
+        heading="New Club"
+      />
       <form
         onSubmit={handleSubmit((values) =>
           handleCreateSubmit(values, setServerError)

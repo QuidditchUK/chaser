@@ -15,6 +15,10 @@ export const isScoped_ServerProps = async (
     authOptions
   );
 
+  if (!session?.user) {
+    return false;
+  }
+
   const userScopes = getPlainScopes(session.user.scopes);
   return hasScope(pageScopes, userScopes);
 };
