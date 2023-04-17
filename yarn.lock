@@ -3910,7 +3910,7 @@ create-require@^1.1.0:
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
-cross-fetch@3.1.5, cross-fetch@^3.1.4:
+cross-fetch@3.1.5, cross-fetch@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
   integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
@@ -5094,12 +5094,12 @@ functions-have-names@^1.2.2:
   resolved "https://registry.yarnpkg.com/functions-have-names/-/functions-have-names-1.2.3.tgz#0404fe4ee2ba2f607f0e0ec3c80bae994133b834"
   integrity sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==
 
-g-sheets-api@2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/g-sheets-api/-/g-sheets-api-2.1.2.tgz#527ed407f3d34f9bddac7655b28e22cd62f61e16"
-  integrity sha512-d13dxX96UcPnaZW+XZMs40/MEWrjJlzvto9QgamVy95iWdBnRwJa9nInHtMqVsNHJtMqEodj3lBX1dryvaGSnQ==
+g-sheets-api@2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/g-sheets-api/-/g-sheets-api-2.1.3.tgz#1afb2a306129dc2067b764dd9a760ac6af3a83c2"
+  integrity sha512-G2ZGoOgcErok3wppPElPatvRu8UMW40N8+xVn9BQsJVq9NAOXegcNzNHVYznZ2TBogbDXrfNrTzEw7siybwtKQ==
   dependencies:
-    cross-fetch "^3.1.4"
+    cross-fetch "^3.1.5"
 
 gauge@^3.0.0:
   version "3.0.2"
