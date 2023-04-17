@@ -24,6 +24,11 @@ import { clubs as Club } from '@prisma/client';
 import Stripe from 'stripe';
 import useMe from 'hooks/useMe';
 import SkeletonLoaderWrapper from 'components/shared/SkeletonLoaderWrapper';
+import { getPlainScopes } from 'modules/scopes';
+import { BANNED } from 'constants/scopes';
+import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const Container = dynamic(() => import('components/layout/container'));
 
@@ -36,6 +41,22 @@ const PrismicClubCard = dynamic(() => import('components/prismic/club-card'));
 
 const Dashboard = () => {
   const { data: user, isLoading } = useMe();
+  const { push } = useRouter();
+
+  const userScopes = getPlainScopes(user?.scopes);
+
+  // QQ commonise
+  // QQ Some information to the user that their account has been banned?
+  const handleSignOut = async () => {
+    const data = await signOut({ redirect: false, callbackUrl: '/' });
+    push(data?.url);
+  };
+
+  useEffect(() => {
+    if (userScopes && userScopes.includes(BANNED)) {
+      handleSignOut();
+    }
+  }, [userScopes]);
 
   const { data: memberships } = useCachedResponse<Stripe.Product[]>({
     queryKey: '/products/me',

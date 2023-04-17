@@ -3,6 +3,7 @@ export const VOLUNTEER = 'volunteer';
 export const EMT = 'emt';
 export const HEAD_SCOUT = 'head-scout';
 export const CLUB_MANAGEMENT = 'club-management';
+export const BANNED = 'banned';
 
 export const USERS_READ = 'users:read';
 export const CLUBS_READ = 'clubs:read';

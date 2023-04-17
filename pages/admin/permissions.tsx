@@ -1,6 +1,6 @@
 import { Flex, Box } from '@chakra-ui/react';
 
-import { ADMIN, EMT, HEAD_SCOUT, VOLUNTEER } from 'constants/scopes';
+import { ADMIN, BANNED, EMT, HEAD_SCOUT, VOLUNTEER } from 'constants/scopes';
 import { getPlainScopes } from 'modules/scopes';
 import { isScoped_ServerProps } from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
@@ -39,24 +39,35 @@ const Permissions = () => {
             scope={EMT}
             userScopes={userScopes}
             actionScopes={[ADMIN]}
+            allowEditing={true}
           />
           <PermissionBlock
             label="Admin"
             scope={ADMIN}
             userScopes={userScopes}
             actionScopes={[ADMIN]}
+            allowEditing={true}
           />
           <PermissionBlock
             label="Head Scout"
             scope={HEAD_SCOUT}
             userScopes={userScopes}
             actionScopes={[ADMIN, EMT]}
+            allowEditing={true}
           />
           <PermissionBlock
             label="Volunteers"
             scope={VOLUNTEER}
             userScopes={userScopes}
             actionScopes={[ADMIN, EMT]}
+            allowEditing={true}
+          />
+          <PermissionBlock
+            label="Banned users (not reversible)"
+            scope={BANNED}
+            userScopes={userScopes}
+            actionScopes={[ADMIN]}
+            allowEditing={false}
           />
         </Slice>
       </SkeletonLoaderWrapper>

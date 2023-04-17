@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isScoped_ApiRoute } from 'modules/auth';
 import { getToken } from 'next-auth/jwt';
-import { ADMIN, EMT } from 'constants/scopes';
+import { ADMIN, EMT, BANNED } from 'constants/scopes';
 import prisma from 'modules/prisma';
 
 export default async function handler(
@@ -23,8 +23,11 @@ export default async function handler(
 
         const userScopes = token.user.scopes.map(({ scope }) => scope);
 
-        // Only admins can admin EMT + Admin scopes
-        if ([ADMIN, EMT].includes(scope) && !userScopes.includes(ADMIN)) {
+        // Only admins can admin EMT + Admin + Banned scopes
+        if (
+          [ADMIN, EMT, BANNED].includes(scope) &&
+          !userScopes.includes(ADMIN)
+        ) {
           res.status(403).end();
           return;
         }
@@ -36,12 +39,26 @@ export default async function handler(
           return;
         }
 
+        const user_uuid = user.uuid;
+
         await prisma.scopes.create({
-          data: {
-            user_uuid: user?.uuid,
-            scope,
-          },
+          data: { user_uuid, scope },
         });
+
+        if (scope === BANNED) {
+          await prisma.users_stripe_products.deleteMany({
+            where: { user_uuid },
+          });
+          await prisma.teams_users.deleteMany({
+            where: { user_uuid },
+          });
+          await prisma.scouting_requests.deleteMany({
+            where: { user_uuid },
+          });
+          await prisma.student_summer_pass.deleteMany({
+            where: { user_uuid },
+          });
+        }
 
         res.status(201).end();
         return;

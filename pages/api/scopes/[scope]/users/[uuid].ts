@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isScoped_ApiRoute } from 'modules/auth';
-import { ADMIN, EMT, CLUB_MANAGEMENT } from 'constants/scopes';
+import { ADMIN, EMT, CLUB_MANAGEMENT, BANNED } from 'constants/scopes';
 import { getToken } from 'next-auth/jwt';
 import prisma from 'modules/prisma';
 
@@ -26,6 +26,13 @@ export default async function handler(
 
         // Only admins can remove EMT + Admin scopes
         if ([ADMIN, EMT].includes(scope) && !userScopes.includes(ADMIN)) {
+          res.status(403).end();
+          return;
+        }
+
+        // Nobody can unban users (it's not a reversible action)
+        // To make it reversible we need to have a record of what the user had before banning - products, club memberships, etc.
+        if (scope === BANNED) {
           res.status(403).end();
           return;
         }

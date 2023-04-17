@@ -45,11 +45,13 @@ const PermissionBlock = ({
   scope,
   userScopes,
   actionScopes,
+  allowEditing,
 }: {
   label: string;
   scope: string;
   userScopes: string[];
   actionScopes: string[]; // scope with permission to add/remove
+  allowEditing: boolean; // whether the block allows editing scopes
 }) => {
   const {
     register,
@@ -82,7 +84,9 @@ const PermissionBlock = ({
       <Box bg="white" borderRadius="lg">
         <Table
           name={scope}
-          columns={['Name', 'Scopes', 'Actions']}
+          columns={
+            allowEditing ? ['Name', 'Scopes', 'Actions'] : ['Name', 'Scopes']
+          }
           isLoading={isLoading}
           tableProps={{
             sx: {
@@ -100,7 +104,7 @@ const PermissionBlock = ({
                 {user?.first_name} {user?.last_name}
               </Td>
               <Td>{user?.scopes.map(({ scope }) => scope).join(', ')}</Td>
-              {hasScope(actionScopes, userScopes) && (
+              {hasScope(actionScopes, userScopes) && allowEditing && (
                 <Td textAlign="right">
                   <Flex direction="row" justifyContent="flex-end" gap={3}>
                     <Button
