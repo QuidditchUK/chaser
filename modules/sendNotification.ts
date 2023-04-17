@@ -1,6 +1,7 @@
 import pushNotification from './push';
 import {
   NotificationType,
+  NotificationDataType,
   NOTIFICATION_PAYLOADS,
   PUSH_PAYLOADS,
 } from '../constants/notifications';
@@ -8,13 +9,16 @@ import prisma from './prisma';
 
 /**
  * Sends a push notification (if enabled) and a regular notification to the user
- * @param  {{user_uuid:string;type_id:NotificationType}}
- * @param  {any} data
  */
-const sendNotifications = async (
-  { user_uuid, type_id }: { user_uuid: string; type_id: NotificationType },
-  data: any
-) => {
+export default async function sendNotifications<T extends NotificationType>({
+  type_id,
+  user_uuid,
+  data,
+}: {
+  type_id: T;
+  user_uuid: string;
+  data: NotificationDataType<T>;
+}) {
   if (!user_uuid) {
     return;
   }
@@ -38,21 +42,9 @@ const sendNotifications = async (
   }
 
   const payloadLookup = PUSH_PAYLOADS[type_id];
-  let payload = {};
-
-  if (typeof payload === 'function') {
-    payload = payloadLookup(data);
-  } else {
-    payload = payloadLookup;
-  }
+  const payload = payloadLookup(data);
 
   pushNotifications?.forEach(({ endpoint, p256dh, auth, uuid }) => {
-    pushNotification(
-      { endpoint, keys: { p256dh, auth } },
-      PUSH_PAYLOADS[type_id],
-      uuid
-    );
+    pushNotification({ endpoint, keys: { p256dh, auth } }, payload, uuid);
   });
-};
-
-export default sendNotifications;
+}

@@ -37,12 +37,13 @@ export default async function handler(
           data: req.body,
         });
 
+        const payloadLookup = PUSH_PAYLOADS.PUSH_NOTIFICATION_ENABLED;
         pushNotification(
           {
             endpoint: pn.endpoint,
             keys: { p256dh: pn.p256dh, auth: pn.auth },
           },
-          PUSH_PAYLOADS.PUSH_NOTIFICATION_ENABLED,
+          payloadLookup(),
           pn.uuid
         );
 

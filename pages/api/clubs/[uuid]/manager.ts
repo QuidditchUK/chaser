@@ -56,10 +56,11 @@ export default async function handler(
         });
 
         // notify user they are now the manager of the club
-        await sendNotifications(
-          { user_uuid, type_id: CLUB_MANAGEMENT },
-          { club_name: club?.name }
-        );
+        await sendNotifications({
+          user_uuid,
+          type_id: CLUB_MANAGEMENT,
+          data: { club_name: club?.name },
+        });
 
         res.status(200).end();
         return;

@@ -110,25 +110,21 @@ export default async function handler(
         });
 
         // Send notification to transferring user
-        await sendNotifications(
-          {
-            user_uuid: transfer?.user_uuid,
-            type_id: TRANSFER_APPROVED,
-          },
-          { club_name: transfer?.newClub?.name }
-        );
+        await sendNotifications({
+          user_uuid: transfer?.user_uuid,
+          type_id: TRANSFER_APPROVED,
+          data: { club_name: transfer?.newClub?.name },
+        });
 
         // send notification to new club manager
-        await sendNotifications(
-          {
-            user_uuid: transfer?.newClub?.managed_by,
-            type_id: CLUB_MEMBER_ADDED,
-          },
-          {
+        await sendNotifications({
+          user_uuid: transfer?.newClub?.managed_by,
+          type_id: CLUB_MEMBER_ADDED,
+          data: {
             club_name: transfer?.newClub?.name,
             user_name: `${user?.first_name} ${user?.last_name}`,
-          }
-        );
+          },
+        });
 
         res.status(200).end();
         return;
