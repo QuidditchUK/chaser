@@ -7,6 +7,7 @@ import {
   Link as ChakraLink,
   Skeleton,
   Grid,
+  useToast,
 } from '@chakra-ui/react';
 
 import { getBasePageProps } from 'modules/prismic';
@@ -44,11 +45,20 @@ const Dashboard = () => {
   const { push } = useRouter();
 
   const userScopes = getPlainScopes(user?.scopes);
+  const toast = useToast();
 
-  // QQ commonise
-  // QQ Some information to the user that their account has been banned?
   const handleSignOut = async () => {
     const data = await signOut({ redirect: false, callbackUrl: '/' });
+    toast({
+      title: 'Account banned',
+      description:
+        'Your account has been banned. If you think this is a mistake, please contact us via https://quadballuk.org/about/contact-us',
+      status: 'error',
+      duration: 5000,
+      position: 'top',
+      variant: 'left-accent',
+      isClosable: true,
+    });
     push(data?.url);
   };
 

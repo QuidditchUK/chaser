@@ -46,18 +46,24 @@ export default async function handler(
         });
 
         if (scope === BANNED) {
-          await prisma.users_stripe_products.deleteMany({
-            where: { user_uuid },
-          });
-          await prisma.teams_users.deleteMany({
-            where: { user_uuid },
-          });
-          await prisma.scouting_requests.deleteMany({
-            where: { user_uuid },
-          });
-          await prisma.student_summer_pass.deleteMany({
-            where: { user_uuid },
-          });
+          await Promise.all([
+            prisma.users_stripe_products.deleteMany({
+              where: { user_uuid },
+            }),
+            prisma.teams_users.deleteMany({
+              where: { user_uuid },
+            }),
+            prisma.scouting_requests.deleteMany({
+              where: { user_uuid },
+            }),
+            prisma.student_summer_pass.deleteMany({
+              where: { user_uuid },
+            }),
+            prisma.users.update({
+              where: { uuid: user_uuid },
+              data: { club_uuid: null },
+            }),
+          ]);
         }
 
         res.status(201).end();
