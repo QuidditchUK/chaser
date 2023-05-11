@@ -4,7 +4,15 @@ import {
   Prisma,
 } from '@prisma/client';
 
-export type SafeUser = Omit<PrismaUser, 'hashed_password' | 'salt'>;
+type StripeProducts = Prisma.users_stripe_productsGetPayload<{
+  include: {
+    products: true;
+  };
+}>;
+
+export type SafeUser = Omit<PrismaUser, 'hashed_password' | 'salt'> & {
+  stripe_products: StripeProducts[];
+};
 export type SafeUserWithScopes = SafeUser & { scopes: PrismaScope[] };
 
 interface CreateUserProps {

@@ -6,14 +6,17 @@ import { parse } from 'date-fns';
 import { useForm } from 'react-hook-form';
 
 import { USERS_READ, EMT } from 'constants/scopes';
-import Slice from 'components/shared/slice';
 import { isScoped_ServerProps } from 'modules/auth';
-import Meta from 'components/shared/meta';
 import { getBasePageProps } from 'modules/prismic';
-import Table from 'components/shared/table';
+
 import useCachedResponse from 'hooks/useCachedResponse';
+import useDebounce from 'hooks/useDebounce';
+
+import Meta from 'components/shared/meta';
+import Slice from 'components/shared/slice';
+import Table from 'components/shared/table';
 import Pagination from 'components/shared/pagination';
-import { getLatestProduct } from 'components/admin/clubs/club-members';
+import { getLatestProduct } from 'utils/products';
 import InputV2 from 'components/formControls/inputV2';
 
 import usersService from 'services/users';
@@ -22,27 +25,6 @@ import { GetServerSideProps } from 'next';
 
 import { AdminUserWithRelations } from 'types/user';
 import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
-
-function useDebounce(value, delay) {
-  // State and setters for debounced value
-  const [debouncedValue, setDebouncedValue] = useState(value);
-  useEffect(
-    () => {
-      // Update debounced value after delay
-      const handler = setTimeout(() => {
-        setDebouncedValue(value);
-      }, delay);
-      // Cancel the timeout if value changes (also on delay change or unmount)
-      // This is how we prevent debounced value from updating if value is changed ...
-      // .. within the delay period. Timeout gets cleared and restarted.
-      return () => {
-        clearTimeout(handler);
-      };
-    },
-    [value, delay] // Only re-call effect if value or delay changes
-  );
-  return debouncedValue;
-}
 
 const Users = () => {
   const [page, setPage] = useState(0);
@@ -61,7 +43,7 @@ const Users = () => {
   const watchTerm = watch('term');
   const [searchTerm, setSearchTerm] = useState(null);
 
-  const debouncedTerm = useDebounce(watchTerm, 500);
+  const debouncedTerm = useDebounce<string>(watchTerm, 500);
 
   useEffect(() => {
     if (debouncedTerm !== searchTerm) {

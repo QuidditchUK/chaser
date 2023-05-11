@@ -12,12 +12,8 @@ import {
   DrawerCloseButton,
   DrawerHeader,
 } from '@chakra-ui/react';
-import {
-  CheckCircleIcon,
-  DownloadIcon,
-  NotAllowedIcon,
-} from '@chakra-ui/icons';
-import { format, parse } from 'date-fns';
+import { CheckCircleIcon, DownloadIcon } from '@chakra-ui/icons';
+import { format } from 'date-fns';
 import { clubs as Club } from '@prisma/client';
 
 import useCSVDownload from 'hooks/useCSVDownload';
@@ -44,37 +40,11 @@ import PersonIcon from 'public/images/person.svg';
 import PageBody from 'components/layout/PageBody';
 import SkeletonLoaderWrapper from 'components/shared/SkeletonLoaderWrapper';
 
-export const getLatestProduct = (member) =>
-  member?.stripe_products[member?.stripe_products?.length - 1]?.products;
-
-const isActive = (member: SafeUserWithScopes) => {
-  const product = getLatestProduct(member);
-  return parse(product?.expires, 'dd-MM-yyyy', new Date()) > new Date();
-};
-
-export const groupByActive = (
-  members: any[]
-): { active: any[]; inactive: any[] } => {
-  const [active, inactive] = members?.reduce(
-    (result, member) => {
-      result[isActive(member) ? 0 : 1].push(member);
-      return result;
-    },
-    [[], []]
-  );
-  return { active, inactive };
-};
+import { getProductName, groupByActive, isActive } from 'utils/products';
 
 // const getClubTeam = (teams, club_uuid) => {
 //   return teams?.filter(({ teams }) => teams?.club_uuid === club_uuid)[0]?.teams;
 // };
-
-const getProductName = (member) => {
-  const product = getLatestProduct(member);
-  return parse(product?.expires, 'dd-MM-yyyy', new Date()) > new Date()
-    ? product?.description
-    : 'Expired';
-};
 
 const CSVMemberRows = (members: SafeUserWithScopes[]) => {
   if (!members) {
