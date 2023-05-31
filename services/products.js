@@ -18,6 +18,12 @@ const productsService = {
     url: `/products/session?price_id=${price_id}`,
     ...params,
   }),
+
+  getProductsMemberships: (params) => ({
+    method: 'get',
+    url: '/products/membership',
+    ...params,
+  }),
 };
 
 export default createService(productsService);

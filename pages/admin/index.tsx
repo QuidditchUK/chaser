@@ -8,8 +8,6 @@ import {
   USERS_READ,
   CLUBS_READ,
   TRANSFER_READ,
-  NATIONAL_TEAM_READ,
-  HEAD_SCOUT,
 } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import Card from 'components/shared/card';
@@ -34,7 +32,7 @@ const Dashboard = () => {
           gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }}
         >
           {hasScope([USERS_READ, EMT], userScopes) && (
-            <Card href="/admin/users" title="Users" />
+            <Card title="Users" href="/admin/users" />
           )}
           {hasScope([CLUBS_READ, EMT], userScopes) && (
             <Card title="Clubs" href="/admin/clubs" />
@@ -44,6 +42,9 @@ const Dashboard = () => {
           )}
           {hasScope([EMT], userScopes) && (
             <Card title="Volunteer Permissions" href="/admin/permissions" />
+          )}
+          {hasScope([EMT], userScopes) && (
+            <Card title="Memberships" href="/admin/memberships" />
           )}
           {/* TODO: Enable when SSP released */}
           {/* {hasScope([EMT], userScopes) && (
