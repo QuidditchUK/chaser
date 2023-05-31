@@ -7,6 +7,7 @@ import {
   Link as ChakraLink,
   Skeleton,
   Grid,
+  useToast,
 } from '@chakra-ui/react';
 
 import { getBasePageProps } from 'modules/prismic';
@@ -24,6 +25,11 @@ import { clubs as Club } from '@prisma/client';
 import Stripe from 'stripe';
 import useMe from 'hooks/useMe';
 import SkeletonLoaderWrapper from 'components/shared/SkeletonLoaderWrapper';
+import { getPlainScopes } from 'modules/scopes';
+import { BANNED } from 'constants/scopes';
+import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const Container = dynamic(() => import('components/layout/container'));
 
@@ -36,6 +42,31 @@ const PrismicClubCard = dynamic(() => import('components/prismic/club-card'));
 
 const Dashboard = () => {
   const { data: user, isLoading } = useMe();
+  const { push } = useRouter();
+
+  const userScopes = getPlainScopes(user?.scopes);
+  const toast = useToast();
+
+  const handleSignOut = async () => {
+    const data = await signOut({ redirect: false, callbackUrl: '/' });
+    toast({
+      title: 'Account banned',
+      description:
+        'Your account has been banned. If you think this is a mistake, please contact us via https://quadballuk.org/about/contact-us',
+      status: 'error',
+      duration: 5000,
+      position: 'top',
+      variant: 'left-accent',
+      isClosable: true,
+    });
+    push(data?.url);
+  };
+
+  useEffect(() => {
+    if (userScopes && userScopes.includes(BANNED)) {
+      handleSignOut();
+    }
+  }, [userScopes]);
 
   const { data: memberships } = useCachedResponse<Stripe.Product[]>({
     queryKey: '/products/me',
