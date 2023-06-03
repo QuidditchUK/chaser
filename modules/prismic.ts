@@ -110,13 +110,13 @@ export const getClubs = async ({
 
   const { results } = await client().get({
     predicates: [
+      prismic.predicate.any('my.clubs.league', leagues),
       prismic.predicate.geopointNear(
         'my.clubs.coordinates',
         latitude,
         longitude,
         distance
       ),
-      prismic.predicate.any('my.clubs.league', leagues),
     ],
     pageSize: 100,
   });
