@@ -8,6 +8,7 @@ import {
   Skeleton,
   Grid,
   useToast,
+  Text
 } from '@chakra-ui/react';
 
 import { getBasePageProps } from 'modules/prismic';
@@ -17,7 +18,7 @@ import useCachedResponse from 'hooks/useCachedResponse';
 import productsService from 'services/products';
 import clubsService from 'services/clubs';
 
-import { PlusSquareIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { PlusSquareIcon, ChevronRightIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import GroupIcon from 'public/images/group.svg';
 import { ProductCardV2 } from 'components/dashboard/product-card';
 import { InfoCard } from 'components/dashboard/info-card';
@@ -47,7 +48,8 @@ const Dashboard = () => {
   const userScopes = getPlainScopes(user?.scopes);
   const toast = useToast();
 
-  const handleSignOut = async () => {
+  useEffect(() => {
+    const handleSignOut = async () => {
     const data = await signOut({ redirect: false, callbackUrl: '/' });
     toast({
       title: 'Account banned',
@@ -61,12 +63,10 @@ const Dashboard = () => {
     });
     push(data?.url);
   };
-
-  useEffect(() => {
     if (userScopes && userScopes.includes(BANNED)) {
       handleSignOut();
     }
-  }, [userScopes]);
+  }, [userScopes, push, toast]);
 
   const { data: memberships } = useCachedResponse<Stripe.Product[]>({
     queryKey: '/products/me',
@@ -119,6 +119,11 @@ const Dashboard = () => {
             >
               Hello, {user?.first_name} 👋
             </Heading>
+
+            <Box width="100%" bg="gray.50" border="1px solid" borderColor="qukBlue" p={4} my={3} borderRadius="md">
+              <Heading fontFamily="body" color='qukBlue' fontSize="xl" mt={0}>Mouthguard Discount</Heading>
+              <Text>From October 1st until November 4th, All QuadballUK members are eligible for a 20% discount on orders with SISU Mouthguards! Simply enter the code QUADBALLUK at checkout to receive your discount. <ChakraLink href="https://sisuguard.eu/" target="_blank" rel="noopener noreferrer">SISU Website <ExternalLinkIcon /></ChakraLink></Text>
+            </Box>
 
             <HorizontalScrollWrapper horizontalScroll itemsCount={3}>
               <Flex flexDirection="column">
