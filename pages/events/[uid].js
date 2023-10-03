@@ -130,7 +130,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                   )}
                 />
               )}
-              {event?.player_fee && (
+              {event?.player_fee !== 0 && (
                 <Description
                   term="Individual Fee"
                   description={`£${event.player_fee}`}
@@ -145,7 +145,7 @@ const EventPage = ({ page: initialPage, preview }) => {
                   )}
                 />
               )}
-              {event?.team_fee && (
+              {event?.team_fee !== 0 && (
                 <Description
                   term="Team Fee"
                   description={`£${event.team_fee}`}
