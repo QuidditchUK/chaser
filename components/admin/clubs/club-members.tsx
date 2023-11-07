@@ -44,8 +44,23 @@ import PersonIcon from 'public/images/person.svg';
 import PageBody from 'components/layout/PageBody';
 import SkeletonLoaderWrapper from 'components/shared/SkeletonLoaderWrapper';
 
-export const getLatestProduct = (member) =>
-  member?.stripe_products[member?.stripe_products?.length - 1]?.products;
+export const getLatestProduct = (member) => {
+  let latestStripeProduct;
+  let latestDate;
+  member?.stripe_products.forEach((stripe_product) => {
+    const createdDate = parse(
+      stripe_product.products?.expires,
+      'dd-MM-yyyy',
+      new Date()
+    );
+    const isOldProduct = latestDate && latestDate > createdDate;
+    if (!isOldProduct) {
+      latestStripeProduct = stripe_product;
+      latestDate = createdDate;
+    }
+  });
+  return latestStripeProduct?.products;
+};
 
 const isActive = (member: SafeUserWithScopes) => {
   const product = getLatestProduct(member);
