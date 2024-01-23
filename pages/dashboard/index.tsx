@@ -122,7 +122,7 @@ const Dashboard = () => {
 
             <Box width="100%" bg="gray.50" border="1px solid" borderColor="qukBlue" p={4} my={3} borderRadius="md">
               <Heading fontFamily="body" color='qukBlue' fontSize="xl" mt={0}>Mouthguard Discount</Heading>
-              <Text>From October 3rd until November 30th, All QuadballUK members are eligible for a 20% discount on orders with SISU Mouthguards! Simply enter the code <strong>QuadballUK23</strong> at checkout to receive your discount. <ChakraLink href="https://sisuguard.eu/" target="_blank" rel="noopener noreferrer">SISU Website <ExternalLinkIcon /></ChakraLink></Text>
+              <Text>From October 3rd until February 29th, All QuadballUK members are eligible for a 20% discount with free shipping on orders with SISU Mouthguards! Simply enter the code <strong>QuadballUK24</strong> at checkout to receive your discount. <ChakraLink href="https://sisuguard.eu/" target="_blank" rel="noopener noreferrer">SISU Website <ExternalLinkIcon /></ChakraLink></Text>
             </Box>
 
             <HorizontalScrollWrapper horizontalScroll itemsCount={3}>
