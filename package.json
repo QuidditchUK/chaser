@@ -83,7 +83,7 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/luxon": "^3.2.0",
     "@types/node": "^18.11.7",
-    "eslint": "7.32.0",
+    "eslint": "8.57.0",
     "eslint-config-next": "^12.1.1",
     "eslint-config-prettier": "^8.1.0",
     "g-sheets-api": "2.1.3",
