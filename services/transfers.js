@@ -32,6 +32,13 @@ const transfersService = {
     data,
     ...params,
   }),
+
+  automaticTransfer: ({ data, ...params }) => ({
+    method: 'post',
+    url: '/transfers/automatic',
+    data,
+    ...params,
+  }),
 };
 
 export default createService(transfersService);
