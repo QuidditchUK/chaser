@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "TransferStatus" ADD VALUE 'MEMBERSHIP_PENDING';

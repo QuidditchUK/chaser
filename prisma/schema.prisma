@@ -108,6 +108,7 @@ enum TransferStatus {
   PENDING
   APPROVED
   DECLINED
+  MEMBERSHIP_PENDING
 }
 
 enum TeamType {
