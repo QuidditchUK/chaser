@@ -48,7 +48,7 @@ const PurchaseMembership = ({ products }: { products: any }) => {
     Club[]
   >({
     queryKey: '/clubs/all',
-    queryFn: clubsService.getAllClubs,
+    queryFn: clubsService.getPublicClubs,
   });
   const activeClubs = queryClubs?.filter((club) => club.active);
 
