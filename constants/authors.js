@@ -9,6 +9,8 @@ const BeckThroup = '/images/authors/beck-throup.jpg';
 const JoshFogg = '/images/authors/josh-fogg.jpg';
 const Logo = '/images/authors/quk-logo.png';
 const GioForino = '/images/authors/gio-forino.jpg';
+const AlexHarrison = '/images/authors/alex-harrison.jpg';
+const FraserPosford = '/images/authors/fraser-posford.jpg';
 
 const authors = {
   'Sam Instone': SamInstone,
@@ -21,6 +23,8 @@ const authors = {
   'Beck Throup': BeckThroup,
   'Josh Fogg': JoshFogg,
   'Gio Forino': GioForino,
+  'Alex Harrison': AlexHarrison,
+  'Fraser Posford': FraserPosford,
 };
 
 export default function Authors(author) {
