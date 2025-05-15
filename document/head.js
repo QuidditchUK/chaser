@@ -10,7 +10,7 @@ const DocumentHead = () => (
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="theme-color" content="#0e375f" />
 
-    <meta property="og:site_name" content="QuadballUK – Find Your Passion" />
+    <meta property="og:site_name" content="QuadballUK – Sport For Anyone" />
     <meta property="og:locale" content="en_GB" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />

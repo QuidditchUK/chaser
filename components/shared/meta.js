@@ -4,7 +4,7 @@ import Head from 'next/head';
 const SITE_URL = 'https://quadballuk.org'; // TODO: Use env variable
 
 const Meta = ({
-  subTitle = 'Find Your Passion',
+  subTitle = 'Sport For Anyone',
   description = 'The official source for Quadball UK news, highlights, results and more',
   image = `${SITE_URL}/open-graph.png`,
   title = 'QuadballUK',
