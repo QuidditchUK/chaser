@@ -77,19 +77,25 @@ const PurchaseMembership = ({ products }: { products: any }) => {
 
           <Box maxWidth="768px">
             <Text>
-              We offer two tiers of membership: <strong>Trial</strong> and{' '}
+              We offer two tiers of membership: <strong>First time</strong> and{' '}
               <strong>Individual</strong>.
             </Text>
             <Text>
-              <strong>Trial</strong> Membership covers the cost of the
-              membership for the current season and a player fee for one
-              QuadballUK Tournament. People who have never played the sport
-              before should purchase a Trial Membership.
+              <strong>
+                First Time Membership (previously Trial Membership)
+              </strong>{' '}
+              covers the cost of the membership for the current season and a
+              player fee for one official QuadballUK Tournament. People who have
+              never played the sport before, outside of training or
+              friendly/fantasy events, can purchase a First Time Membership.
             </Text>
             <Text>
               <strong>Individual</strong> Membership covers the cost of the
-              membership for the current season. Seasoned players should
-              purchase an Individual Membership.
+              membership for the current season. Seasoned players{' '}
+              <strong>must</strong>
+              purchase an Individual Membership. Please select the club you plan
+              to play with during the season covered by the membership from the
+              dropdown below.
             </Text>
             <Text>
               Please select the club you plan to play with during the season
