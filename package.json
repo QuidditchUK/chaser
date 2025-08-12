@@ -2,6 +2,7 @@
   "name": "chaser",
   "version": "0.1.0",
   "dependencies": {
+    "@aws-sdk/client-ses": "3.864.0",
     "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^1.8.7",
     "@emotion/react": "^11.1.5",
@@ -13,7 +14,6 @@
     "@prismicio/next": "^0.1.5",
     "@prismicio/react": "^2.5.0",
     "@prismicio/slice-simulator-react": "^0.2.2",
-    "@sendgrid/mail": "^7.7.0",
     "@sentry/nextjs": "^6.19.2",
     "@svgr/webpack": "^5.4.0",
     "@types/web-push": "^3.3.2",

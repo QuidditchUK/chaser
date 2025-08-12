@@ -1,21 +1,96 @@
-import sendgrid, { MailService } from '@sendgrid/mail';
+import { SendEmailCommand } from '@aws-sdk/client-ses';
+import { SESClient } from '@aws-sdk/client-ses';
 
-let sendgridClient: MailService | null;
+import { welcomeTemplate } from './email_templates/welcome';
+import { resetPasswordTemplate } from './email_templates/reset_password';
+import { contactFormTemplate } from './email_templates/contact_form';
+import { volunteerFormTemplate } from './email_templates/volunteer_form';
+import { newMemberTemplate } from './email_templates/new_member';
+import { ediCommitteeFormTemplate } from './email_templates/edi_committee_form';
+import { nationalTeamInterestTemplate } from './email_templates/national_team_interest';
+import { scoutingRequestEmailTemplate } from './email_templates/scouting_request';
+import { scoutingRequestReceivedTemplate } from './email_templates/scouting_request_received';
+import { registerClubFormTemplate } from './email_templates/register_club_form';
+import { newTransferTemplate } from './email_templates/new_transfer';
+import { transferRequestTemplate } from './email_templates/transfer_request';
+import { transferDeclinedTemplate } from './email_templates/transfer_declined';
+import { transferApprovedTemplate } from './email_templates/transfer_approved';
 
-const getSendgridClient = () => {
-  if (!sendgridClient) {
-    sendgrid.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
-    sendgridClient = sendgrid;
+const getTemplateRaw = (
+  template: string
+): { templateRaw: string; subject: string } => {
+  switch (template) {
+    case 'welcome':
+      return { subject: 'Welcome to QuadballUK', templateRaw: welcomeTemplate };
+    case 'forgotPassword':
+      return {
+        subject: 'QuadballUK: Reset Password',
+        templateRaw: resetPasswordTemplate,
+      };
+    case 'contactForm':
+      return { subject: 'Contact Form', templateRaw: contactFormTemplate };
+    case 'volunteerForm':
+      return { subject: 'Volunteer Form', templateRaw: volunteerFormTemplate };
+    case 'newMember':
+      return {
+        subject: 'QuadballUK: New Club Member',
+        templateRaw: newMemberTemplate,
+      };
+    case 'ediCommitteeForm':
+      return {
+        subject: 'EDI Committee Form',
+        templateRaw: ediCommitteeFormTemplate,
+      };
+    case 'nationalTeamInterest':
+      return {
+        subject: 'National Team Interest',
+        templateRaw: nationalTeamInterestTemplate,
+      };
+    case 'scoutingApplication':
+      return {
+        subject: 'Scouting Request',
+        templateRaw: scoutingRequestEmailTemplate,
+      };
+    case 'scoutingResponse':
+      return {
+        subject: 'QuadballUK: Scouting Request',
+        templateRaw: scoutingRequestReceivedTemplate,
+      };
+    case 'registerClubForm':
+      return {
+        subject: 'Register Club Form',
+        templateRaw: registerClubFormTemplate,
+      };
+    case 'transferClubNewMember':
+      return {
+        subject: 'QuadballUK: New Transfer',
+        templateRaw: newTransferTemplate,
+      };
+    case 'transferRequestForm':
+      return {
+        subject: 'Transfer Request',
+        templateRaw: transferRequestTemplate,
+      };
+    case 'transferDeclined':
+      return {
+        subject: 'QuadballUK: Transfer Declined',
+        templateRaw: transferDeclinedTemplate,
+      };
+    case 'transferApproved':
+      return {
+        subject: 'QuadballUK: Transfer Approved',
+        templateRaw: transferApprovedTemplate,
+      };
+    default:
+      throw new Error(`Unknown template: ${template}`);
   }
-
-  return sendgridClient;
 };
 
 export default async function sendEmail<T extends Templates>({
   template,
   data,
   to,
-  from = 'admin@quidditchuk.org',
+  from = 'admin@quadballuk.org',
   cc,
 }: {
   template: T;
@@ -30,16 +105,44 @@ export default async function sendEmail<T extends Templates>({
     return {};
   }
 
-  const client = getSendgridClient();
+  let { templateRaw, subject } = getTemplateRaw(template);
+  for (const key in data) {
+    if (Object.prototype.hasOwnProperty.call(data, key)) {
+      templateRaw = templateRaw.replace(
+        new RegExp(`{{${key}}}`, 'g'),
+        (data as any)[key]
+      );
+    }
+  }
+
+  const sesClient = new SESClient({
+    region: 'eu-west-2',
+    credentials: {
+      accessKeyId: process.env.AWS_SES_KEY_ID || '',
+      secretAccessKey: process.env.AWS_SES_KEY_SECRET || '',
+    },
+  });
 
   try {
-    await client.send({
-      templateId: templateIds[template],
-      dynamicTemplateData: data,
-      from,
-      to,
-      cc,
-    });
+    await sesClient.send(
+      new SendEmailCommand({
+        Source: from,
+        Destination: {
+          ToAddresses: [to],
+          CcAddresses: cc ? [cc] : [],
+        },
+        Message: {
+          Subject: {
+            Data: subject,
+          },
+          Body: {
+            Html: {
+              Data: templateRaw,
+            },
+          },
+        },
+      })
+    );
   } catch (err) {
     console.log(err);
   }
