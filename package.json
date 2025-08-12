@@ -103,5 +103,8 @@
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
+  "resolutions": {
+    "@types/minimatch": "5.1.2"
   }
 }
