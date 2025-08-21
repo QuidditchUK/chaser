@@ -142,6 +142,7 @@ body {font-family: 'Poppins', sans-serif;}
         <p></p>
       </td>
     </tr>
+  </table>
 <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" role="module" data-type="columns" style="padding:30px 0px 30px 0px;" bgcolor="#0e375f" data-distribution="1">
     <tbody>
       <tr role="module-content">
