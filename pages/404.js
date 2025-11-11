@@ -23,7 +23,6 @@ export default function Custom404() {
             <Heading as="h1" textAlign="center" marginTop={0}>
               Page Not Found
             </Heading>
-            <Image src="/images/404.gif" alt="404" height={208} width={500} />
             <Content paddingTop={3} textAlign="center">
               Don&#39;t worry, it happens to the best of us.
               <br />
