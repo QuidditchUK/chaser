@@ -165,15 +165,15 @@ export const getAllEvents = async () => {
 };
 
 export const getScoutingApplicationEvents = async () => {
-  const twoWeeks = add(new Date(), { days: 12 });
-  const fourWeeks = add(new Date(), { days: 28 });
+  const oneDay = add(new Date(), { days: 1 });
+  const oneYear = add(new Date(), { days: 365 });
   const { results } = await client().get({
     predicates: [
       prismic.predicate.at('document.type', 'events'),
       prismic.predicate.dateBetween(
         'my.events.event_start_date',
-        twoWeeks,
-        fourWeeks
+        oneDay,
+        oneYear
       ),
     ],
     pageSize: 100,
