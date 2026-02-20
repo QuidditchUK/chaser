@@ -1,4 +1,4 @@
-export default `
+const styles = `
 /* Document
    ========================================================================== */
 
@@ -363,3 +363,5 @@ html {
   height: 100%;
 }
 `;
+
+export default styles;

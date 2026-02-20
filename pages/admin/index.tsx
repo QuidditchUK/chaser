@@ -46,6 +46,9 @@ const Dashboard = () => {
           {hasScope([EMT], userScopes) && (
             <Card title="Memberships" href="/admin/memberships" />
           )}
+          {hasScope([EMT], userScopes) && (
+            <Card title="Tournaments" href="/admin/tournaments" />
+          )}
           {/* TODO: Enable when SSP released */}
           {/* {hasScope([EMT], userScopes) && (
             <Card title="System Settings" href="/admin/settings" />
