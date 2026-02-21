@@ -1,56 +1,58 @@
 import { GetServerSideProps } from 'next';
 
 import { useRouter } from 'next/router';
-import { Heading, Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
 
-import type { clubs as PrismaClub } from '@prisma/client';
+import type { tournaments as PrismaTournament } from '@prisma/client';
 import generateServerSideHeaders from 'modules/headers';
 
-import { CLUBS_READ, CLUBS_WRITE, EMT } from 'constants/scopes';
+import { EMT } from 'constants/scopes';
 import Slice from 'components/shared/slice';
 import Meta from 'components/shared/meta';
 import Modal from 'components/shared/modal';
 import Button from 'components/shared/button';
 
-import UpdateClubForm from 'components/admin/clubs/update-club-form';
-import ClubTeams from 'components/admin/clubs/club-teams';
-import ClubMembers from 'components/admin/clubs/club-members';
-
 import { isScoped_ServerProps } from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
 
-import clubsService from 'services/clubs';
+import tournamentsService from 'services/tournaments';
 
 import useCachedResponse from 'hooks/useCachedResponse';
 import { getPlainScopes, hasScope } from 'modules/scopes';
 import useMe from 'hooks/useMe';
 import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
 import useResponse from 'hooks/useResponse';
+import TournamentForm from 'components/admin/tournaments/tournament-form';
 
-const ClubPage = ({ club: initialData }: { club: PrismaClub }) => {
+const TournamentPage = ({
+  tournament: initialData,
+}: {
+  tournament: PrismaTournament;
+}) => {
   const router = useRouter();
   const { data: user } = useMe();
   const userScopes = getPlainScopes(user?.scopes);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { data: club, refetch } = useCachedResponse<PrismaClub>({
-    queryKey: ['/clubs/', router.query.uid],
-    queryFn: () => clubsService.getClub({ club_uuid: router.query.uid }),
+  const { data: tournament, refetch } = useCachedResponse<PrismaTournament>({
+    queryKey: ['/tournaments/', router.query.uid],
+    queryFn: () =>
+      tournamentsService.getTournament({ tournament_uuid: router.query.uid }),
     initialData,
   });
 
-  const { mutate: deleteClub } = useResponse({
-    queryFn: clubsService.deleteClub,
+  const { mutate: deleteTournament } = useResponse({
+    queryFn: tournamentsService.deleteTournament,
     onSettled: () => {
       onClose();
-      router.push('/admin/clubs');
+      router.push('/admin/tournaments');
     },
   });
 
   return (
     <>
-      <Meta subTitle={club?.name} title="Clubs Admin Dashboard" />
+      <Meta subTitle={tournament?.name} title="Tournaments Admin Dashboard" />
       <Slice>
         <Flex
           flexDirection="row"
@@ -62,43 +64,38 @@ const ClubPage = ({ club: initialData }: { club: PrismaClub }) => {
           <HeadingWithBreadcrumbs
             breadcrumbs={[
               { link: '/admin', title: 'Dashboard' },
-              { link: '/admin/clubs', title: 'Clubs' },
+              { link: '/admin/tournaments', title: 'Tournaments' },
             ]}
-            heading={club?.name}
+            heading={tournament?.name}
           />
 
-          {hasScope([CLUBS_WRITE, EMT], userScopes) && !club.active && (
+          {hasScope([EMT], userScopes) && (
             <Button variant="secondary" onClick={onOpen}>
-              Delete Club
+              Delete Tournament
             </Button>
           )}
         </Flex>
 
-        {hasScope([CLUBS_WRITE, EMT], userScopes) && (
-          <UpdateClubForm club={club} refetch={refetch} />
+        {hasScope([EMT], userScopes) && (
+          <TournamentForm initialTournament={tournament} />
         )}
-
-        {hasScope([CLUBS_WRITE, EMT], userScopes) && (
-          <ClubTeams club_uuid={club?.uuid} />
-        )}
-        <Heading fontFamily="body" color="qukBlue" fontSize="2xl">
-          Members
-        </Heading>
-        <ClubMembers club={club} refetch={refetch} scopes={userScopes} />
       </Slice>
 
       <Modal
-        title="Delete Club"
+        title="Delete Tournament"
         isOpen={isOpen}
         onClose={onClose}
-        footerAction={() => deleteClub({ club_uuid: club.uuid })}
+        footerAction={() =>
+          deleteTournament({ tournament_uuid: tournament.uuid })
+        }
         footerTitle="Delete"
         footerButtonProps={{ variant: 'secondary' }}
       >
-        <Text>Are you sure you want to delete {club?.name}?</Text>
+        {/* QQ better wording */}
+        <Text>Are you sure you want to delete {tournament?.name}?</Text>
         <Text fontWeight="bold">
-          This action cannot be undone, and any members attached to the club
-          will become unassigned.
+          This action cannot be undone, and any members attached to the
+          tournament will become unassigned.
         </Text>
       </Modal>
     </>
@@ -106,11 +103,7 @@ const ClubPage = ({ club: initialData }: { club: PrismaClub }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const auth = await isScoped_ServerProps(context, [
-    CLUBS_READ,
-    CLUBS_WRITE,
-    EMT,
-  ]);
+  const auth = await isScoped_ServerProps(context, [EMT]);
 
   if (!auth) {
     return {
@@ -123,21 +116,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const headers = generateServerSideHeaders(context.req);
 
-  const [{ data: club }, basePageProps] = await Promise.all([
-    clubsService.getClub({ club_uuid: context.params?.uid, headers }),
+  const [{ data: tournament }, basePageProps] = await Promise.all([
+    tournamentsService.getTournament({
+      tournament_uuid: context.params?.uid,
+      headers,
+    }),
     getBasePageProps(),
   ]);
 
   return {
     props: {
-      club,
+      tournament,
       ...basePageProps,
     },
   };
 };
 
-export default ClubPage;
+export default TournamentPage;
 
-ClubPage.auth = {
+TournamentPage.auth = {
   skeleton: <Box />,
 };
