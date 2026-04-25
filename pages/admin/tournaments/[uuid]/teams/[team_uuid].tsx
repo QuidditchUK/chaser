@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import { Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
 
 import type { tournaments as PrismaTournament } from '@prisma/client';
+import type { teams as PrismaTeam } from '@prisma/client';
+
 import generateServerSideHeaders from 'modules/headers';
 
 import { EMT } from 'constants/scopes';
@@ -23,79 +25,87 @@ import useMe from 'hooks/useMe';
 import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
 import useResponse from 'hooks/useResponse';
 import TournamentForm from 'components/admin/tournaments/tournament-form';
+import TournamentTeams from 'components/admin/tournaments/tournament-teams';
+import TournamentTeamPlayers from 'components/admin/tournaments/tournament-team-players';
 
-const TournamentPage = ({
-  tournament: initialData,
-}: {
-  tournament: PrismaTournament;
-}) => {
+// QQ need to get team data here - ideally from tournament team endpoint
+const TeamPage = () => {
   const router = useRouter();
   const { data: user } = useMe();
   const userScopes = getPlainScopes(user?.scopes);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { data: tournament, refetch } = useCachedResponse<PrismaTournament>({
-    queryKey: ['/tournaments/', router.query.uid],
+  const tournament_uuid = router.query.uuid;
+  const team_uuid = router.query.team_uuid;
+
+  const {
+    data: tournament_team,
+    isLoading,
+    isError,
+  } = useCachedResponse<{
+    tournament: PrismaTournament;
+    team: PrismaTeam;
+  }>({
+    queryKey: ['/tournaments/', tournament_uuid, '/teams/', team_uuid],
     queryFn: () =>
-      tournamentsService.getTournament({ tournament_uuid: router.query.uid }),
-    initialData,
+      tournamentsService.getTournamentTeam({
+        tournament_uuid: tournament_uuid,
+        team_uuid: team_uuid,
+      }),
   });
 
-  const { mutate: deleteTournament } = useResponse({
-    queryFn: tournamentsService.deleteTournament,
-    onSettled: () => {
-      onClose();
-      router.push('/admin/tournaments');
-    },
-  });
+  const removeTeamFromTournament = async () => {
+    await tournamentsService.removeTeamFromTournament({
+      tournament_uuid,
+      team_uuid: team_uuid,
+    });
+    router.push(`/admin/tournaments/${tournament_uuid}`);
+  };
+
+  if (isLoading || isError || !tournament_team) {
+    return null;
+  }
 
   return (
     <>
-      <Meta subTitle={tournament?.name} title="Tournaments Admin Dashboard" />
+      <Meta subTitle={tournament_team?.tournament.name} title="Tournament Team Admin Dashboard" />
       <Slice>
-        <Flex
-          flexDirection="row"
-          width="100%"
-          alignItems="center"
-          justifyContent="space-between"
-          gap={2}
-        >
+        <Flex flexDirection="row" width="100%" alignItems="center" justifyContent="space-between" gap={2}>
           <HeadingWithBreadcrumbs
             breadcrumbs={[
               { link: '/admin', title: 'Dashboard' },
               { link: '/admin/tournaments', title: 'Tournaments' },
+              {
+                link: `/admin/tournaments/${tournament_uuid}`,
+                title: tournament_team?.tournament.name,
+              },
             ]}
-            heading={tournament?.name}
+            heading={'Team'}
           />
 
           {hasScope([EMT], userScopes) && (
             <Button variant="secondary" onClick={onOpen}>
-              Delete Tournament
+              Delete Team
             </Button>
           )}
         </Flex>
 
-        {hasScope([EMT], userScopes) && (
-          <TournamentForm initialTournament={tournament} />
-        )}
+        <TournamentTeamPlayers tournament_uuid={tournament_uuid} team_uuid={team_uuid} />
       </Slice>
 
       <Modal
-        title="Delete Tournament"
+        title="Delete Team from Tournament"
         isOpen={isOpen}
         onClose={onClose}
-        footerAction={() =>
-          deleteTournament({ tournament_uuid: tournament.uuid })
-        }
+        footerAction={() => removeTeamFromTournament()}
         footerTitle="Delete"
         footerButtonProps={{ variant: 'secondary' }}
       >
         {/* QQ better wording */}
-        <Text>Are you sure you want to delete {tournament?.name}?</Text>
+        <Text>Are you sure you want to delete {tournament_team.team.name}?</Text>
         <Text fontWeight="bold">
-          This action cannot be undone, and any members attached to the
-          tournament will become unassigned.
+          This action cannot be undone, and any members attached to the tournament will become unassigned.
         </Text>
       </Modal>
     </>
@@ -118,7 +128,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const [{ data: tournament }, basePageProps] = await Promise.all([
     tournamentsService.getTournament({
-      tournament_uuid: context.params?.uid,
+      tournament_uuid: context.params?.uuid,
       headers,
     }),
     getBasePageProps(),
@@ -132,8 +142,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default TournamentPage;
+export default TeamPage;
 
-TournamentPage.auth = {
+TeamPage.auth = {
   skeleton: <Box />,
 };

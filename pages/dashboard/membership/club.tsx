@@ -46,10 +46,7 @@ const STATUS = {
 
 const SelectClubSchema = object().shape({
   club_uuid: string().nullable().required('Required'),
-  confirm: bool().oneOf(
-    [true],
-    'Please confirm that you have read the disclaimer'
-  ),
+  confirm: bool().oneOf([true], 'Please confirm that you have read the disclaimer'),
 });
 
 const handleClubSubmit = async ({ club_uuid }, setServerError) => {
@@ -66,9 +63,7 @@ const handleClubSubmit = async ({ club_uuid }, setServerError) => {
 const ManageClub = ({ clubs = [], settings }) => {
   const { data: user, refetch } = useMe();
 
-  const [selectedClub, setSelectedClub] = useState(
-    clubs.find(({ uuid }) => uuid === user?.club_uuid)
-  );
+  const [selectedClub, setSelectedClub] = useState(clubs.find(({ uuid }) => uuid === user?.club_uuid));
 
   useEffect(() => {
     if (!selectedClub) {
@@ -92,19 +87,14 @@ const ManageClub = ({ clubs = [], settings }) => {
     },
   });
 
-  const hasPendingTransfer = user?.transfers?.some(
-    (transfer) => transfer?.status === 'PENDING'
-  );
-  const canTransfer =
-    settings?.transfer_window && !hasPendingTransfer && user?.club_uuid;
+  const hasPendingTransfer = user?.transfers?.some((transfer) => transfer?.status === 'PENDING');
+  const canTransfer = settings?.transfer_window && !hasPendingTransfer && user?.club_uuid;
 
   const currentSelectedClubUuid = watch('club_uuid', user?.club_uuid);
 
   useEffect(() => {
     if (selectedClub?.uuid !== currentSelectedClubUuid) {
-      setSelectedClub(
-        clubs.find(({ uuid }) => uuid === currentSelectedClubUuid)
-      );
+      setSelectedClub(clubs.find(({ uuid }) => uuid === currentSelectedClubUuid));
     }
   }, [selectedClub, setSelectedClub, currentSelectedClubUuid, clubs]);
 
@@ -115,16 +105,8 @@ const ManageClub = ({ clubs = [], settings }) => {
         subTitle="Manage"
       />
       <Slice>
-        <Grid
-          gridTemplateColumns={{ base: '1fr', md: '2fr 1fr' }}
-          gridGap={{ base: 4, md: 9 }}
-        >
-          <Box
-            bg="white"
-            py={4}
-            px={{ base: 4, sm: 8, md: 9 }}
-            borderRadius="md"
-          >
+        <Grid gridTemplateColumns={{ base: '1fr', md: '2fr 1fr' }} gridGap={{ base: 4, md: 9 }}>
+          <Box bg="white" py={4} px={{ base: 4, sm: 8, md: 9 }} borderRadius="md">
             <Heading as="h2" fontFamily="body" color="qukBlue" fontSize="3xl">
               {user?.club_uuid ? 'Your club' : 'Select your club'}
             </Heading>
@@ -133,23 +115,14 @@ const ManageClub = ({ clubs = [], settings }) => {
               {user?.club_uuid ? (
                 <>
                   <p>
-                    You have selected <strong>{selectedClub?.name}</strong> as
-                    your QuadballUK Club.
+                    You have selected <strong>{selectedClub?.name}</strong> as your QuadballUK Club.
+                  </p>
+                  <p>If you need to change your club, you must submit a transfer request to QuadballUK.</p>
+                  <p>
+                    The transfer window is currently <strong>{settings.transfer_window ? 'Open' : 'Closed'}.</strong>
                   </p>
                   <p>
-                    If you need to change your club, you must submit a transfer
-                    request to QuadballUK.
-                  </p>
-                  <p>
-                    The transfer window is currently{' '}
-                    <strong>
-                      {settings.transfer_window ? 'Open' : 'Closed'}.
-                    </strong>
-                  </p>
-                  <p>
-                    {user?.transfers.some(
-                      (transfer) => transfer.status === 'PENDING'
-                    )
+                    {user?.transfers.some((transfer) => transfer.status === 'PENDING')
                       ? 'Your transfer request is currently being reviewed.'
                       : settings.transfer_window
                       ? 'You can submit a Transfer request using the form below.'
@@ -158,13 +131,8 @@ const ManageClub = ({ clubs = [], settings }) => {
                       'Transfer requests are subject to review to ensure all relevant gameplay policies are adhered to.'
                     ) : (
                       <>
-                        Any transfer requests outside the transfer window must
-                        be emailed to{' '}
-                        <Link
-                          href="mailto:clubs@quidditchuk.org"
-                          color="monarchRed"
-                          fontWeight="bold"
-                        >
+                        Any transfer requests outside the transfer window must be emailed to{' '}
+                        <Link href="mailto:clubs@quidditchuk.org" color="monarchRed" fontWeight="bold">
                           clubs@quidditchuk.org
                         </Link>
                       </>
@@ -174,25 +142,19 @@ const ManageClub = ({ clubs = [], settings }) => {
               ) : (
                 <>
                   <p>
-                    Before confirming, please double check that you have
-                    selected the correct club and they know you are joining them
-                    this competitive season.
+                    Before confirming, please double check that you have selected the correct club and they know you are
+                    joining them this competitive season.
                   </p>
                   <p>
-                    Please note that once you have chosen and locked in your
-                    club you will not be able to undo it, and any changes will
-                    have to be requested via a Transfer Request to QuadballUK.
+                    Please note that once you have chosen and locked in your club you will not be able to undo it, and
+                    any changes will have to be requested via a Transfer Request to QuadballUK.
                   </p>
                 </>
               )}
             </Content>
 
             {!user?.club_uuid && (
-              <form
-                onSubmit={handleSubmit((values) =>
-                  handleClubSubmit(values, setServerError)
-                )}
-              >
+              <form onSubmit={handleSubmit((values) => handleClubSubmit(values, setServerError))}>
                 <Grid gridTemplateColumns="1fr" mt={5} gridGap={3}>
                   <Select
                     label="Select your club"
@@ -207,25 +169,13 @@ const ManageClub = ({ clubs = [], settings }) => {
                     {...register('club_uuid')}
                   />
 
-                  <Checkbox
-                    id="confirm"
-                    {...register('confirm')}
-                    size="md"
-                    error={errors?.confirm}
-                    isRequired={true}
-                  >
-                    By checking this box I acknowledge that I have read the
-                    above disclaimer and I intend for{' '}
-                    <strong>{selectedClub?.name}</strong> to be my QuadballUK
-                    club for the 2022/2023 Season.
+                  <Checkbox id="confirm" {...register('confirm')} size="md" error={errors?.confirm} isRequired={true}>
+                    By checking this box I acknowledge that I have read the above disclaimer and I intend for{' '}
+                    <strong>{selectedClub?.name}</strong> to be my QuadballUK club for the 2025/2026 Season.
                   </Checkbox>
+                  {/* QQQQ Fix this properly */}
 
-                  <Button
-                    mt="2"
-                    type="submit"
-                    variant="green"
-                    disabled={isSubmitting}
-                  >
+                  <Button mt="2" type="submit" variant="green" disabled={isSubmitting}>
                     {isSubmitting ? 'Submitting' : 'Select my club'}
                   </Button>
                 </Grid>
@@ -243,11 +193,7 @@ const ManageClub = ({ clubs = [], settings }) => {
 
         {canTransfer && (
           <Grid gridTemplateColumns="1fr">
-            <TransferRequestForm
-              currentClub={user?.club_uuid}
-              clubs={clubs}
-              callback={refetch}
-            />
+            <TransferRequestForm currentClub={user?.club_uuid} clubs={clubs} callback={refetch} />
           </Grid>
         )}
 
@@ -259,20 +205,15 @@ const ManageClub = ({ clubs = [], settings }) => {
 
             <Box bg="white" borderRadius="lg">
               <Table columns={['Old Club', 'New Club', 'Status']}>
-                {orderBy(user?.transfers, ['updated'], 'desc').map(
-                  (transfer) => (
-                    <Tr key={transfer?.uuid}>
-                      <Td>{transfer?.prevClub?.name}</Td>
-                      <Td>{transfer?.newClub?.name}</Td>
-                      <Td
-                        color={STATUS[transfer.status].color}
-                        fontWeight="bold"
-                      >
-                        {STATUS[transfer.status].label}
-                      </Td>
-                    </Tr>
-                  )
-                )}
+                {orderBy(user?.transfers, ['updated'], 'desc').map((transfer) => (
+                  <Tr key={transfer?.uuid}>
+                    <Td>{transfer?.prevClub?.name}</Td>
+                    <Td>{transfer?.newClub?.name}</Td>
+                    <Td color={STATUS[transfer.status].color} fontWeight="bold">
+                      {STATUS[transfer.status].label}
+                    </Td>
+                  </Tr>
+                ))}
               </Table>
             </Box>
           </>
@@ -288,10 +229,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   if (
     !products.length ||
-    !products.filter(
-      (product) =>
-        new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())
-    ).length
+    !products.filter((product) => new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())).length
   ) {
     return {
       redirect: {
@@ -301,12 +239,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     };
   }
 
-  const [{ data: clubs }, { data: settings }, basePageProps] =
-    await Promise.all([
-      clubsService.getPublicClubs(),
-      settingsService.getSettings(),
-      getBasePageProps(),
-    ]);
+  const [{ data: clubs }, { data: settings }, basePageProps] = await Promise.all([
+    clubsService.getPublicClubs(),
+    settingsService.getSettings(),
+    getBasePageProps(),
+  ]);
 
   return {
     props: {

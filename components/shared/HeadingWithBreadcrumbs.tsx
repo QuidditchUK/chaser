@@ -18,21 +18,15 @@ export default function HeadingWithBreadcrumbs({
   return (
     <Box mt={4}>
       <Flex alignItems="center">
-        {breadcrumbs.map((breadcrumb) => (
-          <Fragment key={breadcrumb.title}>
-            <Link href={breadcrumb.link}>{breadcrumb.title}</Link>{' '}
-            <ChevronRightIcon />
-          </Fragment>
-        ))}
+        {breadcrumbs
+          .filter((breadcrumb) => !!breadcrumb && !!breadcrumb.link && !!breadcrumb.title)
+          .map((breadcrumb) => (
+            <Fragment key={breadcrumb.title}>
+              <Link href={breadcrumb.link}>{breadcrumb.title}</Link> <ChevronRightIcon />
+            </Fragment>
+          ))}
       </Flex>
-      <Heading
-        as="h3"
-        mt={1}
-        fontFamily="body"
-        color="qukBlue"
-        display="flex"
-        alignItems="center"
-      >
+      <Heading as="h3" mt={1} fontFamily="body" color="qukBlue" display="flex" alignItems="center">
         {heading}
       </Heading>
     </Box>

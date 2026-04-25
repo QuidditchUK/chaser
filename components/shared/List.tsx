@@ -15,14 +15,7 @@ import {
 import Button from './button';
 
 export const List = (props: ListProps) => (
-  <UnorderedList
-    listStyleType="none"
-    m={0}
-    p={0}
-    bg="white"
-    borderRadius="lg"
-    {...props}
-  />
+  <UnorderedList listStyleType="none" m={0} p={0} bg="white" borderRadius="lg" {...props} />
 );
 
 type LiProps = ListItemProps & {
@@ -32,7 +25,9 @@ type LiProps = ListItemProps & {
   active?: boolean;
   activeLabel?: string;
   inactiveLabel?: string;
+  showActiveLabel?: boolean;
   href?: string;
+  action?: ReactNode;
 };
 
 export const Li = ({
@@ -42,7 +37,9 @@ export const Li = ({
   active,
   activeLabel = 'Active',
   inactiveLabel = 'Inactive',
+  showActiveLabel = true,
   href,
+  action,
   ...props
 }: LiProps) => {
   const Wrapper = href ? Link : Fragment;
@@ -70,9 +67,13 @@ export const Li = ({
           </Text>
         </Box>
 
-        <Text color={active ? 'keeperGreen' : 'monarchRed'} fontWeight="bold">
-          {active ? activeLabel : inactiveLabel}
-        </Text>
+        {showActiveLabel && (
+          <Text color={active ? 'keeperGreen' : 'monarchRed'} fontWeight="bold">
+            {active ? activeLabel : inactiveLabel}
+          </Text>
+        )}
+
+        {action}
       </ListItem>
     </Wrapper>
   );
