@@ -63,6 +63,17 @@ const tournamentsService = {
     url: `/tournaments/${tournament_uuid}/teams/${team_uuid}/players`,
     ...params,
   }),
+  addPlayerToTeam: ({ tournament_uuid, team_uuid, data, ...params }) => ({
+    method: 'post',
+    url: `/tournaments/${tournament_uuid}/teams/${team_uuid}/players`,
+    data,
+    ...params,
+  }),
+  removePlayerFromTeam: ({ tournament_uuid, team_uuid, user_uuid, ...params }) => ({
+    method: 'delete',
+    url: `/tournaments/${tournament_uuid}/teams/${team_uuid}/players/${user_uuid}`,
+    ...params,
+  }),
 };
 
 export default createService(tournamentsService);

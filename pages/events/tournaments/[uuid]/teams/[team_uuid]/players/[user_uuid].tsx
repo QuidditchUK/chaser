@@ -14,7 +14,6 @@ import Meta from 'components/shared/meta';
 import Modal from 'components/shared/modal';
 import Button from 'components/shared/button';
 
-import { isScoped_ServerProps } from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
 
 import tournamentsService from 'services/tournaments';
@@ -23,12 +22,12 @@ import useCachedResponse from 'hooks/useCachedResponse';
 import { getPlainScopes, hasScope } from 'modules/scopes';
 import useMe from 'hooks/useMe';
 import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
-import useResponse from 'hooks/useResponse';
-import TournamentForm from 'components/admin/tournaments/tournament-form';
-import TournamentTeams from 'components/admin/tournaments/tournament-teams';
-import TournamentTeamPlayers from 'components/admin/tournaments/tournament-team-players';
+import TournamentTeamPlayers from 'components/events/tournaments/tournament-team-players';
 
-// QQ need to get team data here - ideally from tournament team endpoint
+// QQQQ fetch registration details
+// QQQQ admin needs to be able to manually mark a player as paid
+// QQQQ anyone can pay a player's registration fee
+// QQQQ before they can pay, the player needs to have an active quk membership
 const TeamPage = () => {
   const router = useRouter();
   const { data: user } = useMe();
@@ -38,6 +37,7 @@ const TeamPage = () => {
 
   const tournament_uuid = router.query.uuid;
   const team_uuid = router.query.team_uuid;
+  const user_uuid = router.query.user_uuid;
 
   const {
     data: tournament_team,
@@ -60,7 +60,7 @@ const TeamPage = () => {
       tournament_uuid,
       team_uuid: team_uuid,
     });
-    router.push(`/admin/tournaments/${tournament_uuid}`);
+    router.push(`/events/tournaments/${tournament_uuid}`);
   };
 
   if (isLoading || isError || !tournament_team) {
@@ -74,10 +74,10 @@ const TeamPage = () => {
         <Flex flexDirection="row" width="100%" alignItems="center" justifyContent="space-between" gap={2}>
           <HeadingWithBreadcrumbs
             breadcrumbs={[
-              { link: '/admin', title: 'Dashboard' },
-              { link: '/admin/tournaments', title: 'Tournaments' },
+              { link: '/events', title: 'Events' },
+              { link: '/events/tournaments', title: 'Tournaments' },
               {
-                link: `/admin/tournaments/${tournament_uuid}`,
+                link: `/events/tournaments/${tournament_uuid}`,
                 title: tournament_team?.tournament.name,
               },
             ]}
@@ -113,17 +113,6 @@ const TeamPage = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const auth = await isScoped_ServerProps(context, [EMT]);
-
-  if (!auth) {
-    return {
-      redirect: {
-        destination: '/dashboard',
-        permanent: false,
-      },
-    };
-  }
-
   const headers = generateServerSideHeaders(context.req);
 
   const [{ data: tournament }, basePageProps] = await Promise.all([

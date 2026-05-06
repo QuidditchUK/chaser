@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 
 import { useRouter } from 'next/router';
-import { Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, Heading, Link, Text, useDisclosure } from '@chakra-ui/react';
 
 import type { tournaments as PrismaTournament } from '@prisma/client';
 import generateServerSideHeaders from 'modules/headers';
@@ -12,7 +12,6 @@ import Meta from 'components/shared/meta';
 import Modal from 'components/shared/modal';
 import Button from 'components/shared/button';
 
-import { isScoped_ServerProps } from 'modules/auth';
 import { getBasePageProps } from 'modules/prismic';
 
 import tournamentsService from 'services/tournaments';
@@ -22,8 +21,7 @@ import { getPlainScopes, hasScope } from 'modules/scopes';
 import useMe from 'hooks/useMe';
 import HeadingWithBreadcrumbs from 'components/shared/HeadingWithBreadcrumbs';
 import useResponse from 'hooks/useResponse';
-import TournamentForm from 'components/admin/tournaments/tournament-form';
-import TournamentTeams from 'components/admin/tournaments/tournament-teams';
+import TournamentTeams from 'components/events/tournaments/tournament-teams';
 
 const TournamentPage = ({ tournament: initialData }: { tournament: PrismaTournament }) => {
   const router = useRouter();
@@ -34,7 +32,11 @@ const TournamentPage = ({ tournament: initialData }: { tournament: PrismaTournam
 
   const tournament_uuid = router.query.uuid;
 
-  const { data: tournament, refetch } = useCachedResponse<PrismaTournament>({
+  const {
+    data: tournament,
+    refetch,
+    isLoading,
+  } = useCachedResponse<PrismaTournament>({
     queryKey: ['/tournaments/', tournament_uuid],
     queryFn: () => tournamentsService.getTournament({ tournament_uuid: tournament_uuid }),
     initialData,
@@ -44,7 +46,7 @@ const TournamentPage = ({ tournament: initialData }: { tournament: PrismaTournam
     queryFn: tournamentsService.deleteTournament,
     onSettled: () => {
       onClose();
-      router.push('/admin/tournaments');
+      router.push('/events/tournaments');
     },
   });
 
@@ -55,22 +57,52 @@ const TournamentPage = ({ tournament: initialData }: { tournament: PrismaTournam
         <Flex flexDirection="row" width="100%" alignItems="center" justifyContent="space-between" gap={2}>
           <HeadingWithBreadcrumbs
             breadcrumbs={[
-              { link: '/admin', title: 'Dashboard' },
-              { link: '/admin/tournaments', title: 'Tournaments' },
+              { link: '/events', title: 'Events' },
+              { link: '/events/tournaments', title: 'Tournaments' },
             ]}
             heading={tournament?.name}
           />
 
           {hasScope([EMT], userScopes) && (
-            <Button variant="secondary" onClick={onOpen}>
-              Delete Tournament
-            </Button>
+            <Flex flexDirection="row" alignItems="center" justifyContent="space-between" gap={6}>
+              <Link href={`/events/tournaments/${tournament?.uuid}/edit`}>Update Tournament</Link>
+              <Button variant="secondary" onClick={onOpen}>
+                Delete Tournament
+              </Button>
+            </Flex>
           )}
         </Flex>
 
-        {hasScope([EMT], userScopes) && <TournamentForm initialTournament={tournament} />}
+        <Box bg="white" p={4} marginTop={4} marginBottom={4} borderRadius="lg">
+          <Heading as="h4" fontFamily="body" color="qukBlue" fontSize="2xl" marginTop={0}>
+            Tournament details
+          </Heading>
+          <Text>
+            <b>Tournament name:</b>
+            <br /> {tournament?.name || 'N/A'}
+          </Text>
+          <Text>
+            <b>Location:</b>
+            <br /> {tournament?.location || 'N/A'}
+          </Text>
+          <Text>
+            <b>Description:</b> <br /> {tournament?.description || 'N/A'}
+          </Text>
+          <Text>
+            <b>Tournament dates</b>
+            <br /> {tournament?.start ? new Date(tournament.start).toLocaleDateString() : 'N/A'} -{' '}
+            {tournament?.end ? new Date(tournament.end).toLocaleDateString() : 'N/A'}
+          </Text>
+          <Text>
+            <b>Tournament registration dates</b>
+            <br /> {tournament?.registrationStart
+              ? new Date(tournament.registrationStart).toLocaleDateString()
+              : 'N/A'}{' '}
+            - {tournament?.registrationEnd ? new Date(tournament.registrationEnd).toLocaleDateString() : 'N/A'}
+          </Text>
+        </Box>
 
-        <TournamentTeams tournament_uuid={tournament_uuid} />
+        <TournamentTeams tournament_uuid={tournament_uuid as string} readonly />
       </Slice>
 
       <Modal
@@ -92,17 +124,6 @@ const TournamentPage = ({ tournament: initialData }: { tournament: PrismaTournam
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const auth = await isScoped_ServerProps(context, [EMT]);
-
-  if (!auth) {
-    return {
-      redirect: {
-        destination: '/dashboard',
-        permanent: false,
-      },
-    };
-  }
-
   const headers = generateServerSideHeaders(context.req);
 
   const [{ data: tournament }, basePageProps] = await Promise.all([

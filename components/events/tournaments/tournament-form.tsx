@@ -32,24 +32,12 @@ const TournamentSchema = object().shape({
   'registrationStart-day': number().optional(),
   'registrationStart-month': number().optional(),
   'registrationStart-year': number().optional(),
-  'registrationEnd-day': number().required(
-    'Please enter the last day players can register'
-  ),
-  'registrationEnd-month': number().required(
-    'Please enter the last day players can register'
-  ),
-  'registrationEnd-year': number().required(
-    'Please enter the last day players can register'
-  ),
+  'registrationEnd-day': number().required('Please enter the last day players can register'),
+  'registrationEnd-month': number().required('Please enter the last day players can register'),
+  'registrationEnd-year': number().required('Please enter the last day players can register'),
 });
 
-const handleEditSubmit = async (
-  uuid,
-  values,
-  setServerError,
-  setServerSuccess,
-  refetch
-) => {
+const handleEditSubmit = async (uuid, values, setServerError, setServerSuccess, refetch) => {
   try {
     setServerError(null);
     setServerSuccess(null);
@@ -63,11 +51,7 @@ const handleEditSubmit = async (
   }
 };
 
-const TournamentForm = ({
-  initialTournament,
-}: {
-  initialTournament?: PrismaTournaments;
-}) => {
+const TournamentForm = ({ initialTournament }: { initialTournament?: PrismaTournaments }) => {
   const [serverSuccess, setServerSuccess] = useTempPopup(); // QQ use?
   const [serverError, setServerError] = useTempPopup();
 
@@ -82,56 +66,24 @@ const TournamentForm = ({
       name: initialTournament?.name || '',
       location: initialTournament?.location || '',
       description: initialTournament?.description || '',
-      'start-day':
-        DateTime.fromISO(initialTournament?.start as unknown as string).day ||
-        null,
-      'start-month':
-        DateTime.fromISO(initialTournament?.start as unknown as string).month ||
-        null,
-      'start-year':
-        DateTime.fromISO(initialTournament?.start as unknown as string).year ||
-        null,
-      'end-day':
-        DateTime.fromISO(initialTournament?.end as unknown as string).day ||
-        null,
-      'end-month':
-        DateTime.fromISO(initialTournament?.end as unknown as string).month ||
-        null,
-      'end-year':
-        DateTime.fromISO(initialTournament?.end as unknown as string).year ||
-        null,
-      'registrationStart-day':
-        DateTime.fromISO(
-          initialTournament?.registrationStart as unknown as string
-        ).day || null,
+      'start-day': DateTime.fromISO(initialTournament?.start as unknown as string).day || null,
+      'start-month': DateTime.fromISO(initialTournament?.start as unknown as string).month || null,
+      'start-year': DateTime.fromISO(initialTournament?.start as unknown as string).year || null,
+      'end-day': DateTime.fromISO(initialTournament?.end as unknown as string).day || null,
+      'end-month': DateTime.fromISO(initialTournament?.end as unknown as string).month || null,
+      'end-year': DateTime.fromISO(initialTournament?.end as unknown as string).year || null,
+      'registrationStart-day': DateTime.fromISO(initialTournament?.registrationStart as unknown as string).day || null,
       'registrationStart-month':
-        DateTime.fromISO(
-          initialTournament?.registrationStart as unknown as string
-        ).month || null,
+        DateTime.fromISO(initialTournament?.registrationStart as unknown as string).month || null,
       'registrationStart-year':
-        DateTime.fromISO(
-          initialTournament?.registrationStart as unknown as string
-        ).year || null,
-      'registrationEnd-day':
-        DateTime.fromISO(
-          initialTournament?.registrationEnd as unknown as string
-        ).day || null,
-      'registrationEnd-month':
-        DateTime.fromISO(
-          initialTournament?.registrationEnd as unknown as string
-        ).month || null,
-      'registrationEnd-year':
-        DateTime.fromISO(
-          initialTournament?.registrationEnd as unknown as string
-        ).year || null,
+        DateTime.fromISO(initialTournament?.registrationStart as unknown as string).year || null,
+      'registrationEnd-day': DateTime.fromISO(initialTournament?.registrationEnd as unknown as string).day || null,
+      'registrationEnd-month': DateTime.fromISO(initialTournament?.registrationEnd as unknown as string).month || null,
+      'registrationEnd-year': DateTime.fromISO(initialTournament?.registrationEnd as unknown as string).year || null,
     },
   });
 
-  const handleActionSubmit = async (
-    values,
-    setServerError,
-    setServerSuccess
-  ) => {
+  const handleActionSubmit = async (values, setServerError, setServerSuccess) => {
     const mappedValues = {
       name: values.name,
       location: values.location,
@@ -164,7 +116,7 @@ const TournamentForm = ({
           data: mappedValues,
         });
 
-        Router.push(`/admin/tournaments/${tournament.uuid}`);
+        Router.push(`/events/tournaments/${tournament.uuid}`);
       } else {
         setServerError(null);
         await tournamentsService.updateTournament({
@@ -180,18 +132,8 @@ const TournamentForm = ({
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit((values) =>
-          handleActionSubmit(values, setServerError, setServerSuccess)
-        )}
-      >
-        <Grid
-          bg="gray.100"
-          p={4}
-          borderRadius="lg"
-          gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
-          width="100%"
-        >
+      <form onSubmit={handleSubmit((values) => handleActionSubmit(values, setServerError, setServerSuccess))}>
+        <Grid bg="gray.100" p={4} borderRadius="lg" gridTemplateColumns={{ base: '1fr', md: '1fr' }} width="100%">
           <Flex direction="column" gridGap={3}>
             <InputV2
               label="Name"
@@ -232,13 +174,7 @@ const TournamentForm = ({
                 name="start"
                 register={register}
               />
-              <DateInput
-                label="Tournament end"
-                id="end"
-                error={errors?.['end-day']}
-                name="end"
-                register={register}
-              />
+              <DateInput label="Tournament end" id="end" error={errors?.['end-day']} name="end" register={register} />
             </Grid>
 
             <Grid gridTemplateColumns={{ base: '1fr 1fr' }} gridGap={4}>
@@ -259,11 +195,7 @@ const TournamentForm = ({
             </Grid>
 
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting
-                ? 'Submitting'
-                : initialTournament
-                ? 'Update'
-                : 'Create'}
+              {isSubmitting ? 'Submitting' : initialTournament ? 'Update' : 'Create'}
             </Button>
           </Flex>
         </Grid>

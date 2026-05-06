@@ -60,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           where: { tournament_uuid, team_uuid },
         });
 
-        const user_uuid = req.body.player_uuid;
+        const user_uuid = req.body.user_uuid;
 
         const existing_matching_users = await prisma.tournament_team_players.findMany({
           where: { tournament_team_uuid: tournament_team.uuid, user_uuid },
