@@ -2,16 +2,16 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerStripe } from 'modules/stripe';
 import prisma from 'modules/prisma';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'POST':
       const stripe = await getServerStripe();
       const event = req.body;
 
       switch (event.type) {
+        // QQQQ metadata if - there will be product type
+        // tournament registration needs to go elsewhere
+        // QQQQ filter tournament registration purchases out of the general membership purchase
         case 'checkout.session.completed': {
           const { customer, metadata, id } = event.data.object;
           const { user_uuid } = metadata;
@@ -32,9 +32,7 @@ export default async function handler(
           });
 
           if (!product) {
-            const newProduct = await stripe.products.retrieve(
-              stripe_product_id
-            );
+            const newProduct = await stripe.products.retrieve(stripe_product_id);
 
             await prisma.stripe_products.create({
               data: {
@@ -95,9 +93,7 @@ export default async function handler(
             });
 
             // Remove user CLUB team if they have one
-            const team = user?.teams?.find(
-              ({ teams }) => teams?.type === 'CLUB'
-            );
+            const team = user?.teams?.find(({ teams }) => teams?.type === 'CLUB');
 
             if (team) {
               const teamUsers = await prisma?.teams_users?.findMany({
@@ -105,9 +101,7 @@ export default async function handler(
               });
 
               // find the relevant teams_users entry
-              const teamUser = teamUsers?.find(
-                ({ user_uuid }) => user_uuid === user?.uuid
-              );
+              const teamUser = teamUsers?.find(({ user_uuid }) => user_uuid === user?.uuid);
 
               // Remove the teams_users row
               if (teamUser) {

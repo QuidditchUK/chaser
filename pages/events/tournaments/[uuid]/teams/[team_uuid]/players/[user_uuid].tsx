@@ -28,7 +28,7 @@ import TournamentTeamPlayers from 'components/events/tournaments/tournament-team
 // QQQQ admin needs to be able to manually mark a player as paid
 // QQQQ anyone can pay a player's registration fee
 // QQQQ before they can pay, the player needs to have an active quk membership
-const TeamPage = () => {
+const TeamPlayerPage = () => {
   const router = useRouter();
   const { data: user } = useMe();
   const userScopes = getPlainScopes(user?.scopes);
@@ -131,8 +131,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default TeamPage;
+export default TeamPlayerPage;
 
-TeamPage.auth = {
+TeamPlayerPage.auth = {
   skeleton: <Box />,
 };

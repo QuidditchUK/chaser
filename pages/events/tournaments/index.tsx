@@ -44,13 +44,14 @@ const TournamentDashboard = () => {
         <HeadingWithBreadcrumbs breadcrumbs={[{ link: '/events', title: 'Events' }]} heading="Tournaments" />
 
         <Text mt={0}>
-          This is a place to create, edit and manage tournaments. Club presidents can register their teams in the
-          tournaments. They can also manage which players are in which teams. Players can choose to leave teams. EMT can
-          edit all of it.
+          This is a place to create, edit and view tournaments. EMT members can create tournaments and manage all
+          aspects of them. Club presidents can manage their own teams and players, but not the tournament itself.
+          Players can view the tournaments they are registered in and leave teams they are in.
         </Text>
 
         <Text mt={0}>
-          Players need to pay the registration fee. An admin can mark them as paid. You can pay someone else{"'"}s fee.
+          Players need to pay the registration fee. An EMT member can mark them as paid in case of bugs or
+          complications. You can pay someone else{"'"}s fee.
         </Text>
 
         <PageBody>
