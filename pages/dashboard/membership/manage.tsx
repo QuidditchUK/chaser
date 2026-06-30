@@ -10,27 +10,22 @@ import generateServerSideHeaders from 'modules/headers';
 
 const Meta = dynamic(() => import('components/shared/meta'));
 const ProductCard = dynamic(() => import('components/dashboard/product-card'));
-const MembershipForm = dynamic(
-  () => import('components/dashboard/membership-form')
-);
+const MembershipForm = dynamic(() => import('components/dashboard/membership-form'));
 
 const ManageMembership = ({ products }) => {
+  const membershipProducts = useMemo(
+    () => products?.filter((product) => product.metadata.type === 'MEMBERSHIP'),
+    [products]
+  );
   const currentProducts = useMemo(
     () =>
-      products?.filter(
-        (product) =>
-          new Date() < parse(product.metadata.expires, 'dd-MM-yyyy', new Date())
-      ),
-    [products]
+      membershipProducts?.filter((product) => new Date() < parse(product.metadata.expires, 'dd-MM-yyyy', new Date())),
+    [membershipProducts]
   );
   const expiredProducts = useMemo(
     () =>
-      products?.filter(
-        (product) =>
-          new Date() >=
-          parse(product.metadata.expires, 'dd-MM-yyyy', new Date())
-      ),
-    [products]
+      membershipProducts?.filter((product) => new Date() >= parse(product.metadata.expires, 'dd-MM-yyyy', new Date())),
+    [membershipProducts]
   );
 
   return (
