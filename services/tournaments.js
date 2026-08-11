@@ -74,6 +74,27 @@ const tournamentsService = {
     url: `/tournaments/${tournament_uuid}/teams/${team_uuid}/players/${user_uuid}`,
     ...params,
   }),
+  getTournamentPlayerRegistration: ({ tournament_uuid, team_uuid, user_uuid, ...params }) => ({
+    method: 'get',
+    url: `/tournaments/${tournament_uuid}/teams/${team_uuid}/players/${user_uuid}/registration`,
+    ...params,
+  }),
+  adminCreatePlayerRegistration: ({ tournament_uuid, team_uuid, user_uuid, data, ...params }) => ({
+    method: 'post',
+    url: `/tournaments/${tournament_uuid}/teams/${team_uuid}/players/${user_uuid}/registration`,
+    data,
+    ...params,
+  }),
+  adminDeletePlayerRegistration: ({ tournament_uuid, team_uuid, user_uuid, ...params }) => ({
+    method: 'delete',
+    url: `/tournaments/${tournament_uuid}/teams/${team_uuid}/players/${user_uuid}/registration`,
+    ...params,
+  }),
+  getStripeSessionForPlayerRegistration: ({ tournament_uuid, team_uuid, user_uuid, price_id, ...params }) => ({
+    method: 'get',
+    url: `/tournaments/${tournament_uuid}/teams/${team_uuid}/players/${user_uuid}/session?price_id=${price_id}`,
+    ...params,
+  }),
 };
 
 export default createService(tournamentsService);
