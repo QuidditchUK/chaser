@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from 'modules/prisma';
 import { isScoped_ApiRoute } from 'modules/auth';
 import { ADMIN, EMT } from 'constants/scopes';
+import { isManager } from 'modules/clubs';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -39,13 +40,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'DELETE':
       try {
         const isScoped = await isScoped_ApiRoute(req, [EMT, ADMIN]);
-        if (!isScoped) {
+        const team_uuid = req.body.team_uuid;
+        const team = await prisma.teams.findUnique({ where: { uuid: team_uuid } });
+        const userIsManager = await isManager(req, team?.club_uuid);
+        if (!isScoped && !userIsManager) {
           res.status(401).end();
           return;
         }
 
         const tournament_uuid = req.query.uuid as string;
-        const team_uuid = req.query.team_uuid as string;
 
         // QQ what to do with players?
         // QQ do they need to be re-entered each time?

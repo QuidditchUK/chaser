@@ -52,7 +52,7 @@ const TournamentPage = ({ tournament: initialData }: { tournament: PrismaTournam
 
   return (
     <>
-      <Meta subTitle={tournament?.name} title="Tournaments Admin Dashboard" />
+      <Meta subTitle={tournament?.name} title={`Tournament: ${tournament?.name}`} />
       <Slice>
         <Flex flexDirection="row" width="100%" alignItems="center" justifyContent="space-between" gap={2}>
           <HeadingWithBreadcrumbs

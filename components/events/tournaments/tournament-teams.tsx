@@ -11,12 +11,11 @@ import { useState } from 'react';
 import Select from 'components/formControls/select';
 import useMe from 'hooks/useMe';
 import { getPlainScopes, hasScope } from 'modules/scopes';
-import { EMT } from 'constants/scopes';
+import { CLUB_MANAGEMENT, EMT } from 'constants/scopes';
 
 const TournamentTeams = ({ tournament_uuid }: { tournament_uuid: string; readonly?: boolean }) => {
   const { data: user } = useMe();
   const userScopes = getPlainScopes(user?.scopes);
-  // QQQQ club presidents can add their clubs teams to the tournament, but not teams of other clubs. EMT can add any team.
 
   const [selectedTeamUuid, setSelectedTeamUuid] = useState<string>();
 
@@ -57,7 +56,7 @@ const TournamentTeams = ({ tournament_uuid }: { tournament_uuid: string; readonl
           <Heading as="h4" fontFamily="body" color="qukBlue" fontSize="2xl" marginTop={0}>
             Teams
           </Heading>
-          {hasScope([EMT], userScopes) && (
+          {hasScope([EMT, CLUB_MANAGEMENT], userScopes) && (
             <HStack spacing={3}>
               <Select
                 onChange={(event) => {
@@ -90,6 +89,11 @@ const TournamentTeams = ({ tournament_uuid }: { tournament_uuid: string; readonl
 
         <Table columns={['Name', 'Actions']} isLoading={isLoading} skeletonRows={10}>
           {tournament_teams?.map((team) => {
+            // Probably not fully true, one user could manage more teams I guess
+            // But not worth the effort right now
+            const isTeamManager = user.club_uuid === team.club_uuid && hasScope([CLUB_MANAGEMENT], userScopes);
+            const userCanManageTeam = hasScope([EMT], userScopes) || isTeamManager;
+
             return (
               <Tr key={team.uuid}>
                 <Td>
@@ -98,7 +102,7 @@ const TournamentTeams = ({ tournament_uuid }: { tournament_uuid: string; readonl
 
                 <Td>
                   <Flex flexDirection="row" alignItems="center" justifyContent="space-between" gap={6}>
-                    {hasScope([EMT], userScopes) ? (
+                    {userCanManageTeam ? (
                       <>
                         <Link href={`/events/tournaments/${tournament_uuid}/teams/${team.uuid}`}>
                           Manage team players
