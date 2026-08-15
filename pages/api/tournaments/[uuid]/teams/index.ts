@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from 'modules/prisma';
 import { isScoped_ApiRoute } from 'modules/auth';
 import { ADMIN, EMT } from 'constants/scopes';
+import { isManager } from 'modules/clubs';
+import { getToken } from 'next-auth/jwt';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -16,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               include: {
                 tournament_team_players: {
                   include: {
-                    tournament_team_player_registrations: true, // QQ don't return all medical form info here?
+                    tournament_team_player_registrations: true,
                   },
                 },
               },
@@ -32,7 +34,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const possible_teams = active_teams.filter((team) => !tournament_teams_uuids.includes(team.uuid));
 
-        res.status(200).json({ tournament_teams, possible_teams });
+        const token = await getToken({ req });
+        if (!token || !token?.user) {
+          res.status(200).json({ tournament_teams, possible_teams: [] });
+          return;
+        }
+
+        const can_manage_all_teams = await isScoped_ApiRoute(req, [EMT, ADMIN]);
+        const individual_managed_teams = await prisma.teams.findMany({
+          where: {
+            clubs: {
+              managed_by: token.user.uuid,
+            },
+          },
+        });
+        const individual_managed_teams_uuids = individual_managed_teams.map((team) => team.uuid);
+
+        res.status(200).json({
+          tournament_teams,
+          possible_teams: can_manage_all_teams
+            ? possible_teams
+            : possible_teams.filter((team) => individual_managed_teams_uuids.includes(team.uuid)),
+        });
 
         return;
       } catch (err) {
@@ -42,13 +65,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'POST':
       try {
         const isScoped = await isScoped_ApiRoute(req, [EMT, ADMIN]);
-        if (!isScoped) {
+
+        const team_uuid = req.body.team_uuid;
+        const team = await prisma.teams.findUnique({ where: { uuid: team_uuid } });
+        const userIsManager = await isManager(req, team?.club_uuid);
+        if (!isScoped && !userIsManager) {
           res.status(401).end();
           return;
         }
 
         const tournament_uuid = req.query.uuid as string;
-        const team_uuid = req.body.team_uuid;
 
         const existing_matching_teams = await prisma.tournament_teams.findMany({
           where: { tournament_uuid, team_uuid },

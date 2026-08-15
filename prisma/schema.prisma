@@ -272,8 +272,9 @@ model tournament_team_player_registrations {
   tournament_team_player      tournament_team_players @relation(fields: [tournament_team_player_uuid], references: [uuid], onDelete: Cascade, onUpdate: Cascade)
   tournament_team_player_uuid String                  @db.Uuid
 
-  tournament_fee      users_stripe_products @relation(fields: [tournament_fee_uuid], references: [uuid], onDelete: Cascade, onUpdate: Cascade)
-  tournament_fee_uuid String                @db.Uuid
+  tournament_fee      users_stripe_products? @relation(fields: [tournament_fee_uuid], references: [uuid], onDelete: Cascade, onUpdate: Cascade)
+  tournament_fee_uuid String?               @db.Uuid
 
   medical_form_filled Boolean @default(false)
+  registered_by_admin Boolean @default(false)
 }

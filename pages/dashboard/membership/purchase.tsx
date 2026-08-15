@@ -44,9 +44,7 @@ const PurchaseMembership = ({ products }: { products: any }) => {
   const [serverError, setServerError] = useState(null);
   const { data: user, isLoading: userLoading } = useMe();
   const [selectedClubUuid, setSelectedClubUuid] = useState(user?.club_uuid);
-  const { data: queryClubs = [], isLoading: clubsLoading } = useCachedResponse<
-    Club[]
-  >({
+  const { data: queryClubs = [], isLoading: clubsLoading } = useCachedResponse<Club[]>({
     queryKey: '/clubs/all',
     queryFn: clubsService.getPublicClubs,
   });
@@ -57,19 +55,12 @@ const PurchaseMembership = ({ products }: { products: any }) => {
   }, [user?.club_uuid]);
 
   return (
-    <SkeletonLoaderWrapper
-      isLoading={userLoading || clubsLoading}
-      loaderComponent={<Box />}
-    >
+    <SkeletonLoaderWrapper isLoading={userLoading || clubsLoading} loaderComponent={<Box />}>
       <Meta
         description="Sign in to QuadballUK to manage your QuadballUK Membership, Account details and more"
         subTitle="Manage"
       />
-      <Box
-        bg="greyLight"
-        py={{ base: 4, lg: 10 }}
-        px={{ base: 4, sm: 8, md: 9 }}
-      >
+      <Box bg="greyLight" py={{ base: 4, lg: 10 }} px={{ base: 4, sm: 8, md: 9 }}>
         <Container>
           <Heading as="h2" fontFamily="body">
             Purchase Membership
@@ -77,29 +68,22 @@ const PurchaseMembership = ({ products }: { products: any }) => {
 
           <Box maxWidth="768px">
             <Text>
-              We offer two tiers of membership: <strong>First time</strong> and{' '}
-              <strong>Individual</strong>.
+              We offer two tiers of membership: <strong>First time</strong> and <strong>Individual</strong>.
             </Text>
             <Text>
-              <strong>
-                First Time Membership (previously Trial Membership)
-              </strong>{' '}
-              covers the cost of the membership for the current season and a
-              player fee for one official QuadballUK Tournament. People who have
-              never played the sport before, outside of training or
-              friendly/fantasy events, can purchase a First Time Membership.
+              <strong>First Time Membership (previously Trial Membership)</strong> covers the cost of the membership for
+              the current season and a player fee for one official QuadballUK Tournament. People who have never played
+              the sport before, outside of training or friendly/fantasy events, can purchase a First Time Membership.
             </Text>
             <Text>
-              <strong>Individual</strong> Membership covers the cost of the
-              membership for the current season. Seasoned players{' '}
-              <strong>must</strong>
-              purchase an Individual Membership. Please select the club you plan
-              to play with during the season covered by the membership from the
-              dropdown below.
+              <strong>Individual</strong> Membership covers the cost of the membership for the current season. Seasoned
+              players <strong>must</strong>
+              purchase an Individual Membership. Please select the club you plan to play with during the season covered
+              by the membership from the dropdown below.
             </Text>
             <Text>
-              Please select the club you plan to play with during the season
-              covered by the membership from the dropdown below.
+              Please select the club you plan to play with during the season covered by the membership from the dropdown
+              below.
             </Text>
           </Box>
 
@@ -128,14 +112,7 @@ const PurchaseMembership = ({ products }: { products: any }) => {
                 description={product.description}
                 name={product.name}
                 price={product.price}
-                onClick={() =>
-                  handleClick(
-                    product.price?.id,
-                    user,
-                    selectedClubUuid,
-                    setServerError
-                  )
-                }
+                onClick={() => handleClick(product.price?.id, user, selectedClubUuid, setServerError)}
               />
             ))}
           </Grid>
@@ -165,7 +142,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   return {
     props: {
-      products,
+      products: products.filter((product) => product.metadata.type === 'MEMBERSHIP'),
       ...basePageProps,
     },
   };
