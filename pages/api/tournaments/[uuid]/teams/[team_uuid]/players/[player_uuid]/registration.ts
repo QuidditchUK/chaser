@@ -23,9 +23,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
         });
 
-        const registration = await prisma.tournament_team_player_registrations.findMany({
+        const registrations = await prisma.tournament_team_player_registrations.findMany({
           where: { tournament_team_player_uuid: tournament_team_player[0].uuid },
         });
+
+        const registration = registrations[0];
 
         const user_stripe_products = await prisma.users_stripe_products.findMany({
           where: { user_uuid: user_uuid },
