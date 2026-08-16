@@ -50,6 +50,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
           });
 
+          console.log('metadata', metadata);
+
           if (metadata?.type === 'MEMBERSHIP') {
             // There really shouldn't be more than one
             // We wipe them in /transfers/auromatic
