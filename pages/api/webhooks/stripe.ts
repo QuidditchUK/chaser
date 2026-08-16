@@ -129,15 +129,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               where: { tournament_team_player_uuid: tournament_team_player[0].uuid },
             });
 
-            registration.forEach(async (reg) => {
-              await prisma.tournament_team_player_registrations.update({
-                where: { uuid: reg.uuid },
+            if (!registration || registration.length === 0) {
+              await prisma.tournament_team_player_registrations.create({
                 data: {
+                  tournament_team_player_uuid: tournament_team_player[0].uuid as string,
                   tournament_fee_uuid: user_stripe_product.uuid,
                   updated: new Date(),
                 },
               });
-            });
+            } else {
+              registration.forEach(async (reg) => {
+                await prisma.tournament_team_player_registrations.update({
+                  where: { uuid: reg.uuid },
+                  data: {
+                    tournament_fee_uuid: user_stripe_product.uuid,
+                    updated: new Date(),
+                  },
+                });
+              });
+            }
           }
 
           res.status(200).end();
