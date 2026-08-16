@@ -31,14 +31,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             where: { stripe_product_id },
           });
 
-          if (!product) {
-            const newProduct = await stripe.products.retrieve(stripe_product_id);
+          const prismaProduct = await stripe.products.retrieve(stripe_product_id);
 
+          if (!product) {
             await prisma.stripe_products.create({
               data: {
                 stripe_product_id,
                 description: item.id,
-                expires: newProduct.metadata.expires,
+                expires: prismaProduct.metadata.expires,
               },
             });
           }
@@ -50,9 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
           });
 
-          console.log('metadata', metadata);
-
-          if (metadata?.type === 'MEMBERSHIP') {
+          if (prismaProduct.metadata.type === 'MEMBERSHIP') {
             // There really shouldn't be more than one
             // We wipe them in /transfers/auromatic
             // If someone gets here with two, they did some messing around
@@ -116,7 +114,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
               }
             }
-          } else if (metadata?.type === 'TOURNAMENT_MEMBERSHIP') {
+          } else if (prismaProduct.metadata.type === 'TOURNAMENT_MEMBERSHIP') {
             // QQQQ check the type
             const { user_uuid, tournament_uuid, team_uuid } = metadata;
 
