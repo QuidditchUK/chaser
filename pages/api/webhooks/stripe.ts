@@ -9,9 +9,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const event = req.body;
 
       switch (event.type) {
-        // QQQQ metadata if - there will be product type
-        // tournament registration needs to go elsewhere
-        // QQQQ filter tournament registration purchases out of the general membership purchase
         case 'checkout.session.completed': {
           const { customer, metadata, id } = event.data.object;
           const { user_uuid } = metadata;
@@ -50,6 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
           });
 
+          // QQQQ store product type
           if (prismaProduct.metadata.type === 'MEMBERSHIP') {
             // There really shouldn't be more than one
             // We wipe them in /transfers/auromatic
@@ -115,10 +113,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               }
             }
           } else if (prismaProduct.metadata.type === 'TOURNAMENT_MEMBERSHIP') {
-            // QQQQ check the type
             const { user_uuid, tournament_uuid, team_uuid } = metadata;
 
-            // QQQQ maybe can find directly?
             const tournament_team = await prisma.tournament_teams.findFirst({
               where: { tournament_uuid, team_uuid },
             });

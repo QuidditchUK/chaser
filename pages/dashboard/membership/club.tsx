@@ -227,8 +227,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const headers = generateServerSideHeaders(req);
   const { data: products } = await productsService.getUserProducts({ headers });
 
-  //QQQQ handle tournament registration products
-
   if (
     !products.length ||
     !products.filter((product) => new Date() < parse(product?.metadata?.expires, 'dd-MM-yyyy', new Date())).length

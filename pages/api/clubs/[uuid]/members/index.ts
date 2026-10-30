@@ -20,6 +20,11 @@ export const safeMemberProps = {
           expires: true,
         },
       },
+      tournament_team_player_registrations: {
+        select: {
+          tournament_team_player_uuid: true,
+        },
+      },
     },
   },
   teams: {
@@ -34,10 +39,7 @@ export const safeMemberProps = {
   },
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
       try {
@@ -79,9 +81,7 @@ export default async function handler(
           return;
         }
 
-        const studentSummerPassMembers = club.student_summer_pass.map(
-          ({ user }) => user
-        );
+        const studentSummerPassMembers = club.student_summer_pass.map(({ user }) => user);
         res.json({
           members: club.users,
           studentSummerPassMembers,

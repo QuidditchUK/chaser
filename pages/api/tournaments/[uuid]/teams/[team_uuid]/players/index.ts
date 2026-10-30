@@ -3,6 +3,17 @@ import prisma from 'modules/prisma';
 import { isScoped_ApiRoute } from 'modules/auth';
 import { ADMIN, EMT } from 'constants/scopes';
 import { safeMemberProps } from 'pages/api/clubs/[uuid]/members';
+import { parse } from 'date-fns';
+
+const active_memberships = (membership_products: any[]) => {
+  return membership_products
+    .filter((product) => product.tournament_team_player_registrations.length === 0)
+    .filter((user_stripe_product) => {
+      const now = new Date();
+      const membership_expiry = parse(user_stripe_product.products?.expires, 'dd-MM-yyyy', new Date()); // QQQQ check other places with expiry parsing
+      return membership_expiry > now;
+    });
+};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -16,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const team_players = await prisma.tournament_team_players.findMany({
           where: { tournament_team_uuid: tournament_team.uuid },
-          include: { user: { select: safeMemberProps } },
+          include: { user: { select: safeMemberProps }, tournament_team_player_registrations: true },
         });
 
         const team = await prisma.teams.findUnique({ where: { uuid: team_uuid } });
@@ -32,8 +43,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
         });
 
-        const club_users = club.users; // qq active?
-        const team_users = team_players.map((player) => player.user);
+        const club_users = club.users;
+        const team_users = team_players.map((player) => ({
+          ...player.user,
+          registration: player.tournament_team_player_registrations,
+          active_memberships: active_memberships(player.user.stripe_products),
+        }));
         const team_user_ids = team_users.map((user) => user.uuid);
 
         res.status(200).json({

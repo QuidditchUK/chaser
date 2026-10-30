@@ -19,7 +19,7 @@ const TournamentTeamPlayers = ({ tournament_uuid, team_uuid }) => {
   const [selectedUserUuid, setSelectedUserUuid] = useState<string>();
 
   const { data, isLoading, isError, refetch } = useCachedResponse<{
-    team_users: User[];
+    team_users: (User & { active_memberships: any[]; registration: any[] })[];
     possible_users: User[];
   }>({
     queryKey: ['/tournaments', tournament_uuid, '/teams', team_uuid, '/players'],
@@ -57,9 +57,15 @@ const TournamentTeamPlayers = ({ tournament_uuid, team_uuid }) => {
   return (
     <Box bg="white" p={4} marginTop={4} marginBottom={4} borderRadius="lg">
       <Flex flexDirection="row" alignItems="center" justifyContent="space-between" gap={6}>
-        <Heading as="h4" fontFamily="body" color="qukBlue" fontSize="2xl" marginTop={0}>
-          Players
-        </Heading>
+        <div>
+          <Heading as="h4" fontFamily="body" color="qukBlue" fontSize="2xl" marginTop={0}>
+            Players
+          </Heading>
+          <Text>
+            All players need to have a complete player registration and have active QUK memberships to be allowed to
+            play.
+          </Text>
+        </div>
 
         <HStack spacing={3}>
           <Select
@@ -90,8 +96,7 @@ const TournamentTeamPlayers = ({ tournament_uuid, team_uuid }) => {
         </HStack>
       </Flex>
 
-      {/* QQQQ show if the user has paid (And is active this season) */}
-      <Table columns={['Name', 'Actions']} isLoading={isLoading} skeletonRows={10}>
+      <Table columns={['Name', 'QUK membership', 'Registration', 'Actions']} isLoading={isLoading} skeletonRows={10}>
         {team_users?.map((user) => {
           return (
             <Tr key={user.uuid}>
@@ -99,6 +104,18 @@ const TournamentTeamPlayers = ({ tournament_uuid, team_uuid }) => {
                 <Text>
                   {user.first_name} {user.last_name}
                 </Text>
+              </Td>
+
+              <Td>
+                <Text>
+                  {user.active_memberships.length > 0
+                    ? `Active: ${user.active_memberships[0].products.description}`
+                    : 'Inactive'}
+                </Text>
+              </Td>
+
+              <Td>
+                <Text>{user.registration?.length > 0 ? 'Registered' : 'Not registered'}</Text>
               </Td>
 
               <Td>
