@@ -153,6 +153,11 @@ const TeamPlayerPage = ({ tournament, products }) => {
                     contact QUK support. You can pay the tournament registration fee for the player (even if they are
                     not you!) by clicking a card below.
                   </Text>
+                  <Text>
+                    If you have purchased a First Time Membership, you are entitled to one free tournament registration.
+                    This is equivalent to this being your first season in the sport. QUK will ask your team manager to
+                    confirm the list of players who qualify.
+                  </Text>
                   {product ? (
                     <ProductCard
                       key={product.id}
