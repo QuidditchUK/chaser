@@ -14,7 +14,7 @@ import { getPlainScopes, hasScope } from 'modules/scopes';
 import { CLUB_MANAGEMENT, EMT } from 'constants/scopes';
 
 const TournamentTeams = ({ tournament_uuid }: { tournament_uuid: string; readonly?: boolean }) => {
-  const { data: user } = useMe();
+  const { data: user, isLoading: isUserLoading } = useMe();
   const userScopes = getPlainScopes(user?.scopes);
 
   const [selectedTeamUuid, setSelectedTeamUuid] = useState<string>();
@@ -27,7 +27,7 @@ const TournamentTeams = ({ tournament_uuid }: { tournament_uuid: string; readonl
     queryFn: () => tournamentsService.getTournamentTeams({ tournament_uuid }),
   });
 
-  if (isLoading || isError) {
+  if (isUserLoading || isLoading || isError) {
     return <></>;
   }
   const { tournament_teams, possible_teams } = data;

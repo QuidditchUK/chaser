@@ -27,14 +27,18 @@ import TournamentTeams from 'components/events/tournaments/tournament-teams';
 
 const TournamentPage = ({ tournament: initialData }: { tournament: PrismaTournament }) => {
   const router = useRouter();
-  const { data: user } = useMe();
+  const { data: user, isLoading: isUserLoading } = useMe();
   const userScopes = getPlainScopes(user?.scopes);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const tournament_uuid = router.query.uuid;
 
-  const { data: tournament, refetch } = useCachedResponse<PrismaTournament>({
+  const {
+    data: tournament,
+    isLoading,
+    isError,
+  } = useCachedResponse<PrismaTournament>({
     queryKey: ['/tournaments/', tournament_uuid],
     queryFn: () => tournamentsService.getTournament({ tournament_uuid: tournament_uuid }),
     initialData,
@@ -47,6 +51,10 @@ const TournamentPage = ({ tournament: initialData }: { tournament: PrismaTournam
       router.push('/events/tournaments');
     },
   });
+
+  if (isUserLoading || isLoading || isError || !tournament) {
+    return null;
+  }
 
   return (
     <>

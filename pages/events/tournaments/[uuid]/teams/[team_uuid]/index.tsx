@@ -26,7 +26,7 @@ import TournamentTeamPlayers from 'components/events/tournaments/tournament-team
 
 const TeamPage = () => {
   const router = useRouter();
-  const { data: user } = useMe();
+  const { data: user, isLoading: isUserLoading } = useMe();
   const userScopes = getPlainScopes(user?.scopes);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,7 +58,7 @@ const TeamPage = () => {
     router.push(`/events/tournaments/${tournament_uuid}`);
   };
 
-  if (isLoading || isError || !tournament_team) {
+  if (isUserLoading || isLoading || isError || !tournament_team) {
     return null;
   }
 

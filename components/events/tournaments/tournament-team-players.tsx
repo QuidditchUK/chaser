@@ -13,7 +13,7 @@ import { getPlainScopes, hasScope } from 'modules/scopes';
 import useMe from 'hooks/useMe';
 
 const TournamentTeamPlayers = ({ tournament_uuid, team_uuid }) => {
-  const { data: user } = useMe();
+  const { data: user, isLoading: isUserLoading } = useMe();
   const userScopes = getPlainScopes(user?.scopes);
 
   const [selectedUserUuid, setSelectedUserUuid] = useState<string>();
@@ -30,7 +30,7 @@ const TournamentTeamPlayers = ({ tournament_uuid, team_uuid }) => {
       }),
   });
 
-  if (isLoading || isError) {
+  if (isUserLoading || isLoading || isError) {
     return <></>;
   }
   const { team_users, possible_users } = data;
