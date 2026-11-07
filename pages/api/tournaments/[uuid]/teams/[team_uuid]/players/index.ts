@@ -4,6 +4,7 @@ import { isScoped_ApiRoute } from 'modules/auth';
 import { ADMIN, EMT } from 'constants/scopes';
 import { safeMemberProps } from 'pages/api/clubs/[uuid]/members';
 import { parse } from 'date-fns';
+import { isManager } from 'modules/clubs';
 
 const active_memberships = (membership_products: any[]) => {
   return membership_products
@@ -64,13 +65,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'POST':
       try {
         const isScoped = await isScoped_ApiRoute(req, [EMT, ADMIN]);
-        if (!isScoped) {
+        const team_uuid = req.query.team_uuid as string;
+        const team = await prisma.teams.findUnique({ where: { uuid: team_uuid } });
+        const userIsManager = await isManager(req, team?.club_uuid);
+        if (!isScoped && !userIsManager) {
           res.status(401).end();
           return;
         }
 
         const tournament_uuid = req.query.uuid as string;
-        const team_uuid = req.query.team_uuid as string;
         const tournament_team = await prisma.tournament_teams.findFirst({
           where: { tournament_uuid, team_uuid },
         });
