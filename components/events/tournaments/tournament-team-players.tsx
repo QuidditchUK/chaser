@@ -1,4 +1,4 @@
-import { Heading, Grid, Flex, HStack, Box, List, Text, Link, Td, Tr } from '@chakra-ui/react';
+import { Heading, Grid, Flex, HStack, Box, List, Text, Link, Td, Tr, Checkbox } from '@chakra-ui/react';
 import { DeleteIcon, SmallAddIcon } from '@chakra-ui/icons';
 import useCachedResponse from 'hooks/useCachedResponse';
 import tournamentsService from 'services/tournaments';
@@ -54,6 +54,15 @@ const TournamentTeamPlayers = ({ tournament_uuid, team_uuid }) => {
     refetch();
   };
 
+  const checkMedicalFormFilled = async (userUuid: string) => {
+    await tournamentsService.toggleMedicalForm({
+      tournament_uuid,
+      team_uuid: team_uuid,
+      user_uuid: userUuid,
+    });
+    refetch();
+  };
+
   return (
     <Box bg="white" p={4} marginTop={4} marginBottom={4} borderRadius="lg">
       <Flex flexDirection="row" alignItems="center" justifyContent="space-between" gap={6}>
@@ -96,8 +105,14 @@ const TournamentTeamPlayers = ({ tournament_uuid, team_uuid }) => {
         </HStack>
       </Flex>
 
-      <Table columns={['Name', 'QUK membership', 'Registration', 'Actions']} isLoading={isLoading} skeletonRows={10}>
+      <Table
+        columns={['Name', 'QUK membership', 'Registration', 'Medical form', 'Actions']}
+        isLoading={isLoading}
+        skeletonRows={10}
+      >
         {team_users?.map((user) => {
+          const registration = user.registration?.[0];
+          const medical_form_filled = registration?.medical_form_filled;
           return (
             <Tr key={user.uuid}>
               <Td>
@@ -115,7 +130,20 @@ const TournamentTeamPlayers = ({ tournament_uuid, team_uuid }) => {
               </Td>
 
               <Td>
-                <Text>{user.registration?.length > 0 ? 'Registered' : 'Not registered'}</Text>
+                <Text>{registration ? 'Registered' : 'Not registered'}</Text>
+              </Td>
+              <Td>
+                <Text>
+                  {registration ? (
+                    <Checkbox
+                      isChecked={medical_form_filled}
+                      onChange={() => checkMedicalFormFilled(user.uuid)}
+                      disabled={!hasScope([EMT], userScopes)}
+                    />
+                  ) : (
+                    'Need to register first'
+                  )}
+                </Text>
               </Td>
 
               <Td>

@@ -74,6 +74,11 @@ const tournamentsService = {
     url: `/tournaments/${tournament_uuid}/teams/${team_uuid}/players/${user_uuid}`,
     ...params,
   }),
+  toggleMedicalForm: ({ tournament_uuid, team_uuid, user_uuid, ...params }) => ({
+    method: 'post',
+    url: `/tournaments/${tournament_uuid}/teams/${team_uuid}/players/${user_uuid}/medical`,
+    ...params,
+  }),
   getTournamentPlayerRegistration: ({ tournament_uuid, team_uuid, user_uuid, ...params }) => ({
     method: 'get',
     url: `/tournaments/${tournament_uuid}/teams/${team_uuid}/players/${user_uuid}/registration`,
